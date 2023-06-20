@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Study } from './entities/study.entity';
 import { StudiesModule } from './modules/studies/studies.module';
+import { Participant } from './entities/participant.entity';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -12,10 +14,11 @@ import { StudiesModule } from './modules/studies/studies.module';
       username: 'root',
       password: 'root',
       database: 'studien_generator_app',
-      entities: [Study],
+      entities: [Study, Participant],
       synchronize: true,
     }),
-    StudiesModule
+    AuthModule,
+    StudiesModule,
   ],
 })
 
