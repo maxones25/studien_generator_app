@@ -4,6 +4,7 @@ import { Study } from './entities/study.entity';
 import { StudiesModule } from './modules/studies/studies.module';
 import { Participant } from './entities/participant.entity';
 import { AuthModule } from './modules/auth/auth.module';
+import { Director } from './entities/director.entity';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { AuthModule } from './modules/auth/auth.module';
       username: 'root',
       password: 'root',
       database: 'studien_generator_app',
-      entities: [Study, Participant],
+      entities: [Study, Participant, Director],
       synchronize: true,
     }),
     AuthModule,

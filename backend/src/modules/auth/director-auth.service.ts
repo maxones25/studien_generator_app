@@ -1,10 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Director } from 'src/entities/director.entity';
+import { Director } from '../../entities/director.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDirectorDto } from './dtos/LoginDirectorDto';
 import * as bcrypt from 'bcrypt';
+import { SignupDirectors } from './dtos/SignupDirectorDto';
 
 @Injectable()
 export class DirectorAuthService {
@@ -14,7 +15,7 @@ export class DirectorAuthService {
         private jwtService: JwtService,
       ) {}
     
-      async checkCredentials({email, firstName, lastName, password} : LoginDirectorDto) {
+      async checkCredentials({email, password} : LoginDirectorDto) {
         const director = await this.directorsRepository.findOne({
             where: {
               email,
@@ -23,26 +24,25 @@ export class DirectorAuthService {
       
           if (!director) throw new UnauthorizedException();
 
-          if (await bcrypt.compare(password, director.password))
-          throw new UnauthorizedException();
+          if (!await bcrypt.compare(password, director.password)) 
+            throw new UnauthorizedException();
+
       
           return await this.jwtService.signAsync({
-              directorId: director.id,
+              directorEmail: director.email,
           })
       }
 
-      async create({email, firstName, lastName, password} : LoginDirectorDto, activationPassword) {
+      async create({email, firstName, lastName, password, activationPassword} : SignupDirectors) {
         if (activationPassword != '1234') throw new UnauthorizedException(); //muss geändert werden!!
 
-        const hashedPassword = bcrypt.hashSync(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-        this.directorsRepository.insert({
+        return await this.directorsRepository.insert({
             email,
             firstName,
             lastName,
             password: hashedPassword,
         })
-
-        return true;
       }
 }

@@ -1,9 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Director {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
 
   @Column()
   firstName: string;
@@ -11,7 +9,7 @@ export class Director {
   @Column()
   lastName: string;
 
-  @Column({ unique: true })
+  @PrimaryColumn()
   email: string;
 
   @Column()

@@ -6,13 +6,14 @@ import { Director } from 'src/entities/director.entity';
 import { Participant } from 'src/entities/participant.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
+import { jwtConstants } from './constants';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Director, Participant]),
     JwtModule.register({
       global: true,
-      secret: 'JWT-Secret-123',  // muss geändert werden !!!
+      secret: jwtConstants.secret,  // muss geändert werden !!!
       signOptions: { expiresIn: '30d' },
     }),
   ],

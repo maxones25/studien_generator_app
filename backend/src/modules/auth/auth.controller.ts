@@ -3,6 +3,7 @@ import { ParticipantsAuthService } from './participant-auth.service';
 import { LoginParticipantDto } from './dtos/LoginParticipantDto';
 import { DirectorAuthService } from './director-auth.service';
 import { LoginDirectorDto } from './dtos/LoginDirectorDto';
+import { SignupDirectors } from './dtos/SignupDirectorDto';
 
 @Controller('auth')
 export class AuthController {
@@ -21,8 +22,13 @@ export class AuthController {
     return this.participantAuthService.create();
   }
 
+  @Post('directors/login')
+  async loginDirector(@Body() loginDirectorDto: LoginDirectorDto) {
+    return this.directorAuthService.checkCredentials(loginDirectorDto);
+  }
+
   @Post('directors/create')
-  async addDirectors(@Body() loginDirectorDto: LoginDirectorDto, activationPassword: string) {
-    return this.directorAuthService.create(loginDirectorDto, activationPassword);
+  async addDirector(@Body() signupDirectors: SignupDirectors ) {
+    return this.directorAuthService.create(signupDirectors);
   }
 }
