@@ -15,11 +15,10 @@ import { AuthModule } from './modules/auth/auth.module';
       password: 'root',
       database: 'studien_generator_app',
       entities: [Study, Participant],
-      synchronize: true,
+      synchronize: false,
     }),
     AuthModule,
     StudiesModule,
   ],
 })
-
 export class AppModule {}

@@ -22,12 +22,12 @@
     "method": "POST",
     "sortNum": 40000,
     "created": "2023-06-20T10:01:17.420Z",
-    "modified": "2023-06-20T10:19:40.711Z",
+    "modified": "2023-06-20T13:07:34.520Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"id\": \"123\",\n  \"password\": \"12\"\n}",
+      "raw": "{\n  \"id\": \"47f6926d-3a7b-467e-aae7-ed9b50bbf434\",\n  \"password\": \"72jGvmBhNYcm\"\n}",
       "form": []
     },
     "tests": []

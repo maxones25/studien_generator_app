@@ -1,0 +1,36 @@
+import { createContext, FC, ReactNode, useContext } from "react";
+
+interface {{pascalCase name}}ContextValue {}
+
+interface {{pascalCase name}}ProviderProps {
+  children: ReactNode;
+}
+
+const {{pascalCase name}}Context = createContext<{{pascalCase name}}ContextValue | undefined>(
+  undefined
+);
+
+const use{{pascalCase name}}ContextValue = () => {
+  return {}
+};
+
+export const {{pascalCase name}}Provider: FC<{{pascalCase name}}ProviderProps> = ({
+  children,
+}) => {
+  const value = use{{pascalCase name}}ContextValue();
+
+  return (
+    <{{pascalCase name}}Context.Provider value={value}>
+      {children}
+    </{{pascalCase name}}Context.Provider>
+  );
+};
+
+export const use{{pascalCase name}}Context = () => {
+  const context = useContext({{pascalCase name}}Context);
+
+  if (!context)
+    throw new Error("{{pascalCase name}}Context must be inside a {{pascalCase name}}Provider");
+
+  return context;
+};

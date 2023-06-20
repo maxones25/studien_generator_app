@@ -27,10 +27,14 @@ export class ParticipantsAuthService {
     if (await bcrypt.compare(password, participant.password))
       throw new UnauthorizedException();
 
-    return await this.jwtService.signAsync({
+    const accessToken = await this.jwtService.signAsync({
       participantId: participant.id,
       groupId: 123,
     });
+
+    return {
+      accessToken,
+    };
   }
 
   async create() {
@@ -40,6 +44,7 @@ export class ParticipantsAuthService {
       uppercase: true,
       lowercase: true,
       symbols: false,
+      excludeSimilarCharacters: true,
     });
 
     // vorerst deaktiviert, muss besprochen werden
