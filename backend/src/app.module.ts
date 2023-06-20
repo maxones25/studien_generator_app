@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Study } from './entities/study.entity';
 import { StudiesModule } from './modules/studies/studies.module';
@@ -20,4 +18,5 @@ import { StudiesModule } from './modules/studies/studies.module';
     StudiesModule
   ],
 })
+
 export class AppModule {}
