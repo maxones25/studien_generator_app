@@ -1,0 +1,22 @@
+[
+  {
+    "_id": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+    "colName": "StudienGeneratorApp",
+    "created": "2023-06-20T08:59:36.016Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
+        "name": "Studies",
+        "containerId": "",
+        "created": "2023-06-20T08:59:45.845Z",
+        "sortNum": 10000
+      }
+    ],
+    "settings": {
+      "options": {
+        "baseUrl": "{{BASE_URI}}"
+      }
+    }
+  }
+]

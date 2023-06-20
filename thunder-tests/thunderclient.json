@@ -1,0 +1,14 @@
+[
+  {
+    "_id": "14f24ded-8d1a-4f51-aab4-9544bfc7359f",
+    "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+    "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
+    "name": "get all studies",
+    "url": "",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2023-06-20T08:59:55.030Z",
+    "modified": "2023-06-20T08:59:55.030Z",
+    "headers": []
+  }
+]

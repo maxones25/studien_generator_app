@@ -1,0 +1,24 @@
+services:
+    mysql:
+      container_name: database
+      image: mysql
+      command:
+        [
+          "--character-set-server=utf8mb4",
+          "--collation-server=utf8mb4_unicode_ci",
+        ]
+      volumes:
+        - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+        - ./mysql/data:/var/lib/mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=studien_generator_app
+    phpmyadmin:
+      container_name: phpmyadmin
+      image: phpmyadmin/phpmyadmin
+      ports:
+        - 8080:80
+      environment:
+        - PMA_HOST=mysql
+        - PMA_USER=root
+        - PMA_PASSWORD=root
