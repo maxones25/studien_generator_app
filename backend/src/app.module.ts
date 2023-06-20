@@ -16,11 +16,10 @@ import { Director } from './entities/director.entity';
       password: 'root',
       database: 'studien_generator_app',
       entities: [Study, Participant, Director],
-      synchronize: true,
+      synchronize: false,
     }),
     AuthModule,
     StudiesModule,
   ],
 })
-
 export class AppModule {}
