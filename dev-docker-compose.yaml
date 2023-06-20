@@ -13,6 +13,8 @@ services:
       environment:
         - MYSQL_ROOT_PASSWORD=root
         - MYSQL_DATABASE=studien_generator_app
+      ports:
+        - 3306:3306
     phpmyadmin:
       container_name: phpmyadmin
       image: phpmyadmin/phpmyadmin
