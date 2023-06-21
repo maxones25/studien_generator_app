@@ -8,7 +8,6 @@ services:
           "--collation-server=utf8mb4_unicode_ci",
         ]
       volumes:
-        - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
         - ./mysql/data:/var/lib/mysql
       environment:
         - MYSQL_ROOT_PASSWORD=root

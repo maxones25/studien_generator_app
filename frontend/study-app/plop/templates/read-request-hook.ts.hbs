@@ -1,0 +1,12 @@
+import { useReadRequest } from "@modules/core/hooks";
+import { apiRequest } from "@modules/core/utils";
+
+export interface Use{{pascalCase name}}Options {}
+
+export const get{{pascalCase name}}Key = () => ["{{camelCase name}}"];
+
+export const use{{pascalCase name}} = (options? : Use{{pascalCase name}}Options) => {
+  return useReadRequest<unknown>(get{{pascalCase name}}Key(), (options) =>
+    apiRequest(`/`, { ...options })
+  );
+}

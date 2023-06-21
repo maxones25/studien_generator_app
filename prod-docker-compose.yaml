@@ -1,0 +1,57 @@
+services:
+  mysql:
+    container_name: database
+    image: mysql
+    command:
+      [
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+      ]
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=studien_generator_app
+    ports:
+      - 3306:3306
+    networks:
+      - study-app-network
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    networks:
+      - study-app-network
+  api:
+    container_name: api
+    build:
+      context: ./backend
+    ports:
+      - 8000:8000
+    networks:
+      - study-app-network
+    environment:
+    - DB_HOST=mysql
+  study-app:
+    container_name: study-app
+    build:
+      context: ./frontend/study-app
+    ports:
+      - 4000:4000
+    networks:
+      - study-app-network
+  admin-app:
+    container_name: admin-app
+    build:
+      context: ./frontend/admin-app
+    ports:
+      - 3000:3000
+    networks:
+      - study-app-network
+networks:
+  study-app-network:
