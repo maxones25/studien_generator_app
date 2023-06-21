@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Study } from 'src/entities/study.entity';
+import { Study } from '../../entities/study.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -15,7 +15,10 @@ export class StudiesService {
   }
 
   findOne(id: number): Promise<Study | null> {
-    return this.studiesRepository.findOneBy({ id });
+    return this.studiesRepository.findOne( {   
+      where: {
+      id: 1,
+  }});
   }
 
   async remove(id: number): Promise<void> {

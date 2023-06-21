@@ -30,6 +30,7 @@ export class ParticipantsAuthService {
     const accessToken = await this.jwtService.signAsync({
       participantId: participant.id,
       groupId: 123,
+      role: 'participant',
     });
 
     return {
