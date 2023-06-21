@@ -9,14 +9,14 @@ import { useTranslation } from "react-i18next";
 export interface LoginFormProps extends FormProps<LoginFormData> {}
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, values }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["login"]);
   const form = useForm({ values });
 
   return (
     <Form onSubmit={form.handleSubmit(onSubmit)}>
       {!values?.id && (
         <TextField
-          label={t("login.id")}
+          label={t("id")}
           margin="normal"
           {...form.register("id", {
             required: "id required",
@@ -24,7 +24,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, values }) => {
         />
       )}
       <TextField
-        label={t("login.password")}
+        label={t("password")}
         margin="normal"
         {...form.register("password", {
           required: "password required",

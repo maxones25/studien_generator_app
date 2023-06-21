@@ -16,6 +16,10 @@ i18n
   .use(initReactI18next)
   .init({
     lng: "de",
+    fallbackLng: "de",
+    backend: {
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
+    },
     detection: {
       order: [
         "querystring",

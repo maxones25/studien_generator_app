@@ -1,5 +1,3 @@
 {
-  "test": "hello world",
-  "login.id": "participant id",
-  "login.password": "password"
+  "test": "hello world"
 }
