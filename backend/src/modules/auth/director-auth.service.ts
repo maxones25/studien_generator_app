@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginDirectorDto } from './dtos/LoginDirectorDto';
 import * as bcrypt from 'bcrypt';
 import { SignupDirectors } from './dtos/SignupDirectorDto';
+import { activationPasswordConstant } from './constants';
 
 @Injectable()
 export class DirectorAuthService {
@@ -15,34 +16,38 @@ export class DirectorAuthService {
         private jwtService: JwtService,
       ) {}
     
-      async checkCredentials({email, password} : LoginDirectorDto) {
-        const director = await this.directorsRepository.findOne({
-            where: {
-              email,
-            },
-          });
-      
-          if (!director) throw new UnauthorizedException();
+  async checkCredentials({email, password} : LoginDirectorDto) {
+    const director = await this.directorsRepository.findOne({
+        where: {
+          email,
+        },
+      });
 
-          if (!await bcrypt.compare(password, director.password)) 
-            throw new UnauthorizedException();
+      if (!director) throw new UnauthorizedException();
 
-      
-          return await this.jwtService.signAsync({
-              directorEmail: director.email,
-          })
-      }
+      if (!await bcrypt.compare(password, director.password)) 
+        throw new UnauthorizedException();
 
-      async create({email, firstName, lastName, password, activationPassword} : SignupDirectors) {
-        if (activationPassword != '1234') throw new UnauthorizedException(); //muss geändert werden!!
+      const accessToken = await this.jwtService.signAsync({
+          directorEmail: director.email,
+          role: 'director',
+      })
+  
+      return {
+        accessToken,
+      };
+  }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+  async create({email, firstName, lastName, password, activationPassword} : SignupDirectors) {
+    if (activationPassword != activationPasswordConstant.password) throw new UnauthorizedException(); //muss geändert werden!!
 
-        return await this.directorsRepository.insert({
-            email,
-            firstName,
-            lastName,
-            password: hashedPassword,
-        })
-      }
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    return await this.directorsRepository.insert({
+        email,
+        firstName,
+        lastName,
+        password: hashedPassword,
+    })
+  }
 }
