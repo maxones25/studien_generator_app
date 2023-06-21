@@ -8,6 +8,7 @@ import { Director } from './entities/director.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './modules/auth/roles.guard';
 import { ConfigModule } from '@nestjs/config';
+import { StudyToDirector } from './entities/studyToDirector.entity';
 
 @Module({
   imports: [
@@ -19,8 +20,8 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Study, Participant, Director],
-      synchronize: false,
+      entities: [Study, Participant, Director, StudyToDirector],
+      synchronize: true,
     }),
     AuthModule,
     StudiesModule,

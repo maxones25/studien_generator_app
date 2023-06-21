@@ -29,7 +29,7 @@ export class DirectorAuthService {
         throw new UnauthorizedException();
 
       const accessToken = await this.jwtService.signAsync({
-          directorEmail: director.email,
+          directorId: director.id,
           role: 'director',
       })
   

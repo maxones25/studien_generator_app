@@ -7,10 +7,11 @@ import { Participant } from '../..//entities/participant.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
 import { jwtConstants } from './constants';
+import { StudyToDirector } from 'src/entities/studyToDirector.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Director, Participant]),
+    TypeOrmModule.forFeature([Director, Participant, StudyToDirector]),
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,  // muss geändert werden !!!

@@ -1,7 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, OneToMany } from 'typeorm';
+import { StudyToDirector } from './studyToDirector.entity';
 
 @Entity()
 export class Director {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   firstName: string;
@@ -9,9 +12,14 @@ export class Director {
   @Column()
   lastName: string;
 
-  @PrimaryColumn()
+  @Column()
   email: string;
 
   @Column()
   password: string;
+
+  @OneToMany(() => StudyToDirector, studyToDirector => studyToDirector.director, {
+    cascade: true,
+})
+  public studyToDirector: StudyToDirector[];
 }

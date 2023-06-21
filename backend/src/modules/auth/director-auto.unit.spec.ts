@@ -36,7 +36,9 @@ describe('DirectorAuthService', () => {
   });
 
   it('should call create', async () => {
-    const mockDirector: Director = { firstName: 'John', lastName: 'Doe', email: 'test@email.de', password: '1234'};
+    const mockDirector: Director = {
+      firstName: 'John', lastName: 'Doe', email: 'test@email.de', password: '1234', id: '', studyToDirector: []
+    };
     jest.spyOn(directorRepository, 'insert').mockImplementation(() => Promise.resolve({raw: true, identifiers: null, generatedMaps: null}));
 
     const result = await service.create({...mockDirector, activationPassword: activationPasswordConstant.password});
@@ -46,7 +48,9 @@ describe('DirectorAuthService', () => {
   it('should call checkCredentials', async () => {
     const password = '1234';
     const hashedPassword = await bcrypt.hash(password, 10);
-    const mockDirector: Director = { firstName: 'John', lastName: 'Doe', email: 'test@email.de', password: hashedPassword};
+    const mockDirector: Director = {
+      firstName: 'John', lastName: 'Doe', email: 'test@email.de', password: hashedPassword, id: '', studyToDirector: []
+    };
     jest.spyOn(directorRepository, 'findOne').mockImplementation(() => Promise.resolve(mockDirector));
 
     const token = await service.checkCredentials({email: mockDirector.email, password: password});

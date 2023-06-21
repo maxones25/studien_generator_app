@@ -23,15 +23,15 @@ describe('StudiesService', () => {
   });
 
   it('should call findOne', async () => {
-    const mockStudy: Study = { id: 1, name: 'John Doe'};
+    const mockStudy: Study = { id: '1', name: 'John Doe', studyToDirector: []};
     jest.spyOn(studiesRepository, 'findOne').mockImplementation(() => Promise.resolve(mockStudy));
 
-    const result = await service.findOne(1);
+    const result = await service.findOne('1');
     expect(result).toEqual(mockStudy);
   });
 
   it('should call findAll', async () => {
-    const mockStudies: Study[] = [{ id: 1, name: 'John Doe'}];
+    const mockStudies: Study[] = [{ id: '', name: 'John Doe', studyToDirector: []}];
     jest.spyOn(studiesRepository, 'find').mockImplementation(() => Promise.resolve(mockStudies));
 
     const result = await service.findAll();
@@ -41,7 +41,7 @@ describe('StudiesService', () => {
   it('should call remove', async () => {
     jest.spyOn(studiesRepository, 'delete').mockImplementation(() => Promise.resolve({raw: true, affected: 1}));
 
-    await service.remove(1);
+    await service.delete({id: '1'});
     expect(studiesRepository.delete).toHaveBeenCalledWith(1)
   });
 });
