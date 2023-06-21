@@ -1,0 +1,1 @@
+export type ThemeColor = "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning" | undefined
