@@ -28,7 +28,9 @@ jobs:
           cache: 'npm'
 
       - name: Install packages
+        working-directory: ./tests
         run: npm install
 
       - name: Run all end to end tests
+        working-directory: ./tests
         run: npm run test
