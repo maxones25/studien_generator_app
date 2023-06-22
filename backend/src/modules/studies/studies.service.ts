@@ -7,6 +7,7 @@ import { StudyToDirector } from '../../entities/studyToDirector.entity';
 import { DeleteStudyDto } from './dtos/deleteStudyDto';
 import { AddOrRemoveDirector } from './dtos/addOrRemoveDirector';
 import { TransferAdminDto } from './dtos/transferAdminDto';
+import { Roles } from '../../enums/roles.enum';
 
 @Injectable()
 export class StudiesService {

@@ -1,4 +1,4 @@
-enum Types {
+export enum Types {
     director,
     particpant,
   }

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, PrimaryColumn} from 'typeorm';
+import { Entity, Column, ManyToOne, PrimaryColumn} from 'typeorm';
 import { Director } from './director.entity';
 import { Study } from './study.entity';
 
