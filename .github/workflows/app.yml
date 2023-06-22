@@ -32,8 +32,8 @@ jobs:
         docker-compose -f test-docker-compose.yaml up -d
 
     - name: Use Node.js 18.x
-      working-directory: ./tests
       uses: actions/setup-node@v2
+      working-directory: ./tests
       with:
         node-version: '18'
         cache: 'npm'
