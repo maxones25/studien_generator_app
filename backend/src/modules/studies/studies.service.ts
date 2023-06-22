@@ -21,7 +21,7 @@ export class StudiesService {
     const study = new Study();
     study.name = name;
     await this.studiesRepository.insert(study);
-    return await this.studyToDirectorRepository.insert({ directorId: directorId, studyId: study.id, role: 'admin' });
+    return await this.studyToDirectorRepository.insert({ directorId: directorId, studyId: study.id, role: Roles.admin });
   }
 
   findAll(): Promise<Study[]> {
@@ -40,16 +40,16 @@ export class StudiesService {
   }
 
   async addEmployee({studyId, employeeId}: AddOrRemoveDirector) {
-    return await this.studyToDirectorRepository.insert({ directorId: employeeId, studyId: studyId, role: 'employee' });
+    return await this.studyToDirectorRepository.insert({ directorId: employeeId, studyId: studyId, role: Roles.employee });
   }
 
   async removeEmployee({studyId, employeeId}: AddOrRemoveDirector) {
-    await this.studyToDirectorRepository.delete({ directorId: employeeId, studyId: studyId, role: 'employee' });
+    await this.studyToDirectorRepository.delete({ directorId: employeeId, studyId: studyId, role: Roles.employee });
   }
 
   async transferAdmin({studyId, oldAdminId, newAdminId}: TransferAdminDto) {
     await this.removeEmployee({studyId, employeeId: newAdminId});
-    await this.studyToDirectorRepository.delete({ directorId: oldAdminId, studyId: studyId, role: 'admin' });
-    return await this.studyToDirectorRepository.insert({ directorId: newAdminId, studyId: studyId, role: 'admin' });
+    await this.studyToDirectorRepository.delete({ directorId: oldAdminId, studyId: studyId, role: Roles.employee });
+    return await this.studyToDirectorRepository.insert({ directorId: newAdminId, studyId: studyId, role: Roles.admin });
   }
 }

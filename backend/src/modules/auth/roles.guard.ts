@@ -9,7 +9,7 @@ import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { StudyToDirector } from 'src/entities/studyToDirector.entity';
+import { StudyToDirector } from '../../entities/studyToDirector.entity';
   
 @Injectable()
 export class RolesGuard implements CanActivate {

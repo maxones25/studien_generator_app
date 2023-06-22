@@ -1,0 +1,4 @@
+enum Types {
+    director,
+    particpant,
+  }
