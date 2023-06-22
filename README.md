@@ -1,5 +1,25 @@
 # Studien Generator App
 
+## Projektbeschreibung
+
+Dieses Projekt zielt darauf ab, eine generische Anwendung für wissenschaftliche Studien zu entwickeln. Diese App wird in Zusammenarbeit mit dem Zentralinstitut für Seelische Gesundheit (ZI) in Mannheim erstellt und soll dazu dienen, das Management von Studien sowie die Erfassung und Verwaltung von Teilnehmerdaten zu ermöglichen. 
+
+## Technologie Stack
+
+Die App wird mit folgenden Technologien entwickelt:
+
+- Frontend: React (PWA)
+- Backend: Nest.js
+- Datenbank: MySQL
+
+## Anwendungsfunktionen
+
+Die App besteht aus zwei Teilen: 
+
+1. **Admin-App:** Dient der Administration und Verwaltung der Studien. Hier können neue Studien erstellt, bestehende Studien bearbeitet und Teilnehmer verwaltet werden.
+
+2. **Studien-App:** Hier können die Teilnehmer ihre Daten erfassen. Die Teilnehmer können sich für Studien anmelden, ihre persönlichen Daten eingeben und ihre Studiendaten einreichen.
+
 ## Getting started
 
 Builden der Anwendung
@@ -58,7 +78,7 @@ Starte die Anwendung
 npm start
 ```
 
-### Starten der Study App (Frontend)
+### Starten der Studien App (Frontend)
 
 Navigiere in den Order frontend/study-app
 
@@ -77,3 +97,38 @@ Starte die Anwendung
 ```console
 npm start
 ```
+
+### Code Generierung
+
+Im Frontend wird der Code Generator "plop.js" eingesetzt.
+
+[Plop Dokumentation](documentation/plop.md)
+
+## Testen
+
+### End To End Tests
+
+Starten der Anwendung
+
+```console
+docker-compose -f "prod-docker-compose.yaml" up -d
+```
+
+Navigiere in den Order tests
+
+```console
+cd tests
+```
+
+Teste die Admin App 
+
+```console
+npm run test:admin-app
+```
+
+Teste die Studien App 
+
+```console
+npm run test:study-app
+```
+
