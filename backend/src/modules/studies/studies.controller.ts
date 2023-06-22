@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { StudiesService } from './studies.service';
-import { Roles } from 'src/decorators/roles.decorator';
+import { Roles } from '../../decorators/roles.decorator';
 import { CreateStudyDto } from './dtos/createStudyDto';
 import { DeleteStudyDto } from './dtos/deleteStudyDto';
 import { AddOrRemoveDirector } from './dtos/addOrRemoveDirector';

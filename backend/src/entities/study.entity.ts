@@ -11,6 +11,7 @@ export class Study {
 
   @OneToMany(() => StudyToDirector, studyToDirector => studyToDirector.study, {
     cascade: true,
+    onDelete: 'CASCADE',
 })
   public studyToDirector: StudyToDirector[];
 }

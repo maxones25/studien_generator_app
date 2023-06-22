@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, OneToMany, Unique } from 'typeorm';
 import { StudyToDirector } from './studyToDirector.entity';
 
 @Entity()
@@ -12,7 +12,7 @@ export class Director {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -20,6 +20,7 @@ export class Director {
 
   @OneToMany(() => StudyToDirector, studyToDirector => studyToDirector.director, {
     cascade: true,
+    onDelete: 'CASCADE',
 })
   public studyToDirector: StudyToDirector[];
 }

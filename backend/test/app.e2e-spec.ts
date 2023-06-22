@@ -2,11 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
+import { DataSource } from 'typeorm';
+import { clearDatabase } from './clearDatabase';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
-
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -15,10 +16,68 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  beforeEach(async () => {
+    await clearDatabase(app);
+  });
+
+  it('/POST create new director', () => {
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .post('/auth/directors/create')
+      .send({ 
+        email: "test", 
+        firstName: "kai",
+        lastName: "mann", 
+        password: "12345678", 
+        activationPassword: "1234"
+      })
+      .expect(201)
+  });
+
+  it('/POST create same director twice', () => {
+    return request(app.getHttpServer())
+    .post('/auth/directors/create')
+    .send({ 
+      email: "test", 
+      firstName: "kai",
+      lastName: "mann", 
+      password: "12345678", 
+      activationPassword: "1234"
+    })
+    .expect(201).then(() => 
+    request(app.getHttpServer())
+    .post('/auth/directors/create')
+    .send({ 
+      email: "test", 
+      firstName: "kai",
+      lastName: "mann", 
+      password: "12345678", 
+      activationPassword: "1234"
+    })
+    .expect(500));
+  });
+
+  it('/POST login director', () => {
+    
+  return request(app.getHttpServer())
+  .post('/auth/directors/create')
+  .send({ 
+    email: "test", 
+    firstName: "kai",
+    lastName: "mann", 
+    password: "12345678", 
+    activationPassword: "1234"
+  })
+  .expect(201).then(() => 
+  request(app.getHttpServer())
+    .post('/auth/directors/login')
+    .send({ 
+      email: "test", 
+      password: "12345678", 
+    })
+    .expect(201).then((result) => console.log(result)))
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });

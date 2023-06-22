@@ -1,7 +1,23 @@
+import { IsString, IsNotEmpty } from "class-validator";
+
 export class SignupDirectors {
-    readonly email: string;
-    readonly firstName: string;
-    readonly lastName: string;
-    readonly password: string;
-    readonly activationPassword: string;
+  @IsString()
+  @IsNotEmpty()
+  readonly email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  readonly firstName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  readonly lastName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  readonly password: string;
+  
+  @IsString()
+  @IsNotEmpty()
+  readonly activationPassword: string;
   }
