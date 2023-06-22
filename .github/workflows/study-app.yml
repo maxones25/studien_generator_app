@@ -18,9 +18,6 @@ jobs:
       - name: Start containers
         run: docker-compose -f "prod-docker-compose.yaml" up -d --build
       
-      - name: Change to test directory
-        working-directory: ./tests
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
