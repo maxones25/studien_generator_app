@@ -1,16 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, PrimaryColumn} from 'typeorm';
 import { Director } from './director.entity';
 import { Study } from './study.entity';
 
 @Entity()
 export class StudyToDirector {
-    @PrimaryGeneratedColumn('uuid')
-    public studyToDirectorId: string
-
-    @Column()
+    @PrimaryColumn()
     public studyId: string
 
-    @Column()
+    @PrimaryColumn()
     public directorId: string
 
     @Column()
