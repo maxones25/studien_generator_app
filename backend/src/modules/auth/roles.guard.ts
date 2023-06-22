@@ -6,7 +6,6 @@ import {
   } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { jwtConstants } from './constants';
 import { Reflector } from '@nestjs/core';
   
 @Injectable()
@@ -30,7 +29,7 @@ async canActivate(context: ExecutionContext): Promise<boolean> {
     const payload = await this.jwtService.verifyAsync(
         token,
         {
-        secret: jwtConstants.secret
+        secret: process.env.JWT_SECRET
         }
     );
     return roles.includes(payload?.role);

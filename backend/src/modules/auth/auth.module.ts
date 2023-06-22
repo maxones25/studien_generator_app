@@ -6,16 +6,22 @@ import { Director } from '../../entities/director.entity';
 import { Participant } from '../..//entities/participant.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
-import { jwtConstants } from './constants';
 import { StudyToDirector } from '../../entities/studyToDirector.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     TypeOrmModule.forFeature([Director, Participant, StudyToDirector]),
-    JwtModule.register({
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
       global: true,
-      secret: jwtConstants.secret,  // muss geändert werden !!!
-      signOptions: { expiresIn: '30d' },
+      useFactory: async (configService: ConfigService) => {
+        return {
+          secret: configService.get<string>('JWT_SECRET')
+        };
+      },
+      inject: [ConfigService]
     }),
   ],
   providers: [DirectorAuthService, ParticipantsAuthService],

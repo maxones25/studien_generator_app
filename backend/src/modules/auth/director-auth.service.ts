@@ -6,7 +6,6 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginDirectorDto } from './dtos/LoginDirectorDto';
 import * as bcrypt from 'bcrypt';
 import { SignupDirectors } from './dtos/SignupDirectorDto';
-import { activationPasswordConstant } from './constants';
 
 @Injectable()
 export class DirectorAuthService {
@@ -39,7 +38,7 @@ export class DirectorAuthService {
   }
 
   async create({email, firstName, lastName, password, activationPassword} : SignupDirectors) {
-    if (activationPassword != activationPasswordConstant.password) throw new UnauthorizedException(); //muss geändert werden!!
+    if (activationPassword != process.env.ACTIVATION_PASSWORD) throw new UnauthorizedException(); //muss geändert werden!!
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
