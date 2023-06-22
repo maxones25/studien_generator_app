@@ -4,13 +4,17 @@
     "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
     "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
     "name": "get all studies",
-    "url": "/studies",
+    "url": "/studies/all",
     "method": "GET",
     "sortNum": 20000,
     "created": "2023-06-20T08:59:55.030Z",
-    "modified": "2023-06-20T09:10:56.301Z",
+    "modified": "2023-06-22T11:14:34.565Z",
     "headers": [],
     "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiY2U1YjYwZTEtNGMwNC00OTMxLWI1MTQtMGYwZTM3YWFhNDBhIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NDMyNDY4fQ.qkR7Gbg4SqxM0TcHtSaleow6ajUkaT9-QPH7duE9SNM"
+    },
     "tests": []
   },
   {
@@ -44,6 +48,90 @@
     "modified": "2023-06-20T10:21:41.694Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "b807102a-10dd-4c71-9335-ef2d512495de",
+    "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+    "containerId": "5ea67d0a-b1d8-429b-a590-0de2d44b51cc",
+    "name": "create director",
+    "url": "/auth/directors/create",
+    "method": "POST",
+    "sortNum": 60000,
+    "created": "2023-06-22T10:53:56.723Z",
+    "modified": "2023-06-22T11:37:44.242Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{ \r\n    \"email\": \"test3\", \r\n    \"firstName\": \"kai\",\r\n    \"lastName\": \"mann\", \r\n    \"password\": \"12345678\", \r\n    \"activationPassword\": \"1234\"\r\n  }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "f4430d54-796a-4250-bb8e-9bf234f96bc3",
+    "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+    "containerId": "5ea67d0a-b1d8-429b-a590-0de2d44b51cc",
+    "name": "login director",
+    "url": "/auth/directors/login",
+    "method": "POST",
+    "sortNum": 70000,
+    "created": "2023-06-22T10:55:38.315Z",
+    "modified": "2023-06-22T11:43:57.364Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{      \"email\": \"test3\", \r\n      \"password\": \"12345678\" }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "fc077321-5cf4-4a4b-b990-57cc32132ee0",
+    "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+    "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
+    "name": "create study",
+    "url": "/studies/create",
+    "method": "POST",
+    "sortNum": 80000,
+    "created": "2023-06-22T11:04:50.195Z",
+    "modified": "2023-06-22T11:45:06.157Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{ \n  \"name\": \"test\", \n  \"directorId\": \"eb2f38a6-8115-4049-b25b-3a413fe05110\"\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiMDIzNzNiNTEtOGUzMy00OWY4LTgxODUtNjFiZjEyNWM0NjYzIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NDM0MjM3fQ.fiNvTQNRbirKi2re0fZwIk3zPN5QYwjMKg411Wr3By4"
+    },
+    "tests": []
+  },
+  {
+    "_id": "ba87931f-ee7e-4b07-905c-b038879bf9dc",
+    "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+    "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
+    "name": "add employee",
+    "url": "/studies/employee/add",
+    "method": "POST",
+    "sortNum": 90000,
+    "created": "2023-06-22T11:34:20.603Z",
+    "modified": "2023-06-22T11:39:04.897Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "    {\n      \"studyId\": \"5d812496-253e-4bf2-8f3e-7697bdf8dec7\",\n      \"employeeId\": \"5e607eb6-97da-4892-885a-99764f3cda69\"\n    }",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiZWIyZjM4YTYtODExNS00MDQ5LWIyNWItM2E0MTNmZTA1MTEwIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NDMzOTM2fQ.EO6xE0uAUriPtWy2CdMCvA8bCetYG6maIohVsPZeGAw"
+    },
     "tests": []
   }
 ]

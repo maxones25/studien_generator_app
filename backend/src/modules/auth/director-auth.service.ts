@@ -29,7 +29,7 @@ export class DirectorAuthService {
 
       const accessToken = await this.jwtService.signAsync({
           directorId: director.id,
-          role: 'director',
+          type: 'director',
       })
   
       return {
