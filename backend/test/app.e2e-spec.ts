@@ -74,7 +74,7 @@ describe('AppController (e2e)', () => {
       email: "test", 
       password: "12345678", 
     })
-    .expect(201).then((result) => console.log(result)))
+    .expect(201))
   });
 
   afterAll(async () => {
