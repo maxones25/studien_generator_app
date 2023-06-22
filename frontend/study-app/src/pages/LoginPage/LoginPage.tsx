@@ -15,7 +15,6 @@ const LoginPage: React.FC<LoginPageProps> = () => {
 
   return (
     <Page testId="login page">
-      <Text variant="h1">Login</Text>
       <LoginForm
         onSubmit={login.mutate}
         values={{ id: participantId, password }}
