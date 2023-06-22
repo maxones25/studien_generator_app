@@ -38,7 +38,7 @@ async canActivate(context: ExecutionContext): Promise<boolean> {
         secret: process.env.JWT_SECRET
         }
     );
-    request["body"]["directorId"] = payload.directorId;
+    request.body.directorId = payload.directorId;
     const studyToDirector = await this.studyToDirectorRepository.findOne({
         where: {
             studyId: request.body.studyId,

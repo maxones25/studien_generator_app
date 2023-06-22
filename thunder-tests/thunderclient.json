@@ -59,12 +59,12 @@
     "method": "POST",
     "sortNum": 60000,
     "created": "2023-06-22T10:53:56.723Z",
-    "modified": "2023-06-22T11:37:44.242Z",
+    "modified": "2023-06-22T14:52:18.519Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{ \r\n    \"email\": \"test3\", \r\n    \"firstName\": \"kai\",\r\n    \"lastName\": \"mann\", \r\n    \"password\": \"12345678\", \r\n    \"activationPassword\": \"1234\"\r\n  }",
+      "raw": "{ \n    \"email\": \"test\", \n    \"firstName\": \"kai\",\n    \"lastName\": \"mann\", \n    \"password\": \"12345678\", \n    \"activationPassword\": \"1234\"\n  }",
       "form": []
     },
     "tests": []
@@ -78,12 +78,12 @@
     "method": "POST",
     "sortNum": 70000,
     "created": "2023-06-22T10:55:38.315Z",
-    "modified": "2023-06-22T11:43:57.364Z",
+    "modified": "2023-06-22T23:34:49.519Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{      \"email\": \"test3\", \r\n      \"password\": \"12345678\" }",
+      "raw": "{      \"email\": \"test\", \n      \"password\": \"12345678\" }",
       "form": []
     },
     "tests": []
@@ -97,17 +97,17 @@
     "method": "POST",
     "sortNum": 80000,
     "created": "2023-06-22T11:04:50.195Z",
-    "modified": "2023-06-22T11:45:06.157Z",
+    "modified": "2023-06-22T23:35:11.129Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{ \n  \"name\": \"test\", \n  \"directorId\": \"eb2f38a6-8115-4049-b25b-3a413fe05110\"\n}",
+      "raw": "{ \n  \"name\": \"test\"\n}",
       "form": []
     },
     "auth": {
       "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiMDIzNzNiNTEtOGUzMy00OWY4LTgxODUtNjFiZjEyNWM0NjYzIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NDM0MjM3fQ.fiNvTQNRbirKi2re0fZwIk3zPN5QYwjMKg411Wr3By4"
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiZjgyOGZiZDAtYjJmYy00ZDdkLWFhZjMtYzZjOGI0NTc4YjEyIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NDc2ODg5fQ.7nuAmSemdtBJGfHs-zL1SZs4ZlsfqFuesea4_60ayH8"
     },
     "tests": []
   },
@@ -120,17 +120,17 @@
     "method": "POST",
     "sortNum": 90000,
     "created": "2023-06-22T11:34:20.603Z",
-    "modified": "2023-06-22T11:39:04.897Z",
+    "modified": "2023-06-22T14:53:05.626Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "    {\n      \"studyId\": \"5d812496-253e-4bf2-8f3e-7697bdf8dec7\",\n      \"employeeId\": \"5e607eb6-97da-4892-885a-99764f3cda69\"\n    }",
+      "raw": "    {\n      \"studyId\": \"af2e5ff5-8d57-419d-9a00-6a224d561a95\",\n      \"employeeId\": \"92afca51-343d-404d-b929-8b8e98b8ee0b\"\n    }",
       "form": []
     },
     "auth": {
       "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiZWIyZjM4YTYtODExNS00MDQ5LWIyNWItM2E0MTNmZTA1MTEwIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NDMzOTM2fQ.EO6xE0uAUriPtWy2CdMCvA8bCetYG6maIohVsPZeGAw"
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiM2EzNTE1MTYtZWY2ZS00OGMyLThlY2UtNzgwMTcwMzkyYWMyIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NDQ1NTA4fQ.bCdBwi8-zl2To0eCkuhF_fdUWvPx5S0p-zS9NeiXRU4"
     },
     "tests": []
   }
