@@ -1,6 +1,6 @@
 import { LoginForm } from "@modules/auth/components";
 import { useLogin } from "@modules/auth/hooks";
-import { Page, Text } from "@modules/core/components";
+import { Page } from "@modules/core/components";
 import { useQueryParams } from "@modules/core/hooks";
 import React from "react";
 

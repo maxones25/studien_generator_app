@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Start containers
-        run: docker-compose -f "prod-docker-compose.yaml" up -d --build
+        run: docker-compose -f "test-docker-compose.yaml" up -d --build
       
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
