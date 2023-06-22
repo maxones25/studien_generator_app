@@ -1,4 +1,4 @@
-name: "[App] Run End-To-End Tests"
+name: "[App] Integrate Code"
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-deploy-app:
-    name: Deploy to Beta Server
+    name: Run End-to-End Tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -32,6 +32,7 @@ jobs:
         docker-compose -f test-docker-compose.yaml up -d
 
     - name: Use Node.js 18.x
+      working-directory: ./tests
       uses: actions/setup-node@v2
       with:
         node-version: '18'
