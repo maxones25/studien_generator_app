@@ -29,8 +29,8 @@ export class StudiesService {
     return study;
   }
 
-  findAll(): Promise<Study[]> {
-    return this.studiesRepository.find();
+  getByDirector(directorId: string): Promise<Study[]> {
+    return this.studiesRepository.find({ where: { members: { directorId } } });
   }
 
   findOne(id: string): Promise<Study | null> {
@@ -45,10 +45,7 @@ export class StudiesService {
     await this.studiesRepository.delete(studyId);
   }
 
-  async addMember(
-    studyId: string,
-    { directorId, role }: AddOrRemoveDirector,
-  ) {
+  async addMember(studyId: string, { directorId, role }: AddOrRemoveDirector) {
     return await this.studyMemberRepository.insert({
       directorId,
       studyId: studyId,
@@ -86,8 +83,8 @@ export class StudiesService {
       where: {
         directorId,
         studyId,
-      }
-    })
+      },
+    });
     if (member.role === 'admin') {
       const adminMembers = await this.studyMemberRepository.find({
         where: {
@@ -95,8 +92,8 @@ export class StudiesService {
           role: Roles.admin,
         },
       });
-      if (adminMembers.length === 1) 
-        throw new ConflictException('can not delete/change last admin');;
+      if (adminMembers.length === 1)
+        throw new ConflictException('can not delete/change last admin');
     }
     return true;
   }
