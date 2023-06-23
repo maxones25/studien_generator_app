@@ -1,7 +1,7 @@
 import { IsString, IsNotEmpty } from "class-validator";
 import { Roles } from "src/enums/roles.enum";
 
-export class AddOrRemoveDirector{
+export class AddMemberDto{
     @IsString()
     @IsNotEmpty()
     readonly directorId: string;
