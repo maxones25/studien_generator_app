@@ -39,9 +39,7 @@ export class RolesGuard implements CanActivate {
 
       const { directorId } = payload;
 
-      console.log(payload)
       const director = await this.studyMemberRepository.findOne({ where: { directorId } });
-
 
       if(!director) throw new UnauthorizedException();
 
