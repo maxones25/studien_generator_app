@@ -6,16 +6,23 @@ import { Study } from '../../entities/study.entity';
 import { StudyMember } from '../../entities/study-member';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { Group, Participant } from '@entities';
+import { GroupsController } from './groups.controller';
+import { ParticipantsController } from './participants.controller';
+import { GroupsService } from './groups.service';
+import { ParticipantsService } from './participants.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Study, StudyMember])],
+  imports: [TypeOrmModule.forFeature([Study, StudyMember, Group, Participant])],
   providers: [
     StudiesService,
+    GroupsService,
+    ParticipantsService,
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
   ],
-  controllers: [StudiesController],
+  controllers: [StudiesController, GroupsController, ParticipantsController],
 })
 export class StudiesModule {}
