@@ -1,26 +1,26 @@
 import {
-    CanActivate,
-    ExecutionContext,
-    Injectable,
-    UnauthorizedException,
-  } from '@nestjs/common';
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { StudyToDirector } from '../../entities/studyToDirector.entity';
-  
+import { StudyMember } from '../../entities/study-member';
+
 @Injectable()
 export class RolesGuard implements CanActivate {
-constructor(
-    @InjectRepository(StudyToDirector)
-    private studyToDirectorRepository: Repository<StudyToDirector>,
+  constructor(
+    @InjectRepository(StudyMember)
+    private studyMemberRepository: Repository<StudyMember>,
     private jwtService: JwtService,
-    private reflector: Reflector
-    ) {}
+    private reflector: Reflector,
+  ) {}
 
-async canActivate(context: ExecutionContext): Promise<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
     if (!roles) {
       return true;
@@ -29,30 +29,34 @@ async canActivate(context: ExecutionContext): Promise<boolean> {
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
-    throw new UnauthorizedException();
+      throw new UnauthorizedException();
     }
-    try {
-    const payload = await this.jwtService.verifyAsync(
-        token,
-        {
-        secret: process.env.JWT_SECRET
-        }
-    );
-    request.body.directorId = payload.directorId;
-    const studyToDirector = await this.studyToDirectorRepository.findOne({
-        where: {
-            studyId: request.body.studyId,
-            directorId: payload.directorId,
-        }
-    })
-    return roles.includes(studyToDirector.role);
-    } catch {
-    throw new UnauthorizedException();
-    }
-}
 
-private extractTokenFromHeader(request: Request): string | undefined {
+    try {
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: process.env.JWT_SECRET,
+      });
+
+      const { directorId } = payload;
+
+      console.log(payload)
+      const director = await this.studyMemberRepository.findOne({ where: { directorId } });
+
+
+      if(!director) throw new UnauthorizedException();
+
+      if (!roles.includes(director.role)) throw new UnauthorizedException();
+
+      request.payload = payload;
+
+      return true;
+    } catch {
+      throw new UnauthorizedException();
+    }
+  }
+
+  private extractTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
-}
+  }
 }

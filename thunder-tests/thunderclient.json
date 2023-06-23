@@ -4,16 +4,16 @@
     "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
     "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
     "name": "get all studies",
-    "url": "/studies/all",
+    "url": "/studies",
     "method": "GET",
     "sortNum": 20000,
     "created": "2023-06-20T08:59:55.030Z",
-    "modified": "2023-06-22T11:14:34.565Z",
+    "modified": "2023-06-23T08:53:42.551Z",
     "headers": [],
     "params": [],
     "auth": {
       "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiY2U1YjYwZTEtNGMwNC00OTMxLWI1MTQtMGYwZTM3YWFhNDBhIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NDMyNDY4fQ.qkR7Gbg4SqxM0TcHtSaleow6ajUkaT9-QPH7duE9SNM"
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiMDYwMTU0ZGUtMGQ2Zi00OTBlLTgzM2ItNDQ0ZTFlOTgzZTZkIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NTEwNDEzfQ.kAXnuH3jj93PSsUcsE0ahs_BOGE7NnZ9mgP5E2SRVj8"
     },
     "tests": []
   },
@@ -37,35 +37,24 @@
     "tests": []
   },
   {
-    "_id": "186e9e24-0e11-46fe-9f59-89bfa1ad6e97",
-    "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
-    "containerId": "5ea67d0a-b1d8-429b-a590-0de2d44b51cc",
-    "name": "create participant",
-    "url": "/auth/participants/create",
-    "method": "POST",
-    "sortNum": 50000,
-    "created": "2023-06-20T10:21:27.091Z",
-    "modified": "2023-06-20T10:21:41.694Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
     "_id": "b807102a-10dd-4c71-9335-ef2d512495de",
     "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
     "containerId": "5ea67d0a-b1d8-429b-a590-0de2d44b51cc",
     "name": "create director",
     "url": "/auth/directors/create",
     "method": "POST",
-    "sortNum": 60000,
+    "sortNum": 20000,
     "created": "2023-06-22T10:53:56.723Z",
-    "modified": "2023-06-22T14:52:18.519Z",
+    "modified": "2023-06-23T09:11:54.418Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{ \n    \"email\": \"test\", \n    \"firstName\": \"kai\",\n    \"lastName\": \"mann\", \n    \"password\": \"12345678\", \n    \"activationPassword\": \"1234\"\n  }",
+      "raw": "{ \n    \"email\": \"test123\", \n    \"firstName\": \"max\",\n    \"lastName\": \"mann\", \n    \"password\": \"12345678\", \n    \"activationPassword\": \"1234\"\n  }",
       "form": []
+    },
+    "auth": {
+      "type": "none"
     },
     "tests": []
   },
@@ -76,9 +65,9 @@
     "name": "login director",
     "url": "/auth/directors/login",
     "method": "POST",
-    "sortNum": 70000,
+    "sortNum": 30000,
     "created": "2023-06-22T10:55:38.315Z",
-    "modified": "2023-06-22T23:34:49.519Z",
+    "modified": "2023-06-23T08:59:49.742Z",
     "headers": [],
     "params": [],
     "body": {
@@ -93,11 +82,11 @@
     "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
     "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
     "name": "create study",
-    "url": "/studies/create",
+    "url": "/studies",
     "method": "POST",
     "sortNum": 80000,
     "created": "2023-06-22T11:04:50.195Z",
-    "modified": "2023-06-22T23:35:11.129Z",
+    "modified": "2023-06-23T09:01:41.933Z",
     "headers": [],
     "params": [],
     "body": {

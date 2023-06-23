@@ -1,15 +1,8 @@
-import { IsString, IsNotEmpty } from "class-validator";
+import { IsString, IsNotEmpty } from 'class-validator';
+import { Roles } from 'src/enums/roles.enum';
 
-export class TransferAdminDto{
-    @IsString()
-    @IsNotEmpty()
-    readonly studyId: string;
-
-    @IsString()
-    @IsNotEmpty()
-    readonly oldAdminId: string;
-    
-    @IsString()
-    @IsNotEmpty()
-    readonly newAdminId: string;
+export class TransferAdminDto {
+  @IsString()
+  @IsNotEmpty()
+  readonly role: Roles;
 }

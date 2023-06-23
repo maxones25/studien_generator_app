@@ -1,11 +1,12 @@
 import { IsString, IsNotEmpty } from "class-validator";
+import { Roles } from "src/enums/roles.enum";
 
 export class AddOrRemoveDirector{
     @IsString()
     @IsNotEmpty()
-    readonly studyId: string;
-    
+    readonly directorId: string;
+
     @IsString()
     @IsNotEmpty()
-    readonly employeeId: string;
+    readonly role: Roles;
 }

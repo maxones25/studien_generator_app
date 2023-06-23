@@ -6,22 +6,22 @@ import { Director } from '../../entities/director.entity';
 import { Participant } from '../..//entities/participant.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
-import { StudyToDirector } from '../../entities/studyToDirector.entity';
+import { StudyMember } from '../../entities/study-member';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([Director, Participant, StudyToDirector]),
+    TypeOrmModule.forFeature([Director, Participant, StudyMember]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       global: true,
       useFactory: async (configService: ConfigService) => {
         return {
-          secret: configService.get<string>('JWT_SECRET')
+          secret: configService.get<string>('JWT_SECRET'),
         };
       },
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
   ],
   providers: [DirectorAuthService, ParticipantsAuthService],

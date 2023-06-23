@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Group } from './group.entity';
 
 @Entity()
 export class Participant {
@@ -7,4 +8,9 @@ export class Participant {
 
   @Column()
   password: string;
+
+  @ManyToOne(() => Group, (group) => group.participants, {
+    onDelete: "CASCADE"
+  })
+  group: Group;
 }

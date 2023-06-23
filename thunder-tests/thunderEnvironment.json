@@ -10,6 +10,10 @@
       {
         "name": "BASE_URI",
         "value": "http://localhost:8000"
+      },
+      {
+        "name": "DIRECTOR_ACCESS_TOKEN",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiMDYwMTU0ZGUtMGQ2Zi00OTBlLTgzM2ItNDQ0ZTFlOTgzZTZkIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NTEwNDEzfQ.kAXnuH3jj93PSsUcsE0ahs_BOGE7NnZ9mgP5E2SRVj8"
       }
     ]
   }

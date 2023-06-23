@@ -8,7 +8,7 @@
       {
         "_id": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
         "name": "Studies",
-        "containerId": "",
+        "containerId": "9b159183-ed44-4029-9f49-8849a3b138ec",
         "created": "2023-06-20T08:59:45.845Z",
         "sortNum": 10000
       },
@@ -18,9 +18,26 @@
         "containerId": "",
         "created": "2023-06-20T10:01:06.422Z",
         "sortNum": 5000
+      },
+      {
+        "_id": "9b159183-ed44-4029-9f49-8849a3b138ec",
+        "name": "Admin",
+        "containerId": "",
+        "created": "2023-06-23T09:00:46.396Z",
+        "sortNum": 20000,
+        "settings": {
+          "auth": {
+            "type": "bearer",
+            "bearer": "{{DIRECTOR_ACCESS_TOKEN}}"
+          }
+        }
       }
     ],
     "settings": {
+      "auth": {
+        "type": "bearer",
+        "bearer": "{{ACCESS_TOKEN}}"
+      },
       "options": {
         "baseUrl": "{{BASE_URI}}"
       }

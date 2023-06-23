@@ -7,8 +7,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { Director } from './entities/director.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
-import { StudyToDirector } from './entities/studyToDirector.entity';
+import { StudyMember } from './entities/study-member';
 import { TypesGuard } from './modules/auth/types.guard';
+import { Group } from './entities/group.entity';
 
 @Module({
   imports: [
@@ -20,8 +21,9 @@ import { TypesGuard } from './modules/auth/types.guard';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Study, Participant, Director, StudyToDirector],
+      entities: [Director, Study, StudyMember, Group, Participant],
       synchronize: true,
+      logging: true,
     }),
     AuthModule,
     StudiesModule,
@@ -30,7 +32,7 @@ import { TypesGuard } from './modules/auth/types.guard';
     {
       provide: APP_GUARD,
       useClass: TypesGuard,
-    }, 
+    },
   ],
 })
 export class AppModule {}

@@ -3,8 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Study } from '../../entities/study.entity';
 import { Repository } from 'typeorm';
 import { CreateStudyDto } from './dtos/createStudyDto';
-import { StudyToDirector } from '../../entities/studyToDirector.entity';
-import { DeleteStudyDto } from './dtos/deleteStudyDto';
+import { StudyMember } from '../../entities/study-member';
 import { AddOrRemoveDirector } from './dtos/addOrRemoveDirector';
 import { TransferAdminDto } from './dtos/transferAdminDto';
 import { Roles } from '../../enums/roles.enum';
@@ -14,15 +13,19 @@ export class StudiesService {
   constructor(
     @InjectRepository(Study)
     private studiesRepository: Repository<Study>,
-    @InjectRepository(StudyToDirector)
-    private studyToDirectorRepository: Repository<StudyToDirector>,
+    @InjectRepository(StudyMember)
+    private studyMemberRepository: Repository<StudyMember>,
   ) {}
 
-  async create({name, directorId}: CreateStudyDto) {
-    const study = new Study();
-    study.name = name;
-    await this.studiesRepository.insert(study);
-    return await this.studyToDirectorRepository.insert({ directorId: directorId, studyId: study.id, role: Roles.admin });
+  async create({ name, directorId }: CreateStudyDto) {
+    const study = await this.studiesRepository.create({ name });
+    console.log(study)
+    await this.studyMemberRepository.insert({
+      directorId: directorId,
+      studyId: study.id,
+      role: Roles.admin,
+    });
+    return study;
   }
 
   findAll(): Promise<Study[]> {
@@ -30,27 +33,69 @@ export class StudiesService {
   }
 
   findOne(id: string): Promise<Study | null> {
-    return this.studiesRepository.findOne( {  
+    return this.studiesRepository.findOne({
       where: {
-      id,
-  }});
+        id,
+      },
+    });
   }
 
-  async delete({id}: DeleteStudyDto): Promise<void> {
-    await this.studiesRepository.delete(id);
+  async delete(studyId: string): Promise<void> {
+    await this.studiesRepository.delete(studyId);
   }
 
-  async addEmployee({studyId, employeeId}: AddOrRemoveDirector) {
-    return await this.studyToDirectorRepository.insert({ directorId: employeeId, studyId: studyId, role: Roles.employee });
+  async addEmployee(
+    studyId: string,
+    { directorId, role }: AddOrRemoveDirector,
+  ) {
+    return await this.studyMemberRepository.insert({
+      directorId,
+      studyId: studyId,
+      role,
+    });
   }
 
-  async removeEmployee({studyId, employeeId}: AddOrRemoveDirector) {
-    await this.studyToDirectorRepository.delete({ directorId: employeeId, studyId: studyId, role: Roles.employee });
+  async updateEmployee(
+    studyId: string,
+    directorId: string,
+    { role }: TransferAdminDto,
+  ) {
+    await this.studyMemberRepository.update(
+      {
+        studyId,
+        directorId,
+      },
+      {
+        role,
+      },
+    );
   }
 
-  async transferAdmin({studyId, oldAdminId, newAdminId}: TransferAdminDto) {
-    await this.removeEmployee({studyId, employeeId: newAdminId});
-    await this.studyToDirectorRepository.delete({ directorId: oldAdminId, studyId: studyId, role: Roles.employee });
-    return await this.studyToDirectorRepository.insert({ directorId: newAdminId, studyId: studyId, role: Roles.admin });
+  async removeEmployee(studyId: string, directorId: string) {
+    const adminMembers = await this.studyMemberRepository.find({
+      where: {
+        studyId,
+        role: Roles.admin,
+      },
+    });
+    if (adminMembers.length === 1)
+      await this.studyMemberRepository.delete({
+        directorId,
+        studyId: studyId,
+      });
   }
+
+  // async transferAdmin({ studyId, oldAdminId, newAdminId }: TransferAdminDto) {
+  //   await this.removeEmployee({ studyId, employeeId: newAdminId });
+  //   await this.studyMemberRepository.delete({
+  //     directorId: oldAdminId,
+  //     studyId: studyId,
+  //     role: Roles.employee,
+  //   });
+  //   return await this.studyMemberRepository.insert({
+  //     directorId: newAdminId,
+  //     studyId: studyId,
+  //     role: Roles.admin,
+  //   });
+  // }
 }
