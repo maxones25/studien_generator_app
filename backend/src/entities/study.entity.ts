@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { StudyMember } from './study-member';
 import { Group } from './group.entity';
+import { Participant } from './participant.entity';
 
 @Entity()
 export class Study {
@@ -13,6 +14,9 @@ export class Study {
   @OneToMany(() => Group, (group) => group.study)
   public groups: Group[];
 
-  @OneToMany(() => StudyMember, (StudyMember) => StudyMember.study)
-  public StudyMember: StudyMember[];
+  @OneToMany(() => StudyMember, (studyMember) => studyMember.study)
+  public members: StudyMember[];
+
+  @OneToMany(() => Participant, (participant) => participant.study)
+  public participants: Participant[];
 }

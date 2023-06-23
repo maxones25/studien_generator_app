@@ -18,9 +18,9 @@ export class Director {
   @Column()
   password: string;
 
-  @OneToMany(() => StudyMember, (StudyMember) => StudyMember.director, {
+  @OneToMany(() => StudyMember, (studyMember) => studyMember.director, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  public StudyMember: StudyMember[];
+  public studies: StudyMember[];
 }

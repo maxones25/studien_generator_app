@@ -13,12 +13,12 @@ export class StudyMember {
   @Column()
   public role: string;
 
-  @ManyToOne(() => Study, (study) => study.StudyMember, {
+  @ManyToOne(() => Study, (study) => study.members, {
     onDelete: 'CASCADE',
   })
   public study: Study;
 
-  @ManyToOne(() => Director, (director) => director.StudyMember, {
+  @ManyToOne(() => Director, (director) => director.id, {
     onDelete: 'CASCADE',
   })
   public director: Director;
