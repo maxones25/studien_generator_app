@@ -4,7 +4,7 @@ import { Study } from '../../entities/study.entity';
 import { Repository } from 'typeorm';
 import { CreateStudyDto } from './dtos/createStudyDto';
 import { StudyMember } from '../../entities/study-member';
-import { AddOrRemoveDirector } from './dtos/addOrRemoveDirector';
+import { AddMemberDto } from './dtos/addMemberDto';
 import { UpdateMemberDto } from './dtos/updateMemberDto';
 import { Roles } from '../../enums/roles.enum';
 
@@ -45,7 +45,7 @@ export class StudiesService {
     await this.studiesRepository.delete(studyId);
   }
 
-  async addMember(studyId: string, { directorId, role }: AddOrRemoveDirector) {
+  async addMember(studyId: string, { directorId, role }: AddMemberDto) {
     return await this.studyMemberRepository.insert({
       directorId,
       studyId: studyId,

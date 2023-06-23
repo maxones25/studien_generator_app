@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Director } from 'src/entities/director.entity';
+import { Director } from '../../entities/director.entity';
 import { Repository } from 'typeorm';
-
 @Injectable()
 export class DirectorsService {
     constructor(
@@ -12,5 +11,16 @@ export class DirectorsService {
 
     findAll(): Promise<Director[]> {
         return this.directosRepository.find();
+    }
+
+    async delete(directorId: string): Promise<void> {
+        await this.directosRepository.delete(directorId);
+    }
+
+    async update(
+        directorId: string,
+        updatedDirector: Partial<Director>,
+    ) {
+        await this.directosRepository.update(directorId, updatedDirector);
     }
 }

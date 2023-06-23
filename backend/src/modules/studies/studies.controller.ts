@@ -11,7 +11,7 @@ import { StudiesService } from './studies.service';
 import { Roles } from '../../decorators/roles.decorator';
 import { DirectorId } from '../../decorators/director-id.decorator';
 import { CreateStudyDto } from './dtos/createStudyDto';
-import { AddOrRemoveDirector } from './dtos/addOrRemoveDirector';
+import { AddMemberDto } from './dtos/addMemberDto';
 import { UpdateMemberDto } from './dtos/updateMemberDto';
 import { Types } from '../../decorators/type.decorator';
 
@@ -46,9 +46,9 @@ export class StudiesController {
   @Post(':studyId/members')
   async addMember(
     @Param('studyId') studyId: string,
-    @Body() addOrRemoveDirector: AddOrRemoveDirector,
+    @Body() addMemberDto: AddMemberDto,
   ) {
-    return this.studiesService.addMember(studyId, addOrRemoveDirector);
+    return this.studiesService.addMember(studyId, addMemberDto);
   }
 
   @Types('director')
