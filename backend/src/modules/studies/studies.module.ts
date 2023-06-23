@@ -7,10 +7,10 @@ import { StudyMember } from '../../entities/study-member';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Group, Participant } from '@entities';
-import { GroupsController } from './groups.controller';
-import { ParticipantsController } from './participants.controller';
-import { GroupsService } from './groups.service';
-import { ParticipantsService } from './participants.service';
+import { GroupsController } from './groups/groups.controller';
+import { ParticipantsController } from './participants/participants.controller';
+import { GroupsService } from './groups/groups.service';
+import { ParticipantsService } from './participants/participants.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Study, StudyMember, Group, Participant])],

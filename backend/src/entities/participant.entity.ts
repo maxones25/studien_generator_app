@@ -15,6 +15,9 @@ export class Participant {
   password: string;
 
   @Column()
+  groupId: string;
+
+  @Column()
   studyId: string;
 
   @ManyToOne(() => Study, (study) => study.participants, {
