@@ -4,12 +4,11 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Director } from '../../entities/director.entity';
+import { Director } from '@entities';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
-import { LoginDirectorDto } from './dtos/LoginDirectorDto';
-import * as bcrypt from 'bcrypt';
-import { SignupDirectors } from './dtos/SignupDirectorDto';
+import { LoginDirectorDto, SignupDirectors } from '@modules/auth/dtos';
+import { PasswordService } from '@modules/auth/services';
 
 @Injectable()
 export class DirectorAuthService {
@@ -17,6 +16,7 @@ export class DirectorAuthService {
     @InjectRepository(Director)
     private directorsRepository: Repository<Director>,
     private jwtService: JwtService,
+    private passwordService: PasswordService,
   ) {}
 
   async checkCredentials({ email, password }: LoginDirectorDto) {
@@ -28,7 +28,7 @@ export class DirectorAuthService {
 
     if (!director) throw new UnauthorizedException();
 
-    if (!(await bcrypt.compare(password, director.password)))
+    if (!(await this.passwordService.compare(password, director.password)))
       throw new UnauthorizedException();
 
     const accessToken = await this.jwtService.signAsync({
@@ -51,7 +51,7 @@ export class DirectorAuthService {
     if (activationPassword != process.env.ACTIVATION_PASSWORD)
       throw new UnauthorizedException();
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await this.passwordService.hash(password, 10);
 
     try {
       const { identifiers } = await this.directorsRepository.insert({

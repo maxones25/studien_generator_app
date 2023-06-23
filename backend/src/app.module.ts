@@ -1,15 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Study } from './entities/study.entity';
-import { StudiesModule } from './modules/studies/studies.module';
-import { Participant } from './entities/participant.entity';
-import { AuthModule } from './modules/auth/auth.module';
-import { Director } from './entities/director.entity';
+import { AuthModule, StudiesModule } from '@modules';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
-import { StudyMember } from './entities/study-member';
-import { TypesGuard } from './modules/auth/types.guard';
-import { Group } from './entities/group.entity';
+import { TypesGuard } from '@modules/auth/guards';
+import { StudyMember, Director, Group, Participant, Study } from '@entities';
 
 @Module({
   imports: [

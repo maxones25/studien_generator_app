@@ -1,11 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Participant } from '../../entities/participant.entity';
-import { Repository } from 'typeorm';
-import { LoginParticipantDto } from './dtos/LoginParticipantDto';
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
 import { generate } from 'generate-password';
+import { JwtService } from '@nestjs/jwt';
+import { Repository } from 'typeorm';
+import { Participant } from '@entities';
+import { LoginParticipantDto } from '@modules/auth/dtos';
+import { PasswordService } from './password.service';
 
 @Injectable()
 export class ParticipantsAuthService {
@@ -13,6 +13,7 @@ export class ParticipantsAuthService {
     @InjectRepository(Participant)
     private particpantsRepository: Repository<Participant>,
     private jwtService: JwtService,
+    private passwordService: PasswordService,
   ) {}
 
   async checkCredentials({ id, password }: LoginParticipantDto) {
@@ -24,7 +25,7 @@ export class ParticipantsAuthService {
 
     if (!participant) throw new UnauthorizedException();
 
-    if (await bcrypt.compare(password, participant.password))
+    if (await this.passwordService.compare(password, participant.password))
       throw new UnauthorizedException();
 
     const accessToken = await this.jwtService.signAsync({
@@ -49,7 +50,7 @@ export class ParticipantsAuthService {
     });
 
     // vorerst deaktiviert, muss besprochen werden
-    // const hashedPassword = bcrypt.hashSync(password, 10);
+    // const hashedPassword = await this.passwordService.hash(password, 10);
 
     return await this.particpantsRepository.insert({
       // password: hashedPassword,

@@ -1,9 +1,13 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ParticipantsAuthService } from './participant-auth.service';
-import { LoginParticipantDto } from './dtos/LoginParticipantDto';
-import { DirectorAuthService } from './director-auth.service';
-import { LoginDirectorDto } from './dtos/LoginDirectorDto';
-import { SignupDirectors } from './dtos/SignupDirectorDto';
+import {
+  ParticipantsAuthService,
+  DirectorAuthService,
+} from '@modules/auth/services';
+import {
+  LoginParticipantDto,
+  LoginDirectorDto,
+  SignupDirectors,
+} from '@modules/auth/dtos';
 
 @Controller('auth')
 export class AuthController {
@@ -28,7 +32,7 @@ export class AuthController {
   }
 
   @Post('directors/create')
-  async addDirector(@Body() signupDirectors: SignupDirectors ) {
+  async addDirector(@Body() signupDirectors: SignupDirectors) {
     return this.directorAuthService.create(signupDirectors);
   }
 }
