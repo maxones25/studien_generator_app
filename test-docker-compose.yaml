@@ -9,11 +9,24 @@ services:
       ]
     volumes:
       - ./mysql/data:/var/lib/mysql
+      - ./mysql/schema.sql:/docker-entrypoint-initdb.d/0-schema.sql
+      - ./mysql/seed/test-seed.sql:/docker-entrypoint-initdb.d/1-seed.sql
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=studien_generator_app
     ports:
       - 3306:3306
+    networks:
+      - study-app-network
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=root
     networks:
       - study-app-network
   api:
