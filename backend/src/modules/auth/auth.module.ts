@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
-import { DirectorAuthService } from './director-auth.service';
-import { ParticipantsAuthService } from './participant-auth.service';
 import { JwtModule } from '@nestjs/jwt';
-import { Director } from '../../entities/director.entity';
-import { Participant } from '../..//entities/participant.entity';
+import { Director, Participant, StudyMember } from '@entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
-import { StudyMember } from '../../entities/study-member';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import {
+  PasswordService,
+  DirectorAuthService,
+  ParticipantsAuthService,
+} from '@modules/auth/services';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
     }),
   ],
-  providers: [DirectorAuthService, ParticipantsAuthService],
+  providers: [PasswordService, DirectorAuthService, ParticipantsAuthService],
   controllers: [AuthController],
 })
 export class AuthModule {}
