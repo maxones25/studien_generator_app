@@ -26,8 +26,9 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     const request = context.switchToHttp().getRequest();
+    const studyId = request.params.studyId;
     const token = this.extractTokenFromHeader(request);
-
+    
     if (!token) {
       throw new UnauthorizedException();
     }
@@ -39,7 +40,7 @@ export class RolesGuard implements CanActivate {
 
       const { directorId } = payload;
 
-      const director = await this.studyMemberRepository.findOne({ where: { directorId } });
+      const director = await this.studyMemberRepository.findOne({ where: { directorId, studyId } });
 
       if(!director) throw new UnauthorizedException();
 
