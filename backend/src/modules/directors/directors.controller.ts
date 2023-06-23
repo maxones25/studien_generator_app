@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Put, Request } from '@nestjs/common';
 import { DirectorsService } from './directors.service';
 import { Types } from '../../decorators/type.decorator';
 import { Director } from '../../entities/director.entity';
+import { DirectorId } from '../../decorators/director-id.decorator';
 
 @Controller('directors')
 export class DirectorsController {
@@ -15,17 +16,17 @@ export class DirectorsController {
 
     @Types('director')
     @Delete()
-    async delete(@Request() req) {
-        return this.directorsService.delete(req.payload.directorId);
+    async delete(@DirectorId() directorId: string) {
+        return this.directorsService.delete(directorId);
     }
 
     @Types('director')
     @Put()
     async update(
-        @Request() req,
+        @DirectorId() directorId: string,
         @Body()updatedDirector: Partial<Director>,
         ) {
-        return this.directorsService.update(req.payload.directorId, updatedDirector)
+        return this.directorsService.update(directorId, updatedDirector)
     }
 }
 
