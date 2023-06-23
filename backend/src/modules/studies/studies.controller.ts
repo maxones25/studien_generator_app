@@ -12,7 +12,7 @@ import { StudiesService } from './studies.service';
 import { Roles } from '../../decorators/roles.decorator';
 import { CreateStudyDto } from './dtos/createStudyDto';
 import { AddOrRemoveDirector } from './dtos/addOrRemoveDirector';
-import { TransferAdminDto } from './dtos/transferAdminDto';
+import { UpdateEmployeeDto } from './dtos/updateEmployeeDto';
 import { Types } from '../../decorators/type.decorator';
 
 @Controller('studies')
@@ -27,8 +27,11 @@ export class StudiesController {
 
   @Types('director')
   @Post()
-  async create(@Body() createStudyDto: CreateStudyDto) {
-    return this.studiesService.create(createStudyDto);
+  async create(
+    @Body() createStudyDto: CreateStudyDto,
+    @Request() req,
+    ) {
+    return this.studiesService.create(createStudyDto, req.payload.directorId);
   }
 
   @Types('director')
@@ -54,12 +57,12 @@ export class StudiesController {
   async transferAdmin(
     @Param('studyId') studyId: string,
     @Param('directorId') directorId: string,
-    @Body() transferAdminDto: TransferAdminDto,
+    @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
     return this.studiesService.updateEmployee(
       studyId,
       directorId,
-      transferAdminDto,
+      updateEmployeeDto,
     );
   }
 

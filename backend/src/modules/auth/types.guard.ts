@@ -32,7 +32,7 @@ async canActivate(context: ExecutionContext): Promise<boolean> {
         secret: process.env.JWT_SECRET
         }
     );
-    request.body.directorId = payload.directorId;
+    request.payload = payload;
     return types.includes(payload?.type);
     } catch {
     throw new UnauthorizedException();

@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateStudyDto } from './dtos/createStudyDto';
 import { StudyMember } from '../../entities/study-member';
 import { AddOrRemoveDirector } from './dtos/addOrRemoveDirector';
-import { TransferAdminDto } from './dtos/transferAdminDto';
+import { UpdateEmployeeDto } from './dtos/updateEmployeeDto';
 import { Roles } from '../../enums/roles.enum';
 
 @Injectable()
@@ -17,9 +17,10 @@ export class StudiesService {
     private studyMemberRepository: Repository<StudyMember>,
   ) {}
 
-  async create({ name, directorId }: CreateStudyDto) {
-    const study = await this.studiesRepository.create({ name });
-    console.log(study)
+  async create({ name }: CreateStudyDto, directorId: string) {
+    const study = new Study();
+    study.name = name;
+    await this.studiesRepository.insert(study);
     await this.studyMemberRepository.insert({
       directorId: directorId,
       studyId: study.id,
@@ -58,7 +59,7 @@ export class StudiesService {
   async updateEmployee(
     studyId: string,
     directorId: string,
-    { role }: TransferAdminDto,
+    { role }: UpdateEmployeeDto,
   ) {
     await this.studyMemberRepository.update(
       {
