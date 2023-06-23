@@ -1,81 +1,59 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../../src/app.module';
+import { AppModule } from '../../src/app.module';
+import fakeData from '../fakeData';
+import { createDirector, getDirectorAccessToken } from '../utils';
+import { ValidationPipe } from '@nestjs/common';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
+  let directorId: any;
+  let accessToken: string;
+
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.useGlobalPipes(new ValidationPipe());
     await app.init();
+
+    const director = fakeData.director();
+
+    directorId = await createDirector(app, {
+      ...director,
+      activationPassword: process.env.ACTIVATION_PASSWORD,
+    });
+
+    accessToken = await getDirectorAccessToken(
+      app,
+      director.email,
+      director.password,
+    );
   });
 
-  beforeEach(async () => {
-    await clearDatabase(app);
-  });
-
-  it('/POST create new director', () => {
+  it('/POST create study successfully', () => {
+    const study = fakeData.study();
     return request(app.getHttpServer())
-      .post('/auth/directors/create')
-      .send({
-        email: 'test',
-        firstName: 'kai',
-        lastName: 'mann',
-        password: '12345678',
-        activationPassword: '1234',
-      })
-      .expect(201);
-  });
-
-  it('/POST create same director twice', () => {
-    return request(app.getHttpServer())
-      .post('/auth/directors/create')
-      .send({
-        email: 'test',
-        firstName: 'kai',
-        lastName: 'mann',
-        password: '12345678',
-        activationPassword: '1234',
-      })
+      .post('/studies')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(study)
       .expect(201)
-      .then(() =>
-        request(app.getHttpServer())
-          .post('/auth/directors/create')
-          .send({
-            email: 'test',
-            firstName: 'kai',
-            lastName: 'mann',
-            password: '12345678',
-            activationPassword: '1234',
-          })
-          .expect(500),
-      );
+      .then((res) => {
+        expect(typeof res.body.id).toBe('string');
+      });
   });
 
-  it('/POST login director', () => {
+  it('/POST create study with no data', () => {
     return request(app.getHttpServer())
-      .post('/auth/directors/create')
+      .post('/studies')
+      .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        email: 'test',
-        firstName: 'kai',
-        lastName: 'mann',
-        password: '12345678',
-        activationPassword: '1234',
+        name: ""
       })
-      .expect(201)
-      .then(() =>
-        request(app.getHttpServer())
-          .post('/auth/directors/login')
-          .send({
-            email: 'test',
-            password: '12345678',
-          })
-          .expect(201),
-      );
+      .expect(400);
   });
 
   afterAll(async () => {

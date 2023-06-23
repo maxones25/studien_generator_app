@@ -1,10 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { generate } from 'generate-password';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
-import { Participant } from '@entities';
-import { LoginParticipantDto } from '@modules/auth/dtos';
+import { Participant } from '../../../entities/participant.entity';
+import { LoginParticipantDto } from '../dtos/LoginParticipantDto';
 import { PasswordService } from './password.service';
 
 @Injectable()
@@ -39,22 +38,22 @@ export class ParticipantsAuthService {
     };
   }
 
-  async create() {
-    const password = generate({
-      length: 12,
-      numbers: true,
-      uppercase: true,
-      lowercase: true,
-      symbols: false,
-      excludeSimilarCharacters: true,
-    });
+  // async create() {
+  //   const password = generate({
+  //     length: 12,
+  //     numbers: true,
+  //     uppercase: true,
+  //     lowercase: true,
+  //     symbols: false,
+  //     excludeSimilarCharacters: true,
+  //   });
 
-    // vorerst deaktiviert, muss besprochen werden
-    // const hashedPassword = await this.passwordService.hash(password, 10);
+  //   // vorerst deaktiviert, muss besprochen werden
+  //   // const hashedPassword = await this.passwordService.hash(password, 10);
 
-    return await this.particpantsRepository.insert({
-      // password: hashedPassword,
-      password,
-    });
-  }
+  //   return await this.particpantsRepository.insert({
+  //     // password: hashedPassword,
+  //     password,
+  //   });
+  // }
 }

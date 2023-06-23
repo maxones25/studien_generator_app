@@ -4,11 +4,12 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Director } from '@entities';
+import { Director } from '../../../entities/director.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
-import { LoginDirectorDto, SignupDirectors } from '@modules/auth/dtos';
-import { PasswordService } from '@modules/auth/services';
+import { LoginDirectorDto } from '../dtos/LoginDirectorDto';
+import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
+import { PasswordService } from './password.service';
 
 @Injectable()
 export class DirectorAuthService {
@@ -47,7 +48,7 @@ export class DirectorAuthService {
     lastName,
     password,
     activationPassword,
-  }: SignupDirectors) {
+  }: SignupDirectorDto) {
     if (activationPassword != process.env.ACTIVATION_PASSWORD)
       throw new UnauthorizedException();
 

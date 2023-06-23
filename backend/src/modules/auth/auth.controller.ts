@@ -1,18 +1,16 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import {
-  ParticipantsAuthService,
-  DirectorAuthService,
-} from '@modules/auth/services';
-import {
-  LoginParticipantDto,
-  LoginDirectorDto,
-  SignupDirectors,
-} from '@modules/auth/dtos';
+import { Body, Controller, Post, Inject, forwardRef } from '@nestjs/common';
+import { LoginDirectorDto } from './dtos/LoginDirectorDto';
+import { LoginParticipantDto } from './dtos/LoginParticipantDto';
+import { SignupDirectorDto } from './dtos/SignupDirectorDto';
+import { DirectorAuthService } from './services/director-auth.service';
+import { ParticipantsAuthService } from './services/participant-auth.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
+    @Inject(forwardRef(() => ParticipantsAuthService))
     private readonly participantAuthService: ParticipantsAuthService,
+    @Inject(forwardRef(() => DirectorAuthService))
     private readonly directorAuthService: DirectorAuthService,
   ) {}
 
@@ -21,18 +19,13 @@ export class AuthController {
     return this.participantAuthService.checkCredentials(loginParticipantDto);
   }
 
-  @Post('participants/create')
-  async addParticipant() {
-    return this.participantAuthService.create();
-  }
-
   @Post('directors/login')
   async loginDirector(@Body() loginDirectorDto: LoginDirectorDto) {
     return this.directorAuthService.checkCredentials(loginDirectorDto);
   }
 
-  @Post('directors/create')
-  async addDirector(@Body() signupDirectors: SignupDirectors) {
+  @Post('directors/signUp')
+  async addDirector(@Body() signupDirectors: SignupDirectorDto) {
     return this.directorAuthService.create(signupDirectors);
   }
 }

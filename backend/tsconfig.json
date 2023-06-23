@@ -18,9 +18,13 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@app-module": ["src/app.module.ts"],
       "@modules": ["src/modules"],
       "@modules/*": ["src/modules/*"],
-      "@entities": ["src/entities"]
+      "@entities": ["src/entities"],
+      "@entities/*": ["src/entities/*"],
+      "@enums": ["src/enums"],
+      "@test/*": ["test/*"]
     }
   }
 }

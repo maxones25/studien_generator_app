@@ -1,10 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule, StudiesModule } from '@modules';
+import { AuthModule } from './modules/auth/auth.module';
+import { StudiesModule } from './modules/studies/studies.module';
+import { TypesGuard } from './modules/auth/guards/types.guard';
 import { APP_GUARD } from '@nestjs/core';
-import { ConfigModule } from '@nestjs/config';
-import { TypesGuard } from '@modules/auth/guards';
-import { StudyMember, Director, Group, Participant, Study } from '@entities';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
+import { Director } from './entities/director.entity';
+import { Study } from './entities/study.entity';
+import { StudyMember } from './entities/study-member';
+import { Group } from './entities/group.entity';
+import { Participant } from './entities/participant.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -19,6 +26,16 @@ import { StudyMember, Director, Group, Participant, Study } from '@entities';
       entities: [Director, Study, StudyMember, Group, Participant],
       logging: true,
       synchronize: false,
+    }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      global: true,
+      useFactory: async (configService: ConfigService) => {
+        return {
+          secret: configService.get<string>('JWT_SECRET'),
+        };
+      },
+      inject: [ConfigService],
     }),
     AuthModule,
     StudiesModule,

@@ -1,7 +1,7 @@
-import { IsString, IsNotEmpty } from "class-validator";
+import { IsString, IsNotEmpty } from 'class-validator';
 
-export class CreateStudyDto{
-    @IsString()
-    @IsNotEmpty()
-    readonly name: string;
+export class CreateStudyDto {
+  @IsString()
+  @IsNotEmpty()
+  readonly name: string;
 }

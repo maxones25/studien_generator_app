@@ -67,12 +67,12 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2023-06-22T10:55:38.315Z",
-    "modified": "2023-06-23T11:19:46.434Z",
+    "modified": "2023-06-23T16:37:44.063Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email\": \"max@stock.de\",\n  \"password\": \"12345678\"\n}",
+      "raw": "{\n  \"email\": \"max@stock.com\",\n  \"password\": \"12345678\"\n}",
       "form": []
     },
     "tests": []
@@ -86,12 +86,12 @@
     "method": "POST",
     "sortNum": 80000,
     "created": "2023-06-22T11:04:50.195Z",
-    "modified": "2023-06-23T11:20:28.881Z",
+    "modified": "2023-06-23T16:53:04.869Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{ \n  \"name\": \"test\"\n}",
+      "raw": "{ \n  \"name\": \"\"\n}",
       "form": []
     },
     "auth": {
