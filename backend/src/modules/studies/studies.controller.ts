@@ -6,10 +6,10 @@ import {
   Param,
   Post,
   Put,
-  Request,
 } from '@nestjs/common';
 import { StudiesService } from './studies.service';
 import { Roles } from '../../decorators/roles.decorator';
+import { DirectorId } from '../../decorators/director-id.decorator';
 import { CreateStudyDto } from './dtos/createStudyDto';
 import { AddMemberDto } from './dtos/addMemberDto';
 import { UpdateMemberDto } from './dtos/updateMemberDto';
@@ -21,17 +21,17 @@ export class StudiesController {
 
   @Types('director')
   @Get()
-  async findAll() {
-    return this.studiesService.findAll();
+  async findStudiesByDirector(@DirectorId() directorId: string) {
+    return this.studiesService.getByDirector(directorId);
   }
 
   @Types('director')
   @Post()
   async create(
     @Body() createStudyDto: CreateStudyDto,
-    @Request() req,
-    ) {
-    return this.studiesService.create(createStudyDto, req.payload.directorId);
+    @DirectorId() directorId: string,
+  ) {
+    return this.studiesService.create(createStudyDto, directorId);
   }
 
   @Types('director')
@@ -59,11 +59,7 @@ export class StudiesController {
     @Param('directorId') directorId: string,
     @Body() updateMember: UpdateMemberDto,
   ) {
-    return this.studiesService.updateMember(
-      studyId,
-      directorId,
-      updateMember,
-    );
+    return this.studiesService.updateMember(studyId, directorId, updateMember);
   }
 
   @Types('director')
