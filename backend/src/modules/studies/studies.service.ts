@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Study } from '../../entities/study.entity';
 import { Repository } from 'typeorm';
 import { CreateStudyDto } from './dtos/createStudyDto';
 import { StudyMember } from '../../entities/study-member';
 import { AddOrRemoveDirector } from './dtos/addOrRemoveDirector';
-import { UpdateEmployeeDto } from './dtos/updateEmployeeDto';
+import { UpdateMemberDto } from './dtos/updateMemberDto';
 import { Roles } from '../../enums/roles.enum';
 
 @Injectable()
@@ -45,7 +45,7 @@ export class StudiesService {
     await this.studiesRepository.delete(studyId);
   }
 
-  async addEmployee(
+  async addMember(
     studyId: string,
     { directorId, role }: AddOrRemoveDirector,
   ) {
@@ -56,47 +56,48 @@ export class StudiesService {
     });
   }
 
-  async updateEmployee(
+  async updateMember(
     studyId: string,
     directorId: string,
-    { role }: UpdateEmployeeDto,
+    { role }: UpdateMemberDto,
   ) {
-    await this.studyMemberRepository.update(
-      {
-        studyId,
-        directorId,
-      },
-      {
-        role,
-      },
-    );
+    if (await this.checkAdmins(studyId, directorId))
+      await this.studyMemberRepository.update(
+        {
+          studyId,
+          directorId,
+        },
+        {
+          role,
+        },
+      );
   }
 
-  async removeEmployee(studyId: string, directorId: string) {
-    const adminMembers = await this.studyMemberRepository.find({
-      where: {
-        studyId,
-        role: Roles.admin,
-      },
-    });
-    if (adminMembers.length === 1)
+  async removeMember(studyId: string, directorId: string) {
+    if (await this.checkAdmins(studyId, directorId))
       await this.studyMemberRepository.delete({
         directorId,
         studyId: studyId,
       });
   }
 
-  // async transferAdmin({ studyId, oldAdminId, newAdminId }: TransferAdminDto) {
-  //   await this.removeEmployee({ studyId, employeeId: newAdminId });
-  //   await this.studyMemberRepository.delete({
-  //     directorId: oldAdminId,
-  //     studyId: studyId,
-  //     role: Roles.employee,
-  //   });
-  //   return await this.studyMemberRepository.insert({
-  //     directorId: newAdminId,
-  //     studyId: studyId,
-  //     role: Roles.admin,
-  //   });
-  // }
+  async checkAdmins(studyId: string, directorId: string): Promise<boolean> {
+    const member = await this.studyMemberRepository.findOne({
+      where: {
+        directorId,
+        studyId,
+      }
+    })
+    if (member.role === 'admin') {
+      const adminMembers = await this.studyMemberRepository.find({
+        where: {
+          studyId,
+          role: Roles.admin,
+        },
+      });
+      if (adminMembers.length === 1) 
+        throw new ConflictException('can not delete/change last admin');;
+    }
+    return true;
+  }
 }

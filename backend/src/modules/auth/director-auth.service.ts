@@ -49,7 +49,7 @@ export class DirectorAuthService {
     activationPassword,
   }: SignupDirectors) {
     if (activationPassword != process.env.ACTIVATION_PASSWORD)
-      throw new UnauthorizedException(); //muss geändert werden!!
+      throw new UnauthorizedException();
 
     const hashedPassword = await bcrypt.hash(password, 10);
 

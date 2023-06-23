@@ -12,7 +12,7 @@ import { StudiesService } from './studies.service';
 import { Roles } from '../../decorators/roles.decorator';
 import { CreateStudyDto } from './dtos/createStudyDto';
 import { AddOrRemoveDirector } from './dtos/addOrRemoveDirector';
-import { UpdateEmployeeDto } from './dtos/updateEmployeeDto';
+import { UpdateMemberDto } from './dtos/updateMemberDto';
 import { Types } from '../../decorators/type.decorator';
 
 @Controller('studies')
@@ -44,37 +44,35 @@ export class StudiesController {
   @Types('director')
   @Roles('admin')
   @Post(':studyId/members')
-  async addEmployee(
+  async addMember(
     @Param('studyId') studyId: string,
     @Body() addOrRemoveDirector: AddOrRemoveDirector,
   ) {
-    return this.studiesService.addEmployee(studyId, addOrRemoveDirector);
+    return this.studiesService.addMember(studyId, addOrRemoveDirector);
   }
 
   @Types('director')
   @Roles('admin')
   @Put(':studyId/members/:directorId')
-  async transferAdmin(
+  async updateMember(
     @Param('studyId') studyId: string,
     @Param('directorId') directorId: string,
-    @Body() updateEmployeeDto: UpdateEmployeeDto,
+    @Body() updateMember: UpdateMemberDto,
   ) {
-    return this.studiesService.updateEmployee(
+    return this.studiesService.updateMember(
       studyId,
       directorId,
-      updateEmployeeDto,
+      updateMember,
     );
   }
 
   @Types('director')
   @Roles('admin')
   @Delete(':studyId/members/:directorId')
-  async deleteDirector(
+  async removeMember(
     @Param('studyId') studyId: string,
     @Param('directorId') directorId: string,
-    @Request() req,
   ) {
-    console.log(req.payload)
-    return this.studiesService.removeEmployee(studyId, directorId);
+    return this.studiesService.removeMember(studyId, directorId);
   }
 }
