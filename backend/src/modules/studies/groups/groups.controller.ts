@@ -1,4 +1,4 @@
-import { Body, Controller, Put, Param, Post } from '@nestjs/common';
+import { Body, Controller, Put, Param, Post, Delete } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { Types } from '../../../decorators/type.decorator';
 import { GroupDto } from './dtos/groupDto';
@@ -8,7 +8,7 @@ export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
   @Types('director')
-  @Post('/:studyId/groups')
+  @Post(':studyId/groups')
   async create(
     @Param('studyId') studyId: string,
     @Body() createStudyDto: GroupDto,
@@ -17,11 +17,17 @@ export class GroupsController {
   }
 
   @Types('director')
-  @Put('/groups:groudId')
+  @Put('groups:groudId')
   async update(
     @Param('groupId') groupId: string,
     @Body() updateMember: GroupDto,
   ) {
     return this.groupsService.update(groupId, updateMember);
+  }
+
+  @Types('director')
+  @Delete('groups/:groudId')
+  async deleteParticipant(@Param('groudId') groudId: string) {
+    this.groupsService.delete(groudId);
   }
 }
