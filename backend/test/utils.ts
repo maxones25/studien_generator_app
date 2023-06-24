@@ -18,6 +18,18 @@ export const createDirector = (
       .catch((err) => reject(err));
   });
 
+export const deleteDirector = (app: INestApplication, accessToken: string) =>
+  new Promise<void>((resolve, reject) => {
+    request(app.getHttpServer())
+      .delete('/directors')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(200)
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => reject(err));
+  });
+
 export const getDirectorAccessToken = (
   app: INestApplication,
   email: string,

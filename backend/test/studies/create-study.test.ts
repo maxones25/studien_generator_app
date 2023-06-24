@@ -3,7 +3,11 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
 import fakeData from '../fakeData';
-import { createDirector, getDirectorAccessToken } from '../utils';
+import {
+  createDirector,
+  deleteDirector,
+  getDirectorAccessToken,
+} from '../utils';
 import { ValidationPipe } from '@nestjs/common';
 
 describe('AppController (e2e)', () => {
@@ -46,17 +50,37 @@ describe('AppController (e2e)', () => {
       });
   });
 
-  it('/POST create study with no data', () => {
+  it('/POST create study with empty name', () => {
     return request(app.getHttpServer())
       .post('/studies')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        name: ""
+        name: '',
       })
       .expect(400);
   });
 
+  it('/POST create study with existing name', () => {
+    const study = fakeData.study();
+
+    return request(app.getHttpServer())
+      .post('/studies')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(study)
+      .expect(201)
+      .then((res) => {
+        expect(typeof res.body.id).toBe('string');
+
+        return request(app.getHttpServer())
+          .post('/studies')
+          .set('Authorization', `Bearer ${accessToken}`)
+          .send(study)
+          .expect(409);
+      });
+  });
+
   afterAll(async () => {
+    await deleteDirector(app, accessToken);
     await app.close();
   });
 });

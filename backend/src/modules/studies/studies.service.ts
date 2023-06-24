@@ -20,13 +20,20 @@ export class StudiesService {
   async create({ name }: CreateStudyDto, directorId: string) {
     const study = new Study();
     study.name = name;
-    await this.studiesRepository.insert(study);
-    await this.studyMemberRepository.insert({
-      directorId: directorId,
-      studyId: study.id,
-      role: Roles.admin,
-    });
-    return study;
+
+    try {
+      await this.studiesRepository.insert(study);
+
+      await this.studyMemberRepository.insert({
+        directorId: directorId,
+        studyId: study.id,
+        role: Roles.admin,
+      });
+
+      return study;
+    } catch (error) {
+      throw new ConflictException('study can not be created');
+    }
   }
 
   getByDirector(directorId: string): Promise<Study[]> {
