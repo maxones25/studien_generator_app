@@ -1,6 +1,7 @@
 import * as request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { SignupDirectorDto } from '../src/modules/auth/dtos/SignupDirectorDto';
+import { CreateStudyDto } from '../src/modules/studies/dtos/createStudyDto';
 
 export const createDirector = (
   app: INestApplication,
@@ -46,6 +47,39 @@ export const getDirectorAccessToken = (
       .then((res) => {
         expect(typeof res.body.accessToken).toBe('string');
         resolve(res.body.accessToken as string);
+      })
+      .catch((err) => reject(err));
+  });
+
+export const createStudy = (
+  app: INestApplication,
+  accessToken: string,
+  data: CreateStudyDto,
+) => 
+  new Promise<string>((resolve, reject) => {
+    request(app.getHttpServer())
+      .post('/studies')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(data)
+      .expect(201)
+      .then((res) => {
+        expect(typeof res.body.id).toBe('string');
+        resolve(res.body.id);
+      })
+      .catch((err) => reject(err));
+  });
+
+export const deleteStudy = (
+  app: INestApplication,
+  accessToken: string,
+  studyId: string,
+) => new Promise<void>((resolve, reject) => {
+    request(app.getHttpServer())
+      .delete(`/studies/${studyId}`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(200)
+      .then(() => {
+        resolve();
       })
       .catch((err) => reject(err));
   });

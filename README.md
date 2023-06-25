@@ -52,6 +52,12 @@ Navigiere in den Order backend
 cd backend
 ```
 
+Installiere alle npm Pakete
+
+```console
+npm install
+```
+
 Starte den lokalen Backendserver
 
 ```console
