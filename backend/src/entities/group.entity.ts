@@ -26,6 +26,8 @@ export class Group {
   })
   study: Study;
 
-  @OneToMany(() => Participant, (participant) => participant.group)
+  @OneToMany(() => Participant, (participant) => participant.group, {
+    cascade: true,
+  })
   participants: Participant[];
 }
