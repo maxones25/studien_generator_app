@@ -12,7 +12,11 @@ export class GroupsService {
   ) {}
 
   async create(studyId: string, { name }: GroupDto) {
-    await this.groupsRepository.insert({ studyId, name });
+    const group = new Group();
+    group.name = name;
+    group.studyId = studyId;
+    await this.groupsRepository.insert(group);
+    return group;
   }
 
   async update(groupId: string, updatedGroup: GroupDto) {

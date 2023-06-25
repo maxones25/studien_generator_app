@@ -8,12 +8,13 @@ export class ParticipantsController {
   constructor(private readonly participantsService: ParticipantsService) {}
 
   @Types('director')
-  @Post('groups/:groupId/participants')
+  @Post(':studyId/groups/:groupId/participants')
   async create(
+    @Param('studyId') studyId: string,
     @Param('groupId') groupId: string,
     @Body() participantDto: ParticipantDto,
   ) {
-    return this.participantsService.create(groupId, participantDto);
+    return this.participantsService.create(studyId, groupId, participantDto);
   }
 
   @Types('director')

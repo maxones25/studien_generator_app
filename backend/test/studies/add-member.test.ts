@@ -55,7 +55,7 @@ describe('AppController (e2e)', () => {
       director2.password,
     );
 
-    studyId = await createStudy(app, accessToken1, study)
+    studyId = await createStudy(app, accessToken1, study);
   });
 
   it('/POST add employee to study successfully', () => {

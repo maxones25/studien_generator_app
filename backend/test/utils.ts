@@ -2,6 +2,7 @@ import * as request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { SignupDirectorDto } from '../src/modules/auth/dtos/SignupDirectorDto';
 import { CreateStudyDto } from '../src/modules/studies/dtos/createStudyDto';
+import { GroupDto } from '../src/modules/studies/groups/dtos/groupDto';
 
 export const createDirector = (
   app: INestApplication,
@@ -83,3 +84,22 @@ export const deleteStudy = (
       })
       .catch((err) => reject(err));
   });
+
+export const createGroup = (
+    app: INestApplication,
+    accessToken: string,
+    studyId: string,
+    data: GroupDto,
+  ) => 
+    new Promise<string>((resolve, reject) => {
+      request(app.getHttpServer())
+        .post(`/studies/${studyId}/groups`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(data)
+        .expect(201)
+        .then((res) => {
+          expect(typeof res.body.id).toBe('string');
+          resolve(res.body.id);
+        })
+        .catch((err) => reject(err));
+    });
