@@ -1,8 +1,8 @@
 import { AuthenticationGuard, LoginGuard } from "@modules/auth/components";
-import HelloWorldPage from "@pages/HelloWorldPage/HelloWorldPage";
 import LoginPage from "@pages/LoginPage/LoginPage";
 import SignUpPage from "@pages/SignUpPage/SignUpPage";
-import { createBrowserRouter } from "react-router-dom";
+import StudiesPage from "@pages/StudiesPage/StudiesPage";
+import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -25,9 +25,19 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <AuthenticationGuard>
-        <HelloWorldPage />
+        <Outlet />
       </AuthenticationGuard>
     ),
+    children: [
+      {
+        path: "",
+        element: <Navigate to="/studies"/>
+      },
+      {
+        path: "studies",
+        element: <StudiesPage/>
+      },
+    ]
   },
 ]);
 

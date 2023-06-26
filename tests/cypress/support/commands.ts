@@ -2,11 +2,13 @@
 
 import "cypress-wait-until";
 import "cypress-localstorage-commands";
+import testData from "../../testData";
 
 declare global {
   namespace Cypress {
     interface Chainable {
-      fetchAccessToken(): Chainable<any>;
+      fetchAccessToken(type: "director" | "participant"): Chainable<any>;
+      setAccessToken(type: "director" | "participant"): Chainable<any>;
       shouldBeRelativePath(path: string): Chainable<any>;
       getByTestId(
         name: string,
@@ -40,20 +42,44 @@ Cypress.Commands.add(
   }
 );
 
-Cypress.Commands.add("fetchAccessToken", () => {
-  return cy
-    .request({
-      method: "POST",
-      url: `${Cypress.env("apiUrl")}/auth/participants/login`,
-      body: {
-        id: "3b87163e-9ad0-4a8b-82bb-0023d2b35ba2",
-        password: "GFeDrKZ9QV31",
-      },
-    })
-    .its("body")
-    .then(({ accessToken }) => {
-      Cypress.env("accessToken", accessToken);
-      cy.setLocalStorage("accessToken", JSON.stringify(accessToken));
-      cy.saveLocalStorage();
-    });
+Cypress.Commands.add("fetchAccessToken", (type: "director" | "participant") => {
+  if (type === "director") {
+    return cy
+      .request({
+        method: "POST",
+        url: `${Cypress.env("apiUrl")}/auth/directors/login`,
+        body: {
+          email: testData.director.email,
+          password: testData.director.password,
+        },
+      })
+      .its("body")
+      .then(({ accessToken }) => {
+        Cypress.env("directorAccessToken", accessToken);
+        cy.setLocalStorage("accessToken", JSON.stringify(accessToken));
+        cy.saveLocalStorage();
+      });
+  } else if (type === "participant") {
+    return cy
+      .request({
+        method: "POST",
+        url: `${Cypress.env("apiUrl")}/auth/participants/login`,
+        body: {
+          id: testData.participant.id,
+          password: testData.participant.password,
+        },
+      })
+      .its("body")
+      .then(({ accessToken }) => {
+        Cypress.env("participantAccessToken", accessToken);
+        cy.setLocalStorage("accessToken", JSON.stringify(accessToken));
+        cy.saveLocalStorage();
+      });
+  }
+});
+
+Cypress.Commands.add("setAccessToken", (type: "director" | "participant") => {
+  const accessToken = Cypress.env(type + "AccessToken");
+  cy.setLocalStorage("accessToken", JSON.stringify(accessToken));
+  cy.saveLocalStorage();
 });

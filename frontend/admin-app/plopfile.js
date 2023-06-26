@@ -1,4 +1,12 @@
-const modules = ["core", "auth", "date"];
+const modules = [
+  "core",
+  "auth",
+  "date",
+  "studies",
+  "participants",
+  "members",
+  "groups",
+];
 
 const types = ["type", "interface"];
 
