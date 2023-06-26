@@ -3,7 +3,6 @@ import { Participant } from '../../entities/participant.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ParticipantDto } from './dtos/participantDto';
-import { generate } from 'generate-password';
 import { PasswordService } from '../auth/services/password.service';
 
 @Injectable()
@@ -16,21 +15,24 @@ export class ParticipantsService {
 
   //TODO 
   async create(studyId: string, groupId: string, { number }: ParticipantDto) {
-    const password = generate({
-      length: 12,
-      numbers: true,
-      uppercase: true,
-      lowercase: true,
-      symbols: false,
-      excludeSimilarCharacters: true,
-    });
     const participant = new Participant();
+    const password = await this.passwordService.generate();
     participant.studyId = studyId;
     participant.groupId = groupId;
     participant.number = number;
     participant.password = await this.passwordService.hash(password, 10);
     await this.participantsRepository.insert(participant);
-    return {...participant, password};
+    return {...participant, password: password};
+  }
+  
+  async regeneratePassword(participantId: string) {
+    const password = await this.passwordService.generate();
+    const hashedPassword = await this.passwordService.hash(password, 10);
+    await this.participantsRepository.update(
+      { id: participantId }, 
+      { password: hashedPassword },
+    );
+    return {password: password};
   }
 
   async getByStudy(studyId: string): Promise<Participant[]> {

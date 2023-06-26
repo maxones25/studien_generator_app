@@ -1,9 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
 import { Types } from '../../decorators/type.decorator';
 import { ParticipantDto } from './dtos/participantDto';
 import { Roles } from '../../decorators/roles.decorator';
-
 @Controller('studies/:studyId')
 export class ParticipantsController {
   constructor(private readonly participantsService: ParticipantsService) {}
@@ -17,6 +16,13 @@ export class ParticipantsController {
     @Body() participantDto: ParticipantDto,
   ) {
     return this.participantsService.create(studyId, groupId, participantDto);
+  }
+
+  @Types('director')
+  @Roles('admin')
+  @Get('participants/:participantId')
+  async regeneratePassword(@Param('participantId') participantId: string) {
+    return this.participantsService.regeneratePassword(participantId);
   }
 
   @Types('director')
