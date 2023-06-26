@@ -20,7 +20,7 @@ export class GroupsController {
 
   @Types('director')
   @Roles('admin')
-  @Put('groups:groudId')
+  @Put('groups/:groudId')
   async update(
     @Param('groupId') groupId: string,
     @Body() updatedGroup: GroupDto,
