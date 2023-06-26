@@ -1,18 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { Participant } from '../../../entities/participant.entity';
+import { Participant } from '../../entities/participant.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ParticipantDto } from './dtos/participantDto';
 import { generate } from 'generate-password';
-import { Group } from '../../../entities/group.entity';
 
 @Injectable()
 export class ParticipantsService {
   constructor(
     @InjectRepository(Participant)
     private participantsRepository: Repository<Participant>,
-    @InjectRepository(Group)
-    private groupsRepository: Repository<Group>,
   ) {}
 
   //TODO 

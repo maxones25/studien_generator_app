@@ -2,7 +2,7 @@ import * as request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { SignupDirectorDto } from '../src/modules/auth/dtos/SignupDirectorDto';
 import { CreateStudyDto } from '../src/modules/studies/dtos/createStudyDto';
-import { GroupDto } from '../src/modules/studies/groups/dtos/groupDto';
+import { GroupDto } from '../src/modules/groups/dtos/groupDto';
 
 export const createDirector = (
   app: INestApplication,

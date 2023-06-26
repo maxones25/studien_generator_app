@@ -1,14 +1,16 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
-import { Types } from '../../../decorators/type.decorator';
+import { Types } from '../../decorators/type.decorator';
 import { ParticipantDto } from './dtos/participantDto';
+import { Roles } from '../../decorators/roles.decorator';
 
-@Controller('studies')
+@Controller('studies/:studyId')
 export class ParticipantsController {
   constructor(private readonly participantsService: ParticipantsService) {}
 
   @Types('director')
-  @Post(':studyId/groups/:groupId/participants')
+  @Roles('admin')
+  @Post('groups/:groupId/participants')
   async create(
     @Param('studyId') studyId: string,
     @Param('groupId') groupId: string,
@@ -18,19 +20,22 @@ export class ParticipantsController {
   }
 
   @Types('director')
-  @Get(':studyId/participants')
+  @Roles('admin', 'employee')
+  @Get('participants')
   async findParticipantsByStudy(@Param('studyId') studyId: string) {
     return this.participantsService.getByStudy(studyId);
   }
 
   @Types('director')
+  @Roles('admin', 'employee')
   @Get('groups/:groupId/participants')
   async findParticipantsByGroup(@Param('groupId') groupId: string) {
     return this.participantsService.getByGroup(groupId);
   }
 
   @Types('director')
-  @Delete('participants/:participantId')
+  @Roles('admin')
+  @Delete('groups/:groupId/participants/:participantId')
   async deleteParticipant(@Param('participantId') participantId: string) {
     this.participantsService.delete(participantId);
   }

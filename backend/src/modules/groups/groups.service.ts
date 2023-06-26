@@ -1,4 +1,4 @@
-import { Group } from '../../../entities/group.entity';
+import { Group } from '../../entities/group.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
