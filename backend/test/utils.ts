@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import { SignupDirectorDto } from '../src/modules/auth/dtos/SignupDirectorDto';
 import { CreateStudyDto } from '../src/modules/studies/dtos/createStudyDto';
 import { GroupDto } from '../src/modules/groups/dtos/groupDto';
+import { ParticipantDto } from '../src/modules/participants/dtos/participantDto';
 
 export const createDirector = (
   app: INestApplication,
@@ -102,4 +103,24 @@ export const createGroup = (
           resolve(res.body.id);
         })
         .catch((err) => reject(err));
-    });
+  });
+
+export const createParticipant = (
+  app: INestApplication,
+  accessToken: string,
+  studyId: string,
+  groupId: string,
+  data: ParticipantDto,
+  ) => 
+    new Promise<string>((resolve, reject) => {
+      request(app.getHttpServer())
+        .post(`/studies/${studyId}/groups/${groupId}/participants`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(data)
+        .expect(201)
+        .then((res) => {
+          expect(typeof res.body.id).toBe('string');
+          resolve(res.body.id);
+        })
+        .catch((err) => reject(err));
+  });
