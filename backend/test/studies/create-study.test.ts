@@ -6,6 +6,7 @@ import fakeData from '../fakeData';
 import {
   createDirector,
   deleteDirector,
+  deleteStudy,
   getDirectorAccessToken,
 } from '../utils';
 import { ValidationPipe } from '@nestjs/common';
@@ -14,6 +15,7 @@ describe('AppController (e2e)', () => {
   let app: INestApplication;
   let directorId: any;
   let accessToken: string;
+  let studieIds: Array<string> = [];
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -47,6 +49,7 @@ describe('AppController (e2e)', () => {
       .expect(201)
       .then((res) => {
         expect(typeof res.body.id).toBe('string');
+        studieIds.push(res.body.id);
       });
   });
 
@@ -70,6 +73,7 @@ describe('AppController (e2e)', () => {
       .expect(201)
       .then((res) => {
         expect(typeof res.body.id).toBe('string');
+        studieIds.push(res.body.id);
 
         return request(app.getHttpServer())
           .post('/studies')
@@ -80,6 +84,7 @@ describe('AppController (e2e)', () => {
   });
 
   afterAll(async () => {
+    studieIds.forEach(async (studieId) => await deleteStudy(app, accessToken, studieId));
     await deleteDirector(app, accessToken);
     await app.close();
   });
