@@ -4,12 +4,14 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ParticipantDto } from './dtos/participantDto';
 import { generate } from 'generate-password';
+import { PasswordService } from '../auth/services/password.service';
 
 @Injectable()
 export class ParticipantsService {
   constructor(
     @InjectRepository(Participant)
     private participantsRepository: Repository<Participant>,
+    private passwordService: PasswordService,
   ) {}
 
   //TODO 
@@ -22,12 +24,13 @@ export class ParticipantsService {
       symbols: false,
       excludeSimilarCharacters: true,
     });
-    await this.participantsRepository.insert({ 
-      studyId: studyId,
-      groupId, 
-      number, 
-      password,
-    });
+    const participant = new Participant();
+    participant.studyId = studyId;
+    participant.groupId = groupId;
+    participant.number = number;
+    participant.password = await this.passwordService.hash(password, 10);
+    await this.participantsRepository.insert(participant);
+    return {...participant, password};
   }
 
   async getByStudy(studyId: string): Promise<Participant[]> {
