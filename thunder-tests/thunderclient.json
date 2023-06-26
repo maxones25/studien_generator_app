@@ -41,11 +41,11 @@
     "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
     "containerId": "5ea67d0a-b1d8-429b-a590-0de2d44b51cc",
     "name": "create director",
-    "url": "/auth/directors/create",
+    "url": "/auth/directors/signUp",
     "method": "POST",
     "sortNum": 20000,
     "created": "2023-06-22T10:53:56.723Z",
-    "modified": "2023-06-23T11:19:25.752Z",
+    "modified": "2023-06-26T09:20:57.764Z",
     "headers": [],
     "params": [],
     "body": {
@@ -67,12 +67,12 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2023-06-22T10:55:38.315Z",
-    "modified": "2023-06-23T16:37:44.063Z",
+    "modified": "2023-06-26T12:02:15.909Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email\": \"max@stock.com\",\n  \"password\": \"12345678\"\n}",
+      "raw": "{\n  \"email\": \"max.mustermann@test.de\",\n  \"password\": \"wrong-password\"\n}",
       "form": []
     },
     "tests": []

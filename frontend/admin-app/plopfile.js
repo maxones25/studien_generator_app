@@ -1,8 +1,4 @@
-const modules = [
-  "core",
-  "auth",
-  "date",
-];
+const modules = ["core", "auth", "date"];
 
 const types = ["type", "interface"];
 

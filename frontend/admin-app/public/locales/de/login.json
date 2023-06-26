@@ -1,4 +1,9 @@
 {
-  "id": "Probanden ID",
-  "password": "Passwort"
+  "email": "Email",
+  "email required": "Bitte Email eingeben",
+  "password": "Passwort",
+  "password required": "Bitte Passwort eingeben",
+  "login": "Login",
+  "access denied": "Zugriff verweigert",
+  "sign up link": "Noch keinen Account? Hier gehts zur Registrierung."
 }

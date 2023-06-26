@@ -27,8 +27,8 @@ const useAccessTokenContextValue = () => {
   const isValid = useMemo(() => {
     if (typeof value !== "string") return false;
     const { exp } = jwt_decode(value) as { exp: number };
-    const currentDateTime = Math.floor(new Date().getTime() / 1000)
-    if(exp < currentDateTime) return false
+    const currentDateTime = Math.floor(new Date().getTime() / 1000);
+    if (exp < currentDateTime) return false;
     return true;
   }, [value]);
 

@@ -7,8 +7,20 @@ export const useLogin = () => {
   const accessToken = useAccessTokenContext();
 
   return useWriteRequest<LoginFormData, { accessToken: string }>(
-    (options) =>
-      apiRequest(`/auth/participants/login`, { ...options, method: "POST" }),
+    async (options) => {
+      const res = await apiRequest<{ accessToken: string }>(
+        `/auth/directors/login`,
+        {
+          ...options,
+          method: "POST",
+        }
+      );
+
+      if (typeof res.accessToken !== "string")
+        throw new Error("accessToken invalid");
+
+      return res;
+    },
     {
       onSuccess: ({ accessToken: value }) => {
         accessToken.set(value);
