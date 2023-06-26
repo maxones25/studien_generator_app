@@ -52,11 +52,11 @@ describe('AppController (e2e)', () => {
   it('/PUT remove participant from group successfully',async () => {
     const participant = fakeData.participant();
     const participantId = await createParticipant(app, accessToken, studyId, groupId, participant);
-    const updateParticipant = fakeData.participant();
+    const updatedParticipant = fakeData.participant();
     return request(app.getHttpServer())
       .put(`/studies/${studyId}/participants/${participantId}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send(updateParticipant)
+      .send(updatedParticipant)
       .expect(200);
   });
 
