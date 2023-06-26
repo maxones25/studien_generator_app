@@ -11,7 +11,5 @@ export const AuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
 }) => {
   const accessToken = useAccessTokenContext();
 
-  console.log(accessToken)
-
   return accessToken.isValid ? children : <Navigate to="/login" />;
 };

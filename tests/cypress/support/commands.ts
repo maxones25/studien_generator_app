@@ -3,63 +3,42 @@
 import "cypress-wait-until";
 import "cypress-localstorage-commands";
 
-type Director = {
-  email: string,
-  firstName: string,
-  lastName: string,
-  password: string,
-  activationPassword: string,
-}
-
-type Study = {
-  name: string;
-}
-
-type Group = {
-  name: string;
-  studyId: string
-}
-
 declare global {
   namespace Cypress {
     interface Chainable {
-      setupTest(): Chainable<any>;
-      signUpDirector(data: Director): Chainable<any>;
-      createStudy(data: Study): Chainable<any>;
-      createStudyGroup(data: Group): Chainable<any>;
       fetchAccessToken(): Chainable<any>;
-      getByTestId(name: string): Chainable<any>;
+      shouldBeRelativePath(path: string): Chainable<any>;
+      getByTestId(
+        name: string,
+        options?: Partial<
+          Cypress.Loggable &
+            Cypress.Timeoutable &
+            Cypress.Withinable &
+            Cypress.Shadow
+        >
+      ): Chainable<any>;
     }
   }
 }
 
-Cypress.Commands.add("getByTestId", (name: string) => {
-  return cy.get(`[data-testid="${name}"]`);
+Cypress.Commands.add("shouldBeRelativePath", (path: string) => {
+  cy.url().should("equal", Cypress.config().baseUrl + path);
 });
 
-Cypress.Commands.add("signUpDirector", (data: Director) => {
-  return cy.request({
-    method: "POST",
-    url: `${Cypress.env("apiUrl")}/auth/directors/signup`,
-    body: data,
-  }).its("body")
-});
-
-Cypress.Commands.add("createStudy", (data: Study) => {
-  return cy.request({
-    method: "POST",
-    url: `${Cypress.env("apiUrl")}/studies`,
-    body: data,
-  }).its("body")
-});
-
-Cypress.Commands.add("createStudyGroup", ({ studyId, ...data }: Group) => {
-  return cy.request({
-    method: "POST",
-    url: `${Cypress.env("apiUrl")}/studies/${studyId}/groups`,
-    body: data
-  }).its("body")
-});
+Cypress.Commands.add(
+  "getByTestId",
+  (
+    name: string,
+    options?: Partial<
+      Cypress.Loggable &
+        Cypress.Timeoutable &
+        Cypress.Withinable &
+        Cypress.Shadow
+    >
+  ) => {
+    return cy.get(`[data-testid="${name}"]`, options);
+  }
+);
 
 Cypress.Commands.add("fetchAccessToken", () => {
   return cy

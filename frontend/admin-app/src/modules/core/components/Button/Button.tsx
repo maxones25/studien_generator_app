@@ -1,12 +1,26 @@
 import React from "react";
-import { Button as MButton, ButtonProps as MButtonProps } from "@mui/material";
+import {
+  CircularProgress,
+  Button as MButton,
+  ButtonProps as MButtonProps,
+} from "@mui/material";
 
-export interface ButtonProps extends MButtonProps {}
+export interface ButtonProps extends MButtonProps {
+  testId: string;
+  isLoading?: boolean;
+}
 
 export const Button: React.FC<ButtonProps> = ({
   color = "primary",
   variant = "contained",
+  isLoading = false,
+  children,
+  testId,
   ...props
 }) => {
-  return <MButton color={color} variant={variant} {...props}></MButton>;
+  return (
+    <MButton data-testid={testId} color={color} variant={variant} {...props}>
+      {isLoading ? <CircularProgress /> : children}
+    </MButton>
+  );
 };
