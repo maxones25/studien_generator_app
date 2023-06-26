@@ -26,4 +26,4 @@ export const Form: React.FC<FormProps> = forwardRef(
   }
 );
 
-Form.displayName = 'Form';
+Form.displayName = "Form";

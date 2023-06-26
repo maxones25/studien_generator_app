@@ -7,11 +7,14 @@ import { useForm } from "react-hook-form";
 
 export interface StudyFormProps extends FormProps<StudyFormData> {}
 
-export const StudyForm: React.FC<StudyFormProps> = ({ onSubmit }) => {
+export const StudyForm: React.FC<StudyFormProps> = ({
+  onSubmit,
+  formProps,
+}) => {
   const form = useForm<StudyFormData>();
 
   return (
-    <Form onSubmit={form.handleSubmit(onSubmit)}>
+    <Form data-testid="study form" onSubmit={form.handleSubmit(onSubmit)} {...formProps}>
       <FormTextField
         label="Name"
         formState={form.formState}
