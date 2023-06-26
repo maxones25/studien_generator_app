@@ -20,9 +20,19 @@ export class ParticipantsController {
 
   @Types('director')
   @Roles('admin')
-  @Get('participants/:participantId')
+  @Get('participants/:participantId/password')
   async regeneratePassword(@Param('participantId') participantId: string) {
     return this.participantsService.regeneratePassword(participantId);
+  }
+
+  @Types('director')
+  @Roles('admin')
+  @Put('participants/:participantId')
+  async update(
+    @Param('participantId') participantId: string,
+    @Body() updateParticipant: ParticipantDto,
+  ) {
+    return this.participantsService.update(participantId, updateParticipant);
   }
 
   @Types('director')

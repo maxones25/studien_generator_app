@@ -35,6 +35,10 @@ export class ParticipantsService {
     return {password: password};
   }
 
+  async update(participantId: string, updatedParticipant: ParticipantDto) {
+    await this.participantsRepository.update({ id: participantId }, updatedParticipant)
+  }
+
   async getByStudy(studyId: string): Promise<Participant[]> {
     return this.participantsRepository.find({ where: { studyId } });
   }
