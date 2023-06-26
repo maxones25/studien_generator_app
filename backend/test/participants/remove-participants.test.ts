@@ -51,7 +51,7 @@ describe('AppController (e2e)', () => {
 
   it('/DELETE remove participant from group successfully',async () => {
     const participant = fakeData.participant();
-    const participantId = await createParticipant(app, accessToken, studyId, groupId, participant)
+    const participantId = await createParticipant(app, accessToken, studyId, groupId, participant);
     return request(app.getHttpServer())
       .delete(`/studies/${studyId}/groups/${groupId}/participants/${participantId}`)
       .set('Authorization', `Bearer ${accessToken}`)

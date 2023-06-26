@@ -51,9 +51,9 @@ describe('AppController (e2e)', () => {
 
   it('/GET regenerate participants password successfully',async () => {
     const participant = fakeData.participant();
-    const participantId = await createParticipant(app, accessToken, studyId, groupId, participant)
+    const participantId = await createParticipant(app, accessToken, studyId, groupId, participant);
     return request(app.getHttpServer())
-      .get(`/studies/${studyId}/participants/${participantId}`)
+      .get(`/studies/${studyId}/participants/${participantId}/password`)
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(200)
       .then((res) => {

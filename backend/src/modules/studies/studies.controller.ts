@@ -57,9 +57,9 @@ export class StudiesController {
   async updateMember(
     @Param('studyId') studyId: string,
     @Param('directorId') directorId: string,
-    @Body() updateMember: UpdateMemberDto,
+    @Body() updatedMember: UpdateMemberDto,
   ) {
-    return this.studiesService.updateMember(studyId, directorId, updateMember);
+    return this.studiesService.updateMember(studyId, directorId, updatedMember);
   }
 
   @Types('director')

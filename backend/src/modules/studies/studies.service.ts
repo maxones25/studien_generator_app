@@ -63,7 +63,7 @@ export class StudiesService {
   async updateMember(
     studyId: string,
     directorId: string,
-    { role }: UpdateMemberDto,
+    updatedMember: UpdateMemberDto,
   ) {
     if (await this.checkAdmins(studyId, directorId))
       await this.studyMemberRepository.update(
@@ -71,9 +71,7 @@ export class StudiesService {
           studyId,
           directorId,
         },
-        {
-          role,
-        },
+        updatedMember,
       );
   }
 

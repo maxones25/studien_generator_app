@@ -23,9 +23,9 @@ export class GroupsController {
   @Put('groups:groudId')
   async update(
     @Param('groupId') groupId: string,
-    @Body() updateMember: GroupDto,
+    @Body() updatedGroup: GroupDto,
   ) {
-    return this.groupsService.update(groupId, updateMember);
+    return this.groupsService.update(groupId, updatedGroup);
   }
 
   @Types('director')
