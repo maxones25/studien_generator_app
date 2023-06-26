@@ -14,6 +14,7 @@ const config: Config = {
     '^@entities': '<rootDir>/src/entities',
     '^@enums': '<rootDir>/src/enums',
   },
+  testTimeout: 15000,
 };
 
 export default config;

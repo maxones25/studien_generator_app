@@ -13,13 +13,19 @@ import {
   getDirectorAccessToken,
 } from '../utils';
 import { ValidationPipe } from '@nestjs/common';
+import { ParticipantDto } from '@modules/participants/dtos/participantDto';
+import { Participant } from '../../src/entities/participant.entity';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   let directorId: any;
   let accessToken: string;
   let studyId: string;
-  let groupId: string;
+  let group1Id: string;
+  let group2Id: string;
+  let participant1: ParticipantDto;
+  let participant2: ParticipantDto;
+  let participant3: ParticipantDto;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -32,7 +38,11 @@ describe('AppController (e2e)', () => {
 
     const director = fakeData.director();
     const study = fakeData.study();
-    const group = fakeData.group();
+    const group1 = fakeData.group();
+    const group2 = fakeData.group();
+    participant1 = fakeData.participant();
+    participant2 = fakeData.participant();
+    participant3 = fakeData.participant();
 
     directorId = await createDirector(app, {
       ...director,
@@ -46,18 +56,31 @@ describe('AppController (e2e)', () => {
     );
 
     studyId = await createStudy(app, accessToken, study);
-    groupId = await createGroup(app, accessToken, studyId, group);
+    group1Id = await createGroup(app, accessToken, studyId, group1);
+    group2Id = await createGroup(app, accessToken, studyId, group2);
+    await createParticipant(app, accessToken, studyId, group1Id, participant1);
+    await createParticipant(app, accessToken, studyId, group1Id, participant2);
+    await createParticipant(app, accessToken, studyId, group2Id, participant3);
+  
   });
 
-  it('/GET regenerate participants password successfully',async () => {
-    const participant = fakeData.participant();
-    const participantId = await createParticipant(app, accessToken, studyId, groupId, participant);
+  it('/Get get all participants from study successfully',async () => {
     return request(app.getHttpServer())
-      .get(`/studies/${studyId}/participants/${participantId}/password`)
+      .get(`/studies/${studyId}/participants`)
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(200)
       .then((res) => {
-        expect(typeof res.body.password).toBe('string');
+        expect(res.body.length).toBe(3);
+      });
+  });
+
+  it('/Get get all participants from group1 successfully',async () => {
+    return request(app.getHttpServer())
+      .get(`/studies/${studyId}/groups/${group1Id}/participants`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(200)
+      .then((res) => {
+        expect(res.body.length).toBe(2);
       });
   });
 
