@@ -1,6 +1,6 @@
 import { Button, Column, Page, Row, Text } from "@modules/core/components";
 import { StudiesList, StudyForm } from "@modules/studies/components";
-import { useCreateStudy } from "@modules/studies/hooks";
+import { useCreateStudy, useUpdateStudy } from "@modules/studies/hooks";
 import { StudyFormData } from "@modules/studies/types";
 import { Dialog } from "@mui/material";
 import React, { useState } from "react";
@@ -14,13 +14,18 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
     undefined
   );
   const createStudy = useCreateStudy();
+  const updateStudy = useUpdateStudy();
 
   const handleCreateStudy = () => {
     setFormData({ name: "" });
   };
 
   const handleSaveStudy = (data: StudyFormData) => {
-    createStudy.mutate(data);
+    if (data.id) {
+      updateStudy.mutate(data);
+    } else {
+      createStudy.mutate(data);
+    }
     handleCloseDialog();
   };
 
@@ -37,7 +42,7 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
             {t("create study")}
           </Button>
         </Row>
-        <StudiesList />
+        <StudiesList onUpdate={setFormData} />
       </Column>
       <Dialog open={Boolean(formData)} onClose={handleCloseDialog}>
         <Column p={2}>

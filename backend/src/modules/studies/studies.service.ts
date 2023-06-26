@@ -7,6 +7,7 @@ import { StudyMember } from '../../entities/study-member';
 import { AddMemberDto } from './dtos/addMemberDto';
 import { UpdateMemberDto } from './dtos/updateMemberDto';
 import { Roles } from '../../enums/roles.enum';
+import { UpdateStudyDto } from './dtos/updateStudyDto';
 
 @Injectable()
 export class StudiesService {
@@ -36,8 +37,24 @@ export class StudiesService {
     }
   }
 
-  getByDirector(directorId: string): Promise<Study[]> {
-    return this.studiesRepository.find({ where: { members: { directorId } } });
+  update(id: string, { name }: UpdateStudyDto) {
+    return this.studiesRepository.update(id, { name });
+  }
+
+  async getByDirector(directorId: string) {
+    const studies = await this.studiesRepository
+      .createQueryBuilder('studies')
+      .leftJoinAndSelect('studies.members', 'member')
+      .where('member.directorId = :directorId', { directorId })
+      .select(['studies.id', 'studies.name', 'member.role'])
+      .orderBy('member.role', 'ASC')
+      .getMany();
+
+    return studies.map(({ id, name, members }) => ({
+      id,
+      name,
+      role: members[0].role ?? 'employee',
+    }));
   }
 
   findOne(id: string): Promise<Study | null> {

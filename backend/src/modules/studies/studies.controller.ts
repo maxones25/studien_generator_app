@@ -14,6 +14,7 @@ import { CreateStudyDto } from './dtos/createStudyDto';
 import { AddMemberDto } from './dtos/addMemberDto';
 import { UpdateMemberDto } from './dtos/updateMemberDto';
 import { Types } from '../../decorators/type.decorator';
+import { UpdateStudyDto } from './dtos/updateStudyDto';
 
 @Controller('studies')
 export class StudiesController {
@@ -32,6 +33,13 @@ export class StudiesController {
     @DirectorId() directorId: string,
   ) {
     return this.studiesService.create(createStudyDto, directorId);
+  }
+
+  @Types('director')
+  @Roles('admin')
+  @Put(':studyId')
+  async update(@Param('studyId') studyId: string, @Body() updateStudyDto: UpdateStudyDto) {
+    return this.studiesService.update(studyId, updateStudyDto);
   }
 
   @Types('director')

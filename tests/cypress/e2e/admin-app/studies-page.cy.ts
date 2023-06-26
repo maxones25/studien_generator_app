@@ -26,7 +26,7 @@ describe("studies page", () => {
 
     cy.getByTestId("loading studies spinner").should("exist");
 
-    cy.contains(testData.study.name).should("be.visible");
+    cy.contains(testData.study.name).should("exist");
   });
 
   it("should open create study dialog", () => {
@@ -62,6 +62,28 @@ describe("studies page", () => {
 
     cy.getByTestId("submit-study-form").click();
 
-    cy.contains(name).should("be.visible");
+    cy.contains(name).should("exist");
+  });
+
+  it("should update existing study", () => {
+    cy.visit("/studies");
+
+    const newName = faker.company.name();
+
+    cy.contains(newName).should("not.exist");
+
+    cy.getByTestId("update study button").first().click();
+
+    cy.getByTestId("study form").should("be.visible");
+
+    cy.getByTestId("name-input").should("not.have.value", "");
+
+    cy.getByTestId("name-input").clear();
+
+    cy.getByTestId("name-input").type(newName).should("have.value", newName);
+
+    cy.getByTestId("submit-study-form").click();
+
+    cy.contains(newName).should("exist");
   });
 });

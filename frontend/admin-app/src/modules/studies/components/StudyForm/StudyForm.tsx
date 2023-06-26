@@ -10,11 +10,16 @@ export interface StudyFormProps extends FormProps<StudyFormData> {}
 export const StudyForm: React.FC<StudyFormProps> = ({
   onSubmit,
   formProps,
+  values,
 }) => {
-  const form = useForm<StudyFormData>();
+  const form = useForm<StudyFormData>({ values });
 
   return (
-    <Form data-testid="study form" onSubmit={form.handleSubmit(onSubmit)} {...formProps}>
+    <Form
+      data-testid="study form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      {...formProps}
+    >
       <FormTextField
         label="Name"
         formState={form.formState}

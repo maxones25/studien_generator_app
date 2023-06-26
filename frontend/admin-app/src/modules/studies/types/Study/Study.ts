@@ -1,4 +1,5 @@
 export type Study = {
-    id: string;
-    name: string;
-}
+  id: string;
+  name: string;
+  role: string;
+};

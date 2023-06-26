@@ -67,12 +67,12 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2023-06-22T10:55:38.315Z",
-    "modified": "2023-06-26T12:02:15.909Z",
+    "modified": "2023-06-26T17:43:43.618Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email\": \"max.mustermann@test.de\",\n  \"password\": \"wrong-password\"\n}",
+      "raw": "{\n  \"email\": \"max@stock.de\",\n  \"password\": \"12345678\"\n}",
       "form": []
     },
     "tests": []
@@ -86,17 +86,13 @@
     "method": "POST",
     "sortNum": 80000,
     "created": "2023-06-22T11:04:50.195Z",
-    "modified": "2023-06-23T16:53:04.869Z",
+    "modified": "2023-06-26T17:44:12.789Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{ \n  \"name\": \"\"\n}",
+      "raw": "{ \n  \"name\": \"test study 123\"\n}",
       "form": []
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiNmJlYzAxYmItM2M3Ny00ODkxLWJmNGMtYzMyNjljOGZmYTAzIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NTE5MTg2fQ.8BY8W-LfgczapG4KGsnnKFf2YEFW-bNaY3Omve_qkvQ"
     },
     "tests": []
   },
