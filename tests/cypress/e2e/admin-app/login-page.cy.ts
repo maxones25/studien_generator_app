@@ -81,7 +81,7 @@ describe("login page", () => {
 
     cy.getByTestId("login-submit-button").click();
 
-    cy.shouldBeRelativePath("/");
+    cy.shouldBeRelativePath("/studies");
   });
 
   it("should open sign up page", () => {
