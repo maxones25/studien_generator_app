@@ -7,16 +7,16 @@ export interface PageProps extends ColumnProps {
 
 export const Page: React.FC<PageProps> = ({ sx, testId, ...props }) => {
   return (
-    <Column
-      data-testid={testId}
-      sx={{
-        position: "relative",
-        height: "100vh",
-        overflowY: "hidden",
-        bgcolor: "background.default",
-        ...sx,
-      }}
-      {...props}
-    />
+      <Column
+        data-testid={testId}
+        sx={{
+          position: "relative",
+          height: "100vh",
+          overflowY: "hidden",
+          bgcolor: "background.default",
+          ...sx,
+        }}
+        {...props}
+      />
   );
 };

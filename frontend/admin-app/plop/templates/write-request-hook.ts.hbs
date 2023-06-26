@@ -1,10 +1,8 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 
-export interface Use{{pascalCase name}}Options {}
-
-export const use{{pascalCase name}} = (options? : Use{{pascalCase name}}Options) => {
-  return useWriteRequest<unknown, unknown>(get{{pascalCase name}}Key(), (options) =>
+export const use{{pascalCase name}} = () => {
+  return useWriteRequest<unknown, unknown>((options) =>
     apiRequest(`/`, { method: "POST", ...options })
   );
 }

@@ -1,6 +1,7 @@
 import { AuthenticationGuard, LoginGuard } from "@modules/auth/components";
 import HelloWorldPage from "@pages/HelloWorldPage/HelloWorldPage";
 import LoginPage from "@pages/LoginPage/LoginPage";
+import SignUpPage from "@pages/SignUpPage/SignUpPage";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -9,6 +10,14 @@ const router = createBrowserRouter([
     element: (
       <LoginGuard>
         <LoginPage />
+      </LoginGuard>
+    ),
+  },
+  {
+    path: "/signUp",
+    element: (
+      <LoginGuard>
+        <SignUpPage />
       </LoginGuard>
     ),
   },

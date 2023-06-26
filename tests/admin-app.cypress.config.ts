@@ -7,5 +7,6 @@ export default defineConfig({
       apiUrl: "http://localhost:8000",
     },
     video: false,
+    specPattern: "cypress/e2e/admin-app/**/*.cy.{js,jsx,ts,tsx}"
   },
 });

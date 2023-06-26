@@ -14,13 +14,13 @@ const LoginPage: React.FC<LoginPageProps> = () => {
   return (
     <Page testId="login page" alignItems="center">
       <Column p={1} mt={6}>
-        <Text variant="h6" align="center">Studien Generator App</Text>
+        <Text variant="h6" align="center">Login</Text>
         <LoginForm
           onSubmit={login.mutate}
           isError={login.isError}
           isLoading={login.isLoading}
         />
-        <Link to="/signUp">{t("sign up link")}</Link>
+        <Link data-testid="signup-link" to="/signUp">{t("sign up link")}</Link>
       </Column>
     </Page>
   );

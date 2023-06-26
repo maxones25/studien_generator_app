@@ -81,6 +81,15 @@ describe("login page", () => {
 
     cy.getByTestId("login-submit-button").click();
 
-    cy.shouldBeRelativePath('/');
+    cy.shouldBeRelativePath("/");
+  });
+
+  it("should open sign up page", () => {
+    cy.visit("/login");
+
+    cy.getByTestId("signup-link").click();
+    
+    cy.shouldBeRelativePath("/signUp");
+    cy.getByTestId("sign up page").should("exist");
   });
 });

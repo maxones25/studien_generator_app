@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["ESNext", "dom"],
-    "types": ["cypress"]
+    "types": ["cypress"],
+    "module": "commonjs"
   },
   "include": ["**/*.ts"]
 }
