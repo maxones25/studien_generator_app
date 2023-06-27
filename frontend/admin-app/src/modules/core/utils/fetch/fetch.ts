@@ -25,7 +25,7 @@ export const apiRequest = <Response>(
   endpoint: string,
   options: ApiRequestOptions = {}
 ) =>
-  new Promise<Response>(async (resolve) => {
+  new Promise<Response>(async (resolve, reject) => {
     const {
       method = "GET",
       headers = {},
@@ -42,16 +42,18 @@ export const apiRequest = <Response>(
       queryParams !== "" ? `?${queryParams}` : ""
     }`;
 
-    const res = await fetch(uri, {
+    fetch(uri, {
       method,
       headers,
       body: body ? JSON.stringify(body) : undefined,
-    });
-
-    try {
-      const data = await res.json();
-      resolve(data as Response);
-    } catch (error) {
-      resolve({} as Response);
-    }
+    })
+      .then((res) => res.text())
+      .then((text) => {
+        if (text.length > 0) {
+          resolve(JSON.parse(text) as Response);
+        } else {
+          resolve({} as Response);
+        }
+      })
+      .catch((err) => reject(err));
   });
