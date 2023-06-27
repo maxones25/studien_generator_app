@@ -7,8 +7,6 @@ import {
   createDirector,
   createGroup,
   createStudy,
-  deleteDirector,
-  deleteStudy,
   getDirectorAccessToken,
 } from '../utils';
 import { ValidationPipe } from '@nestjs/common';
@@ -58,8 +56,6 @@ describe('AppController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await deleteStudy(app, accessToken, studyId);
-    await deleteDirector(app, accessToken);
     await app.close();
   });
 });

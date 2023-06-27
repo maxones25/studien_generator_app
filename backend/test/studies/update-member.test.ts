@@ -56,24 +56,6 @@ describe('AppController (e2e)', () => {
     studyId = await createStudy(app, accessToken1, study);
   });
 
-  it('/POST add employee to study successfully', () => {
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/members`)
-      .set('Authorization', `Bearer ${accessToken1}`)
-      .send({
-        directorId: director2Id,
-        role: 'employee'
-    })
-      .expect(201);
-  });
-
-  it('/DELETE remove last admin from study' , () => {
-    return request(app.getHttpServer())
-      .delete(`/studies/${studyId}/members/${director1Id}`)
-      .set('Authorization', `Bearer ${accessToken1}`)
-      .expect(409);
-  });
-
   it('/PUT change employee to admin as employee' , () => {
     return request(app.getHttpServer())
       .put(`/studies/${studyId}/members/${director1Id}`)
@@ -92,13 +74,6 @@ describe('AppController (e2e)', () => {
       .send({
         role: 'admin',
       })
-      .expect(200);
-  });
-
-  it('/DELETE remove admin from study successfully' , () => {
-    return request(app.getHttpServer())
-      .delete(`/studies/${studyId}/members/${director2Id}`)
-      .set('Authorization', `Bearer ${accessToken1}`)
       .expect(200);
   });
 

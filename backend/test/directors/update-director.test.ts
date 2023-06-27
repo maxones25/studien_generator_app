@@ -5,7 +5,6 @@ import { AppModule } from '../../src/app.module';
 import fakeData, { director } from '../fakeData';
 import {
   createDirector,
-  deleteDirector,
   getDirectorAccessToken,
 } from '../utils';
 import { ValidationPipe } from '@nestjs/common';
@@ -49,7 +48,6 @@ describe('AppController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await deleteDirector(app, accessToken);
     await app.close();
   });
 });
