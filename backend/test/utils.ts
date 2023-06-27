@@ -99,7 +99,7 @@ export const createParticipant = (
         .catch((err) => reject(err));
   });
 
-export const createMember = (
+export const addMember = (
   app: INestApplication,
   accessToken: string,
   studyId: string,
@@ -110,5 +110,7 @@ export const createMember = (
         .post(`/studies/${studyId}/members`)
         .set('Authorization', `Bearer ${accessToken}`)
         .send(data)
-        .expect(201);
+        .expect(201)
+        .then((res) => resolve(res.body))
+        .catch((err) => reject(err));
   });

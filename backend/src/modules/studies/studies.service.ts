@@ -100,6 +100,10 @@ export class StudiesService {
       });
   }
 
+  async getMembers(studyId: string) {
+    return await this.studyMemberRepository.find({where: { studyId}})
+  }
+
   async checkAdmins(studyId: string, directorId: string): Promise<boolean> {
     const member = await this.studyMemberRepository.findOne({
       where: {

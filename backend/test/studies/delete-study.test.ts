@@ -5,14 +5,16 @@ import { AppModule } from '../../src/app.module';
 import fakeData from '../fakeData';
 import {
   createDirector,
+  createStudy,
   getDirectorAccessToken,
-} from '../utils';
+} from '../utils'; 
 import { ValidationPipe } from '@nestjs/common';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   let directorId: any;
   let accessToken: string;
+  let studyId: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -24,6 +26,7 @@ describe('AppController (e2e)', () => {
     await app.init();
 
     const director = fakeData.director();
+    const study = fakeData.study();
 
     directorId = await createDirector(app, {
       ...director,
@@ -35,12 +38,14 @@ describe('AppController (e2e)', () => {
       director.email,
       director.password,
     );
-  
+
+    studyId = await createStudy(app, accessToken, study)
   });
 
-  it('/DELETE delete director successfully',async () => {
+  it('/DELETE delete study succesfully', () => {
+    const study = fakeData.study();
     return request(app.getHttpServer())
-      .delete(`/directors`)
+      .delete(`/studies/${studyId}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(200)
   });

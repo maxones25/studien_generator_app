@@ -50,6 +50,15 @@ export class StudiesController {
   }
 
   @Types('director')
+  @Roles('admin', 'employee')
+  @Get(':studyId/members')
+  async findMembersByStudy(
+    @Param('studyId') studyId: string,
+  ) {
+    return this.studiesService.getMembers(studyId);
+  }
+
+  @Types('director')
   @Roles('admin')
   @Post(':studyId/members')
   async addMember(
