@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { AccessTokenProvider } from "@modules/auth/contexts";
 import { Theme } from "@modules/core/components";
-
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import Backend from "i18next-http-backend";
