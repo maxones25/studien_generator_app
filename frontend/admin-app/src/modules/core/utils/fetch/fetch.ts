@@ -21,15 +21,11 @@ export interface ApiRequestOptions {
   params?: RequestParams;
 }
 
-interface ErrorResponse {
-  message: string;
-}
-
 export const apiRequest = <Response>(
   endpoint: string,
   options: ApiRequestOptions = {}
 ) =>
-  new Promise<Response>((resolve, reject: (error: ErrorResponse) => void) => {
+  new Promise<Response>(async (resolve) => {
     const {
       method = "GET",
       headers = {},
@@ -46,16 +42,16 @@ export const apiRequest = <Response>(
       queryParams !== "" ? `?${queryParams}` : ""
     }`;
 
-    fetch(uri, {
+    const res = await fetch(uri, {
       method,
       headers,
       body: body ? JSON.stringify(body) : undefined,
-    }).then((res) => {
-      res.json().then((data) => {
-        if (res.status < 200 || 400 <= res.status) {
-          reject(data.error as ErrorResponse);
-        }
-        resolve(data);
-      });
     });
+
+    try {
+      const data = await res.json();
+      resolve(data as Response);
+    } catch (error) {
+      resolve({} as Response);
+    }
   });
