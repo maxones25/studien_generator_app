@@ -13,6 +13,9 @@ import { Group } from './entities/group.entity';
 import { Participant } from './entities/participant.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { DirectorsModule } from '@modules';
+import { AbstractEntity } from '@entities/abstract-entity.entity';
+import { ConcreteEntity } from '@entities/concrete-entity.entity';
+import { EntityField } from '@entities/entity-field.entity';
 
 @Module({
   imports: [
@@ -24,9 +27,18 @@ import { DirectorsModule } from '@modules';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Director, Study, StudyMember, Group, Participant],
+      entities: [
+        Director,
+        Study,
+        StudyMember,
+        Group,
+        Participant,
+        AbstractEntity,
+        ConcreteEntity,
+        EntityField,
+      ],
       logging: false,
-      synchronize: false,
+      synchronize: true,
     }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -40,7 +52,7 @@ import { DirectorsModule } from '@modules';
     }),
     AuthModule,
     StudiesModule,
-    DirectorsModule
+    DirectorsModule,
   ],
   providers: [
     {

@@ -21,12 +21,14 @@ export class Participant {
   studyId: string;
 
   @ManyToOne(() => Study, (study) => study.participants, {
-    onDelete: "CASCADE"
+    cascade: true,
+    onDelete: 'CASCADE',
   })
   study: Study;
 
   @ManyToOne(() => Group, (group) => group.participants, {
-    onDelete: "CASCADE"
+    cascade: true,
+    onDelete: 'CASCADE',
   })
   group: Group;
 }
