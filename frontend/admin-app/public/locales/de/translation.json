@@ -1,5 +1,6 @@
 {
   "no studies found": "keine Studien gefunden",
   "admin": "Admin",
-  "employee": "Teammitglied"
+  "employee": "Teammitglied",
+  "error: studies could not load": "Studien können nicht geladen werden"
 }

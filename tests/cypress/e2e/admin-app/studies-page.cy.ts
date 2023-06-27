@@ -204,4 +204,18 @@ describe("studies page", () => {
 
     cy.getByTestId("name-input-helper-text").should("be.visible");
   });
+
+  it("should show error if studies can not be loaded", () => {
+    cy.intercept("GET", Cypress.env("apiUrl") + "/studies", {
+      forceNetworkError: true,
+    }).as("getStudies");
+
+    cy.visit("/studies");
+
+    cy.getByTestId("studies page").should("exist");
+
+    cy.getByTestId("get-studies-error-text", { timeout: 15000 }).should(
+      "exist"
+    );
+  });
 });

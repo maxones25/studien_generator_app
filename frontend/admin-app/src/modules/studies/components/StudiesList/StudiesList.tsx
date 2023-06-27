@@ -19,7 +19,10 @@ export interface StudiesListProps {
   onDelete: (data: Study) => void;
 }
 
-export const StudiesList: React.FC<StudiesListProps> = ({ onUpdate, onDelete }) => {
+export const StudiesList: React.FC<StudiesListProps> = ({
+  onUpdate,
+  onDelete,
+}) => {
   const { t } = useTranslation();
   const getStudies = useGetStudies();
 
@@ -33,10 +36,14 @@ export const StudiesList: React.FC<StudiesListProps> = ({ onUpdate, onDelete }) 
 
   const hasStudies = (getStudies.data?.length ?? 0) > 0;
 
+  console.log(getStudies);
+
   return (
     <Column alignItems="center" p={1} boxShadow={1} borderRadius={1}>
       {getStudies.isLoading ? (
         <CircularProgress data-testid="loading studies spinner" />
+      ) : getStudies.isError ? (
+        <Text data-testid="get-studies-error-text" color="error.main">{t("error: studies could not load")}</Text>
       ) : !hasStudies ? (
         <Text>{t("no studies found")}</Text>
       ) : (
