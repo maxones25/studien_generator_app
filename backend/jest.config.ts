@@ -8,12 +8,6 @@ const config: Config = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
-  moduleNameMapper: {
-    '^@app.module': '<rootDir>/src/app.module.ts',
-    '^@modules': '<rootDir>/src/modules',
-    '^@entities': '<rootDir>/src/entities',
-    '^@enums': '<rootDir>/src/enums',
-  },
   testTimeout: 15000,
 };
 

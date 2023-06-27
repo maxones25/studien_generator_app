@@ -31,6 +31,13 @@
             "bearer": "{{DIRECTOR_ACCESS_TOKEN}}"
           }
         }
+      },
+      {
+        "_id": "652d52a0-2ff6-4147-9811-023bf43376fb",
+        "name": "Entities",
+        "containerId": "9b159183-ed44-4029-9f49-8849a3b138ec",
+        "created": "2023-06-27T15:43:15.863Z",
+        "sortNum": 30000
       }
     ],
     "settings": {

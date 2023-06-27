@@ -12,10 +12,10 @@ import { StudyMember } from './entities/study-member';
 import { Group } from './entities/group.entity';
 import { Participant } from './entities/participant.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { DirectorsModule } from '@modules';
-import { AbstractEntity } from '@entities/abstract-entity.entity';
-import { ConcreteEntity } from '@entities/concrete-entity.entity';
-import { EntityField } from '@entities/entity-field.entity';
+import { DirectorsModule } from './modules/directors/directors.module';
+import { AbstractEntity } from './entities/abstract-entity.entity';
+import { ConcreteEntity } from './entities/concrete-entity.entity';
+import { EntityField } from './entities/entity-field.entity';
 
 @Module({
   imports: [
@@ -38,7 +38,7 @@ import { EntityField } from '@entities/entity-field.entity';
         EntityField,
       ],
       logging: false,
-      synchronize: true,
+      synchronize: false,
     }),
     JwtModule.registerAsync({
       imports: [ConfigModule],

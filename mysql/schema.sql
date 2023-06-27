@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 23. Jun 2023 um 11:07
+-- Erstellungszeit: 27. Jun 2023 um 15:44
 -- Server-Version: 8.0.31
 -- PHP-Version: 8.0.19
 
@@ -24,6 +24,31 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `abstract_entity`
+--
+
+CREATE TABLE `abstract_entity` (
+  `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `studyId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `concrete_entity`
+--
+
+CREATE TABLE `concrete_entity` (
+  `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `studyId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `groupId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `abstractEntityId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `director`
 --
 
@@ -33,6 +58,20 @@ CREATE TABLE `director` (
   `lastName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `entity_field`
+--
+
+CREATE TABLE `entity_field` (
+  `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abtractEntityId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `concreteEntityId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `abstractEntityId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -57,8 +96,8 @@ CREATE TABLE `participant` (
   `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `studyId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `groupId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `groupId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `studyId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -89,11 +128,38 @@ CREATE TABLE `study_member` (
 --
 
 --
+-- Indizes für die Tabelle `abstract_entity`
+--
+ALTER TABLE `abstract_entity`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_name_for_study` (`name`,`studyId`),
+  ADD KEY `FK_d5d5fe7cdd2f5c4634c9f144ab5` (`studyId`);
+
+--
+-- Indizes für die Tabelle `concrete_entity`
+--
+ALTER TABLE `concrete_entity`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_entity_for_group` (`abstractEntityId`,`groupId`),
+  ADD UNIQUE KEY `unique_entity_for_study` (`abstractEntityId`,`studyId`),
+  ADD KEY `FK_abcdb51ad91b394e2d2a29aaedf` (`studyId`),
+  ADD KEY `FK_d110c731c925c7b7d3558295262` (`groupId`);
+
+--
 -- Indizes für die Tabelle `director`
 --
 ALTER TABLE `director`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `IDX_ee3063e394bf69b0a6157fdaa6` (`email`);
+
+--
+-- Indizes für die Tabelle `entity_field`
+--
+ALTER TABLE `entity_field`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_name_for_entity` (`name`,`abtractEntityId`),
+  ADD KEY `FK_df5379e31de951ca6af4c59b39c` (`abstractEntityId`),
+  ADD KEY `FK_5212593a95d4e84a18904ff1fc9` (`concreteEntityId`);
 
 --
 -- Indizes für die Tabelle `group`
@@ -129,6 +195,27 @@ ALTER TABLE `study_member`
 --
 -- Constraints der exportierten Tabellen
 --
+
+--
+-- Constraints der Tabelle `abstract_entity`
+--
+ALTER TABLE `abstract_entity`
+  ADD CONSTRAINT `FK_d5d5fe7cdd2f5c4634c9f144ab5` FOREIGN KEY (`studyId`) REFERENCES `study` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints der Tabelle `concrete_entity`
+--
+ALTER TABLE `concrete_entity`
+  ADD CONSTRAINT `FK_86aa511a06b756b5c4a1a4eb74c` FOREIGN KEY (`abstractEntityId`) REFERENCES `abstract_entity` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_abcdb51ad91b394e2d2a29aaedf` FOREIGN KEY (`studyId`) REFERENCES `study` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_d110c731c925c7b7d3558295262` FOREIGN KEY (`groupId`) REFERENCES `group` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints der Tabelle `entity_field`
+--
+ALTER TABLE `entity_field`
+  ADD CONSTRAINT `FK_5212593a95d4e84a18904ff1fc9` FOREIGN KEY (`concreteEntityId`) REFERENCES `concrete_entity` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_df5379e31de951ca6af4c59b39c` FOREIGN KEY (`abstractEntityId`) REFERENCES `abstract_entity` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints der Tabelle `group`
