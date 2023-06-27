@@ -24,7 +24,7 @@ export class ParticipantsAuthService {
 
     if (!participant) throw new UnauthorizedException();
 
-    if (await this.passwordService.compare(password, participant.password))
+    if (!await this.passwordService.compare(password, participant.password))
       throw new UnauthorizedException();
 
     const accessToken = await this.jwtService.signAsync({
