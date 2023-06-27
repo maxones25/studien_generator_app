@@ -22,7 +22,7 @@ export const useLogin = () => {
       return res;
     },
     {
-      onSuccess: ({ accessToken: value }) => {
+      onSuccess: ({ data: { accessToken: value } }) => {
         accessToken.set(value);
       },
     }
