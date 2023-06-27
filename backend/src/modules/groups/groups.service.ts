@@ -19,8 +19,8 @@ export class GroupsService {
     return group;
   }
 
-  async update(groupId: string, updatedGroup: GroupDto) {
-    await this.groupsRepository.update({ id: groupId }, updatedGroup);
+  async update(groupId: string, { name }: GroupDto) {
+    await this.groupsRepository.update({ id: groupId }, { name });
   }
 
   async delete(groupId: string) {

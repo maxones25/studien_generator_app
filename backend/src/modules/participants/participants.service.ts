@@ -13,7 +13,7 @@ export class ParticipantsService {
     private passwordService: PasswordService,
   ) {}
 
-  //TODO 
+  //TODO
   async create(studyId: string, groupId: string, { number }: ParticipantDto) {
     const participant = new Participant();
     const password = await this.passwordService.generate();
@@ -22,21 +22,21 @@ export class ParticipantsService {
     participant.number = number;
     participant.password = await this.passwordService.hash(password, 10);
     await this.participantsRepository.insert(participant);
-    return {...participant, password: password};
+    return { ...participant, password: password };
   }
-  
+
   async regeneratePassword(participantId: string) {
     const password = await this.passwordService.generate();
     const hashedPassword = await this.passwordService.hash(password, 10);
     await this.participantsRepository.update(
-      { id: participantId }, 
+      { id: participantId },
       { password: hashedPassword },
     );
-    return {password: password};
+    return { password: password };
   }
 
-  async update(participantId: string, updatedParticipant: ParticipantDto) {
-    await this.participantsRepository.update({ id: participantId }, updatedParticipant)
+  async update(participantId: string, { number }: ParticipantDto) {
+    await this.participantsRepository.update({ id: participantId }, { number });
   }
 
   async getByStudy(studyId: string): Promise<Participant[]> {
