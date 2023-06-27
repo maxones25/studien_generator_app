@@ -1,5 +1,10 @@
 {
   "studies": "Studien",
   "create study": "Studie anlegen",
-  "update study": "Studie editieren"
+  "update study": "Studie editieren",
+  "delete study": "Studie löschen",
+  "delete study question": "Wollen Sie die Studie '{{name}}' wirklich löschen? Alle erhobenen Daten werden hierbei ebenfalls gelöscht. Geben Sie hierfür den Namen der Studie ein:",
+  "delete": "Löschen",
+  "name required": "Bitte Name eingeben",
+  "name unequal study name": "Name entspricht nicht dem Studienname"
 }

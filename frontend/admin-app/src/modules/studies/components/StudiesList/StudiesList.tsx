@@ -1,7 +1,7 @@
 import { Column, Text } from "@modules/core/components";
 import { useGetStudies } from "@modules/studies/hooks";
 import { Study } from "@modules/studies/types";
-import { Edit } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import {
   CircularProgress,
   IconButton,
@@ -16,14 +16,19 @@ import { useTranslation } from "react-i18next";
 
 export interface StudiesListProps {
   onUpdate: (data: Study) => void;
+  onDelete: (data: Study) => void;
 }
 
-export const StudiesList: React.FC<StudiesListProps> = ({ onUpdate }) => {
+export const StudiesList: React.FC<StudiesListProps> = ({ onUpdate, onDelete }) => {
   const { t } = useTranslation();
   const getStudies = useGetStudies();
 
   const handleUpdateStudy = (study: Study) => () => {
     onUpdate(study);
+  };
+
+  const handleDeleteStudy = (study: Study) => () => {
+    onDelete(study);
   };
 
   const hasStudies = (getStudies.data?.length ?? 0) > 0;
@@ -38,7 +43,6 @@ export const StudiesList: React.FC<StudiesListProps> = ({ onUpdate }) => {
         <List sx={{ width: "100%" }}>
           {getStudies.data?.map((study, i, arr) => (
             <ListItem
-              data-testid={`study ${i}`}
               key={study.id}
               divider={i < arr.length - 1}
               disablePadding
@@ -50,10 +54,18 @@ export const StudiesList: React.FC<StudiesListProps> = ({ onUpdate }) => {
               <ListItemSecondaryAction>
                 {study.role === "admin" && (
                   <IconButton
-                    data-testid="update study button"
+                    data-testid={`update-study-${study.name}-button`}
                     onClick={handleUpdateStudy(study)}
                   >
                     <Edit />
+                  </IconButton>
+                )}
+                {study.role === "admin" && (
+                  <IconButton
+                    data-testid={`delete-study-${study.name}-button`}
+                    onClick={handleDeleteStudy(study)}
+                  >
+                    <Delete />
                   </IconButton>
                 )}
               </ListItemSecondaryAction>

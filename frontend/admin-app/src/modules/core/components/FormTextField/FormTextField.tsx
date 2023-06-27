@@ -9,6 +9,7 @@ export interface FormTextFieldProps<FormData extends FieldValues> {
   label?: React.ReactNode;
   type?: React.InputHTMLAttributes<unknown>["type"];
   fullWidth?: boolean;
+  placeholder?: string;
 }
 
 export const FormTextField = <FormData extends FieldValues>({
@@ -16,6 +17,7 @@ export const FormTextField = <FormData extends FieldValues>({
   textFieldProps,
   label,
   sx,
+  placeholder,
   type = "text",
   isVisible = true,
   fullWidth = false,
@@ -33,6 +35,7 @@ export const FormTextField = <FormData extends FieldValues>({
       label={label}
       type={type}
       fullWidth={fullWidth}
+      placeholder={placeholder}
       inputProps={{
         ...inputProps,
         "data-testid": `${name}-input`,
