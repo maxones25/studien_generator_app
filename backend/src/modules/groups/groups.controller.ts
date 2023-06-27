@@ -1,16 +1,16 @@
-import { Body, Controller, Put, Param, Post, Delete } from '@nestjs/common';
+import { Body, Controller, Put, Param, Post, Delete, Get } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { Types } from '../../decorators/type.decorator';
 import { GroupDto } from './dtos/groupDto';
 import { Roles } from '../../decorators/roles.decorator';
 
-@Controller('studies/:studyId')
+@Controller('studies/:studyId/groups')
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
   @Types('director')
   @Roles('admin')
-  @Post('groups')
+  @Post()
   async create(
     @Param('studyId') studyId: string,
     @Body() createStudyDto: GroupDto,
@@ -19,8 +19,17 @@ export class GroupsController {
   }
 
   @Types('director')
+  @Roles('admin', 'employee')
+  @Get()
+  async findGroupsByStudies(
+    @Param('studyId') studyId: string,
+  ) {
+    return this.groupsService.getByStudy(studyId);
+  }
+
+  @Types('director')
   @Roles('admin')
-  @Put('groups/:groudId')
+  @Put(':groudId')
   async update(
     @Param('groupId') groupId: string,
     @Body() updatedGroup: GroupDto,
@@ -30,7 +39,7 @@ export class GroupsController {
 
   @Types('director')
   @Roles('admin')
-  @Delete('groups/:groudId')
+  @Delete(':groudId')
   async deleteGroup(@Param('groudId') groudId: string) {
     this.groupsService.delete(groudId);
   }

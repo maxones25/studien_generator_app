@@ -4,11 +4,13 @@ import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
 import fakeData from '../fakeData';
 import {
+  addMember,
   createDirector,
   createStudy,
   getDirectorAccessToken,
 } from '../utils';
 import { ValidationPipe } from '@nestjs/common';
+import { Roles } from '../../src/enums/roles.enum';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -29,6 +31,8 @@ describe('AppController (e2e)', () => {
 
     const director1 = fakeData.director();
     const director2 = fakeData.director();
+    const director3 = fakeData.director();
+    const director4 = fakeData.director();
     const study = fakeData.study();
 
     director1Id = await createDirector(app, {
@@ -37,9 +41,10 @@ describe('AppController (e2e)', () => {
     });
 
     director2Id = await createDirector(app, {
-        ...director2,
-        activationPassword: process.env.ACTIVATION_PASSWORD,
-      });
+      ...director2,
+      activationPassword: process.env.ACTIVATION_PASSWORD,
+    });
+
 
     accessToken1 = await getDirectorAccessToken(
       app,
@@ -54,52 +59,17 @@ describe('AppController (e2e)', () => {
     );
 
     studyId = await createStudy(app, accessToken1, study);
+    await addMember(app, accessToken1, studyId, {directorId: director2Id, role: Roles.employee})
   });
 
-  it('/POST add employee to study successfully', () => {
+  it('/GET get members of study successfully', () => {
     return request(app.getHttpServer())
-      .post(`/studies/${studyId}/members`)
+      .get(`/studies/${studyId}/members`)
       .set('Authorization', `Bearer ${accessToken1}`)
-      .send({
-        directorId: director2Id,
-        role: 'employee'
-    })
-      .expect(201);
-  });
-
-  it('/DELETE remove last admin from study' , () => {
-    return request(app.getHttpServer())
-      .delete(`/studies/${studyId}/members/${director1Id}`)
-      .set('Authorization', `Bearer ${accessToken1}`)
-      .expect(409);
-  });
-
-  it('/PUT change employee to admin as employee' , () => {
-    return request(app.getHttpServer())
-      .put(`/studies/${studyId}/members/${director1Id}`)
-      .set('Authorization', `Bearer ${accessToken2}`)
-      .send({
-        directorId: director2Id,
-        role: 'employee'
-      })
-      .expect(401);
-  });
-
-  it('/PUT change employee to admin successfully', () => {
-    return request(app.getHttpServer())
-      .put(`/studies/${studyId}/members/${director2Id}`)
-      .set('Authorization', `Bearer ${accessToken1}`)
-      .send({
-        role: 'admin',
-      })
-      .expect(200);
-  });
-
-  it('/DELETE remove admin from study successfully' , () => {
-    return request(app.getHttpServer())
-      .delete(`/studies/${studyId}/members/${director2Id}`)
-      .set('Authorization', `Bearer ${accessToken1}`)
-      .expect(200);
+      .expect(200)
+      .then((res) => {
+        expect(res.body.length).toBe(2);
+      });
   });
 
   afterAll(async () => {

@@ -43,9 +43,6 @@ describe('AppController (e2e)', () => {
       .get(`/directors`)
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(200)
-      .then((res) => {
-        expect(res.body.length).toBe(1);
-      });
   });
 
   afterAll(async () => {

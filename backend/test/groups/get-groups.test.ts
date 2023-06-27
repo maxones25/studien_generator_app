@@ -5,14 +5,21 @@ import { AppModule } from '../../src/app.module';
 import fakeData from '../fakeData';
 import {
   createDirector,
+  createGroup,
+  createParticipant,
+  createStudy,
   getDirectorAccessToken,
 } from '../utils';
 import { ValidationPipe } from '@nestjs/common';
+import { ParticipantDto } from '@modules/participants/dtos/participantDto';
+import { Participant } from '../../src/entities/participant.entity';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   let directorId: any;
   let accessToken: string;
+  let studyId: string;
+  let groupId: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -24,6 +31,8 @@ describe('AppController (e2e)', () => {
     await app.init();
 
     const director = fakeData.director();
+    const study = fakeData.study();
+    const group = fakeData.group();
 
     directorId = await createDirector(app, {
       ...director,
@@ -35,14 +44,20 @@ describe('AppController (e2e)', () => {
       director.email,
       director.password,
     );
+
+    studyId = await createStudy(app, accessToken, study);
+    groupId = await createGroup(app, accessToken, studyId, group);
   
   });
 
-  it('/DELETE delete director successfully',async () => {
+  it('/GET get all groups from study successfully',async () => {
     return request(app.getHttpServer())
-      .delete(`/directors`)
+      .get(`/studies/${studyId}/groups`)
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(200)
+      .then((res) => {
+        expect(res.body.length).toBe(1);
+      });
   });
 
   afterAll(async () => {

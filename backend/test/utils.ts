@@ -5,6 +5,7 @@ import { CreateStudyDto } from '../src/modules/studies/dtos/createStudyDto';
 import { AddMemberDto } from '../src/modules/studies/dtos/addMemberDto';
 import { GroupDto } from '../src/modules/groups/dtos/groupDto';
 import { ParticipantDto } from '../src/modules/participants/dtos/participantDto';
+import { LoginParticipantDto } from '../src/modules/auth/dtos/LoginParticipantDto';
 
 export const createDirector = (
   app: INestApplication,
@@ -86,7 +87,7 @@ export const createParticipant = (
   groupId: string,
   data: ParticipantDto,
   ) => 
-    new Promise<string>((resolve, reject) => {
+    new Promise<LoginParticipantDto>((resolve, reject) => {
       request(app.getHttpServer())
         .post(`/studies/${studyId}/groups/${groupId}/participants`)
         .set('Authorization', `Bearer ${accessToken}`)
@@ -94,12 +95,12 @@ export const createParticipant = (
         .expect(201)
         .then((res) => {
           expect(typeof res.body.id).toBe('string');
-          resolve(res.body.id);
+          resolve({ id: res.body.id, password: res.body.password });
         })
         .catch((err) => reject(err));
   });
 
-export const createMember = (
+export const addMember = (
   app: INestApplication,
   accessToken: string,
   studyId: string,
@@ -110,5 +111,7 @@ export const createMember = (
         .post(`/studies/${studyId}/members`)
         .set('Authorization', `Bearer ${accessToken}`)
         .send(data)
-        .expect(201);
+        .expect(201)
+        .then((res) => resolve(res.body))
+        .catch((err) => reject(err));
   });

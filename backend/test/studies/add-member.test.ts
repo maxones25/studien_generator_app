@@ -4,7 +4,6 @@ import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
 import fakeData from '../fakeData';
 import {
-  addMember,
   createDirector,
   createStudy,
   getDirectorAccessToken,
@@ -16,8 +15,12 @@ describe('AppController (e2e)', () => {
   let app: INestApplication;
   let director1Id: any;
   let director2Id: any;
+  let director3Id: any;
+  let director4Id: any;
   let accessToken1: string;
   let accessToken2: string;
+  let accessToken3: string;
+  let accessToken4: string;
   let studyId: string;
 
   beforeAll(async () => {
@@ -31,6 +34,8 @@ describe('AppController (e2e)', () => {
 
     const director1 = fakeData.director();
     const director2 = fakeData.director();
+    const director3 = fakeData.director();
+    const director4 = fakeData.director();
     const study = fakeData.study();
 
     director1Id = await createDirector(app, {
@@ -39,9 +44,19 @@ describe('AppController (e2e)', () => {
     });
 
     director2Id = await createDirector(app, {
-        ...director2,
-        activationPassword: process.env.ACTIVATION_PASSWORD,
-      });
+      ...director2,
+      activationPassword: process.env.ACTIVATION_PASSWORD,
+    });
+
+    director3Id = await createDirector(app, {
+      ...director3,
+      activationPassword: process.env.ACTIVATION_PASSWORD,
+    });
+
+    director4Id = await createDirector(app, {
+      ...director4,
+      activationPassword: process.env.ACTIVATION_PASSWORD,
+    });
 
     accessToken1 = await getDirectorAccessToken(
       app,
@@ -55,48 +70,52 @@ describe('AppController (e2e)', () => {
       director2.password,
     );
 
+    accessToken3 = await getDirectorAccessToken(
+      app,
+      director3.email,
+      director3.password,
+    );
+
+    accessToken4 = await getDirectorAccessToken(
+      app,
+      director4.email,
+      director4.password,
+    );
+
     studyId = await createStudy(app, accessToken1, study);
-    await addMember(app, accessToken1, studyId, {directorId: director2Id, role: Roles.employee})
   });
 
-  it('/PUT change last admin to employee' , () => {
+  it('/POST add employee to study successfully', () => {
     return request(app.getHttpServer())
-      .put(`/studies/${studyId}/members/${director1Id}`)
+      .post(`/studies/${studyId}/members`)
       .set('Authorization', `Bearer ${accessToken1}`)
       .send({
-        role: Roles.employee
-      })
-      .expect(409);
+        directorId: director2Id,
+        role: Roles.employee,
+    })
+      .expect(201);
   });
 
-  it('/PUT change employee to admin as employee' , () => {
+  it('/POST add admin to study successfully', () => {
     return request(app.getHttpServer())
-      .put(`/studies/${studyId}/members/${director2Id}`)
+      .post(`/studies/${studyId}/members`)
+      .set('Authorization', `Bearer ${accessToken1}`)
+      .send({
+        directorId: director3Id,
+        role: Roles.admin,
+    })
+      .expect(201);
+  });
+
+  it('/POST add employee to study as employee', () => {
+    return request(app.getHttpServer())
+      .post(`/studies/${studyId}/members`)
       .set('Authorization', `Bearer ${accessToken2}`)
       .send({
-        role: Roles.admin
-      })
-      .expect(401);
-  });
-
-  it('/PUT change employee to admin successfully', () => {
-    return request(app.getHttpServer())
-      .put(`/studies/${studyId}/members/${director2Id}`)
-      .set('Authorization', `Bearer ${accessToken1}`)
-      .send({
-        role: Roles.admin,
-      })
-      .expect(200);
-  });
-
-  it('/PUT change admin to employee successfully', () => {
-    return request(app.getHttpServer())
-      .put(`/studies/${studyId}/members/${director2Id}`)
-      .set('Authorization', `Bearer ${accessToken1}`)
-      .send({
+        directorId: director4Id,
         role: Roles.employee,
-      })
-      .expect(200);
+    })
+      .expect(401);
   });
 
   afterAll(async () => {
