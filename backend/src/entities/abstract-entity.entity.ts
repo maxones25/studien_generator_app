@@ -1,19 +1,18 @@
 import {
-  Entity,
+  Entity as TypeOrmEntity,
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToMany,
   Unique,
+  OneToMany,
 } from 'typeorm';
 import { Study } from './study.entity';
-import { Participant } from './participant.entity';
 import { EntityField } from './entity-field.entity';
 import { ConcreteEntity } from './concrete-entity.entity';
 
-@Entity()
+@TypeOrmEntity()
 @Unique('unique_name_for_study', ['name', 'studyId'])
-export class Group {
+export class AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -23,13 +22,13 @@ export class Group {
   @Column()
   studyId: string;
 
-  @OneToMany(() => Participant, (participant) => participant.group)
-  participants: Participant[];
+  @OneToMany(() => EntityField, (field) => field.abstractEntity)
+  fields: EntityField[];
 
-  @OneToMany(() => ConcreteEntity, (entity) => entity.group)
-  entities: ConcreteEntity[];
+  @OneToMany(() => ConcreteEntity, (entity) => entity.abstractEntity)
+  concreteEntites: ConcreteEntity[];
 
-  @ManyToOne(() => Study, (study) => study.groups, {
+  @ManyToOne(() => Study, (study) => study.abstractEntities, {
     cascade: true,
     onDelete: 'CASCADE',
   })

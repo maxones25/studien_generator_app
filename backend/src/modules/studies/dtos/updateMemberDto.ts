@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty } from 'class-validator';
-import { Roles } from '@enums';
+import { Roles } from '../../../enums/roles.enum';
 
 export class UpdateMemberDto {
   @IsString()

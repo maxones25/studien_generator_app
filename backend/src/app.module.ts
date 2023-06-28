@@ -12,7 +12,10 @@ import { StudyMember } from './entities/study-member';
 import { Group } from './entities/group.entity';
 import { Participant } from './entities/participant.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { DirectorsModule } from '@modules';
+import { DirectorsModule } from './modules/directors/directors.module';
+import { AbstractEntity } from './entities/abstract-entity.entity';
+import { ConcreteEntity } from './entities/concrete-entity.entity';
+import { EntityField } from './entities/entity-field.entity';
 import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.filter';
 
 @Module({
@@ -25,7 +28,16 @@ import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.fil
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Director, Study, StudyMember, Group, Participant],
+      entities: [
+        Director,
+        Study,
+        StudyMember,
+        Group,
+        Participant,
+        AbstractEntity,
+        ConcreteEntity,
+        EntityField,
+      ],
       logging: false,
       synchronize: false,
     }),
@@ -41,7 +53,7 @@ import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.fil
     }),
     AuthModule,
     StudiesModule,
-    DirectorsModule
+    DirectorsModule,
   ],
   providers: [
     {

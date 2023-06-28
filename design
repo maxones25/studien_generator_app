@@ -1,0 +1,87 @@
+
+Studien
+
+Gruppen
+
+Probanden
+
+Entity
+    Stimmung
+Fields
+    Stimmung
+        Typ
+            Zahl
+        Regeln
+            Min
+                0
+            Max
+                100
+Abfragen
+    Häufigkeit
+        Art
+            variabel
+        Anzahl
+            3
+        Zeitraum
+            Woche
+        Regeln
+            min. Abstand
+                1
+            verschiebbar
+                ja
+            verschiebbar um
+                1
+            anzahl verschiebbar
+                1
+            verschiebbar auf selben tag
+                nein
+Erinnerungen
+    vor der Abfrage
+        Minuten
+            15
+    nach der Abfrage
+        Minuten
+            15
+        Minuten
+            60
+
+
+type
+    FIELD
+key
+    beginn
+
+
+
+Entity
+    Schlaf
+Fields
+    beginn
+        typ
+            datum
+        required
+            ja
+        Regeln
+            less_eq
+                value
+                    CURRENT_DATE
+                type
+                    PLACEHOLDER
+            less_eq
+                value
+                    ende
+                type
+                    FIELD
+    ende
+        typ
+            datum
+        required
+            ja
+                
+
+Entity
+    HIIT
+Fields
+    Motivation vor dem Workout
+    Motivation nach dem Workout
+

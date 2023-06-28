@@ -11,7 +11,7 @@ import {
   getDirectorAccessToken,
 } from '../utils';
 import { ValidationPipe } from '@nestjs/common';
-import { ParticipantDto } from '@modules/participants/dtos/participantDto';
+import { ParticipantDto } from '../../src/modules/participants/dtos/participantDto';
 import { Participant } from '../../src/entities/participant.entity';
 
 describe('AppController (e2e)', () => {
@@ -47,10 +47,9 @@ describe('AppController (e2e)', () => {
 
     studyId = await createStudy(app, accessToken, study);
     groupId = await createGroup(app, accessToken, studyId, group);
-  
   });
 
-  it('/GET get all groups from study successfully',async () => {
+  it('/GET get all groups from study successfully', async () => {
     return request(app.getHttpServer())
       .get(`/studies/${studyId}/groups`)
       .set('Authorization', `Bearer ${accessToken}`)
