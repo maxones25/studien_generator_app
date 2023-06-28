@@ -85,3 +85,29 @@ Fields
     Motivation vor dem Workout
     Motivation nach dem Workout
 
+POST    /studies/id/entities
+GET     /studies/id/entities
+PUT     /studies/id/entities/id
+DELETE  /studies/id/entities/id
+
+POST    /studies/id/entities/id/fields
+GET     /studies/id/entities/id/fields
+PUT     /studies/id/entities/id/fields/id
+DELETE  /studies/id/entities/id/fields/id
+
+POST    /studies/id/entities/id/group/id
+DELETE  /studies/id/entities/id/group/id
+POST    /studies/id/entities/id/global
+DELETE  /studies/id/entities/id/global
+
+POST    /studies/id/entities/id/group/id/fields
+GET     /studies/id/entities/id/group/id/fields
+PUT     /studies/id/entities/id/group/id/fields/id
+DELETE  /studies/id/entities/id/group/id/fields/id
+
+POST    /studies/id/entities/id/global/fields
+GET     /studies/id/entities/id/global/fields
+PUT     /studies/id/entities/id/global/fields/id
+DELETE  /studies/id/entities/id/global/fields/id
+
+

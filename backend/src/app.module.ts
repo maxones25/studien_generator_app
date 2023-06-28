@@ -17,6 +17,8 @@ import { AbstractEntity } from './entities/abstract-entity.entity';
 import { ConcreteEntity } from './entities/concrete-entity.entity';
 import { EntityField } from './entities/entity-field.entity';
 import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.filter';
+import { EntityFieldAttribute } from './entities/entity-field-attribute.entity';
+import { EntitiesModule } from './modules/entities/entities.module';
 
 @Module({
   imports: [
@@ -37,6 +39,7 @@ import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.fil
         AbstractEntity,
         ConcreteEntity,
         EntityField,
+        EntityFieldAttribute,
       ],
       logging: false,
       synchronize: false,
@@ -54,6 +57,7 @@ import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.fil
     AuthModule,
     StudiesModule,
     DirectorsModule,
+    EntitiesModule,
   ],
   providers: [
     {

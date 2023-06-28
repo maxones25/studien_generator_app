@@ -1,5 +1,5 @@
 import {
-  Entity as TypeOrmEntity,
+  Entity,
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
@@ -10,7 +10,7 @@ import { Study } from './study.entity';
 import { EntityField } from './entity-field.entity';
 import { ConcreteEntity } from './concrete-entity.entity';
 
-@TypeOrmEntity()
+@Entity()
 @Unique('unique_name_for_study', ['name', 'studyId'])
 export class AbstractEntity {
   @PrimaryGeneratedColumn('uuid')

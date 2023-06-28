@@ -1,5 +1,5 @@
 import {
-  Entity as TypeOrmEntity,
+  Entity,
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
@@ -10,15 +10,15 @@ import { Study } from './study.entity';
 import { EntityField } from './entity-field.entity';
 import { Group } from './group.entity';
 import { AbstractEntity } from './abstract-entity.entity';
+import { EntityFieldAttribute } from './entity-field-attribute.entity';
 
-@TypeOrmEntity()
-@Unique('unique_entity_for_study', ['abstractEntityId', 'studyId'])
+@Entity()
 @Unique('unique_entity_for_group', ['abstractEntityId', 'groupId'])
 export class ConcreteEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: true })
+  @Column()
   studyId: string;
 
   @Column({ nullable: true })
@@ -29,6 +29,12 @@ export class ConcreteEntity {
 
   @OneToMany(() => EntityField, (field) => field.concreteEntity)
   fields: EntityField[];
+
+  @OneToMany(
+    () => EntityFieldAttribute,
+    (attribute) => attribute.concreteEntity,
+  )
+  fieldAttributes: EntityFieldAttribute[];
 
   @ManyToOne(() => Study, (study) => study.entities, {
     cascade: true,

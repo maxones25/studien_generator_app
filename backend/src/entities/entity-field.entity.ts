@@ -4,12 +4,15 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   Unique,
+  OneToOne,
 } from 'typeorm';
 import { AbstractEntity } from './abstract-entity.entity';
 import { ConcreteEntity } from './concrete-entity.entity';
+import { EntityFieldAttribute } from './entity-field-attribute.entity';
+import { FieldType } from '../enums/field-type.enum';
 
 @TypeOrmEntity()
-@Unique('unique_name_for_entity', ['name', 'abtractEntityId'])
+@Unique('unique_name_for_entity', ['name', 'abstractEntityId'])
 export class EntityField {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -18,10 +21,16 @@ export class EntityField {
   name: string;
 
   @Column()
-  abtractEntityId: string;
+  type: FieldType;
+
+  @Column()
+  abstractEntityId: string;
 
   @Column({ nullable: true })
   concreteEntityId: string;
+
+  @OneToOne(() => EntityFieldAttribute, (attribute) => attribute.field)
+  attributes: EntityFieldAttribute[];
 
   @ManyToOne(() => AbstractEntity, (entity) => entity.fields, {
     cascade: true,

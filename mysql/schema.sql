@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 27. Jun 2023 um 15:44
+-- Erstellungszeit: 28. Jun 2023 um 20:20
 -- Server-Version: 8.0.31
 -- PHP-Version: 8.0.19
 
@@ -41,7 +41,7 @@ CREATE TABLE `abstract_entity` (
 
 CREATE TABLE `concrete_entity` (
   `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `studyId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `studyId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `groupId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `abstractEntityId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -69,9 +69,23 @@ CREATE TABLE `director` (
 CREATE TABLE `entity_field` (
   `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abtractEntityId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `concreteEntityId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `abstractEntityId` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `entity_field_attribute`
+--
+
+CREATE TABLE `entity_field_attribute` (
+  `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fieldId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `concreteEntityId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` json NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -141,7 +155,6 @@ ALTER TABLE `abstract_entity`
 ALTER TABLE `concrete_entity`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_entity_for_group` (`abstractEntityId`,`groupId`),
-  ADD UNIQUE KEY `unique_entity_for_study` (`abstractEntityId`,`studyId`),
   ADD KEY `FK_abcdb51ad91b394e2d2a29aaedf` (`studyId`),
   ADD KEY `FK_d110c731c925c7b7d3558295262` (`groupId`);
 
@@ -157,9 +170,17 @@ ALTER TABLE `director`
 --
 ALTER TABLE `entity_field`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_name_for_entity` (`name`,`abtractEntityId`),
+  ADD UNIQUE KEY `unique_name_for_entity` (`name`,`abstractEntityId`) USING BTREE,
   ADD KEY `FK_df5379e31de951ca6af4c59b39c` (`abstractEntityId`),
   ADD KEY `FK_5212593a95d4e84a18904ff1fc9` (`concreteEntityId`);
+
+--
+-- Indizes für die Tabelle `entity_field_attribute`
+--
+ALTER TABLE `entity_field_attribute`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_key_for_concrete_entity` (`fieldId`,`concreteEntityId`,`key`),
+  ADD KEY `FK_6b1bae42c3024525e76a6e93e09` (`concreteEntityId`);
 
 --
 -- Indizes für die Tabelle `group`
@@ -216,6 +237,13 @@ ALTER TABLE `concrete_entity`
 ALTER TABLE `entity_field`
   ADD CONSTRAINT `FK_5212593a95d4e84a18904ff1fc9` FOREIGN KEY (`concreteEntityId`) REFERENCES `concrete_entity` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_df5379e31de951ca6af4c59b39c` FOREIGN KEY (`abstractEntityId`) REFERENCES `abstract_entity` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints der Tabelle `entity_field_attribute`
+--
+ALTER TABLE `entity_field_attribute`
+  ADD CONSTRAINT `FK_6b1bae42c3024525e76a6e93e09` FOREIGN KEY (`concreteEntityId`) REFERENCES `concrete_entity` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_8abc19c63dd4d09efde3e5ab575` FOREIGN KEY (`fieldId`) REFERENCES `entity_field` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints der Tabelle `group`
