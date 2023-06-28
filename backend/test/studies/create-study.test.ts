@@ -74,7 +74,7 @@ describe('AppController (e2e)', () => {
           .post('/studies')
           .set('Authorization', `Bearer ${accessToken}`)
           .send(study)
-          .expect(409);
+          .expect(422);
       });
   });
 

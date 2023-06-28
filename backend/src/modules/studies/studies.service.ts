@@ -22,19 +22,15 @@ export class StudiesService {
     const study = new Study();
     study.name = name;
 
-    try {
-      await this.studiesRepository.insert(study);
+    await this.studiesRepository.insert(study);
 
-      await this.studyMemberRepository.insert({
-        directorId: directorId,
-        studyId: study.id,
-        role: Roles.admin,
-      });
+    await this.studyMemberRepository.insert({
+      directorId: directorId,
+      studyId: study.id,
+      role: Roles.admin,
+    });
 
-      return study;
-    } catch (error) {
-      throw new ConflictException('study can not be created');
-    }
+    return study;
   }
 
   update(id: string, { name }: UpdateStudyDto) {

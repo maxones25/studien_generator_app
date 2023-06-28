@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './modules/auth/auth.module';
 import { StudiesModule } from './modules/studies/studies.module';
 import { TypesGuard } from './modules/auth/guards/types.guard';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { Director } from './entities/director.entity';
@@ -13,6 +13,7 @@ import { Group } from './entities/group.entity';
 import { Participant } from './entities/participant.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { DirectorsModule } from '@modules';
+import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.filter';
 
 @Module({
   imports: [
@@ -46,6 +47,10 @@ import { DirectorsModule } from '@modules';
     {
       provide: APP_GUARD,
       useClass: TypesGuard,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: TypeOrmExceptionFilter,
     },
   ],
 })

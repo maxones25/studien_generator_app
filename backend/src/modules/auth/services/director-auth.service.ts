@@ -53,17 +53,13 @@ export class DirectorAuthService {
       throw new UnauthorizedException();
 
     const hashedPassword = await this.passwordService.hash(password, 10);
-
-    try {
-      const { identifiers } = await this.directorsRepository.insert({
-        email,
-        firstName,
-        lastName,
-        password: hashedPassword,
-      });
-      return { id: identifiers[0].id };
-    } catch (error) {
-      throw new ConflictException('user can not be created');
-    }
+    
+    const { identifiers } = await this.directorsRepository.insert({
+      email,
+      firstName,
+      lastName,
+      password: hashedPassword,
+    });
+    return { id: identifiers[0].id };
   }
 }
