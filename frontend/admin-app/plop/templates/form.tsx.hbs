@@ -1,0 +1,26 @@
+import { Button, Form } from "@modules/core/components";
+import { FormProps } from "@modules/core/types";
+import { {{pascalCase name}}FormData } from "@modules/{{camelCase name}}s/types";
+import { FormControl } from "@mui/material";
+import React from "react";
+import { useForm } from "react-hook-form";
+
+export interface {{pascalCase name}}FormProps extends FormProps<{{pascalCase name}}FormData> {}
+
+export const {{pascalCase name}}Form: React.FC<{{pascalCase name}}FormProps> = ({
+  onSubmit,
+  values,
+  formProps,
+}) => {
+  const form = useForm<{{pascalCase name}}FormData>({ values });
+
+  return (
+    <Form {...formProps} onSubmit={form.handleSubmit(onSubmit)}>
+      <FormControl margin="normal">
+        <Button testId="{{lowerCase name}} form submit button" type="submit">
+          Save
+        </Button>
+      </FormControl>
+    </Form>
+  );
+};

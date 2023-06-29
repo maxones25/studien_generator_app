@@ -2,10 +2,12 @@ const modules = [
   "core",
   "auth",
   "date",
+  "navigation",
   "studies",
   "participants",
   "members",
   "groups",
+  "entities",
 ];
 
 const types = ["type", "interface"];
@@ -244,6 +246,39 @@ const ContextGenerator = {
   },
 };
 
+const FormGenerator = {
+  description: "Create a form",
+  prompts: [
+    ModulePrompt,
+    {
+      type: "input",
+      name: "name",
+      message: "Name?",
+    },
+  ],
+  actions: function () {
+    const actions = [
+      {
+        type: "add",
+        path: "src/modules/{{module}}/components/index.ts",
+        skipIfExists: true,
+      },
+      {
+        type: "add",
+        path: "src/modules/{{module}}/components/{{pascalCase name}}Form/{{pascalCase name}}Form.tsx",
+        templateFile: "plop/templates/form.tsx.hbs",
+      },
+      {
+        type: "append",
+        path: "src/modules/{{module}}/components/index.ts",
+        templateFile: "plop/templates/form.pipe.ts.hbs",
+      },
+    ];
+
+    return actions;
+  },
+};
+
 export default (plop) => {
   plop.setGenerator("c", ComponentGenerator);
   plop.setGenerator("component", ComponentGenerator);
@@ -257,4 +292,5 @@ export default (plop) => {
   plop.setGenerator("type", TypeGenerator);
   plop.setGenerator("u", UtilsGenerator);
   plop.setGenerator("utils", UtilsGenerator);
+  plop.setGenerator("form", FormGenerator);
 };

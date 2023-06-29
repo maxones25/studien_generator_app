@@ -17,11 +17,13 @@ import { useTranslation } from "react-i18next";
 export interface StudiesListProps {
   onUpdate: (data: Study) => void;
   onDelete: (data: Study) => void;
+  onSelect: (data: Study) => void;
 }
 
 export const StudiesList: React.FC<StudiesListProps> = ({
   onUpdate,
   onDelete,
+  onSelect,
 }) => {
   const { t } = useTranslation();
   const getStudies = useGetStudies();
@@ -41,7 +43,9 @@ export const StudiesList: React.FC<StudiesListProps> = ({
       {getStudies.isLoading ? (
         <CircularProgress data-testid="loading studies spinner" />
       ) : getStudies.isError ? (
-        <Text data-testid="get-studies-error-text" color="error.main">{t("error: studies could not load")}</Text>
+        <Text data-testid="get-studies-error-text" color="error.main">
+          {t("error: studies could not load")}
+        </Text>
       ) : !hasStudies ? (
         <Text>{t("no studies found")}</Text>
       ) : (
@@ -53,7 +57,7 @@ export const StudiesList: React.FC<StudiesListProps> = ({
               disablePadding
               dense
             >
-              <ListItemButton>
+              <ListItemButton onClick={() => onSelect(study)}>
                 <ListItemText primary={study.name} secondary={t(study.role)} />
               </ListItemButton>
               <ListItemSecondaryAction>

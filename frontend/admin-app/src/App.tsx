@@ -3,13 +3,14 @@ import router from "./router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { AccessTokenProvider } from "@modules/auth/contexts";
-import { Theme } from "@modules/core/components";
+import { AlertNotification, Theme } from "@modules/core/components";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { Suspense } from "react";
 import { LinearProgress } from "@mui/material";
+import { SnackBarProvider } from "@modules/core/contexts";
 
 i18n
   .use(Backend)
@@ -45,12 +46,15 @@ const App = () => {
   return (
     <Suspense fallback={<LinearProgress />}>
       <QueryClientProvider client={queryClient}>
-        <Theme>
-          <AccessTokenProvider>
-            <RouterProvider router={router} />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </AccessTokenProvider>
-        </Theme>
+        <SnackBarProvider>
+          <Theme>
+            <AccessTokenProvider>
+              <RouterProvider router={router} />
+              <ReactQueryDevtools initialIsOpen={false} />
+              <AlertNotification />
+            </AccessTokenProvider>
+          </Theme>
+        </SnackBarProvider>
       </QueryClientProvider>
     </Suspense>
   );

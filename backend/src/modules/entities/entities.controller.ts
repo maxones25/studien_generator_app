@@ -34,6 +34,24 @@ export class EntitiesController {
   }
 
   @Types('director')
+  @Post('study')
+  async createAndAddStudy(
+    @Param('studyId') studyId: string,
+    @Body() body: CreateEntityDto,
+  ) {
+    return this.entitiesService.create(studyId, body);
+  }
+
+  @Types('director')
+  @Post('groups')
+  async createAndAddGroups(
+    @Param('studyId') studyId: string,
+    @Body() body: CreateEntityDto,
+  ) {
+    return this.entitiesService.create(studyId, body);
+  }
+
+  @Types('director')
   @Get(':entityId')
   async getById(@Param('entityId') entityId: string) {
     return this.entitiesService.getById(entityId);

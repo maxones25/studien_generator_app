@@ -20,7 +20,10 @@ export class GroupsService {
   }
 
   async getByStudy(studyId: string) {
-    return await this.groupsRepository.find({ where: { studyId } });
+    return await this.groupsRepository.find({
+      where: { studyId },
+      order: { name: 'ASC' },
+    });
   }
 
   async update(groupId: string, { name }: GroupDto) {

@@ -1,5 +1,5 @@
 import { Button, Column, Page, Row, Text } from "@modules/core/components";
-import { useFormData } from "@modules/core/hooks";
+import { useFormData, useNavigationHelper } from "@modules/core/hooks";
 import {
   DeleteStudyForm,
   StudiesList,
@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 export interface StudiesPageProps {}
 
 const StudiesPage: React.FC<StudiesPageProps> = () => {
+  const navigate = useNavigationHelper();
   const { t } = useTranslation("studies");
   const editFormData = useFormData<StudyFormData>();
   const deleteFormData = useFormData<StudyFormData>();
@@ -54,6 +55,7 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
         <StudiesList
           onUpdate={editFormData.set}
           onDelete={deleteFormData.set}
+          onSelect={(study) => navigate.to(study.id)}
         />
       </Column>
       <Dialog open={editFormData.hasData} onClose={editFormData.reset}>

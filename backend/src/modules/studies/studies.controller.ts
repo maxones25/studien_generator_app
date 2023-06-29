@@ -36,9 +36,18 @@ export class StudiesController {
   }
 
   @Types('director')
+  @Get(':studyId')
+  async getById(@Param('studyId') studyId: string) {
+    return this.studiesService.findOne(studyId);
+  }
+
+  @Types('director')
   @Roles('admin')
   @Put(':studyId')
-  async update(@Param('studyId') studyId: string, @Body() updateStudyDto: UpdateStudyDto) {
+  async update(
+    @Param('studyId') studyId: string,
+    @Body() updateStudyDto: UpdateStudyDto,
+  ) {
     return this.studiesService.update(studyId, updateStudyDto);
   }
 
@@ -52,9 +61,7 @@ export class StudiesController {
   @Types('director')
   @Roles('admin', 'employee')
   @Get(':studyId/members')
-  async findMembersByStudy(
-    @Param('studyId') studyId: string,
-  ) {
+  async findMembersByStudy(@Param('studyId') studyId: string) {
     return this.studiesService.getMembers(studyId);
   }
 

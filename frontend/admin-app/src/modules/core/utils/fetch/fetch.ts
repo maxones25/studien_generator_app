@@ -47,12 +47,18 @@ export const apiRequest = <Response>(
       headers,
       body: body ? JSON.stringify(body) : undefined,
     })
-      .then((res) => res.text())
-      .then((text) => {
-        if (text.length > 0) {
-          resolve(JSON.parse(text) as Response);
+      .then(async (res) => {
+        return {
+          isError: res.status < 200 || 400 <= res.status,
+          text: await res.text(),
+        };
+      })
+      .then(({ isError, text }) => {
+        const data = text.length > 0 ? JSON.parse(text) : {};
+        if (isError) {
+          reject(data as Response);
         } else {
-          resolve({} as Response);
+          resolve(data as Response);
         }
       })
       .catch((err) => reject(err));
