@@ -12,7 +12,7 @@ import { GroupsController } from '../groups/groups.controller';
 import { ParticipantsController } from '../participants/participants.controller';
 import { GroupsService } from '../groups/groups.service';
 import { ParticipantsService } from '../participants/participants.service';
-import { PasswordService } from '../auth/services/password.service';
+import { PasswordService } from '../auth/password.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Study, StudyMember, Group, Participant])],

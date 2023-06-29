@@ -7,8 +7,12 @@
     "modified": "2023-06-20T09:00:14.274Z",
     "data": [
         {
-            "name": "BASE_URI",
+            "name": "ADMIN_BASE_URI",
             "value": "http://localhost:8000"
+        },
+        {
+            "name": "STUDY_BASE_URI",
+            "value": "http://localhost:9000"
         },
         {
             "name": "DIRECTOR_ACCESS_TOKEN",

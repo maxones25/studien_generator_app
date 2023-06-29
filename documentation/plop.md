@@ -91,6 +91,16 @@ oder
 npx plop context
 ```
 
+### 7. FormGenerator
+
+Erzeugt eine neue Formular-Komponente in einem spezifischen Modul. Es erstellt eine neue .tsx-Datei für die Komponente und fügt einen Import-Statement zur index.ts-Datei des Moduls hinzu.
+
+Verwendung:
+
+```console
+npx plop form
+```
+
 ## Module
 
 Die verfügbaren Module sind "core", "auth" und "date" oder weitere Module, welchen dem Modul-Array hinzugefügt werden. Sie können ein Modul auswählen, wenn Sie eine Komponente, einen Hook, einen Typ oder ein Dienstprogrammpaket erstellen.

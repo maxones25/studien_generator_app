@@ -1,14 +1,23 @@
 import { useState } from "react";
 
+export interface UseFormDataResult<TFormData extends FormData> {
+  set: (formData: TFormData) => void;
+  reset: () => void;
+  handleSet: (formData: TFormData) => () => void;
+  data: TFormData | undefined;
+  hasData: boolean;
+  isNew: boolean;
+}
+
 export interface UseFormDataOptions {}
 
-interface FormData {
+export interface FormData {
   id?: string;
 }
 
 export const useFormData = <TFormData extends FormData>(
   defaultData: TFormData | undefined = undefined
-) => {
+): UseFormDataResult<TFormData> => {
   const [data, setData] = useState<TFormData | undefined>(defaultData);
 
   const set = (formData: TFormData) => {

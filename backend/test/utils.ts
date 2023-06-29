@@ -1,11 +1,27 @@
 import * as request from 'supertest';
-import { INestApplication } from '@nestjs/common';
-import { SignupDirectorDto } from '../src/modules/auth/dtos/SignupDirectorDto';
+import {
+  INestApplication,
+  ValidationPipe,
+} from '@nestjs/common';
+import { SignupDirectorDto } from '../src/modules/auth/admin/dtos/SignupDirectorDto';
 import { CreateStudyDto } from '../src/modules/studies/dtos/createStudyDto';
 import { AddMemberDto } from '../src/modules/studies/dtos/addMemberDto';
 import { GroupDto } from '../src/modules/groups/dtos/groupDto';
 import { ParticipantDto } from '../src/modules/participants/dtos/participantDto';
-import { LoginParticipantDto } from '../src/modules/auth/dtos/LoginParticipantDto';
+import { LoginParticipantDto } from '../src/modules/auth/study/dtos/LoginParticipantDto';
+import { Test, TestingModule } from '@nestjs/testing';
+
+export const createApp = async (AppModule: any) => {
+  const moduleFixture: TestingModule = await Test.createTestingModule({
+    imports: [AppModule],
+  }).compile();
+
+  const app = moduleFixture.createNestApplication();
+  app.useGlobalPipes(new ValidationPipe());
+  await app.init();
+
+  return app;
+};
 
 export const createDirector = (
   app: INestApplication,
@@ -13,7 +29,7 @@ export const createDirector = (
 ) =>
   new Promise<string>((resolve, reject) => {
     request(app.getHttpServer())
-      .post('/auth/directors/signUp')
+      .post('/auth/signUp')
       .send(data)
       .expect(201)
       .then((res) => {
@@ -30,7 +46,7 @@ export const getDirectorAccessToken = (
 ) =>
   new Promise<string>((resolve, reject) => {
     request(app.getHttpServer())
-      .post('/auth/directors/login')
+      .post('/auth/login')
       .send({
         email,
         password,
@@ -47,7 +63,7 @@ export const createStudy = (
   app: INestApplication,
   accessToken: string,
   data: CreateStudyDto,
-) => 
+) =>
   new Promise<string>((resolve, reject) => {
     request(app.getHttpServer())
       .post('/studies')
@@ -62,22 +78,22 @@ export const createStudy = (
   });
 
 export const createGroup = (
-    app: INestApplication,
-    accessToken: string,
-    studyId: string,
-    data: GroupDto,
-  ) => 
-    new Promise<string>((resolve, reject) => {
-      request(app.getHttpServer())
-        .post(`/studies/${studyId}/groups`)
-        .set('Authorization', `Bearer ${accessToken}`)
-        .send(data)
-        .expect(201)
-        .then((res) => {
-          expect(typeof res.body.id).toBe('string');
-          resolve(res.body.id);
-        })
-        .catch((err) => reject(err));
+  app: INestApplication,
+  accessToken: string,
+  studyId: string,
+  data: GroupDto,
+) =>
+  new Promise<string>((resolve, reject) => {
+    request(app.getHttpServer())
+      .post(`/studies/${studyId}/groups`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(data)
+      .expect(201)
+      .then((res) => {
+        expect(typeof res.body.id).toBe('string');
+        resolve(res.body.id);
+      })
+      .catch((err) => reject(err));
   });
 
 export const createParticipant = (
@@ -86,18 +102,18 @@ export const createParticipant = (
   studyId: string,
   groupId: string,
   data: ParticipantDto,
-  ) => 
-    new Promise<LoginParticipantDto>((resolve, reject) => {
-      request(app.getHttpServer())
-        .post(`/studies/${studyId}/groups/${groupId}/participants`)
-        .set('Authorization', `Bearer ${accessToken}`)
-        .send(data)
-        .expect(201)
-        .then((res) => {
-          expect(typeof res.body.id).toBe('string');
-          resolve({ id: res.body.id, password: res.body.password });
-        })
-        .catch((err) => reject(err));
+) =>
+  new Promise<LoginParticipantDto>((resolve, reject) => {
+    request(app.getHttpServer())
+      .post(`/studies/${studyId}/groups/${groupId}/participants`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(data)
+      .expect(201)
+      .then((res) => {
+        expect(typeof res.body.id).toBe('string');
+        resolve({ id: res.body.id, password: res.body.password });
+      })
+      .catch((err) => reject(err));
   });
 
 export const addMember = (
@@ -105,13 +121,13 @@ export const addMember = (
   accessToken: string,
   studyId: string,
   data: AddMemberDto,
-  ) => 
-    new Promise<string>((resolve, reject) => {
-      request(app.getHttpServer())
-        .post(`/studies/${studyId}/members`)
-        .set('Authorization', `Bearer ${accessToken}`)
-        .send(data)
-        .expect(201)
-        .then((res) => resolve(res.body))
-        .catch((err) => reject(err));
+) =>
+  new Promise<string>((resolve, reject) => {
+    request(app.getHttpServer())
+      .post(`/studies/${studyId}/members`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(data)
+      .expect(201)
+      .then((res) => resolve(res.body))
+      .catch((err) => reject(err));
   });

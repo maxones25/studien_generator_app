@@ -1,0 +1,45 @@
+{
+    "_id": "bf743467-ed25-4b29-ab5d-c53806e6f040",
+    "colName": "Study",
+    "created": "2023-06-29T21:57:47.865Z",
+    "sortNum": 20000,
+    "folders": [
+        {
+            "_id": "ae357b32-2da9-4043-8753-3b44e33e7ce5",
+            "name": "Auth",
+            "containerId": "",
+            "created": "2023-06-29T21:57:47.891Z",
+            "sortNum": 100000
+        }
+    ],
+    "settings": {
+        "auth": {
+            "type": "bearer",
+            "bearer": "{{ACCESS_TOKEN}}"
+        },
+        "options": {
+            "baseUrl": "{{STUDY_BASE_URI}}"
+        }
+    },
+    "requests": [
+        {
+            "_id": "f7becbf8-1438-44a6-a343-db39148338e7",
+            "colId": "bf743467-ed25-4b29-ab5d-c53806e6f040",
+            "containerId": "ae357b32-2da9-4043-8753-3b44e33e7ce5",
+            "name": "login participant",
+            "url": "/auth/login",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-06-29T21:57:47.907Z",
+            "modified": "2023-06-29T22:05:16.986Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": \"3b87163e-9ad0-4a8b-82bb-0023d2b35ba2\",\n  \"password\": \"GFeDrKZ9QV31\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
