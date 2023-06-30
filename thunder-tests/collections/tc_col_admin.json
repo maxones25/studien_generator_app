@@ -64,7 +64,7 @@
     "settings": {
         "auth": {
             "type": "bearer",
-            "bearer": "{{ACCESS_TOKEN}}"
+            "bearer": "{{DIRECTOR_ACCESS_TOKEN}}"
         },
         "options": {
             "baseUrl": "{{ADMIN_BASE_URI}}"
@@ -116,12 +116,12 @@
             "method": "POST",
             "sortNum": 30000,
             "created": "2023-06-22T10:55:38.315Z",
-            "modified": "2023-06-29T22:15:11.669Z",
+            "modified": "2023-06-30T20:12:24.589Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"email\": \"max@stock.de\",\n  \"password\": \"12345678\"\n}",
+                "raw": "{\n  \"email\": \"maximilian.stock@t-online.de\",\n  \"password\": \"\"\n}",
                 "form": []
             },
             "tests": []
@@ -211,11 +211,11 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "652d52a0-2ff6-4147-9811-023bf43376fb",
             "name": "get entities",
-            "url": "/studies/54a59efb-a7fe-44b5-8e5e-1003e67d6ef2/entities",
+            "url": "/studies/{{studyId}}/entities",
             "method": "GET",
             "sortNum": 110000,
             "created": "2023-06-28T14:34:38.805Z",
-            "modified": "2023-06-28T14:34:57.326Z",
+            "modified": "2023-06-30T20:17:02.596Z",
             "headers": [],
             "params": [],
             "tests": []

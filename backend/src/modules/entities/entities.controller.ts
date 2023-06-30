@@ -13,18 +13,22 @@ import { CreateEntityDto } from './dtos/CreateEntityDto';
 import { CreateEntityFieldDto } from './dtos/CreateEntityFieldDto';
 import { UpdateEntityFieldDto } from './dtos/UpdateEntityFieldDto';
 import { CreateFieldAttributeDto } from './dtos/CreateFieldAttributeDto';
+import { Roles } from '../../decorators/roles.decorator';
+import { ValidateIdPipe } from 'src/pipes/validate-id.pipe';
 
 @Controller('studies/:studyId/entities')
 export class EntitiesController {
   constructor(private readonly entitiesService: EntitiesService) {}
 
   @Types('director')
+  @Roles('admin')
   @Get()
   async getAll(@Param('studyId') studyId: string) {
     return this.entitiesService.getByStudy(studyId);
   }
 
   @Types('director')
+  @Roles('admin')
   @Post()
   async create(
     @Param('studyId') studyId: string,
@@ -34,6 +38,7 @@ export class EntitiesController {
   }
 
   @Types('director')
+  @Roles('admin')
   @Post('study')
   async createAndAddStudy(
     @Param('studyId') studyId: string,
@@ -43,6 +48,7 @@ export class EntitiesController {
   }
 
   @Types('director')
+  @Roles('admin')
   @Post('groups')
   async createAndAddGroups(
     @Param('studyId') studyId: string,
@@ -52,12 +58,17 @@ export class EntitiesController {
   }
 
   @Types('director')
+  @Roles('admin')
   @Get(':entityId')
-  async getById(@Param('entityId') entityId: string) {
-    return this.entitiesService.getById(entityId);
+  async getById(
+    @Param('studyId', new ValidateIdPipe()) studyId: string,
+    @Param('entityId', new ValidateIdPipe()) entityId: string,
+  ) {
+    return this.entitiesService.getById(studyId, entityId);
   }
 
   @Types('director')
+  @Roles('admin')
   @Post(':entityId/study')
   async addToStudy(
     @Param('studyId') studyId: string,
@@ -67,6 +78,7 @@ export class EntitiesController {
   }
 
   @Types('director')
+  @Roles('admin')
   @Delete(':entityId/study')
   async deleteFromStudy(
     @Param('studyId') studyId: string,
@@ -76,6 +88,7 @@ export class EntitiesController {
   }
 
   @Types('director')
+  @Roles('admin')
   @Post(':entityId/groups/:groupId')
   async addToGroup(
     @Param('studyId') studyId: string,
@@ -86,6 +99,7 @@ export class EntitiesController {
   }
 
   @Types('director')
+  @Roles('admin')
   @Delete(':entityId/groups/:groupId')
   async deleteFromGroup(
     @Param('entityId') entityId: string,
@@ -95,6 +109,7 @@ export class EntitiesController {
   }
 
   @Types('director')
+  @Roles('admin')
   @Post(':entityId/fields')
   async addField(
     @Param('entityId') entityId: string,
@@ -104,6 +119,7 @@ export class EntitiesController {
   }
 
   @Types('director')
+  @Roles('admin')
   @Put('fields/:fieldId')
   async updateField(
     @Param('fieldId') fieldId: string,
@@ -113,12 +129,14 @@ export class EntitiesController {
   }
 
   @Types('director')
+  @Roles('admin')
   @Delete('fields/:fieldId')
   async deleteField(@Param('fieldId') fieldId: string) {
     return this.entitiesService.deleteField(fieldId);
   }
 
   @Types('director')
+  @Roles('admin')
   @Post('fields/:fieldId/attributes')
   async createAttribute(
     @Param('fieldId') fieldId: string,
@@ -128,6 +146,7 @@ export class EntitiesController {
   }
 
   @Types('director')
+  @Roles('admin')
   @Get('fields/:fieldId/attributes')
   async getAttributes(@Param('fieldId') fieldId: string) {
     return this.entitiesService.getAttributes(fieldId);

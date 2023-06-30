@@ -15,7 +15,6 @@ import { AddMemberDto } from './dtos/addMemberDto';
 import { UpdateMemberDto } from './dtos/updateMemberDto';
 import { Types } from '../../decorators/type.decorator';
 import { UpdateStudyDto } from './dtos/updateStudyDto';
-import { director } from 'test/fakeData';
 
 @Controller('studies')
 export class StudiesController {
@@ -60,43 +59,5 @@ export class StudiesController {
   @Delete(':studyId')
   async delete(@Param('studyId') studyId: string) {
     return this.studiesService.delete(studyId);
-  }
-
-  @Types('director')
-  @Roles('admin', 'employee')
-  @Get(':studyId/members')
-  async findMembersByStudy(@Param('studyId') studyId: string) {
-    return this.studiesService.getMembers(studyId);
-  }
-
-  @Types('director')
-  @Roles('admin')
-  @Post(':studyId/members')
-  async addMember(
-    @Param('studyId') studyId: string,
-    @Body() addMemberDto: AddMemberDto,
-  ) {
-    return this.studiesService.addMember(studyId, addMemberDto);
-  }
-
-  @Types('director')
-  @Roles('admin')
-  @Put(':studyId/members/:directorId')
-  async updateMember(
-    @Param('studyId') studyId: string,
-    @Param('directorId') directorId: string,
-    @Body() updatedMember: UpdateMemberDto,
-  ) {
-    return this.studiesService.updateMember(studyId, directorId, updatedMember);
-  }
-
-  @Types('director')
-  @Roles('admin')
-  @Delete(':studyId/members/:directorId')
-  async removeMember(
-    @Param('studyId') studyId: string,
-    @Param('directorId') directorId: string,
-  ) {
-    return this.studiesService.removeMember(studyId, directorId);
   }
 }

@@ -148,10 +148,11 @@ export class EntitiesService {
     return entityField;
   }
 
-  async getById(entityId: string) {
+  async getById(studyId: string, entityId: string) {
     return this.abstractEntitiesRepository.find({
       where: {
         id: entityId,
+        studyId,
         fields: {
           concreteEntityId: IsNull(),
         },

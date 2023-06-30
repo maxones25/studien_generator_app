@@ -1,8 +1,13 @@
-import { Button, Form, FormSelect, Row } from "@modules/core/components";
+import { Form, FormSelect, Row } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
 import { Director, MemberFormData } from "@modules/members/types";
 import { Add } from "@mui/icons-material";
-import { Autocomplete, FormControl, IconButton, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  FormControl,
+  IconButton,
+  TextField,
+} from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -75,8 +80,11 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
           ]}
         />
         <FormControl margin="normal" sx={{ ml: 1 }}>
-          <IconButton color="success" data-testid="invite member form submit button">
-            <Add/>
+          <IconButton
+            color="success"
+            data-testid="invite member form submit button"
+          >
+            <Add />
           </IconButton>
           {/* <Button testId="invite member form submit button" type="submit">
             {"{{ Add }}"}

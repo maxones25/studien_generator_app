@@ -13,6 +13,8 @@ import { ParticipantsController } from '../participants/participants.controller'
 import { GroupsService } from '../groups/groups.service';
 import { ParticipantsService } from '../participants/participants.service';
 import { PasswordService } from '../auth/password.service';
+import { MembersController } from './members.controller';
+import { MembersService } from './members.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Study, StudyMember, Group, Participant])],
@@ -21,11 +23,17 @@ import { PasswordService } from '../auth/password.service';
     GroupsService,
     ParticipantsService,
     PasswordService,
+    MembersService,
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
   ],
-  controllers: [StudiesController, GroupsController, ParticipantsController],
+  controllers: [
+    StudiesController,
+    GroupsController,
+    ParticipantsController,
+    MembersController,
+  ],
 })
 export class StudiesModule {}

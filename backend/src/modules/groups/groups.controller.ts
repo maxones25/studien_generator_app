@@ -9,9 +9,10 @@ import {
 } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { Types } from '../../decorators/type.decorator';
-import { GroupDto } from './dtos/groupDto';
+import { UpdateGroupDto } from './dtos/UpdateGroupDto';
 import { Roles } from '../../decorators/roles.decorator';
 import { ValidateIdPipe } from '../../../src/pipes/validate-id.pipe';
+import { CreateGroupDto } from './dtos/CreateGroupDto';
 
 @Controller('studies/:studyId/groups')
 export class GroupsController {
@@ -22,7 +23,7 @@ export class GroupsController {
   @Post()
   async create(
     @Param('studyId', new ValidateIdPipe()) studyId: string,
-    @Body() createStudyDto: GroupDto,
+    @Body() createStudyDto: CreateGroupDto,
   ) {
     return this.groupsService.create(studyId, createStudyDto);
   }
@@ -41,9 +42,9 @@ export class GroupsController {
   @Put(':groupId')
   async update(
     @Param('groupId', new ValidateIdPipe()) groupId: string,
-    @Body() updatedGroup: GroupDto,
+    @Body() updateGroupDto: UpdateGroupDto,
   ) {
-    return this.groupsService.update(groupId, updatedGroup);
+    return this.groupsService.update(groupId, updateGroupDto);
   }
 
   @Types('director')

@@ -2,7 +2,8 @@ import { Group } from '../../entities/group.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { GroupDto } from './dtos/groupDto';
+import { CreateGroupDto } from './dtos/CreateGroupDto';
+import { UpdateGroupDto } from './dtos/UpdateGroupDto';
 
 @Injectable()
 export class GroupsService {
@@ -11,7 +12,7 @@ export class GroupsService {
     private groupsRepository: Repository<Group>,
   ) {}
 
-  async create(studyId: string, { name }: GroupDto) {
+  async create(studyId: string, { name }: CreateGroupDto) {
     const group = new Group();
     group.name = name;
     group.studyId = studyId;
@@ -30,8 +31,7 @@ export class GroupsService {
     });
   }
 
-  async update(groupId: string, { name }: GroupDto) {
-    console.log(groupId);
+  async update(groupId: string, { name }: UpdateGroupDto) {
     return this.groupsRepository.update(groupId, { name });
   }
 

@@ -1,4 +1,4 @@
-import { Button, Column, DataList, Page, Text } from "@modules/core/components";
+import { Column, DataList, Page, Text } from "@modules/core/components";
 import { InviteMemberForm } from "@modules/members/components";
 import {
   useAddMember,
@@ -59,7 +59,9 @@ const MembersPage: React.FC<MembersPageProps> = () => {
         </Column>
       )}
       <Column>
-        <Text variant="h4" sx={{ mb: 2 }}>{"{{ Members }}"}</Text>
+        <Text variant="h4" sx={{ mb: 2 }}>
+          {"{{ Members }}"}
+        </Text>
         <DataList
           client={getMembers}
           errorText="error"

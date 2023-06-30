@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Director } from '../../entities/director.entity';
 import { Repository } from 'typeorm';
+import { UpdateDirectorDto } from './dtos/UpdateDirectorDto';
 
 @Injectable()
 export class DirectorsService {
@@ -22,7 +23,7 @@ export class DirectorsService {
 
   async update(
     directorId: string,
-    { email, firstName, lastName }: Partial<Director>,
+    { email, firstName, lastName }: UpdateDirectorDto,
   ) {
     await this.directosRepository.update(directorId, {
       email,
