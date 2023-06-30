@@ -15,6 +15,7 @@ import { AddMemberDto } from './dtos/addMemberDto';
 import { UpdateMemberDto } from './dtos/updateMemberDto';
 import { Types } from '../../decorators/type.decorator';
 import { UpdateStudyDto } from './dtos/updateStudyDto';
+import { director } from 'test/fakeData';
 
 @Controller('studies')
 export class StudiesController {
@@ -37,8 +38,11 @@ export class StudiesController {
 
   @Types('director')
   @Get(':studyId')
-  async getById(@Param('studyId') studyId: string) {
-    return this.studiesService.findOne(studyId);
+  async getById(
+    @Param('studyId') studyId: string,
+    @DirectorId() directorId: string,
+  ) {
+    return this.studiesService.findOne(studyId, directorId);
   }
 
   @Types('director')

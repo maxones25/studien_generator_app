@@ -33,7 +33,7 @@ export const useFormData = <TFormData extends FormData>(
   };
 
   const hasData = data !== undefined;
-  const isNew = data?.id !== undefined;
+  const isNew = data?.id === undefined;
 
   return {
     set,

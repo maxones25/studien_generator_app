@@ -9,7 +9,7 @@ export const useLogin = () => {
   return useWriteRequest<LoginFormData, { accessToken: string }>(
     async (options) => {
       const res = await apiRequest<{ accessToken: string }>(
-        `/auth/directors/login`,
+        `/auth/login`,
         {
           ...options,
           method: "POST",

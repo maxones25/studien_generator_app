@@ -53,12 +53,31 @@ export class StudiesService {
     }));
   }
 
-  findOne(id: string): Promise<Study | null> {
-    return this.studiesRepository.findOne({
+  async findOne(studyId: string, directorId: string) {
+    const { id, name, members } = await this.studiesRepository.findOne({
       where: {
-        id,
+        id: studyId,
+        members: {
+          directorId,
+        },
+      },
+      relations: {
+        members: true,
+      },
+      select: {
+        id: true,
+        name: true,
+        members: {
+          role: true,
+        },
       },
     });
+
+    return {
+      id,
+      name,
+      role: members[0]?.role ?? '',
+    };
   }
 
   async delete(studyId: string): Promise<void> {
@@ -97,7 +116,21 @@ export class StudiesService {
   }
 
   async getMembers(studyId: string) {
-    return await this.studyMemberRepository.find({ where: { studyId } });
+    return await this.studyMemberRepository.find({
+      where: { studyId },
+      relations: {
+        director: true,
+      },
+      select: {
+        role: true,
+        director: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+        },
+      },
+    });
   }
 
   async checkAdmins(studyId: string, directorId: string): Promise<boolean> {

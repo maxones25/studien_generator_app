@@ -1,5 +1,7 @@
+import { useAccessTokenContext } from "@modules/auth/contexts";
 import { Column, Text } from "@modules/core/components";
 import { useNavigationHelper } from "@modules/core/hooks";
+import { useGetStudy } from "@modules/studies/hooks";
 import {
   Divider,
   List,
@@ -36,22 +38,44 @@ const menu = [
 
 export const StudyDrawer: React.FC<StudyDrawerProps> = ({ title }) => {
   const navigate = useNavigationHelper();
+  const getStudy = useGetStudy();
+  const accessToken = useAccessTokenContext();
 
   return (
-    <Column component={Paper} minWidth={200} maxWidth={250}>
+    <Column component={Paper} width={250}>
       <Toolbar>
         <Text variant="body2">{title ?? "-"}</Text>
       </Toolbar>
       <Divider />
-      <List>
-        {menu.map(({ label, path }) => (
-          <ListItem key={label} disablePadding divider>
-            <ListItemButton onClick={navigate.handle(path)}>
-              <ListItemText>{label}</ListItemText>
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      <Column justifyContent="space-between" height="100%">
+        <List>
+          {menu.map(({ label, path }) => (
+            <ListItem key={label} disablePadding divider>
+              <ListItemButton onClick={navigate.handle(path)}>
+                <ListItemText>{label}</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Column>
+          <Divider></Divider>
+          <List>
+            <ListItem divider>
+              <ListItemText primary={getStudy.data?.role} secondary="Rolle" />
+            </ListItem>
+            <ListItem disablePadding divider>
+              <ListItemButton onClick={navigate.handle("/studies")}>
+                <ListItemText>Studien</ListItemText>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={accessToken.reset}>
+                <ListItemText>Logout</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Column>
+      </Column>
     </Column>
   );
 };

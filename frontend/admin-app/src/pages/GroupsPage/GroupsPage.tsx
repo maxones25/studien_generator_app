@@ -1,6 +1,6 @@
 import {
   Button,
-  Column,
+  DataDialog,
   DataList,
   Page,
   Row,
@@ -12,11 +12,11 @@ import {
   useCreateGroup,
   useDeleteGroup,
   useGetGroups,
+  useUpdateGroup,
 } from "@modules/groups/hooks";
 import { GroupFormData } from "@modules/groups/types";
 import { Delete, Edit } from "@mui/icons-material";
 import {
-  Dialog,
   IconButton,
   ListItem,
   ListItemSecondaryAction,
@@ -32,19 +32,7 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
   const getGroups = useGetGroups();
   const createGroup = useCreateGroup();
   const deleteGroup = useDeleteGroup();
-
-  const handleSaveGroup = (data: GroupFormData) => {
-    if (data.id) {
-    } else {
-      createGroup.mutate(data);
-    }
-    editGroupData.reset();
-  };
-
-  const handleDeleteGroup = (data: GroupFormData) => {
-    deleteGroup.mutate(data);
-    deleteGroupData.reset();
-  };
+  const updateGroup = useUpdateGroup();
 
   return (
     <Page testId="groups page">
@@ -67,7 +55,7 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
           <ListItem key={group.id} divider={!isLast}>
             <ListItemText>{group.name}</ListItemText>
             <ListItemSecondaryAction>
-              <IconButton>
+              <IconButton onClick={editGroupData.handleSet(group)}>
                 <Edit />
               </IconButton>
               <IconButton onClick={deleteGroupData.handleSet(group)}>
@@ -77,21 +65,22 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
           </ListItem>
         )}
       />
-      <Dialog open={editGroupData.hasData} onClose={editGroupData.reset}>
-        <Column p={2}>
-          <Text color="text.secondary">{"{{ Create Group }}"}</Text>
-          <GroupForm onSubmit={handleSaveGroup} values={editGroupData.data} />
-        </Column>
-      </Dialog>
-      <Dialog open={deleteGroupData.hasData} onClose={deleteGroupData.reset}>
-        <Column p={2}>
-          <Text color="text.secondary">{"{{ Delete Group }}"}</Text>
-          <DeleteGroupForm
-            onSubmit={handleDeleteGroup}
-            values={deleteGroupData.data}
-          />
-        </Column>
-      </Dialog>
+      <DataDialog
+        Form={GroupForm}
+        client={editGroupData}
+        createTitle="{{ Create Group }}"
+        updateTitle="{{ Update Group }}"
+        onCreate={createGroup.mutateAsync}
+        onUpdate={updateGroup.mutateAsync}
+      />
+
+      <DataDialog
+        Form={DeleteGroupForm}
+        client={deleteGroupData}
+        mode="delete"
+        deleteTitle="{{ Delete Group }}"
+        onDelete={deleteGroup.mutateAsync}
+      />
     </Page>
   );
 };

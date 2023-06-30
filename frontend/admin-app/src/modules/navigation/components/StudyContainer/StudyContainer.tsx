@@ -19,10 +19,9 @@ export const StudyContainer: React.FC<StudyContainerProps> = ({ children }) => {
       width="100vw"
       display="flex"
       alignItems="stretch"
-      justifyContent="space-between"
     >
       <StudyDrawer title={getStudy.data?.name} />
-      <Column flex={1} m={1}>
+      <Column m={4} mt={0} mb={0} width="calc((100% - 250px) / 2)">
         <Toolbar/>
         {children}
       </Column>

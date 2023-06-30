@@ -11,7 +11,9 @@ export class DirectorsService {
   ) {}
 
   findAll(): Promise<Director[]> {
-    return this.directosRepository.find();
+    return this.directosRepository.find({
+      select: { id: true, firstName: true, lastName: true, email: true },
+    });
   }
 
   async delete(directorId: string): Promise<void> {

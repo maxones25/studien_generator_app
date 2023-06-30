@@ -22,15 +22,20 @@ export class GroupsService {
   async getByStudy(studyId: string) {
     return await this.groupsRepository.find({
       where: { studyId },
+      select: {
+        id: true,
+        name: true,
+      },
       order: { name: 'ASC' },
     });
   }
 
   async update(groupId: string, { name }: GroupDto) {
-    await this.groupsRepository.update({ id: groupId }, { name });
+    console.log(groupId);
+    return this.groupsRepository.update(groupId, { name });
   }
 
   async delete(groupId: string) {
-    await this.groupsRepository.delete({ id: groupId });
+    return await this.groupsRepository.delete({ id: groupId });
   }
 }
