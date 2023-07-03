@@ -1,12 +1,11 @@
 import {
-  Button,
   DataDialog,
   DataList,
+  DataListItem,
   Page,
-  Row,
   Text,
 } from "@modules/core/components";
-import { useFormData } from "@modules/core/hooks";
+import { useFormData, useNavigationHelper } from "@modules/core/hooks";
 import { DeleteGroupForm, GroupForm } from "@modules/groups/components";
 import {
   useCreateGroup,
@@ -15,18 +14,21 @@ import {
   useUpdateGroup,
 } from "@modules/groups/hooks";
 import { GroupFormData } from "@modules/groups/types";
-import { Delete, Edit } from "@mui/icons-material";
+import { useGroupId } from "@modules/navigation/hooks";
+import { Add } from "@mui/icons-material";
 import {
   IconButton,
-  ListItem,
-  ListItemSecondaryAction,
+  ListItemButton,
   ListItemText,
+  Toolbar,
 } from "@mui/material";
 import React from "react";
 
 export interface GroupsPageProps {}
 
 const GroupsPage: React.FC<GroupsPageProps> = () => {
+  const groupId = useGroupId();
+  const navigate = useNavigationHelper();
   const editGroupData = useFormData<GroupFormData>();
   const deleteGroupData = useFormData<GroupFormData>();
   const getGroups = useGetGroups();
@@ -35,34 +37,35 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
   const updateGroup = useUpdateGroup();
 
   return (
-    <Page testId="groups page">
-      <Row mb={2}>
-        <Text variant="h4" pl={2} pr={2}>
-          Gruppen
-        </Text>
-        <Button
-          testId="create group button"
+    <Page testId="groups page" width={200} boxShadow={4}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between", pl: 2 }}>
+        <Text variant="h6">Gruppen</Text>
+        <IconButton
+          data-testid="create group button"
           onClick={editGroupData.handleSet({ name: "" })}
         >
-          Add
-        </Button>
-      </Row>
+          <Add />
+        </IconButton>
+      </Toolbar>
       <DataList
         client={getGroups}
         errorText="{{ es konnten keine gruppen geladen werden }}"
         noDataText="{{ keine Gruppen angelegt }}"
         renderItem={(group, { isLast }) => (
-          <ListItem key={group.id} divider={!isLast}>
-            <ListItemText>{group.name}</ListItemText>
-            <ListItemSecondaryAction>
-              <IconButton onClick={editGroupData.handleSet(group)}>
-                <Edit />
-              </IconButton>
-              <IconButton onClick={deleteGroupData.handleSet(group)}>
-                <Delete />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
+          <DataListItem
+            key={group.id}
+            divider={!isLast}
+            item={group}
+            onUpdate={editGroupData.handleSet(group)}
+            onDelete={deleteGroupData.handleSet(group)}
+          >
+            <ListItemButton
+              onClick={navigate.handle(`${group.id}/entities`)}
+              selected={groupId === group.id}
+            >
+              <ListItemText>{group.name}</ListItemText>
+            </ListItemButton>
+          </DataListItem>
         )}
       />
       <DataDialog

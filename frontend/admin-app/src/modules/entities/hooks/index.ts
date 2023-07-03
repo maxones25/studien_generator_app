@@ -1,1 +1,5 @@
 export * from './useGetEntities/useGetEntities'
+export * from './useCreateEntity/useCreateEntity'
+export * from './useUpdateEntity/useUpdateEntity'
+export * from './useDeleteEntity/useDeleteEntity'
+export * from './useGetEntity/useGetEntity'

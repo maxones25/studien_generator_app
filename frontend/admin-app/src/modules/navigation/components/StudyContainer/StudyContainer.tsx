@@ -1,30 +1,24 @@
-import { Box, LinearProgress, Toolbar } from "@mui/material";
+import { Box, LinearProgress } from "@mui/material";
 import React from "react";
 import { StudyDrawer } from "..";
-import { useGetStudy } from "@modules/studies/hooks";
-import { Column } from "@modules/core/components";
+import { Row } from "@modules/core/components";
+import { useStudyContext } from "@modules/studies/contexts";
 
 export interface StudyContainerProps {
   children: JSX.Element;
 }
 
 export const StudyContainer: React.FC<StudyContainerProps> = ({ children }) => {
-  const getStudy = useGetStudy();
+  const getStudy = useStudyContext();
 
   return getStudy.isLoading ? (
     <LinearProgress />
   ) : (
-    <Box
-      height="100vh"
-      width="100vw"
-      display="flex"
-      alignItems="stretch"
-    >
+    <Box height="100vh" width="100vw" display="flex" alignItems="stretch">
       <StudyDrawer title={getStudy.data?.name} />
-      <Column m={4} mt={0} mb={0} width="calc((100% - 250px) / 2)">
-        <Toolbar/>
+      <Row ml={1} flex={1}>
         {children}
-      </Column>
+      </Row>
     </Box>
   );
 };

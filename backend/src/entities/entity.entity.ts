@@ -1,5 +1,5 @@
 import {
-  Entity,
+  Entity as TypeOrmEntity,
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
@@ -8,13 +8,18 @@ import {
 } from 'typeorm';
 import { Study } from './study.entity';
 import { EntityField } from './entity-field.entity';
-import { ConcreteEntity } from './concrete-entity.entity';
 
-@Entity()
+@TypeOrmEntity()
 @Unique('unique_name_for_study', ['name', 'studyId'])
-export class AbstractEntity {
+export class Entity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  modifiedAt: Date;
 
   @Column()
   name: string;
@@ -22,13 +27,10 @@ export class AbstractEntity {
   @Column()
   studyId: string;
 
-  @OneToMany(() => EntityField, (field) => field.abstractEntity)
+  @OneToMany(() => EntityField, (field) => field.entity)
   fields: EntityField[];
 
-  @OneToMany(() => ConcreteEntity, (entity) => entity.abstractEntity)
-  concreteEntites: ConcreteEntity[];
-
-  @ManyToOne(() => Study, (study) => study.abstractEntities, {
+  @ManyToOne(() => Study, (study) => study.entities, {
     cascade: true,
     onDelete: 'CASCADE',
   })

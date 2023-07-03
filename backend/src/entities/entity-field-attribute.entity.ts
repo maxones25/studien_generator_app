@@ -4,13 +4,15 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   Unique,
-  PrimaryColumn,
 } from 'typeorm';
-import { ConcreteEntity } from './concrete-entity.entity';
 import { EntityField } from './entity-field.entity';
+import { Group } from './group.entity';
 
 @Entity()
-@Unique('unique_key_for_concrete_entity', ['fieldId', 'concreteEntityId', 'key'])
+@Unique('unique_key_for_concrete_entity', [
+  'fieldId',
+  'key',
+])
 export class EntityFieldAttribute {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -18,14 +20,14 @@ export class EntityFieldAttribute {
   @Column()
   fieldId: string;
 
-  @Column({ nullable: true })
-  concreteEntityId: string;
-
   @Column()
   key: string;
 
   @Column({ type: 'json' })
   value: any;
+
+  @Column({ nullable: true })
+  groupId: string;
 
   @ManyToOne(() => EntityField, (field) => field.attributes, {
     cascade: true,
@@ -33,9 +35,9 @@ export class EntityFieldAttribute {
   })
   field: EntityField;
 
-  @ManyToOne(() => ConcreteEntity, (entity) => entity.fieldAttributes, {
+  @ManyToOne(() => Group, (group) => group.attributes, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  concreteEntity: ConcreteEntity;
+  group: Group;
 }

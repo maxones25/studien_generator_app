@@ -1,5 +1,0 @@
-export * from "./director.entity"
-export * from "./study.entity"
-export * from "./study-member"
-export * from "./group.entity"
-export * from "./participant.entity"

@@ -2,21 +2,17 @@ import { Module } from '@nestjs/common';
 import { EntitiesService } from './entities.service';
 import { EntitiesController } from './entities.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AbstractEntity } from '../../entities/abstract-entity.entity';
-import { ConcreteEntity } from '../../entities/concrete-entity.entity';
+import { Entity } from '../../entities/entity.entity';
 import { EntityField } from '../../entities/entity-field.entity';
 import { EntityFieldAttribute } from '../../entities/entity-field-attribute.entity';
+import { FieldsController } from './fields.controller';
+import { FieldsService } from './fields.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      AbstractEntity,
-      ConcreteEntity,
-      EntityField,
-      EntityFieldAttribute,
-    ]),
+    TypeOrmModule.forFeature([Entity, EntityField, EntityFieldAttribute]),
   ],
-  providers: [EntitiesService],
-  controllers: [EntitiesController],
+  providers: [EntitiesService, FieldsService],
+  controllers: [EntitiesController, FieldsController],
 })
 export class EntitiesModule {}

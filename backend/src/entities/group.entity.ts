@@ -9,13 +9,19 @@ import {
 import { Study } from './study.entity';
 import { Participant } from './participant.entity';
 import { EntityField } from './entity-field.entity';
-import { ConcreteEntity } from './concrete-entity.entity';
+import { EntityFieldAttribute } from './entity-field-attribute.entity';
 
 @Entity()
 @Unique('unique_name_for_study', ['name', 'studyId'])
 export class Group {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  modifiedAt: Date;
 
   @Column()
   name: string;
@@ -26,8 +32,11 @@ export class Group {
   @OneToMany(() => Participant, (participant) => participant.group)
   participants: Participant[];
 
-  @OneToMany(() => ConcreteEntity, (entity) => entity.group)
-  entities: ConcreteEntity[];
+  @OneToMany(() => EntityField, (field) => field.group)
+  fields: EntityField[];
+
+  @OneToMany(() => EntityFieldAttribute, (attribute) => attribute.group)
+  attributes: EntityField[];
 
   @ManyToOne(() => Study, (study) => study.groups, {
     cascade: true,

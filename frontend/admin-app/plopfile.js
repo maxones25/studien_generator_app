@@ -8,6 +8,7 @@ const modules = [
   "members",
   "groups",
   "entities",
+  "fields",
 ];
 
 const types = ["type", "interface"];

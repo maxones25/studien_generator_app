@@ -81,6 +81,7 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
         />
         <FormControl margin="normal" sx={{ ml: 1 }}>
           <IconButton
+            type="submit"
             color="success"
             data-testid="invite member form submit button"
           >

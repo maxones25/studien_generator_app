@@ -35,23 +35,9 @@
         {
             "_id": "8a2ad440-54d7-4bcc-95c6-991869f7fcde",
             "name": "Groups",
-            "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
+            "containerId": "",
             "created": "2023-06-28T16:29:31.676Z",
-            "sortNum": 50000
-        },
-        {
-            "_id": "f4f27e73-4011-49f2-8695-83e9f578c7e5",
-            "name": "Groups",
-            "containerId": "652d52a0-2ff6-4147-9811-023bf43376fb",
-            "created": "2023-06-28T19:00:51.316Z",
-            "sortNum": 60000
-        },
-        {
-            "_id": "cea854e0-9827-4d66-886e-16dfd6792fbb",
-            "name": "Study",
-            "containerId": "652d52a0-2ff6-4147-9811-023bf43376fb",
-            "created": "2023-06-28T19:01:02.657Z",
-            "sortNum": 50000
+            "sortNum": 45000
         },
         {
             "_id": "4b88970d-8d3b-4004-8160-f9632fa29ee7",
@@ -94,12 +80,12 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-22T10:53:56.723Z",
-            "modified": "2023-06-30T16:19:57.081Z",
+            "modified": "2023-07-03T13:50:36.025Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{ \n    \"email\": \"max.mustermann@test.de\", \n    \"firstName\": \"Max\",\n    \"lastName\": \"Mustermann\", \n    \"password\": \"12345678\", \n    \"activationPassword\": \"1234\"\n  }",
+                "raw": "{ \n    \"email\": \"maximilian.stock@t-online.de\", \n    \"firstName\": \"Max\",\n    \"lastName\": \"Stock\", \n    \"password\": \"R31sk0ch3r\", \n    \"activationPassword\": \"1234\"\n  }",
                 "form": []
             },
             "auth": {
@@ -116,12 +102,12 @@
             "method": "POST",
             "sortNum": 30000,
             "created": "2023-06-22T10:55:38.315Z",
-            "modified": "2023-06-30T20:12:24.589Z",
+            "modified": "2023-07-03T13:51:13.803Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"email\": \"maximilian.stock@t-online.de\",\n  \"password\": \"\"\n}",
+                "raw": "{\n  \"email\": \"maximilian.stock@t-online.de\",\n  \"password\": \"R31sk0ch3r\"\n}",
                 "form": []
             },
             "tests": []
@@ -221,34 +207,6 @@
             "tests": []
         },
         {
-            "_id": "e50d67b3-128c-43f2-b45c-f31ec6753976",
-            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
-            "containerId": "cea854e0-9827-4d66-886e-16dfd6792fbb",
-            "name": "add entity to study",
-            "url": "/studies/{{studyId}}/entities/afcf4e80-0dd9-4e2b-9789-bfcee1afe453/study",
-            "method": "POST",
-            "sortNum": 10000,
-            "created": "2023-06-28T15:54:54.668Z",
-            "modified": "2023-06-28T16:25:16.244Z",
-            "headers": [],
-            "params": [],
-            "tests": []
-        },
-        {
-            "_id": "63980bc2-3dc9-4956-ad4c-86895c6a3093",
-            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
-            "containerId": "f4f27e73-4011-49f2-8695-83e9f578c7e5",
-            "name": "add entity to group",
-            "url": "/studies/{{studyId}}/entities/3b9062bc-eab1-4063-82ef-95ce9b57b008/groups/79f1b66c-7271-47b0-b7f5-8e4b7161d1bf",
-            "method": "POST",
-            "sortNum": 20000,
-            "created": "2023-06-28T16:19:14.812Z",
-            "modified": "2023-06-28T16:36:48.442Z",
-            "headers": [],
-            "params": [],
-            "tests": []
-        },
-        {
             "_id": "45d42d7f-e65b-4bfd-8871-51bab65d527e",
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "8a2ad440-54d7-4bcc-95c6-991869f7fcde",
@@ -329,34 +287,6 @@
             "tests": []
         },
         {
-            "_id": "814226e4-0f9b-4deb-8938-785bdc83fc22",
-            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
-            "containerId": "cea854e0-9827-4d66-886e-16dfd6792fbb",
-            "name": "remove entity from study",
-            "url": "/studies/{{studyId}}/entities/0f3f576b-e0d6-4a58-a20b-11141328a94c/study",
-            "method": "DELETE",
-            "sortNum": 20000,
-            "created": "2023-06-28T18:51:35.613Z",
-            "modified": "2023-06-28T18:55:16.815Z",
-            "headers": [],
-            "params": [],
-            "tests": []
-        },
-        {
-            "_id": "fa67c8e3-4e78-4016-afe5-c788032d8375",
-            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
-            "containerId": "f4f27e73-4011-49f2-8695-83e9f578c7e5",
-            "name": "remove entity from group",
-            "url": "/studies/{{studyId}}/entities/3b9062bc-eab1-4063-82ef-95ce9b57b008/groups/79f1b66c-7271-47b0-b7f5-8e4b7161d1bf",
-            "method": "DELETE",
-            "sortNum": 10000,
-            "created": "2023-06-28T18:56:08.700Z",
-            "modified": "2023-06-28T18:57:20.671Z",
-            "headers": [],
-            "params": [],
-            "tests": []
-        },
-        {
             "_id": "34ca3650-569a-434d-8472-c9d0597e6b09",
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "4b88970d-8d3b-4004-8160-f9632fa29ee7",
@@ -387,6 +317,25 @@
             "modified": "2023-06-28T19:34:50.063Z",
             "headers": [],
             "params": [],
+            "tests": []
+        },
+        {
+            "_id": "9d79ddd2-b3a5-403e-8a82-1719e81d48bf",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "8a2ad440-54d7-4bcc-95c6-991869f7fcde",
+            "name": "update group",
+            "url": "/studies/{{studyId}}/groups",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-07-01T11:20:28.161Z",
+            "modified": "2023-07-01T11:20:28.161Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Gruppe 2\"\n}",
+                "form": []
+            },
             "tests": []
         }
     ]

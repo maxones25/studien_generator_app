@@ -1,14 +1,13 @@
 import { useAccessTokenContext } from "@modules/auth/contexts";
 import { Column, Text } from "@modules/core/components";
 import { useNavigationHelper } from "@modules/core/hooks";
-import { useGetStudy } from "@modules/studies/hooks";
+import { useStudyContext } from "@modules/studies/contexts";
 import {
   Divider,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
-  Paper,
   Toolbar,
 } from "@mui/material";
 import React from "react";
@@ -38,11 +37,11 @@ const menu = [
 
 export const StudyDrawer: React.FC<StudyDrawerProps> = ({ title }) => {
   const navigate = useNavigationHelper();
-  const getStudy = useGetStudy();
+  const getStudy = useStudyContext();
   const accessToken = useAccessTokenContext();
 
   return (
-    <Column component={Paper} width={250}>
+    <Column width={200} boxShadow={4}>
       <Toolbar>
         <Text variant="body2">{title ?? "-"}</Text>
       </Toolbar>

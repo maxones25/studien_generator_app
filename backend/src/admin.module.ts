@@ -13,8 +13,7 @@ import { Group } from './entities/group.entity';
 import { Participant } from './entities/participant.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { DirectorsModule } from './modules/directors/directors.module';
-import { AbstractEntity } from './entities/abstract-entity.entity';
-import { ConcreteEntity } from './entities/concrete-entity.entity';
+import { Entity } from './entities/entity.entity';
 import { EntityField } from './entities/entity-field.entity';
 import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.filter';
 import { EntityFieldAttribute } from './entities/entity-field-attribute.entity';
@@ -38,8 +37,7 @@ import { EntitiesModule } from './modules/entities/entities.module';
         StudyMember,
         Group,
         Participant,
-        AbstractEntity,
-        ConcreteEntity,
+        Entity,
         EntityField,
         EntityFieldAttribute,
       ],

@@ -1,0 +1,23 @@
+
+# Entities Controller
+POST    /studies/id/entities
+GET     /studies/id/entities
+PUT     /studies/id/entities/id
+DELETE  /studies/id/entities/id
+
+# Fields Controller
+POST    /studies/id/entities/id/fields
+GET     /studies/id/entities/id/fields
+PUT     /studies/id/entities/id/fields/id
+DELETE  /studies/id/entities/id/fields/id
+
+# Attributes Controller
+POST    /studies/id/entities/id/fields/id/attributes
+GET     /studies/id/entities/id/fields/id/attributes
+PUT     /studies/id/entities/id/fields/id/attributes/id
+DELETE  /studies/id/entities/id/fields/id/attributes/id
+
+# Groups Entities Controller
+GET     /studies/id/groups/id/entities
+GET     /studies/id/groups/id/entities/id/fields
+GET     /studies/id/groups/id/entities/id/fields/id/attributes

@@ -8,19 +8,20 @@ import { Participant } from '../../entities/participant.entity';
 import { StudyMember } from '../../entities/study-member';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { GroupsController } from '../groups/groups.controller';
 import { ParticipantsController } from '../participants/participants.controller';
-import { GroupsService } from '../groups/groups.service';
 import { ParticipantsService } from '../participants/participants.service';
 import { PasswordService } from '../auth/password.service';
 import { MembersController } from './members.controller';
 import { MembersService } from './members.service';
+import { GroupsModule } from '../groups/groups.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Study, StudyMember, Group, Participant])],
+  imports: [
+    TypeOrmModule.forFeature([Study, StudyMember, Group, Participant]),
+    GroupsModule,
+  ],
   providers: [
     StudiesService,
-    GroupsService,
     ParticipantsService,
     PasswordService,
     MembersService,
@@ -31,7 +32,6 @@ import { MembersService } from './members.service';
   ],
   controllers: [
     StudiesController,
-    GroupsController,
     ParticipantsController,
     MembersController,
   ],

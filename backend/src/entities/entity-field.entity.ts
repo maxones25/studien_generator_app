@@ -6,13 +6,13 @@ import {
   Unique,
   OneToOne,
 } from 'typeorm';
-import { AbstractEntity } from './abstract-entity.entity';
-import { ConcreteEntity } from './concrete-entity.entity';
+import { Entity } from './entity.entity';
 import { EntityFieldAttribute } from './entity-field-attribute.entity';
 import { FieldType } from '../enums/field-type.enum';
+import { Group } from './group.entity';
 
 @TypeOrmEntity()
-@Unique('unique_name_for_entity', ['name', 'abstractEntityId'])
+@Unique('unique_name_for_entity', ['name', 'entityId'])
 export class EntityField {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -24,23 +24,23 @@ export class EntityField {
   type: FieldType;
 
   @Column()
-  abstractEntityId: string;
+  entityId: string;
 
   @Column({ nullable: true })
-  concreteEntityId: string;
+  groupId: string;
 
   @OneToOne(() => EntityFieldAttribute, (attribute) => attribute.field)
   attributes: EntityFieldAttribute[];
 
-  @ManyToOne(() => AbstractEntity, (entity) => entity.fields, {
+  @ManyToOne(() => Entity, (entity) => entity.fields, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  abstractEntity: AbstractEntity;
+  entity: Entity;
 
-  @ManyToOne(() => ConcreteEntity, (entity) => entity.fields, {
+  @ManyToOne(() => Group, (entity) => entity.fields, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  concreteEntity: ConcreteEntity;
+  group: Group;
 }

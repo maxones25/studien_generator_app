@@ -1,6 +1,8 @@
 import { AuthenticationGuard, LoginGuard } from "@modules/auth/components";
 import { StudyContainer } from "@modules/navigation/components";
+import { StudyProvider } from "@modules/studies/contexts";
 import EntitiesPage from "@pages/EntitiesPage/EntitiesPage";
+import EntityPage from "@pages/EntityPage/EntityPage";
 import GroupsPage from "@pages/GroupsPage/GroupsPage";
 import LoginPage from "@pages/LoginPage/LoginPage";
 import MembersPage from "@pages/MembersPage/MembersPage";
@@ -48,28 +50,52 @@ const router = createBrowserRouter([
           {
             path: ":studyId",
             element: (
-              <StudyContainer>
-                <Outlet/>
-              </StudyContainer>
+              <StudyProvider>
+                <StudyContainer>
+                  <Outlet />
+                </StudyContainer>
+              </StudyProvider>
             ),
             children: [
               {
                 path: "groups",
-                element: <GroupsPage/>
+                element: (
+                  <>
+                    <GroupsPage />
+                    <Outlet />
+                  </>
+                ),
+                children: [
+                  {
+                    path: ":groupId/entities",
+                    element: (
+                      <>
+                        <EntitiesPage />
+                        <Outlet />
+                      </>
+                    ),
+                    children: [
+                      {
+                        path: ":entityId/:tab",
+                        element: <EntityPage />,
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 path: "members",
-                element: <MembersPage/>
+                element: <MembersPage />,
               },
               {
                 path: "participants",
-                element: <ParticipantsPage/>
+                element: <ParticipantsPage />,
               },
               {
                 path: "entities",
-                element: <EntitiesPage/>
+                element: <EntitiesPage />,
               },
-            ]
+            ],
           },
         ],
       },

@@ -7,13 +7,22 @@ import {
 import { StudyMember } from './study-member';
 import { Group } from './group.entity';
 import { Participant } from './participant.entity';
-import { AbstractEntity } from './abstract-entity.entity';
-import { ConcreteEntity } from './concrete-entity.entity';
+import { Entity } from './entity.entity';
 
 @TypeOrmEntity()
 export class Study {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({
+    type: 'datetime',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  modifiedAt: Date;
 
   @Column({ unique: true })
   name: string;
@@ -27,9 +36,6 @@ export class Study {
   @OneToMany(() => Participant, (participant) => participant.study)
   public participants: Participant[];
 
-  @OneToMany(() => AbstractEntity, (entity) => entity.study)
-  public abstractEntities: AbstractEntity[];
-
-  @OneToMany(() => ConcreteEntity, (entity) => entity.study)
-  public entities: ConcreteEntity[];
+  @OneToMany(() => Entity, (entity) => entity.study)
+  public entities: Entity[];
 }

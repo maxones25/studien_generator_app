@@ -79,35 +79,59 @@ Fields
             ja
                 
 
-Entity
-    HIIT
-Fields
-    Motivation vor dem Workout
-    Motivation nach dem Workout
+Abfragen
+    Häufigkeit
+        Art
+            VARIABLE | FIXED
+        Anzahl
+            3
+        Zeitraum
+            Woche
+    Häufigkeit
+        Art
+            fix
+        Anzahl
+            3
+        Zeitraum
+            Woche
+    Regeln
 
-POST    /studies/id/entities
-GET     /studies/id/entities
-PUT     /studies/id/entities/id
-DELETE  /studies/id/entities/id
-
-POST    /studies/id/entities/id/fields
-GET     /studies/id/entities/id/fields
-PUT     /studies/id/entities/id/fields/id
-DELETE  /studies/id/entities/id/fields/id
-
-POST    /studies/id/entities/id/group/id
-DELETE  /studies/id/entities/id/group/id
-POST    /studies/id/entities/id/global
-DELETE  /studies/id/entities/id/global
-
-POST    /studies/id/entities/id/group/id/fields
-GET     /studies/id/entities/id/group/id/fields
-PUT     /studies/id/entities/id/group/id/fields/id
-DELETE  /studies/id/entities/id/group/id/fields/id
-
-POST    /studies/id/entities/id/global/fields
-GET     /studies/id/entities/id/global/fields
-PUT     /studies/id/entities/id/global/fields/id
-DELETE  /studies/id/entities/id/global/fields/id
+        min. Abstand
+            anzahl  
+                1
+            Zeitraum
+                Tag
+        verschiebbar
+            ja
+        verschiebbar um
+            1
+        anzahl verschiebbar
+            1
+        verschiebbar auf selben tag
+            nein
 
 
+REQUEST
+    {
+        type: "FIXED",
+        rules: [
+            {
+                type: "postponable",
+                value: false,
+            }
+        ],
+        days: [
+            {
+                weekday: "MO",
+                time: "08:00"
+            }
+        ]
+    }
+
+
+
+Task
+    participantId
+    date
+    time
+    entityId

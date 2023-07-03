@@ -54,8 +54,6 @@ export function DataDialog<TData extends FormData>({
       ? deleteTitle
       : undefined;
 
-      console.log(client)
-
   return (
     <Dialog open={client.hasData} onClose={client.reset}>
       <Column p={2}>

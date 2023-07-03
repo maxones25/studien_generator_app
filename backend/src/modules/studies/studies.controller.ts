@@ -11,8 +11,6 @@ import { StudiesService } from './studies.service';
 import { Roles } from '../../decorators/roles.decorator';
 import { DirectorId } from '../../decorators/director-id.decorator';
 import { CreateStudyDto } from './dtos/createStudyDto';
-import { AddMemberDto } from './dtos/addMemberDto';
-import { UpdateMemberDto } from './dtos/updateMemberDto';
 import { Types } from '../../decorators/type.decorator';
 import { UpdateStudyDto } from './dtos/updateStudyDto';
 

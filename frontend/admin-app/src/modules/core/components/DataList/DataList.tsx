@@ -23,7 +23,7 @@ export function DataList<Data>({
   const hasData = (data?.length ?? 0) > 0;
 
   return (
-    <Column alignItems="center" p={1} boxShadow={1} borderRadius={1}>
+    <Column alignItems="center">
       {isLoading ? (
         <CircularProgress data-testid="loading spinner" />
       ) : isError ? (
