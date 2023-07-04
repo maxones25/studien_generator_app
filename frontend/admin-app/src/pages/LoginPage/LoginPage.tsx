@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 export interface LoginPageProps {}
 
 const LoginPage: React.FC<LoginPageProps> = () => {
-  const { t } = useTranslation("login");
+  const { t } = useTranslation();
   const login = useLogin();
 
   return (

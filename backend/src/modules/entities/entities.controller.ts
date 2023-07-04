@@ -10,9 +10,9 @@ import {
 import { Types } from '../../decorators/type.decorator';
 import { EntitiesService } from './entities.service';
 import { CreateEntityDto } from './dtos/CreateEntityDto';
-import { UpdateEntityFieldDto } from './dtos/UpdateEntityFieldDto';
 import { Roles } from '../../decorators/roles.decorator';
 import { ValidateIdPipe } from 'src/pipes/validate-id.pipe';
+import { UpdateEntityDto } from './dtos/UpdateEntityDto';
 
 @Controller('studies/:studyId/entities')
 export class EntitiesController {
@@ -29,14 +29,14 @@ export class EntitiesController {
   }
 
   @Types('director')
-  @Roles('admin')
+  @Roles('admin', 'employee')
   @Get()
   async getAll(@Param('studyId') studyId: string) {
     return this.entitiesService.getAll(studyId);
   }
 
   @Types('director')
-  @Roles('admin')
+  @Roles('admin', 'employee')
   @Get(':entityId')
   async getById(
     @Param('studyId', new ValidateIdPipe()) studyId: string,
@@ -50,7 +50,7 @@ export class EntitiesController {
   @Put(':entityId')
   async update(
     @Param('entityId', new ValidateIdPipe()) entityId: string,
-    @Body() updateEntityDto: UpdateEntityFieldDto,
+    @Body() updateEntityDto: UpdateEntityDto,
   ) {
     return this.entitiesService.update(entityId, updateEntityDto);
   }

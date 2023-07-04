@@ -11,6 +11,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export interface StudyDrawerProps {
   title?: string;
@@ -18,30 +19,35 @@ export interface StudyDrawerProps {
 
 const menu = [
   {
-    label: "Mitarbeitenden",
     path: "members",
+    label: "members",
   },
   {
-    label: "Gruppen",
     path: "groups",
+    label: "configurator",
   },
   {
-    label: "Probanden",
     path: "participants",
+    label: "participants",
   },
   {
-    label: "Entitäten",
-    path: "entities",
+    path: "data",
+    label: "data",
+  },
+  {
+    path: "chats",
+    label: "chats",
   },
 ];
 
 export const StudyDrawer: React.FC<StudyDrawerProps> = ({ title }) => {
+  const { t } = useTranslation();
   const navigate = useNavigationHelper();
   const getStudy = useStudyContext();
   const accessToken = useAccessTokenContext();
 
   return (
-    <Column width={200} boxShadow={4}>
+    <Column width={200} boxShadow={6} zIndex={1000}>
       <Toolbar>
         <Text variant="body2">{title ?? "-"}</Text>
       </Toolbar>
@@ -49,9 +55,9 @@ export const StudyDrawer: React.FC<StudyDrawerProps> = ({ title }) => {
       <Column justifyContent="space-between" height="100%">
         <List>
           {menu.map(({ label, path }) => (
-            <ListItem key={label} disablePadding divider>
+            <ListItem key={path} disablePadding divider>
               <ListItemButton onClick={navigate.handle(path)}>
-                <ListItemText>{label}</ListItemText>
+                <ListItemText>{t(label)}</ListItemText>
               </ListItemButton>
             </ListItem>
           ))}
@@ -60,16 +66,19 @@ export const StudyDrawer: React.FC<StudyDrawerProps> = ({ title }) => {
           <Divider></Divider>
           <List>
             <ListItem divider>
-              <ListItemText primary={getStudy.data?.role} secondary="Rolle" />
+              <ListItemText
+                primary={t(getStudy.data?.role ?? "-")}
+                secondary={t("role")}
+              />
             </ListItem>
             <ListItem disablePadding divider>
               <ListItemButton onClick={navigate.handle("/studies")}>
-                <ListItemText>Studien</ListItemText>
+                <ListItemText>{t("studies")}</ListItemText>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton onClick={accessToken.reset}>
-                <ListItemText>Logout</ListItemText>
+                <ListItemText>{t("logout")}</ListItemText>
               </ListItemButton>
             </ListItem>
           </List>

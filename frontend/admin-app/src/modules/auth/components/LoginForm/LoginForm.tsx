@@ -20,7 +20,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   isError,
   isLoading,
 }) => {
-  const { t } = useTranslation(["login"]);
+  const { t } = useTranslation();
   const form = useForm({ values });
 
   return (
@@ -29,14 +29,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         label={t("email")}
         formState={form.formState}
         textFieldProps={form.register("email", {
-          required: t("email required"),
+          required: t("value required", { value: t("email") }),
         })}
       />
       <FormPasswordField
         label={t("password")}
         formState={form.formState}
         textFieldProps={form.register("password", {
-          required: t("password required"),
+          required: t("value required", { value: t("password") }),
         })}
       />
       {isError && (

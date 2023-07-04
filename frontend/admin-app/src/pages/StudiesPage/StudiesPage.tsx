@@ -25,7 +25,7 @@ export interface StudiesPageProps {}
 
 const StudiesPage: React.FC<StudiesPageProps> = () => {
   const navigate = useNavigationHelper();
-  const { t } = useTranslation("studies");
+  const { t } = useTranslation();
   const editFormData = useFormData<StudyFormData>();
   const deleteFormData = useFormData<StudyFormData>();
   const createStudy = useCreateStudy();
@@ -41,7 +41,7 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
             testId="create-study-button"
             onClick={editFormData.handleSet({ name: "" })}
           >
-            {t("create study")}
+            {t("create data", { data: t("study") })}
           </Button>
         </Row>
         <StudiesList
@@ -52,15 +52,16 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
       </Column>
       <DataDialog
         client={editFormData}
-        createTitle={t("create study")}
-        updateTitle={t("update study")}
+        createTitle={t("create data", { data: t("study") })}
+        updateTitle={t("update data", { data: t("study") })}
         Form={StudyForm}
         onCreate={createStudy.mutateAsync}
         onUpdate={updateStudy.mutateAsync}
       />
       <DataDialog
         client={deleteFormData}
-        deleteTitle={t("delete study")}
+        mode="delete"
+        deleteTitle={t("delete data", { data: t("study") })}
         Form={DeleteStudyForm}
         onDelete={deleteStudy.mutateAsync}
       />

@@ -5,5 +5,6 @@ export interface FormProps<FormData> {
   values?: FormData;
   isError?: boolean;
   isLoading?: boolean;
+  isNew?: boolean;
   formProps?: FormComponentProps;
 }

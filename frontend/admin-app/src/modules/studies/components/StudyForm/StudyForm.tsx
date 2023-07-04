@@ -4,6 +4,7 @@ import { StudyFormData } from "@modules/studies/types";
 import { FormControl } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export interface StudyFormProps extends FormProps<StudyFormData> {}
 
@@ -12,6 +13,7 @@ export const StudyForm: React.FC<StudyFormProps> = ({
   formProps,
   values,
 }) => {
+  const { t } = useTranslation();
   const form = useForm<StudyFormData>({ values });
 
   return (
@@ -23,7 +25,9 @@ export const StudyForm: React.FC<StudyFormProps> = ({
       <FormTextField
         label="Name"
         formState={form.formState}
-        textFieldProps={form.register("name", { required: "Name required" })}
+        textFieldProps={form.register("name", {
+          required: t("value required", { value: t("name") }),
+        })}
       />
       <FormControl margin="normal">
         <Button testId="submit-study-form" type="submit">

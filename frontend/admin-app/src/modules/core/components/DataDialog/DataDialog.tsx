@@ -26,6 +26,7 @@ export function DataDialog<TData extends FormData>({
   onDelete,
   mode = "upsert",
 }: DataDialogProps<TData>) {
+  
   const handleSave = (data: TData) => {
     if (data.id) {
       if (mode === "upsert" && onUpdate) {

@@ -5,10 +5,12 @@ import { FieldsTabPanel } from "@modules/fields/components";
 import { useEntityId, useTab } from "@modules/navigation/hooks";
 import { Tab, Tabs, Toolbar } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export interface EntityPageProps {}
 
 const EntityPage: React.FC<EntityPageProps> = () => {
+  const { t } = useTranslation();
   const entityId = useEntityId();
   const tab = useTab();
   const navigate = useNavigationHelper();
@@ -24,9 +26,9 @@ const EntityPage: React.FC<EntityPageProps> = () => {
         value={tab}
         sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}
       >
-        <Tab label="Fields" value="fields" />
-        <Tab label="Requests" value="requests" />
-        <Tab label="Form" value="form" />
+        <Tab label={t("fields")} value="fields" />
+        <Tab label={t("requests")} value="requests" />
+        <Tab label={t("form")} value="form" />
       </Tabs>
       {tab === "fields" ? <FieldsTabPanel /> : null}
     </Page>

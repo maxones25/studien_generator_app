@@ -1,4 +1,11 @@
-import { FormControl, MenuItem, Select, SxProps, Theme } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SxProps,
+  Theme,
+} from "@mui/material";
 import {
   Control,
   Controller,
@@ -23,6 +30,7 @@ export interface FormSelectProps<TFieldValues extends FieldValues> {
   >;
   sx?: SxProps<Theme>;
   size?: "small" | "medium";
+  label?: string;
 }
 
 export function FormSelect<TFieldValues extends FieldValues>({
@@ -31,6 +39,7 @@ export function FormSelect<TFieldValues extends FieldValues>({
   options,
   rules,
   size,
+  label,
   sx,
 }: FormSelectProps<TFieldValues>) {
   return (
@@ -40,9 +49,12 @@ export function FormSelect<TFieldValues extends FieldValues>({
       name={name}
       render={({ field: { onChange, ...field }, formState }) => (
         <FormControl margin="normal">
+          {label && <InputLabel id={`${name}-select`}>{label}</InputLabel>}
           <Select
             sx={sx}
             size={size}
+            labelId={`${name}-select`}
+            label={label}
             error={Boolean(formState.errors[name])}
             onChange={(e) => {
               const value = e.target.value;

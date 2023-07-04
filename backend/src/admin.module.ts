@@ -18,6 +18,7 @@ import { EntityField } from './entities/entity-field.entity';
 import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.filter';
 import { EntityFieldAttribute } from './entities/entity-field-attribute.entity';
 import { EntitiesModule } from './modules/entities/entities.module';
+import { FieldsModule } from './modules/fields/fields.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { EntitiesModule } from './modules/entities/entities.module';
     StudiesModule,
     DirectorsModule,
     EntitiesModule,
+    FieldsModule,
   ],
   providers: [
     {

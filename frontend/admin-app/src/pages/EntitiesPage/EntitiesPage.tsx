@@ -23,10 +23,12 @@ import {
   Toolbar,
 } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export interface EntitiesPageProps {}
 
 const EntitiesPage: React.FC<EntitiesPageProps> = () => {
+  const { t } = useTranslation();
   const entityId = useEntityId();
   const navigate = useNavigationHelper();
   const editData = useFormData<EntityFormData>();
@@ -37,9 +39,9 @@ const EntitiesPage: React.FC<EntitiesPageProps> = () => {
   const deleteEntity = useDeleteEntity();
 
   return (
-    <Page testId="entities page" ml={1} width={200} boxShadow={4}>
+    <Page testId="entities page" width={200} boxShadow={6} zIndex={800}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", pl: 2 }}>
-        <Text variant="h6">Entities</Text>
+        <Text variant="h6">{t("entities")}</Text>
         <IconButton
           data-testid="create entities button"
           onClick={editData.handleSet({ name: "" })}
@@ -49,8 +51,8 @@ const EntitiesPage: React.FC<EntitiesPageProps> = () => {
       </Toolbar>
       <DataList
         client={getEntities}
-        noDataText="no data"
-        errorText="error"
+        errorText={t("fetch error data", { data: t("entities") })}
+        noDataText={t("no data found", { data: t("entities") })}
         renderItem={(entity, { isLast }) => (
           <DataListItem
             key={entity.id}
@@ -71,8 +73,8 @@ const EntitiesPage: React.FC<EntitiesPageProps> = () => {
       <DataDialog
         client={editData}
         Form={EntityForm}
-        createTitle="create entity"
-        updateTitle="update entity"
+        createTitle={t("create data", { data: t("entity") })}
+        updateTitle={t("update data", { data: t("entity") })}
         onCreate={createEntity.mutateAsync}
         onUpdate={updateEntity.mutateAsync}
       />
@@ -80,7 +82,7 @@ const EntitiesPage: React.FC<EntitiesPageProps> = () => {
         client={deleteData}
         Form={DeleteEntityForm}
         mode="delete"
-        deleteTitle="delete entity"
+        deleteTitle={t("delete data", { data: t("entity") })}
         onDelete={deleteEntity.mutateAsync}
       />
     </Page>

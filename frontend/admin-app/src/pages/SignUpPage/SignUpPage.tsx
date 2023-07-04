@@ -11,7 +11,7 @@ export interface SignUpPageProps {}
 
 const SignUpPage: React.FC<SignUpPageProps> = () => {
   const signUp = useSignUp();
-  const { t } = useTranslation("signUp");
+  const { t } = useTranslation();
   const navigate = useNavigationHelper();
 
   const handleSignUp = (data: SignUpFormData) => {
@@ -32,7 +32,7 @@ const SignUpPage: React.FC<SignUpPageProps> = () => {
           isLoading={signUp.isLoading}
         />
         <Link data-testid="login-link" to="/login">
-          {t("login up link")}
+          {t("login link")}
         </Link>
       </Column>
     </Page>

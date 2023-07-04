@@ -1,18 +1,15 @@
-import { Form, FormSelect, Row } from "@modules/core/components";
+import { Form, FormSelect, Row, IconButton } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
 import { Director, MemberFormData } from "@modules/members/types";
 import { Add } from "@mui/icons-material";
-import {
-  Autocomplete,
-  FormControl,
-  IconButton,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, FormControl, TextField } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export interface InviteMemberFormProps extends FormProps<MemberFormData> {
   directors: Director[];
+  isAdmin: boolean;
 }
 
 export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
@@ -20,7 +17,9 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
   values,
   formProps,
   directors,
+  isAdmin,
 }) => {
+  const { t } = useTranslation();
   const form = useForm<MemberFormData>({
     values,
   });
@@ -41,7 +40,7 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
       <FormControl margin="normal" sx={{ flex: 1 }}>
         <Autocomplete
           disablePortal
-          noOptionsText="{{ no option }}"
+          noOptionsText={t("no directors found")}
           onChange={(_, director) => {
             form.setValue("directorId", director?.id ?? "");
           }}
@@ -53,7 +52,7 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
             <TextField
               {...params}
               size="small"
-              placeholder="Suche Mitarbeiter..."
+              placeholder={t("search directors")}
             />
           )}
         />
@@ -70,11 +69,11 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
           name="role"
           options={[
             {
-              label: "Mitarbeiter",
+              label: t("member"),
               value: "employee",
             },
             {
-              label: "Administrator",
+              label: t("admin"),
               value: "admin",
             },
           ]}
@@ -83,13 +82,11 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
           <IconButton
             type="submit"
             color="success"
-            data-testid="invite member form submit button"
-          >
-            <Add />
-          </IconButton>
-          {/* <Button testId="invite member form submit button" type="submit">
-            {"{{ Add }}"}
-          </Button> */}
+            testId="invite member form submit button"
+            disabled={!isAdmin}
+            tooltipProps={!isAdmin ? { title: t("admin only") } : undefined}
+            Icon={<Add />}
+          />
         </FormControl>
       </Row>
     </Form>

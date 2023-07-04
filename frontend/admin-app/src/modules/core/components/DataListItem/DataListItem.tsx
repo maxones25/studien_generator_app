@@ -4,10 +4,10 @@ import { IconButton, ListItem, Menu, MenuItem } from "@mui/material";
 
 export interface DataListItemProps<ItemData> {
   item: ItemData;
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
   divider?: boolean;
-  onUpdate: (item: ItemData) => void;
-  onDelete: (item: ItemData) => void;
+  onUpdate?: (item: ItemData) => void;
+  onDelete?: (item: ItemData) => void;
 }
 
 export function DataListItem<ItemData>({
@@ -38,8 +38,12 @@ export function DataListItem<ItemData>({
             open={menuAnchor.isOpen}
             onClose={menuAnchor.close}
           >
-            <MenuItem onClick={handleClick(onUpdate)}>Edit</MenuItem>
-            <MenuItem onClick={handleClick(onDelete)}>Delete</MenuItem>
+            {onUpdate && (
+              <MenuItem onClick={handleClick(onUpdate)}>Edit</MenuItem>
+            )}
+            {onDelete && (
+              <MenuItem onClick={handleClick(onDelete)}>Delete</MenuItem>
+            )}
           </Menu>
         </>
       }

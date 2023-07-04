@@ -21,7 +21,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
   isError,
   isLoading,
 }) => {
-  const { t } = useTranslation("signUp");
+  const { t } = useTranslation();
   const form = useForm<SignUpFormData>();
 
   const password = form.watch("password");
@@ -34,7 +34,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           label={t("firstName")}
           formState={form.formState}
           textFieldProps={form.register("firstName", {
-            required: t("firstName required"),
+            required: t("value required", { value: t("firstName") }),
           })}
         />
         <FormTextField
@@ -42,7 +42,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           label={t("lastName")}
           formState={form.formState}
           textFieldProps={form.register("lastName", {
-            required: t("lastName required"),
+            required: t("value required", { value: t("lastName") }),
           })}
         />
       </Row>
@@ -50,7 +50,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
         label={t("email")}
         formState={form.formState}
         textFieldProps={form.register("email", {
-          required: t("email required"),
+          required: t("value required", { value: t("email") }),
         })}
       />
       <Row flexWrap="wrap">
@@ -59,10 +59,10 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           label={t("password")}
           formState={form.formState}
           textFieldProps={form.register("password", {
-            required: t("password required"),
+            required: t("value required", { value: t("password") }),
             minLength: {
               value: 8,
-              message: t("min length password", { value: 8 }),
+              message: t("min length value", { name: t("password"), value: 8 }),
             },
           })}
         />
@@ -71,7 +71,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           label={t("validate password")}
           formState={form.formState}
           textFieldProps={form.register("validatePassword", {
-            required: t("password required"),
+            required: t("value required", { value: t("password") }),
             validate: {
               unequal: (value) => value === password || t("passwords unequal"),
             },
@@ -82,7 +82,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
         label={t("activationPassword")}
         formState={form.formState}
         textFieldProps={form.register("activationPassword", {
-          required: t("activationPassword required"),
+          required: t("value required", { value: t("activationPassword") }),
         })}
       />
       {isError && (

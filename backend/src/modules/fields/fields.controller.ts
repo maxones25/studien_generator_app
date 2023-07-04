@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { Types } from '../../decorators/type.decorator';
 import { CreateEntityFieldDto } from './dtos/CreateEntityFieldDto';
@@ -13,6 +14,7 @@ import { UpdateEntityFieldDto } from './dtos/UpdateEntityFieldDto';
 import { Roles } from '../../decorators/roles.decorator';
 import { ValidateIdPipe } from '../../pipes/validate-id.pipe';
 import { FieldsService } from './fields.service';
+import { GetFieldQueryParamsDto } from './dtos/GetFieldQueryParamsDto';
 
 @Controller('studies/:studyId/entities/:entityId/fields')
 export class FieldsController {
@@ -31,8 +33,11 @@ export class FieldsController {
   @Types('director')
   @Roles('admin', 'employee')
   @Get()
-  async getFields(@Param('entityId', new ValidateIdPipe()) entityId: string) {
-    return this.fieldsService.getAll(entityId);
+  async getFields(
+    @Param('entityId', new ValidateIdPipe()) entityId: string,
+    @Query() { groupId }: GetFieldQueryParamsDto,
+  ) {
+    return this.fieldsService.getAll(entityId, groupId);
   }
 
   @Types('director')

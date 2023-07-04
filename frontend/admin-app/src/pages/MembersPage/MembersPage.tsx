@@ -1,4 +1,10 @@
-import { Column, DataList, Page, Text } from "@modules/core/components";
+import {
+  Column,
+  DataList,
+  IconButton,
+  Page,
+  Text,
+} from "@modules/core/components";
 import { InviteMemberForm } from "@modules/members/components";
 import {
   useAddMember,
@@ -11,18 +17,20 @@ import { useGetStudy } from "@modules/studies/hooks";
 import { Remove } from "@mui/icons-material";
 import {
   FormControl,
-  IconButton,
   ListItem,
   ListItemText,
   MenuItem,
   Select,
   SelectChangeEvent,
+  Toolbar,
 } from "@mui/material";
 import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 export interface MembersPageProps {}
 
 const MembersPage: React.FC<MembersPageProps> = () => {
+  const { t } = useTranslation();
   const getDirectors = useGetDirectors();
   const getMembers = useGetMembers();
   const getStudy = useGetStudy();
@@ -46,26 +54,25 @@ const MembersPage: React.FC<MembersPageProps> = () => {
   const isAdmin = getStudy.data?.role === "admin";
 
   return (
-    <Page testId="members page">
-      {isAdmin && (
-        <Column mb={2}>
-          <Text variant="h6">{"{{ Invite Member }}"}</Text>
-          <InviteMemberForm
-            formProps={{ p: 1 }}
-            onSubmit={addMember.mutate}
-            values={{ directorId: "", role: "employee" }}
-            directors={invitableMembers}
-          />
-        </Column>
-      )}
+    <Page testId="members page" ml={2} flex={1} maxWidth="50%">
+      <Toolbar></Toolbar>
+      <Column mb={2}>
+        <Text variant="h6">{t("add data", { data: t("member") })}</Text>
+        <InviteMemberForm
+          isAdmin={isAdmin}
+          onSubmit={addMember.mutate}
+          values={{ directorId: "", role: "employee" }}
+          directors={invitableMembers}
+        />
+      </Column>
       <Column>
         <Text variant="h4" sx={{ mb: 2 }}>
-          {"{{ Members }}"}
+          {t("members")}
         </Text>
         <DataList
           client={getMembers}
-          errorText="error"
-          noDataText="no data"
+          errorText={t("fetch error data", { data: t("members") })}
+          noDataText={t("no data found", { data: t("members") })}
           renderItem={(member, { isLast }) => (
             <ListItem key={member.director.id} divider={!isLast} disablePadding>
               <ListItemText
@@ -80,14 +87,17 @@ const MembersPage: React.FC<MembersPageProps> = () => {
                   onChange={handleChangeRole(member)}
                   readOnly={!isAdmin}
                 >
-                  <MenuItem value="admin">Administrator</MenuItem>
-                  <MenuItem value="employee">Mitarbeiter</MenuItem>
+                  <MenuItem value="admin">{t("admin")}</MenuItem>
+                  <MenuItem value="employee">{t("member")}</MenuItem>
                 </Select>
               </FormControl>
               <FormControl margin="normal" sx={{ ml: 1 }}>
-                <IconButton color="error">
-                  <Remove />
-                </IconButton>
+                <IconButton
+                  testId="remove member button"
+                  color="error"
+                  disabled={!isAdmin}
+                  Icon={<Remove />}
+                />
               </FormControl>
             </ListItem>
           )}

@@ -3,4 +3,5 @@ export enum FieldType {
   Text = 'Text',
   Boolean = 'Boolean',
   Date = 'Date',
+  Enum = 'Enum',
 }

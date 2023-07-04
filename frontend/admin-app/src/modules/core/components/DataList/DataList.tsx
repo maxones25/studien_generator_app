@@ -10,6 +10,7 @@ export interface DataListProps<Data> {
     item: Data,
     options: { i: number; arr: Data[]; isLast: boolean }
   ) => JSX.Element;
+  disablePadding?: boolean;
 }
 
 export function DataList<Data>({
@@ -17,6 +18,7 @@ export function DataList<Data>({
   errorText,
   noDataText,
   renderItem,
+  disablePadding = false,
 }: DataListProps<Data>) {
   const { isLoading, isError, data } = client;
 
@@ -33,7 +35,7 @@ export function DataList<Data>({
       ) : !hasData ? (
         <Text>{noDataText}</Text>
       ) : (
-        <List sx={{ width: "100%" }}>
+        <List sx={{ width: "100%" }} disablePadding={disablePadding}>
           {data?.map((item, i, arr) =>
             renderItem(item, { i, arr, isLast: i === arr.length - 1 })
           )}
