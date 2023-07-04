@@ -42,9 +42,12 @@ describe('AppController (e2e)', () => {
   it('/POST add participant to group successfully', () => {
     const participant = fakeData.participant();
     return request(app.getHttpServer())
-      .post(`/studies/${studyId}/groups/${groupId}/participants`)
+      .post(`/studies/${studyId}/participants`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send(participant)
+      .send({
+        number: participant.number,
+        groupId,
+      })
       .expect(201);
   });
 

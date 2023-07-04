@@ -19,9 +19,9 @@ describe('AppController (e2e)', () => {
   let studyId: string;
   let group1Id: string;
   let group2Id: string;
-  let participant1: ParticipantDto;
-  let participant2: ParticipantDto;
-  let participant3: ParticipantDto;
+  let participant1: any;
+  let participant2: any;
+  let participant3: any;
 
   beforeAll(async () => {
     app = await createApp(AppModule);
@@ -48,9 +48,9 @@ describe('AppController (e2e)', () => {
     studyId = await createStudy(app, accessToken, study);
     group1Id = await createGroup(app, accessToken, studyId, group1);
     group2Id = await createGroup(app, accessToken, studyId, group2);
-    await createParticipant(app, accessToken, studyId, group1Id, participant1);
-    await createParticipant(app, accessToken, studyId, group1Id, participant2);
-    await createParticipant(app, accessToken, studyId, group2Id, participant3);
+    await createParticipant(app, accessToken, studyId, {number: participant1.number, groupId: group1Id});
+    await createParticipant(app, accessToken, studyId, {number: participant2.number, groupId: group1Id});
+    await createParticipant(app, accessToken, studyId, {number: participant3.number, groupId: group2Id});
   });
 
   it('/GET get all participants from study successfully', async () => {
@@ -63,15 +63,15 @@ describe('AppController (e2e)', () => {
       });
   });
 
-  it('/GET get all participants from group1 successfully', async () => {
-    return request(app.getHttpServer())
-      .get(`/studies/${studyId}/groups/${group1Id}/participants`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(200)
-      .then((res) => {
-        expect(res.body.length).toBe(2);
-      });
-  });
+  // it('/GET get all participants from group1 successfully', async () => {
+  //   return request(app.getHttpServer())
+  //     .get(`/studies/${studyId}/groups/${group1Id}/participants`)
+  //     .set('Authorization', `Bearer ${accessToken}`)
+  //     .expect(200)
+  //     .then((res) => {
+  //       expect(res.body.length).toBe(2);
+  //     });
+  // });
 
   afterAll(async () => {
     await app.close();

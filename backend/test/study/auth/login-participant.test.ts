@@ -49,8 +49,7 @@ describe('AppController (e2e)', () => {
       adminApp,
       accessToken,
       studyId,
-      groupId,
-      participant,
+      {number: participant.number, groupId},
     );
   });
 
