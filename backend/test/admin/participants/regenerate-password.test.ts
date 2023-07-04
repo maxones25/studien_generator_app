@@ -46,8 +46,10 @@ describe('AppController (e2e)', () => {
       app,
       accessToken,
       studyId,
-      groupId,
-      participant,
+      {
+        number: participant.number,
+        groupId,
+      }
     );
     return request(app.getHttpServer())
       .get(`/studies/${studyId}/participants/${participantId}/password`)

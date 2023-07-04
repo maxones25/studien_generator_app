@@ -3,7 +3,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { SignupDirectorDto } from '../src/modules/auth/admin/dtos/SignupDirectorDto';
 import { CreateStudyDto } from '../src/modules/studies/dtos/createStudyDto';
 import { AddMemberDto } from '../src/modules/studies/dtos/addMemberDto';
-import { GroupDto } from '../src/modules/groups/dtos/UpdateGroupDto';
+import { CreateGroupDto } from '../src/modules/groups/dtos/CreateGroupDto';
 import { ParticipantDto } from '../src/modules/participants/dtos/participantDto';
 import { LoginParticipantDto } from '../src/modules/auth/study/dtos/LoginParticipantDto';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -78,7 +78,7 @@ export const createGroup = (
   app: INestApplication,
   accessToken: string,
   studyId: string,
-  data: GroupDto,
+  data: CreateGroupDto,
 ) =>
   new Promise<string>((resolve, reject) => {
     request(app.getHttpServer())
@@ -97,12 +97,11 @@ export const createParticipant = (
   app: INestApplication,
   accessToken: string,
   studyId: string,
-  groupId: string,
   data: ParticipantDto,
 ) =>
   new Promise<LoginParticipantDto>((resolve, reject) => {
     request(app.getHttpServer())
-      .post(`/studies/${studyId}/groups/${groupId}/participants`)
+      .post(`/studies/${studyId}/participants`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send(data)
       .expect(201)

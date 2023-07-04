@@ -46,14 +46,19 @@ describe('AppController (e2e)', () => {
       app,
       accessToken,
       studyId,
-      groupId,
-      participant,
+      {
+        number: participant.number,
+        groupId,
+      }
     );
     const updatedParticipant = fakeData.participant();
     return request(app.getHttpServer())
       .put(`/studies/${studyId}/participants/${participantId}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send(updatedParticipant)
+      .send({
+        number: updatedParticipant.number,
+        groupId,
+      })
       .expect(200);
   });
 

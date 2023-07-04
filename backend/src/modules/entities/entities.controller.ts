@@ -12,7 +12,7 @@ import { EntitiesService } from './entities.service';
 import { CreateEntityDto } from './dtos/CreateEntityDto';
 import { UpdateEntityFieldDto } from './dtos/UpdateEntityFieldDto';
 import { Roles } from '../../decorators/roles.decorator';
-import { ValidateIdPipe } from 'src/pipes/validate-id.pipe';
+import { ValidateIdPipe } from '../../pipes/validate-id.pipe';
 
 @Controller('studies/:studyId/entities')
 export class EntitiesController {

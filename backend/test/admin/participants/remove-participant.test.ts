@@ -46,12 +46,14 @@ describe('AppController (e2e)', () => {
       app,
       accessToken,
       studyId,
-      groupId,
-      participant,
+      {
+        number: participant.number,
+        groupId,
+      }
     );
     return request(app.getHttpServer())
       .delete(
-        `/studies/${studyId}/groups/${groupId}/participants/${participantId}`,
+        `/studies/${studyId}/participants/${participantId}`,
       )
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(200);
