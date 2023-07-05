@@ -19,11 +19,10 @@ export const Form: React.FC<FormProps> = forwardRef(
         component="form"
         sx={{ ...sx }}
         onSubmit={handleSubmit}
-        p={1}
         {...props}
       ></Column>
     );
   }
 );
 
-Form.displayName = 'Form';
+Form.displayName = "Form";
