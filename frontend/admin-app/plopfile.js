@@ -3,6 +3,7 @@ const modules = [
   "auth",
   "date",
   "navigation",
+  "forms",
   "studies",
   "participants",
   "members",

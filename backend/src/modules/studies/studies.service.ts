@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { Study } from '../../entities/study.entity';
 import { EntityManager, Repository } from 'typeorm';
@@ -57,7 +57,7 @@ export class StudiesService {
   }
 
   async findOne(studyId: string, directorId: string) {
-    const { id, name, members } = await this.studiesRepository.findOne({
+    const study = await this.studiesRepository.findOne({
       where: {
         id: studyId,
         members: {
@@ -76,10 +76,11 @@ export class StudiesService {
       },
     });
 
+    if (!study) throw new ConflictException('study not found');
+
     return {
-      id,
-      name,
-      role: members[0]?.role ?? '',
+      ...study,
+      role: study.members[0]?.role ?? '',
     };
   }
 

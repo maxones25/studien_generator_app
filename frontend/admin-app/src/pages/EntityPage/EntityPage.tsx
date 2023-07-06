@@ -2,6 +2,7 @@ import { Page, Text } from "@modules/core/components";
 import { useNavigationHelper } from "@modules/core/hooks";
 import { useGetEntity } from "@modules/entities/hooks";
 import { FieldsTabPanel } from "@modules/fields/components";
+import { FormTabPanel } from "@modules/forms/components";
 import { useEntityId, useTab } from "@modules/navigation/hooks";
 import { Tab, Tabs, Toolbar } from "@mui/material";
 import React from "react";
@@ -30,7 +31,11 @@ const EntityPage: React.FC<EntityPageProps> = () => {
         <Tab label={t("requests")} value="requests" />
         <Tab label={t("form")} value="form" />
       </Tabs>
-      {tab === "fields" ? <FieldsTabPanel /> : null}
+      {tab === "fields" ? (
+        <FieldsTabPanel />
+      ) : tab === "form" ? (
+        <FormTabPanel />
+      ) : null}
     </Page>
   );
 };
