@@ -4,15 +4,13 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   Unique,
-  OneToMany,
 } from 'typeorm';
-import { Study } from './study.entity';
-import { EntityField } from './entity-field.entity';
-import { Form } from './form.entity';
+import { Entity } from './entity.entity';
+import { Group } from './group.entity';
 
 @TypeOrmEntity()
-@Unique('unique_name_for_study', ['name', 'studyId'])
-export class Entity {
+@Unique('unique_form_for_group', ['entityId', 'groupId'])
+export class Form {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -27,20 +25,26 @@ export class Entity {
   modifiedAt: Date;
 
   @Column()
-  name: string;
+  entityId: string;
+
+  @Column({ nullable: true })
+  groupId: string;
 
   @Column()
-  studyId: string;
+  active: boolean;
 
-  @OneToMany(() => EntityField, (field) => field.entity)
-  fields: EntityField[];
+  @Column('json')
+  data: any;
 
-  @OneToMany(() => Form, (form) => form.entity)
-  forms: Form[];
-
-  @ManyToOne(() => Study, (study) => study.entities, {
+  @ManyToOne(() => Group, (group) => group.forms, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  study: Study;
+  group: Group;
+
+  @ManyToOne(() => Entity, (entity) => entity.forms, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  entity: Entity;
 }

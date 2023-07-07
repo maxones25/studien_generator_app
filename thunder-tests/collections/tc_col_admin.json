@@ -45,6 +45,13 @@
             "containerId": "07252029-2922-4cef-b19c-bd2bfb55a37b",
             "created": "2023-06-28T19:17:42.882Z",
             "sortNum": 80000
+        },
+        {
+            "_id": "d01717b2-a5f4-4af4-be17-482369af049d",
+            "name": "Forms",
+            "containerId": "",
+            "created": "2023-07-06T13:20:58.857Z",
+            "sortNum": 90000
         }
     ],
     "settings": {
@@ -229,12 +236,12 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-28T16:35:40.316Z",
-            "modified": "2023-06-28T16:36:12.804Z",
+            "modified": "2023-07-06T13:23:49.377Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Gruppe 2\"\n}",
+                "raw": "{\n  \"name\": \"Gruppe 1\"\n}",
                 "form": []
             },
             "tests": []
@@ -336,6 +343,45 @@
                 "raw": "{\n  \"name\": \"Gruppe 2\"\n}",
                 "form": []
             },
+            "tests": []
+        },
+        {
+            "_id": "dcfa696a-d17a-47f5-8767-e422b941a3a3",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "d01717b2-a5f4-4af4-be17-482369af049d",
+            "name": "create form",
+            "url": "/studies/{{studyId}}/entities/{{entityId}}/forms",
+            "method": "POST",
+            "sortNum": 130000,
+            "created": "2023-07-06T13:21:06.909Z",
+            "modified": "2023-07-06T13:24:02.970Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"active\": true,\n  \"groupId\": \"3a10c88a-48c8-4605-b0c1-4d4ef9720867\",\n  \"data\": {\n    \"title\": \"Test\",\n    \"pages\": [\n      {\n        \"title\": \"Page 1\",\n        \"type\": \"Form\",\n        \"fields\": [\n          {\n            \n          }\n          ]\n      }\n    ]\n  }\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "2630f78e-cf5c-414b-b223-c3500a4e0cc6",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "d01717b2-a5f4-4af4-be17-482369af049d",
+            "name": "get form",
+            "url": "/studies/{{studyId}}/entities/{{entityId}}/forms?groupId=3a10c88a-48c8-4605-b0c1-4d4ef9720867",
+            "method": "GET",
+            "sortNum": 140000,
+            "created": "2023-07-06T13:24:08.865Z",
+            "modified": "2023-07-06T16:21:19.598Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "groupId",
+                    "value": "3a10c88a-48c8-4605-b0c1-4d4ef9720867",
+                    "isPath": false
+                }
+            ],
             "tests": []
         }
     ]

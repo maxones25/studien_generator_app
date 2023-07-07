@@ -19,6 +19,8 @@ import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.fil
 import { EntityFieldAttribute } from './entities/entity-field-attribute.entity';
 import { EntitiesModule } from './modules/entities/entities.module';
 import { FieldsModule } from './modules/fields/fields.module';
+import { Form } from './entities/form.entity';
+import { FormsModule } from './modules/forms/forms.module';
 
 @Module({
   imports: [
@@ -41,6 +43,7 @@ import { FieldsModule } from './modules/fields/fields.module';
         Entity,
         EntityField,
         EntityFieldAttribute,
+        Form,
       ],
       logging: false,
       synchronize: false,
@@ -60,6 +63,7 @@ import { FieldsModule } from './modules/fields/fields.module';
     DirectorsModule,
     EntitiesModule,
     FieldsModule,
+    FormsModule,
   ],
   providers: [
     {
