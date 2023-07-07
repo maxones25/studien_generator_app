@@ -11,6 +11,8 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { Suspense } from "react";
 import { LinearProgress } from "@mui/material";
 import { SnackBarProvider } from "@modules/core/contexts";
+import { DateProvider } from "@modules/date/contexts";
+import { MultiFormProvider } from "@modules/forms/contexts";
 
 i18n
   .use(Backend)
@@ -47,13 +49,17 @@ const App = () => {
     <Suspense fallback={<LinearProgress />}>
       <QueryClientProvider client={queryClient}>
         <SnackBarProvider>
-          <Theme>
-            <AccessTokenProvider>
-              <RouterProvider router={router} />
-              <ReactQueryDevtools initialIsOpen={false} />
-              <AlertNotification />
-            </AccessTokenProvider>
-          </Theme>
+          <DateProvider>
+            <MultiFormProvider>
+              <Theme>
+                <AccessTokenProvider>
+                  <RouterProvider router={router} />
+                  <ReactQueryDevtools initialIsOpen={false} />
+                  <AlertNotification />
+                </AccessTokenProvider>
+              </Theme>
+            </MultiFormProvider>
+          </DateProvider>
         </SnackBarProvider>
       </QueryClientProvider>
     </Suspense>

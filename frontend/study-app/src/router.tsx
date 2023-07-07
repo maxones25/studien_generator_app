@@ -1,7 +1,9 @@
 import { AuthenticationGuard, LoginGuard } from "@modules/auth/components";
-import HelloWorldPage from "@pages/HelloWorldPage/HelloWorldPage";
+import ChatPage from "@pages/ChatPage/ChatPage";
 import LoginPage from "@pages/LoginPage/LoginPage";
-import { createBrowserRouter } from "react-router-dom";
+import RecordsPage from "@pages/RecordsPage/RecordsPage";
+import TasksPage from "@pages/TasksPage/TasksPage";
+import { Navigate,  Outlet,  createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -16,9 +18,27 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <AuthenticationGuard>
-        <HelloWorldPage />
+        <Outlet />
       </AuthenticationGuard>
     ),
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/tasks" />,
+      },
+      {
+        path: "tasks",
+        element: <TasksPage />
+      },
+      {
+        path: "records",
+        element: <RecordsPage />
+      },
+      {
+        path: "chat",
+        element: <ChatPage />
+      }
+    ]
   },
 ]);
 

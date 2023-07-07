@@ -10,7 +10,7 @@ export const useLogin = () => {
     (options) =>
       apiRequest(`/auth/participants/login`, { ...options, method: "POST" }),
     {
-      onSuccess: ({ accessToken: value }) => {
+      onSuccess: ({ data: { accessToken: value }}) => {
         accessToken.set(value);
       },
     }

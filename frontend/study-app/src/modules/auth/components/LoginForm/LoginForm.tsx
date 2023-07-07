@@ -31,7 +31,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, values }) => {
         })}
       />
       <FormControl>
-        <Button type="submit">Login</Button>
+        <Button type="submit" testId="submit-login-form">Login</Button>
       </FormControl>
     </Form>
   );
