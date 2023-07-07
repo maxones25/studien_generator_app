@@ -1,3 +1,9 @@
 {
-  "test": "Hallo Welt"
+  "test": "Hallo Welt",
+  "/tasks": "Aufgaben",
+  "/records": "Ereignisse",
+  "/chat": "Chat",
+  "send": "Senden",
+  "next": "Weiter",
+  "save": "Speichern"
 }

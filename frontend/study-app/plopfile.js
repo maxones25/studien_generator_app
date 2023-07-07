@@ -2,6 +2,11 @@ const modules = [
   "core",
   "auth",
   "date",
+  "navigation",
+  "forms",
+  "tasks",
+  "chat",
+  "records",
 ];
 
 const types = ["type", "interface"];
