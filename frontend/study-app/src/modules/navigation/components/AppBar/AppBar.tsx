@@ -27,10 +27,10 @@ export const AppBar : React.FC<AppBarProps>= () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, visibility: path === "/tasks" ? "hidden" : "inherit"}}
             onClick={changePage()}
-            testId={ path === "/tasks" ? 'add-record-app-bar' : 'go-back-app-bar' }
-            Icon={ path === "/tasks" ? <AddOutlined /> : <ArrowBack /> }
+            testId={'go-back-app-bar'}
+            Icon={<ArrowBack /> }
           />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {t(`${path}`)}
@@ -51,7 +51,6 @@ export const AppBar : React.FC<AppBarProps>= () => {
             edge="end"
             color="inherit"
             aria-label="menu"
-            sx={{ ml: 2 }}
             onClick={navigate.handle('../login')}
             testId='log-out-app-bar'
             Icon={<LogoutOutlined />}

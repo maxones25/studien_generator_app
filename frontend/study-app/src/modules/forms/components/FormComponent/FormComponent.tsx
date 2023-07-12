@@ -4,12 +4,12 @@ import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-export interface FormFieldProps {
+export interface FormComponentProps {
   formField: FormFieldData;
   form: UseFormReturn
 }
 
-export const FormField : React.FC<FormFieldProps>= ({
+export const FormComponent : React.FC<FormComponentProps>= ({
   formField,
   form,
 }) => {

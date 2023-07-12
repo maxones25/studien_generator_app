@@ -15,7 +15,7 @@ export const Page: React.FC<PageProps> = ({ sx, testId, ...props }) => {
     <Box sx={{
       height: "100vh",
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
       }}>
       {accessToken.isValid && <AppBar />}
       <Column
@@ -25,6 +25,7 @@ export const Page: React.FC<PageProps> = ({ sx, testId, ...props }) => {
         overflowY: "scroll",
         bgcolor: "background.default",
         flexGrow: "1",
+        paddingX: "5vw",
         ...sx,
       }}
       {...props}

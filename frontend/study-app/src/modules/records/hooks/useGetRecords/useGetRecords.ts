@@ -8,6 +8,16 @@ export const getGetRecordsKey = () => ["getRecords"];
 
 export const useGetRecords = (options? : UseGetRecordsOptions) => {
   return useReadRequest<Record[]>(getGetRecordsKey(), (options) =>
-    apiRequest(`/records`, { ...options })
+  new Promise((resolve, reject) => {
+    resolve([{
+      id: "1",
+      name: "test",
+    },
+    {
+      id: "2",
+      name: "test",
+    }])
+  })  
+  // apiRequest(`/records`, { ...options })
   );
 }

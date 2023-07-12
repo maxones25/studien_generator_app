@@ -1,3 +1,3 @@
 export * from './FormPage/FormPage'
-export * from './MultiFormDialog/MultiFormDialog'
-export * from './FormField/FormField'
+export * from './FormDialog/FormDialog'
+export * from './FormComponent/FormComponent'

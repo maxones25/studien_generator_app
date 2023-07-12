@@ -12,7 +12,7 @@ import { Suspense } from "react";
 import { LinearProgress } from "@mui/material";
 import { SnackBarProvider } from "@modules/core/contexts";
 import { DateProvider } from "@modules/date/contexts";
-import { MultiFormProvider } from "@modules/forms/contexts";
+import { FormIdProvider } from "@modules/forms/contexts";
 
 i18n
   .use(Backend)
@@ -50,7 +50,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <SnackBarProvider>
           <DateProvider>
-            <MultiFormProvider>
+            <FormIdProvider>
               <Theme>
                 <AccessTokenProvider>
                   <RouterProvider router={router} />
@@ -58,7 +58,7 @@ const App = () => {
                   <AlertNotification />
                 </AccessTokenProvider>
               </Theme>
-            </MultiFormProvider>
+            </FormIdProvider>
           </DateProvider>
         </SnackBarProvider>
       </QueryClientProvider>
