@@ -1,27 +1,27 @@
 import { FormTextField } from '@modules/core/components';
-import {  FormFieldData } from '@modules/forms/types';
+import { FormComponentData } from '@modules/forms/types';
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 export interface FormComponentProps {
-  formField: FormFieldData;
+  formComponent: FormComponentData;
   form: UseFormReturn
 }
 
 export const FormComponent : React.FC<FormComponentProps>= ({
-  formField,
+  formComponent,
   form,
 }) => {
   const { t } = useTranslation();
 
   const createField = ():JSX.Element => {
-    switch (formField.type) {
+    switch (formComponent.type) {
       case "text":
         return <FormTextField 
-          label={formField.name}
+          label={formComponent.label}
           formState={form.formState}
-          textFieldProps={form.register(formField.name, {
+          textFieldProps={form.register(formComponent.id, {
             required: t("value required", { value: t("name") }),
           })}
         />

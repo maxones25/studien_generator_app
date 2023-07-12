@@ -1,12 +1,12 @@
 import { createContext, FC, ReactNode, useContext, useState } from "react";
-import { FormData } from "@modules/forms/types";
+import { FormPageData } from "@modules/forms/types";
 import { useFormContext, useFormIdContext } from "..";
 
 interface FormDataContextValue {
   title: string,
   isLastPage: boolean;
   handleSubmit: (data: Object) => void;
-  currentPage?: FormData
+  currentPage?: FormPageData
 }
 
 interface FormDataProviderProps {
@@ -41,7 +41,7 @@ const useFormDataContextValue = () => {
       },
       form: {
         id: formId,
-        fields: {...data, ...newData}}
+        components: {...data, ...newData}}
     });
   }
 

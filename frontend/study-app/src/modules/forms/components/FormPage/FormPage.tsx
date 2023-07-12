@@ -24,20 +24,20 @@ export const FormPage : React.FC<FormPageProps> = ({
 
   return (
     <Form
-      data-testid={`${currentPage?.name}-form`}
+      data-testid={`${currentPage?.title}-form`}
       onSubmit={form.handleSubmit(handleSubmit)}
       {...formProps}
     >
-      <Text>{currentPage?.name}</Text>
-      {currentPage?.fields.map((value) => 
+      <Text>{currentPage?.title}</Text>
+      {currentPage?.components.map((value) => 
         <FormComponent 
-          key={value?.name}
-          formField={value}
+          key={value?.id}
+          formComponent={value}
           form={form}
         />
       )}
       <FormControl margin="normal">
-        <Button testId={`submit-${currentPage?.name}-form`} type="submit">
+        <Button testId={`submit-${currentPage?.title}-form`} type="submit">
           { isLastPage ? t("save") : t("next") }
         </Button>
       </FormControl>

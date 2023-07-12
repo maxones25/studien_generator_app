@@ -1,6 +1,6 @@
 import { useReadRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
-import { MultiFormData } from "@modules/forms/types";
+import { FormData } from "@modules/forms/types";
 
 export interface UseGetFormOptions {
   formId: string
@@ -10,26 +10,30 @@ export const getGetFormKey = () => ["getForm"];
 
 export const useGetForm = (options? : UseGetFormOptions) => {
   const formId = options?.formId;
-  return useReadRequest<MultiFormData>(getGetFormKey(), (options) =>
+  return useReadRequest<FormData>(getGetFormKey(), (options) =>
     new Promise((resolve, reject) => {
       resolve({
-        title: "multifrom",
+        id: "1",
+        name: "form",
         pages: [{
-          name: "page1",
-          fields: [{
-            name: "Name1",
+          title: "page1",
+          components: [{
+            id: "1",
+            label: "Name1",
             type: "text",
           }]
         }, {
-          name: "page2",
-          fields: [{
-            name: "Name2",
+          title: "page2",
+          components: [{
+            id: "2",
+            label: "Name2",
             type: "text",
           }]
         }, {
-          name: "page3",
-          fields: [{
-            name: "Name3",
+          title: "page3",
+          components: [{
+            id: "3",
+            label: "Name3",
             type: "text",
           }]
         }]

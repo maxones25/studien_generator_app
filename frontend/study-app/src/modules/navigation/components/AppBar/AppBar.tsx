@@ -1,6 +1,6 @@
 import { AppBar as MAppBar, Toolbar, Typography } from '@mui/material';
 import React from 'react';
-import { ArrowBack, AddOutlined, MailOutline, LogoutOutlined } from '@mui/icons-material';
+import { ArrowBack, MailOutline, LogoutOutlined } from '@mui/icons-material';
 import { useNavigationHelper } from '@modules/core/hooks';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';

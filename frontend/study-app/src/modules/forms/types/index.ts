@@ -1,1 +1,1 @@
-export * from './MultiFormData/MultiFormData'
+export * from './FormData/FormData'

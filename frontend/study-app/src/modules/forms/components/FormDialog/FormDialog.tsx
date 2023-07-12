@@ -9,14 +9,14 @@ export interface FormDialogProps {
 
 export const FormDialog : React.FC<FormDialogProps>= ({
 }) => {
-  const {hasFormId, title, resetForm} = useFormIdContext();
+  const {hasFormId, name, resetForm} = useFormIdContext();
 
   return (
     <Dialog open={hasFormId} onClose={resetForm}>
       <FormProvider>
         <FormDataProvider>
           <Column p={2}>
-            <Text color="text.secondary">{title}</Text>
+            <Text color="text.secondary">{name}</Text>
             <FormPage />
           </Column>
         </FormDataProvider>
