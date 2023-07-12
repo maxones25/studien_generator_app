@@ -1,5 +1,6 @@
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -14,6 +15,7 @@ import {
   PathValue,
   RegisterOptions,
 } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export type FormSelectOption = {
   label: string;
@@ -42,19 +44,25 @@ export function FormSelect<TFieldValues extends FieldValues>({
   label,
   sx,
 }: FormSelectProps<TFieldValues>) {
+  const { t } = useTranslation();
+
   return (
     <Controller
       control={control}
       rules={rules}
       name={name}
-      render={({ field: { onChange, ...field }, formState }) => (
-        <FormControl margin="normal">
+      render={({ field: { onChange, value, ...field }, formState }) => (
+        <FormControl 
+          margin="normal"
+          error={Boolean(formState.errors[name])}
+        >
           {label && <InputLabel id={`${name}-select`}>{label}</InputLabel>}
           <Select
             sx={sx}
             size={size}
             labelId={`${name}-select`}
             label={label}
+            value={value ?? ''}
             error={Boolean(formState.errors[name])}
             onChange={(e) => {
               const value = e.target.value;
@@ -68,6 +76,7 @@ export function FormSelect<TFieldValues extends FieldValues>({
               </MenuItem>
             ))}
           </Select>
+          {Boolean(formState.errors[name]) && <FormHelperText>{t("value required")}</FormHelperText>}
         </FormControl>
       )}
     />

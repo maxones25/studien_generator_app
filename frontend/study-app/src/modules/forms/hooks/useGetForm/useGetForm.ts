@@ -20,21 +20,27 @@ export const useGetForm = (options? : UseGetFormOptions) => {
           components: [{
             id: "1",
             label: "Name1",
-            type: "text",
+            type: "Text",
           }]
         }, {
           title: "page2",
           components: [{
             id: "2",
             label: "Name2",
-            type: "text",
+            type: "Enum",
+            attributes: {
+              options: [
+                {value: "hallo", label: "hallo"}, 
+                {value: "hello", label: "hello"},
+              ]
+            }
           }]
         }, {
           title: "page3",
           components: [{
             id: "3",
             label: "Name3",
-            type: "text",
+            type: "Text",
           }]
         }]
       })

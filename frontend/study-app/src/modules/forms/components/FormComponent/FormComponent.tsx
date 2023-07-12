@@ -1,4 +1,4 @@
-import { FormTextField } from '@modules/core/components';
+import { FormSelect, FormTextField } from '@modules/core/components';
 import { FormComponentData } from '@modules/forms/types';
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -17,13 +17,22 @@ export const FormComponent : React.FC<FormComponentProps>= ({
 
   const createField = ():JSX.Element => {
     switch (formComponent.type) {
-      case "text":
+      case "Text":
         return <FormTextField 
           label={formComponent.label}
           formState={form.formState}
           textFieldProps={form.register(formComponent.id, {
-            required: t("value required", { value: t("name") }),
+            required: t("value required"),
           })}
+        />
+      case "Enum":
+        return <FormSelect 
+          label={formComponent.label}
+          control={form.control}
+          name={formComponent.id}
+          rules={{required: true}}
+          options={
+            formComponent?.attributes?.options ?? []}
         />
       default: 
         return <></>

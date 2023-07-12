@@ -15,7 +15,7 @@ export const FormDialog : React.FC<FormDialogProps>= ({
     <Dialog open={hasFormId} onClose={resetForm}>
       <FormProvider>
         <FormDataProvider>
-          <Column p={2}>
+          <Column p={2} width={"70vw"}>
             <Text color="text.secondary">{name}</Text>
             <FormPage />
           </Column>
