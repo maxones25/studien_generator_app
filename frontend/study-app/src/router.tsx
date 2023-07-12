@@ -1,9 +1,9 @@
 import { AuthenticationGuard, LoginGuard } from "@modules/auth/components";
 import ChatPage from "@pages/ChatPage/ChatPage";
 import LoginPage from "@pages/LoginPage/LoginPage";
-import RecordsPage from "@pages/RecordsPage/RecordsPage";
 import TasksPage from "@pages/TasksPage/TasksPage";
 import { Navigate,  Outlet,  createBrowserRouter } from "react-router-dom";
+import EventsPage from "@pages/Eventspage/EventsPage";
 
 const router = createBrowserRouter([
   {
@@ -31,8 +31,8 @@ const router = createBrowserRouter([
         element: <TasksPage />
       },
       {
-        path: "records",
-        element: <RecordsPage />
+        path: "events",
+        element: <EventsPage />
       },
       {
         path: "chat",

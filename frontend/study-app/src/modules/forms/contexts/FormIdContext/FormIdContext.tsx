@@ -2,6 +2,7 @@ import { createContext, FC, ReactNode, useContext, useState } from "react";
 
 interface FormIdContextValue {
   formId?: string;
+  taskId?: string;
   title?: string;
   setForm: (formId: string, title: string) => void;
   resetForm: () => void;
@@ -19,21 +20,26 @@ const FormIdContext = createContext<FormIdContextValue | undefined>(
 
 const useFormIdContextValue = () => {
   const [formId, setFormId] = useState<string|undefined>();
+  const [taskId, setTaskId] = useState<string|undefined>();
   const [title, setTitle] = useState<string|undefined>();
 
-  const setForm = (formId: string, title: string) => {
+  const setForm = (formId: string, title: string, taskId?: string) => {
     setFormId(formId);
+    setTaskId(taskId);
     setTitle(title);
   }
 
   const resetForm = () => {
     setFormId(undefined);
+    setTaskId(undefined);
+    setTitle(undefined);
   }
 
   const hasFormId = formId !== undefined;
 
   return {
     formId,
+    taskId,
     title,
     setForm,
     resetForm,

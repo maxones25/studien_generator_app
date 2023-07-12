@@ -18,7 +18,7 @@ const FormDataContext = createContext<FormDataContextValue | undefined>(
 );
 
 const useFormDataContextValue = () => {
-  const { resetForm } = useFormIdContext();
+  const { resetForm, formId, taskId } = useFormIdContext();
   const { form } = useFormContext();
   const [data, setData] = useState({});
   const [pageNumber, setPageNumber] = useState(0);
@@ -34,7 +34,15 @@ const useFormDataContextValue = () => {
   }
 
   const saveForm = (newData: Object) => {
-    console.log({...data, ...newData});
+    console.log({
+      task: {
+        id: taskId,
+        completedAt: Date.now(),
+      },
+      form: {
+        id: formId,
+        fields: {...data, ...newData}}
+    });
   }
 
   const addData = (newData: Object) => {

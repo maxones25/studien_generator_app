@@ -1,6 +1,6 @@
-import { Page, Text } from '@modules/core/components';
+import { Page } from '@modules/core/components';
 import { DatePicker } from '@modules/date/components';
-import { FiledRecordsList, TasksList } from '@modules/tasks/components';
+import { RecordedEventsList, TasksList } from '@modules/tasks/components';
 import React from 'react';
 
 export interface TasksPageProps {}
@@ -11,7 +11,7 @@ const TasksPage : React.FC<TasksPageProps> = () => {
     <Page testId="home page">
       <DatePicker />
       <TasksList />
-      <FiledRecordsList />
+      <RecordedEventsList />
     </Page>
   );
 };

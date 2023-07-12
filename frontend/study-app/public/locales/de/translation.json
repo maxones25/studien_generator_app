@@ -1,7 +1,7 @@
 {
   "test": "Hallo Welt",
   "/tasks": "Aufgaben",
-  "/records": "Ereignisse",
+  "/events": "Ereignisse",
   "/chat": "Chat",
   "send": "Senden",
   "next": "Weiter",

@@ -4,9 +4,9 @@ import { useGetFiledReecordsByDate } from '@modules/tasks/hooks';
 import { AddOutlined } from '@mui/icons-material';
 import React from 'react';
 
-export interface FiledRecordsListProps {}
+export interface RecordedEventsListProps {}
 
-export const FiledRecordsList : React.FC<FiledRecordsListProps> = ({
+export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
   
 }) => {
   const getFiledRecords = useGetFiledReecordsByDate();
@@ -22,7 +22,7 @@ export const FiledRecordsList : React.FC<FiledRecordsListProps> = ({
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={navigate.handle('../records')}
+            onClick={navigate.handle('../events')}
             testId={'add-record-filed-records-list'}
             Icon={<AddOutlined />}
           />

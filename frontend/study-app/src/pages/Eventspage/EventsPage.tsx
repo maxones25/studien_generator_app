@@ -1,20 +1,20 @@
 import { Page } from '@modules/core/components';
 import React from 'react';
-import { RecordsList } from '@modules/records/components';
 import { FormDialog } from '@modules/forms/components';
+import { EventsList } from '@modules/events/components';
 
-export interface RecordsPageProps {}
+export interface EventsPagePageProps {}
 
-const RecordsPage : React.FC<RecordsPageProps> = ({
+const EventsPage : React.FC<EventsPagePageProps> = ({
   
 }) => {
 
   return (
     <Page testId="home page">
-      <RecordsList />
+      <EventsList />
       <FormDialog />
     </Page>
   );
 };
 
-export default RecordsPage
+export default EventsPage

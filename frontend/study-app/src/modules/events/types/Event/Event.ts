@@ -1,4 +1,4 @@
-export type Record = {
+export type Event = {
   id: string,
   name: string,
 }

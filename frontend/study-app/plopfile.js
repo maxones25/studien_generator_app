@@ -6,7 +6,7 @@ const modules = [
   "forms",
   "tasks",
   "chat",
-  "records",
+  "events",
 ];
 
 const types = ["type", "interface"];

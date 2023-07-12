@@ -1,20 +1,20 @@
 import { List } from '@modules/core/components';
+import { useGetEvents } from '@modules/events/hooks';
 import { useFormIdContext } from '@modules/forms/contexts';
-import { useGetRecords } from '@modules/records/hooks';
 import React from 'react';
 
-export interface RecordsListProps {}
+export interface EventsListProps {}
 
-export const RecordsList : React.FC<RecordsListProps> = ({
+export const EventsList : React.FC<EventsListProps> = ({
 
 }) => {
-  const getRecords = useGetRecords();
+  const getEvents = useGetEvents();
   const { setForm } = useFormIdContext();
 
   return (
     <List 
       title='records'
-      getListItems={getRecords}
+      getListItems={getEvents}
       handleClick={setForm}
     />
   );
