@@ -63,7 +63,6 @@ export function FormSelect<TFieldValues extends FieldValues>({
             labelId={`${name}-select`}
             label={label}
             value={value ?? ''}
-            error={Boolean(formState.errors[name])}
             onChange={(e) => {
               const value = e.target.value;
               onChange(value as PathValue<TFieldValues, Path<TFieldValues>>);
