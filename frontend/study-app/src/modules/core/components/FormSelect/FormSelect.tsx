@@ -61,7 +61,6 @@ export function FormSelect<TFieldValues extends FieldValues>({
             sx={sx}
             size={size}
             labelId={`${name}-select`}
-            label={label}
             value={value ?? ''}
             onChange={(e) => {
               const value = e.target.value;

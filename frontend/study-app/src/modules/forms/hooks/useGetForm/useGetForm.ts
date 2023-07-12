@@ -21,6 +21,11 @@ export const useGetForm = (options? : UseGetFormOptions) => {
             id: "1",
             label: "Name1",
             type: "Text",
+          },
+          {
+            id: "4",
+            label: "Name4",
+            type: "Boolean",
           }]
         }, {
           title: "page2",
@@ -40,7 +45,11 @@ export const useGetForm = (options? : UseGetFormOptions) => {
           components: [{
             id: "3",
             label: "Name3",
-            type: "Text",
+            type: "Number",
+            attributes: {
+              min: 1,
+              max: 7,
+            }
           }]
         }]
       })

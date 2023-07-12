@@ -20,4 +20,6 @@ export type FormComponentData = {
 
 export type FormComponentDataAttributes = {
   options?: FormSelectOption[],
+  min?: number,
+  max?: number
 }
