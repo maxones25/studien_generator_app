@@ -1,4 +1,4 @@
-import { FormSelect, FormSlider, FormSwitch, FormTextField, FormTimePicker } from '@modules/core/components';
+import { FormCheckBox, FormDatePicker, FormDateTimePicker, FormSelect, FormSlider, FormSwitch, FormTextField, FormTimePicker } from '@modules/core/components';
 import { FormComponentData } from '@modules/forms/types';
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -14,10 +14,17 @@ export const FormComponent : React.FC<FormComponentProps>= ({
   form,
 }) => {
   const { t } = useTranslation();
+  const props = {
+    label: formComponent.label,
+    control: form.control,
+    name: formComponent.id,
+    rules: {required: t("value required")},
+    attributes: formComponent.attributes
+  }
 
   const createField = ():JSX.Element => {
     switch (formComponent.type) {
-      case "Text":
+      case "TextField":
         return <FormTextField 
           label={formComponent.label}
           formState={form.formState}
@@ -25,38 +32,20 @@ export const FormComponent : React.FC<FormComponentProps>= ({
             required: t("value required"),
           })}
         />
-      case "Enum":
-        return <FormSelect 
-          label={formComponent.label}
-          control={form.control}
-          name={formComponent.id}
-          rules={{required: true}}
-          options={
-            formComponent?.attributes?.options ?? []}
-        />
-      case "Boolean":
-        return <FormSwitch 
-          label={formComponent.label}
-          control={form.control}
-          name={formComponent.id}
-          rules={{required: true}}
-        />
-      case "Number":
-        return <FormSlider 
-          label={formComponent.label}
-          control={form.control}
-          name={formComponent.id}
-          rules={{required: true}}
-          attributes={formComponent.attributes}
-        />
-      case "Date":
-        return <FormTimePicker 
-          label={formComponent.label}
-          control={form.control}
-          name={formComponent.id}
-          rules={{required: t("value required")}}
-          attributes={formComponent.attributes}
-        />
+      case "Select":
+        return <FormSelect {...props} />
+      case "Switch":
+        return <FormSwitch {...props} />
+      case "Slider":
+        return <FormSlider {...props} />
+      case "TimePicker":
+        return <FormTimePicker {...props} />
+      case "DatePicker":
+        return <FormDatePicker {...props} />
+      case "DateTimePicker":
+        return <FormDateTimePicker {...props} />
+      case "CheckBox":
+        return <FormCheckBox {...props} />
       default: 
         return <></>
     }

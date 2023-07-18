@@ -1,12 +1,9 @@
 import { FormComponentDataAttributes } from "@modules/forms/types";
 import {
+  Checkbox,
   FormControl,
+  FormControlLabel,
   FormHelperText,
-  InputLabel,
-  MenuItem,
-  Select,
-  SxProps,
-  Theme,
 } from "@mui/material";
 import {
   Control,
@@ -18,28 +15,24 @@ import {
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-export interface FormSelectProps<TFieldValues extends FieldValues> {
+export interface FormCheckBoxProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
   name: Path<TFieldValues>;
   rules?: Omit<
     RegisterOptions<TFieldValues, Path<TFieldValues>>,
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
   >;
-  sx?: SxProps<Theme>;
-  size?: "small" | "medium";
   label?: string;
   attributes?: FormComponentDataAttributes;
 }
 
-export function FormSelect<TFieldValues extends FieldValues>({
+export function FormCheckBox<TFieldValues extends FieldValues>({
   control,
   name,
   rules,
-  size,
   label,
-  sx,
   attributes,
-}: FormSelectProps<TFieldValues>) {
+}: FormCheckBoxProps<TFieldValues>) {
   const { t } = useTranslation();
 
   return (
@@ -51,26 +44,19 @@ export function FormSelect<TFieldValues extends FieldValues>({
         <FormControl 
           margin="normal"
           error={Boolean(formState.errors[name])}
-        >
-          {label && <InputLabel id={`${name}-select`}>{label}</InputLabel>}
-          <Select
-            sx={sx}
-            size={size}
-            labelId={`${name}-select`}
-            label={label}
-            value={value ?? ''}
-            onChange={(e) => {
-              const value = e.target.value;
-              onChange(value as PathValue<TFieldValues, Path<TFieldValues>>);
-            }}
-            {...field}
-          >
-            {attributes?.options?.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
+        > 
+          <FormControlLabel 
+            label={label} 
+            control={
+              <Checkbox 
+                onChange={(_e, checked) => {
+                  onChange(checked as PathValue<TFieldValues, Path<TFieldValues>>);
+                }}
+                {...field}
+                {...attributes}
+              />
+            }
+          />
           {Boolean(formState.errors[name]) && <FormHelperText>{t("value required")}</FormHelperText>}
         </FormControl>
       )}

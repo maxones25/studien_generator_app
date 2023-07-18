@@ -8,6 +8,7 @@ import {
 import { Switch } from "..";
 import { FormControl, FormHelperText } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { FormComponentDataAttributes } from "@modules/forms/types";
 
 export interface FormSwitchProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
@@ -17,6 +18,7 @@ export interface FormSwitchProps<TFieldValues extends FieldValues> {
     RegisterOptions<TFieldValues, Path<TFieldValues>>,
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
   >;
+  attributes?: FormComponentDataAttributes;
 }
 
 export function FormSwitch<TFieldValues extends FieldValues>({
@@ -24,6 +26,7 @@ export function FormSwitch<TFieldValues extends FieldValues>({
   control,
   name,
   rules,
+  attributes
 }: FormSwitchProps<TFieldValues>) {
   const { t } = useTranslation();
 
@@ -38,8 +41,10 @@ export function FormSwitch<TFieldValues extends FieldValues>({
         error={Boolean(formState.errors[name])}
         >
           <Switch 
-            {...field} 
-            label={label}/>
+            {...field}
+            {...attributes} 
+            label={label}
+          />
           {Boolean(formState.errors[name]) && 
             <FormHelperText>{t("value required")}</FormHelperText>}
         </FormControl>
