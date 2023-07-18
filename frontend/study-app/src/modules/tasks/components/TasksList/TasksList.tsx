@@ -9,7 +9,7 @@ export const TasksList : React.FC<TasksListProps> = ({
   
 }) => {
   const date = useDateContext();
-  const getTasks = useGetTasksByDate({date: date.value});
+  const getTasks = useGetTasksByDate({date: date.value.toDate()});
 
   return (
     <Column>
