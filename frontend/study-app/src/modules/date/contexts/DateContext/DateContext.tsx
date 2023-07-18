@@ -1,11 +1,17 @@
 import { createContext, FC, ReactNode, useContext, useState } from "react";
-import dateApi from "date-and-time";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs, { Dayjs } from "dayjs";
+import 'dayjs/locale/de';
+
 
 interface DateContextValue {
-  value: Date;
-  set: (value: Date) => void;
+  value: Dayjs;
+  set: (value: Dayjs) => void;
   increase: () => void;
   decrease: () => void;
+  locale: string
+  setLocale: (value: string) => void;
 }
 
 interface DateProviderProps {
@@ -15,28 +21,35 @@ interface DateProviderProps {
 const DateContext = createContext<DateContextValue | undefined>(undefined);
 
 const useDateContextValue = () => {
-  const [value, set] = useState(new Date());
+  const [value, set] = useState(dayjs());
+  const [locale, setLocale] = useState('de')
 
   const increase = () => {
-    set(dateApi.addDays(value, 1));
+    set(value.add(1, 'day'));
   };
 
   const decrease = () => {
-    set(dateApi.addDays(value, -1));
+    set(value.subtract(1, 'day'));
   };
 
   return {
-    value,
+    value: value.locale(locale),
     set,
     increase,
     decrease,
+    locale,
+    setLocale,
   };
 };
 
 export const DateProvider: FC<DateProviderProps> = ({ children }) => {
   const value = useDateContextValue();
 
-  return <DateContext.Provider value={value}>{children}</DateContext.Provider>;
+  return <DateContext.Provider value={value}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={value.locale}>
+      {children}
+    </LocalizationProvider>
+  </DateContext.Provider>;
 };
 
 export const useDateContext = () => {

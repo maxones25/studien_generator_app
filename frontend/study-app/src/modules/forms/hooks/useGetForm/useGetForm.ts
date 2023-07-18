@@ -26,6 +26,10 @@ export const useGetForm = (options? : UseGetFormOptions) => {
             id: "4",
             label: "Name4",
             type: "Boolean",
+          },          {
+            id: "9",
+            label: "Name9",
+            type: "Date",
           }]
         }, {
           title: "page2",

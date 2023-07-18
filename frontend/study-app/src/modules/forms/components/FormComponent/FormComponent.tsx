@@ -1,4 +1,4 @@
-import { FormSelect, FormSlider, FormSwitch, FormTextField } from '@modules/core/components';
+import { FormSelect, FormSlider, FormSwitch, FormTextField, FormTimePicker } from '@modules/core/components';
 import { FormComponentData } from '@modules/forms/types';
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -47,6 +47,14 @@ export const FormComponent : React.FC<FormComponentProps>= ({
           control={form.control}
           name={formComponent.id}
           rules={{required: true}}
+          attributes={formComponent.attributes}
+        />
+      case "Date":
+        return <FormTimePicker 
+          label={formComponent.label}
+          control={form.control}
+          name={formComponent.id}
+          rules={{required: t("value required")}}
           attributes={formComponent.attributes}
         />
       default: 
