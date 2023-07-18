@@ -12,6 +12,7 @@ export const useGetForm = (options? : UseGetFormOptions) => {
   const formId = options?.formId;
   return useReadRequest<FormData>(getGetFormKey(), (options) =>
     new Promise((resolve, reject) => {
+      setTimeout(() => 
       resolve({
         id: "1",
         name: "form",
@@ -56,7 +57,7 @@ export const useGetForm = (options? : UseGetFormOptions) => {
             }
           }]
         }]
-      })
+      }), 2000)
     })  
   //apiRequest(`/forms/${formId}`, { ...options })
   );

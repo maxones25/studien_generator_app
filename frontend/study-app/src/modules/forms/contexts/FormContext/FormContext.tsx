@@ -1,10 +1,11 @@
 import { useGetForm } from "@modules/forms/hooks";
-import { MultiFormData } from "@modules/forms/types";
+import { FormData } from "@modules/forms/types";
 import { createContext, FC, ReactNode, useContext } from "react";
 import { useFormIdContext } from "..";
+import { UseReadRequestResult } from "@modules/core/hooks";
 
 interface FormContextValue {
-  form?: MultiFormData
+  form: UseReadRequestResult<FormData>
 }
 
 interface FormProviderProps {
@@ -17,7 +18,7 @@ const FormContext = createContext<FormContextValue | undefined>(
 
 const useFormContextValue = () => {
   const { formId = '' } = useFormIdContext();
-  const form = useGetForm({formId}).data
+  const form = useGetForm({formId})
 
   return {
     form,

@@ -3,7 +3,6 @@ import { FormPageData } from "@modules/forms/types";
 import { useFormContext, useFormIdContext } from "..";
 
 interface FormDataContextValue {
-  title: string,
   isLastPage: boolean;
   handleSubmit: (data: Object) => void;
   currentPage?: FormPageData
@@ -49,11 +48,10 @@ const useFormDataContextValue = () => {
     setData({...data, ...newData});
   }
 
-  const isLastPage = form?.pages.length === pageNumber + 1;
-  const currentPage = form?.pages[pageNumber];
+  const isLastPage = form.data?.pages.length === pageNumber + 1;
+  const currentPage = form.data?.pages[pageNumber];
 
   return {
-    title: form?.title ?? '',
     isLastPage,
     handleSubmit,
     currentPage
