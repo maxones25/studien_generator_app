@@ -13,18 +13,6 @@
         {
             "name": "STUDY_BASE_URI",
             "value": "http://localhost:9000"
-        },
-        {
-            "name": "DIRECTOR_ACCESS_TOKEN",
-            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiMmIyZjlmODUtMzU4ZC00OWI0LWI1NTctMDJlM2I1ZDVjN2JhIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg4NDA1MjY0fQ.V5O8WoOafB1VV0zN6MM-D3e0Jz44TFP9iEDOZqUktyY"
-        },
-        {
-            "name": "studyId",
-            "value": "a6889dbc-80db-4229-a6b3-24796b0ea423"
-        },
-        {
-            "name": "entityId",
-            "value": "dcef4aa0-51a9-4ecb-9cdf-b8631b187a14"
         }
     ]
 }

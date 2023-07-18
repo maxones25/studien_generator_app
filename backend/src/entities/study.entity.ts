@@ -8,6 +8,8 @@ import { StudyMember } from './study-member';
 import { Group } from './group.entity';
 import { Participant } from './participant.entity';
 import { Entity } from './entity.entity';
+import { Form } from './form.entity';
+import { FormConfiguration } from './form-configuration.entity';
 
 @TypeOrmEntity()
 export class Study {
@@ -28,14 +30,23 @@ export class Study {
   name: string;
 
   @OneToMany(() => Group, (group) => group.study)
-  public groups: Group[];
+  groups: Group[];
+
+  @OneToMany(
+    () => FormConfiguration,
+    (formConfiguration) => formConfiguration.study,
+  )
+  formConfigurations: FormConfiguration[];
+
+  @OneToMany(() => Form, (form) => form.study)
+  forms: Form[];
 
   @OneToMany(() => StudyMember, (studyMember) => studyMember.study)
-  public members: StudyMember[];
+  members: StudyMember[];
 
   @OneToMany(() => Participant, (participant) => participant.study)
-  public participants: Participant[];
+  participants: Participant[];
 
   @OneToMany(() => Entity, (entity) => entity.study)
-  public entities: Entity[];
+  entities: Entity[];
 }

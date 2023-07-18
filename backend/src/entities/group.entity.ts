@@ -8,9 +8,7 @@ import {
 } from 'typeorm';
 import { Study } from './study.entity';
 import { Participant } from './participant.entity';
-import { EntityField } from './entity-field.entity';
-import { EntityFieldAttribute } from './entity-field-attribute.entity';
-import { Form } from './form.entity';
+import { FormConfiguration } from './form-configuration.entity';
 
 @Entity()
 @Unique('unique_name_for_study', ['name', 'studyId'])
@@ -37,14 +35,11 @@ export class Group {
   @OneToMany(() => Participant, (participant) => participant.group)
   participants: Participant[];
 
-  @OneToMany(() => EntityField, (field) => field.group)
-  fields: EntityField[];
-
-  @OneToMany(() => EntityFieldAttribute, (attribute) => attribute.group)
-  attributes: EntityField[];
-
-  @OneToMany(() => Form, (form) => form.group)
-  forms: Form[];
+  @OneToMany(
+    () => FormConfiguration,
+    (formConfiguration) => formConfiguration.group,
+  )
+  forms: FormConfiguration[];
 
   @ManyToOne(() => Study, (study) => study.groups, {
     cascade: true,

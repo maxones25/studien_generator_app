@@ -15,7 +15,7 @@ export const EntityForm: React.FC<EntityFormFormProps> = ({
   const form = useForm<EntityFormData>({ values });
 
   return (
-    <Form {...formProps} onSubmit={form.handleSubmit(onSubmit)}>
+    <Form form={form} onSubmit={onSubmit} {...formProps}>
       <FormTextField
         formState={form.formState}
         textFieldProps={form.register("name", { required: "required" })}

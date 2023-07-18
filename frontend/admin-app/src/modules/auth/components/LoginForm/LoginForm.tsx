@@ -19,12 +19,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   values,
   isError,
   isLoading,
+  formProps,
 }) => {
   const { t } = useTranslation();
-  const form = useForm({ values });
+  const form = useForm<LoginFormData>({ values });
 
   return (
-    <Form onSubmit={form.handleSubmit(onSubmit)}>
+    <Form form={form} onSubmit={onSubmit} {...formProps}>
       <FormEmailField
         label={t("email")}
         formState={form.formState}

@@ -1,28 +1,37 @@
-import React, { FormEventHandler, forwardRef } from "react";
+import { FormEventHandler } from "react";
 import { Column, ColumnProps } from "../Column/Column";
+import { ReactHookFormDevTools } from "..";
+import {
+  FieldValues,
+  FormProvider,
+  SubmitHandler,
+  UseFormReturn,
+} from "react-hook-form";
 
-export interface FormProps extends ColumnProps {}
+export interface FormProps<FormData extends FieldValues>
+  extends Omit<ColumnProps, "onSubmit"> {
+  form: UseFormReturn<FormData, any, undefined>;
+  onSubmit: SubmitHandler<FormData>;
+}
 
-export const Form: React.FC<FormProps> = forwardRef(
-  ({ sx, onSubmit, ...props }, ref) => {
-    const handleSubmit: FormEventHandler<HTMLDivElement> = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (onSubmit) {
-        onSubmit(e);
-      }
-    };
+export function Form<FormData extends FieldValues>({
+  onSubmit,
+  form,
+  children,
+  ...props
+}: FormProps<FormData>) {
+  const handleSubmit: FormEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    form.handleSubmit(onSubmit)(e);
+  };
 
-    return (
-      <Column
-        ref={ref}
-        component="form"
-        sx={{ ...sx }}
-        onSubmit={handleSubmit}
-        {...props}
-      ></Column>
-    );
-  }
-);
-
-Form.displayName = "Form";
+  return (
+    <FormProvider {...form}>
+      <Column component="form" onSubmit={handleSubmit} {...props}>
+        {children}
+        <ReactHookFormDevTools />
+      </Column>
+    </FormProvider>
+  );
+}

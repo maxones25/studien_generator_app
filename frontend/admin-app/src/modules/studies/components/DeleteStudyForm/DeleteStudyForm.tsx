@@ -6,7 +6,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-export interface DeleteStudyFormProps extends FormProps<StudyFormData> {}
+export interface DeleteStudyFormProps
+  extends FormProps<StudyFormData, { name: string }> {}
 
 export const DeleteStudyForm: React.FC<DeleteStudyFormProps> = ({
   values,
@@ -19,7 +20,8 @@ export const DeleteStudyForm: React.FC<DeleteStudyFormProps> = ({
   return (
     <Form
       data-testId="delete study form"
-      onSubmit={form.handleSubmit(() => onSubmit(values!))}
+      form={form}
+      onSubmit={() => onSubmit(values!)}
       {...formProps}
     >
       <Text mt={1}>{t("delete study question", { name: values?.name })}</Text>

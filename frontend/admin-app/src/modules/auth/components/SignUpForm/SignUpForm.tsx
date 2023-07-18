@@ -27,7 +27,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
   const password = form.watch("password");
 
   return (
-    <Form onSubmit={form.handleSubmit(onSubmit)}>
+    <Form form={form} onSubmit={(data) => onSubmit(data)}>
       <Row flexWrap="wrap">
         <FormTextField
           sx={{ flex: 1 }}

@@ -35,9 +35,8 @@ export class FieldsController {
   @Get()
   async getFields(
     @Param('entityId', new ValidateIdPipe()) entityId: string,
-    @Query() { groupId }: GetFieldQueryParamsDto,
   ) {
-    return this.fieldsService.getAll(entityId, groupId);
+    return this.fieldsService.getAll(entityId);
   }
 
   @Types('director')
