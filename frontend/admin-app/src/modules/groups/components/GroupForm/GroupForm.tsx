@@ -17,7 +17,7 @@ export const GroupForm: React.FC<GroupFormProps> = ({
   const form = useForm<GroupFormData>({ values });
 
   return (
-    <Form {...formProps} onSubmit={form.handleSubmit(onSubmit)}>
+    <Form form={form} {...formProps} onSubmit={onSubmit}>
       <FormTextField
         label={t("name")}
         formState={form.formState}

@@ -14,7 +14,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { Entity } from './entities/entity.entity';
 import { EntityField } from './entities/entity-field.entity';
 import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.filter';
-import { EntityFieldAttribute } from './entities/entity-field-attribute.entity';
 
 @Module({
   imports: [
@@ -36,7 +35,6 @@ import { EntityFieldAttribute } from './entities/entity-field-attribute.entity';
         Participant,
         Entity,
         EntityField,
-        EntityFieldAttribute,
       ],
       logging: false,
       synchronize: false,

@@ -20,8 +20,4 @@ export class CreateEntityFieldDto {
   @IsOptional()
   @IsUUID()
   readonly groupId?: string;
-
-  @IsObject()
-  @IsOptional()
-  readonly data?: FieldData;
 }

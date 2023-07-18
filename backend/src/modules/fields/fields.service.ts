@@ -13,32 +13,23 @@ export class FieldsService {
     private entityFieldsRepository: Repository<EntityField>,
   ) {}
 
-  async add(
-    entityId: string,
-    { name, type, groupId, data }: CreateEntityFieldDto,
-  ) {
+  async add(entityId: string, { name, type }: CreateEntityFieldDto) {
     const entityField = new EntityField();
 
     entityField.entityId = entityId;
     entityField.name = name;
     entityField.type = type;
-    entityField.groupId = groupId;
-    entityField.data = data;
-
-    if (type === FieldType.Enum && !data.enum)
-      throw new ConflictException('enum must have enum data');
 
     await this.entityFieldsRepository.insert(entityField);
 
     return entityField;
   }
 
-  async getAll(entityId: string, groupId?: string) {
+  async getAll(entityId: string) {
     return this.entityFieldsRepository.find({
-      where: [
-        { entityId, groupId: IsNull() },
-        { entityId, groupId },
-      ],
+      where: {
+        entityId,
+      },
       order: {
         createdAt: 'ASC',
       },
@@ -46,16 +37,12 @@ export class FieldsService {
         id: true,
         name: true,
         type: true,
-        data: {
-          enum: true,
-        },
-        groupId: true,
       },
     });
   }
 
-  async update(fieldId: string, { name, type, groupId }: UpdateEntityFieldDto) {
-    return this.entityFieldsRepository.update(fieldId, { name, type, groupId });
+  async update(fieldId: string, { name, type }: UpdateEntityFieldDto) {
+    return this.entityFieldsRepository.update(fieldId, { name, type });
   }
 
   async delete(fieldId: string) {

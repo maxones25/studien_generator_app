@@ -29,7 +29,7 @@ export const FormForm: React.FC<FormFormProps> = ({
   const pages = useFieldArray({ control: form.control, name: "data.pages" });
 
   return (
-    <Form {...formProps} onSubmit={form.handleSubmit(onSubmit)}>
+    <Form {...formProps} form={form} onSubmit={onSubmit}>
       <Row m={1} justifyContent="space-between">
         <FormSwitch
           control={form.control}

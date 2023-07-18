@@ -5,7 +5,8 @@ import { FormControl } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-export interface DeleteEntityFormProps extends FormProps<EntityFormData> {}
+export interface DeleteEntityFormProps
+  extends FormProps<EntityFormData, { name: string }> {}
 
 export const DeleteEntityForm: React.FC<DeleteEntityFormProps> = ({
   onSubmit,
@@ -15,7 +16,7 @@ export const DeleteEntityForm: React.FC<DeleteEntityFormProps> = ({
   const form = useForm<{ name: string }>();
 
   return (
-    <Form {...formProps} onSubmit={form.handleSubmit(() => onSubmit(values!))}>
+    <Form form={form} onSubmit={() => onSubmit(values!)} {...formProps}>
       <FormTextField
         formState={form.formState}
         textFieldProps={form.register("name", {

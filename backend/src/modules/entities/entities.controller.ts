@@ -38,11 +38,8 @@ export class EntitiesController {
   @Types('director')
   @Roles('admin', 'employee')
   @Get(':entityId')
-  async getById(
-    @Param('studyId', new ValidateIdPipe()) studyId: string,
-    @Param('entityId', new ValidateIdPipe()) entityId: string,
-  ) {
-    return this.entitiesService.getById(studyId, entityId);
+  async getById(@Param('entityId', new ValidateIdPipe()) entityId: string) {
+    return this.entitiesService.getById(entityId);
   }
 
   @Types('director')

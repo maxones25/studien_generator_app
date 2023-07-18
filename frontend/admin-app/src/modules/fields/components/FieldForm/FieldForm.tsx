@@ -32,7 +32,7 @@ export const FieldForm: React.FC<FieldFormProps> = ({
   const form = useForm<FieldFormData>({ values });
 
   return (
-    <Form {...formProps} onSubmit={form.handleSubmit(onSubmit)}>
+    <Form form={form} {...formProps} onSubmit={onSubmit}>
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Text variant="h6">{isNew ? "New Field" : "Update Field"}</Text>
         <IconButton data-testid="field form submit button" type="submit">

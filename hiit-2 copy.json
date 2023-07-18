@@ -1,0 +1,119 @@
+{
+  "variable 3 times per week": {
+    "type": "VARIABLE",
+    "period": "WEEK",
+    "inBetween?": {
+      "amount": 1,
+      "peroid": "DAY"
+    },
+    "postpone": {
+      "active": true,
+      "maxDays": 1,
+      "maxTimes": 1
+    },
+    "requests": [
+      {
+        "time": "TIME | BEFORE_SLEEP | AFTER_SLEEP"
+      }
+    ]
+  },
+  "variable weekly": {
+    "type": "VARIABLE",
+    "period": "WEEK",
+    "inBetween?": {
+      "amount": 1,
+      "peroid": "DAY"
+    },
+    "postpone": {
+      "active": true,
+      "maxDays": 1,
+      "maxTimes": 1
+    },
+    "requests": [
+      {
+        "day?": "DAY_OF_WEEK | DAY_OF_MONTH",
+        "time": "TIME | BEFORE_SLEEP | AFTER_SLEEP"
+      }
+    ]
+  },
+  "variable weekly": {
+    "type": "VARIABLE",
+    "period": "DAILY",
+    "inBetween?": 1,
+    "postpone": {
+      "active": true,
+      "maxDays": 1,
+      "maxTimes": 1
+    },
+    "requests": [
+      {
+        "day?": "DAY_OF_WEEK | DAY_OF_MONTH",
+        "time": "TIME | BEFORE_SLEEP | AFTER_SLEEP"
+      }
+    ]
+  },
+  "new 1": {
+    "requests": [
+      {
+        "time": "08:00",
+        "period": "WEEK",
+        "type": "flexible",
+        "day": null,
+        "inBetween": 1,
+        "postpone": {
+          "active": true,
+          "maxDays": 1,
+          "maxTimes": 1
+        }
+      },
+      {
+        "time": "08:00",
+        "period": "WEEK",
+        "type": "flexible",
+        "day": null,
+        "inBetween": 1,
+        "postpone": {
+          "active": true,
+          "maxDays": 1,
+          "maxTimes": 1
+        }
+      },
+      {
+        "time": "08:00",
+        "period": "WEEK",
+        "type": "flexible",
+        "day": null,
+        "inBetween": 1,
+        "postpone": {
+          "active": true,
+          "maxDays": 1,
+          "maxTimes": 1
+        }
+      }
+    ]
+  },
+  "new 2": {
+    "period": "WEEK",
+    "type": "fix",
+    "daysBetween": null,
+    "postpone": {
+      "active": true,
+      "maxDays": 1,
+      "maxTimes": 1
+    },
+    "requests": [
+      {
+        "day": "MO",
+        "time": "08:00"
+      },
+      {
+        "day": "DO",
+        "time": "08:00"
+      },
+      {
+        "day": "SA",
+        "time": "08:00"
+      }
+    ]
+  }
+}

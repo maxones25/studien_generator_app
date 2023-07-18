@@ -5,19 +5,40 @@ GET     /studies/id/entities
 PUT     /studies/id/entities/id
 DELETE  /studies/id/entities/id
 
-# Fields Controller
+# Entity Fields Controller
 POST    /studies/id/entities/id/fields
 GET     /studies/id/entities/id/fields
 PUT     /studies/id/entities/id/fields/id
 DELETE  /studies/id/entities/id/fields/id
 
-# Attributes Controller
-POST    /studies/id/entities/id/fields/id/attributes
-GET     /studies/id/entities/id/fields/id/attributes
-PUT     /studies/id/entities/id/fields/id/attributes/id
-DELETE  /studies/id/entities/id/fields/id/attributes/id
+# Forms Controller
+POST    /studies/id/forms
+GET     /studies/id/forms/id
+PUT     /studies/id/forms/id
+DELETE  /studies/id/forms/id
 
-# Groups Entities Controller
-GET     /studies/id/groups/id/entities
-GET     /studies/id/groups/id/entities/id/fields
-GET     /studies/id/groups/id/entities/id/fields/id/attributes
+# Form Configurations Controller
+POST    /studies/id/formConfigs
+GET     /studies/id/formConfigs
+PUT     /studies/id/formConfigs/id
+DELETE  /studies/id/formConfigs/id
+
+# Form Pages Controller
+POST    /studies/id/forms/id/pages
+GET     /studies/id/forms/id/pages
+PUT     /studies/id/forms/id/pages/id
+DELETE  /studies/id/forms/id/pages/id
+POST    /studies/id/forms/id/pages/reorder
+
+# Form Fields Controller
+POST    /studies/id/forms/id/pages/id/fields
+GET     /studies/id/forms/id/pages/id/fields
+PUT     /studies/id/forms/id/pages/id/fields/id
+DELETE  /studies/id/forms/id/pages/id/fields/id
+POST    /studies/id/forms/id/pages/id/fields/reorder
+
+# Form Fields Attributes Controller
+POST    /studies/id/forms/id/fields/id/attributes
+GET     /studies/id/forms/id/fields/id/attributes
+PUT     /studies/id/forms/id/fields/id/attributes/id
+DELETE  /studies/id/forms/id/fields/id/attributes/id

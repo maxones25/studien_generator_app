@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Study } from './study.entity';
 import { EntityField } from './entity-field.entity';
-import { Form } from './form.entity';
+import { FormEntity } from './form-entity.entity';
 
 @TypeOrmEntity()
 @Unique('unique_name_for_study', ['name', 'studyId'])
@@ -35,8 +35,8 @@ export class Entity {
   @OneToMany(() => EntityField, (field) => field.entity)
   fields: EntityField[];
 
-  @OneToMany(() => Form, (form) => form.entity)
-  forms: Form[];
+  @OneToMany(() => FormEntity, (formEntity) => formEntity.entity)
+  formEntities: FormEntity[];
 
   @ManyToOne(() => Study, (study) => study.entities, {
     cascade: true,

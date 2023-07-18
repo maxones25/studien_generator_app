@@ -42,11 +42,10 @@ export class EntitiesService {
     });
   }
 
-  async getById(studyId: string, entityId: string) {
+  async getById(entityId: string) {
     return this.entitiesRepository.findOne({
       where: {
         id: entityId,
-        studyId,
       },
       relations: {
         fields: true,

@@ -4,13 +4,13 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   Unique,
-  OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { Entity } from './entity.entity';
-import { EntityFieldAttribute } from './entity-field-attribute.entity';
 import { FieldType } from '../enums/field-type.enum';
-import { Group } from './group.entity';
 import { FieldData } from '../modules/fields/dtos/FieldData';
+import { FormField } from './form-field.entity';
+import { RecordField } from './record-field.entity';
 
 @TypeOrmEntity()
 @Unique('unique_name_for_entity', ['name', 'entityId'])
@@ -29,6 +29,9 @@ export class EntityField {
   modifiedAt: Date;
 
   @Column()
+  entityId: string;
+
+  @Column()
   name: string;
 
   @Column()
@@ -37,24 +40,15 @@ export class EntityField {
   @Column('json', { nullable: true })
   data: FieldData;
 
-  @Column()
-  entityId: string;
+  @OneToMany(() => FormField, (formField) => formField.entityField)
+  formFields: FormField[];
 
-  @Column({ nullable: true })
-  groupId: string;
-
-  @OneToOne(() => EntityFieldAttribute, (attribute) => attribute.field)
-  attributes: EntityFieldAttribute[];
+  @OneToMany(() => RecordField, (recordField) => recordField.entityField)
+  recordFields: RecordField[];
 
   @ManyToOne(() => Entity, (entity) => entity.fields, {
     cascade: true,
     onDelete: 'CASCADE',
   })
   entity: Entity;
-
-  @ManyToOne(() => Group, (entity) => entity.fields, {
-    cascade: true,
-    onDelete: 'CASCADE',
-  })
-  group: Group;
 }

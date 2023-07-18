@@ -1,6 +1,6 @@
 {
   "type": "VARIABLE",
-  "period": "WEEK",
+  "period": 7,
   "inBetween?": {
     "amount": 1,
     "peroid": "DAY"
@@ -13,8 +13,7 @@
   "requests": [
     {
       "day?": "DAY_OF_WEEK | DAY_OF_MONTH",
-      "time": "TIME | BEFORE_SLEEP | AFTER_SLEEP",
-      "reminders": ["number"]
+      "time": "TIME | BEFORE_SLEEP | AFTER_SLEEP"
     }
   ],
   "form": {
