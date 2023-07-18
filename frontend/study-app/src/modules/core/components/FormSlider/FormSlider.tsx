@@ -1,6 +1,7 @@
 import { FormComponentDataAttributes } from '@modules/forms/types';
-import { Slider } from '@mui/material';
+import { FormControl, FormControlLabel, FormHelperText, Slider } from '@mui/material';
 import { Control, Controller, FieldValues, Path, PathValue, RegisterOptions } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 export interface FormSliderProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
@@ -20,21 +21,36 @@ export function FormSlider<TFieldValues extends FieldValues>({
   rules,
   attributes
 }: FormSliderProps<TFieldValues>) {
+  const { t } = useTranslation();
+
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
-      render={({ field: { onChange, value, ...field} }) => (
-        <Slider 
-          aria-label='Temperature'
-          value={value ?? 0} 
-          onChange={(_e, newValue) => {
-            onChange(newValue as PathValue<TFieldValues, Path<TFieldValues>>);
-          }}
-          {...field} 
-          {...attributes}
+      render={({ field: { onChange, value, ...field}, formState }) => (
+      <FormControl 
+        margin="normal"
+        error={Boolean(formState.errors[name])}
+        >
+          <FormControlLabel
+          control={
+            <Slider 
+              aria-label='Temperature'
+              value={value ?? 0} 
+              onChange={(_e, newValue) => {
+                onChange(newValue as PathValue<TFieldValues, Path<TFieldValues>>);
+              }}
+              {...field} 
+              {...attributes}
+            />
+          }
+          label={label}
+          labelPlacement='top'
         />
+        {Boolean(formState.errors[name]) && 
+        <FormHelperText>{t("value required")}</FormHelperText>}
+      </FormControl>
       )}
     />
   );

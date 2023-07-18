@@ -5,8 +5,8 @@ import {
   RegisterOptions,
   Path,
 } from "react-hook-form";
-import { Row, Switch } from "..";
-import { FormControl, FormHelperText, FormLabel } from "@mui/material";
+import { Switch } from "..";
+import { FormControl, FormHelperText } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 export interface FormSwitchProps<TFieldValues extends FieldValues> {
@@ -37,11 +37,9 @@ export function FormSwitch<TFieldValues extends FieldValues>({
         margin="normal"
         error={Boolean(formState.errors[name])}
         >
-          <Row>
-            <Switch 
-              {...field} 
-              label={label}/>
-          </Row>
+          <Switch 
+            {...field} 
+            label={label}/>
           {Boolean(formState.errors[name]) && 
             <FormHelperText>{t("value required")}</FormHelperText>}
         </FormControl>
