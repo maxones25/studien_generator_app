@@ -1,6 +1,6 @@
 import { Column, IconButton, List, Row, Text } from '@modules/core/components';
 import { useNavigationHelper } from '@modules/core/hooks';
-import { useGetFiledReecordsByDate } from '@modules/tasks/hooks';
+import { useGetFiledRecordsByDate } from '@modules/tasks/hooks';
 import { AddOutlined } from '@mui/icons-material';
 import React from 'react';
 
@@ -9,7 +9,7 @@ export interface RecordedEventsListProps {}
 export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
   
 }) => {
-  const getFiledRecords = useGetFiledReecordsByDate();
+  const getFiledRecords = useGetFiledRecordsByDate();
   const navigate = useNavigationHelper();
 
   return (
