@@ -8,8 +8,8 @@ export interface TasksListProps {}
 export const TasksList : React.FC<TasksListProps> = ({
   
 }) => {
-  const date = useDateContext();
-  const getTasks = useGetTasksByDate({date: date.value.toDate()});
+  const { value: date } = useDateContext();
+  const getTasks = useGetTasksByDate({ date });
 
   return (
     <Column>
