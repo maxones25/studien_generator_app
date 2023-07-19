@@ -7,7 +7,7 @@ import { DirectorsModule } from './modules/directors/directors.module';
 import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.filter';
 import { EntitiesModule } from './modules/entities/entities.module';
 import { FormsModule } from './modules/forms/forms.module';
-import { RecordsModule } from './records/records.module';
+import { RecordsModule } from './modules/records/admin/records.module';
 import DbModule from './modules/db/db.module';
 import JwtModule from './modules/jwt/jwt.module';
 import ConfigModule from './modules/config/config.module';
