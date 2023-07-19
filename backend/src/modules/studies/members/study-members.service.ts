@@ -1,13 +1,12 @@
 import {
   BadRequestException,
-  ConflictException,
   Injectable,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudyMember } from '../../../entities/study-member';
-import { AddMemberDto } from './dtos/addMemberDto';
-import { UpdateMemberDto } from './dtos/updateMemberDto';
+import { AddMemberDto } from './dtos/AddMemberDto';
+import { UpdateMemberDto } from './dtos/UpdateMemberDto';
 import { Roles } from '../../../enums/roles.enum';
 
 @Injectable()
@@ -18,11 +17,13 @@ export class StudyMembersService {
   ) {}
 
   async addToStudy(studyId: string, { directorId, role }: AddMemberDto) {
-    return await this.studyMemberRepository.insert({
-      directorId,
-      studyId,
-      role,
-    });
+    const studyMember = new StudyMember();
+
+    studyMember.studyId = studyId;
+    studyMember.directorId = directorId;
+    studyMember.role = role;
+
+    await this.studyMemberRepository.insert(studyMember);
   }
 
   async updateMember(
@@ -35,7 +36,7 @@ export class StudyMembersService {
       (await this.isMemberLastAdmin(studyId, directorId))
     )
       throw new BadRequestException('can not remove last admin from study');
-    await this.studyMemberRepository.update(
+    return await this.studyMemberRepository.update(
       {
         studyId,
         directorId,

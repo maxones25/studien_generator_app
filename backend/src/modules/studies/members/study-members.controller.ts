@@ -8,8 +8,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { Roles } from '../../../decorators/roles.decorator';
-import { AddMemberDto } from './dtos/addMemberDto';
-import { UpdateMemberDto } from './dtos/updateMemberDto';
+import { AddMemberDto } from './dtos/AddMemberDto';
+import { UpdateMemberDto } from './dtos/UpdateMemberDto';
 import { Types } from '../../../decorators/type.decorator';
 import { StudyMembersService } from './study-members.service';
 

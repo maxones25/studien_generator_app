@@ -80,12 +80,26 @@
             "containerId": "d01717b2-a5f4-4af4-be17-482369af049d",
             "created": "2023-07-18T16:09:02.890Z",
             "sortNum": 140000
+        },
+        {
+            "_id": "e33d298d-5205-4868-9b22-8a6033fefd84",
+            "name": "Members",
+            "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
+            "created": "2023-07-19T09:18:56.281Z",
+            "sortNum": 150000
+        },
+        {
+            "_id": "edb399a4-a30e-4b23-b83f-5f7d70d959fb",
+            "name": "Directors",
+            "containerId": "",
+            "created": "2023-07-19T09:20:11.551Z",
+            "sortNum": 35000
         }
     ],
     "settings": {
         "auth": {
             "type": "bearer",
-            "bearer": "{{DIRECTOR_ACCESS_TOKEN}}"
+            "bearer": "{{accessToken}}"
         },
         "options": {
             "baseUrl": "{{ADMIN_BASE_URI}}"
@@ -680,6 +694,86 @@
             "sortNum": 40000,
             "created": "2023-07-19T08:37:03.149Z",
             "modified": "2023-07-19T08:37:20.678Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "2d5fea11-0704-404c-9502-0bd9f29dcd55",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "e33d298d-5205-4868-9b22-8a6033fefd84",
+            "name": "get all study members",
+            "url": "/studies/{{studyId}}/members",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-07-19T09:19:00.673Z",
+            "modified": "2023-07-19T09:19:22.637Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c3472242-28fd-4420-b993-a2080cf62870",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "e33d298d-5205-4868-9b22-8a6033fefd84",
+            "name": "add study member",
+            "url": "/studies/{{studyId}}/members",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-07-19T09:19:27.617Z",
+            "modified": "2023-07-19T09:21:28.244Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"directorId\": \"57318d97-cc08-45fd-945d-ee551dacc7e5\",\n  \"role\": \"employee\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "279cd037-9a67-4cb9-be70-035539c8d963",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "edb399a4-a30e-4b23-b83f-5f7d70d959fb",
+            "name": "get directors",
+            "url": "/directors",
+            "method": "GET",
+            "sortNum": 190000,
+            "created": "2023-07-19T09:20:23.301Z",
+            "modified": "2023-07-19T09:20:30.803Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "ab142408-b5e1-4c59-a7bc-d2508e66f5b6",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "e33d298d-5205-4868-9b22-8a6033fefd84",
+            "name": "update study member",
+            "url": "/studies/{{studyId}}/members/57318d97-cc08-45fd-945d-ee551dacc7e5",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2023-07-19T09:24:00.485Z",
+            "modified": "2023-07-19T09:27:19.845Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"role\": \"employee\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "81abb761-5f61-4a79-b71a-bb8545af4b4d",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "e33d298d-5205-4868-9b22-8a6033fefd84",
+            "name": "remove study member",
+            "url": "/studies/{{studyId}}/members/2b2f9f85-358d-49b4-b557-02e3b5d5c7ba",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2023-07-19T09:27:38.954Z",
+            "modified": "2023-07-19T09:28:12.070Z",
             "headers": [],
             "params": [],
             "tests": []
