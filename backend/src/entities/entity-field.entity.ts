@@ -8,9 +8,9 @@ import {
 } from 'typeorm';
 import { Entity } from './entity.entity';
 import { FieldType } from '../enums/field-type.enum';
-import { FieldData } from '../modules/fields/dtos/FieldData';
 import { FormField } from './form-field.entity';
 import { RecordField } from './record-field.entity';
+import { FieldData } from '../modules/entities/fields/dtos/FieldData';
 
 @TypeOrmEntity()
 @Unique('unique_name_for_entity', ['name', 'entityId'])

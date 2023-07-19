@@ -7,9 +7,9 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { Types } from '../../decorators/type.decorator';
-import { Roles } from '../../decorators/roles.decorator';
-import { ValidateIdPipe } from 'src/pipes/validate-id.pipe';
+import { Types } from '../../../decorators/type.decorator';
+import { Roles } from '../../../decorators/roles.decorator';
+import { ValidateIdPipe } from '../../../pipes/validate-id.pipe';
 import { FormPagesService } from './form-pages.service';
 import { CreateFormPageDto } from './dtos/CreateFormPageDto';
 import { UpdateFormPageDto } from './dtos/UpdateFormPageDto';

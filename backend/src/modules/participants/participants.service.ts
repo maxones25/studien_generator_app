@@ -13,7 +13,6 @@ export class ParticipantsService {
     private passwordService: PasswordService,
   ) {}
 
-  //TODO
   async create(studyId: string, { number, groupId }: ParticipantDto) {
     const participant = new Participant();
     const password = await this.passwordService.generate();

@@ -6,11 +6,11 @@ import {
   FormFieldDto,
 } from './dtos/CreateFormComponentDto';
 
-import { FormComponent } from '../../entities/form-component.entity';
-import { EntityField } from '../../entities/entity-field.entity';
-import { ComponentTypeService } from './component-type.service';
-import { ComponentType } from '../../enums/component-type.enum';
-import { FormField } from '../../entities/form-field.entity';
+import { FormComponent } from '../../../../entities/form-component.entity';
+import { EntityField } from '../../../../entities/entity-field.entity';
+import { ComponentTypesService } from '../../../componentTypes/component-types.service';
+import { ComponentType } from '../../../../enums/component-type.enum';
+import { FormField } from '../../../../entities/form-field.entity';
 
 @Injectable()
 export class FormComponentsService {
@@ -19,8 +19,8 @@ export class FormComponentsService {
     private formComponentsRepository: Repository<FormComponent>,
     @InjectEntityManager()
     private entityManager: EntityManager,
-    @Inject(ComponentTypeService)
-    private componentTypeService: ComponentTypeService,
+    @Inject(ComponentTypesService)
+    private componentTypesService: ComponentTypesService,
   ) {}
 
   async create(pageId: string, { type, formFields }: CreateFormComponentDto) {
@@ -59,7 +59,7 @@ export class FormComponentsService {
     });
   }
 
-  getAll(pageId: string) {
+  async getAll(pageId: string) {
     return this.formComponentsRepository.find({
       where: { pageId },
       select: {
@@ -78,7 +78,7 @@ export class FormComponentsService {
     });
   }
 
-  delete(id: string) {
+  async delete(id: string) {
     return this.entityManager.transaction(async (entityManager) => {
       const formComponentsRepo = await entityManager.getRepository(
         FormComponent,
@@ -99,7 +99,7 @@ export class FormComponentsService {
         formComponents.map((c, i) => ({ ...c, number: i + 1 })),
       );
 
-      return deleteResult
+      return deleteResult;
     });
   }
 
@@ -117,7 +117,7 @@ export class FormComponentsService {
 
     for (const entityField of entityFields) {
       if (
-        !this.componentTypeService.isValidForEntityType(entityField.type, type)
+        !this.componentTypesService.isValidForEntityType(entityField.type, type)
       ) {
         return false;
       }

@@ -14,14 +14,17 @@ export class GroupsService {
 
   async create(studyId: string, { name }: CreateGroupDto) {
     const group = new Group();
+
     group.name = name;
     group.studyId = studyId;
+    
     await this.groupsRepository.insert(group);
-    return group;
+    
+    return group.id;
   }
 
   async getByStudy(studyId: string) {
-    return await this.groupsRepository.find({
+    return this.groupsRepository.find({
       where: { studyId },
       select: {
         id: true,
@@ -35,7 +38,7 @@ export class GroupsService {
     return this.groupsRepository.update(groupId, { name });
   }
 
-  async delete(groupId: string) {
-    return await this.groupsRepository.delete({ id: groupId });
+  async delete(id: string) {
+    return await this.groupsRepository.delete(id);
   }
 }

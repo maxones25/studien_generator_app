@@ -1,13 +1,12 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, IsNull, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateEntityFieldDto } from './dtos/CreateEntityFieldDto';
-import { EntityField } from '../../entities/entity-field.entity';
+import { EntityField } from '../../../entities/entity-field.entity';
 import { UpdateEntityFieldDto } from './dtos/UpdateEntityFieldDto';
-import { FieldType } from 'src/enums/field-type.enum';
 
 @Injectable()
-export class FieldsService {
+export class EntityFieldsService {
   constructor(
     @InjectRepository(EntityField)
     private entityFieldsRepository: Repository<EntityField>,

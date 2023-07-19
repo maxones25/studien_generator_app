@@ -1,7 +1,7 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Form } from 'src/entities/form.entity';
-import { IsNull, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateFormDto } from './dtos/CreateFormDto';
 import { UpdateFormDto } from './dtos/UpdateFormDto';
 
@@ -27,6 +27,10 @@ export class FormsService {
     return this.formsRepository.find({
       where: {
         studyId,
+      },
+      select: {
+        id: true,
+        name: true,
       },
     });
   }

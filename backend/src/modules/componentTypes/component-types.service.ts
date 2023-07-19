@@ -3,7 +3,7 @@ import { ComponentType } from '../../enums/component-type.enum';
 import { FieldType } from '../../enums/field-type.enum';
 
 @Injectable()
-export class ComponentTypeService {
+export class ComponentTypesService {
   private componentTypes = new Map<FieldType, ComponentType[]>();
 
   constructor() {
@@ -27,6 +27,8 @@ export class ComponentTypeService {
   }
 
   getAll() {
-    return Object.fromEntries(this.componentTypes);
+    return {
+      map: Object.fromEntries(this.componentTypes),
+    };
   }
 }

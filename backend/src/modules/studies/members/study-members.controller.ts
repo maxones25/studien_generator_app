@@ -7,21 +7,21 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { Roles } from '../../decorators/roles.decorator';
-import { AddMemberDto } from './dtos/addMemberDto';
-import { UpdateMemberDto } from './dtos/updateMemberDto';
-import { Types } from '../../decorators/type.decorator';
-import { MembersService } from './members.service';
+import { Roles } from '../../../decorators/roles.decorator';
+import { AddMemberDto } from './dtos/AddMemberDto';
+import { UpdateMemberDto } from './dtos/UpdateMemberDto';
+import { Types } from '../../../decorators/type.decorator';
+import { StudyMembersService } from './study-members.service';
 
 @Controller('studies/:studyId/members')
-export class MembersController {
-  constructor(private readonly membersService: MembersService) {}
+export class StudyMembersController {
+  constructor(private readonly studyMembersService: StudyMembersService) {}
 
   @Types('director')
   @Roles('admin', 'employee')
   @Get()
   async findMembersByStudy(@Param('studyId') studyId: string) {
-    return this.membersService.getByStudy(studyId);
+    return this.studyMembersService.getByStudy(studyId);
   }
 
   @Types('director')
@@ -31,7 +31,7 @@ export class MembersController {
     @Param('studyId') studyId: string,
     @Body() addMemberDto: AddMemberDto,
   ) {
-    return this.membersService.addToStudy(studyId, addMemberDto);
+    return this.studyMembersService.addToStudy(studyId, addMemberDto);
   }
 
   @Types('director')
@@ -42,7 +42,11 @@ export class MembersController {
     @Param('directorId') directorId: string,
     @Body() updatedMember: UpdateMemberDto,
   ) {
-    return this.membersService.updateMember(studyId, directorId, updatedMember);
+    return this.studyMembersService.updateMember(
+      studyId,
+      directorId,
+      updatedMember,
+    );
   }
 
   @Types('director')
@@ -52,6 +56,6 @@ export class MembersController {
     @Param('studyId') studyId: string,
     @Param('directorId') directorId: string,
   ) {
-    return this.membersService.removeFromStudy(studyId, directorId);
+    return this.studyMembersService.removeFromStudy(studyId, directorId);
   }
 }

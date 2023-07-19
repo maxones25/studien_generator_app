@@ -3,13 +3,13 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  Unique,
   OneToMany,
 } from 'typeorm';
 import { Group } from './group.entity';
 import { Study } from './study.entity';
 import { Task } from './task.entity';
 import { Form } from './form.entity';
+import { FormConfigType } from '../enums/form-config-type.enum';
 
 @TypeOrmEntity()
 export class FormConfiguration {
@@ -39,7 +39,7 @@ export class FormConfiguration {
   isActive: boolean;
 
   @Column()
-  type: string;
+  type: FormConfigType;
 
   @OneToMany(() => Task, (task) => task.form)
   tasks: Task[];
