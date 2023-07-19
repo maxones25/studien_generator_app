@@ -5,7 +5,7 @@ describe("home page", () => {
   });
 
   it("should open to home page", () => {
-    cy.fetchAccessToken().then(() => {
+    cy.fetchAccessToken("participant").then(() => {
       cy.visit("/");
       cy.getByTestId("home page").should("exist")
     });

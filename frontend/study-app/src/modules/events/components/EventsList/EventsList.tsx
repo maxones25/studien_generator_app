@@ -13,7 +13,7 @@ export const EventsList : React.FC<EventsListProps> = ({
 
   return (
     <List 
-      title='records'
+      title='events'
       getListItems={getEvents}
       handleClick={setForm}
     />

@@ -23,12 +23,12 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
             aria-label="menu"
             sx={{ mr: 2 }}
             onClick={navigate.handle('../events')}
-            testId={'add-record-filed-records-list'}
+            testId={'add-event'}
             Icon={<AddOutlined />}
           />
       </Row>
       <List 
-        title='filed records'
+        title='recorded events'
         getListItems={getFiledRecords}
         handleClick={() => {}}
       />
