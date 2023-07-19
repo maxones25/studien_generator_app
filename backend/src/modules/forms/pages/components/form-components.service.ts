@@ -5,12 +5,10 @@ import {
   CreateFormComponentDto,
   FormFieldDto,
 } from './dtos/CreateFormComponentDto';
-
 import { FormComponent } from '../../../../entities/form-component.entity';
-import { EntityField } from '../../../../entities/entity-field.entity';
-import { ComponentTypesService } from '../../../componentTypes/component-types.service';
+import { ComponentsService } from '../../../components/components.service';
 import { ComponentType } from '../../../../enums/component-type.enum';
-import { FormField } from '../../../../entities/form-field.entity';
+import { CreateFormComponentTransaction } from './transactions/CreateFormComponentTransaction';
 
 @Injectable()
 export class FormComponentsService {
@@ -19,43 +17,24 @@ export class FormComponentsService {
     private formComponentsRepository: Repository<FormComponent>,
     @InjectEntityManager()
     private entityManager: EntityManager,
-    @Inject(ComponentTypesService)
-    private componentTypesService: ComponentTypesService,
+    @Inject(ComponentsService)
+    private componentsService: ComponentsService,
   ) {}
 
-  async create(pageId: string, { type, formFields }: CreateFormComponentDto) {
+  async create(pageId: string, data: CreateFormComponentDto) {
+    const { formFields, type } = data;
+
     if (!(await this.AreForFieldTypesValid(type, formFields)))
-      throw new BadRequestException('Component Type invalid');
-
-    const pages = await this.formComponentsRepository.find({
-      where: { pageId },
-    });
-
-    return this.entityManager.transaction(async (entityManager) => {
-      const formComponentsRepo = await entityManager.getRepository(
-        FormComponent,
+      throw new BadRequestException(
+        `component type ${type} invalid for entity fields`,
       );
 
-      const formComponent = new FormComponent();
+    const number = await this.getNextNumber(pageId);
 
-      formComponent.pageId = pageId;
-      formComponent.number = pages.length + 1;
-      formComponent.type = type;
-
-      await formComponentsRepo.insert(formComponent);
-
-      const formFieldsRepo = await entityManager.getRepository(FormField);
-
-      for (const { entityFieldId } of formFields) {
-        const formField = new FormField();
-
-        formField.entityFieldId = entityFieldId;
-        formField.formComponentId = formComponent.id;
-
-        await formFieldsRepo.insert(formField);
-      }
-
-      return formComponent.id;
+    return new CreateFormComponentTransaction(this.entityManager).run({
+      pageId,
+      number,
+      data,
     });
   }
 
@@ -107,22 +86,17 @@ export class FormComponentsService {
     type: ComponentType,
     formFields: FormFieldDto[],
   ) {
-    const entityFieldsRepo = await this.entityManager.getRepository(
-      EntityField,
+    const entityFieldsIds = formFields.map(
+      ({ entityFieldId }) => entityFieldId,
     );
 
-    const entityFields = await entityFieldsRepo.find({
-      where: formFields.map(({ entityFieldId }) => ({ id: entityFieldId })),
+    return await this.componentsService.areEntityFieldsValid(type, entityFieldsIds)
+  }
+
+  private async getNextNumber(pageId: string) {
+    const pages = await this.formComponentsRepository.find({
+      where: { pageId },
     });
-
-    for (const entityField of entityFields) {
-      if (
-        !this.componentTypesService.isValidForEntityType(entityField.type, type)
-      ) {
-        return false;
-      }
-    }
-
-    return true;
+    return pages.length + 1;
   }
 }
