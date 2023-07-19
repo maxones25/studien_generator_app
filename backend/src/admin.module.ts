@@ -6,11 +6,13 @@ import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { DirectorsModule } from './modules/directors/directors.module';
 import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.filter';
 import { EntitiesModule } from './modules/entities/entities.module';
-import { FieldsModule } from './modules/fields/fields.module';
 import { FormsModule } from './modules/forms/forms.module';
 import DbModule from './modules/db/db.module';
 import JwtModule from './modules/jwt/jwt.module';
 import ConfigModule from './modules/config/config.module';
+import { ComponentTypesModule } from './modules/componentTypes/component-types.module';
+import { ParticipantsModule } from './modules/participants/participants.module';
+import { GroupsModule } from './modules/groups/groups.module';
 
 @Module({
   imports: [
@@ -18,11 +20,13 @@ import ConfigModule from './modules/config/config.module';
     DbModule,
     JwtModule,
     AuthModule,
-    StudiesModule,
     DirectorsModule,
+    StudiesModule,
+    GroupsModule,
+    ParticipantsModule,
     EntitiesModule,
-    FieldsModule,
     FormsModule,
+    ComponentTypesModule,
   ],
   providers: [
     {

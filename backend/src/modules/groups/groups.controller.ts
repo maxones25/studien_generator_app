@@ -51,6 +51,6 @@ export class GroupsController {
   @Roles('admin')
   @Delete(':groupId')
   async deleteGroup(@Param('groupId', new ValidateIdPipe()) groupId: string) {
-    this.groupsService.delete(groupId);
+    return this.groupsService.delete(groupId);
   }
 }

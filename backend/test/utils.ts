@@ -2,7 +2,7 @@ import * as request from 'supertest';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { SignupDirectorDto } from '../src/modules/auth/admin/dtos/SignupDirectorDto';
 import { CreateStudyDto } from '../src/modules/studies/dtos/createStudyDto';
-import { AddMemberDto } from '../src/modules/studies/dtos/addMemberDto';
+import { AddMemberDto } from '../src/modules/studies/members/dtos/addMemberDto';
 import { CreateGroupDto } from '../src/modules/groups/dtos/CreateGroupDto';
 import { ParticipantDto } from '../src/modules/participants/dtos/participantDto';
 import { LoginParticipantDto } from '../src/modules/auth/study/dtos/LoginParticipantDto';

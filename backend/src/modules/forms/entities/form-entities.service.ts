@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, EntityManager, Repository } from 'typeorm';
-import { FormEntity } from '../../entities/form-entity.entity';
+import { FormEntity } from '../../../entities/form-entity.entity';
 import { CreateFormEntityDto } from './dtos/CreateFormEntityDto';
-import { FormComponent } from '../../entities/form-component.entity';
+import { FormComponent } from '../../../entities/form-component.entity';
 
 @Injectable()
 export class FormEntitiesService {
@@ -25,7 +25,7 @@ export class FormEntitiesService {
     return formEntity;
   }
 
-  remove(formId: string, entityId: string) {
+  async remove(formId: string, entityId: string) {
     return this.entityManager.transaction<DeleteResult>(
       async (entityManager) => {
         const formEntitiesRepository = await entityManager.getRepository(
@@ -59,5 +59,31 @@ export class FormEntitiesService {
         return result;
       },
     );
+  }
+
+  async getAll(formId: string) {
+    const items = await this.formEntitiesRepository.find({
+      where: {
+        formId,
+      },
+      relations: {
+        entity: {
+          fields: true,
+        },
+      },
+      select: {
+        entity: {
+          id: true,
+          name: true,
+          fields: {
+            id: true,
+            name: true,
+            type: true,
+          },
+        },
+      },
+    });
+
+    return items.map(({ entity }) => entity);
   }
 }

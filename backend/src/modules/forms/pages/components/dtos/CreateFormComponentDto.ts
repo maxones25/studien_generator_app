@@ -5,7 +5,7 @@ import {
   IsUUID,
   ValidateNested,
 } from 'class-validator';
-import { ComponentType } from '../../../enums/component-type.enum';
+import { ComponentType } from '../../../../../enums/component-type.enum';
 import { Type } from 'class-transformer';
 
 export class FormFieldDto {

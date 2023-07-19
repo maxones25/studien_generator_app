@@ -6,8 +6,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { FieldType } from '../../../enums/field-type.enum';
-import { FieldData } from './FieldData';
+import { FieldType } from '../../../../enums/field-type.enum';
 
 export class CreateEntityFieldDto {
   @IsString()

@@ -3,9 +3,8 @@ import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { Study } from '../../entities/study.entity';
 import { EntityManager, Repository } from 'typeorm';
 import { CreateStudyDto } from './dtos/createStudyDto';
-import { StudyMember } from '../../entities/study-member';
-import { Roles } from '../../enums/roles.enum';
 import { UpdateStudyDto } from './dtos/updateStudyDto';
+import { CreateStudyTransaction } from './transactions/create-study.transaction';
 
 @Injectable()
 export class StudiesService {
@@ -16,23 +15,10 @@ export class StudiesService {
     private studiesRepository: Repository<Study>,
   ) {}
 
-  async create({ name }: CreateStudyDto, directorId: string) {
-    return await this.entityManager.transaction(async (entityManager) => {
-      const studiesRepository = entityManager.getRepository(Study);
-      const studyMemberRepository = entityManager.getRepository(StudyMember);
-
-      const study = new Study();
-      study.name = name;
-
-      await studiesRepository.insert(study);
-
-      await studyMemberRepository.insert({
-        directorId: directorId,
-        studyId: study.id,
-        role: Roles.admin,
-      });
-
-      return study;
+  async create(data: CreateStudyDto, directorId: string) {
+    return new CreateStudyTransaction(this.entityManager).run({
+      directorId,
+      data,
     });
   }
 
@@ -84,7 +70,7 @@ export class StudiesService {
     };
   }
 
-  async delete(studyId: string): Promise<void> {
-    await this.studiesRepository.delete(studyId);
+  async delete(studyId: string) {
+    return this.studiesRepository.delete(studyId);
   }
 }

@@ -73,6 +73,13 @@
             "containerId": "",
             "created": "2023-07-18T14:14:01.115Z",
             "sortNum": 130000
+        },
+        {
+            "_id": "58b295ec-0589-42f3-b200-af1a074e5fef",
+            "name": "Configurations",
+            "containerId": "d01717b2-a5f4-4af4-be17-482369af049d",
+            "created": "2023-07-18T16:09:02.890Z",
+            "sortNum": 140000
         }
     ],
     "settings": {
@@ -103,7 +110,7 @@
             "_id": "b807102a-10dd-4c71-9335-ef2d512495de",
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "5ea67d0a-b1d8-429b-a590-0de2d44b51cc",
-            "name": "create director",
+            "name": "sign up director",
             "url": "/auth/signUp",
             "method": "POST",
             "sortNum": 20000,
@@ -147,38 +154,15 @@
             "name": "create study",
             "url": "/studies",
             "method": "POST",
-            "sortNum": 80000,
+            "sortNum": 10000,
             "created": "2023-06-22T11:04:50.195Z",
-            "modified": "2023-06-29T20:18:20.515Z",
+            "modified": "2023-07-19T09:15:14.806Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{ \n  \"name\": \"test study 333\"\n}",
+                "raw": "{ \n  \"name\": \"test study 123\"\n}",
                 "form": []
-            },
-            "tests": []
-        },
-        {
-            "_id": "ba87931f-ee7e-4b07-905c-b038879bf9dc",
-            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
-            "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
-            "name": "add employee",
-            "url": "/studies/employee/add",
-            "method": "POST",
-            "sortNum": 90000,
-            "created": "2023-06-22T11:34:20.603Z",
-            "modified": "2023-06-22T14:53:05.626Z",
-            "headers": [],
-            "params": [],
-            "body": {
-                "type": "json",
-                "raw": "    {\n      \"studyId\": \"af2e5ff5-8d57-419d-9a00-6a224d561a95\",\n      \"employeeId\": \"92afca51-343d-404d-b929-8b8e98b8ee0b\"\n    }",
-                "form": []
-            },
-            "auth": {
-                "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXJlY3RvcklkIjoiM2EzNTE1MTYtZWY2ZS00OGMyLThlY2UtNzgwMTcwMzkyYWMyIiwidHlwZSI6ImRpcmVjdG9yIiwiaWF0IjoxNjg3NDQ1NTA4fQ.bCdBwi8-zl2To0eCkuhF_fdUWvPx5S0p-zS9NeiXRU4"
             },
             "tests": []
         },
@@ -257,12 +241,12 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-28T16:35:40.316Z",
-            "modified": "2023-07-06T13:23:49.377Z",
+            "modified": "2023-07-19T08:36:28.191Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Gruppe 1\"\n}",
+                "raw": "{\n  \"name\": \"Gruppe 2\"\n}",
                 "form": []
             },
             "tests": []
@@ -319,16 +303,16 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "8a2ad440-54d7-4bcc-95c6-991869f7fcde",
             "name": "update group",
-            "url": "/studies/{{studyId}}/groups",
-            "method": "POST",
+            "url": "/studies/{{studyId}}/groups/d61cc74e-c54f-4813-aaaa-55e10dbfd6a6",
+            "method": "PUT",
             "sortNum": 30000,
             "created": "2023-07-01T11:20:28.161Z",
-            "modified": "2023-07-01T11:20:28.161Z",
+            "modified": "2023-07-19T08:36:50.751Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Gruppe 2\"\n}",
+                "raw": "{\n  \"name\": \"Gruppe 3\"\n}",
                 "form": []
             },
             "tests": []
@@ -602,6 +586,100 @@
             "sortNum": 30000,
             "created": "2023-07-18T14:28:18.756Z",
             "modified": "2023-07-18T14:40:00.079Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "e20dee94-ea9a-4518-9b94-652a171663e4",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "edb2c300-141d-423c-9b85-ad55b7a483d9",
+            "name": "get entity fields",
+            "url": "/studies/{{studyId}}/forms/{{schlafFormId}}/entityFields",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2023-07-18T14:50:41.572Z",
+            "modified": "2023-07-18T14:50:58.402Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "3bbd9b94-28e2-48fc-9dac-1fbf9e69fe18",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "58b295ec-0589-42f3-b200-af1a074e5fef",
+            "name": "create form configuration",
+            "url": "/studies/{{studyId}}/forms/{{schlafFormId}}/configurations",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-07-18T16:09:07.555Z",
+            "modified": "2023-07-18T16:11:50.351Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"isActive\": true,\n  \"type\": \"TimeIndependent\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "9ad48054-9483-4a64-a34f-f31d1cafaa6b",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "58b295ec-0589-42f3-b200-af1a074e5fef",
+            "name": "get form configurations",
+            "url": "/studies/{{studyId}}/forms/{{schlafFormId}}/configurations",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-07-18T16:13:07.240Z",
+            "modified": "2023-07-18T16:13:27.659Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "20165186-28cf-4a6f-9957-3e994bd06d7c",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
+            "name": "update Study",
+            "url": "/studies/{{studyId}}",
+            "method": "PUT",
+            "sortNum": 55000,
+            "created": "2023-07-19T08:33:34.562Z",
+            "modified": "2023-07-19T08:34:12.678Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{ \n  \"name\": \"Meine Studie\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f04f1f1b-b08b-4501-a0b8-b99733a3ec9f",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
+            "name": "delete study",
+            "url": "/studies/242437b1-c55b-46ee-8f0c-f622dcf8e496",
+            "method": "DELETE",
+            "sortNum": 65000,
+            "created": "2023-07-19T08:35:02.744Z",
+            "modified": "2023-07-19T08:35:23.755Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "3be2514a-f10b-451e-8eb0-2bae81d5f80b",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "8a2ad440-54d7-4bcc-95c6-991869f7fcde",
+            "name": "delete group",
+            "url": "/studies/{{studyId}}/groups/d61cc74e-c54f-4813-aaaa-55e10dbfd6a6",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2023-07-19T08:37:03.149Z",
+            "modified": "2023-07-19T08:37:20.678Z",
             "headers": [],
             "params": [],
             "tests": []

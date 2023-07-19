@@ -13,14 +13,11 @@ import { Roles } from '../../decorators/roles.decorator';
 import { ValidateIdPipe } from 'src/pipes/validate-id.pipe';
 import { CreateFormDto } from './dtos/CreateFormDto';
 import { UpdateFormDto } from './dtos/UpdateFormDto';
-import { CreateFormEntityDto } from './dtos/CreateFormEntityDto';
-import { FormEntitiesService } from './form-entities.service';
 
 @Controller('studies/:studyId/forms')
 export class FormsController {
   constructor(
     private readonly formsService: FormsService,
-    private readonly formEntitiesService: FormEntitiesService,
   ) {}
 
   @Types('director')
@@ -62,25 +59,5 @@ export class FormsController {
   @Delete(':formId')
   async delete(@Param('formId', new ValidateIdPipe()) formId: string) {
     return this.formsService.delete(formId);
-  }
-
-  @Types('director')
-  @Roles('admin', 'employee')
-  @Post(':formId/entities')
-  async addFormEntity(
-    @Param('formId', new ValidateIdPipe()) formId: string,
-    @Body() body: CreateFormEntityDto,
-  ) {
-    return this.formEntitiesService.add(formId, body);
-  }
-
-  @Types('director')
-  @Roles('admin', 'employee')
-  @Delete(':formId/entities/:entityId')
-  async deleteFormEntity(
-    @Param('formId', new ValidateIdPipe()) formId: string,
-    @Param('entityId', new ValidateIdPipe()) entityId: string,
-  ) {
-    return this.formEntitiesService.remove(formId, entityId);
   }
 }

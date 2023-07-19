@@ -3,33 +3,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Form } from '../../entities/form.entity';
 import { FormsController } from './forms.controller';
 import { FormsService } from './forms.service';
-import { FormEntitiesService } from './form-entities.service';
-import { FormEntity } from '../../entities/form-entity.entity';
-import { FormComponent } from '../../entities/form-component.entity';
-import { FormPagesController } from './form-pages.controller';
-import { FormPage } from '../../entities/form-page.entity';
-import { FormPagesService } from './form-pages.service';
-import { FormComponentsController } from './form-components.controller';
-import { FormComponentsService } from './form-components.service';
-import { ComponentTypeService } from './component-type.service';
-import { ComponentTypesController } from './component-type.controller';
+import { FormPagesModule } from './pages/form-pages.module';
+import { FormEntitiesModule } from './entities/form-entities.module';
+import { FormConfigurationsModule } from './configurations/form-configurations.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Form, FormEntity, FormComponent, FormPage]),
+    TypeOrmModule.forFeature([Form]),
+    FormPagesModule,
+    FormConfigurationsModule,
+    FormEntitiesModule,
   ],
-  controllers: [
-    FormsController,
-    FormPagesController,
-    FormComponentsController,
-    ComponentTypesController,
-  ],
-  providers: [
-    ComponentTypeService,
-    FormsService,
-    FormEntitiesService,
-    FormPagesService,
-    FormComponentsService,
-  ],
+  controllers: [FormsController],
+  providers: [FormsService],
 })
 export class FormsModule {}

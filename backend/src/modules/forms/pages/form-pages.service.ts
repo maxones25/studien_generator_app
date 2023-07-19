@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, EntityManager, Repository } from 'typeorm';
-import { FormPage } from '../../entities/form-page.entity';
+import { FormPage } from '../../../entities/form-page.entity';
 import { CreateFormPageDto } from './dtos/CreateFormPageDto';
 import { UpdateFormPageDto } from './dtos/UpdateFormPageDto';
 
@@ -30,7 +30,7 @@ export class FormPagesService {
     return formPage.id;
   }
 
-  getAll(formId: string) {
+  async getAll(formId: string) {
     return this.formPagesRepository.find({
       where: { formId },
       select: {
@@ -43,7 +43,7 @@ export class FormPagesService {
     });
   }
 
-  update(id: string, { title }: UpdateFormPageDto) {
+  async update(id: string, { title }: UpdateFormPageDto) {
     return this.formPagesRepository.update(id, { title });
   }
 

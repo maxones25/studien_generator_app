@@ -1,7 +1,7 @@
 import { Controller, Post, Param, Body, Get, Delete } from '@nestjs/common';
-import { Types } from '../../decorators/type.decorator';
-import { Roles } from '../../decorators/roles.decorator';
-import { ValidateIdPipe } from 'src/pipes/validate-id.pipe';
+import { Types } from '../../../../decorators/type.decorator';
+import { Roles } from '../../../../decorators/roles.decorator';
+import { ValidateIdPipe } from '../../../../pipes/validate-id.pipe';
 import { FormComponentsService } from './form-components.service';
 import { CreateFormComponentDto } from './dtos/CreateFormComponentDto';
 
@@ -22,15 +22,13 @@ export class FormComponentsController {
   @Types('director')
   @Roles('admin', 'employee')
   @Get()
-  async getAll(
-    @Param('pageId', new ValidateIdPipe()) pageId: string,
-  ) {
+  async getAll(@Param('pageId', new ValidateIdPipe()) pageId: string) {
     return this.formComponentsService.getAll(pageId);
   }
 
   @Types('director')
   @Roles('admin', 'employee')
-  @Delete(":componentId")
+  @Delete(':componentId')
   async delete(
     @Param('componentId', new ValidateIdPipe()) componentId: string,
   ) {
