@@ -1,6 +1,7 @@
 import { createContext, FC, ReactNode, useContext, useState } from "react";
-import { FormPageData } from "@modules/forms/types";
+import { FormPageData, Record, RecordField } from "@modules/forms/types";
 import { useFormContext, useFormIdContext } from "..";
+import { useSaveForm } from "@modules/forms/hooks";
 
 interface FormDataContextValue {
   isLastPage: boolean;
@@ -21,10 +22,11 @@ const useFormDataContextValue = () => {
   const { form } = useFormContext();
   const [data, setData] = useState({});
   const [pageNumber, setPageNumber] = useState(0);
+  const saveForm = useSaveForm();
 
   const handleSubmit = (newData: Object) => {
     if (isLastPage) {
-      saveForm(newData);
+      save(newData);
       resetForm();
       return;
     }
@@ -32,16 +34,17 @@ const useFormDataContextValue = () => {
     setPageNumber(pageNumber + 1);
   }
 
-  const saveForm = (newData: Object) => {
-    console.log({
-      task: {
-        id: taskId,
-        completedAt: Date.now(),
-      },
-      form: {
-        id: formId,
-        components: {...data, ...newData}}
-    });
+  const save = (newData: Object) => {
+    const fields: Object = {...data, ...newData};
+    const fieldsArray = Object.entries(fields);
+    const record: Record = {
+      taskId: taskId,
+      completedAt: new Date(),
+      formId: formId!,
+      fields: fieldsArray.map((value) => {return {id: value[0], value: value[1]}}),
+    } ;
+    console.log(record);
+    saveForm.mutateAsync(record);
   }
 
   const addData = (newData: Object) => {
