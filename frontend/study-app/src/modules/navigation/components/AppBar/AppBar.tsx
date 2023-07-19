@@ -1,10 +1,11 @@
 import { AppBar as MAppBar, Toolbar, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowBack, MailOutline, LogoutOutlined } from '@mui/icons-material';
 import { useNavigationHelper } from '@modules/core/hooks';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { IconButton } from '@modules/core/components';
+import { LogOutDialog } from '..';
 
 export interface AppBarProps {}
 
@@ -12,12 +13,15 @@ export const AppBar : React.FC<AppBarProps>= () => {
   const navigate = useNavigationHelper();
   const path = useLocation().pathname;
   const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
 
   const changePage = () => {
     if (path === "/tasks")
       return navigate.handle('../records');
     return navigate.handle('../tasks');
   }
+
+  const handleClick = () => setOpen(!open);
 
   return (
       <MAppBar position="static">
@@ -51,11 +55,15 @@ export const AppBar : React.FC<AppBarProps>= () => {
             edge="end"
             color="inherit"
             aria-label="menu"
-            onClick={navigate.handle('../login')}
+            onClick={handleClick}
             testId='log-out-app-bar'
             Icon={<LogoutOutlined />}
           />
         </Toolbar>
+        <LogOutDialog 
+          open={open}
+          onClose={handleClick}
+        />
       </MAppBar>
   );
 };
