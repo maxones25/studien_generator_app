@@ -8,7 +8,7 @@ export const useLogin = () => {
 
   return useWriteRequest<LoginFormData, { accessToken: string }>(
     (options) =>
-      apiRequest(`/auth/participants/login`, { ...options, method: "POST" }),
+      apiRequest(`/auth/login`, { ...options, method: "POST" }),
     {
       onSuccess: ({ data: { accessToken: value }}) => {
         accessToken.set(value);

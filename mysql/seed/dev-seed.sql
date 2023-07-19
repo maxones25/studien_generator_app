@@ -8,7 +8,7 @@ SET @studyId = 'ed450d39-b087-4ce9-a5fb-45b063e45c4a';
 SET @groupId = '497d0534-de0a-4267-ae00-5221a0c6b6ef';  
 
 SET @participant = '54feae71-a7ae-4752-b9b5-a908e2446d31';  
-SET @participantPassword = '0123456789AB';
+SET @participantPassword = '$2b$10$yZNDSG7UmGZTfda37Nmp0uvHOy6rRHYWp7UZnpfaINmYocJ/IhUE.'; -- PW: 0123456789AB
 
 INSERT INTO `director` (`firstName`, `lastName`, `email`, `password`, `id`) VALUES
 ('Max', 'Mustermann', 'max.mustermann@test.de', @directorPassword, @directorId);

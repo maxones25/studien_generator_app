@@ -2,13 +2,12 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './modules/auth/study/auth.module';
 import { TypesGuard } from './modules/auth/guards/types.guard';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.filter';
 import DbModule from './modules/db/db.module';
-import { EntitiesModule } from './modules/entities/entities.module';
 import { FormsModule } from './modules/forms/forms.module';
 import ConfigModule from './modules/config/config.module';
 import { RecordsModule } from './records/records.module';
+import JwtModule from './modules/jwt/jwt.module';
 
 
 
@@ -18,7 +17,6 @@ import { RecordsModule } from './records/records.module';
     DbModule,
     JwtModule,
     AuthModule,
-    EntitiesModule,
     FormsModule,
     RecordsModule,
   ],

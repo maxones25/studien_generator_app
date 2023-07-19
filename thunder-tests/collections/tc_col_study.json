@@ -31,12 +31,12 @@
             "method": "POST",
             "sortNum": 40000,
             "created": "2023-06-29T21:57:47.907Z",
-            "modified": "2023-06-29T22:05:16.986Z",
+            "modified": "2023-07-19T12:22:44.251Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"id\": \"3b87163e-9ad0-4a8b-82bb-0023d2b35ba2\",\n  \"password\": \"GFeDrKZ9QV31\"\n}",
+                "raw": "{\n  \"id\": \"54feae71-a7ae-4752-b9b5-a908e2446d31\",\n  \"password\": \"0123456789AB\"\n}",
                 "form": []
             },
             "tests": []
