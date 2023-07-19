@@ -20,7 +20,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <MButton data-testid={testId} color={color} variant={variant} {...props}>
-      {isLoading ? <CircularProgress /> : children}
+      {isLoading ? <CircularProgress color="inherit" /> : children}
     </MButton>
   );
 };
