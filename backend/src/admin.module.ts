@@ -8,6 +8,7 @@ import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.fil
 import { EntitiesModule } from './modules/entities/entities.module';
 import { FieldsModule } from './modules/fields/fields.module';
 import { FormsModule } from './modules/forms/forms.module';
+import { RecordsModule } from './records/records.module';
 import DbModule from './modules/db/db.module';
 import JwtModule from './modules/jwt/jwt.module';
 import ConfigModule from './modules/config/config.module';
@@ -23,6 +24,7 @@ import ConfigModule from './modules/config/config.module';
     EntitiesModule,
     FieldsModule,
     FormsModule,
+    RecordsModule,
   ],
   providers: [
     {
