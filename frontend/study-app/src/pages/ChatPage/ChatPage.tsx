@@ -9,7 +9,7 @@ const ChatPage : React.FC<ChatPageProps> = () => {
   const { t } = useTranslation();
 
   return (
-    <Page testId="home page">
+    <Page testId="chat page">
       <Text>{t("test")}</Text>
       <Outlet />
     </Page>

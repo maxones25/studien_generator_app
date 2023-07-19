@@ -10,7 +10,7 @@ const EventsPage : React.FC<EventsPagePageProps> = ({
 }) => {
 
   return (
-    <Page testId="home page">
+    <Page testId="events page">
       <EventsList />
       <FormDialog />
     </Page>

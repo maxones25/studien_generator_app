@@ -47,7 +47,7 @@ Cypress.Commands.add("fetchAccessToken", (type: "director" | "participant") => {
     return cy
       .request({
         method: "POST",
-        url: `${Cypress.env("apiUrl")}/auth/directors/login`,
+        url: `${Cypress.env("apiUrl")}/auth/login`,
         body: {
           email: testData.director.email,
           password: testData.director.password,
@@ -63,7 +63,7 @@ Cypress.Commands.add("fetchAccessToken", (type: "director" | "participant") => {
     return cy
       .request({
         method: "POST",
-        url: `${Cypress.env("apiUrl")}/auth/participants/login`,
+        url: `${Cypress.env("apiUrl")}/auth/login`,
         body: {
           id: testData.participant.id,
           password: testData.participant.password,
