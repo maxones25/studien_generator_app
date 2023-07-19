@@ -6,13 +6,15 @@ import { FormsService } from './forms.service';
 import { FormPagesModule } from './pages/form-pages.module';
 import { FormEntitiesModule } from './entities/form-entities.module';
 import { FormConfigurationsModule } from './configurations/form-configurations.module';
+import { FormComponentsModule } from './pages/components/form-components.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Form]),
-    FormPagesModule,
-    FormConfigurationsModule,
     FormEntitiesModule,
+    FormConfigurationsModule,
+    FormPagesModule,
+    FormComponentsModule,
   ],
   controllers: [FormsController],
   providers: [FormsService],

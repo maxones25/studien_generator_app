@@ -11,7 +11,7 @@ import { RecordsModule } from './records/records.module';
 import DbModule from './modules/db/db.module';
 import JwtModule from './modules/jwt/jwt.module';
 import ConfigModule from './modules/config/config.module';
-import { ComponentTypesModule } from './modules/componentTypes/component-types.module';
+import { ComponentsModule } from './modules/components/components.module';
 import { ParticipantsModule } from './modules/participants/participants.module';
 import { GroupsModule } from './modules/groups/groups.module';
 
@@ -27,8 +27,8 @@ import { GroupsModule } from './modules/groups/groups.module';
     ParticipantsModule,
     EntitiesModule,
     FormsModule,
+    ComponentsModule,
     RecordsModule,
-    ComponentTypesModule,
   ],
   providers: [
     {

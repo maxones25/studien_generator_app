@@ -11,21 +11,21 @@ export class DirectorsService {
     private directosRepository: Repository<Director>,
   ) {}
 
-  findAll(): Promise<Director[]> {
+  async findAll(): Promise<Director[]> {
     return this.directosRepository.find({
       select: { id: true, firstName: true, lastName: true, email: true },
     });
   }
 
-  async delete(directorId: string): Promise<void> {
-    await this.directosRepository.delete(directorId);
+  async delete(directorId: string) {
+    return this.directosRepository.delete(directorId);
   }
 
   async update(
     directorId: string,
     { email, firstName, lastName }: UpdateDirectorDto,
   ) {
-    await this.directosRepository.update(directorId, {
+    return await this.directosRepository.update(directorId, {
       email,
       firstName,
       lastName,

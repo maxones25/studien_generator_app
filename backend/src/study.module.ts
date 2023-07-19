@@ -6,7 +6,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.filter';
 import DbModule from './modules/db/db.module';
 import { EntitiesModule } from './modules/entities/entities.module';
-import { FieldsModule } from './modules/fields/fields.module';
 import { FormsModule } from './modules/forms/forms.module';
 import ConfigModule from './modules/config/config.module';
 import { RecordsModule } from './records/records.module';
@@ -20,7 +19,6 @@ import { RecordsModule } from './records/records.module';
     JwtModule,
     AuthModule,
     EntitiesModule,
-    FieldsModule,
     FormsModule,
     RecordsModule,
   ],

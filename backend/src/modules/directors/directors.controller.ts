@@ -24,8 +24,8 @@ export class DirectorsController {
   @Put()
   async update(
     @DirectorId() directorId: string,
-    @Body() updatedDirector: UpdateDirectorDto,
+    @Body() body: UpdateDirectorDto,
   ) {
-    return this.directorsService.update(directorId, updatedDirector);
+    return this.directorsService.update(directorId, body);
   }
 }
