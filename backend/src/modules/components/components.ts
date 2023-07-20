@@ -56,3 +56,21 @@ export class TextFieldComponent extends Component {
     super(ComponentType.TextField, [FieldType.Text]);
   }
 }
+
+export class HIITComponent extends Component {
+  constructor() {
+    super(ComponentType.HIIT, [FieldType.DateTime, FieldType.DateTime]);
+  }
+}
+
+export class DateTimePickerComponent extends Component {
+  constructor() {
+    super(ComponentType.DateTimePicker, [FieldType.DateTime]);
+  }
+}
+
+export class TimePickerComponent extends Component {
+  constructor() {
+    super(ComponentType.TimePicker, [FieldType.Time]);
+  }
+}

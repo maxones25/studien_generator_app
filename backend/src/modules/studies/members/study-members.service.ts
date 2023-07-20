@@ -1,10 +1,7 @@
-import {
-  BadRequestException,
-  Injectable,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { StudyMember } from '../../../entities/study-member';
+import { StudyMember } from '../../../entities/study-member.entity';
 import { AddMemberDto } from './dtos/AddMemberDto';
 import { UpdateMemberDto } from './dtos/UpdateMemberDto';
 import { Roles } from '../../../enums/roles.enum';

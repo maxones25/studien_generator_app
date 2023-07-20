@@ -1,0 +1,46 @@
+Members
+    - all Members
+    - remove Members
+    - add Member
+Chats
+    all chats by participant
+    open chat
+        all messages between participant and directors
+        send message
+Groups
+    list all Groups
+        edit name
+        list all forms
+            open form
+            show global config
+                set active/inactive (warning)
+                make group config (warning)
+                configure form (warning)
+            show group config
+                set active/inactive
+                make public
+                configure form
+        add form
+        list all participants
+            open participant
+Formulare
+    list all forms
+        edit name
+        add page
+        list all pages
+            remove page
+            change title
+            list all entities (with warning if fields are missing)
+                add entity (with name)
+                remove entity
+                list all entity fields (with warning)
+            Create entity
+                name
+                fields
+                    name
+                    type
+            select entity field to page
+                show all possible components
+            add component
+                select type
+Data

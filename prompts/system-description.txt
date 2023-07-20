@@ -1,1 +1,57 @@
-we are programming an application for conducting scientific studies and data collection. for this we have two react apps (an admin app and a study app) and a nest js backend. the backend is connected to a mysql database via typeorm. the react apps use vite as a build tool. the react apps communicate with the backend via a REST interface. The admin app is used to manage studies and study participants. The study app is used to collect data from the study participants. The app should allow to define different configurations for different studies. it can be defined how often per week a value is queried. this can be variable (e.g. 3 times per week or month) or fixed (e.g. Monday and Friday or on the 1st of the month). furthermore, a fixed time can be defined or one defines a person-related time (e. the queries can be mandatory or voluntary. the queries can be postponed or postponement can be forbidden. if postponement is allowed, it can be defined by how many days and how often it can be postponed.
+**Systembeschreibung**
+
+Unsere Anwendung ist ein wissenschaftliches Studien- und Datenerfassungstool. Das System besteht aus zwei Hauptkomponenten, den React-Anwendungen und einem Backend, das mit NestJS entwickelt wurde.
+
+**Frontend**
+
+Die Frontend-Anwendung besteht aus zwei Teilen: 
+
+1. Admin App: Diese App wird von den Administratoren und Studienleitern genutzt, um Studien und Studienteilnehmer zu verwalten. Sie können neue Studien erstellen oder bestehende Studien löschen oder umbenennen. Sie können auch Teilnehmer zu den Studien hinzufügen oder entfernen und ihre Rollen innerhalb der Studie verwalten. Darüber hinaus ermöglicht die Admin App das Hinzufügen von Gruppen zu Studien, das Verwalten von Formularen und das Festlegen von Studienkonfigurationen. 
+
+2. Study App: Diese App wird von den Studienteilnehmern genutzt, um ihre Daten zu erfassen. Die App kann verschiedene Studienkonfigurationen berücksichtigen und ermöglicht die Datenerfassung basierend auf den in der Admin App definierten Formularen.
+
+Beide Apps verwenden Vite als Build-Tool und kommunizieren mit dem Backend über eine REST-Schnittstelle.
+
+**Backend**
+
+Das Backend der Anwendung ist in NestJS entwickelt und ist verantwortlich für die Geschäftslogik und die Datenverwaltung. Es kommuniziert mit einer MySQL-Datenbank über TypeORM und implementiert verschiedene Dienste, die die in den verschiedenen Komponenten der Anwendung erforderlichen Geschäftsregeln und -logiken definieren.
+
+**Admin-Service**:
+
+Die Hauptaufgaben des Admin-Services umfassen die Verwaltung von Studien, Gruppen, Formularen, Studienteilnehmern, Chat-Nachrichten und Terminen. Es ermöglicht auch die Verwaltung von Entitäten.
+
+**Probanden-Service**:
+
+Der Probanden-Service ist verantwortlich für die Datenerfassung von den Studienteilnehmern. Er holt die Studienkonfigurationen vom Backend und generiert entsprechende Formulare für die Datenerfassung.
+
+**Berechtigungsmanagement**:
+
+Die Anwendung unterscheidet zwischen Administratoren und Studienleitern sowie Studienteilnehmern. Die Administratoren und Studienleiter haben keinen Zugriff auf die Probanden-App, und umgekehrt haben die Studienteilnehmer keinen Zugriff auf die Admin-App. Jede Studie muss mindestens einen Admin haben, der bei der Erstellung der Studie automatisch hinzugefügt wird.
+
+**Datenvalidierung und Integrität**:
+
+Die Daten werden vor dem Schreiben in die Datenbank validiert, wobei spezielle Validierungsregeln für bestimmte Felder oder Entitäten gelten können. Die Integrität der Daten wird durch die Datenbank sichergestellt.
+
+**Fehler- und Ausnahmebehandlung**:
+
+Fehler und Ausnahmen werden durch die Rückgabe eines HTTP-Fehlercodes und einer Fehlermeldung behandelt.
+
+**Benachrichtigungen**:
+
+Die Probanden-App kommuniziert über Push-Benachrichtigungen mit den Probanden.
+
+**Skalierbarkeit**:
+
+Die Anwendung wird so entwickelt, dass sie in Bezug auf Leistung und Skalierbarkeit ausreichend ist, wenn jeweils eine Instanz jeder Anwendung vorhanden ist.
+
+**Datenfluss und Konsistenz**:
+
+Beide Anwendungen greifen auf dieselbe Datenbank zu, jedoch kommunizieren die Services nicht direkt miteinander. Starke Konsistenz ist erforderlich, wobei jede Änderung in einer Domäne sofort in anderen Domänen sichtbar sein muss.
+
+**Änderungsmanagement**:
+
+Änderungen in der Domänenlogik oder den Datenstrukturen führen zu Implementierungsanpassungen, die durch Continuous Integration und Continuous Deployment (CI/CD) gelöst werden.
+
+**Sicherheitsanforderungen**:
+
+Zur Kontrolle des Zugangs zu den Services und Daten wird bei HTTP-Anfragen ein JWT Access-Token gesendet.

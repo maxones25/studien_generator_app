@@ -4,7 +4,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
-import { StudyMember } from './study-member';
+import { StudyMember } from './study-member.entity';
 import { Group } from './group.entity';
 import { Participant } from './participant.entity';
 import { Entity } from './entity.entity';

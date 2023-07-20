@@ -6,7 +6,7 @@ import { TypeOrmResponseError } from './type-orm-respones-error';
 @Catch(QueryFailedError, EntityNotFoundError, CannotCreateEntityIdMapError, TypeORMError)
 export class TypeOrmExceptionFilter implements ExceptionFilter {
 	catch(exception: unknown, host: ArgumentsHost) {
-		console.log("CATCH")
+		console.log("CATCH", exception)
 		const ctx = host.switchToHttp();
 		const response = ctx.getResponse<Response>();
 		const request = ctx.getRequest<Request>();

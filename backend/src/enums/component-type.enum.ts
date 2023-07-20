@@ -6,5 +6,7 @@ export enum ComponentType {
   Select = 'Select',
   Switch = 'Switch',
   CheckBox = 'CheckBox',
-  // DateTimePicker = 'DateTimePicker',
+  HIIT = 'HIIT',
+  DateTimePicker = 'DateTimePicker',
+  TimePicker = 'TimePicker',
 }

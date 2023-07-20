@@ -1,6 +1,6 @@
 import { CreateStudyDto } from '../dtos/createStudyDto';
 import { Study } from '../../../entities/study.entity';
-import { StudyMember } from '../../../entities/study-member';
+import { StudyMember } from '../../../entities/study-member.entity';
 import { Roles } from '../../../enums/roles.enum';
 import { Transaction } from '../../../utils/transaction';
 

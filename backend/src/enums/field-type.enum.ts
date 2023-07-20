@@ -5,5 +5,5 @@ export enum FieldType {
   Enum = 'Enum',
   DateTime = 'DateTime',
   Date = 'Date',
-  // Time = 'Time',
+  Time = 'Time',
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ComponentType } from '../../enums/component-type.enum';
-import { CheckBoxComponent, Component, DatePickerComponent, NumberPickerComponent, SelectComponent, SliderComponent, SwitchComponent, TextFieldComponent } from './components';
+import { CheckBoxComponent, Component, DatePickerComponent, DateTimePickerComponent, HIITComponent, NumberPickerComponent, SelectComponent, SliderComponent, SwitchComponent, TextFieldComponent, TimePickerComponent } from './components';
 import { EntityField } from '../../entities/entity-field.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -8,13 +8,16 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class ComponentsService {
   private components = new Map<ComponentType, Component>([
-    [ComponentType.CheckBox, new CheckBoxComponent()],
+    [ComponentType.DateTimePicker, new DateTimePickerComponent()],
     [ComponentType.DatePicker, new DatePickerComponent()],
+    [ComponentType.TimePicker, new TimePickerComponent()],
+    [ComponentType.CheckBox, new CheckBoxComponent()],
     [ComponentType.NumberPicker, new NumberPickerComponent()],
     [ComponentType.Select, new SelectComponent()],
     [ComponentType.Slider, new SliderComponent()],
     [ComponentType.Switch, new SwitchComponent()],
     [ComponentType.TextField, new TextFieldComponent()],
+    [ComponentType.HIIT, new HIITComponent()],
   ]);
 
   constructor(

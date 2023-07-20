@@ -21,7 +21,13 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test": "jest --detectOpenHandles --config ./jest.config.ts"
+    "test": "jest --detectOpenHandles --config ./jest.config.ts",
+    "test:admin:unit": "jest --config ./test/admin/unit/jest.config.ts",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "db:migration:run": "typeorm-ts-node-commonjs migration:run -d data-source.ts",
+    "db:migration:revert": "typeorm-ts-node-commonjs migration:revert -d data-source.ts",
+    "db:migration:create": "typeorm-ts-node-commonjs migration:create",
+    "db:sync": "typeorm-ts-node-commonjs schema:sync -- -d data-source.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -64,7 +70,7 @@
     "supertest": "^6.1.3",
     "ts-jest": "28.0.8",
     "ts-loader": "^9.2.3",
-    "ts-node": "^10.0.0",
+    "ts-node": "^10.9.1",
     "tsconfig-paths": "4.1.0",
     "typescript": "^4.7.4"
   }

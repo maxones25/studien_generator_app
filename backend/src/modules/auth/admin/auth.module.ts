@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { Director } from '../../../entities/director.entity';
-import { StudyMember } from '../../../entities/study-member';
+import { StudyMember } from '../../../entities/study-member.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
 import { ConfigModule } from '@nestjs/config';

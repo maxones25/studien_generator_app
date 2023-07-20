@@ -1,0 +1,179 @@
+1. Was sind die Geschäftsregeln und Geschäftslogik, die in den verschiedenen Services implementiert werden müssen? Wie sind diese Regeln in Bezug auf Studien, Gruppen, Teilnehmer, Formulare, Aufgaben, Termine, etc. definiert?
+
+- Admin-Service:
+    - Studien
+        - erstellen/löschen/namen ändern
+        - Mitglieder hinzufügen/entfernen
+        - Mitgliederrollen verwalten
+    - Gruppen:
+        - Gruppe zu Studie hinzufügen
+        - Namen ändern
+        - Formular hinzufügen
+        - Formular Konfiguration verwalten
+    - Formulare
+        - erstellen/löschen/editieren
+        - Seiten verwalten
+        - Komponenten hinzufügen/verwalten
+    - Probanden:
+        - Gruppenzugehörigkeit verwalten
+        - hinzufügen/entfernen
+        - informationen verwalten
+    - Chat
+        - nachrichten schreiben
+        - nachrichten lesen
+    - Termine
+        - Terminmanagement
+    - Entitäten
+        - verwalten
+
+- Probanden-Service:
+    - erfassung von daten mit formularen
+
+2. Welche Art von Aktionen sind in den verschiedenen Services erlaubt und welche Geschäftsereignisse lösen sie aus? (z.B. Ein neuer Teilnehmer wird zu einer Gruppe hinzugefügt, eine Studie wird erstellt oder aktualisiert, eine Aufgabe wird verschoben oder abgeschlossen, etc.)
+
+- ergibt sich aus 1. generiere hier alle aktionen. ich werde diese nochmal korrigieren falls notwendig
+
+3. Welche Art von Konsistenz ist erforderlich? Ist Eventual Consistency akzeptabel oder ist Strong Consistency erforderlich?
+
+- Strong Consistency
+
+4. Wie werden Daten zwischen den verschiedenen Services synchronisiert? Gibt es Daten, die von mehreren Services geteilt werden?
+
+- beide greifen auf die selbe db zu. die services kommunizieren jedoch nicht direkt
+
+5. Wie ist die Geschäftslogik aufgeteilt? Gibt es gemeinsame Regeln, die in mehreren Services verwendet werden?
+
+- nein. der admin service erstellt und verwaltet die studien und liest die erfassten daten. der probanden service schreibt nur basierend auf den formularen die daten und liest die Studien konfig
+
+6. Wie werden Benutzer und Berechtigungen verwaltet? Können Administratoren alle Operationen in allen Studien durchführen oder gibt es bestimmte Einschränkungen?
+
+- Probanden haben keinen zugriff auf die admin app. studienleiter haben keinen zugriff auf probanden app. studienleiter haben entweder die rolle admin oder employee. es muss immer einen admin pro studie geben. wenn eine studie erstellt wird ist der ersteller immer der admin. schlage sinnvolle regeln für die rollenbefugnisse vor
+
+7. Welche Arten von Abfragen und Berichten sind erforderlich und wie sollten sie implementiert werden?
+
+- das solltest du lösen
+
+8. Wie wird der Zugang zu den Services und Daten kontrolliert? Welche Sicherheitsanforderungen gibt es?
+
+- es sollte bei http requests ein JWT accessToken gesendet werden
+
+9. Wie sollen Fehler und Ausnahmen behandelt werden? 
+
+- es sollte eine HTTP fehlercode zurückgegeben werden und eine message
+
+10. Wie ist die Performance und Skalierbarkeit? Gibt es spezielle Anforderungen an die Performance oder Skalierbarkeit der Services oder der Datenbank?
+
+- die services werden in nest js geschrieben die db ist mysql. es sollte reichen wenn es von jeder anwendung jeweils eine instanz gibt.
+
+11. Wie werden die Daten validiert, bevor sie in die Datenbank geschrieben werden? Gibt es spezielle Validierungsregeln für bestimmte Felder oder Entitäten?
+
+- die daten sollten in nest js validiert werden
+
+12. Welche Arten von Benachrichtigungen oder Alarmen sind erforderlich und wie sollten sie implementiert werden?
+
+- die probanden app kommuniziert via push notifications mit dem probanden frontend
+
+13. Wie wird die Integrität der Daten sichergestellt, insbesondere wenn sie zwischen den Services geteilt werden?
+
+- das sollte die datenbank übernehmen
+
+14. Wie werden Transaktionen gehandhabt, insbesondere wenn sie mehrere Services betreffen?
+
+- dies sollte nie über mehrere services gehen. innerhalb eines services kann dies mit typeorm datenbank transaktionen realisiert werden.
+
+15. Wie werden Änderungen in der Domänenlogik oder den Datenstrukturen gehandhabt und wie wirken sich diese auf die Services und die Datenbank aus?
+
+- dies führt zu implementierungsanpassungen. dies sollte mittels ci cd gelöst werden.
+
+16. Welche Verhaltensweisen und Aktionen sind relevant für jede Domäne Ihrer Anwendung? Zum Beispiel könnte es für die Domäne "Studie" Verhaltensweisen wie "Studie starten" oder "Studie beenden" geben, und für die Domäne "Formular" könnten es "Formular ausfüllen" oder "Formular einreichen" sein.
+
+Probanden
+
+- Probanden zur studie hinzufügen
+- Probanden zu gruppe hinzufügen
+- proband startet die studie
+- proband als ausgeschieden markieren
+- proband löschen
+- probandnen daten erfassen
+- probanden daten ändern
+- probanden daten löschen
+
+Studien
+- studie erstellen
+- studie starten
+- studie beenden
+- studien dauer definieren
+- studienname ändern
+
+Mitglieder
+- zu studie hinzufügen
+- rolle ändern
+- von studie entfernen
+
+Gruppen
+- gruppen erstellen
+- gruppen löschen
+- gruppenname ändern
+- Teilnehmer zu gruppe hinzufügen
+- teilnehmer aus gruppe entfernen
+- formulare zu gruppe hinzufügen
+- formular aktivieren
+- formular konfigurieren
+
+Formulare
+- formular erstellen
+- name ändern
+- formular löschen
+- formular seite hinzufügen
+- seiten title ändern
+- seite löschen
+- Komponente hinzufügen
+- Komponente konfigurieren
+    - Validierung konfigurieren
+    - entity felder konfigurieren
+- Komponente löschen
+- Formular Entitäten hinzufügen
+- Formular Entitäten entfernen
+
+Entitäten
+- erstellen
+- name ändern
+- felder hinzufügen
+- felder ändern
+- felder löschen
+
+Chat
+- Nachrichten schreiben
+- Nachrichten lesen
+
+Termine
+- Termine ansetzen
+    - für alle teilnehmer
+    - für teilnehmer einer gruppe
+    - für einen einzelnen teilnehmer
+- Termin verschieben
+- Termin löschen
+
+2. Gibt es spezielle Regeln oder Einschränkungen für diese Verhaltensweisen? Zum Beispiel könnte eine Regel sein, dass eine Studie nur gestartet werden kann, wenn sie mindestens ein Formular hat, oder dass ein Formular nur eingereicht werden kann, wenn alle erforderlichen Felder ausgefüllt sind.
+
+- wenn ein formular den typ TIME_DEPENDEND ODER BOTH hat können Aufgaben generiert werden basierend auf der Formular Konfig. Beim Typ TIME_INDEPENDENT geht das nicht und alle bisherigen aufgaben müssen gelöscht werden.
+- ein teilnehmer muss in einer gruppe sein um die studie zu starten
+- der ersteller einer studien ist immer automatisch ein admin
+- eine studie muss immer einen admin haben
+- eine formular komponente hat eine oder mehrere formular fields. diese müssen beim anlegen der Komponente verknüpft werden
+- basierend auf dem Komponenten typ müssen bestimmte komponenten attribute angelegt werden. zb typ slider braucht die attribute min_value und max_value
+- nur admins dürfen die member verwalten (entfernen, hinzufügen, rolle ändern)
+- Wenn ein proband eine studie beginnt, müssen basierend auf der Formular konfig alle aufgaben angelegt werden.
+zb jeden tag morgen schlaf erfassen
+
+3. Wie interagieren die verschiedenen Domänen Ihrer Anwendung miteinander? Zum Beispiel könnte eine Aktion in der Domäne "Teilnehmer" eine Änderung in der Domäne "Studie" auslösen.
+
+- sollte oben schon gut beschrieben sein
+
+4. Welche Ereignisse treten in Ihrer Anwendung auf und wie beeinflussen sie die Zustände Ihrer Ressourcen? Ein Ereignis könnte zum Beispiel sein, dass ein Teilnehmer ein Formular einreicht, was dazu führen könnte, dass der Zustand der Studie auf "abgeschlossen" gesetzt wird.
+
+- s.o.
+
+5. Welche Art von Datenfluss und Datenkonsistenz ist in Ihrer Anwendung erforderlich? Muss zum Beispiel ein Update in einer Domäne sofort in anderen Domänen sichtbar sein, oder ist es akzeptabel, wenn es eine gewisse Verzögerung gibt?
+
+- s.o.

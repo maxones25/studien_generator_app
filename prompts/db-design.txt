@@ -1,0 +1,151 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table studies {
+  id varchar [pk, not null]
+  name varchar [unique, not null]
+}
+
+Table groups {
+  id varchar [pk, not null]
+  name varchar [unique, not null]
+  studyId varchar [ref: > studies.id]
+}
+
+Table participants {
+  id varchar [pk, not null]
+  number varchar [not null]
+  password varchar [not null]
+  groupId varchar [ref: > groups.id]
+}
+
+Table participant_attributes {
+  participantId varchar [ref: > participants.id]
+  key varchar
+  value json
+}
+
+Table forms {
+  id varchar [pk, not null]
+  name varchar [not null]
+}
+
+Table entities {
+  id varchar [pk, not null]
+  name varchar [not null]
+  studyId varchar [ref: > studies.id, not null]
+}
+
+Table entity_fields {
+  id varchar [pk, not null]
+  entityId varchar [ref: > entities.id, not null]
+  name varchar [not null]
+  type varchar [not null]
+}
+
+Table form_pages {
+  id varchar [pk, not null]
+  formId varchar [ref: > forms.id, null]
+  number int
+  title varchar
+}
+
+Table form_components {
+  id varchar [pk, not null]
+  pageId varchar [ref: > form_pages.id, null]
+  number int
+  type varchar
+}
+
+Table form_fields {
+  formComponentId varchar [ref: > form_components.id, null]
+  entityFieldId varchar [ref: > entity_fields.id, null]
+}
+
+Table form_component_attributes {
+  id varchar [pk, not null]
+  formComponentId varchar [ref: > form_components.id, not null]
+  key varchar [not null]
+  value json [not null]
+}
+
+Table tasks {
+  id varchar [pk, not null]
+  participantId varchar [ref: > participants.id, not null]
+  formConfigurationId varchar [ref: > form_configurations.id, not null]
+  scheduledAt timestamp
+  postponedTo timestamp
+  completedAt timestamp
+  postponedTimes integer
+}
+
+Table records {
+  id varchar [pk, not null]
+  taskId varchar [ref: > tasks.id, not null]
+  participantId varchar [ref: > participants.id, not null]
+  formId varchar [ref: > forms.id, not null]
+  failureReason varchar
+}
+
+Table record_fields {
+  id varchar [pk, not null]
+  recordId varchar [ref: > records.id, not null]
+  entityFieldId varchar [ref: > entity_fields.id, not null]
+  value json
+}
+
+Table appointments {
+  id varchar [pk]
+  participantId varchar [ref: > participants.id]
+  groupId varchar [ref: > groups.id]
+  studyId varchar [ref: > studies.id]
+  start datetime
+  end datetime
+  title varchar
+  description text
+}
+
+table directors {
+  id varchar pk
+  firstName varchar
+  lastName varchar
+  email varchar unique
+  password varchar
+}
+
+table study_members {
+  directorId varchar [ref: > directors.id]
+  studyId varchar [ref: > studies.id]
+  role varchar
+}
+
+table chats {
+  id varchar pk
+  studyId varchar [ref: > studies.id]
+}
+
+table chat_messages {
+  id varchar pk
+  participantId varchar [ref: > participants.id]
+  directorId varchar [ref: > directors.id]
+  chatId varchar [ref: > chats.id]
+  sendby varchar
+  sendAt timestamp
+  readAt timestamp
+  content text
+}
+
+table form_configurations {
+  id varchar pk
+  studyId varchar [ref: > studies.id]
+  groupId varchar [ref: > groups.id]
+  formId varchar [ref: > forms.id]
+  isActive boolean
+  type varchar
+  data json
+}
+
+table form_entities {
+  formId varchar [ref: > forms.id]
+  entityId varchar [ref: > entities.id]
+}

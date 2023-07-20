@@ -14,39 +14,42 @@ import { ParticipantAttributes } from '../../entities/participant-attributes.ent
 import { Participant } from '../../entities/participant.entity';
 import { RecordField } from '../../entities/record-field.entity';
 import { Record } from '../../entities/record.entity';
-import { StudyMember } from '../../entities/study-member';
+import { StudyMember } from '../../entities/study-member.entity';
 import { Study } from '../../entities/study.entity';
 import { Task } from '../../entities/task.entity';
 
-const DbModule = TypeOrmModule.forRoot({
-  type: 'mysql',
-  host: process.env.DB_HOST ?? 'localhost',
-  port: parseInt(process.env.DB_PORT) ?? 3306,
-  username: process.env.DB_USER ?? 'root',
-  password: process.env.DB_PASSWORD ?? 'root',
-  database: process.env.DB_NAME ?? 'studien_generator_app',
-  entities: [
-    Director,
-    EntityField,
-    Entity,
-    FormComponentAttribute,
-    FormComponent,
-    FormConfiguration,
-    FormEntity,
-    FormField,
-    FormPage,
-    Form,
-    Group,
-    ParticipantAttributes,
-    Participant,
-    RecordField,
-    Record,
-    StudyMember,
-    Study,
-    Task,
-  ],
-  logging: false,
-  synchronize: false,
+const DbModule = TypeOrmModule.forRootAsync({
+  useFactory: async () => {
+    return {
+      type: 'mysql',
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      entities: [
+        Director,
+        EntityField,
+        Entity,
+        FormComponentAttribute,
+        FormComponent,
+        FormConfiguration,
+        FormEntity,
+        FormField,
+        FormPage,
+        Form,
+        Group,
+        ParticipantAttributes,
+        Participant,
+        RecordField,
+        Record,
+        StudyMember,
+        Study,
+        Task,
+      ],
+      autoLoadEntities: true,
+    };
+  },
 });
 
 export default DbModule;
