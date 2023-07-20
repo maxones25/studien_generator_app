@@ -15,7 +15,7 @@ export const Form : React.FC<FormProps>= ({
   const { t } = useTranslation();
 
   return (
-  <Column p={2} width={"70vw"}>
+  <Column p={2} width={"70vw"} maxWidth={"500px"}>
     <Text color="text.secondary">{name}</Text>
     {form.isLoading ? (
       <CircularProgress 

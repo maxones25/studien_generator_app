@@ -8,7 +8,7 @@ export interface TasksPageProps {}
 const TasksPage : React.FC<TasksPageProps> = () => {
 
   return (
-    <Page testId="home page">
+    <Page testId="tasks page">
       <DatePicker />
       <TasksList />
       <RecordedEventsList />

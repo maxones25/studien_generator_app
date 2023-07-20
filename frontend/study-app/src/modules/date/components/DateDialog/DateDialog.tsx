@@ -16,7 +16,7 @@ export const DateDialog : React.FC<DateDialogProps> = ({
   const { value, set } = useDateContext();
 
   return (
-    <Dialog open={open} onClose={onClose} sx={{m: 0}}>
+    <Dialog data-testid={"date-dialog"} open={open} onClose={onClose} sx={{m: 0}}>
       <StaticDatePicker 
         defaultValue={dayjs(value)} 
         slots={{

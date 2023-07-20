@@ -1,4 +1,4 @@
-import { IconButton, Row, Text } from '@modules/core/components';
+import { Button, IconButton, Row, Text } from '@modules/core/components';
 import { useDateContext } from '@modules/date/contexts';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import React, { useState } from 'react';
@@ -23,18 +23,21 @@ export const DatePicker : React.FC<DatePickerProps>= ({
         testId='remove-day-date-picker'
         Icon={<ArrowBack />}
       />
-      <Text 
+      <Button 
         sx={{
           ":hover": {
             cursor: "pointer"
-          }
+          },
+          minWidth: "10em",
+          textAlign: "center",
+          textTransform: 'none'
         }}
-        minWidth={"10em"} 
-        textAlign={"center"}
         onClick={handleClick}
+        testId='button-date-picker'
+        variant='outlined'
       >
         {date.format('LL')}
-      </Text>
+      </Button>
       <IconButton
         onClick={increase}
         testId='add-day-date-picker'

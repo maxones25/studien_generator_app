@@ -1,38 +1,56 @@
 import { LoginFormData } from "@modules/auth/types";
-import { Button, Form } from "@modules/core/components";
+import {
+  Button,
+  Form,
+  FormPasswordField,
+  FormTextField,
+  Text,
+} from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
-import { TextField, FormControl } from "@mui/material";
+import { FormControl } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 export interface LoginFormProps extends FormProps<LoginFormData> {}
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, values }) => {
-  const { t } = useTranslation(["login"]);
-  const form = useForm({ values });
+export const LoginForm: React.FC<LoginFormProps> = ({
+  onSubmit,
+  isError,
+  isLoading,
+  formProps,
+}) => {
+  const { t } = useTranslation();
+  const form = useForm<LoginFormData>();
 
   return (
-    <Form onSubmit={form.handleSubmit(onSubmit)}>
-      {!values?.id && (
-        <TextField
-          label={t("id")}
-          margin="normal"
-          {...form.register("id", {
-            required: "id required",
-          })}
-        />
-      )}
-      <TextField
-        label={t("password")}
-        margin="normal"
-        {...form.register("password", {
-          required: "password required",
+    <Form onSubmit={form.handleSubmit(onSubmit)} {...formProps}>
+      <FormTextField
+        label={t("id")}
+        formState={form.formState}
+        textFieldProps={form.register("id", {
+          required: t("value required", { value: t("id") }),
         })}
       />
-      <FormControl>
-        <Button type="submit" testId="submit-login-form">
-          Login
+      <FormPasswordField
+        label={t("password")}
+        formState={form.formState}
+        textFieldProps={form.register("password", {
+          required: t("value required", { value: t("password") }),
+        })}
+      />
+      {isError && (
+        <Text data-testid="login-error-text" color="error.main">
+          {t("access denied")}
+        </Text>
+      )}
+      <FormControl margin="normal">
+        <Button
+          testId="login-submit-button"
+          type="submit"
+          isLoading={isLoading}
+        >
+          {t("login")}
         </Button>
       </FormControl>
     </Form>
