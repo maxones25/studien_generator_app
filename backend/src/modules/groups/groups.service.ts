@@ -1,15 +1,15 @@
 import { Group } from '../../entities/group.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { CreateGroupDto } from './dtos/CreateGroupDto';
 import { UpdateGroupDto } from './dtos/UpdateGroupDto';
+import { GroupsRepository } from './groups.repository';
 
 @Injectable()
 export class GroupsService {
   constructor(
     @InjectRepository(Group)
-    private groupsRepository: Repository<Group>,
+    private groupsRepository: GroupsRepository,
   ) {}
 
   async create(studyId: string, { name }: CreateGroupDto) {
@@ -24,14 +24,7 @@ export class GroupsService {
   }
 
   async getByStudy(studyId: string) {
-    return this.groupsRepository.find({
-      where: { studyId },
-      select: {
-        id: true,
-        name: true,
-      },
-      order: { name: 'ASC' },
-    });
+    return this.groupsRepository.getByStudy(studyId)
   }
 
   async update(groupId: string, { name }: UpdateGroupDto) {
