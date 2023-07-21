@@ -31,7 +31,7 @@ export const FormPage : React.FC<FormPageProps> = ({
       <Text>{currentPage?.title}</Text>
       {currentPage?.components.map((value) => 
         <FormComponent 
-          key={value?.id}
+          key={value?.formFields[0].entityFieldId}
           formComponent={value}
           form={form}
         />

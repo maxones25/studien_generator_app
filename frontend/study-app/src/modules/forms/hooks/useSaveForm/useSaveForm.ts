@@ -6,7 +6,7 @@ export interface UseSaveFormOptions {}
 
 export const useSaveForm = (options? : UseSaveFormOptions) => {
   return useWriteRequest<Record, unknown>((options) =>
-    apiRequest(`/record`, { method: "POST", ...options }), {
+    apiRequest(`/records`, { method: "POST", ...options }), {
       
     }
   );

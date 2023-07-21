@@ -29,7 +29,8 @@ export class AuthService {
 
     const accessToken = await this.jwtService.signAsync({
       participantId: participant.id,
-      groupId: 123,
+      groupId: participant.groupId,
+      studyId: participant.studyId,
       type: 'participant',
     });
 

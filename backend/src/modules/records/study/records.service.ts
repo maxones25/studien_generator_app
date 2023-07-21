@@ -1,14 +1,38 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Record } from 'src/entities/record.entity';
-import { Repository } from 'typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
+import { Record } from '../../../entities/record.entity';
+import { Between, EntityManager, Repository } from 'typeorm';
+import { CreateRecordDto } from './dtos/createRecordDto';
+import { CreateRecordTransaction } from './transactions/create.record.transaction';
 
 @Injectable()
 export class RecordsService {
   constructor(
+    @InjectEntityManager()
+    private entityManager: EntityManager,
     @InjectRepository(Record)
     private recordsRepository: Repository<Record>,
   ) {}
 
-  
+  async create(participantId: string, data: CreateRecordDto) {
+    return new CreateRecordTransaction(this.entityManager).run({
+      participantId,
+      data
+    });
+  }
+
+  async findRecordedEventsByDate(participantId: string, date: Date) {
+    const dateStart = new Date(date);
+    dateStart.setHours(0, 0, 0, 0);  // Beginn des heutigen Tages
+
+    const dateEnd = new Date(date);
+    dateEnd.setHours(23, 59, 59, 999);
+
+    return await this.recordsRepository.find({
+      where: {
+        participantId,
+        createdAt: Between(dateStart, dateEnd),
+      }
+    });
+  }
 }
