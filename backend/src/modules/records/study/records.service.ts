@@ -28,11 +28,23 @@ export class RecordsService {
     const dateEnd = new Date(date);
     dateEnd.setHours(23, 59, 59, 999);
 
-    return await this.recordsRepository.find({
+    const records = await this.recordsRepository.find({
       where: {
         participantId,
         createdAt: Between(dateStart, dateEnd),
+      },
+      relations: {
+        form: true,
+      },
+      select: {
+        form: {
+          name: true,
+        }
       }
     });
+
+    return records.map((record) => {
+      return {name: record.form.name, id: record.id, date: record.createdAt};
+    })
   }
 }

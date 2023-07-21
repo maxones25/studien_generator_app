@@ -83,11 +83,21 @@ export class FormsService {
         name: true,
         pages: {
           title: true,
+          number: true,
           components: {
             type: true,
+            number: true,
             formFields: {
               entityFieldId: true
             }
+          }
+        }
+      },
+      order: {
+        pages: {
+          number: "ASC",
+          components: {
+            number: "ASC"
           }
         }
       }
