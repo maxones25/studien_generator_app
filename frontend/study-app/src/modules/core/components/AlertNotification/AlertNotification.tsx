@@ -1,12 +1,14 @@
 import { useSnackBarContext } from "@modules/core/contexts";
 import { Alert, Snackbar } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export interface AlertNotificationProps {}
 
 export const AlertNotification: React.FC<AlertNotificationProps> = () => {
   const { duration, open, color, message, reset } = useSnackBarContext();
-
+  const { t } = useTranslation();
+ 
   return (
     <Snackbar
       open={open}
@@ -15,7 +17,7 @@ export const AlertNotification: React.FC<AlertNotificationProps> = () => {
       onClose={reset}
     >
       <Alert variant="filled" color={color} onClose={reset}>
-        {message}
+        {t(message)}
       </Alert>
     </Snackbar>
   );

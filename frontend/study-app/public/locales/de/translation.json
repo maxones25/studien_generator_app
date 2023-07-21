@@ -48,7 +48,7 @@
   "field": "Feld",
   "requests": "Abfragen",
   "form": "Formular",
-  "logout": "abmelden",
+  "logout": "Abmelden",
   "role": "Rolle",
   "participants": "Probanden",
   "participant": "Proband",
@@ -58,5 +58,7 @@
   "chats": "Chats",
   "data": "Daten",
   "save": "Speichern",
-  "cancel": "abbrechen"
+  "cancel": "Abbrechen",
+  "saved": "Gespeichert",
+  "record in future error": "Das liegt in der Zukunft"
   }

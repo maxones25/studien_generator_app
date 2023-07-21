@@ -7,7 +7,9 @@ export interface UseSaveFormOptions {}
 export const useSaveForm = (options? : UseSaveFormOptions) => {
   return useWriteRequest<Record, unknown>((options) =>
     apiRequest(`/records`, { method: "POST", ...options }), {
-      
+      onSuccess: ({ snackbar }) => {
+        snackbar.showSuccess('saved');
+      },
     }
   );
 }

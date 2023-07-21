@@ -39,6 +39,9 @@ export class CreateRecordTransaction extends Transaction<
   ): Promise<Record> {
     const recordsRepository = this.entityManager.getRepository(Record)
 
+    if (new Date(createdAt) > new Date())
+      throw new ConflictException('record in future error');
+      
     const record = new Record();
     record.createdAt = createdAt;
     record.formId = formId;

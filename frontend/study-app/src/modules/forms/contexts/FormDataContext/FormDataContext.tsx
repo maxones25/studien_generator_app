@@ -2,6 +2,7 @@ import { createContext, FC, ReactNode, useContext, useState } from "react";
 import { FormPageData, Record } from "@modules/forms/types";
 import { useFormContext, useFormIdContext } from "..";
 import { useSaveForm } from "@modules/forms/hooks";
+import { useDateContext } from "@modules/date/contexts";
 
 interface FormDataContextValue {
   isLastPage: boolean;
@@ -20,6 +21,7 @@ const FormDataContext = createContext<FormDataContextValue | undefined>(
 const useFormDataContextValue = () => {
   const { resetForm, formId, taskId } = useFormIdContext();
   const { form } = useFormContext();
+  const { value: date } = useDateContext();
   const [data, setData] = useState({});
   const [pageNumber, setPageNumber] = useState(0);
   const saveForm = useSaveForm();
@@ -39,7 +41,7 @@ const useFormDataContextValue = () => {
     const fieldsArray = Object.entries(fields);
     const record: Record = {
       taskId: taskId,
-      createdAt: new Date(),
+      createdAt: date.toDate(),
       formId: formId!,
       fields: fieldsArray.map((value) => {return {entityFieldId: value[0], value: value[1]}}),
     } ;
