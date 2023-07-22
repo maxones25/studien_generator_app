@@ -72,13 +72,13 @@ export class CreateRecordTransaction extends Transaction<
   private async isValidValue(
     {entityFieldId, value}: RecordFieldDto,
   ): Promise<any> {
-    const entityField = await this.entityFieldRepository.findOne({
+    const entityField = await this.entityFieldRepository.findOneOrFail({
       where: {id: entityFieldId}
     })
 
-    const type = entityField?.type.toString().toLowerCase()
+    const type = entityField.type.toString().toLowerCase()
     
-    switch (entityField?.type) {
+    switch (entityField.type) {
       case FieldType.Number || FieldType.Boolean:
         if (typeof value !== type) 
           return false;
