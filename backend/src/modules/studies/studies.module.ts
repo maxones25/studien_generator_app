@@ -4,13 +4,20 @@ import { StudiesService } from './studies.service';
 import { StudiesController } from './studies.controller';
 import { Study } from '../../entities/study.entity';
 import { StudyMembersModule } from './members/study-members.module';
+import { StudiesRepository } from './studies.repository';
+import { EntityManager } from 'typeorm';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Study]),
-    StudyMembersModule,
+  imports: [TypeOrmModule.forFeature([Study]), StudyMembersModule],
+  providers: [
+    StudiesService,
+    {
+      provide: StudiesRepository,
+      useFactory: (entityManager: EntityManager) =>
+        new StudiesRepository(Study, entityManager),
+      inject: [EntityManager],
+    },
   ],
-  providers: [StudiesService],
   controllers: [StudiesController],
 })
 export class StudiesModule {}

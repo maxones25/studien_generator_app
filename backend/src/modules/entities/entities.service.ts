@@ -13,13 +13,13 @@ export class EntitiesService {
   ) {}
 
   async create(studyId: string, { name }: CreateEntityDto) {
-    const abstractEntity = new Entity();
-    abstractEntity.name = name;
-    abstractEntity.studyId = studyId;
+    const entity = new Entity();
+    entity.name = name;
+    entity.studyId = studyId;
 
-    await this.entitiesRepository.insert(abstractEntity);
+    await this.entitiesRepository.insert(entity);
 
-    return abstractEntity;
+    return entity.id;
   }
 
   async update(entityId: string, { name }: UpdateEntityDto) {

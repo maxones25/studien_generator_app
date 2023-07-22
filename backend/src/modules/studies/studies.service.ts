@@ -1,6 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { Study } from '../../entities/study.entity';
 import { EntityManager } from 'typeorm';
 import { CreateStudyDto } from './dtos/createStudyDto';
 import { UpdateStudyDto } from './dtos/updateStudyDto';
@@ -12,7 +11,7 @@ export class StudiesService {
   constructor(
     @InjectEntityManager()
     private entityManager: EntityManager,
-    @InjectRepository(Study)
+    @Inject(StudiesRepository)
     private studiesRepository: StudiesRepository,
   ) {}
 
@@ -28,11 +27,11 @@ export class StudiesService {
   }
 
   async getByDirector(directorId: string) {
-    return await this.studiesRepository.getByDirector(directorId)
+    return await this.studiesRepository.getByDirector(directorId);
   }
 
   async findOne(studyId: string, directorId: string) {
-    return this.studiesRepository.getOneByDirector(studyId, directorId)
+    return this.studiesRepository.getOneByDirector(studyId, directorId);
   }
 
   async delete(studyId: string) {

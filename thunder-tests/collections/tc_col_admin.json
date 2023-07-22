@@ -170,12 +170,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-22T11:04:50.195Z",
-            "modified": "2023-07-19T09:56:48.507Z",
+            "modified": "2023-07-21T12:41:35.580Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{ \n  \"name\": \"test study 888\"\n}",
+                "raw": "{ \n  \"name\": \"My Study\"\n}",
                 "form": []
             },
             "tests": []
@@ -189,12 +189,12 @@
             "method": "POST",
             "sortNum": 100000,
             "created": "2023-06-27T15:43:22.833Z",
-            "modified": "2023-07-12T13:53:41.404Z",
+            "modified": "2023-07-21T12:41:52.225Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Schlaf 2\"\n}",
+                "raw": "{\n  \"name\": \"Schlaf\"\n}",
                 "form": []
             },
             "tests": []
@@ -208,12 +208,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-28T14:17:22.858Z",
-            "modified": "2023-07-12T13:54:45.220Z",
+            "modified": "2023-07-21T12:45:00.146Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Ende\",\n  \"type\": \"Date\"\n}",
+                "raw": "{\n  \"name\": \"Qualität\",\n  \"type\": \"Number\"\n}",
                 "form": []
             },
             "tests": []
@@ -270,11 +270,11 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "652d52a0-2ff6-4147-9811-023bf43376fb",
             "name": "get entity by id",
-            "url": "/studies/{{studyId}}/entities/{{entityId}}",
+            "url": "/studies/{{studyId}}/entities/{{schlafEntityId}}",
             "method": "GET",
             "sortNum": 120000,
             "created": "2023-06-28T16:58:36.971Z",
-            "modified": "2023-06-28T19:20:46.017Z",
+            "modified": "2023-07-21T12:45:24.295Z",
             "headers": [],
             "params": [],
             "tests": []

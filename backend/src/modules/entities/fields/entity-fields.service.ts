@@ -21,7 +21,7 @@ export class EntityFieldsService {
 
     await this.entityFieldsRepository.insert(entityField);
 
-    return entityField;
+    return entityField.id;
   }
 
   async getAll(entityId: string) {
