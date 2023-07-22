@@ -6,7 +6,7 @@ export interface UseGetEventsOptions {}
 
 export const getGetEventsKey = () => ["getEvents"];
 
-export const useGetEvents = (options? : UseGetEventsOptions) => {
+export const useGetEvents = () => {
   return useReadRequest<Event[]>(getGetEventsKey(), (options) =>
   apiRequest(`/forms/time/independent`, { ...options })
   );
