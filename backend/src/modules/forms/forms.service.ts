@@ -20,7 +20,7 @@ export class FormsService {
 
     await this.formsRepository.insert(form);
 
-    return form;
+    return form.id;
   }
 
   getAll(studyId: string) {
@@ -39,6 +39,10 @@ export class FormsService {
     return this.formsRepository.findOne({
       where: {
         id,
+      },
+      select: {
+        id: true,
+        name: true,
       },
     });
   }

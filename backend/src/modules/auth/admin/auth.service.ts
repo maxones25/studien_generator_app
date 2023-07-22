@@ -17,11 +17,7 @@ export class AuthService {
   ) {}
 
   async checkCredentials({ email, password }: LoginDirectorDto) {
-    const director = await this.directorsRepository.findOne({
-      where: {
-        email,
-      },
-    });
+    const director = await this.getByEmail(email)
 
     if (!director) throw new UnauthorizedException();
 
@@ -57,5 +53,13 @@ export class AuthService {
       password: hashedPassword,
     });
     return { id: identifiers[0].id };
+  }
+
+  async getByEmail(email: string) {
+    return this.directorsRepository.findOne({
+      where: {
+        email,
+      },
+    });
   }
 }

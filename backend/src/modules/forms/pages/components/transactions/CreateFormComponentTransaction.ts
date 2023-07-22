@@ -1,10 +1,12 @@
 import { FormField } from '../../../../../entities/form-field.entity';
 import { FormComponent } from '../../../../../entities/form-component.entity';
+import { FormComponentAttribute } from '../../../../../entities/form-component-attribute.entity';
 import { Transaction } from '../../../../../utils/transaction';
 import {
   CreateFormComponentDto,
   FormFieldDto,
 } from '../dtos/CreateFormComponentDto';
+import { FormComponentAttributeDto } from '../attributes/dtos/FormComponentAttributeDto';
 
 type CreateFormTransactionInput = {
   pageId: string;
@@ -24,6 +26,7 @@ export class CreateFormComponentTransaction extends Transaction<
     const formComponent = await this.createFormComponent(pageId, number, data);
 
     await this.addFormFields(formComponent.id, data.formFields);
+    await this.addAttributes(formComponent.id, data.attributes);
 
     return formComponent.id;
   }
@@ -61,6 +64,25 @@ export class CreateFormComponentTransaction extends Transaction<
       formField.formComponentId = formComponentId;
 
       await formFieldsRepo.insert(formField);
+    }
+  }
+
+  private async addAttributes(
+    formComponentId: string,
+    attributes: FormComponentAttributeDto[],
+  ) {
+    const formComponentAttributesRepo = await this.entityManager.getRepository(
+      FormComponentAttribute,
+    );
+
+    for (const { key, value } of attributes) {
+      const attribute = new FormComponentAttribute();
+
+      attribute.componentId = formComponentId;
+      attribute.key = key;
+      attribute.value = JSON.stringify(value);
+
+      await formComponentAttributesRepo.insert(attribute);
     }
   }
 }

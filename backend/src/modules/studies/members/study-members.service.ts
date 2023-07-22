@@ -1,5 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { StudyMember } from '../../../entities/study-member.entity';
 import { AddMemberDto } from './dtos/AddMemberDto';
 import { UpdateMemberDto } from './dtos/UpdateMemberDto';
@@ -9,7 +8,7 @@ import { StudyMembersRepository } from './study-members.repository';
 @Injectable()
 export class StudyMembersService {
   constructor(
-    @InjectRepository(StudyMember)
+    @Inject(StudyMembersRepository)
     private studyMemberRepository: StudyMembersRepository,
   ) {}
 

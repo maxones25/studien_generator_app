@@ -1,9 +1,22 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ComponentType } from '../../enums/component-type.enum';
-import { CheckBoxComponent, Component, DatePickerComponent, DateTimePickerComponent, HIITComponent, NumberPickerComponent, SelectComponent, SliderComponent, SwitchComponent, TextFieldComponent, TimePickerComponent } from './components';
+import {
+  CheckBoxComponent,
+  Component,
+  DatePickerComponent,
+  DateTimePickerComponent,
+  HIITComponent,
+  NumberPickerComponent,
+  SelectComponent,
+  SliderComponent,
+  SwitchComponent,
+  TextFieldComponent,
+  TimePickerComponent,
+} from './components';
 import { EntityField } from '../../entities/entity-field.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { FormComponentAttributeDto } from '../forms/pages/components/attributes/dtos/FormComponentAttributeDto';
 
 @Injectable()
 export class ComponentsService {
@@ -25,24 +38,29 @@ export class ComponentsService {
     private entityFieldsRepository: Repository<EntityField>,
   ) {}
 
-  async areEntityFieldsValid(
+  async validateFormComponent(
     componentType: ComponentType,
     entityFieldIds: string[],
+    attributes: FormComponentAttributeDto[],
   ) {
-    const entityFields = await this.entityFieldsRepository.find({
-      where: entityFieldIds.map((id) => ({ id })),
-    })
-
     const component = this.components.get(componentType);
 
-    if (!component) return false;
-    
-    return component.areFieldTypesValid(
+    if (!component)
+      throw new BadRequestException(
+        `component type '${componentType}' not found`,
+      );
+
+    const entityFields = await this.entityFieldsRepository.find({
+      where: entityFieldIds.map((id) => ({ id })),
+    });
+
+    component.validate(
       entityFields.map((entityField) => entityField.type),
+      attributes,
     );
   }
 
   getAll() {
-    return Object.values(Object.fromEntries(this.components))
+    return Object.values(Object.fromEntries(this.components));
   }
 }

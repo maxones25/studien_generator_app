@@ -7,6 +7,7 @@ import {
 } from 'class-validator';
 import { ComponentType } from '../../../../../enums/component-type.enum';
 import { Type } from 'class-transformer';
+import { FormComponentAttributeDto } from '../attributes/dtos/FormComponentAttributeDto';
 
 export class FormFieldDto {
   @IsUUID()
@@ -22,4 +23,9 @@ export class CreateFormComponentDto {
   @Type(() => FormFieldDto)
   @ValidateNested({ each: true })
   formFields: FormFieldDto[];
+
+  @IsArray()
+  @Type(() => FormComponentAttributeDto)
+  @ValidateNested({ each: true })
+  attributes: FormComponentAttributeDto[];
 }

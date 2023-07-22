@@ -14,6 +14,7 @@ import ConfigModule from './modules/config/config.module';
 import { ComponentsModule } from './modules/components/components.module';
 import { ParticipantsModule } from './modules/participants/participants.module';
 import { GroupsModule } from './modules/groups/groups.module';
+import { RolesModule } from './modules/auth/roles.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { GroupsModule } from './modules/groups/groups.module';
     FormsModule,
     ComponentsModule,
     RecordsModule,
+    RolesModule,
   ],
   providers: [
     {
