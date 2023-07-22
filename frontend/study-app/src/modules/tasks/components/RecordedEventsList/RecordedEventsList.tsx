@@ -15,7 +15,7 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
   const navigate = useNavigationHelper();
 
   return (
-    <Column>
+    <Column overflow={"hidden"}>
       <Row justifyContent={"space-between"}>
         <Text>Ereignisse</Text>
         <IconButton

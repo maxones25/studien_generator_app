@@ -19,17 +19,20 @@ export const List : React.FC<ListProps> = ({
   const hasItems = (getListItems.data?.length ?? 0) > 0;
 
   return (
-    <Column alignItems="center" py={1} px={2} minHeight={"250px"}>
+    <Column alignItems="center" py={1} px={2} overflow={"hidden"}>
       {getListItems.isLoading ? (
         <CircularProgress sx={{mt: 5}} data-testid={`loading ${title} spinner`} />
       ) : getListItems.isError ? (
         <Text data-testid={`get-${title}-error-text`} color="error.main">
-          {t(`error: ${title} could not load`)}
+          {t(`error: ${title} could not load`)}        
         </Text>
       ) : !hasItems ? (
         <Text>{t(`no ${title} found`)}</Text>
       ) : (
-        <MList sx={{ width: "100%" }}>
+        <MList sx={{ 
+          width: "100%",
+          overflowY: "auto",
+        }}>
           {getListItems.data?.map((item, i, arr) => (
             <ListItem
               key={item.id}
