@@ -15,9 +15,9 @@ export const FormComponent : React.FC<FormComponentProps>= ({
 }) => {
   const { t } = useTranslation();
   const props = {
-    label: formComponent.label,
+    label: formComponent.attributes?.label,
     control: form.control,
-    name: formComponent.id,
+    name: formComponent.formFields[0].entityFieldId,
     rules: {required: t("value required")},
     attributes: formComponent.attributes
   }
@@ -26,9 +26,9 @@ export const FormComponent : React.FC<FormComponentProps>= ({
     switch (formComponent.type) {
       case "TextField":
         return <FormTextField 
-          label={formComponent.label}
+          label={formComponent.attributes?.label}
           formState={form.formState}
-          textFieldProps={form.register(formComponent.id, {
+          textFieldProps={form.register(formComponent.formFields[0].entityFieldId, {
             required: t("value required"),
           })}
         />

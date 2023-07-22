@@ -8,16 +8,6 @@ export const getGetEventsKey = () => ["getEvents"];
 
 export const useGetEvents = (options? : UseGetEventsOptions) => {
   return useReadRequest<Event[]>(getGetEventsKey(), (options) =>
-  new Promise((resolve, reject) => {
-    resolve([{
-      id: "1",
-      name: "test",
-    },
-    {
-      id: "2",
-      name: "test",
-    }])
-  })  
-  // apiRequest(`/Events`, { ...options })
+  apiRequest(`/forms/time/independent`, { ...options })
   );
 }

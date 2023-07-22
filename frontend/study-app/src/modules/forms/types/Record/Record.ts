@@ -1,11 +1,11 @@
 export type Record = {
   taskId?: string;
-  completedAt: Date;
+  createdAt: Date;
   formId: string;
   fields: RecordField[];
 }
 
 export type RecordField = {
-  id: string;
+  entityFieldId: string;
   value: string | boolean | number | Date;
 }

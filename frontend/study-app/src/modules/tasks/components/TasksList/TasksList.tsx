@@ -12,7 +12,7 @@ export const TasksList : React.FC<TasksListProps> = ({
   const getTasks = useGetTasksByDate({ date });
 
   return (
-    <Column>
+    <Column overflow={"hidden"} maxHeight={"55%"}>
       <Text>Aufgaben</Text>
       <List 
         title='tasks'

@@ -1,5 +1,3 @@
-import { FormSelectOption } from "@modules/core/components"
-
 export type FormData = {
   id: string,
   name: string,
@@ -12,14 +10,18 @@ export type FormPageData = {
 }
 
 export type FormComponentData = {
-  id: string
   type: string,
-  label: string,
+  formFields: FormField[],
   attributes?: FormComponentDataAttributes,
 }
 
 export type FormComponentDataAttributes = {
-  options?: FormSelectOption[],
+  label?: string,
+  options?: any[],
   min?: number,
   max?: number
+}
+
+export type FormField = {
+  entityFieldId: string;
 }

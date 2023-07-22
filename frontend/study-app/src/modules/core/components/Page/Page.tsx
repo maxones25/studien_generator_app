@@ -22,10 +22,11 @@ export const Page: React.FC<PageProps> = ({ sx, testId, ...props }) => {
       data-testid={testId}
       sx={{
         position: "relative",
-        overflowY: "scroll",
+        overflowY: "hidden",
         bgcolor: "background.default",
         flexGrow: "1",
         paddingX: "5vw",
+        paddingY: "3vw",
         ...sx,
       }}
       {...props}
