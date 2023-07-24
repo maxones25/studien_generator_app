@@ -15,7 +15,7 @@ export class StudyGuard implements CanActivate {
     private readonly studiesRepository: StudiesRepository,
   ) {}
 
-  canActivate(context: ExecutionContext) {
+  async canActivate(context: ExecutionContext) {
 
     const request: Request = context.switchToHttp().getRequest()
 
@@ -23,10 +23,8 @@ export class StudyGuard implements CanActivate {
 
     if(!studyId) return true
 
-    const study = this.studiesRepository.findOne({ where: { id: studyId } })
+    const study = await this.studiesRepository.findOne({ where: { id: studyId } })
 
-    console.log(study)
-    
     if(!study) throw new UnauthorizedException()
 
     return true;
