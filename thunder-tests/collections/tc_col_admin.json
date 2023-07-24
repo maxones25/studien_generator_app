@@ -777,6 +777,20 @@
             "headers": [],
             "params": [],
             "tests": []
+        },
+        {
+            "_id": "45d03c27-7d41-4489-8bda-2e1cf935bc66",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "fb0ad599-e5b3-4d49-91f8-46a43e6933fa",
+            "name": "get study by id",
+            "url": "/studies/ce28147f-ac54-495f-9964-8cf957d5f1ca",
+            "method": "GET",
+            "sortNum": 37500,
+            "created": "2023-07-24T18:33:36.688Z",
+            "modified": "2023-07-24T18:34:23.061Z",
+            "headers": [],
+            "params": [],
+            "tests": []
         }
     ]
 }
