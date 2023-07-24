@@ -27,6 +27,9 @@ export class StudyGuard implements CanActivate {
 
     if(!study) throw new UnauthorizedException()
 
+    // @ts-ignore
+    request.study = study
+
     return true;
   }
 }
