@@ -11,6 +11,7 @@ export type FormPageData = {
 
 export type FormComponentData = {
   type: string,
+  id: string,
   formFields: FormField[],
   attributes?: FormComponentDataAttributes,
 }

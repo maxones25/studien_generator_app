@@ -1,5 +1,5 @@
 import { createContext, FC, ReactNode, useContext, useState } from "react";
-import { FormPageData, Record } from "@modules/forms/types";
+import { FormPageData, Record, RecordField } from "@modules/forms/types";
 import { useFormContext, useFormIdContext } from "..";
 import { useSaveForm } from "@modules/forms/hooks";
 import { useDateContext } from "@modules/date/contexts";
@@ -37,13 +37,19 @@ const useFormDataContextValue = () => {
   }
 
   const save = (newData: Object) => {
-    const fields: Object = {...data, ...newData};
-    const fieldsArray = Object.entries(fields);
+    const components: Object = {...data, ...newData};
+    const componentsArray = Object.entries(components);
+    let entityFields: RecordField[] = [];
+    componentsArray.forEach((value) => {
+      Object.entries(value[1]).forEach((value) => {
+        entityFields.push({entityFieldId: value[0], value: value[1]})
+      })
+    })
     const record: Record = {
       taskId: taskId,
       createdAt: date.toDate(),
       formId: formId!,
-      fields: fieldsArray.map((value) => {return {entityFieldId: value[0], value: value[1]}}),
+      fields: entityFields,
     } ;
     console.log(record);
     saveForm.mutateAsync(record);
