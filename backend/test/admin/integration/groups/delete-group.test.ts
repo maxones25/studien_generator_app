@@ -45,13 +45,18 @@ describe('delete group', () => {
   it('should delete a group', async () => {
     const group = fakeData.group();
     const groupId = await createGroup(app, accessToken, studyId, group);
-    return request(app.getHttpServer())
+    await request(app.getHttpServer())
       .delete(`/studies/${studyId}/groups/${groupId}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(200)
       .then((res) => {
         expect(parseInt(res.text)).toEqual(1);
       });
+
+    await request(app.getHttpServer())
+      .get(`/studies/${studyId}/groups/${groupId}`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(401)
   });
 
   it('should fail because director is not an admin', async () => {
