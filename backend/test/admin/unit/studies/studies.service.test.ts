@@ -1,15 +1,8 @@
 import { TestBed } from '@automock/jest';
-import { Group } from '@entities/group.entity';
-import { DeleteResult, UpdateResult } from 'typeorm';
 import { faker } from '@faker-js/faker';
-import { GroupsService } from '@admin/modules/groups/groups.service';
-import { GroupsRepository } from '@admin/modules/groups/groups.repository';
-import { CreateGroupDto } from '@admin/modules/groups/dtos/CreateGroupDto';
-import { UpdateGroupDto } from '@admin/modules/groups/dtos/UpdateGroupDto';
 import { StudiesRepository } from '@admin/modules/studies/studies.repository';
 import { StudiesService } from '@admin/modules/studies/studies.service';
-import fakeData, { director } from '@test/fakeData';
-import { Study } from '@entities/study.entity';
+import fakeData from '@test/fakeData';
 import { CreateStudyTransaction } from '@admin/modules/studies/transactions/create-study.transaction';
 
 describe('StudiesService', () => {
