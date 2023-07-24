@@ -9,21 +9,22 @@ import { StudiesRepository } from './studies.repository';
 @Injectable()
 export class StudiesService {
   constructor(
-    @InjectEntityManager()
-    private entityManager: EntityManager,
     @Inject(StudiesRepository)
     private studiesRepository: StudiesRepository,
+    @Inject(CreateStudyTransaction)
+    private createStudyTransaction: CreateStudyTransaction,
   ) {}
 
-  async create(data: CreateStudyDto, directorId: string) {
-    return new CreateStudyTransaction(this.entityManager).run({
+  async create(directorId: string, data: CreateStudyDto) {
+    return this.createStudyTransaction.run({
       directorId,
       data,
     });
   }
 
-  update(id: string, { name }: UpdateStudyDto) {
-    return this.studiesRepository.update(id, { name });
+  async update(id: string, { name }: UpdateStudyDto) {
+    const { affected } = await this.studiesRepository.update(id, { name });
+    return affected;
   }
 
   async getByDirector(directorId: string) {

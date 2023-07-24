@@ -22,10 +22,10 @@ export class StudiesController {
 
   @Post()
   async create(
-    @Body() createStudyDto: CreateStudyDto,
     @DirectorId() directorId: string,
+    @Body() body: CreateStudyDto,
   ) {
-    return this.studiesService.create(createStudyDto, directorId);
+    return this.studiesService.create(directorId, body);
   }
 
   @Get()
@@ -45,9 +45,9 @@ export class StudiesController {
   @Put(':studyId')
   async update(
     @Param('studyId') studyId: string,
-    @Body() updateStudyDto: UpdateStudyDto,
+    @Body() body: UpdateStudyDto,
   ) {
-    return this.studiesService.update(studyId, updateStudyDto);
+    return this.studiesService.update(studyId, body);
   }
 
   @Roles('admin')

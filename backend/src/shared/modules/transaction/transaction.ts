@@ -1,9 +1,15 @@
+import { Injectable } from '@nestjs/common';
+import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 
+@Injectable()
 export abstract class Transaction<TransactionInput, TransactionOutput> {
   protected entityManager: EntityManager;
 
-  constructor(private privateEntityManager: EntityManager) {}
+  constructor(
+    @InjectEntityManager()
+    private readonly privateEntityManager: EntityManager,
+  ) {}
 
   protected abstract execute(
     data: TransactionInput,

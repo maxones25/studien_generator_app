@@ -4,6 +4,7 @@ import { StudiesService } from './studies.service';
 import { Study } from '@entities/study.entity';
 import { Provider } from '@nestjs/common';
 import { StudyGuard } from './guards/study.guard';
+import { CreateStudyTransaction } from './transactions/create-study.transaction';
 
 const studiesProviders: Provider[] = [
   StudiesService,
@@ -12,6 +13,10 @@ const studiesProviders: Provider[] = [
     useFactory: (entityManager: EntityManager) =>
       new StudiesRepository(Study, entityManager),
     inject: [EntityManager],
+  },
+  {
+    provide: CreateStudyTransaction,
+    useClass: CreateStudyTransaction,
   },
   {
     provide: StudyGuard,
