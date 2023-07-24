@@ -6,9 +6,6 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:admin": "nest start --entryFile admin",
     "start:admin:dev": "nest start --entryFile admin --watch",
     "start:admin:debug": "nest start --entryFile admin --debug --watch",
@@ -17,15 +14,20 @@
     "start:study:dev": "nest start --entryFile study --watch",
     "start:study:debug": "nest start --entryFile study --debug --watch",
     "start:study:prod": "node dist/src/study",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test:admin:unit": "jest --config admin-unit.jest.config.ts",
     "test:admin:unit:dev": "jest --config admin-unit.jest.config.ts --onlyChanged --watch",
-    "test:admin:integration": "jest --config admin-integration.jest.config.ts",
+    "test:admin:integration": "jest --config admin-integration.jest.config.ts --coverage",
     "test:admin:integration:dev": "jest --config admin-integration.jest.config.ts --onlyChanged",
+    "test:study:integration": "jest --config study-integration.jest.config.ts --coverage",
+    "test:study:integration:dev": "jest --config study-integration.jest.config.ts --onlyChanged",
+    "build": "nest build",
+    "prebuild": "rimraf dist",
     "db:migration:run": "typeorm-ts-node-commonjs migration:run -d data-source.ts",
     "db:migration:revert": "typeorm-ts-node-commonjs migration:revert -d data-source.ts",
     "db:migration:create": "typeorm-ts-node-commonjs migration:create",
-    "db:sync": "typeorm-ts-node-commonjs schema:sync -- -d data-source.ts"
+    "db:sync": "typeorm-ts-node-commonjs schema:sync -- -d data-source.ts",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
