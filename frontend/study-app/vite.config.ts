@@ -17,11 +17,13 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
+      strategies: 'injectManifest',
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,json}"],
       },
       devOptions: {
         enabled: true,
+        type: 'module',
       },
       manifest: {
         name: 'My Awesome App',
@@ -30,12 +32,12 @@ export default defineConfig({
         theme_color: '#ffffff',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: 'images/pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png',
+            src: 'images/pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png'
           }
