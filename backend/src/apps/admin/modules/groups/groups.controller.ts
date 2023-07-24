@@ -35,6 +35,12 @@ export class GroupsController {
     return this.groupsService.getByStudy(studyId);
   }
 
+  @Get(':groupId')
+  @Roles('admin', 'employee')
+  async getById(@Param('studyId', new ValidateIdPipe()) studyId: string) {
+    return this.groupsService.getByStudy(studyId);
+  }
+
   @Put(':groupId')
   async update(
     @Param('groupId', new ValidateIdPipe()) groupId: string,

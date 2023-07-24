@@ -26,6 +26,10 @@ export class GroupsService {
     return this.groupsRepository.getByStudy(studyId);
   }
 
+  async getById(groupId: string) {
+    return this.groupsRepository.getById(groupId);
+  }
+
   async update(groupId: string, { name }: UpdateGroupDto) {
     const { affected } = await this.groupsRepository.update(groupId, { name });
     return affected;

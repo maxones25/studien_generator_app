@@ -12,4 +12,14 @@ export class GroupsRepository extends Repository<Group> {
       order: { name: 'ASC' },
     });
   }
+
+  async getById(id: string) {
+    return this.findOneOrFail({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+  }
 }
