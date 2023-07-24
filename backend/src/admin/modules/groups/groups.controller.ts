@@ -24,9 +24,9 @@ export class GroupsController {
   @Roles('admin', 'employee')
   async create(
     @Param('studyId', new ValidateIdPipe()) studyId: string,
-    @Body() createStudyDto: CreateGroupDto,
+    @Body() body: CreateGroupDto,
   ) {
-    return this.groupsService.create(studyId, createStudyDto);
+    return this.groupsService.create(studyId, body);
   }
 
   @Get()
@@ -38,9 +38,9 @@ export class GroupsController {
   @Put(':groupId')
   async update(
     @Param('groupId', new ValidateIdPipe()) groupId: string,
-    @Body() updateGroupDto: UpdateGroupDto,
+    @Body() body: UpdateGroupDto,
   ) {
-    return this.groupsService.update(groupId, updateGroupDto);
+    return this.groupsService.update(groupId, body);
   }
 
   @Roles('admin')
