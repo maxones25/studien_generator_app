@@ -14,7 +14,7 @@
     "start:study:dev": "nest start --entryFile study --watch",
     "start:study:debug": "nest start --entryFile study --debug --watch",
     "start:study:prod": "node dist/src/study",
-    "test:admin:unit": "jest --config admin-unit.jest.config.ts",
+    "test:admin:unit": "jest --config admin-unit.jest.config.ts --coverage",
     "test:admin:unit:dev": "jest --config admin-unit.jest.config.ts --onlyChanged --watch",
     "test:admin:integration": "jest --config admin-integration.jest.config.ts --coverage",
     "test:admin:integration:dev": "jest --config admin-integration.jest.config.ts --onlyChanged",

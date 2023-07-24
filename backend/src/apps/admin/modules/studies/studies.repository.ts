@@ -14,7 +14,7 @@ export class StudiesRepository extends Repository<Study> {
     return studies.map(({ id, name, members }) => ({
       id,
       name,
-      role: members[0].role ?? 'employee',
+      role: members[0].role,
     }));
   }
 
@@ -37,8 +37,6 @@ export class StudiesRepository extends Repository<Study> {
         },
       },
     });
-
-    if(members.length !== 1) throw new InternalServerErrorException()
 
     return {
       id,
