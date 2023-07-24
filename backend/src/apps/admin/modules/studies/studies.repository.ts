@@ -4,12 +4,23 @@ import { InternalServerErrorException } from '@nestjs/common';
 
 export class StudiesRepository extends Repository<Study> {
   async getByDirector(directorId: string) {
-    const studies = await this.createQueryBuilder('studies')
-      .leftJoinAndSelect('studies.members', 'member')
-      .where('member.directorId = :directorId', { directorId })
-      .select(['studies.id', 'studies.name', 'member.role'])
-      .orderBy('member.role', 'ASC')
-      .getMany();
+    const studies = await this.find({
+      where: {
+        members: {
+          directorId,
+        },
+      },
+      relations: {
+        members: true,
+      },
+      select: {
+        id: true,
+        name: true,
+        members: {
+          role: true,
+        },
+      },
+    });
 
     return studies.map(({ id, name, members }) => ({
       id,
