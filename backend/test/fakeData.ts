@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker';
 
+const randomName = () => faker.string.alphanumeric({ length: { min: 5, max: 10 } })
+
 export const director = () => {
   return {
     email: faker.internet.email(),
@@ -11,23 +13,26 @@ export const director = () => {
 
 export const study = () => {
   return {
-    name: faker.company.name()
+    name: randomName(),
   };
 };
 
 export const group = () => {
   return {
-    name: faker.company.name()
+    name: randomName(),
   };
 };
 
 export const participant = () => {
   return {
-    number: faker.number.int({min: 100000, max: 999999}).toString()
+    number: faker.number.int({ min: 100000, max: 999999 }).toString(),
   };
 };
 
+export const id = () => faker.string.uuid()
+
 export default {
+  id,
   director,
   study,
   group,

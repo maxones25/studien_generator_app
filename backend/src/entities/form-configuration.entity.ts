@@ -9,7 +9,7 @@ import { Group } from './group.entity';
 import { Study } from './study.entity';
 import { Task } from './task.entity';
 import { Form } from './form.entity';
-import { FormConfigType } from '../enums/form-config-type.enum';
+import { FormConfigType } from '@shared/enums/form-config-type.enum';
 
 @TypeOrmEntity()
 export class FormConfiguration {

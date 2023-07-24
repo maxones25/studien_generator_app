@@ -189,12 +189,12 @@
             "method": "POST",
             "sortNum": 100000,
             "created": "2023-06-27T15:43:22.833Z",
-            "modified": "2023-07-21T12:41:52.225Z",
+            "modified": "2023-07-22T22:17:21.393Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Schlaf\"\n}",
+                "raw": "{\n  \"name\": \"HIIT\"\n}",
                 "form": []
             },
             "tests": []
@@ -204,16 +204,16 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "07252029-2922-4cef-b19c-bd2bfb55a37b",
             "name": "create field",
-            "url": "/studies/{{studyId}}/entities/{{entityId}}/fields",
+            "url": "/studies/{{studyId}}/entities/f07822a7-cdb2-4b81-8859-842cd54cbb7a/fields",
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-28T14:17:22.858Z",
-            "modified": "2023-07-21T12:45:00.146Z",
+            "modified": "2023-07-22T22:18:16.396Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Qualität\",\n  \"type\": \"Number\"\n}",
+                "raw": "{\n  \"name\": \"test\",\n  \"type\": \"DateTime\"\n}",
                 "form": []
             },
             "tests": []
@@ -270,11 +270,11 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "652d52a0-2ff6-4147-9811-023bf43376fb",
             "name": "get entity by id",
-            "url": "/studies/{{studyId}}/entities/{{schlafEntityId}}",
+            "url": "/studies/{{studyId}}/entities/f07822a7-cdb2-4b81-8859-842cd54cbb7a",
             "method": "GET",
             "sortNum": 120000,
             "created": "2023-06-28T16:58:36.971Z",
-            "modified": "2023-07-21T12:45:24.295Z",
+            "modified": "2023-07-22T22:18:34.489Z",
             "headers": [],
             "params": [],
             "tests": []

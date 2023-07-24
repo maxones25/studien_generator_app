@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../../../src/admin.module';
 import fakeData from '../../fakeData';
-import { createApp, createDirector } from '../../utils';
+import { createApp, createDirector } from '../../../utils';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;

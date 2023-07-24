@@ -7,10 +7,10 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Entity } from './entity.entity';
-import { FieldType } from '../enums/field-type.enum';
 import { FormField } from './form-field.entity';
 import { RecordField } from './record-field.entity';
-import { FieldData } from '../modules/entities/fields/dtos/FieldData';
+import { FieldData } from '@admin/modules/entities/fields/dtos/FieldData';
+import { FieldType } from '@shared/enums/field-type.enum';
 
 @TypeOrmEntity()
 @Unique('unique_name_for_entity', ['name', 'entityId'])
