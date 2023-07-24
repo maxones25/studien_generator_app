@@ -1,11 +1,12 @@
 import { FormComponentDataAttributes } from '@modules/forms/types';
 import { FormControl, FormControlLabel, FormHelperText, Slider } from '@mui/material';
-import { Control, Controller, FieldValues, Path, PathValue, RegisterOptions } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path, PathValue, RegisterOptions, get } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 export interface FormSliderProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
-  name: Path<TFieldValues>;
+  componentId: string;
+  entityFieldId: string;
   label?: string;
   rules?: Omit<
     RegisterOptions<TFieldValues, Path<TFieldValues>>,
@@ -17,22 +18,28 @@ export interface FormSliderProps<TFieldValues extends FieldValues> {
 export function FormSlider<TFieldValues extends FieldValues>({
   label,
   control,
-  name,
+  componentId,
+  entityFieldId,
   rules,
   attributes
 }: FormSliderProps<TFieldValues>) {
   const { t } = useTranslation();
+  const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>
+
 
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
-      render={({ field: { onChange, value, ...field}, formState }) => (
-      <FormControl 
-        margin="normal"
-        error={Boolean(formState.errors[name])}
-        >
+      render={({ field: { onChange, value, ...field}, formState }) => {
+        const error = get(formState.errors, name);
+
+        return(
+        <FormControl 
+          margin="normal"
+          error={Boolean(error)}
+          >
           <FormControlLabel
           control={
             <Slider 
@@ -47,11 +54,11 @@ export function FormSlider<TFieldValues extends FieldValues>({
           }
           label={label}
           labelPlacement='top'
-        />
-        {Boolean(formState.errors[name]) && 
-        <FormHelperText>{t("value required")}</FormHelperText>}
+          />
+          {Boolean(error) && 
+          <FormHelperText>{t("value required")}</FormHelperText>}
       </FormControl>
-      )}
+      )}}
     />
   );
 };

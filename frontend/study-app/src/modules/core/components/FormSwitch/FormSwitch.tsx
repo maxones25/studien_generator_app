@@ -4,6 +4,7 @@ import {
   FieldValues,
   RegisterOptions,
   Path,
+  get,
 } from "react-hook-form";
 import { Switch } from "..";
 import { FormControl, FormHelperText } from "@mui/material";
@@ -12,7 +13,8 @@ import { FormComponentDataAttributes } from "@modules/forms/types";
 
 export interface FormSwitchProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
-  name: Path<TFieldValues>;
+  componentId: string;
+  entityFieldId: string;
   label?: string;
   rules?: Omit<
     RegisterOptions<TFieldValues, Path<TFieldValues>>,
@@ -24,31 +26,37 @@ export interface FormSwitchProps<TFieldValues extends FieldValues> {
 export function FormSwitch<TFieldValues extends FieldValues>({
   label,
   control,
-  name,
+  componentId,
+  entityFieldId,
   rules,
   attributes
 }: FormSwitchProps<TFieldValues>) {
   const { t } = useTranslation();
+  const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>
+
 
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
-      render={({ field, formState }) => (
+      render={({ field, formState }) => {
+        const error = get(formState.errors, name);
+        
+        return (
         <FormControl 
         margin="normal"
-        error={Boolean(formState.errors[name])}
+        error={error}
         >
           <Switch 
             {...field}
             {...attributes} 
             label={label}
           />
-          {Boolean(formState.errors[name]) && 
+          {Boolean(error) && 
             <FormHelperText>{t("value required")}</FormHelperText>}
         </FormControl>
-      )}
+      )}}
     />
   );
 }

@@ -13,7 +13,7 @@
   "email": "Email",
   "name": "Name",
   "password": "Passwort",
-  "value required": "Bitte {{value}} eingeben",
+  "value required": "Bitte Wert eingeben",
   "login": "Login",
   "access denied": "Zugriff verweigert",
   "sign up link": "Noch keinen Account? Hier gehts zur Registrierung.",
