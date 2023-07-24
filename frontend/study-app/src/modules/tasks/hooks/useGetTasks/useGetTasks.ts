@@ -6,7 +6,7 @@ export interface UseGetTasksOptions {}
 
 export const getGetTasksKey = () => ["getTasks"];
 
-export const useGetTasks = (options? : UseGetTasksOptions) => {
+export const useGetTasks = () => {
   return useReadRequest<Task[]>(getGetTasksKey(), (options) =>
     apiRequest(`/tasks`, { ...options })
   );

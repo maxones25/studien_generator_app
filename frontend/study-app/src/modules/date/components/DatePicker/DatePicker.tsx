@@ -1,4 +1,4 @@
-import { Button, IconButton, Row, Text } from '@modules/core/components';
+import { Button, IconButton, Row } from '@modules/core/components';
 import { useDateContext } from '@modules/date/contexts';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import React, { useState } from 'react';

@@ -4,7 +4,7 @@ import { Record } from "@modules/forms/types";
 
 export interface UseSaveFormOptions {}
 
-export const useSaveForm = (options? : UseSaveFormOptions) => {
+export const useSaveForm = () => {
   return useWriteRequest<Record, unknown>((options) =>
     apiRequest(`/records`, { method: "POST", ...options }), {
       onSuccess: ({ snackbar }) => {
