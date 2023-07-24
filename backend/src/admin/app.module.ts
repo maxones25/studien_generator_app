@@ -12,6 +12,7 @@ import { StudiesModule } from '@admin/modules/studies/studies.module';
 import { ComponentsModule } from '@admin/modules/components/components.module';
 import { DirectorsModule } from '@admin/modules/directors/directors.module';
 import { EntitiesModule } from '@admin/modules/entities/entities.module';
+import { ParticipantsModule } from "@admin/modules/participants/participants.module";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { EntitiesModule } from '@admin/modules/entities/entities.module';
     DirectorsModule,
     StudiesModule,
     GroupsModule,
+    ParticipantsModule,
     ComponentsModule,
     EntitiesModule,
   ],

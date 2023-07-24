@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
 import { ParticipantDto } from './dtos/participantDto';
-import { Roles } from '../../decorators/roles.decorator';
 import { ParticipantGuard } from './guards/participant.guard';
+import { Roles } from '@admin/modules/roles/roles.decorator';
 
 @Controller('studies/:studyId')
 @UseGuards(ParticipantGuard)

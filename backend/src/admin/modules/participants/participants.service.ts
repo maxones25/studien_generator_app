@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Participant } from '../../entities/participant.entity';
+import { Participant } from '@entities/participant.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ParticipantDto } from './dtos/participantDto';
-import { PasswordService } from '../auth/password.service';
+import { PasswordService } from '@shared/modules/password/password.service';
 
 @Injectable()
 export class ParticipantsService {

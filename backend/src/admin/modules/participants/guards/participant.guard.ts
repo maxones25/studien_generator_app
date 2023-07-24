@@ -4,8 +4,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { Participant } from '../../../entities/participant.entity';
+import { Participant } from '@entities/participant.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Request } from 'express';
@@ -30,7 +29,7 @@ export class ParticipantGuard implements CanActivate {
       where: { studyId, id: participantId },
     });
 
-    if (!participantId) throw new UnauthorizedException();
+    if (!participant) throw new UnauthorizedException();
 
     return true;
   }
