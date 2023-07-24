@@ -8,7 +8,7 @@ const config: Config.InitialOptions = {
   },
   globalSetup: "<rootDir>/test/admin/integration/setup.ts",
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  coverageDirectory: '../coverage/unit',
+  coverageDirectory: './coverage/integration',
   coverageReporters: ['json', 'lcov', 'text', 'clover'],
   moduleNameMapper: {
     '@modules/(.*)': '<rootDir>/src/modules/$1',

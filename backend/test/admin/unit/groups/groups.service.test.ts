@@ -1,17 +1,17 @@
 import { TestBed } from '@automock/jest';
-import { GroupsRepository } from '@modules/groups/groups.repository';
-import { GroupsService } from '@modules/groups/groups.service';
-import { CreateGroupDto } from '@modules/groups/dtos/CreateGroupDto';
-import { UpdateGroupDto } from '@modules/groups/dtos/UpdateGroupDto';
 import { Group } from '@entities/group.entity';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { faker } from '@faker-js/faker';
+import { GroupsService } from '@admin/modules/groups/groups.service';
+import { GroupsRepository } from '@admin/modules/groups/groups.repository';
+import { CreateGroupDto } from '@admin/modules/groups/dtos/CreateGroupDto';
+import { UpdateGroupDto } from '@admin/modules/groups/dtos/UpdateGroupDto';
 
 describe('GroupsService', () => {
   let service: GroupsService;
   let repo: jest.Mocked<GroupsRepository>;
 
-  beforeEach(() => {
+  beforeAll(() => {
     const { unit, unitRef } = TestBed.create(GroupsService)
       .mock(GroupsRepository)
       .using({})

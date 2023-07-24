@@ -1,14 +1,14 @@
-import { GroupsRepository } from '@modules/groups/groups.repository';
 import { ExecutionContext } from '@nestjs/common';
 import { faker } from '@faker-js/faker';
-import { GroupGuard } from '@modules/groups/guards/group.guard';
 import { TestBed } from '@automock/jest';
+import { GroupGuard } from '@admin/modules/groups/guards/group.guard';
+import { GroupsRepository } from '@admin/modules/groups/groups.repository';
 
 describe('GroupGuard', () => {
   let guard: GroupGuard;
-  let repo: GroupsRepository;
+  let repo: jest.Mocked<GroupsRepository>;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const { unit, unitRef } = TestBed.create(GroupGuard)
       .mock(GroupsRepository)
       .using({ findOne: jest.fn() })
@@ -54,7 +54,7 @@ describe('GroupGuard', () => {
     };
 
     // Mock the GroupsRepository findOne method to return undefined
-    jest.spyOn(repo, 'findOne').mockResolvedValue(undefined);
+    repo.findOne.mockResolvedValueOnce(undefined);
 
     await expect(
       guard.canActivate(context as ExecutionContext),
@@ -72,7 +72,7 @@ describe('GroupGuard', () => {
     };
 
     // Mock the GroupsRepository findOne method to return a group
-    jest.spyOn(repo, 'findOne').mockResolvedValue({
+    repo.findOne.mockResolvedValueOnce({
       id: groupId,
       studyId,
     } as any);

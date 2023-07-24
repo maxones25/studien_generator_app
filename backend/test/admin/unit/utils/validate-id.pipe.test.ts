@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { ValidateIdPipe } from '../../../../src/pipes/validate-id.pipe';
 import { BadRequestException } from '@nestjs/common';
+import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 
 describe('ValidateIdPipe', () => {
   const validateIdPipe = new ValidateIdPipe();

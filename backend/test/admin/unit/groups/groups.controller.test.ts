@@ -1,16 +1,16 @@
-import { GroupsController } from '@modules/groups/groups.controller';
-import { GroupsService } from '@modules/groups/groups.service';
 import { faker } from '@faker-js/faker';
-import { GroupGuard } from '@modules/groups/guards/group.guard';
-import { GroupsRepository } from '@modules/groups/groups.repository';
 import { TestBed } from '@automock/jest';
 import { Group } from '@entities/group.entity';
+import { GroupsController } from '@admin/modules/groups/groups.controller';
+import { GroupsService } from '@admin/modules/groups/groups.service';
+import { GroupsRepository } from '@admin/modules/groups/groups.repository';
+import { GroupGuard } from '@admin/modules/groups/guards/group.guard';
 
 describe('GroupsController', () => {
   let controller: GroupsController;
   let service: jest.Mocked<GroupsService>;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const { unit, unitRef } = TestBed.create(GroupsController)
       .mock(GroupsService)
       .using({})
