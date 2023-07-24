@@ -3,9 +3,11 @@ import * as request from 'supertest';
 import fakeData from '@test/fakeData';
 import {
   createApp,
+  createDirector,
   createGroup,
   createStudy,
   getDirectorAccessToken,
+  getEnv,
 } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
@@ -20,10 +22,16 @@ describe('get groups', () => {
   beforeAll(async () => {
     app = await createApp(AppModule);
 
+    const activationPassword = getEnv(app, "ACTIVATION_PASSWORD")
+
+    const director = fakeData.director();
+
+    await createDirector(app, { activationPassword, ...director });
+
     accessToken = await getDirectorAccessToken(
       app,
-      TEST_DIRECTOR.MAX.EMAIL,
-      TEST_DIRECTOR.MAX.PASSWORD,
+      director.email,
+      director.password,
     );
 
     studyId = await createStudy(app, accessToken, fakeData.study());
