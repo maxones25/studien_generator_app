@@ -2,22 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Group } from '../../entities/group.entity';
 import { StudyMember } from '../../entities/study-member.entity';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from '../auth/guards/roles.guard';
 import { GroupsController } from './groups.controller';
-import { GroupsService } from './groups.service';
-import { GroupGuard } from './guards/group.guard';
+import groupsProviders from './groups.providers';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Group, StudyMember])],
-  providers: [
-    GroupsService,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-    GroupGuard,
-  ],
+  providers: groupsProviders,
   controllers: [GroupsController],
 })
 export class GroupsModule {}

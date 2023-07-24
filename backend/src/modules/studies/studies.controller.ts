@@ -18,13 +18,11 @@ import { UpdateStudyDto } from './dtos/updateStudyDto';
 export class StudiesController {
   constructor(private readonly studiesService: StudiesService) {}
 
-  @Types('director')
   @Get()
   async findStudiesByDirector(@DirectorId() directorId: string) {
     return this.studiesService.getByDirector(directorId);
   }
 
-  @Types('director')
   @Post()
   async create(
     @Body() createStudyDto: CreateStudyDto,
@@ -33,7 +31,6 @@ export class StudiesController {
     return this.studiesService.create(createStudyDto, directorId);
   }
 
-  @Types('director')
   @Get(':studyId')
   async getById(
     @Param('studyId') studyId: string,
@@ -42,7 +39,6 @@ export class StudiesController {
     return this.studiesService.findOne(studyId, directorId);
   }
 
-  @Types('director')
   @Roles('admin')
   @Put(':studyId')
   async update(
@@ -52,7 +48,6 @@ export class StudiesController {
     return this.studiesService.update(studyId, updateStudyDto);
   }
 
-  @Types('director')
   @Roles('admin')
   @Delete(':studyId')
   async delete(@Param('studyId') studyId: string) {

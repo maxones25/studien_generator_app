@@ -8,8 +8,18 @@ import { FormComponent } from './form-component.entity';
 
 @TypeOrmEntity()
 export class FormComponentAttribute {
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({
+    type: 'datetime',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  modifiedAt: Date;
+
   @PrimaryColumn()
-  formFieldId: string;
+  componentId: string;
 
   @PrimaryColumn()
   key: string;

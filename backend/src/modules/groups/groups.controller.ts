@@ -6,6 +6,7 @@ import {
   Post,
   Delete,
   Get,
+  UseGuards,
 } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { Types } from '../../decorators/type.decorator';
@@ -13,8 +14,10 @@ import { UpdateGroupDto } from './dtos/UpdateGroupDto';
 import { Roles } from '../../decorators/roles.decorator';
 import { ValidateIdPipe } from '../../../src/pipes/validate-id.pipe';
 import { CreateGroupDto } from './dtos/CreateGroupDto';
+import { GroupGuard } from './guards/group.guard';
 
 @Controller('studies/:studyId/groups')
+@UseGuards(GroupGuard)
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 

@@ -3,11 +3,9 @@ import { Inject, Injectable, BadRequestException } from '@nestjs/common';
 import { EntityManager, Repository } from 'typeorm';
 import {
   CreateFormComponentDto,
-  FormFieldDto,
 } from './dtos/CreateFormComponentDto';
 import { FormComponent } from '../../../../entities/form-component.entity';
 import { ComponentsService } from '../../../components/components.service';
-import { ComponentType } from '../../../../enums/component-type.enum';
 import { CreateFormComponentTransaction } from './transactions/CreateFormComponentTransaction';
 
 @Injectable()
@@ -22,12 +20,7 @@ export class FormComponentsService {
   ) {}
 
   async create(pageId: string, data: CreateFormComponentDto) {
-    const { formFields, type } = data;
-
-    if (!(await this.AreForFieldTypesValid(type, formFields)))
-      throw new BadRequestException(
-        `component type ${type} invalid for entity fields`,
-      );
+    await this.validateFormComponent(data);
 
     const number = await this.getNextNumber(pageId);
 
@@ -41,15 +34,20 @@ export class FormComponentsService {
   async getAll(pageId: string) {
     return this.formComponentsRepository.find({
       where: { pageId },
+      relations: {
+        formFields: true,
+        attributes: true,
+      },
       select: {
         id: true,
         type: true,
         formFields: {
           entityFieldId: true,
         },
-      },
-      relations: {
-        formFields: true,
+        attributes: {
+          key: true,
+          value: true,
+        },
       },
       order: {
         number: 'ASC',
@@ -82,15 +80,20 @@ export class FormComponentsService {
     });
   }
 
-  private async AreForFieldTypesValid(
-    type: ComponentType,
-    formFields: FormFieldDto[],
-  ) {
+  private async validateFormComponent({
+    type,
+    formFields,
+    attributes,
+  }: CreateFormComponentDto) {
     const entityFieldsIds = formFields.map(
       ({ entityFieldId }) => entityFieldId,
     );
 
-    return await this.componentsService.areEntityFieldsValid(type, entityFieldsIds)
+    await this.componentsService.validateFormComponent(
+      type,
+      entityFieldsIds,
+      attributes,
+    );
   }
 
   private async getNextNumber(pageId: string) {

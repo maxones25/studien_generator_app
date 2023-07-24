@@ -1,18 +1,18 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { Study } from '../../entities/study.entity';
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager } from 'typeorm';
 import { CreateStudyDto } from './dtos/createStudyDto';
 import { UpdateStudyDto } from './dtos/updateStudyDto';
 import { CreateStudyTransaction } from './transactions/create-study.transaction';
+import { StudiesRepository } from './studies.repository';
 
 @Injectable()
 export class StudiesService {
   constructor(
     @InjectEntityManager()
     private entityManager: EntityManager,
-    @InjectRepository(Study)
-    private studiesRepository: Repository<Study>,
+    @Inject(StudiesRepository)
+    private studiesRepository: StudiesRepository,
   ) {}
 
   async create(data: CreateStudyDto, directorId: string) {
@@ -27,47 +27,11 @@ export class StudiesService {
   }
 
   async getByDirector(directorId: string) {
-    const studies = await this.studiesRepository
-      .createQueryBuilder('studies')
-      .leftJoinAndSelect('studies.members', 'member')
-      .where('member.directorId = :directorId', { directorId })
-      .select(['studies.id', 'studies.name', 'member.role'])
-      .orderBy('member.role', 'ASC')
-      .getMany();
-
-    return studies.map(({ id, name, members }) => ({
-      id,
-      name,
-      role: members[0].role ?? 'employee',
-    }));
+    return await this.studiesRepository.getByDirector(directorId);
   }
 
   async findOne(studyId: string, directorId: string) {
-    const study = await this.studiesRepository.findOne({
-      where: {
-        id: studyId,
-        members: {
-          directorId,
-        },
-      },
-      relations: {
-        members: true,
-      },
-      select: {
-        id: true,
-        name: true,
-        members: {
-          role: true,
-        },
-      },
-    });
-
-    if (!study) throw new ConflictException('study not found');
-
-    return {
-      ...study,
-      role: study.members[0]?.role ?? '',
-    };
+    return this.studiesRepository.getOneByDirector(studyId, directorId);
   }
 
   async delete(studyId: string) {

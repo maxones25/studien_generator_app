@@ -1,25 +1,24 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 import { Entity } from '../../entities/entity.entity';
-import { Repository } from 'typeorm';
 import { CreateEntityDto } from './dtos/CreateEntityDto';
 import { UpdateEntityDto } from './dtos/UpdateEntityDto';
+import { EntitiesRepository } from './entities.repository';
 
 @Injectable()
 export class EntitiesService {
   constructor(
-    @InjectRepository(Entity)
-    private entitiesRepository: Repository<Entity>,
+    @Inject(EntitiesRepository)
+    private entitiesRepository: EntitiesRepository,
   ) {}
 
   async create(studyId: string, { name }: CreateEntityDto) {
-    const abstractEntity = new Entity();
-    abstractEntity.name = name;
-    abstractEntity.studyId = studyId;
+    const entity = new Entity();
+    entity.name = name;
+    entity.studyId = studyId;
 
-    await this.entitiesRepository.insert(abstractEntity);
+    await this.entitiesRepository.insert(entity);
 
-    return abstractEntity;
+    return entity.id;
   }
 
   async update(entityId: string, { name }: UpdateEntityDto) {
@@ -31,34 +30,10 @@ export class EntitiesService {
   }
 
   getAll(studyId: string) {
-    return this.entitiesRepository.find({
-      where: {
-        studyId,
-      },
-      select: {
-        id: true,
-        name: true,
-      },
-    });
+    return this.entitiesRepository.getAll(studyId);
   }
 
   async getById(entityId: string) {
-    return this.entitiesRepository.findOne({
-      where: {
-        id: entityId,
-      },
-      relations: {
-        fields: true,
-      },
-      select: {
-        id: true,
-        name: true,
-        fields: {
-          id: true,
-          name: true,
-          type: true,
-        },
-      },
-    });
+    return this.entitiesRepository.getById(entityId);
   }
 }

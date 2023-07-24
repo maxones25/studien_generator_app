@@ -129,12 +129,12 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-22T10:53:56.723Z",
-            "modified": "2023-07-03T13:50:36.025Z",
+            "modified": "2023-07-22T08:11:34.935Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{ \n    \"email\": \"maximilian.stock@t-online.de\", \n    \"firstName\": \"Max\",\n    \"lastName\": \"Stock\", \n    \"password\": \"R31sk0ch3r\", \n    \"activationPassword\": \"1234\"\n  }",
+                "raw": "{ \n    \"email\": \"max@test.de\", \n    \"firstName\": \"Max\",\n    \"lastName\": \"Stock\", \n    \"password\": \"R31sk0ch3r\", \n    \"activationPassword\": \"1234\"\n  }",
                 "form": []
             },
             "auth": {
@@ -151,12 +151,12 @@
             "method": "POST",
             "sortNum": 30000,
             "created": "2023-06-22T10:55:38.315Z",
-            "modified": "2023-07-03T13:51:13.803Z",
+            "modified": "2023-07-22T08:11:46.893Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"email\": \"maximilian.stock@t-online.de\",\n  \"password\": \"R31sk0ch3r\"\n}",
+                "raw": "{\n  \"email\": \"max@test.de\",\n  \"password\": \"R31sk0ch3r\"\n}",
                 "form": []
             },
             "tests": []
@@ -170,12 +170,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-22T11:04:50.195Z",
-            "modified": "2023-07-19T09:56:48.507Z",
+            "modified": "2023-07-21T12:41:35.580Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{ \n  \"name\": \"test study 888\"\n}",
+                "raw": "{ \n  \"name\": \"My Study\"\n}",
                 "form": []
             },
             "tests": []
@@ -189,12 +189,12 @@
             "method": "POST",
             "sortNum": 100000,
             "created": "2023-06-27T15:43:22.833Z",
-            "modified": "2023-07-12T13:53:41.404Z",
+            "modified": "2023-07-21T12:41:52.225Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Schlaf 2\"\n}",
+                "raw": "{\n  \"name\": \"Schlaf\"\n}",
                 "form": []
             },
             "tests": []
@@ -208,12 +208,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-28T14:17:22.858Z",
-            "modified": "2023-07-12T13:54:45.220Z",
+            "modified": "2023-07-21T12:45:00.146Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Ende\",\n  \"type\": \"Date\"\n}",
+                "raw": "{\n  \"name\": \"Qualität\",\n  \"type\": \"Number\"\n}",
                 "form": []
             },
             "tests": []
@@ -241,7 +241,7 @@
             "method": "GET",
             "sortNum": 10000,
             "created": "2023-06-28T16:29:41.930Z",
-            "modified": "2023-06-28T16:30:00.391Z",
+            "modified": "2023-07-22T08:56:23.279Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -255,12 +255,12 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-28T16:35:40.316Z",
-            "modified": "2023-07-19T08:36:28.191Z",
+            "modified": "2023-07-22T08:20:09.825Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Gruppe 2\"\n}",
+                "raw": "{\n  \"name\": \"Gruppe 3\"\n}",
                 "form": []
             },
             "tests": []
@@ -270,11 +270,11 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "652d52a0-2ff6-4147-9811-023bf43376fb",
             "name": "get entity by id",
-            "url": "/studies/{{studyId}}/entities/{{entityId}}",
+            "url": "/studies/{{studyId}}/entities/{{schlafEntityId}}",
             "method": "GET",
             "sortNum": 120000,
             "created": "2023-06-28T16:58:36.971Z",
-            "modified": "2023-06-28T19:20:46.017Z",
+            "modified": "2023-07-21T12:45:24.295Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -317,16 +317,16 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "8a2ad440-54d7-4bcc-95c6-991869f7fcde",
             "name": "update group",
-            "url": "/studies/{{studyId}}/groups/d61cc74e-c54f-4813-aaaa-55e10dbfd6a6",
+            "url": "/studies/{{studyId}}/groups/a33eb98e-81cc-4798-99ab-df0e3eb00267",
             "method": "PUT",
             "sortNum": 30000,
             "created": "2023-07-01T11:20:28.161Z",
-            "modified": "2023-07-19T08:36:50.751Z",
+            "modified": "2023-07-22T08:57:37.173Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Gruppe 3\"\n}",
+                "raw": "{\n  \"name\": \"Gruppe 4\"\n}",
                 "form": []
             },
             "tests": []
@@ -340,12 +340,12 @@
             "method": "POST",
             "sortNum": 130000,
             "created": "2023-07-06T13:21:06.909Z",
-            "modified": "2023-07-12T14:17:32.715Z",
+            "modified": "2023-07-22T09:08:16.659Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"test123\"\n}",
+                "raw": "{\n  \"name\": \"Schlaf erfassen\"\n}",
                 "form": []
             },
             "tests": []
@@ -383,11 +383,11 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "d01717b2-a5f4-4af4-be17-482369af049d",
             "name": "get form by id",
-            "url": "/studies/{{studyId}}/forms/6b6fd5f2-4ebf-4990-92e3-56b0e0bee13d",
+            "url": "/studies/{{studyId}}/forms/{{schlafFormId}}",
             "method": "GET",
             "sortNum": 150000,
             "created": "2023-07-12T14:05:05.354Z",
-            "modified": "2023-07-12T14:07:59.399Z",
+            "modified": "2023-07-22T09:14:37.925Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -486,12 +486,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-07-12T15:03:46.544Z",
-            "modified": "2023-07-12T15:11:59.292Z",
+            "modified": "2023-07-22T09:15:55.968Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"title\": \"C\"\n}",
+                "raw": "{\n  \"title\": \"Schlaf erfassen\"\n}",
                 "form": []
             },
             "tests": []
@@ -552,12 +552,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-07-12T16:13:42.165Z",
-            "modified": "2023-07-19T10:19:19.690Z",
+            "modified": "2023-07-22T15:07:02.382Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"type\": \"Slider\",\n  \"formFields\": [\n    {\n      \"entityFieldId\": \"{{beginnEntityFieldId}}\"\n    }\n  ]\n}",
+                "raw": "{\n  \"type\": \"Slider\",\n  \"formFields\": [\n    {\n      \"entityFieldId\": \"{{qualitätEntityFieldId}}\"\n    }\n  ],\n  \"attributes\": [\n    {\n      \"key\": \"label\",\n      \"value\": \"Schlafqualität\"\n    },\n    {\n      \"key\": \"min\",\n      \"value\": 1\n    },\n    {\n      \"key\": \"max\",\n      \"value\": 10\n    }\n  ]\n}",
                 "form": []
             },
             "tests": []
@@ -595,11 +595,11 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "80d0e537-8f46-4e87-9d7d-ee5b0b45dc6c",
             "name": "delete form component",
-            "url": "/studies/{{studyId}}/forms/{{schlafFormId}}/pages/{{schlafFormPageId}}/components/9eb142ce-2e2d-48e0-9c4c-a9ab4c71e108",
+            "url": "/studies/{{studyId}}/forms/{{schlafFormId}}/pages/{{schlafFormPageId}}/components/0455cc31-150a-4059-95f3-fbd3d2a713c4",
             "method": "DELETE",
             "sortNum": 30000,
             "created": "2023-07-18T14:28:18.756Z",
-            "modified": "2023-07-19T10:56:42.088Z",
+            "modified": "2023-07-22T14:42:32.056Z",
             "headers": [],
             "params": [],
             "tests": []

@@ -15,7 +15,7 @@ import { StudyMember } from '../../../entities/study-member.entity';
 export class RolesGuard implements CanActivate {
   constructor(
     @InjectRepository(StudyMember)
-    private studyMemberRepository: Repository<StudyMember>,
+    private studyMembersRepository: Repository<StudyMember>,
     private jwtService: JwtService,
     private reflector: Reflector,
   ) {}
@@ -26,8 +26,8 @@ export class RolesGuard implements CanActivate {
     if (!roles) {
       return true;
     }
+
     const request = context.switchToHttp().getRequest();
-    const studyId = request.params.studyId;
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
@@ -40,8 +40,9 @@ export class RolesGuard implements CanActivate {
       });
 
       const { directorId } = payload;
+      const studyId = request.params.studyId;
 
-      const director = await this.studyMemberRepository.findOne({
+      const director = await this.studyMembersRepository.findOne({
         where: { directorId, studyId },
       });
 

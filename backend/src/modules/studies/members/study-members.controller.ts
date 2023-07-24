@@ -6,25 +6,24 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { Roles } from '../../../decorators/roles.decorator';
 import { AddMemberDto } from './dtos/AddMemberDto';
 import { UpdateMemberDto } from './dtos/UpdateMemberDto';
-import { Types } from '../../../decorators/type.decorator';
 import { StudyMembersService } from './study-members.service';
+import { StudyMemberGuard } from './guards/study-member.guard';
 
-@Controller('studies/:studyId/members')
+@Controller('studies/:studyId/directors')
+@UseGuards(StudyMemberGuard)
 export class StudyMembersController {
   constructor(private readonly studyMembersService: StudyMembersService) {}
 
-  @Types('director')
-  @Roles('admin', 'employee')
   @Get()
   async findMembersByStudy(@Param('studyId') studyId: string) {
     return this.studyMembersService.getByStudy(studyId);
   }
 
-  @Types('director')
   @Roles('admin')
   @Post()
   async addMember(
@@ -34,7 +33,6 @@ export class StudyMembersController {
     return this.studyMembersService.addToStudy(studyId, addMemberDto);
   }
 
-  @Types('director')
   @Roles('admin')
   @Put(':directorId')
   async updateMember(
@@ -49,7 +47,6 @@ export class StudyMembersController {
     );
   }
 
-  @Types('director')
   @Roles('admin')
   @Delete(':directorId')
   async removeMember(
