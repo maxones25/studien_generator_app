@@ -1,7 +1,7 @@
 import { Provider } from '@nestjs/common';
 import { EntitiesService } from './entities.service';
 import { EntitiesRepository } from './entities.repository';
-import { Entity } from 'src/entities/entity.entity';
+import { Entity } from '../../entities/entity.entity';
 import { EntityManager } from 'typeorm';
 import { EntityGuard } from './guards/entity.guard';
 

@@ -46,7 +46,7 @@ export class ParticipantsController {
   }
 
   @Roles('admin')
-  @Get('participants/:participantId/password')
+  @Get('participants/:participantId/resetPassword')
   async regeneratePassword(@Param('participantId') participantId: string) {
     return this.participantsService.regeneratePassword(participantId);
   }

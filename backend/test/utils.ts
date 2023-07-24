@@ -9,6 +9,8 @@ import { LoginParticipantDto } from '../src/modules/auth/study/dtos/LoginPartici
 import { Test, TestingModule } from '@nestjs/testing';
 
 export const createApp = async (AppModule: any) => {
+  if (global.__APP__) return global.__APP__;
+
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [AppModule],
   }).compile();
@@ -18,6 +20,14 @@ export const createApp = async (AppModule: any) => {
   await app.init();
 
   return app;
+};
+
+export const getAccessToken = (key: string) => {
+  const store = global.__ACCESS_TOKEN__;
+  if (typeof store !== 'object') throw new Error('token store not initialized');
+  if (typeof store[key] === undefined)
+    throw new Error(`token ${key} not found`);
+  return store[key];
 };
 
 export const createDirector = (
@@ -68,8 +78,8 @@ export const createStudy = (
       .send(data)
       .expect(201)
       .then((res) => {
-        expect(typeof res.body.id).toBe('string');
-        resolve(res.body.id);
+        expect(typeof res.text).toBe('string');
+        resolve(res.text);
       })
       .catch((err) => reject(err));
   });
@@ -87,8 +97,8 @@ export const createGroup = (
       .send(data)
       .expect(201)
       .then((res) => {
-        expect(typeof res.body.id).toBe('string');
-        resolve(res.body.id);
+        expect(typeof res.text).toBe('string');
+        resolve(res.text);
       })
       .catch((err) => reject(err));
   });

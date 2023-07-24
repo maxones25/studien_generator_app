@@ -1,0 +1,79 @@
+import { INestApplication } from '@nestjs/common';
+import * as request from 'supertest';
+import { AppModule } from '../../../src/admin.module';
+import fakeData from '../../fakeData';
+import {
+  createApp,
+  createDirector,
+  createGroup,
+  createParticipant,
+  createStudy,
+  getDirectorAccessToken,
+} from '../../utils';
+import { ParticipantDto } from '../../../src/modules/participants/dtos/participantDto';
+
+describe('AppController (e2e)', () => {
+  let app: INestApplication;
+  let directorId: any;
+  let accessToken: string;
+  let studyId: string;
+  let group1Id: string;
+  let group2Id: string;
+  let participant1: any;
+  let participant2: any;
+  let participant3: any;
+
+  beforeAll(async () => {
+    app = await createApp(AppModule);
+
+    const director = fakeData.director();
+    const study = fakeData.study();
+    const group1 = fakeData.group();
+    const group2 = fakeData.group();
+    participant1 = fakeData.participant();
+    participant2 = fakeData.participant();
+    participant3 = fakeData.participant();
+
+    directorId = await createDirector(app, {
+      ...director,
+      activationPassword: process.env.ACTIVATION_PASSWORD,
+    });
+
+    accessToken = await getDirectorAccessToken(
+      app,
+      director.email,
+      director.password,
+    );
+
+    studyId = await createStudy(app, accessToken, study);
+    group1Id = await createGroup(app, accessToken, studyId, group1);
+    group2Id = await createGroup(app, accessToken, studyId, group2);
+    await createParticipant(app, accessToken, studyId, {number: participant1.number, groupId: group1Id});
+    await createParticipant(app, accessToken, studyId, {number: participant2.number, groupId: group1Id});
+    await createParticipant(app, accessToken, studyId, {number: participant3.number, groupId: group2Id});
+  });
+
+  it('/GET get all participants from study successfully', async () => {
+    return request(app.getHttpServer())
+      .get(`/studies/${studyId}/participants`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(200)
+      .then((res) => {
+        expect(res.body.length).toBe(3);
+      });
+  });
+
+  // it('/GET get all participants from group1 successfully', async () => {
+  //   return request(app.getHttpServer())
+  //     .get(`/studies/${studyId}/groups/${group1Id}/participants`)
+  //     .set('Authorization', `Bearer ${accessToken}`)
+  //     .expect(200)
+  //     .then((res) => {
+  //       expect(res.body.length).toBe(2);
+  //     });
+  // });
+
+  afterAll(async () => {
+    await app.close();
+  });
+});

@@ -6,20 +6,20 @@ import {
   Body,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
-import { Types } from '../../../decorators/type.decorator';
 import { Roles } from '../../../decorators/roles.decorator';
 import { ValidateIdPipe } from '../../../pipes/validate-id.pipe';
 import { FormPagesService } from './form-pages.service';
 import { CreateFormPageDto } from './dtos/CreateFormPageDto';
 import { UpdateFormPageDto } from './dtos/UpdateFormPageDto';
+import { FormPageGuard } from './guards/form-page.guard';
 
 @Controller('studies/:studyId/forms/:formId/pages')
+@UseGuards(FormPageGuard)
 export class FormPagesController {
   constructor(private readonly formPagesService: FormPagesService) {}
 
-  @Types('director')
-  @Roles('admin', 'employee')
   @Post()
   async create(
     @Param('formId', new ValidateIdPipe()) formId: string,
@@ -28,15 +28,11 @@ export class FormPagesController {
     return this.formPagesService.create(formId, body);
   }
 
-  @Types('director')
-  @Roles('admin', 'employee')
   @Get()
   async getAll(@Param('formId', new ValidateIdPipe()) formId: string) {
     return this.formPagesService.getAll(formId);
   }
 
-  @Types('director')
-  @Roles('admin', 'employee')
   @Put(':pageId')
   async update(
     @Param('pageId', new ValidateIdPipe()) pageId: string,
@@ -45,7 +41,6 @@ export class FormPagesController {
     return this.formPagesService.update(pageId, body);
   }
 
-  @Types('director')
   @Roles('admin')
   @Delete(':pageId')
   async delete(@Param('pageId', new ValidateIdPipe()) pageId: string) {

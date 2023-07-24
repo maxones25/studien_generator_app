@@ -8,11 +8,10 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { Types } from '../../decorators/type.decorator';
 import { EntitiesService } from './entities.service';
 import { CreateEntityDto } from './dtos/CreateEntityDto';
 import { Roles } from '../../decorators/roles.decorator';
-import { ValidateIdPipe } from 'src/pipes/validate-id.pipe';
+import { ValidateIdPipe } from '../../pipes/validate-id.pipe';
 import { UpdateEntityDto } from './dtos/UpdateEntityDto';
 import { EntityGuard } from './guards/entity.guard';
 

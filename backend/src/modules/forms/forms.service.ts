@@ -1,15 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Form } from 'src/entities/form.entity';
-import { Repository } from 'typeorm';
+import { Inject, Injectable } from '@nestjs/common';
+import { Form } from '../../entities/form.entity';
 import { CreateFormDto } from './dtos/CreateFormDto';
 import { UpdateFormDto } from './dtos/UpdateFormDto';
+import { FormsRepository } from './forms.repository';
 
 @Injectable()
 export class FormsService {
   constructor(
-    @InjectRepository(Form)
-    private formsRepository: Repository<Form>,
+    @Inject(FormsRepository)
+    private formsRepository: FormsRepository,
   ) {}
 
   async create(studyId: string, { name }: CreateFormDto) {
@@ -24,27 +23,11 @@ export class FormsService {
   }
 
   getAll(studyId: string) {
-    return this.formsRepository.find({
-      where: {
-        studyId,
-      },
-      select: {
-        id: true,
-        name: true,
-      },
-    });
+    return this.formsRepository.getAll(studyId);
   }
 
   getById(id: string) {
-    return this.formsRepository.findOne({
-      where: {
-        id,
-      },
-      select: {
-        id: true,
-        name: true,
-      },
-    });
+    return this.formsRepository.getById(id);
   }
 
   update(id: string, { name }: UpdateFormDto) {

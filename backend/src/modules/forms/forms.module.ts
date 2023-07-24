@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Form } from '../../entities/form.entity';
 import { FormsController } from './forms.controller';
-import { FormsService } from './forms.service';
 import { FormPagesModule } from './pages/form-pages.module';
 import { FormEntitiesModule } from './entities/form-entities.module';
 import { FormConfigurationsModule } from './configurations/form-configurations.module';
 import { FormComponentsModule } from './pages/components/form-components.module';
+import formsProviders from './forms.providers';
 
 @Module({
   imports: [
@@ -17,6 +17,6 @@ import { FormComponentsModule } from './pages/components/form-components.module'
     FormComponentsModule,
   ],
   controllers: [FormsController],
-  providers: [FormsService],
+  providers: formsProviders,
 })
 export class FormsModule {}

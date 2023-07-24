@@ -16,6 +16,14 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "resolveJsonModule": true,
+    "paths": {
+      "@modules/*": ["src/modules/*"],
+      "@entities/*": ["src/entities/*"],
+      "@test/*": ["test/*"],
+      "@admin/*": ["src/admin/*"],
+      "@shared/*": ["src/shared/*"],
+    }
   }
 }
