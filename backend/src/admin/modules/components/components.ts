@@ -1,8 +1,8 @@
-import { FieldType } from '../../enums/field-type.enum';
-import { ComponentType } from '../../enums/component-type.enum';
+import { FormComponentAttributeDto } from '@modules/forms/pages/components/attributes/dtos/FormComponentAttributeDto';
 import { BadRequestException } from '@nestjs/common';
-import { FormComponentAttributeDto } from '../forms/pages/components/attributes/dtos/FormComponentAttributeDto';
 import { isValid } from 'date-and-time';
+import { ComponentType } from './component-type.enum';
+import { FieldType } from '@shared/enums/field-type.enum';
 
 export abstract class ComponentAttribute {
   constructor(

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateEntityFieldDto } from './dtos/CreateEntityFieldDto';
-import { EntityField } from '../../../entities/entity-field.entity';
+import { EntityField } from '@entities/entity-field.entity';
 import { UpdateEntityFieldDto } from './dtos/UpdateEntityFieldDto';
 
 @Injectable()

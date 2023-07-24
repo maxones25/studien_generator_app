@@ -1,5 +1,4 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { ComponentType } from '../../enums/component-type.enum';
 import {
   CheckBoxComponent,
   Component,
@@ -13,10 +12,11 @@ import {
   TextFieldComponent,
   TimePickerComponent,
 } from './components';
-import { EntityField } from '../../entities/entity-field.entity';
+import { EntityField } from '@entities/entity-field.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FormComponentAttributeDto } from '../forms/pages/components/attributes/dtos/FormComponentAttributeDto';
+import { ComponentType } from './component-type.enum';
+import { FormComponentAttributeDto } from '@modules/forms/pages/components/attributes/dtos/FormComponentAttributeDto';
 
 @Injectable()
 export class ComponentsService {

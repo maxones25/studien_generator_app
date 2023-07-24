@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EntityField } from '../../../entities/entity-field.entity';
+import { EntityField } from '@entities/entity-field.entity';
 import { EntityFieldsController } from './entity-fields.controller';
 import entityFieldsProviders from './entity-fields.providers';
 

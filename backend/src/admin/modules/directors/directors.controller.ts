@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Put, Request } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Put } from '@nestjs/common';
 import { DirectorsService } from './directors.service';
-import { DirectorId } from '../../decorators/director-id.decorator';
 import { UpdateDirectorDto } from './dtos/UpdateDirectorDto';
+import { DirectorId } from '@admin/decorators/director-id.decorator';
 
 @Controller('directors')
 export class DirectorsController {

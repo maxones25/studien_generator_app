@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Director } from '../../entities/director.entity';
+import { Director } from '@entities/director.entity';
 import { Repository } from 'typeorm';
 import { UpdateDirectorDto } from './dtos/UpdateDirectorDto';
 

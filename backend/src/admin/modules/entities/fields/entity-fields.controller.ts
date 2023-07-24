@@ -8,13 +8,12 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { Types } from '../../../decorators/type.decorator';
 import { CreateEntityFieldDto } from './dtos/CreateEntityFieldDto';
 import { UpdateEntityFieldDto } from './dtos/UpdateEntityFieldDto';
-import { Roles } from '../../../decorators/roles.decorator';
-import { ValidateIdPipe } from '../../../pipes/validate-id.pipe';
 import { EntityFieldsService } from './entity-fields.service';
 import { EntityFieldGuard } from './guards/entity-field.guard';
+import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
+import { Roles } from '@admin/modules/roles/roles.decorator';
 
 @Controller('studies/:studyId/entities/:entityId/fields')
 @UseGuards(EntityFieldGuard)

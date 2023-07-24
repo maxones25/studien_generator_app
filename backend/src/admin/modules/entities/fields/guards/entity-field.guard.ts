@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
-import { EntityField } from '../../../../entities/entity-field.entity';
+import { EntityField } from '@entities/entity-field.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()

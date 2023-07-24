@@ -3,11 +3,11 @@ import { AuthModule } from './modules/auth/study/auth.module';
 import { TypesGuard } from './modules/auth/guards/types.guard';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { TypeOrmExceptionFilter } from './exceptionfilter/type-orm-exception.filter';
-import DbModule from './modules/db/db.module';
 import { FormsModule } from './modules/forms/study/forms.module';
-import ConfigModule from './modules/config/config.module';
 import { RecordsModule } from './modules/records/study/records.module';
-import JwtModule from './modules/jwt/jwt.module';
+import ConfigModule from '@shared/modules/config/config.module';
+import DbModule from '@shared/modules/db/db.module';
+import JwtModule from '@shared/modules/jwt/jwt.module';
 
 
 

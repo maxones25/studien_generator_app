@@ -9,6 +9,9 @@ import { AuthModule } from '@admin/modules/auth/auth.module';
 import { GroupsModule } from '@admin/modules/groups/groups.module';
 import { appProviders } from '@admin/app.providers';
 import { StudiesModule } from '@admin/modules/studies/studies.module';
+import { ComponentsModule } from '@admin/modules/components/components.module';
+import { DirectorsModule } from '@admin/modules/directors/directors.module';
+import { EntitiesModule } from '@admin/modules/entities/entities.module';
 
 @Module({
   imports: [
@@ -17,8 +20,11 @@ import { StudiesModule } from '@admin/modules/studies/studies.module';
     JwtModule,
     AuthModule,
     RolesModule,
+    DirectorsModule,
     StudiesModule,
     GroupsModule,
+    ComponentsModule,
+    EntitiesModule,
   ],
   providers: appProviders,
 })

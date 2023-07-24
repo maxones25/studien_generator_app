@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FormComponent } from '../../../../entities/form-component.entity';
 import { FormComponentsController } from './form-components.controller';
-import { ComponentsModule } from '../../../components/components.module';
 import formComponentsProviders from './form-components.providers';
+import { ComponentsModule } from '@admin/modules/components/components.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([FormComponent]), ComponentsModule],

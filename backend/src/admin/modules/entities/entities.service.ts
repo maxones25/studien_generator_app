@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Entity } from '../../entities/entity.entity';
+import { Entity } from '@entities/entity.entity';
 import { CreateEntityDto } from './dtos/CreateEntityDto';
 import { UpdateEntityDto } from './dtos/UpdateEntityDto';
 import { EntitiesRepository } from './entities.repository';

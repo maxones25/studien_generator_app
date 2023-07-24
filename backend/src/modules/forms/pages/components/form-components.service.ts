@@ -5,8 +5,8 @@ import {
   CreateFormComponentDto,
 } from './dtos/CreateFormComponentDto';
 import { FormComponent } from '../../../../entities/form-component.entity';
-import { ComponentsService } from '../../../components/components.service';
 import { CreateFormComponentTransaction } from './transactions/CreateFormComponentTransaction';
+import { ComponentsService } from '@admin/modules/components/components.service';
 
 @Injectable()
 export class FormComponentsService {

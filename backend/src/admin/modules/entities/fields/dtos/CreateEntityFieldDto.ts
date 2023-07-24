@@ -1,12 +1,11 @@
+import { FieldType } from '@shared/enums/field-type.enum';
 import {
   IsEnum,
   IsNotEmpty,
-  IsObject,
   IsOptional,
   IsString,
   IsUUID,
 } from 'class-validator';
-import { FieldType } from '../../../../enums/field-type.enum';
 
 export class CreateEntityFieldDto {
   @IsString()

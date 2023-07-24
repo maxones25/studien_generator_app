@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Entity } from '../../entities/entity.entity';
+import { Entity } from '@entities/entity.entity';
 
 export class EntitiesRepository extends Repository<Entity> {
   getAll(studyId: string) {
