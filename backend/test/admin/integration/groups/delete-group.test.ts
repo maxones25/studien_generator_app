@@ -31,7 +31,10 @@ describe('delete group', () => {
     return request(app.getHttpServer())
       .delete(`/studies/${studyId}/groups/${groupId}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .expect(200);
+      .expect(200)
+      .then(res => {
+        expect(res.text).toEqual(1)
+      })
   });
 
   afterAll(async () => {

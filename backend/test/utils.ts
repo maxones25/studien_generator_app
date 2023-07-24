@@ -8,10 +8,11 @@ import { ParticipantDto } from '@admin/modules/participants/dtos/participantDto'
 import { AddMemberDto } from '@admin/modules/studies/members/dtos/AddMemberDto';
 
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
+import { validateUUID } from '@shared/modules/uuid/uuid';
 
 export const createApp = async () => {
   if (global.__APP__) return global.__APP__;
-  throw new Error("integration test setup is missing")
+  throw new Error('integration test setup is missing');
 };
 
 export const getAccessToken = (key: string) => {
@@ -69,7 +70,7 @@ export const createGroup = (
       .send(data)
       .expect(201)
       .then((res) => {
-        expect(typeof res.text).toBe('string');
+        expect(validateUUID(res.text)).toBeTruthy();
         resolve(res.text);
       })
       .catch((err) => reject(err));

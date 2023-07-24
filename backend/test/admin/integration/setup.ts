@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { TEST_DIRECTOR } from '../../testData';
 import * as request from 'supertest';
-import { AppModule } from '@admin/app.module';
+import { AppModule } from '../../../dist/src/apps/admin/app.module';
+import { TEST_DIRECTOR } from '../../testData';
 
 const getAccessToken = async (
   app: INestApplication,
