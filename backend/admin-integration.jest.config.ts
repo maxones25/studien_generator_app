@@ -6,7 +6,6 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
-  globalSetup: "<rootDir>/test/admin/integration/setup.ts",
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   coverageDirectory: './coverage/integration',
   coverageReporters: ['json', 'lcov', 'text', 'clover'],

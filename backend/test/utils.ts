@@ -1,5 +1,5 @@
 import * as request from 'supertest';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 
 import { SignupDirectorDto } from '@admin/modules/auth/dtos/SignupDirectorDto';
 import { CreateStudyDto } from '@admin/modules/studies/dtos/createStudyDto';
@@ -9,19 +9,48 @@ import { AddMemberDto } from '@admin/modules/studies/members/dtos/AddMemberDto';
 
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
 import { validateUUID } from '@shared/modules/uuid/uuid';
+import { Test, TestingModule } from '@nestjs/testing';
 
-export const createApp = async () => {
+export const createApp = async (AppModule: any) => {
   if (global.__APP__) return global.__APP__;
-  throw new Error('integration test setup is missing');
+
+  const moduleFixture: TestingModule = await Test.createTestingModule({
+    imports: [AppModule],
+  }).compile();
+
+  const app = moduleFixture.createNestApplication();
+
+  app.useGlobalPipes(new ValidationPipe());
+
+  await app.init();
+
+  return app;
 };
 
-export const getAccessToken = (key: string) => {
-  const store = global.__ACCESS_TOKEN__;
-  if (typeof store !== 'object') throw new Error('token store not initialized');
-  if (typeof store[key] === undefined)
-    throw new Error(`token ${key} not found`);
-  return store[key];
-};
+export const getDirectorAccessToken = (
+  app: INestApplication,
+  email: string,
+  password: string,
+) =>
+  new Promise<string>((resolve, reject) => {
+    if (!global.__ACCESS_TOKEN__) {
+      global.__ACCESS_TOKEN__ = {};
+    } else if (global.__ACCESS_TOKEN__[email]) {
+      resolve(global.__ACCESS_TOKEN__[email]);
+    }
+    request(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email,
+        password,
+      })
+      .expect(201)
+      .then((res) => {
+        expect(typeof res.body.accessToken).toEqual('string');
+        resolve(res.body.accessToken as string);
+      })
+      .catch((err) => reject(err));
+  });
 
 export const createDirector = (
   app: INestApplication,
@@ -103,7 +132,7 @@ export const addMember = (
 ) =>
   new Promise<string>((resolve, reject) => {
     request(app.getHttpServer())
-      .post(`/studies/${studyId}/members`)
+      .post(`/studies/${studyId}/directors`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send(data)
       .expect(201)

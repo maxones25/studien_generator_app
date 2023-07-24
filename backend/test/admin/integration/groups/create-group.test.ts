@@ -1,9 +1,10 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import fakeData from '@test/fakeData';
-import { createApp, createStudy, getAccessToken } from '@test/utils';
+import { createApp, createStudy, getDirectorAccessToken } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { validateUUID } from '@shared/modules/uuid/uuid';
+import { AppModule } from '@admin/app.module';
 
 describe('create group', () => {
   let app: INestApplication;
@@ -11,8 +12,12 @@ describe('create group', () => {
   let studyId: string;
 
   beforeAll(async () => {
-    app = await createApp();
-    accessToken = await getAccessToken(TEST_DIRECTOR.MAX.EMAIL);
+    app = await createApp(AppModule);
+    accessToken = await getDirectorAccessToken(
+      app,
+      TEST_DIRECTOR.MAX.EMAIL,
+      TEST_DIRECTOR.MAX.PASSWORD,
+    );
     studyId = await createStudy(app, accessToken, fakeData.study());
   });
 
@@ -75,7 +80,11 @@ describe('create group', () => {
   });
 
   it('should fail because director is not member of study', async () => {
-    const johnAccessToken = await getAccessToken(TEST_DIRECTOR.JOHN.EMAIL);
+    const johnAccessToken = await getDirectorAccessToken(
+      app,
+      TEST_DIRECTOR.JOHN.EMAIL,
+      TEST_DIRECTOR.MAX.PASSWORD,
+    );
 
     const newStudyId = await createStudy(
       app,
