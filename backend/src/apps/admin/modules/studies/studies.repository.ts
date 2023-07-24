@@ -1,5 +1,6 @@
 import { Repository } from 'typeorm';
 import { Study } from '@entities/study.entity';
+import { InternalServerErrorException } from '@nestjs/common';
 
 export class StudiesRepository extends Repository<Study> {
   async getByDirector(directorId: string) {
@@ -18,7 +19,7 @@ export class StudiesRepository extends Repository<Study> {
   }
 
   async getOneByDirector(studyId: string, directorId: string) {
-    const study = await this.findOneOrFail({
+    const { id, name, members } = await this.findOneOrFail({
       where: {
         id: studyId,
         members: {
@@ -37,9 +38,12 @@ export class StudiesRepository extends Repository<Study> {
       },
     });
 
+    if(members.length !== 1) throw new InternalServerErrorException()
+
     return {
-      ...study,
-      role: study.members[0]?.role ?? '',
+      id,
+      name,
+      role: members[0].role,
     };
   }
 }
