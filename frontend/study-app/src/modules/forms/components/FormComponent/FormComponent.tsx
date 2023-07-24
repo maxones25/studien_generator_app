@@ -17,7 +17,8 @@ export const FormComponent : React.FC<FormComponentProps>= ({
   const props = {
     label: formComponent.attributes?.label,
     control: form.control,
-    name: `${formComponent.id}.${formComponent.formFields[0].entityFieldId}`,
+    componentId: formComponent.id,
+    entityFieldId: formComponent.formFields[0].entityFieldId,
     rules: {required: t("value required")},
     attributes: formComponent.attributes
   }

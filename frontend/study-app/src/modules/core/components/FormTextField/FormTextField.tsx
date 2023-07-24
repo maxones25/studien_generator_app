@@ -1,5 +1,5 @@
 import { TextFieldProps, TextField, SxProps, Theme } from "@mui/material";
-import { FieldValues, FormState } from "react-hook-form";
+import { FieldValues, FormState, get } from "react-hook-form";
 
 export interface FormTextFieldProps<FormData extends FieldValues> {
   formState: FormState<FormData>;
@@ -23,6 +23,8 @@ export const FormTextField = <FormData extends FieldValues>({
   fullWidth = false,
 }: FormTextFieldProps<FormData>) => {
   const { name, inputProps } = textFieldProps;
+  const error = get(formState.errors, name);
+
 
   if (!name) throw new Error("name required");
 
@@ -31,7 +33,7 @@ export const FormTextField = <FormData extends FieldValues>({
       sx={sx}
       error={Boolean(formState.errors[name])}
       margin="normal"
-      helperText={formState.errors[name]?.message?.toString() ?? null}
+      helperText={error?.message?.toString() ?? null}
       label={label}
       type={type}
       fullWidth={fullWidth}

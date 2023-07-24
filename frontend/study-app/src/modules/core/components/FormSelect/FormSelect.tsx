@@ -15,12 +15,14 @@ import {
   Path,
   PathValue,
   RegisterOptions,
+  get,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 export interface FormSelectProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
-  name: Path<TFieldValues>;
+  componentId: string;
+  entityFieldId: string;
   rules?: Omit<
     RegisterOptions<TFieldValues, Path<TFieldValues>>,
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
@@ -33,7 +35,8 @@ export interface FormSelectProps<TFieldValues extends FieldValues> {
 
 export function FormSelect<TFieldValues extends FieldValues>({
   control,
-  name,
+  componentId,
+  entityFieldId,
   rules,
   size,
   label,
@@ -41,16 +44,20 @@ export function FormSelect<TFieldValues extends FieldValues>({
   attributes,
 }: FormSelectProps<TFieldValues>) {
   const { t } = useTranslation();
+  const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>
 
   return (
     <Controller
       control={control}
       rules={rules}
       name={name}
-      render={({ field: { onChange, value, ...field }, formState }) => (
+      render={({ field: { onChange, value, ...field }, formState }) => {
+        const error = get(formState.errors, name);
+        
+        return (
         <FormControl 
           margin="normal"
-          error={Boolean(formState.errors[name])}
+          error={error}
         >
           {label && <InputLabel id={`${name}-select`}>{label}</InputLabel>}
           <Select
@@ -71,9 +78,9 @@ export function FormSelect<TFieldValues extends FieldValues>({
               </MenuItem>
             ))}
           </Select>
-          {Boolean(formState.errors[name]) && <FormHelperText>{t("value required")}</FormHelperText>}
+          {Boolean(error) && <FormHelperText>{t("value required")}</FormHelperText>}
         </FormControl>
-      )}
+      )}}
     />
   );
 }
