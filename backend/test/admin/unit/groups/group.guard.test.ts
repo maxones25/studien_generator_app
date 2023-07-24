@@ -1,4 +1,4 @@
-import { ExecutionContext } from '@nestjs/common';
+import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
 import { GroupGuard } from '@admin/modules/groups/guards/group.guard';
@@ -27,7 +27,7 @@ describe('GroupGuard', () => {
 
     await expect(
       guard.canActivate(context as ExecutionContext),
-    ).rejects.toThrow();
+    ).rejects.toThrow(UnauthorizedException);
   });
 
   it('should return true when no groupId is provided', async () => {
@@ -58,7 +58,7 @@ describe('GroupGuard', () => {
 
     await expect(
       guard.canActivate(context as ExecutionContext),
-    ).rejects.toThrow();
+    ).rejects.toThrow(UnauthorizedException);
   });
 
   it('should return true when group is found', async () => {
