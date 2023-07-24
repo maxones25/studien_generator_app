@@ -10,6 +10,7 @@ import { AddMemberDto } from '@admin/modules/studies/members/dtos/AddMemberDto';
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ConfigService } from '@nestjs/config';
 
 export const createApp = async (AppModule: any) => {
   if (global.__APP__) return global.__APP__;
@@ -27,6 +28,18 @@ export const createApp = async (AppModule: any) => {
   global.__APP__ = app;
 
   return app;
+};
+
+export const getEnv = (app: INestApplication, key: string) => {
+  if (!global.__APP_CONFIG__) {
+    global.__APP_CONFIG__ = {};
+  } else if (global.__APP_CONFIG__[key]) {
+    return global.__APP_CONFIG__[key];
+  }
+  const configService = app.get(ConfigService);
+  const env = configService.get(key);
+  global.__APP_CONFIG__[key] = env;
+  return env;
 };
 
 export const getDirectorAccessToken = (

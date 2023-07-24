@@ -7,11 +7,19 @@ const config: Config.InitialOptions = {
     '^.+\\.tsx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  coverageDirectory: './coverage/unit',
-  coverageReporters: ['json', 'lcov', 'text', 'clover'],
+  collectCoverageFrom: ['src/apps/admin/**/*.ts'],
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80,
+    },
+  },
+  coverageDirectory: './coverage/admin/unit',
+  coverageReporters: ['lcov'],
   moduleNameMapper: {
-    '@admin/(.*)': '<rootDir>/src/admin/$1',
-    '@modules/(.*)': '<rootDir>/src/modules/$1',
+    '@admin/(.*)': '<rootDir>/src/apps/admin/$1',
     '@entities/(.*)': '<rootDir>/src/entities/$1',
     '@shared/(.*)': '<rootDir>/src/shared/$1',
     '@test/(.*)': '<rootDir>/test/$1',

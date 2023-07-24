@@ -30,11 +30,12 @@ export class StudiesService {
     return await this.studiesRepository.getByDirector(directorId);
   }
 
-  async findOne(studyId: string, directorId: string) {
+  async getOneByDirector(studyId: string, directorId: string) {
     return this.studiesRepository.getOneByDirector(studyId, directorId);
   }
 
   async delete(studyId: string) {
-    return this.studiesRepository.delete(studyId);
+    const { affected } = await this.studiesRepository.delete(studyId);
+    return affected;
   }
 }

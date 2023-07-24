@@ -6,21 +6,19 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { StudiesService } from './studies.service';
 import { CreateStudyDto } from './dtos/createStudyDto';
 import { UpdateStudyDto } from './dtos/updateStudyDto';
 import { Roles } from '@admin/modules/roles/roles.decorator';
 import { DirectorId } from '@admin/decorators/director-id.decorator';
+import { StudyGuard } from './guards/study.guard';
 
 @Controller('studies')
+@UseGuards(StudyGuard)
 export class StudiesController {
   constructor(private readonly studiesService: StudiesService) {}
-
-  @Get()
-  async findStudiesByDirector(@DirectorId() directorId: string) {
-    return this.studiesService.getByDirector(directorId);
-  }
 
   @Post()
   async create(
@@ -30,12 +28,17 @@ export class StudiesController {
     return this.studiesService.create(createStudyDto, directorId);
   }
 
+  @Get()
+  async getAll(@DirectorId() directorId: string) {
+    return this.studiesService.getByDirector(directorId);
+  }
+
   @Get(':studyId')
   async getById(
     @Param('studyId') studyId: string,
     @DirectorId() directorId: string,
   ) {
-    return this.studiesService.findOne(studyId, directorId);
+    return this.studiesService.getOneByDirector(studyId, directorId);
   }
 
   @Roles('admin')
