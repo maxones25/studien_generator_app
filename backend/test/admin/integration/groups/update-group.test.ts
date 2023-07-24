@@ -1,37 +1,25 @@
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from '../../../src/admin.module';
-import fakeData from '../../fakeData';
+import fakeData from '@test/fakeData';
+import { TEST_DIRECTOR } from '@test/testData';
 import {
   createApp,
-  createDirector,
   createGroup,
   createStudy,
-  getDirectorAccessToken,
-} from '../../utils';
+  getAccessToken,
+} from '@test/utils';
+import * as request from 'supertest';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
-  let directorId: any;
   let accessToken: string;
   let studyId: string;
 
   beforeAll(async () => {
-    app = await createApp(AppModule);
+    app = await createApp();
 
-    const director = fakeData.director();
     const study = fakeData.study();
 
-    directorId = await createDirector(app, {
-      ...director,
-      activationPassword: process.env.ACTIVATION_PASSWORD,
-    });
-
-    accessToken = await getDirectorAccessToken(
-      app,
-      director.email,
-      director.password,
-    );
+    accessToken = await getAccessToken(TEST_DIRECTOR.MAX.EMAIL);
 
     studyId = await createStudy(app, accessToken, study);
   });

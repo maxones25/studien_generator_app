@@ -1,13 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../../../../src/admin.module';
 import fakeData from '@test/fakeData';
 import {
   createApp,
-  createDirector,
   createGroup,
   createStudy,
-  getDirectorAccessToken,
+  getAccessToken,
 } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 
@@ -18,20 +16,16 @@ describe('delete group', () => {
   let studyId: string;
 
   beforeAll(async () => {
-    app = await createApp(AppModule);
+    app = await createApp();
 
     const study = fakeData.study();
 
-    accessToken = await getDirectorAccessToken(
-      app,
-      TEST_DIRECTOR.MAX.EMAIL,
-      TEST_DIRECTOR.MAX.PASSWORD,
-    );
+    accessToken = await getAccessToken(TEST_DIRECTOR.MAX.EMAIL);
 
     studyId = await createStudy(app, accessToken, study);
   });
 
-  it('/DELETE remove group from study successfully', async () => {
+  it('should delete a group', async () => {
     const group = fakeData.group();
     const groupId = await createGroup(app, accessToken, studyId, group);
     return request(app.getHttpServer())

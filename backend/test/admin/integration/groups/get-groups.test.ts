@@ -1,6 +1,5 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../../../../src/admin.module';
 import fakeData from '@test/fakeData';
 import {
   createApp,
@@ -18,7 +17,7 @@ describe('get groups', () => {
   let groupIds: string[];
 
   beforeAll(async () => {
-    app = await createApp(AppModule);
+    app = await createApp();
 
     accessToken = getAccessToken(TEST_DIRECTOR.MAX.EMAIL);
 

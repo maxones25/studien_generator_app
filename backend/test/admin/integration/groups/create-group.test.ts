@@ -1,10 +1,9 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../../../../src/admin.module';
 import fakeData from '@test/fakeData';
-import { createApp, createStudy, getDirectorAccessToken } from '@test/utils';
-import { validate as validateAsUUID } from 'uuid';
+import { createApp, createStudy, getAccessToken } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
+import { validateUUID } from '@shared/modules/uuid/uuid';
 
 describe('create group', () => {
   let app: INestApplication;
@@ -12,12 +11,8 @@ describe('create group', () => {
   let studyId: string;
 
   beforeAll(async () => {
-    app = await createApp(AppModule);
-    accessToken = await getDirectorAccessToken(
-      app,
-      TEST_DIRECTOR.MAX.EMAIL,
-      TEST_DIRECTOR.MAX.PASSWORD,
-    );
+    app = await createApp();
+    accessToken = await getAccessToken(TEST_DIRECTOR.MAX.EMAIL);
     studyId = await createStudy(app, accessToken, fakeData.study());
   });
 
@@ -29,7 +24,7 @@ describe('create group', () => {
       .send(group)
       .expect(201)
       .then((res) => {
-        expect(validateAsUUID(res.text)).toBeTruthy();
+        expect(validateUUID(res.text)).toBeTruthy();
       });
   });
 
@@ -80,11 +75,7 @@ describe('create group', () => {
   });
 
   it('should fail because director is not member of study', async () => {
-    const johnAccessToken = await getDirectorAccessToken(
-      app,
-      TEST_DIRECTOR.JOHN.EMAIL,
-      TEST_DIRECTOR.JOHN.PASSWORD,
-    );
+    const johnAccessToken = await getAccessToken(TEST_DIRECTOR.JOHN.EMAIL);
 
     const newStudyId = await createStudy(
       app,
