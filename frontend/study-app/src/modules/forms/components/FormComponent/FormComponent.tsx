@@ -17,7 +17,7 @@ export const FormComponent : React.FC<FormComponentProps>= ({
   const props = {
     label: formComponent.attributes?.label,
     control: form.control,
-    name: formComponent.formFields[0].entityFieldId,
+    name: `${formComponent.id}.${formComponent.formFields[0].entityFieldId}`,
     rules: {required: t("value required")},
     attributes: formComponent.attributes
   }
@@ -28,7 +28,7 @@ export const FormComponent : React.FC<FormComponentProps>= ({
         return <FormTextField 
           label={formComponent.attributes?.label}
           formState={form.formState}
-          textFieldProps={form.register(formComponent.formFields[0].entityFieldId, {
+          textFieldProps={form.register(`${formComponent.id}.${formComponent.formFields[0].entityFieldId}`, {
             required: t("value required"),
           })}
         />

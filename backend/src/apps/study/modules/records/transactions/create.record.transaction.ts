@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { ConflictException } from '@nestjs/common';
 import { FieldType } from '@shared/enums/field-type.enum';
 import { Transaction } from '@shared/modules/transaction/transaction';
+import { Form } from '@entities/form.entity';
 
 export class CreateRecordTransaction extends Transaction<
   {
@@ -23,9 +24,13 @@ export class CreateRecordTransaction extends Transaction<
     data: CreateRecordDto;
     participantId: string;
   }): Promise<void> {
-    const record = await this.createRecord(data, participantId);
-    this.entityFieldRepository = this.entityManager.getRepository(EntityField);
 
+    if(! await this.isCorrectForm(data.formId, data.fields.map((value) => value.entityFieldId)))
+      throw new ConflictException('invalid form');
+
+    const record = await this.createRecord(data, participantId);
+
+    this.entityFieldRepository = this.entityManager.getRepository(EntityField);
     const promises = data.fields.map((recordField) =>
       this.addRecordField(record.id, recordField),
     );
@@ -66,6 +71,44 @@ export class CreateRecordTransaction extends Transaction<
       value: recordField.value,
       entityFieldId: recordField.entityFieldId,
     });
+  }
+
+  private async isCorrectForm(
+    formId: string,
+    entityFieldIds: string[]
+  ) {
+    const formRepository = this.entityManager.getRepository(Form);
+    const result = await formRepository.findOne({
+      where: {
+        id: formId,
+      },
+      relations: {
+        pages: {
+          components: {
+            formFields: true,
+          },
+        },
+      },
+      select: {
+        id: true,
+        pages: {
+          title: true,
+          components: {
+            id:true,
+            formFields: {
+              entityFieldId: true,
+            },
+          },
+        },
+      },
+    })
+    const flatResult = result.pages.map((page) => 
+      page.components.map((component) => 
+        component.formFields.map((formField) => 
+          formField.entityFieldId))).flat(Infinity);
+    if (flatResult.toString() === entityFieldIds.toString())
+      return true;
+    return false;
   }
 
   private async isValidValue({

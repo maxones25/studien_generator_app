@@ -7,5 +7,5 @@ export type Record = {
 
 export type RecordField = {
   entityFieldId: string;
-  value: string | boolean | number | Date;
+  value: any;
 }

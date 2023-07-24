@@ -91,6 +91,7 @@ export class FormsService {
           title: true,
           number: true,
           components: {
+            id:true,
             type: true,
             number: true,
             formFields: {
