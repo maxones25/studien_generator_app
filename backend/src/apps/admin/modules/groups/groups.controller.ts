@@ -35,7 +35,14 @@ export class GroupsController {
     return this.groupsService.getByStudy(studyId);
   }
 
+  @Get(':groupId')
+  @Roles('admin', 'employee')
+  async getById(@Param('groupId', new ValidateIdPipe()) groupId: string) {
+    return this.groupsService.getById(groupId);
+  }
+
   @Put(':groupId')
+  @Roles('admin', 'employee')
   async update(
     @Param('groupId', new ValidateIdPipe()) groupId: string,
     @Body() body: UpdateGroupDto,
@@ -43,8 +50,8 @@ export class GroupsController {
     return this.groupsService.update(groupId, body);
   }
 
-  @Roles('admin')
   @Delete(':groupId')
+  @Roles('admin')
   async delete(@Param('groupId', new ValidateIdPipe()) groupId: string) {
     return this.groupsService.delete(groupId);
   }

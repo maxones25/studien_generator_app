@@ -1,14 +1,14 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../../../../src/admin.module';
 import fakeData from '@test/fakeData';
 import {
   createApp,
   createGroup,
   createStudy,
-  getAccessToken,
+  getDirectorAccessToken,
 } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
+import { AppModule } from '@admin/app.module';
 
 describe('get groups', () => {
   let app: INestApplication;
@@ -20,7 +20,11 @@ describe('get groups', () => {
   beforeAll(async () => {
     app = await createApp(AppModule);
 
-    accessToken = getAccessToken(TEST_DIRECTOR.MAX.EMAIL);
+    accessToken = await getDirectorAccessToken(
+      app,
+      TEST_DIRECTOR.MAX.EMAIL,
+      TEST_DIRECTOR.MAX.PASSWORD,
+    );
 
     studyId = await createStudy(app, accessToken, fakeData.study());
 
@@ -35,7 +39,11 @@ describe('get groups', () => {
       await createGroup(app, accessToken, studyId, fakeData.group()),
     );
 
-    const johnAccessToken = getAccessToken(TEST_DIRECTOR.JOHN.EMAIL);
+    const johnAccessToken = await getDirectorAccessToken(
+      app,
+      TEST_DIRECTOR.JOHN.EMAIL,
+      TEST_DIRECTOR.JOHN.PASSWORD,
+    );
 
     johnStudyId = await createStudy(app, johnAccessToken, fakeData.study());
 

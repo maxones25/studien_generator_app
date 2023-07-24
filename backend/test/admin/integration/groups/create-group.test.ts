@@ -1,10 +1,10 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../../../../src/admin.module';
 import fakeData from '@test/fakeData';
 import { createApp, createStudy, getDirectorAccessToken } from '@test/utils';
-import { validate as validateAsUUID } from 'uuid';
 import { TEST_DIRECTOR } from '@test/testData';
+import { validateUUID } from '@shared/modules/uuid/uuid';
+import { AppModule } from '@admin/app.module';
 
 describe('create group', () => {
   let app: INestApplication;
@@ -29,7 +29,7 @@ describe('create group', () => {
       .send(group)
       .expect(201)
       .then((res) => {
-        expect(validateAsUUID(res.text)).toBeTruthy();
+        expect(validateUUID(res.text)).toBeTruthy();
       });
   });
 
@@ -83,7 +83,7 @@ describe('create group', () => {
     const johnAccessToken = await getDirectorAccessToken(
       app,
       TEST_DIRECTOR.JOHN.EMAIL,
-      TEST_DIRECTOR.JOHN.PASSWORD,
+      TEST_DIRECTOR.MAX.PASSWORD,
     );
 
     const newStudyId = await createStudy(

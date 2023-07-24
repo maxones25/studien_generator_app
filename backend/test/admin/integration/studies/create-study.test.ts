@@ -1,32 +1,25 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../../../src/admin.module';
-import fakeData from '../../fakeData';
-import { createApp, createDirector, getDirectorAccessToken } from '../../utils';
+import fakeData from '@test/fakeData';
+import { createApp, getDirectorAccessToken } from '@test/utils';
+import { TEST_DIRECTOR } from '@test/testData';
+import { validateUUID } from '@shared/modules/uuid/uuid';
+import { AppModule } from '@admin/app.module';
 
-describe('AppController (e2e)', () => {
+describe('Create Study', () => {
   let app: INestApplication;
-  let directorId: any;
   let accessToken: string;
 
   beforeAll(async () => {
-    app = await createApp(AppModule)
-
-    const director = fakeData.director();
-
-    directorId = await createDirector(app, {
-      ...director,
-      activationPassword: process.env.ACTIVATION_PASSWORD,
-    });
-
+    app = await createApp(AppModule);
     accessToken = await getDirectorAccessToken(
       app,
-      director.email,
-      director.password,
+      TEST_DIRECTOR.MAX.EMAIL,
+      TEST_DIRECTOR.MAX.PASSWORD,
     );
   });
 
-  it('/POST create study successfully', () => {
+  it('should create a study', () => {
     const study = fakeData.study();
     return request(app.getHttpServer())
       .post('/studies')
@@ -34,37 +27,43 @@ describe('AppController (e2e)', () => {
       .send(study)
       .expect(201)
       .then((res) => {
-        expect(typeof res.body.id).toBe('string');
+        expect(validateUUID(res.text)).toBeTruthy();
       });
   });
 
-  it('/POST create study with empty name', () => {
+  it('should fail because name is missing', () => {
+    const study = fakeData.study();
+    delete study.name;
     return request(app.getHttpServer())
       .post('/studies')
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        name: '',
-      })
+      .send(study)
       .expect(400);
   });
 
-  it('/POST create study with existing name', () => {
+  it('should fail because name is empty', () => {
     const study = fakeData.study();
-
+    study.name = '';
     return request(app.getHttpServer())
       .post('/studies')
       .set('Authorization', `Bearer ${accessToken}`)
       .send(study)
-      .expect(201)
-      .then((res) => {
-        expect(typeof res.body.id).toBe('string');
+      .expect(400);
+  });
 
-        return request(app.getHttpServer())
-          .post('/studies')
-          .set('Authorization', `Bearer ${accessToken}`)
-          .send(study)
-          .expect(422);
-      });
+  it('should fail because name already exists', async () => {
+    const study = fakeData.study();
+    await request(app.getHttpServer())
+      .post('/studies')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(study)
+      .expect(201);
+
+    return await request(app.getHttpServer())
+      .post('/studies')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(study)
+      .expect(422);
   });
 
   afterAll(async () => {

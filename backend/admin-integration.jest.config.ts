@@ -6,12 +6,12 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
-  globalSetup: "<rootDir>/test/admin/integration/setup.ts",
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   coverageDirectory: './coverage/integration',
   coverageReporters: ['json', 'lcov', 'text', 'clover'],
   moduleNameMapper: {
-    '@modules/(.*)': '<rootDir>/src/modules/$1',
+    '@admin/(.*)': '<rootDir>/src/apps/admin/$1',
+    '@shared/(.*)': '<rootDir>/src/shared/$1',
     '@entities/(.*)': '<rootDir>/src/entities/$1',
     '@test/(.*)': '<rootDir>/test/$1',
   },

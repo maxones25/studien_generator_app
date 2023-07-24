@@ -1,11 +1,14 @@
 import * as request from 'supertest';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { SignupDirectorDto } from '../src/modules/auth/admin/dtos/SignupDirectorDto';
-import { CreateStudyDto } from '../src/modules/studies/dtos/createStudyDto';
-import { AddMemberDto } from '../src/modules/studies/members/dtos/AddMemberDto';
-import { CreateGroupDto } from '../src/modules/groups/dtos/CreateGroupDto';
-import { ParticipantDto } from '../src/modules/participants/dtos/participantDto';
-import { LoginParticipantDto } from '../src/modules/auth/study/dtos/LoginParticipantDto';
+
+import { SignupDirectorDto } from '@admin/modules/auth/dtos/SignupDirectorDto';
+import { CreateStudyDto } from '@admin/modules/studies/dtos/createStudyDto';
+import { CreateGroupDto } from '@admin/modules/groups/dtos/CreateGroupDto';
+import { ParticipantDto } from '@admin/modules/participants/dtos/participantDto';
+import { AddMemberDto } from '@admin/modules/studies/members/dtos/AddMemberDto';
+
+import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
+import { validateUUID } from '@shared/modules/uuid/uuid';
 import { Test, TestingModule } from '@nestjs/testing';
 
 export const createApp = async (AppModule: any) => {
@@ -16,19 +19,41 @@ export const createApp = async (AppModule: any) => {
   }).compile();
 
   const app = moduleFixture.createNestApplication();
+
   app.useGlobalPipes(new ValidationPipe());
+
   await app.init();
+
+  global.__APP__ = app;
 
   return app;
 };
 
-export const getAccessToken = (key: string) => {
-  const store = global.__ACCESS_TOKEN__;
-  if (typeof store !== 'object') throw new Error('token store not initialized');
-  if (typeof store[key] === undefined)
-    throw new Error(`token ${key} not found`);
-  return store[key];
-};
+export const getDirectorAccessToken = (
+  app: INestApplication,
+  email: string,
+  password: string,
+) =>
+  new Promise<string>((resolve, reject) => {
+    if (!global.__ACCESS_TOKEN__) {
+      global.__ACCESS_TOKEN__ = {};
+    } else if (global.__ACCESS_TOKEN__[email]) {
+      resolve(global.__ACCESS_TOKEN__[email]);
+    }
+    request(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email,
+        password,
+      })
+      .expect(201)
+      .then((res) => {
+        expect(typeof res.body.accessToken).toEqual('string');
+        global.__ACCESS_TOKEN__[email] = res.body.accessToken;
+        resolve(res.body.accessToken as string);
+      })
+      .catch((err) => reject(err));
+  });
 
 export const createDirector = (
   app: INestApplication,
@@ -42,26 +67,6 @@ export const createDirector = (
       .then((res) => {
         expect(res.body).toHaveProperty('id');
         resolve(res.body.id as string);
-      })
-      .catch((err) => reject(err));
-  });
-
-export const getDirectorAccessToken = (
-  app: INestApplication,
-  email: string,
-  password: string,
-) =>
-  new Promise<string>((resolve, reject) => {
-    request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email,
-        password,
-      })
-      .expect(201)
-      .then((res) => {
-        expect(typeof res.body.accessToken).toBe('string');
-        resolve(res.body.accessToken as string);
       })
       .catch((err) => reject(err));
   });
@@ -97,7 +102,7 @@ export const createGroup = (
       .send(data)
       .expect(201)
       .then((res) => {
-        expect(typeof res.text).toBe('string');
+        expect(validateUUID(res.text)).toBeTruthy();
         resolve(res.text);
       })
       .catch((err) => reject(err));
@@ -130,7 +135,7 @@ export const addMember = (
 ) =>
   new Promise<string>((resolve, reject) => {
     request(app.getHttpServer())
-      .post(`/studies/${studyId}/members`)
+      .post(`/studies/${studyId}/directors`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send(data)
       .expect(201)

@@ -21,7 +21,7 @@
     "test:admin:unit": "jest --config admin-unit.jest.config.ts",
     "test:admin:unit:dev": "jest --config admin-unit.jest.config.ts --onlyChanged --watch",
     "test:admin:integration": "jest --config admin-integration.jest.config.ts",
-    "test:admin:integration:dev": "jest --config admin-integration.jest.config.ts  --onlyChanged",
+    "test:admin:integration:dev": "jest --config admin-integration.jest.config.ts --onlyChanged",
     "db:migration:run": "typeorm-ts-node-commonjs migration:run -d data-source.ts",
     "db:migration:revert": "typeorm-ts-node-commonjs migration:revert -d data-source.ts",
     "db:migration:create": "typeorm-ts-node-commonjs migration:create",

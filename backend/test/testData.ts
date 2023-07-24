@@ -4,6 +4,7 @@ export const TEST_DIRECTOR = {
     PASSWORD: '12345678',
   },
   JOHN: {
+    ID: "91bffd5b-9b0f-49a5-851a-684133d5ac30",
     EMAIL: 'john.doe@test.de',
     PASSWORD: '12345678',
   },
