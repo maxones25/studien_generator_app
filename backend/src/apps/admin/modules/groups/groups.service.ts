@@ -23,7 +23,7 @@ export class GroupsService {
   }
 
   async getByStudy(studyId: string) {
-    return this.groupsRepository.getById(studyId);
+    return this.groupsRepository.getByStudy(studyId);
   }
 
   async getById(groupId: string) {
