@@ -1,5 +1,5 @@
 import { FormCheckBox, FormDatePicker, FormDateTimePicker, FormSelect, FormSlider, FormSwitch, FormTextField, FormTimePicker } from '@modules/core/components';
-import { FormComponentData } from '@modules/forms/types';
+import { FormComponentData, FormComponentDataAttributes } from '@modules/forms/types';
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -14,20 +14,24 @@ export const FormComponent : React.FC<FormComponentProps>= ({
   form,
 }) => {
   const { t } = useTranslation();
+  const attributes: FormComponentDataAttributes = formComponent.attributes.reduce((obj, item) => 
+    Object.assign(obj, { [item.key]: item.value }), {}
+  );
+  const label = attributes?.label
   const props = {
-    label: formComponent.attributes?.label,
+    label: label,
     control: form.control,
     componentId: formComponent.id,
     entityFieldId: formComponent.formFields[0].entityFieldId,
     rules: {required: t("value required")},
-    attributes: formComponent.attributes
+    attributes: attributes
   }
 
   const createField = ():JSX.Element => {
     switch (formComponent.type) {
       case "TextField":
         return <FormTextField 
-          label={formComponent.attributes?.label}
+          label={label}
           formState={form.formState}
           textFieldProps={form.register(`${formComponent.id}.${formComponent.formFields[0].entityFieldId}`, {
             required: t("value required"),

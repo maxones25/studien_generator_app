@@ -13,7 +13,16 @@ export type FormComponentData = {
   type: string,
   id: string,
   formFields: FormField[],
-  attributes?: FormComponentDataAttributes,
+  attributes: FormComponentDataAttribute[],
+}
+
+export type FormComponentDataAttribute = {
+  key: string,
+  value: any,
+}
+
+export type FormField = {
+  entityFieldId: string;
 }
 
 export type FormComponentDataAttributes = {
@@ -21,8 +30,4 @@ export type FormComponentDataAttributes = {
   options?: any[],
   min?: number,
   max?: number
-}
-
-export type FormField = {
-  entityFieldId: string;
 }
