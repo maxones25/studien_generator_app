@@ -24,6 +24,8 @@ export const createApp = async (AppModule: any) => {
 
   await app.init();
 
+  global.__APP__ = app;
+
   return app;
 };
 
@@ -47,6 +49,7 @@ export const getDirectorAccessToken = (
       .expect(201)
       .then((res) => {
         expect(typeof res.body.accessToken).toEqual('string');
+        global.__ACCESS_TOKEN__[email] = res.body.accessToken;
         resolve(res.body.accessToken as string);
       })
       .catch((err) => reject(err));

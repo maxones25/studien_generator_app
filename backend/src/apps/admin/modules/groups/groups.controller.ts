@@ -42,7 +42,7 @@ export class GroupsController {
   }
 
   @Put(':groupId')
-  @Roles('admin', "employee")
+  @Roles('admin', 'employee')
   async update(
     @Param('groupId', new ValidateIdPipe()) groupId: string,
     @Body() body: UpdateGroupDto,
