@@ -11,6 +11,7 @@ import { validateUUID } from '@shared/modules/uuid/uuid';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { AddMemberDto } from '@admin/studyMembers/dtos/AddMemberDto';
+import { CreateEntityDto } from '@admin/entities/dtos/CreateEntityDto';
 
 export const createApp = async (AppModule: any) => {
   if (global.__APP__) return global.__APP__;
@@ -153,5 +154,21 @@ export const addMember = (
       .send(data)
       .expect(201)
       .then((res) => resolve(res.body))
+      .catch((err) => reject(err));
+  });
+
+export const createEntity = (
+  app: INestApplication,
+  accessToken: string,
+  studyId: string,
+  data: CreateEntityDto,
+) =>
+  new Promise<string>((resolve, reject) => {
+    request(app.getHttpServer())
+      .post(`/studies/${studyId}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(data)
+      .expect(201)
+      .then((res) => resolve(res.text))
       .catch((err) => reject(err));
   });
