@@ -81,6 +81,7 @@ export class FormsService {
         pages: {
           components: {
             formFields: true,
+            attributes:true
           },
         },
       },
@@ -97,6 +98,10 @@ export class FormsService {
             formFields: {
               entityFieldId: true,
             },
+            attributes: {
+              key: true,
+              value: true,
+            }
           },
         },
       },
