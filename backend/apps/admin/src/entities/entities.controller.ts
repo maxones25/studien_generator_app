@@ -11,7 +11,7 @@ import {
 import { EntitiesService } from './entities.service';
 import { CreateEntityDto } from './dtos/CreateEntityDto';
 import { UpdateEntityDto } from './dtos/UpdateEntityDto';
-import { EntityGuard } from './guards/entity.guard';
+import { EntityGuard } from './entity.guard';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { Roles } from '@admin/roles/roles.decorator';
 

@@ -3,7 +3,7 @@ import { EntitiesService } from './entities.service';
 import { EntitiesRepository } from './entities.repository';
 import { Entity } from '@entities/entity.entity';
 import { EntityManager } from 'typeorm';
-import { EntityGuard } from './guards/entity.guard';
+import { EntityGuard } from './entity.guard';
 
 const entitiesProviders: Provider[] = [
   EntitiesService,
@@ -15,8 +15,8 @@ const entitiesProviders: Provider[] = [
   },
   {
     provide: EntityGuard,
-    useClass: EntityGuard
-  }
+    useClass: EntityGuard,
+  },
 ];
 
 export default entitiesProviders;
