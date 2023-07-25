@@ -1,5 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { Roles } from '@admin/modules/roles/roles.enum';
+import { Roles } from '@admin/roles/roles.enum';
 import { INestApplication } from '@nestjs/common';
 import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';

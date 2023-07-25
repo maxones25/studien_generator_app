@@ -4,16 +4,16 @@ import ConfigModule from '@shared/modules/config/config.module';
 import DbModule from '@shared/modules/db/db.module';
 import JwtModule from '@shared/modules/jwt/jwt.module';
 
-import { RolesModule } from '@admin/modules/roles/roles.module';
-import { AuthModule } from '@admin/modules/auth/auth.module';
-import { GroupsModule } from '@admin/modules/groups/groups.module';
+import { RolesModule } from '@admin/roles/roles.module';
+import { AuthModule } from '@admin/auth/auth.module';
+import { GroupsModule } from '@admin/groups/groups.module';
 import { appProviders } from '@admin/app.providers';
-import { StudiesModule } from '@admin/modules/studies/studies.module';
-import { ComponentsModule } from '@admin/modules/components/components.module';
-import { DirectorsModule } from '@admin/modules/directors/directors.module';
-import { EntitiesModule } from '@admin/modules/entities/entities.module';
-import { ParticipantsModule } from "@admin/modules/participants/participants.module";
-import { FormsModule } from '@admin/modules/forms/forms.module';
+import { StudiesModule } from '@admin/studies/studies.module';
+import { ComponentsModule } from '@admin/components/components.module';
+import { DirectorsModule } from '@admin/directors/directors.module';
+import { EntitiesModule } from '@admin/entities/entities.module';
+import { ParticipantsModule } from '@admin/participants/participants.module';
+import { FormsModule } from '@admin/forms/forms.module';
 
 @Module({
   imports: [
@@ -28,7 +28,7 @@ import { FormsModule } from '@admin/modules/forms/forms.module';
     ParticipantsModule,
     ComponentsModule,
     EntitiesModule,
-    FormsModule
+    FormsModule,
   ],
   providers: appProviders,
 })

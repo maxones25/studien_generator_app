@@ -3,7 +3,7 @@ import * as request from 'supertest';
 import fakeData from '@test/fakeData';
 import { createApp, getDirectorAccessToken, createStudy } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
-import { Roles } from '@admin/modules/roles/roles.enum';
+import { Roles } from '@admin/roles/roles.enum';
 import { AppModule } from '@admin/app.module';
 
 describe('Delete Study', () => {

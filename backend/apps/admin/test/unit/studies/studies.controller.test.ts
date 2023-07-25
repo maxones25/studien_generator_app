@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
 import { Group } from '@entities/group.entity';
-import { GroupsService } from '@admin/modules/groups/groups.service';
-import { StudiesController } from '@admin/modules/studies/studies.controller';
-import { StudiesService } from '@admin/modules/studies/studies.service';
-import { StudiesRepository } from '@admin/modules/studies/studies.repository';
-import { StudyGuard } from '@admin/modules/studies/guards/study.guard';
+import { GroupsService } from '@admin/groups/groups.service';
+import { StudiesController } from '@admin/studies/studies.controller';
+import { StudiesService } from '@admin/studies/studies.service';
+import { StudiesRepository } from '@admin/studies/studies.repository';
+import { StudyGuard } from '@admin/studies/study.guard';
 import fakeData from '@test/fakeData';
 import { Study } from '@entities/study.entity';
 

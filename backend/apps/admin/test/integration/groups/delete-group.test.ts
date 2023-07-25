@@ -9,7 +9,7 @@ import {
   getDirectorAccessToken,
 } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
-import { Roles } from '@admin/modules/roles/roles.enum';
+import { Roles } from '@admin/roles/roles.enum';
 import { AppModule } from '@admin/app.module';
 
 describe('delete group', () => {
@@ -56,7 +56,7 @@ describe('delete group', () => {
     await request(app.getHttpServer())
       .get(`/studies/${studyId}/groups/${groupId}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .expect(401)
+      .expect(401);
   });
 
   it('should fail because director is not an admin', async () => {

@@ -1,6 +1,6 @@
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
-import { CreateGroupDto } from '@admin/modules/groups/dtos/CreateGroupDto';
+import { CreateGroupDto } from '@admin/groups/dtos/CreateGroupDto';
 
 describe('CreateGroupDto', () => {
   it('should pass validation with a valid name', async () => {

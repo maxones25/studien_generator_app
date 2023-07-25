@@ -2,10 +2,10 @@ import { TestBed } from '@automock/jest';
 import { Group } from '@entities/group.entity';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { faker } from '@faker-js/faker';
-import { GroupsService } from '@admin/modules/groups/groups.service';
-import { GroupsRepository } from '@admin/modules/groups/groups.repository';
-import { CreateGroupDto } from '@admin/modules/groups/dtos/CreateGroupDto';
-import { UpdateGroupDto } from '@admin/modules/groups/dtos/UpdateGroupDto';
+import { GroupsService } from '@admin/groups/groups.service';
+import { GroupsRepository } from '@admin/groups/groups.repository';
+import { CreateGroupDto } from '@admin/groups/dtos/CreateGroupDto';
+import { UpdateGroupDto } from '@admin/groups/dtos/UpdateGroupDto';
 
 describe('GroupsService', () => {
   let service: GroupsService;
@@ -25,11 +25,11 @@ describe('GroupsService', () => {
     const studyId = faker.string.uuid();
     const createDto: CreateGroupDto = { name: 'Group1' };
 
-    const id = faker.string.uuid()
+    const id = faker.string.uuid();
 
     repo.insert.mockImplementationOnce((data: Group) => {
-        data.id = id
-        return undefined
+      data.id = id;
+      return undefined;
     });
 
     const groupId = await service.create(studyId, createDto);

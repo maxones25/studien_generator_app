@@ -1,11 +1,11 @@
 import * as request from 'supertest';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 
-import { SignupDirectorDto } from '@admin/modules/auth/dtos/SignupDirectorDto';
-import { CreateStudyDto } from '@admin/modules/studies/dtos/createStudyDto';
-import { CreateGroupDto } from '@admin/modules/groups/dtos/CreateGroupDto';
-import { ParticipantDto } from '@admin/modules/participants/dtos/participantDto';
-import { AddMemberDto } from '@admin/modules/studies/members/dtos/AddMemberDto';
+import { SignupDirectorDto } from '@admin/auth/dtos/SignupDirectorDto';
+import { CreateStudyDto } from '@admin/studies/dtos/createStudyDto';
+import { CreateGroupDto } from '@admin/groups/dtos/CreateGroupDto';
+import { ParticipantDto } from '@admin/participants/dtos/participantDto';
+import { AddMemberDto } from '@admin/studies/members/dtos/AddMemberDto';
 
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
 import { validateUUID } from '@shared/modules/uuid/uuid';

@@ -1,8 +1,8 @@
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
-import { StudyGuard } from '@admin/modules/studies/guards/study.guard';
-import { StudiesRepository } from '@admin/modules/studies/studies.repository';
+import { StudyGuard } from '@admin/studies/study.guard';
+import { StudiesRepository } from '@admin/studies/studies.repository';
 
 describe('StudyGuard', () => {
   let guard: StudyGuard;
@@ -23,7 +23,7 @@ describe('StudyGuard', () => {
 
     const context = {
       switchToHttp: () => ({
-        getRequest: () => ({ params: { } }), // no groupId provided
+        getRequest: () => ({ params: {} }), // no groupId provided
       }),
     };
 

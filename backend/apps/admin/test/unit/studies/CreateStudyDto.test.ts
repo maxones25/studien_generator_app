@@ -1,6 +1,6 @@
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
-import { CreateStudyDto } from '@admin/modules/studies/dtos/createStudyDto';
+import { CreateStudyDto } from '@admin/studies/dtos/createStudyDto';
 import fakeData from '@test/fakeData';
 
 describe('CreateStudyDto', () => {

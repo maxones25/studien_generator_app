@@ -10,7 +10,7 @@ import {
 } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { Roles } from '@admin/modules/roles/roles.enum';
+import { Roles } from '@admin/roles/roles.enum';
 import { ConfigService } from '@nestjs/config';
 
 describe('Get Studies', () => {
@@ -22,7 +22,7 @@ describe('Get Studies', () => {
   beforeAll(async () => {
     app = await createApp(AppModule);
 
-    const activationPassword = getEnv(app, "ACTIVATION_PASSWORD")
+    const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
 
     const director = fakeData.director();
 

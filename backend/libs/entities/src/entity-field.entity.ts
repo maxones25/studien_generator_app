@@ -9,7 +9,7 @@ import {
 import { Entity } from './entity.entity';
 import { FormField } from './form-field.entity';
 import { RecordField } from './record-field.entity';
-import { FieldData } from '@admin/modules/entities/fields/dtos/FieldData';
+import { FieldData } from '@admin/entities/fields/dtos/FieldData';
 import { FieldType } from '@shared/enums/field-type.enum';
 
 @TypeOrmEntity()
