@@ -1,7 +1,7 @@
 import { Provider } from '@nestjs/common';
 import { PasswordService } from '@shared/modules/password/password.service';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 
 const authProviders: Provider[] = [

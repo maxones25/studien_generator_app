@@ -13,9 +13,9 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    
-    if(request.route.path.startsWith("/auth")) return true
-    
+
+    if (request.route.path.startsWith('/auth')) return true;
+
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
@@ -36,7 +36,9 @@ export class AuthGuard implements CanActivate {
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    if (typeof request?.headers?.authorization !== 'string') return undefined;
+    const [type, token] = request.headers.authorization.split(' ');
+    if (type !== 'Bearer' || token === '') return undefined;
+    return token;
   }
 }
