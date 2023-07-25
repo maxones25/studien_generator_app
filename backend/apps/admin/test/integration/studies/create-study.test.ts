@@ -5,6 +5,7 @@ import { createApp, getDirectorAccessToken } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { AppModule } from '@admin/app.module';
+import { Roles } from '@admin/roles/roles.enum';
 
 describe('Create Study', () => {
   let app: INestApplication;
@@ -19,15 +20,26 @@ describe('Create Study', () => {
     );
   });
 
-  it('should create a study', () => {
+  it('should create a study', async () => {
     const study = fakeData.study();
-    return request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/studies')
       .set('Authorization', `Bearer ${accessToken}`)
       .send(study)
       .expect(201)
-      .then((res) => {
+      .then(async (res) => {
         expect(validateUUID(res.text)).toBeTruthy();
+
+        const studyId = res.text;
+
+        await request(app.getHttpServer())
+          .get(`/studies/${studyId}`)
+          .set('Authorization', `Bearer ${accessToken}`)
+          .send(study)
+          .expect(200)
+          .then((res) => {
+            expect(res.body.role).toBe(Roles.admin);
+          });
       });
   });
 
