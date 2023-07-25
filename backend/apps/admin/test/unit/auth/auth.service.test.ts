@@ -2,6 +2,7 @@ import { AuthService } from '@admin/auth/auth.service';
 import { DirectorsRepository } from '@admin/directors/directors.repository';
 import { TestBed } from '@automock/jest';
 import { UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { PasswordService } from '@shared/modules/password/password.service';
 import fakeData from '@test/fakeData';
@@ -12,6 +13,7 @@ describe('AuthService', () => {
   let repo: jest.Mocked<DirectorsRepository>;
   let jwtService: jest.Mocked<JwtService>;
   let passwordService: jest.Mocked<PasswordService>;
+  let configService: jest.Mocked<ConfigService>;
 
   beforeAll(() => {
     const { unit, unitRef } = TestBed.create(AuthService)
@@ -21,12 +23,15 @@ describe('AuthService', () => {
       .using({})
       .mock(PasswordService)
       .using({})
+      .mock(ConfigService)
+      .using({})
       .compile();
 
     service = unit;
     repo = unitRef.get(DirectorsRepository);
     jwtService = unitRef.get(JwtService);
     passwordService = unitRef.get(PasswordService);
+    configService = unitRef.get(ConfigService);
   });
 
   it('should fail because email not found', async () => {
@@ -87,5 +92,34 @@ describe('AuthService', () => {
     const payload: any = await verifyJwt(accessToken, 'secret');
 
     expect(payload.directorId).toBe(directorId);
+  });
+
+  it('should fail because activation password is wrong', async () => {
+    const body = {
+      ...fakeData.director(),
+      activationPassword: '1234',
+    };
+
+    configService.get.mockReturnValueOnce('the password');
+
+    await expect(service.create(body)).rejects.toThrow(UnauthorizedException);
+  });
+
+  it('should sign up director successfully', async () => {
+    const body = {
+      ...fakeData.director(),
+      activationPassword: '1234',
+    };
+
+    const id = fakeData.id();
+
+    configService.get.mockReturnValueOnce('1234');
+
+    repo.insert.mockImplementation((data: any) => {
+      data.id = id;
+      return undefined as any;
+    });
+
+    await expect(service.create(body)).resolves.toBe(id);
   });
 });

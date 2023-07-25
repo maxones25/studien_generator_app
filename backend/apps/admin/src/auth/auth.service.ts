@@ -42,12 +42,12 @@ export class AuthService {
     password,
     activationPassword,
   }: SignupDirectorDto) {
-    if (activationPassword !== this.configService.get("ACTIVATION_PASSWORD"))
+    if (activationPassword !== this.configService.get('ACTIVATION_PASSWORD'))
       throw new UnauthorizedException();
 
     const hashedPassword = await this.passwordService.hash(password, 10);
 
-    const director = new Director()
+    const director = new Director();
 
     director.email = email;
     director.firstName = firstName;
