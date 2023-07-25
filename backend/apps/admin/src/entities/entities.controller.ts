@@ -21,6 +21,7 @@ export class EntitiesController {
   constructor(private readonly entitiesService: EntitiesService) {}
 
   @Post()
+  @Roles('admin', 'employee')
   async create(
     @Param('studyId') studyId: string,
     @Body() body: CreateEntityDto,
@@ -29,16 +30,19 @@ export class EntitiesController {
   }
 
   @Get()
+  @Roles('admin', 'employee')
   async getAll(@Param('studyId', new ValidateIdPipe()) studyId: string) {
     return this.entitiesService.getAll(studyId);
   }
 
   @Get(':entityId')
+  @Roles('admin', 'employee')
   async getById(@Param('entityId', new ValidateIdPipe()) entityId: string) {
     return this.entitiesService.getById(entityId);
   }
 
   @Put(':entityId')
+  @Roles('admin', 'employee')
   async update(
     @Param('entityId', new ValidateIdPipe()) entityId: string,
     @Body() updateEntityDto: UpdateEntityDto,
@@ -46,8 +50,8 @@ export class EntitiesController {
     return this.entitiesService.update(entityId, updateEntityDto);
   }
 
-  @Roles('admin')
   @Delete(':entityId')
+  @Roles('admin')
   async delete(@Param('entityId', new ValidateIdPipe()) entityId: string) {
     return this.entitiesService.delete(entityId);
   }
