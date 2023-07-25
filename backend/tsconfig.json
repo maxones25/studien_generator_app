@@ -19,11 +19,21 @@
     "noFallthroughCasesInSwitch": false,
     "resolveJsonModule": true,
     "paths": {
-      "@entities/*": ["src/entities/*"],
-      "@test/*": ["test/*"],
-      "@admin/*": ["src/apps/admin/*"],
-      "@study/*": ["src/apps/study/*"],
-      "@shared/*": ["src/shared/*"]
+      "@admin/*": [
+        "apps/admin/src/*"
+      ],
+      "@study/*": [
+        "apps/study/src/*"
+      ],
+      "@entities/*": [
+        "libs/entities/src/*"
+      ],
+      "@shared/*": [
+        "libs/shared/src/*"
+      ],
+      "@test/*": [
+        "libs/test/src/*"
+      ]
     }
   }
 }
