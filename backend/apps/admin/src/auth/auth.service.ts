@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDirectorDto } from './dtos/LoginDirectorDto';
@@ -54,8 +58,11 @@ export class AuthService {
     director.lastName = lastName;
     director.password = hashedPassword;
 
-    await this.directorsRepository.insert(director);
-
-    return director.id;
+    try {
+      await this.directorsRepository.insert(director);
+      return director.id;
+    } catch (error) {
+      throw new ConflictException();
+    }
   }
 }
