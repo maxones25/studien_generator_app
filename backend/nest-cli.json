@@ -16,6 +16,9 @@
       "sourceRoot": "apps/admin/src",
       "compilerOptions": {
         "tsConfigPath": "apps/admin/tsconfig.app.json"
+      },
+      "generateOptions": {
+        "spec": false
       }
     },
     "study": {
@@ -34,6 +37,9 @@
       "sourceRoot": "libs/shared/src",
       "compilerOptions": {
         "tsConfigPath": "libs/shared/tsconfig.lib.json"
+      },
+      "generateOptions": {
+        "spec": false
       }
     },
     "entities": {
