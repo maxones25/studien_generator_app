@@ -1,20 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 import { Director } from '@entities/director.entity';
-import { Repository } from 'typeorm';
 import { UpdateDirectorDto } from './dtos/UpdateDirectorDto';
+import { DirectorsRepository } from './directors.repository';
 
 @Injectable()
 export class DirectorsService {
   constructor(
-    @InjectRepository(Director)
-    private directosRepository: Repository<Director>,
+    @Inject(DirectorsRepository)
+    private directosRepository: DirectorsRepository,
   ) {}
 
-  async findAll(): Promise<Director[]> {
-    return this.directosRepository.find({
-      select: { id: true, firstName: true, lastName: true, email: true },
-    });
+  async getAll() {
+    return this.directosRepository.getAll()
   }
 
   async delete(directorId: string) {

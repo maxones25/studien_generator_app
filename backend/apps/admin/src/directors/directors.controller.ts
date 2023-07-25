@@ -8,8 +8,8 @@ export class DirectorsController {
   constructor(private readonly directorsService: DirectorsService) {}
 
   @Get()
-  async findAll() {
-    return this.directorsService.findAll();
+  async getAll() {
+    return this.directorsService.getAll();
   }
 
   @Delete()

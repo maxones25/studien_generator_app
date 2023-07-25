@@ -1,23 +1,22 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Director } from '@entities/director.entity';
-import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDirectorDto } from './dtos/LoginDirectorDto';
 import { SignupDirectorDto } from './dtos/SignupDirectorDto';
 import { PasswordService } from '@shared/modules/password/password.service';
+import { DirectorsRepository } from '@admin/directors/directors.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(Director)
-    private directorsRepository: Repository<Director>,
+    @InjectRepository(DirectorsRepository)
+    private directorsRepository: DirectorsRepository,
     private jwtService: JwtService,
     private passwordService: PasswordService,
   ) {}
 
   async checkCredentials({ email, password }: LoginDirectorDto) {
-    const director = await this.getByEmail(email);
+    const director = await this.directorsRepository.getByEmail(email);
 
     if (!director) throw new UnauthorizedException();
 
@@ -26,7 +25,6 @@ export class AuthService {
 
     const accessToken = await this.jwtService.signAsync({
       directorId: director.id,
-      type: 'director',
     });
 
     return {
@@ -53,13 +51,5 @@ export class AuthService {
       password: hashedPassword,
     });
     return { id: identifiers[0].id };
-  }
-
-  async getByEmail(email: string) {
-    return this.directorsRepository.findOne({
-      where: {
-        email,
-      },
-    });
   }
 }
