@@ -11,7 +11,7 @@ import {
 import { AddMemberDto } from './dtos/AddMemberDto';
 import { UpdateMemberDto } from './dtos/UpdateMemberDto';
 import { StudyMembersService } from './study-members.service';
-import { StudyMemberGuard } from './guards/study-member.guard';
+import { StudyMemberGuard } from './study-member.guard';
 import { Roles } from '@admin/roles/roles.decorator';
 
 @Controller('studies/:studyId/directors')

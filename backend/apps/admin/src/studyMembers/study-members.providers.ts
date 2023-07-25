@@ -3,7 +3,7 @@ import { StudyMembersService } from './study-members.service';
 import { StudyMembersRepository } from './study-members.repository';
 import { StudyMember } from '@entities/study-member.entity';
 import { EntityManager } from 'typeorm';
-import { StudyMemberGuard } from './guards/study-member.guard';
+import { StudyMemberGuard } from './study-member.guard';
 
 const studyMembersProviders: Provider[] = [
   StudyMembersService,
