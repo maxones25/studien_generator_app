@@ -23,7 +23,7 @@ export class EntitiesController {
   @Post()
   @Roles('admin', 'employee')
   async create(
-    @Param('studyId') studyId: string,
+    @Param('studyId', new ValidateIdPipe()) studyId: string,
     @Body() body: CreateEntityDto,
   ) {
     return this.entitiesService.create(studyId, body);

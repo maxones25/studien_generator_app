@@ -29,7 +29,8 @@ export class EntitiesService {
   }
 
   async delete(entityId: string) {
-    return this.entitiesRepository.delete(entityId);
+    const { affected } = await this.entitiesRepository.delete(entityId);
+    return affected;
   }
 
   getAll(studyId: string) {
