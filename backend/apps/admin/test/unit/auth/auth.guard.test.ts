@@ -1,8 +1,6 @@
-import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { UnauthorizedException } from '@nestjs/common';
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
-import { GroupGuard } from '@admin/groups/guards/group.guard';
-import { GroupsRepository } from '@admin/groups/groups.repository';
 import { AuthGuard } from '@admin/auth/auth.guard';
 import { JwtService } from '@nestjs/jwt';
 
@@ -33,8 +31,6 @@ describe('AuthGuard', () => {
       }),
     };
 
-    context.switchToHttp();
-
     await expect(guard.canActivate(context as any)).toBeTruthy();
   });
 
@@ -50,8 +46,6 @@ describe('AuthGuard', () => {
         getRequest: () => request,
       }),
     };
-
-    context.switchToHttp();
 
     await expect(guard.canActivate(context as any)).rejects.toThrow(
       UnauthorizedException,
