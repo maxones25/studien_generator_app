@@ -14,7 +14,7 @@ import { Roles } from '@admin/roles/roles.enum';
 import fakeData from '@test/fakeData';
 import { faker } from '@faker-js/faker';
 
-describe('StudyMembersController (Integration Tests)', () => {
+describe('Add Study Member', () => {
   let app: INestApplication;
   let accessToken: string;
   let studyId: string;
