@@ -14,7 +14,7 @@ import { AddMemberDto } from '@admin/studyMembers/dtos/AddMemberDto';
 import { CreateEntityDto } from '@admin/entities/dtos/CreateEntityDto';
 
 export const createApp = async (AppModule: any) => {
-  if (global.__APP__) return global.__APP__;
+  // if (global.__APP__) return global.__APP__;
 
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [AppModule],
@@ -26,20 +26,20 @@ export const createApp = async (AppModule: any) => {
 
   await app.init();
 
-  global.__APP__ = app;
+  // global.__APP__ = app;
 
   return app;
 };
 
 export const getEnv = (app: INestApplication, key: string) => {
-  if (!global.__APP_CONFIG__) {
-    global.__APP_CONFIG__ = {};
-  } else if (global.__APP_CONFIG__[key]) {
-    return global.__APP_CONFIG__[key];
-  }
+  // if (!global.__APP_CONFIG__) {
+  //   global.__APP_CONFIG__ = {};
+  // } else if (global.__APP_CONFIG__[key]) {
+  //   return global.__APP_CONFIG__[key];
+  // }
   const configService = app.get(ConfigService);
   const env = configService.get(key);
-  global.__APP_CONFIG__[key] = env;
+  // global.__APP_CONFIG__[key] = env;
   return env;
 };
 
@@ -49,11 +49,11 @@ export const getDirectorAccessToken = (
   password: string,
 ) =>
   new Promise<string>((resolve, reject) => {
-    if (!global.__ACCESS_TOKEN__) {
-      global.__ACCESS_TOKEN__ = {};
-    } else if (global.__ACCESS_TOKEN__[email]) {
-      resolve(global.__ACCESS_TOKEN__[email]);
-    }
+    // if (!global.__ACCESS_TOKEN__) {
+    //   global.__ACCESS_TOKEN__ = {};
+    // } else if (global.__ACCESS_TOKEN__[email]) {
+    //   resolve(global.__ACCESS_TOKEN__[email]);
+    // }
     request(app.getHttpServer())
       .post('/auth/login')
       .send({
@@ -63,7 +63,7 @@ export const getDirectorAccessToken = (
       .expect(201)
       .then((res) => {
         expect(typeof res.body.accessToken).toEqual('string');
-        global.__ACCESS_TOKEN__[email] = res.body.accessToken;
+        // global.__ACCESS_TOKEN__[email] = res.body.accessToken;
         resolve(res.body.accessToken as string);
       })
       .catch((err) => reject(err));
