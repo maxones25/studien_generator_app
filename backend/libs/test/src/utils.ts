@@ -78,8 +78,8 @@ export const createDirector = (
       .send(data)
       .expect(201)
       .then((res) => {
-        expect(res.body).toHaveProperty('id');
-        resolve(res.body.id as string);
+        expect(validateUUID(res.text)).toBeTruthy();
+        resolve(res.text as string);
       })
       .catch((err) => reject(err));
   });
