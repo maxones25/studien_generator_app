@@ -22,7 +22,10 @@ export class EntitiesService {
   }
 
   async update(entityId: string, { name }: UpdateEntityDto) {
-    return this.entitiesRepository.update(entityId, { name });
+    const { affected } = await this.entitiesRepository.update(entityId, {
+      name,
+    });
+    return affected;
   }
 
   async delete(entityId: string) {
