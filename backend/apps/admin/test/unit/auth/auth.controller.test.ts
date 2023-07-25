@@ -71,9 +71,9 @@ describe('AuthController', () => {
 
     const id = fakeData.id();
 
-    service.create.mockResolvedValueOnce({ id });
+    service.create.mockResolvedValueOnce(id);
 
-    expect(await controller.addDirector(body)).toStrictEqual({ id });
+    expect(await controller.addDirector(body)).toBe(id);
   });
 
   it('should fail because director data invalid', async () => {

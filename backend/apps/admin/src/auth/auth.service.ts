@@ -5,6 +5,8 @@ import { LoginDirectorDto } from './dtos/LoginDirectorDto';
 import { SignupDirectorDto } from './dtos/SignupDirectorDto';
 import { PasswordService } from '@shared/modules/password/password.service';
 import { DirectorsRepository } from '@admin/directors/directors.repository';
+import { ConfigService } from '@nestjs/config';
+import { Director } from '@entities/director.entity';
 
 @Injectable()
 export class AuthService {
@@ -13,6 +15,7 @@ export class AuthService {
     private directorsRepository: DirectorsRepository,
     private jwtService: JwtService,
     private passwordService: PasswordService,
+    private configService: ConfigService,
   ) {}
 
   async checkCredentials({ email, password }: LoginDirectorDto) {
@@ -39,17 +42,20 @@ export class AuthService {
     password,
     activationPassword,
   }: SignupDirectorDto) {
-    if (activationPassword != process.env.ACTIVATION_PASSWORD)
+    if (activationPassword !== this.configService.get("ACTIVATION_PASSWORD"))
       throw new UnauthorizedException();
 
     const hashedPassword = await this.passwordService.hash(password, 10);
 
-    const { identifiers } = await this.directorsRepository.insert({
-      email,
-      firstName,
-      lastName,
-      password: hashedPassword,
-    });
-    return { id: identifiers[0].id };
+    const director = new Director()
+
+    director.email = email;
+    director.firstName = firstName;
+    director.lastName = lastName;
+    director.password = hashedPassword;
+
+    await this.directorsRepository.insert(director);
+
+    return director.id;
   }
 }

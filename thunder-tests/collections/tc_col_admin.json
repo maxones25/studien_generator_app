@@ -129,12 +129,12 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-22T10:53:56.723Z",
-            "modified": "2023-07-22T08:11:34.935Z",
+            "modified": "2023-07-25T13:57:04.749Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{ \n    \"email\": \"max@test.de\", \n    \"firstName\": \"Max\",\n    \"lastName\": \"Stock\", \n    \"password\": \"R31sk0ch3r\", \n    \"activationPassword\": \"1234\"\n  }",
+                "raw": "{ \n    \"email\": \"max123@test.de\", \n    \"firstName\": \"Max\",\n    \"lastName\": \"Stock\", \n    \"password\": \"R31sk0ch3r\", \n    \"activationPassword\": \"1234\"\n  }",
                 "form": []
             },
             "auth": {
