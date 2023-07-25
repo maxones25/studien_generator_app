@@ -31,3 +31,10 @@ export type FormComponentDataAttributes = {
   min?: number,
   max?: number
 }
+
+export type FormComponentDataRules = {
+  reqired?: string,
+  minLength?: number,
+  maxLength?: number,
+}
+
