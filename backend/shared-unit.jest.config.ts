@@ -2,15 +2,19 @@ import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
   roots: ['.'],
-  testMatch: ['**/shared/unit/**/*.test.ts'],
+  testMatch: ['**/libs/shared/test/unit/**/*.test.ts'],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   collectCoverageFrom: [
-    'src/shared/filters/**/*.ts',
-    'src/shared/modules/**/*.ts',
-    'src/shared/pipes/**/*.ts',
+    '**/libs/shared/src/**/*.ts',
+  ],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/libs/shared/src/enums',
+    '<rootDir>/libs/shared/src/modules/db',
+    '<rootDir>/libs/shared/src/modules/config',
+    '<rootDir>/libs/shared/src/modules/jwt',
   ],
   // coverageThreshold: {
   //   global: {
@@ -23,10 +27,10 @@ const config: Config.InitialOptions = {
   coverageDirectory: './coverage/shared/unit',
   coverageReporters: ['lcov'],
   moduleNameMapper: {
-    '@admin/(.*)': '<rootDir>/src/apps/admin/$1',
-    '@entities/(.*)': '<rootDir>/src/entities/$1',
-    '@shared/(.*)': '<rootDir>/src/shared/$1',
-    '@test/(.*)': '<rootDir>/test/$1',
+    '@admin/(.*)': '<rootDir>/apps/admin/src/$1',
+    '@shared/(.*)': '<rootDir>/libs/shared/src/$1',
+    '@entities/(.*)': '<rootDir>/libs/entities/src/$1',
+    '@test/(.*)': '<rootDir>/libs/test/src/$1',
   },
 };
 

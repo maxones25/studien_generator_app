@@ -2,12 +2,12 @@ import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
   roots: ['.'],
-  testMatch: ['**/admin/integration/**/*.test.ts'],
+  testMatch: ['**/apps/admin/test/integration/**/*.test.ts'],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  collectCoverageFrom: ['src/apps/admin/**/*.ts'],
+  collectCoverageFrom: ['apps/admin/src/**/*.ts'],
   // coverageThreshold: {
   //   global: {
   //     branches: 80,
@@ -19,10 +19,10 @@ const config: Config.InitialOptions = {
   coverageDirectory: './coverage/admin/integration',
   coverageReporters: ['lcov'],
   moduleNameMapper: {
-    '@admin/(.*)': '<rootDir>/src/apps/admin/$1',
-    '@shared/(.*)': '<rootDir>/src/shared/$1',
-    '@entities/(.*)': '<rootDir>/src/entities/$1',
-    '@test/(.*)': '<rootDir>/test/$1',
+    '@admin/(.*)': '<rootDir>/apps/admin/src/$1',
+    '@shared/(.*)': '<rootDir>/libs/shared/src/$1',
+    '@entities/(.*)': '<rootDir>/libs/entities/src/$1',
+    '@test/(.*)': '<rootDir>/libs/test/src/$1',
   },
 };
 
