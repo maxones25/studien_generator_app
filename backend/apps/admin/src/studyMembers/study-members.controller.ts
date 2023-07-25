@@ -20,13 +20,13 @@ export class StudyMembersController {
   constructor(private readonly studyMembersService: StudyMembersService) {}
 
   @Get()
-  async findMembersByStudy(@Param('studyId') studyId: string) {
+  async getAll(@Param('studyId') studyId: string) {
     return this.studyMembersService.getByStudy(studyId);
   }
 
   @Roles('admin')
   @Post()
-  async addMember(
+  async add(
     @Param('studyId') studyId: string,
     @Body() addMemberDto: AddMemberDto,
   ) {
@@ -35,7 +35,7 @@ export class StudyMembersController {
 
   @Roles('admin')
   @Put(':directorId')
-  async updateMember(
+  async update(
     @Param('studyId') studyId: string,
     @Param('directorId') directorId: string,
     @Body() updatedMember: UpdateMemberDto,
@@ -49,7 +49,7 @@ export class StudyMembersController {
 
   @Roles('admin')
   @Delete(':directorId')
-  async removeMember(
+  async remove(
     @Param('studyId') studyId: string,
     @Param('directorId') directorId: string,
   ) {
