@@ -23,6 +23,12 @@ export const group = () => {
   };
 };
 
+export const entity = () => {
+  return {
+    name: randomName(),
+  };
+};
+
 export const participant = () => {
   return {
     number: faker.number.int({ min: 100000, max: 999999 }).toString(),
@@ -37,4 +43,5 @@ export default {
   study,
   group,
   participant,
+  entity,
 };
