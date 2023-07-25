@@ -29,7 +29,7 @@ export class EntitiesController {
   }
 
   @Get()
-  async getAll(@Param('studyId') studyId: string) {
+  async getAll(@Param('studyId', new ValidateIdPipe()) studyId: string) {
     return this.entitiesService.getAll(studyId);
   }
 
