@@ -33,9 +33,9 @@ export const FormComponent : React.FC<FormComponentProps>= ({
         return <FormTextField 
           label={label}
           formState={form.formState}
-          textFieldProps={form.register(`${formComponent.id}.${formComponent.formFields[0].entityFieldId}`, {
-            required: t("value required"),
-          })}
+          textFieldProps={form.register(`${formComponent.id}.${formComponent.formFields[0].entityFieldId}`, 
+            props.rules
+          )}
         />
       case "Select":
         return <FormSelect {...props} />
