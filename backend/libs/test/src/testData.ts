@@ -1,5 +1,6 @@
 export const TEST_DIRECTOR = {
   MAX: {
+    ID: "d98cd02e-1ebf-49f4-8b9b-df37ad78911e",
     EMAIL: 'max.mustermann@test.de',
     PASSWORD: '12345678',
   },
