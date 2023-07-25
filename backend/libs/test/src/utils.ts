@@ -5,12 +5,12 @@ import { SignupDirectorDto } from '@admin/auth/dtos/SignupDirectorDto';
 import { CreateStudyDto } from '@admin/studies/dtos/createStudyDto';
 import { CreateGroupDto } from '@admin/groups/dtos/CreateGroupDto';
 import { ParticipantDto } from '@admin/participants/dtos/participantDto';
-import { AddMemberDto } from '@admin/studies/members/dtos/AddMemberDto';
 
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
+import { AddMemberDto } from '@admin/studyMembers/dtos/AddMemberDto';
 
 export const createApp = async (AppModule: any) => {
   if (global.__APP__) return global.__APP__;
