@@ -1,6 +1,4 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { InjectEntityManager } from '@nestjs/typeorm';
-import { EntityManager } from 'typeorm';
 import { CreateStudyDto } from './dtos/createStudyDto';
 import { UpdateStudyDto } from './dtos/updateStudyDto';
 import { CreateStudyTransaction } from './transactions/create-study.transaction';
