@@ -10,7 +10,7 @@ export const useUpdateMember = () => {
 
   return useWriteRequest<MemberFormData, unknown>(
     ({ body: { directorId, ...body }, ...options }) =>
-      apiRequest(`/studies/${studyId}/members/${directorId}`, {
+      apiRequest(`/studies/${studyId}/directors/${directorId}`, {
         method: "PUT",
         ...options,
         body,

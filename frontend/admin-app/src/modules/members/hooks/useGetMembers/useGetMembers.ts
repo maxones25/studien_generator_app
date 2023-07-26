@@ -9,6 +9,6 @@ export const useGetMembers = () => {
   const studyId = useStudyId()
   
   return useReadRequest<Member[]>(getGetMembersKey(), (options) =>
-    apiRequest(`/studies/${studyId}/members`, { ...options })
+    apiRequest(`/studies/${studyId}/directors`, { ...options })
   );
 }

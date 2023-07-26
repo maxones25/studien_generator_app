@@ -9,7 +9,7 @@ export const useAddMember = () => {
 
   return useWriteRequest<MemberFormData, void>(
     (options) =>
-      apiRequest(`/studies/${studyId}/members`, { method: "POST", ...options }),
+      apiRequest(`/studies/${studyId}/directors`, { method: "POST", ...options }),
     {
       onSuccess: ({ queryClient, snackbar }) => {
         queryClient.invalidateQueries(getGetMembersKey());

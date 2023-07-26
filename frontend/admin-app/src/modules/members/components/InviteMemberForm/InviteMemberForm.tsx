@@ -24,18 +24,21 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
     values,
   });
 
+  const handleSubmit = (data: MemberFormData) => {
+    onSubmit(data);
+    form.reset();
+  };
+
   return (
     <Form
       {...formProps}
+      form={form}
       sx={{
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
       }}
-      onSubmit={form.handleSubmit((data) => {
-        onSubmit(data);
-        form.reset();
-      })}
+      onSubmit={handleSubmit}
     >
       <FormControl margin="normal" sx={{ flex: 1 }}>
         <Autocomplete
