@@ -14,9 +14,10 @@ import { EntityFieldsService } from './entity-fields.service';
 import { EntityFieldGuard } from './guards/entity-field.guard';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { Roles } from '@admin/roles/roles.decorator';
+import { EntityGuard } from '../entity.guard';
 
 @Controller('studies/:studyId/entities/:entityId/fields')
-@UseGuards(EntityFieldGuard)
+@UseGuards(EntityGuard, EntityFieldGuard)
 export class EntityFieldsController {
   constructor(private readonly entityFieldsService: EntityFieldsService) {}
 
