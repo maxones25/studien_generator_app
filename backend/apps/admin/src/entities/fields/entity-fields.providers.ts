@@ -6,10 +6,6 @@ import { EntityGuard } from '../entity.guard';
 const entityFieldsProviders: Provider[] = [
   EntityFieldsService,
   {
-    provide: EntityGuard,
-    useClass: EntityGuard,
-  },
-  {
     provide: EntityFieldGuard,
     useClass: EntityFieldGuard,
   },

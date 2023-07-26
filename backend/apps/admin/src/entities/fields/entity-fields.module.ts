@@ -3,10 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntityField } from '@entities/entity-field.entity';
 import { EntityFieldsController } from './entity-fields.controller';
 import entityFieldsProviders from './entity-fields.providers';
-import { Entity } from '@entities/entity.entity';
+import { EntitiesModule } from '@admin/entities/entities.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Entity, EntityField])],
+  imports: [TypeOrmModule.forFeature([EntityField]), EntitiesModule],
   providers: entityFieldsProviders,
   controllers: [EntityFieldsController],
 })
