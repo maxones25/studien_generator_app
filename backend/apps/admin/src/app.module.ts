@@ -14,7 +14,6 @@ import { DirectorsModule } from '@admin/directors/directors.module';
 import { EntitiesModule } from '@admin/entities/entities.module';
 import { ParticipantsModule } from '@admin/participants/participants.module';
 import { FormsModule } from '@admin/forms/forms.module';
-import { StudyMembersModule } from '@admin/studyMembers/study-members.module';
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { StudyMembersModule } from '@admin/studyMembers/study-members.module';
     RolesModule,
     DirectorsModule,
     StudiesModule,
-    StudyMembersModule,
     GroupsModule,
     ParticipantsModule,
     ComponentsModule,
