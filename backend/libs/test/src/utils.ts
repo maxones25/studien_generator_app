@@ -10,7 +10,7 @@ import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDt
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
-import { AddMemberDto } from '@admin/studyMembers/dtos/AddMemberDto';
+import { AddMemberDto } from '@admin/studies/members/dtos/AddMemberDto';
 import { CreateEntityDto } from '@admin/entities/dtos/CreateEntityDto';
 
 export const createApp = async (AppModule: any) => {
