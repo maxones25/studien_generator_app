@@ -12,6 +12,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { AddMemberDto } from '@admin/studies/members/dtos/AddMemberDto';
 import { CreateEntityDto } from '@admin/entities/dtos/CreateEntityDto';
+import { CreateFormDto } from '@admin/forms/dtos/CreateFormDto';
+import { CreateFormConfigurationDto } from '@admin/forms/configurations/dtos/CreateFormConfigurationDto';
 
 export const createApp = async (AppModule: any) => {
   // if (global.__APP__) return global.__APP__;
@@ -166,6 +168,39 @@ export const createEntity = (
   new Promise<string>((resolve, reject) => {
     request(app.getHttpServer())
       .post(`/studies/${studyId}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(data)
+      .expect(201)
+      .then((res) => resolve(res.text))
+      .catch((err) => reject(err));
+  });
+
+export const createForm = (
+  app: INestApplication,
+  accessToken: string,
+  studyId: string,
+  data: CreateFormDto,
+) =>
+  new Promise<string>((resolve, reject) => {
+    request(app.getHttpServer())
+      .post(`/studies/${studyId}/forms`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(data)
+      .expect(201)
+      .then((res) => resolve(res.text))
+      .catch((err) => reject(err));
+  });
+
+  export const createFormConfig = (
+  app: INestApplication,
+  accessToken: string,
+  studyId: string,
+  formId: string,
+  data: CreateFormConfigurationDto,
+) =>
+  new Promise<string>((resolve, reject) => {
+    request(app.getHttpServer())
+      .post(`/studies/${studyId}/forms/${formId}/configurations`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send(data)
       .expect(201)

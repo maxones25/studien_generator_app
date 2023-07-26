@@ -1,10 +1,17 @@
 import { faker } from '@faker-js/faker';
 import { FieldType } from '@shared/enums/field-type.enum';
+import { FormConfigType } from '@shared/enums/form-config-type.enum';
+
+const randomEnum = <E>(data: E): E[keyof E] => {
+  const values = Object.values(data) as unknown as E[keyof E][];
+  const index = Math.floor(Math.random() * values.length);
+  return values[index];
+};
 
 const randomName = () =>
   faker.string.alphanumeric({ length: { min: 5, max: 10 } });
 
-export const director = () => {
+const director = () => {
   return {
     email: faker.internet.email(),
     firstName: faker.person.firstName(),
@@ -13,37 +20,48 @@ export const director = () => {
   };
 };
 
-export const study = () => {
+const study = () => {
   return {
     name: randomName(),
   };
 };
 
-export const group = () => {
+const group = () => {
   return {
     name: randomName(),
   };
 };
 
-export const entity = () => {
+const entity = () => {
   return {
     name: randomName(),
   };
 };
 
-const fieldTypes = Object.values(FieldType);
-export const entityField = () => {
+const entityField = () => {
   return {
     name: randomName(),
-    type: Object.values(FieldType)[
-      Math.floor(Math.random() * fieldTypes.length)
-    ],
+    type: randomEnum(FieldType),
   };
 };
 
-export const participant = () => {
+const participant = () => {
   return {
     number: faker.number.int({ min: 100000, max: 999999 }).toString(),
+  };
+};
+
+const form = () => {
+  return {
+    name: randomName(),
+  };
+};
+
+const formConfig = (groupId: string) => {
+  return {
+    isActive: faker.datatype.boolean(),
+    type: randomEnum(FormConfigType),
+    groupId,
   };
 };
 
@@ -57,4 +75,6 @@ export default {
   participant,
   entity,
   entityField,
+  form,
+  formConfig,
 };
