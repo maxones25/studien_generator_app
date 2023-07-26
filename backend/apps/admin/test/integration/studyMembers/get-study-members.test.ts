@@ -12,7 +12,7 @@ import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
 import { Roles } from '@admin/roles/roles.enum';
-import { AddMemberDto } from '@admin/studyMembers/dtos/AddMemberDto';
+import { AddMemberDto } from '@admin/studies/members/dtos/AddMemberDto';
 
 describe('Get Study Members', () => {
   let app: INestApplication;
