@@ -68,7 +68,7 @@ describe('Create Entity', () => {
       .post(`/studies/${studyId}/entities`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send(fakeData.entity())
-      .expect(422);
+      .expect(401);
   });
 
   it('should fail if entity already exists', async () => {

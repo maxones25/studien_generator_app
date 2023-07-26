@@ -1,6 +1,6 @@
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { EntityManager, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { FormConfiguration } from '@entities/form-configuration.entity';
 import { CreateFormConfigurationDto } from './dtos/CreateFormConfigurationDto';
 
@@ -9,8 +9,6 @@ export class FormConfigurationsService {
   constructor(
     @InjectRepository(FormConfiguration)
     private formConfigurations: Repository<FormConfiguration>,
-    @InjectEntityManager()
-    private entityManager: EntityManager,
   ) {}
 
   async create(

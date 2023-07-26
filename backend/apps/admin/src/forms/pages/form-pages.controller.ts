@@ -14,9 +14,10 @@ import { UpdateFormPageDto } from './dtos/UpdateFormPageDto';
 import { FormPageGuard } from './guards/form-page.guard';
 import { Roles } from '@admin/roles/roles.decorator';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
+import { FormGuard } from '../form.guard';
 
 @Controller('studies/:studyId/forms/:formId/pages')
-@UseGuards(FormPageGuard)
+@UseGuards(FormGuard, FormPageGuard)
 export class FormPagesController {
   constructor(private readonly formPagesService: FormPagesService) {}
 

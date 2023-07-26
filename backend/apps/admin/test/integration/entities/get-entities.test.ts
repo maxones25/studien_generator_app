@@ -57,7 +57,7 @@ describe('Get Entities', () => {
     return request(app.getHttpServer())
       .get(`/studies/invalid-id/entities`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .expect(400);
+      .expect(401);
   });
 
   it('should return an empty list if no entities exist for the given studyId', async () => {

@@ -3,7 +3,7 @@ import { FormsService } from './forms.service';
 import { FormsRepository } from './forms.repository';
 import { Form } from '@entities/form.entity';
 import { EntityManager } from 'typeorm';
-import { FormGuard } from './guards/form.guard';
+import { FormGuard } from './form.guard';
 
 const formsProviders: Provider[] = [
   FormsService,

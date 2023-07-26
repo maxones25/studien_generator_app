@@ -10,8 +10,8 @@ export class FormConfigurationsController {
     private readonly formConfigurationService: FormConfigurationsService,
   ) {}
 
-  @Roles('admin', 'employee')
   @Post()
+  @Roles('admin', 'employee')
   async create(
     @Param('studyId', new ValidateIdPipe()) studyId: string,
     @Param('formId', new ValidateIdPipe()) formId: string,
