@@ -22,7 +22,7 @@ export class FormGuard implements CanActivate {
     const formId = request.params.formId;
 
     if (!studyId) throw new UnauthorizedException();
-    if (!formId) true;
+    if (!formId) return true;
 
     const form = await this.formsRepository.findOne({
       where: { studyId, id: formId },

@@ -1,15 +1,14 @@
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
-  rootDir: "../../../../",
+  displayName: 'shared:unit',
+  rootDir: '../../../../',
   testMatch: ['<rootDir>/libs/shared/test/unit/**/*.test.ts'],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  collectCoverageFrom: [
-    '<rootDir>/libs/shared/src/**/*.ts',
-  ],
+  collectCoverageFrom: ['<rootDir>/libs/shared/src/**/*.ts'],
   coveragePathIgnorePatterns: [
     '<rootDir>/libs/shared/src/enums',
     '<rootDir>/libs/shared/src/modules/db',
