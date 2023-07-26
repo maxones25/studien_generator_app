@@ -22,7 +22,7 @@ export class EntityFieldsController {
   constructor(private readonly entityFieldsService: EntityFieldsService) {}
 
   @Post()
-  // @Roles("admin", "employee")
+  @Roles('admin', 'employee')
   async addField(
     @Param('entityId', new ValidateIdPipe()) entityId: string,
     @Body() body: CreateEntityFieldDto,
