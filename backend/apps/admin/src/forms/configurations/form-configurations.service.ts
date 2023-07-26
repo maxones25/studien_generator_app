@@ -1,14 +1,13 @@
-import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 import { FormConfiguration } from '@entities/form-configuration.entity';
 import { CreateFormConfigurationDto } from './dtos/CreateFormConfigurationDto';
+import { FormConfigurationsRepository } from './form-configurations.repository';
 
 @Injectable()
 export class FormConfigurationsService {
   constructor(
-    @InjectRepository(FormConfiguration)
-    private formConfigurations: Repository<FormConfiguration>,
+    @Inject(FormConfigurationsRepository)
+    private formConfigurations: FormConfigurationsRepository,
   ) {}
 
   async create(
@@ -29,29 +28,7 @@ export class FormConfigurationsService {
     return formConfiguration.id;
   }
 
-  async getAll(studyId: string, formId: string) {
-    return this.formConfigurations.find({
-      where: {
-        formId,
-        studyId,
-      },
-      relations: {
-        group: true,
-        form: true,
-      },
-      select: {
-        id: true,
-        isActive: true,
-        type: true,
-        group: {
-          id: true,
-          name: true,
-        },
-        form: {
-          id: true,
-          name: true,
-        },
-      },
-    });
+  async getAll(formId: string) {
+    return this.formConfigurations.getByForm(formId);
   }
 }

@@ -23,9 +23,8 @@ export class FormConfigurationsController {
   @Roles('admin', 'employee')
   @Get()
   async getAll(
-    @Param('studyId', new ValidateIdPipe()) studyId: string,
     @Param('formId', new ValidateIdPipe()) formId: string,
   ) {
-    return this.formConfigurationService.getAll(studyId, formId);
+    return this.formConfigurationService.getAll(formId);
   }
 }
