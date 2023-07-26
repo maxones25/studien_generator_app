@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker';
+import { FieldType } from '@shared/enums/field-type.enum';
 
-const randomName = () => faker.string.alphanumeric({ length: { min: 5, max: 10 } })
+const randomName = () =>
+  faker.string.alphanumeric({ length: { min: 5, max: 10 } });
 
 export const director = () => {
   return {
@@ -29,13 +31,23 @@ export const entity = () => {
   };
 };
 
+const fieldTypes = Object.values(FieldType);
+export const entityField = () => {
+  return {
+    name: randomName(),
+    type: Object.values(FieldType)[
+      Math.floor(Math.random() * fieldTypes.length)
+    ],
+  };
+};
+
 export const participant = () => {
   return {
     number: faker.number.int({ min: 100000, max: 999999 }).toString(),
   };
 };
 
-export const id = () => faker.string.uuid()
+export const id = () => faker.string.uuid();
 
 export default {
   id,
@@ -44,4 +56,5 @@ export default {
   group,
   participant,
   entity,
+  entityField,
 };
