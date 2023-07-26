@@ -19,7 +19,8 @@ export const StudyForm: React.FC<StudyFormProps> = ({
   return (
     <Form
       data-testid="study form"
-      onSubmit={form.handleSubmit(onSubmit)}
+      form={form}
+      onSubmit={onSubmit}
       {...formProps}
     >
       <FormTextField

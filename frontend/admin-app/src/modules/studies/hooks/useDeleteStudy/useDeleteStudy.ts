@@ -8,8 +8,9 @@ export const useDeleteStudy = () => {
     ({ body: { id }, ...options }) =>
       apiRequest(`/studies/${id}`, { method: "DELETE", ...options }),
     {
-      onSuccess: ({ queryClient }) => {
+      onSuccess: ({ queryClient, snackbar }) => {
         queryClient.invalidateQueries(getGetStudiesKey());
+        snackbar.showSuccess(`{{ study deleted }}`)
       },
     }
   );

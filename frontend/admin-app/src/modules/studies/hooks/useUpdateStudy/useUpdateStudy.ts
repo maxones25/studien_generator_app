@@ -8,8 +8,9 @@ export const useUpdateStudy = () => {
     ({ body: { id, ...body }, ...options }) =>
       apiRequest(`/studies/${id}`, { method: "PUT", ...options, body }),
     {
-      onSuccess: ({ queryClient }) => {
+      onSuccess: ({ queryClient, snackbar }) => {
         queryClient.invalidateQueries(getGetStudiesKey());
+        snackbar.showSuccess(`{{ study updated }}`)
       },
     }
   );

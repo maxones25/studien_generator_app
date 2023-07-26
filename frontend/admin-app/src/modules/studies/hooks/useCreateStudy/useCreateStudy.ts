@@ -6,8 +6,9 @@ import { getGetStudiesKey } from "..";
 export const useCreateStudy = () => {
   return useWriteRequest<StudyFormData, Study>((options) =>
     apiRequest(`/studies`, { method: "POST", ...options }), {
-      onSuccess: ({ queryClient }) => {
+      onSuccess: ({ queryClient, snackbar }) => {
         queryClient.invalidateQueries(getGetStudiesKey())
+        snackbar.showSuccess(`{{ study created }}`)
       }
     }
   );
