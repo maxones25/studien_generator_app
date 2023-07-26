@@ -39,7 +39,13 @@ export const StudiesList: React.FC<StudiesListProps> = ({
   const hasStudies = (getStudies.data?.length ?? 0) > 0;
 
   return (
-    <Column alignItems="center" p={1} boxShadow={1} borderRadius={1}>
+    <Column
+      alignItems="center"
+      p={1}
+      boxShadow={1}
+      borderRadius={1}
+      sx={{ overflowY: "scroll" }}
+    >
       {getStudies.isLoading ? (
         <CircularProgress data-testid="loading studies spinner" />
       ) : getStudies.isError ? (

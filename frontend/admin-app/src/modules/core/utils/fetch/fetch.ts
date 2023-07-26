@@ -47,14 +47,16 @@ export const apiRequest = <Response>(
       headers,
       body: body ? JSON.stringify(body) : undefined,
     })
-      .then(async (res) => {
+      .then((res) => {
+        const contentType = res.headers.get("Content-Type");
         return {
+          res,
           isError: res.status < 200 || 400 <= res.status,
-          text: await res.text(),
+          isJSON: contentType?.startsWith("application/json") ?? false,
         };
       })
-      .then(({ isError, text }) => {
-        const data = text.length > 0 ? JSON.parse(text) : {};
+      .then(async ({ res, isError, isJSON }) => {
+        const data = isJSON ? await res.json() : await res.text();
         if (isError) {
           reject(data as Response);
         } else {

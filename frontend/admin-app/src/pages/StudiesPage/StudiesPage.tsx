@@ -34,7 +34,7 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
 
   return (
     <Page testId="studies page" alignItems="center">
-      <Column mt={6} minWidth="50%">
+      <Column mt={6} mb={3} minWidth="50%" sx={{ overflowY: "hidden" }}>
         <Row justifyContent="space-between" mb={2}>
           <Text variant="h6">{t("studies")}</Text>
           <Button
