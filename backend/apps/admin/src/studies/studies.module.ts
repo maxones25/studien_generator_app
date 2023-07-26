@@ -3,10 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { StudiesController } from './studies.controller';
 import { Study } from '@entities/study.entity';
 import studiesProviders from './studies.providers';
-import { StudyMembersModule } from './members/study-members.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Study]), StudyMembersModule],
+  imports: [TypeOrmModule.forFeature([Study])],
   providers: studiesProviders,
   controllers: [StudiesController],
 })

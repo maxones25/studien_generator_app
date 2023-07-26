@@ -19,6 +19,7 @@ import { FormConfigurationsModule } from '@admin/forms/configurations/form-confi
 import { FormPagesModule } from '@admin/forms/pages/form-pages.module';
 import { FormComponentsModule } from '@admin/forms/pages/components/form-components.module';
 import { EntityFieldsModule } from '@admin/entities/fields/entity-fields.module';
+import { StudyMembersModule } from '@admin/studies/members/study-members.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { EntityFieldsModule } from '@admin/entities/fields/entity-fields.module'
     RolesModule,
     DirectorsModule,
     StudiesModule,
+    StudyMembersModule,
     GroupsModule,
     ParticipantsModule,
     ComponentsModule,
