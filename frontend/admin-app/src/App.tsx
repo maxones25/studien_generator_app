@@ -3,7 +3,7 @@ import router from "./router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { AccessTokenProvider } from "@modules/auth/contexts";
-import { AlertNotification, Theme } from "@modules/core/components";
+import { AlertNotification, GlobalStyle, Theme } from "@modules/core/components";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import Backend from "i18next-http-backend";
@@ -48,6 +48,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <SnackBarProvider>
           <Theme>
+            <GlobalStyle/>
             <AccessTokenProvider>
               <RouterProvider router={router} />
               <ReactQueryDevtools initialIsOpen={false} />
