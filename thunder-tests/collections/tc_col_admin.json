@@ -94,6 +94,13 @@
             "containerId": "",
             "created": "2023-07-19T09:20:11.551Z",
             "sortNum": 35000
+        },
+        {
+            "_id": "90abcdd9-64ac-4fcc-aa9b-29acb5814098",
+            "name": "Forms",
+            "containerId": "8a2ad440-54d7-4bcc-95c6-991869f7fcde",
+            "created": "2023-07-26T10:55:17.196Z",
+            "sortNum": 160000
         }
     ],
     "settings": {
@@ -170,12 +177,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-22T11:04:50.195Z",
-            "modified": "2023-07-24T21:39:32.645Z",
+            "modified": "2023-07-26T10:56:16.695Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{ \n  \"name\": \"My asdsda\"\n}",
+                "raw": "{ \n  \"name\": \"My Study\"\n}",
                 "form": []
             },
             "tests": []
@@ -255,12 +262,12 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-28T16:35:40.316Z",
-            "modified": "2023-07-22T08:20:09.825Z",
+            "modified": "2023-07-26T10:56:36.808Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Gruppe 3\"\n}",
+                "raw": "{\n  \"name\": \"Gruppe 1\"\n}",
                 "form": []
             },
             "tests": []
@@ -788,6 +795,20 @@
             "sortNum": 37500,
             "created": "2023-07-24T18:33:36.688Z",
             "modified": "2023-07-24T18:34:23.061Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c90a77ab-9b32-427e-84e1-eaed63edad63",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "90abcdd9-64ac-4fcc-aa9b-29acb5814098",
+            "name": "get group forms",
+            "url": "/studies/{{studyId}}/groups/{{groupId}}/forms",
+            "method": "GET",
+            "sortNum": 200000,
+            "created": "2023-07-26T10:55:28.864Z",
+            "modified": "2023-07-26T10:57:09.534Z",
             "headers": [],
             "params": [],
             "tests": []

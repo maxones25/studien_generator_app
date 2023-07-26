@@ -55,4 +55,10 @@ export class GroupsController {
   async delete(@Param('groupId', new ValidateIdPipe()) groupId: string) {
     return this.groupsService.delete(groupId);
   }
+
+  @Get(':groupId/forms')
+  @Roles('admin', 'employee')
+  async getForms(@Param('groupId', new ValidateIdPipe()) groupId: string) {
+    return this.groupsService.getForms(groupId);
+  }
 }

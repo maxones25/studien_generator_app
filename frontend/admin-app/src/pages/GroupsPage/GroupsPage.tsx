@@ -75,7 +75,7 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
             onDelete={deleteGroupData.handleSet(group)}
           >
             <ListItemButton
-              onClick={navigate.handle(`${group.id}/entities`)}
+              onClick={navigate.handle(`${group.id}`)}
               selected={groupId === group.id}
             >
               <ListItemText>{group.name}</ListItemText>

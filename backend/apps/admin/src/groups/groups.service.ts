@@ -39,4 +39,10 @@ export class GroupsService {
     const { affected } = await this.groupsRepository.delete(id);
     return affected;
   }
+
+  async getForms(id: string) {
+    // const { affected } = await this.groupsRepository.delete(id);
+    // return affected;
+    return []
+  }
 }

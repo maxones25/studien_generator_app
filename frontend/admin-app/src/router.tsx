@@ -3,6 +3,7 @@ import { StudyContainer } from "@modules/navigation/components";
 import { StudyProvider } from "@modules/studies/contexts";
 import EntitiesPage from "@pages/EntitiesPage/EntitiesPage";
 import EntityPage from "@pages/EntityPage/EntityPage";
+import GroupPage from "@pages/GroupPage/GroupPage";
 import GroupsPage from "@pages/GroupsPage/GroupsPage";
 import LoginPage from "@pages/LoginPage/LoginPage";
 import MembersPage from "@pages/MembersPage/MembersPage";
@@ -65,7 +66,14 @@ const router = createBrowserRouter([
                     <Outlet />
                   </>
                 ),
-                children: [],
+                children: [
+                  {
+                    path: ":groupId",
+                    element: (
+                      <GroupPage/>
+                    )
+                  }
+                ],
               },
               {
                 path: "members",
