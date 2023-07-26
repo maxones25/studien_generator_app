@@ -6,6 +6,7 @@ export interface DataListItemProps<ItemData> {
   item: ItemData;
   children: JSX.Element | JSX.Element[];
   divider?: boolean;
+  disablePadding?: boolean;
   onUpdate?: (item: ItemData) => void;
   onDelete?: (item: ItemData) => void;
 }
@@ -14,6 +15,7 @@ export function DataListItem<ItemData>({
   item,
   children,
   divider = false,
+  disablePadding = true,
   onDelete,
   onUpdate,
 }: DataListItemProps<ItemData>) {
@@ -27,7 +29,7 @@ export function DataListItem<ItemData>({
   return (
     <ListItem
       divider={divider}
-      disablePadding
+      disablePadding={disablePadding}
       secondaryAction={
         <>
           <IconButton onClick={menuAnchor.open}>

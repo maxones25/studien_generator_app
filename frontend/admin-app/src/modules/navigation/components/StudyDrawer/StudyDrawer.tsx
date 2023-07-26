@@ -24,11 +24,15 @@ const menu = [
   },
   {
     path: "groups",
-    label: "configurator",
+    label: "groups",
   },
   {
     path: "participants",
     label: "participants",
+  },
+  {
+    path: "entities",
+    label: "entities",
   },
   {
     path: "data",

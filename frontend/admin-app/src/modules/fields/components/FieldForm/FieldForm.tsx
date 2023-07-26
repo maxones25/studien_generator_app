@@ -46,17 +46,6 @@ export const FieldForm: React.FC<FieldFormProps> = ({
           required: "required",
         })}
       />
-      <Switch
-        label="is global"
-        onChange={(_, checked) => {
-          if (checked) {
-            form.setValue("groupId", null);
-          } else {
-            form.setValue("groupId", groupId);
-          }
-        }}
-        value={!form.watch("groupId")}
-      />
       <FormSelect
         label="Type"
         control={form.control}

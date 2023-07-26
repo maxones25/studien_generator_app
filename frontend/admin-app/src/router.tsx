@@ -65,23 +65,7 @@ const router = createBrowserRouter([
                     <Outlet />
                   </>
                 ),
-                children: [
-                  {
-                    path: ":groupId/entities",
-                    element: (
-                      <>
-                        <EntitiesPage />
-                        <Outlet />
-                      </>
-                    ),
-                    children: [
-                      {
-                        path: ":entityId/:tab",
-                        element: <EntityPage />,
-                      },
-                    ],
-                  },
-                ],
+                children: [],
               },
               {
                 path: "members",
@@ -93,7 +77,18 @@ const router = createBrowserRouter([
               },
               {
                 path: "entities",
-                element: <EntitiesPage />,
+                element: (
+                  <>
+                    <EntitiesPage />
+                    <Outlet />
+                  </>
+                ),
+                children: [
+                  {
+                    path: ":entityId/fields",
+                    element: <EntityPage />,
+                  },
+                ],
               },
             ],
           },
