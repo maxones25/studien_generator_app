@@ -4,12 +4,14 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
+  Unique,
 } from 'typeorm';
 import { Form } from './form.entity';
 import { Entity } from './entity.entity';
 import { FormField } from './form-field.entity';
 
 @TypeOrmEntity()
+@Unique('unique_form_entity', ['formId', 'entityId', 'name'])
 export class FormEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -33,7 +35,7 @@ export class FormEntity {
   @Column()
   name: string;
 
-  @OneToMany(() => FormField, formField => formField.entity)
+  @OneToMany(() => FormField, (formField) => formField.entity)
   fields: FormField[];
 
   @ManyToOne(() => Form, (form) => form.formEntities, {
