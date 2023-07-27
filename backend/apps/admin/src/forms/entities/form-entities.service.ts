@@ -16,7 +16,7 @@ export class FormEntitiesService {
     private entityManager: EntityManager,
   ) {}
 
-  async add(formId: string, { entityId, name }: CreateFormEntityDto) {
+  async create(formId: string, { entityId, name }: CreateFormEntityDto) {
     const formEntity = new FormEntity();
 
     formEntity.entityId = entityId;

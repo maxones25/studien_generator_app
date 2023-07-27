@@ -27,7 +27,7 @@ export class FormEntitiesController {
     @Param('formId', new ValidateIdPipe()) formId: string,
     @Body() body: CreateFormEntityDto,
   ) {
-    return this.formEntitiesService.add(formId, body);
+    return this.formEntitiesService.create(formId, body);
   }
 
   @Roles('admin', 'employee')

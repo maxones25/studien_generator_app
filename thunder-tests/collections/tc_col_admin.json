@@ -196,12 +196,12 @@
             "method": "POST",
             "sortNum": 100000,
             "created": "2023-06-27T15:43:22.833Z",
-            "modified": "2023-07-22T22:17:21.393Z",
+            "modified": "2023-07-27T18:25:09.207Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"HIIT\"\n}",
+                "raw": "{\n  \"name\": \"Schlaf\"\n}",
                 "form": []
             },
             "tests": []
@@ -460,12 +460,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-07-12T14:18:20.091Z",
-            "modified": "2023-07-27T14:56:35.378Z",
+            "modified": "2023-07-27T18:26:39.066Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"entityId\": \"{{schlafEntityId}}\",\n  \"name\": \"test\"\n}",
+                "raw": "{\n  \"entityId\": \"{{schlafEntityId}}\",\n  \"name\": \"test1\"\n}",
                 "form": []
             },
             "tests": []
@@ -828,6 +828,25 @@
             "body": {
                 "type": "json",
                 "raw": "{\n  \"isActive\": true\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "901df69a-65b6-4e19-be9d-7eef82794681",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "edb2c300-141d-423c-9b85-ad55b7a483d9",
+            "name": "update form entity",
+            "url": "/studies/{{studyId}}/forms/{{schlafFormId}}/entities/88de3d63-f9f4-4a70-8fde-1e8739f8a274",
+            "method": "PUT",
+            "sortNum": 17500,
+            "created": "2023-07-27T18:26:04.726Z",
+            "modified": "2023-07-27T18:26:55.380Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"test\"\n}",
                 "form": []
             },
             "tests": []
