@@ -26,6 +26,7 @@ Groups
 Formulare
     list all forms
         edit name
+        delete form
         add page
         list all pages
             remove page

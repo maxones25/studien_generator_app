@@ -3,23 +3,19 @@ import { Form } from '@entities/form.entity';
 import { CreateFormDto } from './dtos/CreateFormDto';
 import { UpdateFormDto } from './dtos/UpdateFormDto';
 import { FormsRepository } from './forms.repository';
+import { CreateFormTransaction } from './transactions/CreateFormTransaction';
 
 @Injectable()
 export class FormsService {
   constructor(
     @Inject(FormsRepository)
     private formsRepository: FormsRepository,
+    @Inject(CreateFormTransaction)
+    private createFormTransaction: CreateFormTransaction,
   ) {}
 
-  async create(studyId: string, { name }: CreateFormDto) {
-    const form = new Form();
-
-    form.name = name;
-    form.studyId = studyId;
-
-    await this.formsRepository.insert(form);
-
-    return form.id;
+  async create(studyId: string, data: CreateFormDto) {
+    return this.createFormTransaction.run({studyId, data})
   }
 
   getAll(studyId: string) {

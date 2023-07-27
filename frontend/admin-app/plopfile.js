@@ -4,6 +4,8 @@ const modules = [
   "date",
   "navigation",
   "forms",
+  "formPages",
+  "formComponents",
   "studies",
   "participants",
   "members",

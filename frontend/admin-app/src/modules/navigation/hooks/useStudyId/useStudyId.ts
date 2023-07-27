@@ -1,9 +1,3 @@
-import { useParams } from "react-router-dom";
+import { usePathParam } from "..";
 
-export const useStudyId = () => {
-  const { studyId } = useParams<"studyId">();
-
-  if (typeof studyId !== "string") throw new Error("studyId not found");
-
-  return studyId;
-};
+export const useStudyId = () => usePathParam("studyId")
