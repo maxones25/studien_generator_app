@@ -1,53 +1,39 @@
-import {
-  DataDialog,
-  DataList,
-  DataListItem,
-  Page,
-  Text,
-} from "@modules/core/components";
+import { DataDialog, DataList, DataListItem, IconButton, Page, Text } from "@modules/core/components";
 import { useFormData, useNavigationHelper } from "@modules/core/hooks";
-import { DeleteGroupForm, GroupForm } from "@modules/groups/components";
+import { FormForm } from "@modules/forms/components";
 import {
-  useCreateGroup,
-  useDeleteGroup,
-  useGetGroups,
-  useUpdateGroup,
-} from "@modules/groups/hooks";
-import { GroupFormData } from "@modules/groups/types";
-import { useGroupId } from "@modules/navigation/hooks";
+  useCreateForm,
+  useDeleteForm,
+  useGetForms,
+  useUpdateForm,
+} from "@modules/forms/hooks";
+import { FormFormData } from "@modules/forms/types";
 import { Add } from "@mui/icons-material";
-import {
-  IconButton,
-  ListItemButton,
-  ListItemText,
-  Toolbar,
-} from "@mui/material";
+import { ListItemButton, ListItemText, Toolbar } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-export interface GroupsPageProps {}
+export interface FormsPageProps {}
 
-const GroupsPage: React.FC<GroupsPageProps> = () => {
+const FormsPage: React.FC<FormsPageProps> = () => {
   const { t } = useTranslation();
-  const groupId = useGroupId();
   const navigate = useNavigationHelper();
-  const editGroupData = useFormData<GroupFormData>();
-  const deleteGroupData = useFormData<GroupFormData>();
-  const getGroups = useGetGroups();
-  const createGroup = useCreateGroup();
-  const deleteGroup = useDeleteGroup();
-  const updateGroup = useUpdateGroup();
+  const editGroupData = useFormData<FormFormData>();
+  const deleteGroupData = useFormData<FormFormData>();
+  const getGroups = useGetForms();
+  const createGroup = useCreateForm();
+  const updateGroup = useUpdateForm();
+  const deleteGroup = useDeleteForm();
 
   return (
-    <Page testId="groups page" width={200} boxShadow={6} zIndex={900}>
+    <Page testId="forms page" width={200} boxShadow={6} zIndex={900}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", pl: 2 }}>
         <Text variant="h6">{t("groups")}</Text>
         <IconButton
-          data-testid="create group button"
+          testId="create group button"
           onClick={editGroupData.handleSet({ name: "" })}
-        >
-          <Add />
-        </IconButton>
+          Icon={<Add />}
+        />
       </Toolbar>
       <DataList
         client={getGroups}
@@ -64,7 +50,7 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
           >
             <ListItemButton
               onClick={navigate.handle(`${group.id}`)}
-              selected={groupId === group.id}
+              // selected={groupId === group.id}
             >
               <ListItemText>{group.name}</ListItemText>
             </ListItemButton>
@@ -72,7 +58,7 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
         )}
       />
       <DataDialog
-        Form={GroupForm}
+        Form={FormForm}
         client={editGroupData}
         createTitle={t("create data", { data: t("group") })}
         updateTitle={t("update data", { data: t("group") })}
@@ -80,15 +66,15 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
         onUpdate={updateGroup.mutateAsync}
       />
 
-      <DataDialog
+      {/* <DataDialog
         Form={DeleteGroupForm}
         client={deleteGroupData}
         mode="delete"
         deleteTitle={t("delete data", { data: t("group") })}
         onDelete={deleteGroup.mutateAsync}
-      />
+      /> */}
     </Page>
   );
 };
 
-export default GroupsPage;
+export default FormsPage;

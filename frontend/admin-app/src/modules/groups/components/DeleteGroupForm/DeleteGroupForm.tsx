@@ -5,7 +5,7 @@ import { FormControl } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-export interface DeleteGroupFormProps extends FormProps<GroupFormData, { name: string }> {}
+export interface DeleteGroupFormProps extends FormProps<GroupFormData> {}
 
 export const DeleteGroupForm: React.FC<DeleteGroupFormProps> = ({
   onSubmit,

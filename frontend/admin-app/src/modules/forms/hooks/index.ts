@@ -1,1 +1,5 @@
-export * from './useGetForm/useGetForm'
+export * from './useGetForms/useGetForms'
+export * from './useCreateForm/useCreateForm'
+export * from './useUpdateForm/useUpdateForm'
+export * from './useDeleteForm/useDeleteForm'
+export * from './useGetForms/useGetForms'

@@ -3,6 +3,8 @@ import { UpdateFormConfigurationDto } from '../dtos/UpdateFormConfigurationDto';
 import { FormConfiguration } from '@entities/form-configuration.entity';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import { Task } from '@entities/task.entity';
+import { FormSchedule } from '@entities/form-schedule.entity';
+import { MoreThanOrEqual } from 'typeorm';
 
 type UpdateFormConfigInput = {
   id: string;
@@ -34,8 +36,21 @@ export class UpdateFormConfigTransaction extends Transaction<
     return affected;
   }
 
-  private async deleteTasks(formId: string) {
-    const repo = this.entityManager.getRepository(Task);
-    await repo.delete({ formId });
+  private async deleteTasks(configId: string) {
+    const schedulesRepo = this.entityManager.getRepository(FormSchedule);
+  }
+
+  private async getFormSchedules(configId: string) {
+    const repo = this.entityManager.getRepository(FormSchedule);
+    return repo.find({
+      where: {
+        configId,
+        tasks: {
+          scheduledAt: MoreThanOrEqual(new Date()),
+        },
+      },
+      relations: { tasks: true },
+      select: { id: true, tasks: { id: true } },
+    });
   }
 }

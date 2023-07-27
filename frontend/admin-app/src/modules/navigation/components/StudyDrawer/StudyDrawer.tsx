@@ -31,6 +31,10 @@ const menu = [
     label: "participants",
   },
   {
+    path: "forms",
+    label: "forms",
+  },
+  {
     path: "entities",
     label: "entities",
   },
