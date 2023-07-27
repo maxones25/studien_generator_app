@@ -69,6 +69,7 @@ export const id = () => faker.string.uuid();
 
 export default {
   id,
+  name: randomName,
   director,
   study,
   group,

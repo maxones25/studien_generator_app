@@ -15,8 +15,6 @@ const FormPage: React.FC<FormPageProps> = () => {
   const formId = useFormId();
   const pageNumber = usePageNumber();
 
-  console.log(pageNumber);
-
   return (
     <Page testId="form page">
       <Tabs

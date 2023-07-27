@@ -14,18 +14,25 @@ export class FormEntitiesService {
     private entityManager: EntityManager,
   ) {}
 
-  async add(formId: string, { entityId }: CreateFormEntityDto) {
+  async add(formId: string, { entityId, name }: CreateFormEntityDto) {
     const formEntity = new FormEntity();
 
     formEntity.entityId = entityId;
     formEntity.formId = formId;
+    formEntity.name = name;
 
     await this.formEntitiesRepository.insert(formEntity);
 
-    return formEntity;
+    return formEntity.id;
   }
 
-  async remove(formId: string, entityId: string) {
+  async remove(formId: string, id: string) {
+    const formEntitiy = await this.formEntitiesRepository.findOneOrFail({
+      where: { id },
+    });
+
+    const entityId = formEntitiy.entityId;
+
     return this.entityManager.transaction<DeleteResult>(
       async (entityManager) => {
         const formEntitiesRepository = await entityManager.getRepository(
@@ -36,10 +43,7 @@ export class FormEntitiesService {
           FormComponent,
         );
 
-        const result = await formEntitiesRepository.delete({
-          formId,
-          entityId,
-        });
+        const result = await formEntitiesRepository.delete(id);
 
         const formComponents = await formComponentsRepository.find({
           where: {

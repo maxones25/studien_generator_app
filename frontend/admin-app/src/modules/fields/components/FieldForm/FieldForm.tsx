@@ -27,7 +27,6 @@ export const FieldForm: React.FC<FieldFormProps> = ({
   values,
   formProps,
   isNew,
-  groupId,
 }) => {
   const form = useForm<FieldFormData>({ values });
 
@@ -54,7 +53,9 @@ export const FieldForm: React.FC<FieldFormProps> = ({
         options={[
           { label: "Text", value: "Text" },
           { label: "Nummer", value: "Number" },
+          { label: "Datum und Uhrzeit", value: "DateTime" },
           { label: "Datum", value: "Date" },
+          { label: "Uhrzeit", value: "Time" },
           { label: "Wahrheitswert", value: "Boolean" },
           { label: "Enumeration", value: "Enum" },
         ]}
