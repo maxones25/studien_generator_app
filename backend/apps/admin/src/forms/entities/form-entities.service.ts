@@ -5,6 +5,7 @@ import { FormEntity } from '@entities/form-entity.entity';
 import { CreateFormEntityDto } from './dtos/CreateFormEntityDto';
 import { FormComponent } from '@entities/form-component.entity';
 import { FormEntitiesRepository } from './form-entities.repository';
+import { UpdateFormEntityDto } from './dtos/UpdateFormEntityDto';
 
 @Injectable()
 export class FormEntitiesService {
@@ -29,6 +30,11 @@ export class FormEntitiesService {
 
   async getAll(formId: string) {
     return this.formEntitiesRepository.getAll(formId);
+  }
+
+  async update(id: string, { name }: UpdateFormEntityDto) {
+    const { affected } = await this.formEntitiesRepository.update(id, { name });
+    return affected;
   }
 
   async remove(formId: string, id: string) {

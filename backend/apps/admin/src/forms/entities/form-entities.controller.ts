@@ -39,11 +39,10 @@ export class FormEntitiesController {
   @Put(':entityId')
   @Roles('admin', 'employee')
   async update(
-    @Param('formId', new ValidateIdPipe()) formId: string,
     @Param('entityId', new ValidateIdPipe()) entityId: string,
     @Body() body: UpdateFormEntityDto,
   ) {
-    return 1;
+    return this.formEntitiesService.update(entityId, body);
   }
 
   @Roles('admin')
