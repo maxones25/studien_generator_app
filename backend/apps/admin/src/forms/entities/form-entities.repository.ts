@@ -15,6 +15,7 @@ export class FormEntitiesRepository extends Repository<FormEntity> {
       },
       select: {
         id: true,
+        name: true,
         fields: {
           formComponentId: true,
         },
@@ -31,8 +32,12 @@ export class FormEntitiesRepository extends Repository<FormEntity> {
     });
 
     return items.map(
-      ({ id, entity: { fields: entityFields, ...entity }, fields }) => ({
-        id,
+      ({
+        entity: { fields: entityFields, ...entity },
+        fields,
+        ...formEntity
+      }) => ({
+        ...formEntity,
         entity,
         fields: entityFields.map((field) => ({
           ...field,
