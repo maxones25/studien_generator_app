@@ -10,7 +10,7 @@ export interface RecordedEventsListProps {}
 export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
   
 }) => {
-  const { value: date } = useDateContext();
+  const { date, isFuture } = useDateContext();
   const getFiledRecords = useGetRecordedEventsByDate({ date });
   const navigate = useNavigationHelper();
 
@@ -23,7 +23,10 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            disabled = {isFuture}
+            sx={{ 
+              mr: 2,
+            }}
             onClick={navigate.handle('../events')}
             testId={'add-event'}
             Icon={<AddOutlined />}

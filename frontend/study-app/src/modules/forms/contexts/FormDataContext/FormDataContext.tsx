@@ -22,7 +22,7 @@ const FormDataContext = createContext<FormDataContextValue | undefined>(
 const useFormDataContextValue = () => {
   const { resetForm, formId, taskId } = useFormIdContext();
   const { form } = useFormContext();
-  const { value: date } = useDateContext();
+  const { date: date } = useDateContext();
   const [data, setData] = useState({});
   const [pageNumber, setPageNumber] = useState(0);
   const saveForm = useSaveForm();

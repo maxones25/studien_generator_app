@@ -9,7 +9,7 @@ export interface DatePickerProps {}
 export const DatePicker : React.FC<DatePickerProps>= ({
   
 }) => {
-  const { value: date, increase, decrease } = useDateContext();
+  const { date, increase, decrease } = useDateContext();
   const [open, setOpen] = useState(false);
 
   const handleClick = () => setOpen(!open);

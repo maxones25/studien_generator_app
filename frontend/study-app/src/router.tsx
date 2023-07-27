@@ -5,6 +5,7 @@ import TasksPage from "@pages/TasksPage/TasksPage";
 import { Navigate,  Outlet,  createBrowserRouter } from "react-router-dom";
 import EventsPage from "@pages/Eventspage/EventsPage";
 import { Cacher } from "@modules/core/components";
+import { DateGuard } from "@modules/date/components";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
       },
       {
         path: "events",
-        element: <EventsPage />
+        element: ( 
+          <DateGuard>
+            <EventsPage />
+          </DateGuard>
+        )
       },
       {
         path: "chat",

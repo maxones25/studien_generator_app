@@ -3,15 +3,17 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from "dayjs";
 import 'dayjs/locale/de';
+import { useStoredState } from "@modules/core/hooks";
 
 
 interface DateContextValue {
-  value: Dayjs;
+  date: Dayjs;
   set: (value: Dayjs) => void;
   increase: () => void;
   decrease: () => void;
   locale: string
   setLocale: (value: string) => void;
+  isFuture: boolean;
 }
 
 interface DateProviderProps {
@@ -21,24 +23,35 @@ interface DateProviderProps {
 const DateContext = createContext<DateContextValue | undefined>(undefined);
 
 const useDateContextValue = () => {
-  const [value, set] = useState(dayjs());
-  const [locale, setLocale] = useState('de')
+  const [timeStemp, setTimeStemp] = useStoredState<string>("date", {
+    storage: sessionStorage,
+    defaultValue: dayjs().toString(),
+  });
+  const [locale, setLocale] = useState('de');
+  const date = dayjs(timeStemp);
+
+  const set = (date: Dayjs) => {
+    setTimeStemp(date.toString());
+  }
 
   const increase = () => {
-    set(value.add(1, 'day'));
+    set(date.add(1, 'day'));
   };
 
   const decrease = () => {
-    set(value.subtract(1, 'day'));
+    set(date.subtract(1, 'day'));
   };
 
+  const isFuture = date.isAfter(dayjs(), 'day')
+
   return {
-    value: value.locale(locale),
+    date: date.locale(locale),
     set,
     increase,
     decrease,
     locale,
     setLocale,
+    isFuture
   };
 };
 
