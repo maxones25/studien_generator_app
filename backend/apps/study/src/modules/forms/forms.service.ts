@@ -29,12 +29,45 @@ export class FormsService {
         },
       ],
       relations: {
-        form: true,
+        form: {
+          pages: {
+            components: {
+              formFields: true,
+              attributes:true
+            },
+          },
+        },
       },
       select: {
         form: {
-          name: true,
           id: true,
+          name: true,
+          pages: {
+            title: true,
+            number: true,
+            components: {
+              id:true,
+              type: true,
+              number: true,
+              formFields: {
+                entityFieldId: true,
+              },
+              attributes: {
+                key: true,
+                value: true,
+              }
+            },
+          },
+        },
+      },
+      order: {
+        form: {
+          pages: {
+            number: 'ASC',
+            components: {
+              number: 'ASC',
+            },
+          },
         },
       },
     });

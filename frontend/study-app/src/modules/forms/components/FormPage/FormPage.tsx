@@ -20,6 +20,7 @@ export const FormPage : React.FC<FormPageProps> = ({
     isLastPage,
     handleSubmit, 
     currentPage,
+    isLoading,
   } = useFormDataContext();
 
   return (
@@ -37,8 +38,8 @@ export const FormPage : React.FC<FormPageProps> = ({
         />
       )}
       <FormControl margin="normal">
-        <Button testId={`submit-${currentPage?.title}-form`} type="submit">
-          { isLastPage ? t("save") : t("next") }
+        <Button isLoading={isLoading} testId={`submit-${currentPage?.title}-form`} type="submit">
+          {isLastPage ? t("save") : t("next") }
         </Button>
       </FormControl>
     </Form>

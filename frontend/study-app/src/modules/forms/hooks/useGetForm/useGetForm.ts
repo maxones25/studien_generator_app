@@ -6,11 +6,11 @@ export interface UseGetFormOptions {
   formId: string
 }
 
-export const getGetFormKey = () => ["getForm"];
+export const getGetFormKey = (formId: string) => ["getForm"+formId];
 
-export const useGetForm = (options? : UseGetFormOptions) => {
-  const formId = options?.formId;
-  return useReadRequest<FormData>(getGetFormKey(), (options) =>
+export const useGetForm = (options : UseGetFormOptions) => {
+  const formId = options.formId;
+  return useReadRequest<FormData>(getGetFormKey(formId), (options) =>
   apiRequest(`/forms/${formId}`, { ...options })
   );
 }
