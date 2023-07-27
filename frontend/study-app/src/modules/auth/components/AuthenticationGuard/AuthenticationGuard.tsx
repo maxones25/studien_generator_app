@@ -9,7 +9,7 @@ export interface AuthenticationGuardProps {
 export const AuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
   children,
 }) => {
-  const accessToken = useAccessTokenContext();
+  const accessToken = useAccessTokenContext();  
 
   return accessToken.isValid ? children : <Navigate to="/login" />;
 };

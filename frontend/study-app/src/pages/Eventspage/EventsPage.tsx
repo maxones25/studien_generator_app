@@ -8,7 +8,6 @@ export interface EventsPagePageProps {}
 const EventsPage : React.FC<EventsPagePageProps> = ({
   
 }) => {
-
   return (
     <Page testId="events page">
       <EventsList />

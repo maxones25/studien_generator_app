@@ -7,7 +7,8 @@ import { useDateContext } from "@modules/date/contexts";
 interface FormDataContextValue {
   isLastPage: boolean;
   handleSubmit: (data: Object) => void;
-  currentPage?: FormPageData
+  currentPage?: FormPageData;
+  isLoading: boolean;
 }
 
 interface FormDataProviderProps {
@@ -26,9 +27,9 @@ const useFormDataContextValue = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const saveForm = useSaveForm();
 
-  const handleSubmit = (newData: Object) => {
+  const handleSubmit = async (newData: Object) => {
     if (isLastPage) {
-      save(newData);
+      await save(newData);
       resetForm();
       return;
     }
@@ -36,7 +37,7 @@ const useFormDataContextValue = () => {
     setPageNumber(pageNumber + 1);
   }
 
-  const save = (newData: Object) => {
+  const save = async (newData: Object) => {
     const components: Object = {...data, ...newData};
     const componentsArray = Object.entries(components);
     let entityFields: RecordField[] = [];
@@ -52,7 +53,7 @@ const useFormDataContextValue = () => {
       fields: entityFields,
     } ;
     console.log(record);
-    saveForm.mutateAsync(record);
+    await saveForm.mutateAsync(record);
   }
 
   const addData = (newData: Object) => {
@@ -63,6 +64,7 @@ const useFormDataContextValue = () => {
   const currentPage = form.data?.pages[pageNumber];
 
   return {
+    isLoading: saveForm.isLoading,
     isLastPage,
     handleSubmit,
     currentPage

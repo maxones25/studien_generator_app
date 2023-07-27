@@ -42,25 +42,31 @@ i18n
     },
   });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
 
 const App = () => {
   return (
     <Suspense fallback={<LinearProgress />}>
       <QueryClientProvider client={queryClient}>
-        <SnackBarProvider>
-          <DateProvider>
-            <FormIdProvider>
-              <Theme>
-                <AccessTokenProvider>
-                  <RouterProvider router={router} />
-                  <ReactQueryDevtools initialIsOpen={false} />
-                  <AlertNotification />
-                </AccessTokenProvider>
-              </Theme>
-            </FormIdProvider>
-          </DateProvider>
-        </SnackBarProvider>
+        <AccessTokenProvider>
+          <SnackBarProvider>
+            <DateProvider>
+              <FormIdProvider>
+                <Theme>
+                    <RouterProvider router={router} />
+                    <ReactQueryDevtools initialIsOpen={false} />
+                    <AlertNotification />
+                </Theme>
+              </FormIdProvider>
+            </DateProvider>
+          </SnackBarProvider>
+        </AccessTokenProvider>
       </QueryClientProvider>
     </Suspense>
   );

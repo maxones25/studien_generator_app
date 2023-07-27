@@ -9,12 +9,17 @@ export class FormsController {
   constructor(private readonly formsService: FormsService) {}
 
   @Get(':formId')
-  async getById(@Param('formId', new ValidateIdPipe()) formId: string) {
+  async getById(
+    @Param('formId', new ValidateIdPipe()) formId: string,
+    ) {
     return await this.formsService.getById(formId);
   }
 
   @Get()
-  async getAll(@StudyId() studyId: string, @GroupId() groupId: string) {
+  async getAll(
+    @StudyId() studyId: string, 
+    @GroupId() groupId: string,
+    ) {
     return await this.formsService.getAll(studyId, groupId);
   }
 

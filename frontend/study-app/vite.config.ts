@@ -18,12 +18,13 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       strategies: 'injectManifest',
-      workbox: {
+      injectManifest: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,json}"],
       },
       devOptions: {
         enabled: true,
         type: 'module',
+        navigateFallback: 'index.html'
       },
       manifest: {
         name: 'My Awesome App',
