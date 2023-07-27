@@ -26,7 +26,7 @@ export class FormEntityGuard implements CanActivate {
     if (!formId) throw new UnauthorizedException();
     if (!entityId) return true;
 
-    const formEntity = await this.formEntitiesRepository.find({
+    const formEntity = await this.formEntitiesRepository.findOne({
       where: { id: entityId, formId },
     });
 
