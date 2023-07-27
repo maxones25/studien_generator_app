@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext", "dom"],
+    "types": ["jest", "puppeteer", "jest-puppeteer"],
+    "module": "commonjs"
+  },
+  "include": ["**/*.ts"]
+}

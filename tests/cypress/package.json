@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:admin": "cypress run --spec 'cypress/e2e/admin-app/*' --config-file admin-app.cypress.config.ts",
-    "test:study": "cypress run --spec 'cypress/e2e/study-app/*' --config-file study-app.cypress.config.ts",
+    "test:admin": "cypress run --spec 'e2e/admin-app/*' --config-file admin-app.cypress.config.ts",
+    "test:study": "cypress run --spec 'e2e/study-app/*' --config-file study-app.cypress.config.ts",
     "cypress:open:admin": "cypress open --config-file admin-app.cypress.config.ts",
     "cypress:open:study": "cypress open --config-file study-app.cypress.config.ts"
   },
@@ -18,6 +18,6 @@
     "cypress": "^12.15.0",
     "cypress-localstorage-commands": "^2.2.3",
     "cypress-wait-until": "^2.0.0",
-    "typescript": "^5.0.2"
+    "typescript": "^5.1.6"
   }
 }

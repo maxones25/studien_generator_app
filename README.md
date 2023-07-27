@@ -120,10 +120,12 @@ Starten der Anwendung
 docker-compose -f "prod-docker-compose.yaml" up -d
 ```
 
-Navigiere in den Order tests
+#### Cypress
+
+Navigiere in den Ordner test/cypress 
 
 ```console
-cd tests
+cd tests/cypress
 ```
 
 Teste die Admin App 
@@ -133,6 +135,20 @@ npm run test:admin-app
 ```
 
 Teste die Studien App 
+
+```console
+npm run test:study-app
+```
+
+#### Puppeteer
+
+Navigiere in den Ordner test/puppeteer 
+
+```console
+cd tests/puppeteer
+```
+
+Teste die Studien App
 
 ```console
 npm run test:study-app
