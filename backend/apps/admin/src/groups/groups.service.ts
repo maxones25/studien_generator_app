@@ -4,6 +4,8 @@ import { CreateGroupDto } from './dtos/CreateGroupDto';
 import { UpdateGroupDto } from './dtos/UpdateGroupDto';
 import { GroupsRepository } from './groups.repository';
 import { FormConfigurationsRepository } from '@admin/forms/configurations/form-configurations.repository';
+import { FormConfiguration } from '@entities/form-configuration.entity';
+import { CreateGroupFormConfigDto } from './dtos/CreateGroupFormConfigDto';
 
 @Injectable()
 export class GroupsService {
@@ -43,9 +45,24 @@ export class GroupsService {
     return affected;
   }
 
+  async createForm(
+    studyId: string,
+    groupId: string,
+    { isActive, type }: CreateGroupFormConfigDto,
+  ) {
+    const formConfig = new FormConfiguration();
+
+    formConfig.studyId = studyId;
+    formConfig.groupId = groupId;
+    formConfig.isActive = isActive;
+    formConfig.type = type;
+
+    await this.formConfigurationsRepository.insert(formConfig);
+
+    return formConfig.id;
+  }
+
   async getForms(id: string) {
-    // const { affected } = await this.groupsRepository.delete(id);
-    // return affected;
-    return this.formConfigurationsRepository.getByGroup(id)
+    return this.formConfigurationsRepository.getByGroup(id);
   }
 }

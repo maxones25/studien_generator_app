@@ -9,6 +9,7 @@ import {
 import { Form } from './form.entity';
 import { Participant } from './participant.entity';
 import { Record } from './record.entity';
+import { FormSchedule } from './form-schedule.entity';
 
 @TypeOrmEntity()
 export class Task {
@@ -26,10 +27,16 @@ export class Task {
   modifiedAt: Date;
 
   @Column()
+  participantId: string;
+  
+  @Column()
   formId: string;
 
-  @Column()
-  participantId: string;
+  @Column({ nullable: true })
+  scheduleId: string;
+
+  @Column('datetime')
+  originalScheduledAt: Date;
 
   @Column('datetime')
   scheduledAt: Date;
@@ -37,14 +44,23 @@ export class Task {
   @Column('datetime')
   completedAt: Date;
 
+  @Column('integer')
+  rescheduled: number;
+
   @OneToMany(() => Record, (record) => record.task)
-  record: Record;
+  records: Record[];
 
   @ManyToOne(() => Form, (form) => form.tasks, {
     cascade: true,
     onDelete: 'CASCADE',
   })
   form: Form;
+
+  @ManyToOne(() => FormSchedule, (schedule) => schedule.tasks, {
+    cascade: true,
+    onDelete: 'SET NULL',
+  })
+  schedule: FormSchedule;
 
   @ManyToOne(() => Participant, (participant) => participant.tasks, {
     cascade: true,

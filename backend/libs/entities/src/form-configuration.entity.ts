@@ -4,14 +4,16 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   OneToMany,
+  Unique,
 } from 'typeorm';
 import { Group } from './group.entity';
 import { Study } from './study.entity';
-import { Task } from './task.entity';
 import { Form } from './form.entity';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
+import { FormSchedule } from './form-schedule.entity';
 
 @TypeOrmEntity()
+@Unique("unique_form_config", ["formId", "studyId", "groupId", "type"])
 export class FormConfiguration {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -44,8 +46,8 @@ export class FormConfiguration {
   })
   type: FormConfigType;
 
-  @OneToMany(() => Task, (task) => task.form)
-  tasks: Task[];
+  @OneToMany(() => FormSchedule, (schedule) => schedule.config)
+  schedules: FormSchedule[];
 
   @ManyToOne(() => Form, (form) => form.configurations, {
     cascade: true,

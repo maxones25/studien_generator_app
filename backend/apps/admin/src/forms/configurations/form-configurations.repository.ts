@@ -33,17 +33,12 @@ export class FormConfigurationsRepository extends Repository<FormConfiguration> 
         groupId,
       },
       relations: {
-        group: true,
         form: true,
       },
       select: {
         id: true,
         isActive: true,
         type: true,
-        group: {
-          id: true,
-          name: true,
-        },
         form: {
           id: true,
           name: true,

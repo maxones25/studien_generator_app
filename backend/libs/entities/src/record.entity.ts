@@ -35,8 +35,10 @@ export class Record {
   @Column({ nullable: true })
   taskId: string;
 
-  @ManyToOne(() => Task, (task) => task.record, {
-    cascade: true,
+  @Column()
+  failureReason: string;
+
+  @ManyToOne(() => Task, (task) => task.records, {
     onDelete: 'SET NULL',
   })
   task: Task;

@@ -158,12 +158,12 @@
             "method": "POST",
             "sortNum": 30000,
             "created": "2023-06-22T10:55:38.315Z",
-            "modified": "2023-07-25T14:14:48.167Z",
+            "modified": "2023-07-26T17:17:55.639Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"email\": \"\",\n  \"password\": \"R31sk0ch3r\"\n}",
+                "raw": "{\n  \"email\": \"maximilian.stock@t-online.de\",\n  \"password\": \"{{password}}\"\n}",
                 "form": []
             },
             "tests": []
@@ -634,12 +634,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-07-18T16:09:07.555Z",
-            "modified": "2023-07-18T16:11:50.351Z",
+            "modified": "2023-07-26T17:21:42.239Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"isActive\": true,\n  \"type\": \"TimeIndependent\"\n}",
+                "raw": "{\n  \"isActive\": true,\n  \"type\": \"TimeIndependent\",\n  \"groupId\": \"{{groupId}}\"\n}",
                 "form": []
             },
             "tests": []
@@ -811,6 +811,25 @@
             "modified": "2023-07-26T10:57:09.534Z",
             "headers": [],
             "params": [],
+            "tests": []
+        },
+        {
+            "_id": "9d3548fd-e9dc-4f4f-a4ff-88050b92f0fc",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "58b295ec-0589-42f3-b200-af1a074e5fef",
+            "name": "update form configuration",
+            "url": "/studies/{{studyId}}/forms/{{schlafFormId}}/configurations/4b4b159a-6711-4dfb-bf4a-8a78790ce478",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2023-07-26T20:55:07.985Z",
+            "modified": "2023-07-26T20:56:37.714Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"isActive\": true\n}",
+                "form": []
+            },
             "tests": []
         }
     ]

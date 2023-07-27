@@ -14,6 +14,7 @@ import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { CreateGroupDto } from './dtos/CreateGroupDto';
 import { GroupGuard } from './guards/group.guard';
 import { Roles } from '@admin/roles/roles.decorator';
+import { CreateGroupFormConfigDto } from './dtos/CreateGroupFormConfigDto';
 
 @Controller('studies/:studyId/groups')
 @UseGuards(GroupGuard)
@@ -54,6 +55,16 @@ export class GroupsController {
   @Roles('admin')
   async delete(@Param('groupId', new ValidateIdPipe()) groupId: string) {
     return this.groupsService.delete(groupId);
+  }
+
+  @Post(':groupId/forms')
+  @Roles('admin', 'employee')
+  async createForm(
+    @Param('studyId', new ValidateIdPipe()) studyId: string,
+    @Param('groupId', new ValidateIdPipe()) groupId: string,
+    @Body() body: CreateGroupFormConfigDto,
+  ) {
+    return this.groupsService.createForm(studyId, groupId, body);
   }
 
   @Get(':groupId/forms')

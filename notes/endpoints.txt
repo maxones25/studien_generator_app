@@ -42,3 +42,8 @@ POST    /studies/id/forms/id/fields/id/attributes
 GET     /studies/id/forms/id/fields/id/attributes
 PUT     /studies/id/forms/id/fields/id/attributes/id
 DELETE  /studies/id/forms/id/fields/id/attributes/id
+
+
+/studies/id/groups/id/participants
+/studies/id/groups/id/forms
+/studies/id/groups/id/forms/id/schedules

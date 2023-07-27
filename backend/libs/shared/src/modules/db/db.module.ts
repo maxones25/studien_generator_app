@@ -17,6 +17,7 @@ import { Record } from '@entities/record.entity';
 import { StudyMember } from '@entities/study-member.entity';
 import { Study } from '@entities/study.entity';
 import { Task } from '@entities/task.entity';
+import { FormSchedule } from '@entities/form-schedule.entity';
 
 const DbModule = TypeOrmModule.forRootAsync({
   useFactory: async () => {
@@ -46,6 +47,7 @@ const DbModule = TypeOrmModule.forRootAsync({
         StudyMember,
         Study,
         Task,
+        FormSchedule,
       ],
     };
   },

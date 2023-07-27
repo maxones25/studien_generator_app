@@ -51,16 +51,6 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
           <Add />
         </IconButton>
       </Toolbar>
-      <List disablePadding>
-        <ListItem disablePadding divider sx={{ mt: 1 }}>
-          <ListItemButton
-            onClick={navigate.handle(`all/entities`)}
-            selected={groupId === "all"}
-          >
-            <ListItemText>{t("all")}</ListItemText>
-          </ListItemButton>
-        </ListItem>
-      </List>
       <DataList
         client={getGroups}
         disablePadding
