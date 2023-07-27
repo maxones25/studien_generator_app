@@ -18,9 +18,11 @@ export class FormEntityGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
 
+    const studyId = request.params.studyId;
     const formId = request.params.formId;
     const entityId = request.params.entityId;
 
+    if (!studyId) throw new UnauthorizedException();
     if (!formId) throw new UnauthorizedException();
     if (!entityId) return true;
 
