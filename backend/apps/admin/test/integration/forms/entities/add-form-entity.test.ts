@@ -89,12 +89,79 @@ describe('Add Form Entity', () => {
   it('should fail because formID not exists', () => {
     const name = fakeData.name();
     return request(app.getHttpServer())
-      .post(`/studies/${studyId}/forms/${fakeData.id}/entities`)
+      .post(`/studies/${studyId}/forms/${fakeData.id()}/entities`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         entityId,
         name,
       })
       .expect(401);
+  });
+
+  it('should fail because entityId missing', () => {
+    const name = fakeData.name();
+    return request(app.getHttpServer())
+      .post(`/studies/${studyId}/forms/${formId}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        name,
+      })
+      .expect(400);
+  });
+
+  it('should fail because entityId is empty', () => {
+    const name = fakeData.name();
+    return request(app.getHttpServer())
+      .post(`/studies/${studyId}/forms/${formId}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        name,
+        entityId: '',
+      })
+      .expect(400);
+  });
+
+  it('should fail because entityId is invalid', () => {
+    const name = fakeData.name();
+    return request(app.getHttpServer())
+      .post(`/studies/${studyId}/forms/${formId}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        name,
+        entityId: '123',
+      })
+      .expect(400);
+  });
+
+  it('should fail because name is missing', () => {
+    return request(app.getHttpServer())
+      .post(`/studies/${studyId}/forms/${formId}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        entityId,
+      })
+      .expect(400);
+  });
+
+  it('should fail because name is empty', () => {
+    return request(app.getHttpServer())
+      .post(`/studies/${studyId}/forms/${formId}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        name: '',
+        entityId,
+      })
+      .expect(400);
+  });
+
+  it('should fail because name is invalid', () => {
+    return request(app.getHttpServer())
+      .post(`/studies/${studyId}/forms/${formId}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        name: 123,
+        entityId,
+      })
+      .expect(400);
   });
 });
