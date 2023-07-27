@@ -14,6 +14,7 @@ import { AddMemberDto } from '@admin/studies/members/dtos/AddMemberDto';
 import { CreateEntityDto } from '@admin/entities/dtos/CreateEntityDto';
 import { CreateFormDto } from '@admin/forms/dtos/CreateFormDto';
 import { CreateFormConfigurationDto } from '@admin/forms/configurations/dtos/CreateFormConfigurationDto';
+import { CreateFormEntityDto } from '@admin/forms/entities/dtos/CreateFormEntityDto';
 
 export const createApp = async (AppModule: any) => {
   // if (global.__APP__) return global.__APP__;
@@ -191,7 +192,7 @@ export const createForm = (
       .catch((err) => reject(err));
   });
 
-  export const createFormConfig = (
+export const createFormConfig = (
   app: INestApplication,
   accessToken: string,
   studyId: string,
@@ -206,4 +207,24 @@ export const createForm = (
       .expect(201)
       .then((res) => resolve(res.text))
       .catch((err) => reject(err));
+  });
+
+export const createFormEntity = (
+  app: INestApplication,
+  accessToken: string,
+  studyId: string,
+  formId: string,
+  data: CreateFormEntityDto,
+) =>
+  new Promise<string>((resolve, reject) => {
+    request(app.getHttpServer())
+      .post(`/studies/${studyId}/forms/${formId}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(data)
+      .expect(201)
+      .then((res) => {
+        expect(validateUUID(res.text)).toBeTruthy();
+        resolve(res.text);
+      })
+      .catch(reject);
   });

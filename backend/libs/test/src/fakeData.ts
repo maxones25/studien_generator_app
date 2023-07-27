@@ -65,6 +65,13 @@ const formConfig = (groupId: string) => {
   };
 };
 
+const formEntity = (entityId: string) => {
+  return {
+    name: randomName(),
+    entityId,
+  };
+};
+
 export const id = () => faker.string.uuid();
 
 export default {
@@ -78,4 +85,5 @@ export default {
   entityField,
   form,
   formConfig,
+  formEntity,
 };
