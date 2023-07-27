@@ -6,8 +6,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-export interface DeleteStudyFormProps
-  extends FormProps<StudyFormData, { name: string }> {}
+export interface DeleteStudyFormProps extends FormProps<StudyFormData> {}
 
 export const DeleteStudyForm: React.FC<DeleteStudyFormProps> = ({
   values,

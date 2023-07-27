@@ -1,6 +1,13 @@
-import { DataDialog, DataList, DataListItem, IconButton, Page, Text } from "@modules/core/components";
+import {
+  DataDialog,
+  DataList,
+  DataListItem,
+  IconButton,
+  Page,
+  Text,
+} from "@modules/core/components";
 import { useFormData, useNavigationHelper } from "@modules/core/hooks";
-import { FormForm } from "@modules/forms/components";
+import { DeleteFormForm, FormForm } from "@modules/forms/components";
 import {
   useCreateForm,
   useDeleteForm,
@@ -28,7 +35,7 @@ const FormsPage: React.FC<FormsPageProps> = () => {
   return (
     <Page testId="forms page" width={200} boxShadow={6} zIndex={900}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", pl: 2 }}>
-        <Text variant="h6">{t("groups")}</Text>
+        <Text variant="h6">{t("forms")}</Text>
         <IconButton
           testId="create group button"
           onClick={editGroupData.handleSet({ name: "" })}
@@ -38,8 +45,8 @@ const FormsPage: React.FC<FormsPageProps> = () => {
       <DataList
         client={getGroups}
         disablePadding
-        errorText={t("fetch error data", { data: t("groups") })}
-        noDataText={t("no data found", { data: t("groups") })}
+        errorText={t("fetch error data", { data: t("forms") })}
+        noDataText={t("no data found", { data: t("forms") })}
         renderItem={(group, { isLast }) => (
           <DataListItem
             key={group.id}
@@ -60,19 +67,18 @@ const FormsPage: React.FC<FormsPageProps> = () => {
       <DataDialog
         Form={FormForm}
         client={editGroupData}
-        createTitle={t("create data", { data: t("group") })}
-        updateTitle={t("update data", { data: t("group") })}
+        createTitle={t("create data", { data: t("form") })}
+        updateTitle={t("update data", { data: t("form") })}
         onCreate={createGroup.mutateAsync}
         onUpdate={updateGroup.mutateAsync}
       />
-
-      {/* <DataDialog
-        Form={DeleteGroupForm}
+      <DataDialog
+        Form={DeleteFormForm}
         client={deleteGroupData}
         mode="delete"
-        deleteTitle={t("delete data", { data: t("group") })}
+        deleteTitle={t("delete data", { data: t("form") })}
         onDelete={deleteGroup.mutateAsync}
-      /> */}
+      />
     </Page>
   );
 };

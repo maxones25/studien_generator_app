@@ -25,6 +25,7 @@
   "update data": "{{data}} editieren",
   "delete data": "{{data}} löschen",
   "delete study question": "Wollen Sie die Studie '{{name}}' wirklich löschen? Alle erhobenen Daten werden hierbei ebenfalls gelöscht. Geben Sie hierfür den Namen der Studie ein:",
+  "delete record question": "Wollen Sie {{record}} '{{name}}' wirklich löschen? Geben Sie hierfür den Namen ein:",
   "delete": "Löschen",
   "name unequal study name": "Name entspricht nicht dem Studienname",
   "add member": "Mitarbeiter hinzufügen",

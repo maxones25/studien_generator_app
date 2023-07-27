@@ -11,6 +11,7 @@ import MembersPage from "@pages/MembersPage/MembersPage";
 import ParticipantsPage from "@pages/ParticipantsPage/ParticipantsPage";
 import SignUpPage from "@pages/SignUpPage/SignUpPage";
 import StudiesPage from "@pages/StudiesPage/StudiesPage";
+import TestPage from "@pages/TestPage/TestPage";
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -38,6 +39,12 @@ const router = createBrowserRouter([
       </AuthenticationGuard>
     ),
     children: [
+      {
+        path: "test",
+        element: (
+          <TestPage/>
+        )
+      },
       {
         index: true,
         element: <Navigate to="/studies" />,

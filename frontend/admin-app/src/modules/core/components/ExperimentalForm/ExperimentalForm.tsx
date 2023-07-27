@@ -1,25 +1,26 @@
-import { FormEventHandler } from "react";
-import { Column, ColumnProps } from "../Column/Column";
-import { ReactHookFormDevTools } from "..";
 import {
   FieldValues,
   FormProvider,
   SubmitHandler,
-  UseFormReturn,
+  useForm,
 } from "react-hook-form";
+import { Column, ColumnProps, ReactHookFormDevTools } from "..";
+import { FormEventHandler } from "react";
 
-export interface FormProps<FormData extends FieldValues>
+export interface ExperimentalFormProps<FormData extends FieldValues>
   extends Omit<ColumnProps, "onSubmit"> {
-  form: UseFormReturn<FormData>;
   onSubmit: SubmitHandler<FormData>;
+  values?: FormData;
 }
 
-export function Form<FormData extends FieldValues>({
+export function ExperimentalForm<FormData extends FieldValues>({
   onSubmit,
-  form,
+  values,
   children,
   ...props
-}: FormProps<FormData>) {
+}: ExperimentalFormProps<FormData>) {
+  const form = useForm<FormData>({ values });
+
   const handleSubmit: FormEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -27,7 +28,7 @@ export function Form<FormData extends FieldValues>({
   };
 
   return (
-    <FormProvider {...form}>
+    <FormProvider {...props} {...form}>
       <Column component="form" onSubmit={handleSubmit} {...props}>
         {children}
         <ReactHookFormDevTools />

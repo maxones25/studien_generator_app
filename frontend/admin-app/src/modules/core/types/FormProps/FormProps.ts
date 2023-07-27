@@ -7,5 +7,5 @@ export interface FormProps<SubmitData extends FieldValues> {
   isError?: boolean;
   isLoading?: boolean;
   isNew?: boolean;
-  formProps?: ColumnProps;
+  formProps?: Omit<ColumnProps, "onSubmit">;
 }
