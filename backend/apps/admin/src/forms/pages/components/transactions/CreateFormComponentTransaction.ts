@@ -23,6 +23,7 @@ export class CreateFormComponentTransaction extends Transaction<
     number,
     data,
   }: CreateFormTransactionInput): Promise<string> {
+
     const formComponent = await this.createFormComponent(pageId, number, data);
 
     await this.addFormFields(formComponent.id, data.formFields);
@@ -46,6 +47,8 @@ export class CreateFormComponentTransaction extends Transaction<
     formComponent.number = number;
     formComponent.type = type;
 
+    console.table({ pageId, number, type })
+
     await formComponentsRepo.insert(formComponent);
 
     return formComponent;
@@ -57,13 +60,17 @@ export class CreateFormComponentTransaction extends Transaction<
   ) {
     const formFieldsRepo = await this.entityManager.getRepository(FormField);
 
-    for (const { entityFieldId } of formFields) {
+    for (const { entityId, fieldId } of formFields) {
       const formField = new FormField();
 
-      formField.entityFieldId = entityFieldId;
+      formField.entityId = entityId;
+      formField.entityFieldId = fieldId;
       formField.formComponentId = formComponentId;
 
+      
+      console.table(formField)
       await formFieldsRepo.insert(formField);
+      console.table("done")
     }
   }
 

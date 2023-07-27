@@ -1,15 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, EntityManager, Repository } from 'typeorm';
+import { Inject, Injectable } from '@nestjs/common';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { DeleteResult, EntityManager } from 'typeorm';
 import { FormEntity } from '@entities/form-entity.entity';
 import { CreateFormEntityDto } from './dtos/CreateFormEntityDto';
 import { FormComponent } from '@entities/form-component.entity';
+import { FormEntitiesRepository } from './form-entities.repository';
 
 @Injectable()
 export class FormEntitiesService {
   constructor(
-    @InjectRepository(FormEntity)
-    private formEntitiesRepository: Repository<FormEntity>,
+    @Inject(FormEntitiesRepository)
+    private formEntitiesRepository: FormEntitiesRepository,
     @InjectEntityManager()
     private entityManager: EntityManager,
   ) {}
@@ -24,6 +25,10 @@ export class FormEntitiesService {
     await this.formEntitiesRepository.insert(formEntity);
 
     return formEntity.id;
+  }
+
+  async getAll(formId: string) {
+    return this.formEntitiesRepository.getAll(formId);
   }
 
   async remove(formId: string, id: string) {
@@ -63,31 +68,5 @@ export class FormEntitiesService {
         return result;
       },
     );
-  }
-
-  async getAll(formId: string) {
-    const items = await this.formEntitiesRepository.find({
-      where: {
-        formId,
-      },
-      relations: {
-        entity: {
-          fields: true,
-        },
-      },
-      select: {
-        entity: {
-          id: true,
-          name: true,
-          fields: {
-            id: true,
-            name: true,
-            type: true,
-          },
-        },
-      },
-    });
-
-    return items.map(({ entity }) => entity);
   }
 }

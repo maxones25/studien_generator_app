@@ -83,9 +83,7 @@ export class FormComponentsService {
     formFields,
     attributes,
   }: CreateFormComponentDto) {
-    const entityFieldsIds = formFields.map(
-      ({ entityFieldId }) => entityFieldId,
-    );
+    const entityFieldsIds = formFields.map(({ fieldId }) => fieldId);
 
     await this.componentsService.validateFormComponent(
       type,

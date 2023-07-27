@@ -11,7 +11,10 @@ import { ComponentType } from '@admin/components/component-type.enum';
 
 export class FormFieldDto {
   @IsUUID()
-  entityFieldId: string;
+  entityId: string;
+
+  @IsUUID()
+  fieldId: string;
 }
 
 export class CreateFormComponentDto {

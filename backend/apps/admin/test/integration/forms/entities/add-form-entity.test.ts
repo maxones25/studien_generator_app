@@ -49,4 +49,52 @@ describe('Add Form Entity', () => {
         expect(validateUUID(res.text)).toBeTruthy();
       });
   });
+
+  it('should fail because studyId invalid', () => {
+    const name = fakeData.name();
+    return request(app.getHttpServer())
+      .post(`/studies/invalid-id/forms/${formId}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        entityId,
+        name,
+      })
+      .expect(401);
+  });
+
+  it('should fail because formId invalid', () => {
+    const name = fakeData.name();
+    return request(app.getHttpServer())
+      .post(`/studies/${studyId}/forms/invalid-id/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        entityId,
+        name,
+      })
+      .expect(401);
+  });
+
+  it('should fail because studyId not exists', () => {
+    const name = fakeData.name();
+    return request(app.getHttpServer())
+      .post(`/studies/${fakeData.id()}/forms/${formId}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        entityId,
+        name,
+      })
+      .expect(401);
+  });
+
+  it('should fail because formID not exists', () => {
+    const name = fakeData.name();
+    return request(app.getHttpServer())
+      .post(`/studies/${studyId}/forms/${fakeData.id}/entities`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        entityId,
+        name,
+      })
+      .expect(401);
+  });
 });

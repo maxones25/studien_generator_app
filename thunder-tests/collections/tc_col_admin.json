@@ -277,11 +277,11 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "652d52a0-2ff6-4147-9811-023bf43376fb",
             "name": "get entity by id",
-            "url": "/studies/{{studyId}}/entities/f07822a7-cdb2-4b81-8859-842cd54cbb7a",
+            "url": "/studies/{{studyId}}/entities/{{schlafEntityId}}",
             "method": "GET",
             "sortNum": 120000,
             "created": "2023-06-28T16:58:36.971Z",
-            "modified": "2023-07-22T22:18:34.489Z",
+            "modified": "2023-07-27T15:21:38.086Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -559,12 +559,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-07-12T16:13:42.165Z",
-            "modified": "2023-07-22T15:07:02.382Z",
+            "modified": "2023-07-27T15:26:32.286Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"type\": \"Slider\",\n  \"formFields\": [\n    {\n      \"entityFieldId\": \"{{qualitätEntityFieldId}}\"\n    }\n  ],\n  \"attributes\": [\n    {\n      \"key\": \"label\",\n      \"value\": \"Schlafqualität\"\n    },\n    {\n      \"key\": \"min\",\n      \"value\": 1\n    },\n    {\n      \"key\": \"max\",\n      \"value\": 10\n    }\n  ]\n}",
+                "raw": "{\n  \"type\": \"Slider\",\n  \"formFields\": [\n    {\n      \"entityId\": \"{{schlafFormEntityId}}\",\n      \"fieldId\": \"{{qualitätEntityFieldId}}\"\n    }\n  ],\n  \"attributes\": [\n    {\n      \"key\": \"label\",\n      \"value\": \"Schlafqualität\"\n    },\n    {\n      \"key\": \"min\",\n      \"value\": 1\n    },\n    {\n      \"key\": \"max\",\n      \"value\": 10\n    }\n  ]\n}",
                 "form": []
             },
             "tests": []

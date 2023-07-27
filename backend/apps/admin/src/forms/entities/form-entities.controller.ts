@@ -1,10 +1,12 @@
-import { Controller, Post, Param, Get, Body, Delete } from '@nestjs/common';
+import { Controller, Post, Param, Get, Body, Delete, UseGuards } from '@nestjs/common';
 import { CreateFormEntityDto } from './dtos/CreateFormEntityDto';
 import { FormEntitiesService } from './form-entities.service';
 import { Roles } from '@admin/roles/roles.decorator';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
+import { FormEntityGuard } from './form-entity.guard';
 
 @Controller('studies/:studyId/forms/:formId/entities')
+@UseGuards(FormEntityGuard)
 export class FormEntitiesController {
   constructor(private readonly formEntitiesService: FormEntitiesService) {}
 
