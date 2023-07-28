@@ -7,6 +7,8 @@ export default defineConfig({
       apiUrl: "http://localhost:9000",
     },
     video: false,
-    specPattern: "cypress/e2e/study-app/**/*.cy.{js,jsx,ts,tsx}"
+    specPattern: "e2e/study-app/**/*.cy.{js,jsx,ts,tsx}",
+    supportFile: "support/e2e.{js,jsx,ts,tsx}",
+    screenshotsFolder: "screenshots"
   },
 });

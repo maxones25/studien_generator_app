@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import testData from "../../../testData";
+import testData from "../../testData";
 
 describe("studies page", () => {
   before(() => {

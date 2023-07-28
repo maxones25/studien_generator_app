@@ -1,4 +1,4 @@
-import testData from "../../../testData";
+import testData from "../../testData";
 
 describe("task page", () => {
   it("should show task page", () => {

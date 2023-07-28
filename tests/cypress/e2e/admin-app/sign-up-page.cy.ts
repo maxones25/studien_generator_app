@@ -1,4 +1,4 @@
-import testData from "../../../testData";
+import testData from "../../testData";
 import { faker } from "@faker-js/faker";
 
 describe("sign up page", () => {

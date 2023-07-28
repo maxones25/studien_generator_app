@@ -2,7 +2,7 @@
 
 import "cypress-wait-until";
 import "cypress-localstorage-commands";
-import testData from "../../testData";
+import testData from "../testData";
 
 declare global {
   namespace Cypress {
