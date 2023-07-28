@@ -114,16 +114,16 @@ const router = createBrowserRouter([
                 children: [
                   {
                     path: ":formId",
-                    element: (
-                      <>
-                        <FormPage />
-                      </>
-                    ),
                     children: [
                       {
-                        path: "pages/:pageNumber"
-                      }
-                    ]
+                        index: true,
+                        element: <Navigate to="pages/1" />,
+                      },
+                      {
+                        path: "pages/:pageNumber",
+                        element: <FormPage />,
+                      },
+                    ],
                   },
                 ],
               },

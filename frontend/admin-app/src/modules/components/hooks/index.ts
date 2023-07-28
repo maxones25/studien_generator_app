@@ -1,0 +1,1 @@
+export * from './useGetComponents/useGetComponents'

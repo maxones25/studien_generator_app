@@ -14,9 +14,13 @@ export const useCreateEntity = () => {
         ...options,
       }),
     {
-      onSuccess: ({ variables, queryClient, snackbar }) => {
-        snackbar.showSuccess(`{{ study '${variables.name}' created! }}`);
+      onSuccess: ({ variables, queryClient }) => {
         queryClient.invalidateQueries(getGetEntitiesKey());
+        return {
+          text: "record created",
+          record: "entity",
+          name: variables.name,
+        };
       },
     }
   );
