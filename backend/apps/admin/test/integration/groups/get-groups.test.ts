@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import fakeData from '@test/fakeData';
 import {
   createApp,
@@ -22,7 +22,7 @@ describe('get groups', () => {
   beforeAll(async () => {
     app = await createApp(AppModule);
 
-    const activationPassword = getEnv(app, "ACTIVATION_PASSWORD")
+    const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
 
     const director = fakeData.director();
 

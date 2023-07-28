@@ -6,9 +6,7 @@ import {
   Unique,
   OneToMany,
 } from 'typeorm';
-import { Study } from '.';
-import { EntityField } from '.';
-import { FormEntity } from '.';
+import { Study, EntityField, FormEntity } from '.';
 
 @TypeOrmEntity()
 @Unique('unique_name_for_study', ['name', 'studyId'])

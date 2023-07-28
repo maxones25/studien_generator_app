@@ -4,7 +4,7 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
-import { FormComponent } from './form-component.entity';
+import { FormComponent } from '.';
 
 @TypeOrmEntity()
 export class FormComponentAttribute {

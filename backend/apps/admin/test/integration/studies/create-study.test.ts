@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import fakeData from '@test/fakeData';
 import { createApp, getDirectorAccessToken } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';

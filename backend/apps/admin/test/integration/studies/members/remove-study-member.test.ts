@@ -11,7 +11,7 @@ import {
   getDirectorAccessToken,
   getEnv,
 } from '@test/utils';
-import * as request from 'supertest';
+import request from 'supertest';
 
 describe('Remove Study Member', () => {
   let app: INestApplication;

@@ -8,7 +8,7 @@ import {
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
-import * as request from 'supertest';
+import request from 'supertest';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 
 describe('Create Entity Field', () => {

@@ -8,7 +8,7 @@ import {
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
-import * as request from 'supertest';
+import request from 'supertest';
 
 describe('Get Entities', () => {
   let app: INestApplication;
@@ -76,7 +76,12 @@ describe('Get Entities', () => {
   it('should only return entites of the given study', async () => {
     const studyId = await createStudy(app, accessToken, fakeData.study());
 
-    const entityId = await createEntity(app, accessToken, studyId, fakeData.entity())
+    const entityId = await createEntity(
+      app,
+      accessToken,
+      studyId,
+      fakeData.entity(),
+    );
 
     return request(app.getHttpServer())
       .get(`/studies/${studyId}/entities`)

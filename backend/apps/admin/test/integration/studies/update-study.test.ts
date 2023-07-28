@@ -4,7 +4,7 @@ import { INestApplication } from '@nestjs/common';
 import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
 import { createApp, createStudy, getDirectorAccessToken } from '@test/utils';
-import * as request from 'supertest';
+import request from 'supertest';
 
 describe('Update Study', () => {
   let app: INestApplication;

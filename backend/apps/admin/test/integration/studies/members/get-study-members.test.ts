@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import {
   addMember,
   createApp,
@@ -66,19 +66,23 @@ describe('Get Study Members', () => {
       .expect(200)
       .then((res) => {
         expect(Array.isArray(res.body)).toBeTruthy();
-        expect(res.body.length).toBeGreaterThan(0)
+        expect(res.body.length).toBeGreaterThan(0);
         res.body.forEach(({ role, director }) => {
           const findDirector = directors.find(
             (d) => d.directorId === director.id,
           );
           expect(findDirector).not.toBe(undefined);
-          expect(role).toBe(findDirector.role)
+          expect(role).toBe(findDirector.role);
         });
       });
   });
 
   it('should fail because director is not member of study', async () => {
-    const accessToken = await getDirectorAccessToken(app, TEST_DIRECTOR.JOHN.EMAIL, TEST_DIRECTOR.JOHN.PASSWORD)
+    const accessToken = await getDirectorAccessToken(
+      app,
+      TEST_DIRECTOR.JOHN.EMAIL,
+      TEST_DIRECTOR.JOHN.PASSWORD,
+    );
 
     return request(app.getHttpServer())
       .get(`/studies/invalid-id/directors`)

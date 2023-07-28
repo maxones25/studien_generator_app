@@ -8,7 +8,7 @@ import {
   createStudy,
   getDirectorAccessToken,
 } from '@test/utils';
-import * as request from 'supertest';
+import request from 'supertest';
 
 describe('update group', () => {
   let app: INestApplication;
@@ -64,14 +64,19 @@ describe('update group', () => {
     await request(app.getHttpServer())
       .put(`/studies/${studyId}/groups/${groupId}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({ name: "" })
+      .send({ name: '' })
       .expect(400);
   });
 
   it('should fail because name already exists', async () => {
     const group = fakeData.group();
     await createGroup(app, accessToken, studyId, group);
-    const groupId = await createGroup(app, accessToken, studyId, fakeData.group());
+    const groupId = await createGroup(
+      app,
+      accessToken,
+      studyId,
+      fakeData.group(),
+    );
 
     await request(app.getHttpServer())
       .put(`/studies/${studyId}/groups/${groupId}`)
@@ -82,7 +87,12 @@ describe('update group', () => {
 
   it('should fail because name already exists', async () => {
     const studyId = await createStudy(app, johnAccessToken, fakeData.study());
-    const groupId = await createGroup(app, johnAccessToken, studyId, fakeData.group());
+    const groupId = await createGroup(
+      app,
+      johnAccessToken,
+      studyId,
+      fakeData.group(),
+    );
 
     await request(app.getHttpServer())
       .put(`/studies/${studyId}/groups/${groupId}`)

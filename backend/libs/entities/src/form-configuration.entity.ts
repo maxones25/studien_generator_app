@@ -6,14 +6,11 @@ import {
   OneToMany,
   Unique,
 } from 'typeorm';
-import { Group } from '.';
-import { Study } from '.';
-import { Form } from '.';
-import { FormSchedule } from '.';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
+import { Group, Study, Form, FormSchedule } from '.';
 
 @TypeOrmEntity()
-@Unique("unique_form_config", ["formId", "studyId", "groupId", "type"])
+@Unique('unique_form_config', ['formId', 'studyId', 'groupId', 'type'])
 export class FormConfiguration {
   @PrimaryGeneratedColumn('uuid')
   id: string;

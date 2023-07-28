@@ -8,7 +8,7 @@ import {
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
-import * as request from 'supertest';
+import request from 'supertest';
 
 describe('Update Entity', () => {
   let app: INestApplication;

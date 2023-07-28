@@ -1,4 +1,4 @@
-import * as request from 'supertest';
+import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { createApp, getEnv } from '@test/utils';
 import fakeData from '@test/fakeData';
@@ -106,7 +106,7 @@ describe('signUp director', () => {
       .post('/auth/signUp')
       .send({
         ...fakeData.director(),
-        activationPassword: "wrong-password",
+        activationPassword: 'wrong-password',
       })
       .expect(401);
   });

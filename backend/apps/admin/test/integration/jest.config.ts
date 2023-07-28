@@ -4,9 +4,6 @@ const config: Config.InitialOptions = {
   displayName: 'admin:integration',
   rootDir: '../../../../',
   testMatch: ['<rootDir>/apps/admin/test/integration/**/*.test.ts'],
-  // transform: {
-  //   '^.+\\.tsx?$': 'ts-jest',
-  // },
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
@@ -29,16 +26,6 @@ const config: Config.InitialOptions = {
     '@entities': '<rootDir>/libs/entities/src',
     '@test/(.*)': '<rootDir>/libs/test/src/$1',
   },
-  testTimeout: 8000,
-  maxWorkers: '50%',
-  verbose: false,
-  reporters: [
-    'default',
-    [
-      'jest-slow-test-reporter',
-      { numTests: 8, warnOnSlowerThan: 300, color: true },
-    ],
-  ],
 };
 
 export default config;
