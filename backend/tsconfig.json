@@ -25,6 +25,9 @@
       "@study/*": [
         "apps/study/src/*"
       ],
+      "@entities": [
+        "libs/entities/src"
+      ],
       "@entities/*": [
         "libs/entities/src/*"
       ],

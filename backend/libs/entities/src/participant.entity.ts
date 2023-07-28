@@ -6,11 +6,11 @@ import {
   Unique,
   OneToMany,
 } from 'typeorm';
-import { Group } from './group.entity';
-import { Study } from './study.entity';
-import { ParticipantAttributes } from './participant-attributes.entity';
-import { Record } from './record.entity';
-import { Task } from './task.entity';
+import { Group } from '.';
+import { Study } from '.';
+import { Record } from '.';
+import { Task } from '.';
+import { ParticipantAttributes } from '.';
 
 @Entity()
 @Unique('unique_number_for_study', ['number', 'studyId'])

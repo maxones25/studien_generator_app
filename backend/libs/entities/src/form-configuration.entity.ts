@@ -6,11 +6,11 @@ import {
   OneToMany,
   Unique,
 } from 'typeorm';
-import { Group } from './group.entity';
-import { Study } from './study.entity';
-import { Form } from './form.entity';
+import { Group } from '.';
+import { Study } from '.';
+import { Form } from '.';
+import { FormSchedule } from '.';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
-import { FormSchedule } from './form-schedule.entity';
 
 @TypeOrmEntity()
 @Unique("unique_form_config", ["formId", "studyId", "groupId", "type"])

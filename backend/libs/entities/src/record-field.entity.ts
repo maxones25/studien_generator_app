@@ -4,8 +4,8 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
 } from 'typeorm';
-import { Record } from './record.entity';
-import { EntityField } from './entity-field.entity';
+import { Record } from '.';
+import { EntityField } from '.';
 
 @TypeOrmEntity()
 export class RecordField {

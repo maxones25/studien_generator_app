@@ -6,9 +6,9 @@ import {
   Unique,
   OneToMany,
 } from 'typeorm';
-import { Entity } from './entity.entity';
-import { FormField } from './form-field.entity';
-import { RecordField } from './record-field.entity';
+import { Entity } from '.';
+import { FormField } from '.';
+import { RecordField } from '.';
 import { FieldData } from '@admin/entities/fields/dtos/FieldData';
 import { FieldType } from '@shared/enums/field-type.enum';
 

@@ -6,13 +6,12 @@ import {
   Unique,
   OneToMany,
 } from 'typeorm';
-import { Study } from './study.entity';
-import { FormPage } from './form-page.entity';
-import { Record } from './record.entity';
-import { FormEntity } from './form-entity.entity';
-import { FormConfiguration } from './form-configuration.entity';
-import { Task } from './task.entity';
-import { FormComponent } from './form-component.entity';
+import { Study } from '.';
+import { FormPage } from '.';
+import { Record } from '.';
+import { FormEntity } from '.';
+import { FormConfiguration } from '.';
+import { Task } from '.';
 
 @TypeOrmEntity()
 @Unique('unique_name_for_study', ['studyId', 'name'])

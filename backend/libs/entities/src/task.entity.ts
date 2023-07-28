@@ -6,10 +6,10 @@ import {
   OneToOne,
   OneToMany,
 } from 'typeorm';
-import { Form } from './form.entity';
-import { Participant } from './participant.entity';
-import { Record } from './record.entity';
-import { FormSchedule } from './form-schedule.entity';
+import { Form } from '.';
+import { Participant } from '.';
+import { Record } from '.';
+import { FormSchedule } from '.';
 
 @TypeOrmEntity()
 export class Task {

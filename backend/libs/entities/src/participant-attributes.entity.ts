@@ -4,7 +4,7 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
-import { Participant } from './participant.entity';
+import { Participant } from '.';
 
 @Entity()
 export class ParticipantAttributes {

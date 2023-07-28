@@ -6,9 +6,9 @@ import {
   OneToMany,
   Unique,
 } from 'typeorm';
-import { Form } from './form.entity';
-import { Entity } from './entity.entity';
-import { FormField } from './form-field.entity';
+import { Form } from '.';
+import { Entity } from '.';
+import { FormField } from '.';
 
 @TypeOrmEntity()
 @Unique('unique_form_entity', ['formId', 'entityId', 'name'])

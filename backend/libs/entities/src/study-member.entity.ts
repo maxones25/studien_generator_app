@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, PrimaryColumn } from 'typeorm';
-import { Director } from './director.entity';
-import { Study } from './study.entity';
+import { Director } from '.';
+import { Study } from '.';
 
 @Entity()
 export class StudyMember {

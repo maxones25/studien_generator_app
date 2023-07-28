@@ -4,9 +4,9 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
-import { StudyMember } from './study-member.entity';
-import { Group } from './group.entity';
-import { Participant } from './participant.entity';
+import { StudyMember } from '.';
+import { Group } from '.';
+import { Participant } from '.';
 import { Entity } from './entity.entity';
 import { Form } from './form.entity';
 import { FormConfiguration } from './form-configuration.entity';

@@ -6,8 +6,8 @@ import {
   OneToMany,
   Unique,
 } from 'typeorm';
-import { Study } from './study.entity';
-import { Participant } from './participant.entity';
+import { Study } from '.';
+import { Participant } from '.';
 import { FormConfiguration } from './form-configuration.entity';
 
 @Entity()

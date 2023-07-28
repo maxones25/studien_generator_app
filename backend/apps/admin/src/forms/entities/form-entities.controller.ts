@@ -47,10 +47,7 @@ export class FormEntitiesController {
 
   @Roles('admin')
   @Delete(':entityId')
-  async delete(
-    @Param('formId', new ValidateIdPipe()) formId: string,
-    @Param('entityId', new ValidateIdPipe()) entityId: string,
-  ) {
-    return this.formEntitiesService.remove(formId, entityId);
+  async delete(@Param('entityId', new ValidateIdPipe()) entityId: string) {
+    return this.formEntitiesService.remove(entityId);
   }
 }

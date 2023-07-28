@@ -37,42 +37,8 @@ export class FormEntitiesService {
     return affected;
   }
 
-  async remove(formId: string, id: string) {
-    const formEntitiy = await this.formEntitiesRepository.findOneOrFail({
-      where: { id },
-    });
-
-    const entityId = formEntitiy.entityId;
-
-    return this.entityManager.transaction<DeleteResult>(
-      async (entityManager) => {
-        const formEntitiesRepository = await entityManager.getRepository(
-          FormEntity,
-        );
-
-        const formComponentsRepository = await entityManager.getRepository(
-          FormComponent,
-        );
-
-        const result = await formEntitiesRepository.delete(id);
-
-        const formComponents = await formComponentsRepository.find({
-          where: {
-            page: {
-              formId,
-            },
-            formFields: {
-              entityField: {
-                entityId,
-              },
-            },
-          },
-        });
-
-        await formComponentsRepository.remove(formComponents);
-
-        return result;
-      },
-    );
+  async remove(id: string) {
+    const { affected } = await this.formEntitiesRepository.delete(id);
+    return affected;
   }
 }

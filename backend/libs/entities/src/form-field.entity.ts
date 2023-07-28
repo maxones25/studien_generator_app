@@ -1,13 +1,12 @@
 import {
   Entity as TypeOrmEntity,
   ManyToOne,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
   Column,
 } from 'typeorm';
-import { EntityField } from './entity-field.entity';
-import { FormComponent } from './form-component.entity';
-import { FormEntity } from './form-entity.entity';
+import { EntityField } from '.';
+import { FormComponent } from '.';
+import { FormEntity } from '.';
 
 @TypeOrmEntity()
 export class FormField {

@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { StudyMember } from './study-member.entity';
+import { StudyMember } from '.';
 
 @Entity()
 export class Director {
