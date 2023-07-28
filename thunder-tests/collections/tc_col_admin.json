@@ -211,16 +211,16 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "07252029-2922-4cef-b19c-bd2bfb55a37b",
             "name": "create field",
-            "url": "/studies/{{studyId}}/entities/f07822a7-cdb2-4b81-8859-842cd54cbb7a/fields",
+            "url": "/studies/{{studyId}}/entities/{{schlafEntityId}}/fields",
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-28T14:17:22.858Z",
-            "modified": "2023-07-22T22:18:16.396Z",
+            "modified": "2023-07-28T08:52:46.432Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"test\",\n  \"type\": \"DateTime\"\n}",
+                "raw": "{\n  \"name\": \"Qualität\",\n  \"type\": \"Number\"\n}",
                 "form": []
             },
             "tests": []
@@ -460,12 +460,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-07-12T14:18:20.091Z",
-            "modified": "2023-07-27T18:26:39.066Z",
+            "modified": "2023-07-28T08:53:19.413Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"entityId\": \"{{schlafEntityId}}\",\n  \"name\": \"test1\"\n}",
+                "raw": "{\n  \"entityId\": \"{{schlafEntityId}}\",\n  \"name\": \"Schlaf\"\n}",
                 "form": []
             },
             "tests": []
@@ -475,11 +475,11 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "edb2c300-141d-423c-9b85-ad55b7a483d9",
             "name": "delete form entity",
-            "url": "/studies/{{studyId}}/forms/{{schlafFormId}}/entities/{{schlafEntityId}}",
+            "url": "/studies/{{studyId}}/forms/{{schlafFormId}}/entities/73e5d317-257f-496e-843b-1860a307418a",
             "method": "DELETE",
             "sortNum": 20000,
             "created": "2023-07-12T14:29:00.066Z",
-            "modified": "2023-07-12T14:29:32.444Z",
+            "modified": "2023-07-28T08:54:14.029Z",
             "headers": [],
             "params": [],
             "tests": []

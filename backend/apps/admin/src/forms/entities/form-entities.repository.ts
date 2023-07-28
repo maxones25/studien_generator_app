@@ -11,13 +11,19 @@ export class FormEntitiesRepository extends Repository<FormEntity> {
         entity: {
           fields: true,
         },
-        fields: true,
+        fields: {
+          formComponent: true,
+        },
       },
       select: {
         id: true,
         name: true,
         fields: {
-          formComponentId: true,
+          formComponent: {
+            id: true,
+            type: true,
+          },
+          entityFieldId: true,
         },
         entity: {
           id: true,
@@ -41,9 +47,9 @@ export class FormEntitiesRepository extends Repository<FormEntity> {
         entity,
         fields: entityFields.map((field) => ({
           ...field,
-          componentId:
+          component:
             fields.find((formfield) => formfield.entityFieldId === field.id)
-              ?.formComponentId ?? null,
+              ?.formComponent ?? null,
         })),
       }),
     );
