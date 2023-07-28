@@ -55,5 +55,6 @@
   "configurator": "Konfigurator",
   "chats": "Chats",
   "data": "Daten",
-  "save": "Speichern"
+  "save": "Speichern",
+  "page x": "Seite {{number}}"
 }

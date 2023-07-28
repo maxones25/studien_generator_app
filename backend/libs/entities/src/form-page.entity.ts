@@ -31,9 +31,6 @@ export class FormPage {
   @Column('integer')
   number: number;
 
-  @Column()
-  title: string;
-
   @OneToMany(() => FormComponent, (formComponent) => formComponent.page)
   components: FormComponent[];
 

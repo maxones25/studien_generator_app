@@ -3,14 +3,10 @@ import {
   Post,
   Param,
   Get,
-  Body,
-  Put,
   Delete,
   UseGuards,
 } from '@nestjs/common';
 import { FormPagesService } from './form-pages.service';
-import { CreateFormPageDto } from './dtos/CreateFormPageDto';
-import { UpdateFormPageDto } from './dtos/UpdateFormPageDto';
 import { FormPageGuard } from './guards/form-page.guard';
 import { Roles } from '@admin/roles/roles.decorator';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
@@ -24,22 +20,13 @@ export class FormPagesController {
   @Post()
   async create(
     @Param('formId', new ValidateIdPipe()) formId: string,
-    @Body() body: CreateFormPageDto,
   ) {
-    return this.formPagesService.create(formId, body);
+    return this.formPagesService.create(formId);
   }
 
   @Get()
   async getAll(@Param('formId', new ValidateIdPipe()) formId: string) {
     return this.formPagesService.getAll(formId);
-  }
-
-  @Put(':pageId')
-  async update(
-    @Param('pageId', new ValidateIdPipe()) pageId: string,
-    @Body() body: UpdateFormPageDto,
-  ) {
-    return this.formPagesService.update(pageId, body);
   }
 
   @Roles('admin')

@@ -1,4 +1,4 @@
 export type FormPage = {
   id: string;
-  title: string;
+  number: number;
 };

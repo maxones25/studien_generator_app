@@ -15,7 +15,7 @@ export class DeleteFormPageTransaction extends Transaction<
 
     const result = await this.formPagesRepo.delete(id);
 
-    await this.updateNumberOfFormPages(formPage.id);
+    await this.updateNumberOfFormPages(formPage.formId);
 
     return result;
   }

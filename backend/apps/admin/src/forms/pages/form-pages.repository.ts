@@ -2,13 +2,12 @@ import { FormPage } from '@entities/form-page.entity';
 import { Repository } from 'typeorm';
 
 export class FormPagesRepository extends Repository<FormPage> {
-
   async getAll(formId: string) {
     return this.find({
       where: { formId },
       select: {
         id: true,
-        title: true,
+        number: true,
       },
       order: {
         number: 'ASC',
@@ -20,6 +19,6 @@ export class FormPagesRepository extends Repository<FormPage> {
     const formPages = await this.find({
       where: { formId },
     });
-    return formPages.length + 1
+    return formPages.length + 1;
   }
 }
