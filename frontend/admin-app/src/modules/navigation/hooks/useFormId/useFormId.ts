@@ -1,3 +1,4 @@
 import { usePathParam } from "..";
 
-export const useFormId = () => usePathParam("formId");
+export const useFormId = (required: boolean = true) =>
+  usePathParam("formId", required);

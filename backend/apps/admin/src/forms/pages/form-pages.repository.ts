@@ -21,4 +21,9 @@ export class FormPagesRepository extends Repository<FormPage> {
     });
     return formPages.length + 1;
   }
+
+  async isLastPage(formId: string) {
+    const pages = await this.find({ where: { formId } })
+    return pages.length === 1
+  }
 }

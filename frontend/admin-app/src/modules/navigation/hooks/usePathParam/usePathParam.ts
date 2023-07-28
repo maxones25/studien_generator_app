@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 
-export const usePathParam = (name: string) => {
+export const usePathParam = (name: string, required: boolean = true) => {
   const params = useParams();
 
   const value = params[name];
 
-  if (typeof value !== "string") throw new Error(`${name} not found`);
+  if (required && typeof value !== "string") throw new Error(`${name} not found`);
 
   return value;
 };

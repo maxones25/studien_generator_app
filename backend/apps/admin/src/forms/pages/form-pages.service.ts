@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { FormPage } from '@entities/form-page.entity';
@@ -24,14 +24,18 @@ export class FormPagesService {
 
     await this.formPagesRepository.insert(formPage);
 
-    return formPage.id;
+    return {
+      id: formPage.id,
+      number: formPage.number,
+    };
   }
 
   async getAll(formId: string) {
     return this.formPagesRepository.getAll(formId);
   }
 
-  async delete(id: string) {
+  async delete(formId:string, id: string) {
+    if(await this.formPagesRepository.isLastPage(formId)) throw new BadRequestException("form must have one page")
     return new DeleteFormPageTransaction(this.entityManager).run(id);
   }
 }

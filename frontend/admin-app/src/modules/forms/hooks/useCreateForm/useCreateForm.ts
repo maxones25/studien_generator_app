@@ -10,9 +10,13 @@ export const useCreateForm = () => {
     (options) =>
       apiRequest(`/studies/${studyId}/forms`, { method: "POST", ...options }),
     {
-      onSuccess: ({ queryClient, snackbar, variables }) => {
+      onSuccess: ({ queryClient, variables }) => {
         queryClient.invalidateQueries(getGetFormsKey());
-        snackbar.showSuccess(`{{ form ${variables.name} created }}`);
+        return {
+          text: "record created",
+          record: "form",
+          name: variables.name,
+        };
       },
     }
   );

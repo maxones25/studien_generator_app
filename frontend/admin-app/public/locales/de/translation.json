@@ -56,5 +56,10 @@
   "chats": "Chats",
   "data": "Daten",
   "save": "Speichern",
-  "page x": "Seite {{number}}"
+  "page": "Seite",
+  "page x": "Seite {{number}}",
+  "server error": "Es ist ein Fehler aufgetreten",
+  "form must have one page": "Ein Formular muss min. eine Seite haben",
+  "record created": "{{record}} '{{name}}' wurde erstellt!",
+  "record deleted": "{{record}} '{{name}}' wurde gelöscht!"
 }

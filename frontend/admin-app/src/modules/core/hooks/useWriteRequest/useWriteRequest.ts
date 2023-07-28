@@ -5,6 +5,7 @@ import {
 } from "@modules/core/contexts";
 import { ApiError, WriteQueryFunction } from "@modules/core/types";
 import { RequestHeader } from "@modules/core/utils";
+import { useTranslation } from "react-i18next";
 import {
   QueryClient,
   useMutation,
@@ -20,6 +21,12 @@ export interface WriteRequestOnSuccessOptions<InputData, OutputData> {
   snackbar: SnackBarContextValue;
 }
 
+export type WriteRequestOnSuccessReturnValue = {
+  text: "record created" | "record deleted";
+  record: string;
+  name: string;
+};
+
 export interface WriteRequestOnErrorOptions<InputData, ErrorData> {
   queryClient: QueryClient;
   error: ErrorData;
@@ -31,7 +38,7 @@ export interface WriteRequestOnErrorOptions<InputData, ErrorData> {
 export interface UseWriteRequestOptions<InputData, OutputData, ErrorData> {
   onSuccess?: (
     options: WriteRequestOnSuccessOptions<InputData, OutputData>
-  ) => void;
+  ) => WriteRequestOnSuccessReturnValue | void;
   onError?: (options: WriteRequestOnErrorOptions<InputData, ErrorData>) => void;
   queryOptions?: UseMutationOptions<OutputData, unknown, InputData>;
 }
@@ -46,6 +53,7 @@ export const useWriteRequest = <
 ) => {
   const { queryOptions, onSuccess, onError } = options || {};
 
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const accessToken = useAccessTokenContext();
   const snackbar = useSnackBarContext();
@@ -68,14 +76,30 @@ export const useWriteRequest = <
       ...queryOptions,
       onSuccess: (data, variables, context) => {
         if (onSuccess) {
-          onSuccess({ data, variables, context, queryClient, snackbar });
+          const snackbarConfig = onSuccess({
+            data,
+            variables,
+            context,
+            queryClient,
+            snackbar,
+          });
+          if (snackbarConfig) {
+            snackbar.showSuccess(
+              t(snackbarConfig.text, {
+                record: t(snackbarConfig.record),
+                name: snackbarConfig.name,
+              })
+            );
+          }
         }
       },
       onError: (error, variables, context) => {
         if (onError) {
           onError({ error, variables, context, queryClient, snackbar });
         } else {
-          snackbar.showError(error.message);
+          const translatedMessage = t(error.message);
+          const isSame = translatedMessage === error.message;
+          snackbar.showError(isSame ? t("server error") : translatedMessage);
         }
       },
     }

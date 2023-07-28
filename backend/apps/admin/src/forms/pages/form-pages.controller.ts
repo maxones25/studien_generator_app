@@ -18,9 +18,7 @@ export class FormPagesController {
   constructor(private readonly formPagesService: FormPagesService) {}
 
   @Post()
-  async create(
-    @Param('formId', new ValidateIdPipe()) formId: string,
-  ) {
+  async create(@Param('formId', new ValidateIdPipe()) formId: string) {
     return this.formPagesService.create(formId);
   }
 
@@ -31,7 +29,10 @@ export class FormPagesController {
 
   @Roles('admin')
   @Delete(':pageId')
-  async delete(@Param('pageId', new ValidateIdPipe()) pageId: string) {
-    return this.formPagesService.delete(pageId);
+  async delete(
+    @Param('formId', new ValidateIdPipe()) formId: string,
+    @Param('pageId', new ValidateIdPipe()) pageId: string,
+  ) {
+    return this.formPagesService.delete(formId, pageId);
   }
 }

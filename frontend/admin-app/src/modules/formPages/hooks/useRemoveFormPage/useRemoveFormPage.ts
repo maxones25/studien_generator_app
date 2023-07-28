@@ -3,8 +3,10 @@ import { apiRequest } from "@modules/core/utils";
 import { FormPage } from "@modules/formPages/types";
 import { getGetFormPagesKey } from "..";
 import { useFormId, useStudyId } from "@modules/navigation/hooks";
+import { useTranslation } from "react-i18next";
 
 export const useRemoveFormPage = () => {
+  const { t } = useTranslation();
   const studyId = useStudyId();
   const formId = useFormId();
   return useWriteRequest<FormPage, number>(
@@ -14,9 +16,15 @@ export const useRemoveFormPage = () => {
         ...options,
       }),
     {
-      onSuccess: ({ queryClient, snackbar, variables }) => {
-        queryClient.invalidateQueries(getGetFormPagesKey({ formId, studyId }));
-        snackbar.showSuccess(`{{ page ${variables.title} deleted }}`);
+      onSuccess: ({ queryClient, variables }) => {
+        queryClient.invalidateQueries(
+          getGetFormPagesKey({ formId: formId!, studyId: studyId! })
+        );
+        return {
+          text: "record deleted",
+          record: "page",
+          name: t("page x", { number: variables.number }),
+        };
       },
     }
   );

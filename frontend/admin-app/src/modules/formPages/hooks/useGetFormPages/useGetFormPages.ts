@@ -13,7 +13,7 @@ export const useGetFormPages = () => {
   const formId = useFormId();
 
   return useReadRequest<FormPage[]>(
-    getGetFormPagesKey({ studyId, formId }),
+    getGetFormPagesKey({ studyId: studyId!, formId: formId! }),
     (options) =>
       apiRequest(`/studies/${studyId}/forms/${formId}/pages`, { ...options })
   );
