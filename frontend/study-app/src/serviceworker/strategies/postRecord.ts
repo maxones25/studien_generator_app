@@ -1,13 +1,13 @@
 import { IDBPDatabase, IDBPTransaction } from 'idb';
-import { Strategy, StrategyHandler } from 'workbox-strategies';
+import { Strategy, StrategyHandler, StrategyOptions } from 'workbox-strategies';
 import { Record } from '@modules/forms/types';
 import { Task } from '@modules/tasks/types';
 
 export class PostRecord extends Strategy {
-  private dbPromise: Promise<IDBPDatabase>; 
+  private dbPromise: Promise<IDBPDatabase>;
 
-  constructor(dbPromise: Promise<IDBPDatabase>) {
-    super();
+  constructor(dbPromise: Promise<IDBPDatabase>, options: StrategyOptions) {
+    super(options);
     this.dbPromise = dbPromise;
   }
 
