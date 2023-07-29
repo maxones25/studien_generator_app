@@ -14,9 +14,15 @@ export const useDeleteGroup = () => {
         ...options,
       }),
     {
-      onSuccess: ({ variables, queryClient, snackbar }) => {
-        snackbar.showSuccess(`{{ group '${variables.name}' deleted! }}`);
+      onSuccess: ({ variables, queryClient }) => {
         queryClient.invalidateQueries(getGetGroupsKey());
+        return {
+          text: "record deleted",
+          params: {
+            record: "group",
+            name: variables.name,
+          },
+        };
       },
     }
   );

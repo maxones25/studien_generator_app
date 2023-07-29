@@ -15,9 +15,15 @@ export const useUpdateEntity = () => {
         body,
       }),
     {
-      onSuccess: ({ variables, queryClient, snackbar }) => {
-        snackbar.showSuccess(`{{ study '${variables.name}' updated! }}`);
+      onSuccess: ({ variables, queryClient }) => {
         queryClient.invalidateQueries(getGetEntitiesKey());
+        return {
+          text: "record updated",
+          params: {
+            record: "entity",
+            name: variables.name,
+          },
+        };
       },
     }
   );

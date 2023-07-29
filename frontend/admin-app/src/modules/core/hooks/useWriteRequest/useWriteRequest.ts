@@ -22,9 +22,8 @@ export interface WriteRequestOnSuccessOptions<InputData, OutputData> {
 }
 
 export type WriteRequestOnSuccessReturnValue = {
-  text: "record created" | "record deleted";
-  record: string;
-  name: string;
+  text: "record created" | "record deleted" | "record added" | string;
+  params: Record<string, string>;
 };
 
 export interface WriteRequestOnErrorOptions<InputData, ErrorData> {
@@ -84,12 +83,14 @@ export const useWriteRequest = <
             snackbar,
           });
           if (snackbarConfig) {
-            snackbar.showSuccess(
-              t(snackbarConfig.text, {
-                record: t(snackbarConfig.record),
-                name: snackbarConfig.name,
-              })
-            );
+            const params = Object.keys(snackbarConfig.params).reduce<
+              Record<string, string>
+            >((obj, key) => {
+              obj[key] = t(snackbarConfig.params[key]);
+              return obj;
+            }, {});
+            console.log(params);
+            snackbar.showSuccess(t(snackbarConfig.text, params));
           }
         }
       },

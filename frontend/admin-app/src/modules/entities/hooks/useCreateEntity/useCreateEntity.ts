@@ -18,8 +18,10 @@ export const useCreateEntity = () => {
         queryClient.invalidateQueries(getGetEntitiesKey());
         return {
           text: "record created",
-          record: "entity",
-          name: variables.name,
+          params: {
+            record: "entity",
+            name: variables.name,
+          },
         };
       },
     }

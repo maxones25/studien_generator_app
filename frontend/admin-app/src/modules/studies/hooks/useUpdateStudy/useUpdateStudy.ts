@@ -8,9 +8,15 @@ export const useUpdateStudy = () => {
     ({ body: { id, ...body }, ...options }) =>
       apiRequest(`/studies/${id}`, { method: "PUT", ...options, body }),
     {
-      onSuccess: ({ queryClient, snackbar }) => {
+      onSuccess: ({ queryClient, variables }) => {
         queryClient.invalidateQueries(getGetStudiesKey());
-        snackbar.showSuccess(`{{ study updated }}`)
+        return {
+          text: "record updated",
+          params: {
+            record: "study",
+            name: variables.name,
+          },
+        };
       },
     }
   );

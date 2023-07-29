@@ -16,10 +16,16 @@ export const useUpdateMember = () => {
         body,
       }),
     {
-      onSuccess: ({ queryClient, snackbar }) => {
+      onSuccess: ({ queryClient, variables }) => {
         queryClient.invalidateQueries(getGetStudyKey());
         queryClient.invalidateQueries(getGetMembersKey());
-        snackbar.showSuccess(`{{ member updated! }}`);
+        return {
+          text: "record updated",
+          params: {
+            record: "member",
+            name: variables.directorId,
+          },
+        };
       },
     }
   );

@@ -16,14 +16,16 @@ export const useRemoveFormPage = () => {
         ...options,
       }),
     {
-      onSuccess: ({ queryClient, variables }) => {
+      onSuccess: ({ queryClient, variables: { number } }) => {
         queryClient.invalidateQueries(
           getGetFormPagesKey({ formId: formId!, studyId: studyId! })
         );
         return {
           text: "record deleted",
-          record: "page",
-          name: t("page x", { number: variables.number }),
+          params: {
+            record: "page",
+            name: t("page x", { number }),
+          },
         };
       },
     }

@@ -14,9 +14,15 @@ export const useUpdateForm = () => {
         ...options,
       }),
     {
-      onSuccess: ({ queryClient, snackbar, variables }) => {
+      onSuccess: ({ queryClient, variables }) => {
         queryClient.invalidateQueries(getGetFormsKey());
-        snackbar.showSuccess(`{{ form ${variables.name} updated }}`);
+        return {
+          text: "record  updated",
+          params: {
+            record: "form",
+            name: variables.name,
+          },
+        };
       },
     }
   );

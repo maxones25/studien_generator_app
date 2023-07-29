@@ -11,9 +11,15 @@ export const useCreateGroup = () => {
     (options) =>
       apiRequest(`/studies/${studyId}/groups`, { method: "POST", ...options }),
     {
-      onSuccess: ({ data, snackbar, queryClient }) => {
-        snackbar.showSuccess(`{{ group '${data.name}' created! }}`);
+      onSuccess: ({ variables, queryClient }) => {
         queryClient.invalidateQueries(getGetGroupsKey());
+        return {
+          text: "record created",
+          params: {
+            record: "group",
+            name: variables.name,
+          },
+        };
       },
     }
   );

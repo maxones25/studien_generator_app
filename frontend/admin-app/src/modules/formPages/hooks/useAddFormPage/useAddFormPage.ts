@@ -21,8 +21,10 @@ export const useAddFormPage = () => {
         );
         return {
           text: "record created",
-          record: "page",
-          name: t("page x", { number }),
+          params: {
+            record: "page",
+            name: t("page x", { number }),
+          },
         };
       },
     }

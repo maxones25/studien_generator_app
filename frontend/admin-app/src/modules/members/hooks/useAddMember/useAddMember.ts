@@ -9,11 +9,20 @@ export const useAddMember = () => {
 
   return useWriteRequest<MemberFormData, void>(
     (options) =>
-      apiRequest(`/studies/${studyId}/directors`, { method: "POST", ...options }),
+      apiRequest(`/studies/${studyId}/directors`, {
+        method: "POST",
+        ...options,
+      }),
     {
-      onSuccess: ({ queryClient, snackbar }) => {
+      onSuccess: ({ queryClient, variables }) => {
         queryClient.invalidateQueries(getGetMembersKey());
-        snackbar.showSuccess(`{{ member added! }}`);
+        return {
+          text: "record added",
+          params: {
+            name: variables.directorId,
+            record: "member",
+          },
+        };
       },
     }
   );

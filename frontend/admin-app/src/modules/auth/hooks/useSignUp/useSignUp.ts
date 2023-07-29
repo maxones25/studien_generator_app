@@ -3,7 +3,17 @@ import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 
 export const useSignUp = () => {
-  return useWriteRequest<SignUpFormData, void>((options) =>
-    apiRequest(`/auth/signUp`, { method: "POST", ...options })
+  return useWriteRequest<SignUpFormData, void>(
+    (options) => apiRequest(`/auth/signUp`, { method: "POST", ...options }),
+    {
+      onSuccess: ({ variables }) => {
+        return {
+          text: "sign up successfull",
+          params: {
+            email: variables.email,
+          },
+        };
+      },
+    }
   );
 };

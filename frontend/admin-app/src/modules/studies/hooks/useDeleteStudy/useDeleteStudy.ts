@@ -8,9 +8,15 @@ export const useDeleteStudy = () => {
     ({ body: { id }, ...options }) =>
       apiRequest(`/studies/${id}`, { method: "DELETE", ...options }),
     {
-      onSuccess: ({ queryClient, snackbar }) => {
+      onSuccess: ({ queryClient, variables }) => {
         queryClient.invalidateQueries(getGetStudiesKey());
-        snackbar.showSuccess(`{{ study deleted }}`)
+        return {
+          text: "record deleted",
+          params: {
+            record: "study",
+            name: variables.name,
+          },
+        };
       },
     }
   );

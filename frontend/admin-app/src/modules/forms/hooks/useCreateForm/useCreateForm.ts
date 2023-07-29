@@ -14,8 +14,10 @@ export const useCreateForm = () => {
         queryClient.invalidateQueries(getGetFormsKey());
         return {
           text: "record created",
-          record: "form",
-          name: variables.name,
+          params: {
+            record: "form",
+            name: variables.name,
+          },
         };
       },
     }

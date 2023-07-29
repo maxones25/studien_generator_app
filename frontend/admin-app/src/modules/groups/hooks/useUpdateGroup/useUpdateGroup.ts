@@ -7,12 +7,24 @@ import { getGetGroupsKey } from "..";
 export const useUpdateGroup = () => {
   const studyId = useStudyId();
 
-  return useWriteRequest<GroupFormData, void>(({ body: { id, ...body }, ...options }) =>
-    apiRequest(`/studies/${studyId}/groups/${id}`, { method: "PUT", ...options, body }), {
-      onSuccess: ({ variables, queryClient, snackbar }) => {
-        snackbar.showSuccess(`{{ group '${variables.name}' updated!}}`)
-        queryClient.invalidateQueries(getGetGroupsKey())
-      }
+  return useWriteRequest<GroupFormData, void>(
+    ({ body: { id, ...body }, ...options }) =>
+      apiRequest(`/studies/${studyId}/groups/${id}`, {
+        method: "PUT",
+        ...options,
+        body,
+      }),
+    {
+      onSuccess: ({ variables, queryClient }) => {
+        queryClient.invalidateQueries(getGetGroupsKey());
+        return {
+          text: "record updated",
+          params: {
+            record: "group",
+            name: variables.name,
+          },
+        };
+      },
     }
   );
 };

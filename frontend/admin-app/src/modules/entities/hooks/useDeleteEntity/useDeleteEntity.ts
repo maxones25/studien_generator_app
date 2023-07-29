@@ -14,9 +14,15 @@ export const useDeleteEntity = () => {
         ...options,
       }),
     {
-      onSuccess: ({ variables, queryClient, snackbar }) => {
-        snackbar.showSuccess(`{{ entity '${variables.name}' deleted! }}`);
+      onSuccess: ({ variables, queryClient }) => {
         queryClient.invalidateQueries(getGetEntitiesKey());
+        return {
+          text: "record deleted",
+          params: {
+            record: "entity",
+            name: variables.name,
+          },
+        };
       },
     }
   );

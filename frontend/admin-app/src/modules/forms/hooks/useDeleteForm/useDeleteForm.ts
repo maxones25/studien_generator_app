@@ -13,9 +13,15 @@ export const useDeleteForm = () => {
         ...options,
       }),
     {
-      onSuccess: ({ queryClient, snackbar, variables }) => {
+      onSuccess: ({ queryClient, variables }) => {
         queryClient.invalidateQueries(getGetFormsKey());
-        snackbar.showSuccess(`{{ form ${variables.name} deleted }}`);
+        return {
+          text: "record deleted",
+          params: {
+            name: variables.name,
+            record: "form",
+          },
+        };
       },
     }
   );
