@@ -7,6 +7,7 @@ const modules = [
   "tasks",
   "chat",
   "events",
+  "settings",
 ];
 
 const types = ["type", "interface"];

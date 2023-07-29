@@ -1,11 +1,11 @@
 import { AppBar as MAppBar, Toolbar, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { ArrowBack, MailOutline, LogoutOutlined } from '@mui/icons-material';
+import { ArrowBack, MailOutline, Menu } from '@mui/icons-material';
 import { useNavigationHelper } from '@modules/core/hooks';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { IconButton } from '@modules/core/components';
-import { LogOutDialog } from '..';
+import { AppBarMenu, LogOutDialog } from '..';
 
 export interface AppBarProps {}
 
@@ -14,6 +14,8 @@ export const AppBar : React.FC<AppBarProps>= () => {
   const path = useLocation().pathname;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+  const anchorRef = React.useRef<HTMLButtonElement>(null);
 
   const changePage = () => {
     if (path === "/tasks")
@@ -23,8 +25,15 @@ export const AppBar : React.FC<AppBarProps>= () => {
 
   const handleClick = () => setOpen(!open);
 
+  const handleToggle = () => {
+    setOpenMenu((prevOpen) => !prevOpen);
+  };
+
   return (
-      <MAppBar position="static">
+      <MAppBar 
+        position="static"
+        ref={anchorRef}
+      >
         <Toolbar>
           <IconButton
             size="large"
@@ -55,11 +64,17 @@ export const AppBar : React.FC<AppBarProps>= () => {
             edge="end"
             color="inherit"
             aria-label="menu"
-            onClick={handleClick}
+            onClick={handleToggle}
             testId='log-out-app-bar'
-            Icon={<LogoutOutlined />}
+            Icon={<Menu />}
           />
         </Toolbar>
+        <AppBarMenu 
+          anchorEl={anchorRef.current}
+          handleClose={handleToggle}
+          handleLogout={handleClick}
+          open={openMenu}
+        />
         <LogOutDialog 
           open={open}
           onClose={handleClick}

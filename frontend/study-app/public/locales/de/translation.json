@@ -2,6 +2,8 @@
   "/tasks": "Aufgaben",
   "/events": "Ereignisse",
   "/chat": "Chat",
+  "/settings": "Einstellungen",
+  "settings": "Einstellungen",
   "send": "Senden",
   "next": "Weiter",
   "id": "ID",

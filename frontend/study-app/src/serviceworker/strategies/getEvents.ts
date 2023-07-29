@@ -26,7 +26,6 @@ export class GetEvents extends Strategy {
         };
         return event;
       });
-      console.log(mappedData)
       return new Response(JSON.stringify(mappedData));
   } 
 }

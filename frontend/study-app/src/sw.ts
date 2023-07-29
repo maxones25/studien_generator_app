@@ -11,6 +11,7 @@ import { GetById } from './serviceworker/strategies/getById'
 import { Record, Task } from '@modules/tasks/types'
 import { GetEvents } from './serviceworker/strategies/getEvents'
 import { BackgroundSyncPlugin } from 'workbox-background-sync'
+import { messageHandler } from './serviceworker/message_handler/messageHandler'
 
 declare let self: ServiceWorkerGlobalScope;
 
@@ -32,6 +33,10 @@ registerRoute(new NavigationRoute(
 
 self.skipWaiting();
 clientsClaim();
+
+self.addEventListener('message', async (event) => {
+  messageHandler(event.data, self);
+})
 
 registerRoute(
   `${BASE_URI}/forms`, 
