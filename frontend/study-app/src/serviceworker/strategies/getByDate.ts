@@ -1,9 +1,8 @@
 import { IDBPDatabase } from "idb";
 import { dateRange, extractParam } from "../utils/utils"
 import { Strategy } from 'workbox-strategies';
-import { Record } from "@modules/tasks/types";
 
-export class GetByDate extends Strategy {
+export class GetByDate<T extends Record<string, any>> extends Strategy {
   private dbPromise: Promise<IDBPDatabase>; 
   private dbName: string;
   private indexName: string;
@@ -20,7 +19,7 @@ export class GetByDate extends Strategy {
   ): Promise<Response | undefined> {
       const db = await this.dbPromise;
       const date = extractParam(request.url);
-      const data: Record[] | undefined = await db.getAllFromIndex(
+      const data: T[] | undefined = await db.getAllFromIndex(
         this.dbName, 
         this.indexName,
         dateRange(date),

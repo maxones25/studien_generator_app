@@ -8,6 +8,8 @@ import { PostRecord } from './serviceworker/strategies/postRecord'
 import { GetData } from './serviceworker/strategies/getData'
 import { GetByDate } from './serviceworker/strategies/getByDate'
 import { GetById } from './serviceworker/strategies/getById'
+import { Record, Task } from '@modules/tasks/types'
+import { GetEvents } from './serviceworker/strategies/getEvents'
 
 declare let self: ServiceWorkerGlobalScope;
 
@@ -36,6 +38,11 @@ registerRoute(
 );
 
 registerRoute(
+  `${BASE_URI}/forms/time/independent`, 
+  new GetEvents(dbPromise)
+);
+
+registerRoute(
   new RegExp(`${BASE_URI}/forms/*`), 
   new GetById(dbPromise, 'forms')
 );
@@ -47,7 +54,7 @@ registerRoute(
 
 registerRoute(
   new RegExp(`${BASE_URI}/tasks/*`), 
-  new GetByDate(dbPromise, 'tasks', 'scheduledAt')
+  new GetByDate<Task>(dbPromise, 'tasks', 'scheduledAt')
 );
 
 registerRoute(
@@ -58,6 +65,6 @@ registerRoute(
 
 registerRoute(
   new RegExp(`${BASE_URI}/records/*`), 
-  new GetByDate(dbPromise, 'records', 'createdAt')
+  new GetByDate<Record>(dbPromise, 'records', 'createdAt')
 );
 

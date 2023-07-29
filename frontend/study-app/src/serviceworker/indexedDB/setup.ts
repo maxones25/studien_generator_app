@@ -1,3 +1,4 @@
+import { FormDataType } from '@modules/forms/types';
 import { openDB } from 'idb';
 
 export const dbPromise = openDB('study-app', 1, {
@@ -29,8 +30,14 @@ export const dbPromise = openDB('study-app', 1, {
     }
   
     if (!db.objectStoreNames.contains('forms')) {
-      const tasks = db.createObjectStore('forms', { keyPath: 'id' });
-      tasks.createIndex('type', 'type', { unique: false });
+      const forms = db.createObjectStore('forms', { keyPath: 'id' });
+      forms.createIndex('type', 'type', { unique: false });
+      forms.add({
+        id:"1",
+        type: FormDataType.TimeIndependent,
+        name:"testevent",
+        
+      });
     }
 }
 });
