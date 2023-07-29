@@ -1,4 +1,4 @@
-import { IDBPDatabase } from 'idb';
+import { IDBPDatabase, IDBPTransaction } from 'idb';
 import { Strategy, StrategyHandler } from 'workbox-strategies';
 import { Record } from '@modules/forms/types';
 import { Task } from '@modules/tasks/types';
@@ -19,10 +19,11 @@ export class PostRecord extends Strategy {
     return request.json()
     .then(async (data) => {
       const record: Record = JSON.parse(data);
+      const tx = db.transaction(['records', 'tasks'], 'readwrite');
       if (record.taskId) {
-        this.putTask(db, record.formId, record.createdAt);
+        this.putTask(tx, record.formId, record.createdAt);
       }
-      await db.add('records', {
+      await tx.objectStore("records").add({
         id: record.id,
         createdAt: record.createdAt,
       });
@@ -30,9 +31,14 @@ export class PostRecord extends Strategy {
     });
   }
 
-  private async putTask(db: IDBPDatabase, formId: string, createdAt: Date) {
-    const task: Task = await db.get('tasks', formId);
+  private async putTask(
+    tx: IDBPTransaction<unknown, string[], 'readwrite'>, 
+    formId: string, 
+    createdAt: Date
+  ) {
+    const objectStore = tx.objectStore("tasks")
+    const task: Task = await objectStore.get(formId);
     task.completedAt = createdAt;
-    await db.put('tasks', task);
+    await objectStore.put(task);
   }
 }
