@@ -27,7 +27,7 @@ export const List : React.FC<ListProps> = ({
           {t(`error: ${title} could not load`)}        
         </Text>
       ) : !hasItems ? (
-        <Text>{t(`no ${title} found`)}</Text>
+        <Text>{t(`no values found`, {value: t(title)})}</Text>
       ) : (
         <MList sx={{ 
           width: "100%",

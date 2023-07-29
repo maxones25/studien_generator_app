@@ -3,6 +3,7 @@ import { FormPageData, Record, RecordField } from "@modules/forms/types";
 import { useFormContext, useFormIdContext } from "..";
 import { useSaveForm } from "@modules/forms/hooks";
 import { useDateContext } from "@modules/date/contexts";
+import { v4 as uuid } from 'uuid';
 
 interface FormDataContextValue {
   isLastPage: boolean;
@@ -47,6 +48,7 @@ const useFormDataContextValue = () => {
       })
     })
     const record: Record = {
+      id: uuid(),
       taskId: taskId,
       createdAt: date.toDate(),
       formId: formId!,

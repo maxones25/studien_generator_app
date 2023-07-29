@@ -92,7 +92,7 @@ export class CreateRecordTransaction extends Transaction<
       select: {
         id: true,
         pages: {
-          title: true,
+          id: true,
           components: {
             id:true,
             formFields: {

@@ -5,7 +5,6 @@ export type FormData = {
 }
 
 export type FormPageData = {
-  title: string,
   components: FormComponentData[],
 }
 

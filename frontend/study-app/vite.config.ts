@@ -18,8 +18,10 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.ts',
       injectManifest: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,json}"],
+        globPatterns: ["**/*.{ts,js,css,html,ico,png,svg,json}"],
       },
       devOptions: {
         enabled: true,

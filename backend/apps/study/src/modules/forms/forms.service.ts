@@ -43,7 +43,6 @@ export class FormsService {
           id: true,
           name: true,
           pages: {
-            title: true,
             number: true,
             components: {
               id:true,
@@ -122,7 +121,6 @@ export class FormsService {
         id: true,
         name: true,
         pages: {
-          title: true,
           number: true,
           components: {
             id:true,

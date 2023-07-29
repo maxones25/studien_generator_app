@@ -1,4 +1,4 @@
-import { Button, Form, Text } from '@modules/core/components';
+import { Button, Form } from '@modules/core/components';
 import React from 'react';
 import { FormComponent } from '..';
 import { FormProps as FormComponentProps } from '@modules/core/components';
@@ -25,11 +25,9 @@ export const FormPage : React.FC<FormPageProps> = ({
 
   return (
     <Form
-      data-testid={`${currentPage?.title}-form`}
       onSubmit={form.handleSubmit(handleSubmit)}
       {...formProps}
     >
-      <Text>{currentPage?.title}</Text>
       {currentPage?.components.map((value) => 
         <FormComponent 
           key={value?.id}
@@ -38,7 +36,7 @@ export const FormPage : React.FC<FormPageProps> = ({
         />
       )}
       <FormControl margin="normal">
-        <Button isLoading={isLoading} testId={`submit-${currentPage?.title}-form`} type="submit">
+        <Button isLoading={isLoading} testId={`submit-form`} type="submit">
           {isLastPage ? t("save") : t("next") }
         </Button>
       </FormControl>
