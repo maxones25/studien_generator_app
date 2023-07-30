@@ -1,3 +1,6 @@
+import { useMessageContext } from '@modules/core/contexts';
+import { useMessage } from '@modules/core/hooks';
+import { MessageType } from '@modules/core/types';
 import { Button } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,11 +12,11 @@ export const PushNotificationButton : React.FC<PushNotificationButtonProps>= ({
 }) => {
   const [permission, setPermission] = useState<PermissionState|undefined>(undefined);
   const { t } = useTranslation();
+  const { postMessage } = useMessage();
+  const { message } = useMessageContext();
 
   const onAcceptNotifications = async () => {
-    navigator.serviceWorker.ready.then((registration) => {
-      registration?.active?.postMessage("subscribe");
-    });
+    postMessage(MessageType.Subcribe)
   };
 
   useEffect(() => {
@@ -22,7 +25,7 @@ export const PushNotificationButton : React.FC<PushNotificationButtonProps>= ({
         setPermission(permission);
       })
     })
-  })
+  },[message])
 
   return (
     <Button 

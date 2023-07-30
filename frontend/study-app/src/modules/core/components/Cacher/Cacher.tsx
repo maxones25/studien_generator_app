@@ -1,5 +1,5 @@
-import { useGetForms } from '@modules/forms/hooks';
-import { useGetTasks } from '@modules/tasks/hooks';
+import { useMessage } from '@modules/core/hooks';
+import { MessageType } from '@modules/core/types';
 import React, { ReactNode } from 'react';
 
 export interface CacherProps {
@@ -9,8 +9,9 @@ export interface CacherProps {
 export const Cacher : React.FC<CacherProps>= ({
   children,
 }) => {
-  useGetForms();
-  useGetTasks();
+  const { postMessage } = useMessage();
+  postMessage(MessageType.FetchAndCache, '/forms');
+  postMessage(MessageType.FetchAndCache, '/tasks');
 
   return (
     <>
