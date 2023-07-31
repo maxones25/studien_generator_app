@@ -15,6 +15,13 @@ export class RecordsController {
     return this.recordsService.create(participantId, data);
   }
 
+  @Get()
+  async getAll(
+    @ParticipantId() participantId: string,
+  ) {
+    return this.recordsService.findAll(participantId);
+  }
+
   @Get('events/:date')
   async getRecordedEventsByDate(
     @ParticipantId() participantId: string,

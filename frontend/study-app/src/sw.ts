@@ -69,6 +69,11 @@ registerRoute(
 
 registerRoute(
   `${BASE_URI}/records`, 
+  new GetData(dbPromise, 'records'),
+);
+
+registerRoute(
+  `${BASE_URI}/records`, 
   new PostRecord(dbPromise),
   'POST'
 );

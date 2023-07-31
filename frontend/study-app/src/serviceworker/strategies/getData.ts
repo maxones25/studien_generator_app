@@ -24,7 +24,9 @@ export class GetData extends Strategy {
       const responseClone = response.clone()
       responseClone.json().then(async (data) => {
         const tx = db.transaction(this.dbName, 'readwrite');
-        await Promise.all(data.map((record: any) => {
+        await Promise.all(data.map((record: Record<string, any>) => {
+          record.createdAt = new Date(record.createdAt);
+          record.scheduledAt = new Date(record.scheduledAt);
           return tx.store.put(record);
         }));
       })

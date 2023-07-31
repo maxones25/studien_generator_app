@@ -15,9 +15,8 @@ export const Cacher : React.FC<CacherProps>= ({
   if (accessToken.isValid) {
     headers["Authorization"] = `Bearer ${accessToken.value}`;
   }
-  apiRequest('/forms', {headers}).catch((err) => {
-    console.log(err)
-  });
+  apiRequest('/forms', {headers});
+  apiRequest('/records', {headers});
   // apiRequest('/tasks', {headers});
 
   return (

@@ -21,6 +21,29 @@ export class RecordsService {
     });
   }
 
+  async findAll(participantId: string) {
+
+    const records = await this.recordsRepository.find({
+      where: {
+        participantId,
+      },
+      relations: {
+        form: true,
+      },
+      select: {
+        id: true,
+        createdAt: true,
+        form: {
+          name: true,
+        }
+      }
+    });
+
+    return records.map(({form, id, createdAt}) => {
+      return {name: form.name, id: id, createdAt: createdAt};
+    })
+  }
+
   async findRecordedEventsByDate(participantId: string, date: Date) {
     const dateStart = new Date(date);
     dateStart.setHours(0, 0, 0, 0);  // Beginn des heutigen Tages
