@@ -16,9 +16,10 @@ export class PostRecord extends Strategy {
     handler: StrategyHandler
   ): Promise<Response | undefined> {
     const db = await this.dbPromise;
-    return request.json()
+    const clone = request.clone()
+    return clone.json()
     .then(async (data) => {
-      const record: Record = JSON.parse(data);
+      const record: Record = data;
       const tx = db.transaction(['records', 'tasks'], 'readwrite');
       if (record.taskId) {
         this.putTask(tx, record.formId, record.createdAt);

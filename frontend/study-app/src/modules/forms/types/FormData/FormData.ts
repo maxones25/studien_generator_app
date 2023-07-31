@@ -1,13 +1,18 @@
+export type FormConfig = {
+  id: string,
+  type: FormType,
+  form: FormData,
+}
+
 export type FormData = {
   id: string,
   name: string,
-  type: FormDataType,
   pages: FormPageData[],
 }
 
-export enum FormDataType {
-  TimeIndependent = 'Timeindependent',
-  TimeDependent = 'Timedependent'
+export enum FormType {
+  TimeIndependent = 'TimeIndependent',
+  TimeDependent = 'TimeDependent'
 }
 
 export type FormPageData = {

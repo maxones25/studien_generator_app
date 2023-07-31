@@ -25,10 +25,14 @@ export class CreateRecordTransaction extends Transaction<
     participantId: string;
   }): Promise<void> {
 
-    if(! await this.isCorrectForm(data.formId, data.fields.map((value) => value.entityFieldId)))
-      throw new ConflictException('invalid form');
+    // if(! await this.isCorrectForm(data.formId, data.fields.map((value) => value.entityFieldId)))
+    //   throw new ConflictException('invalid form');
+
+    console.log("fine")
 
     const record = await this.createRecord(data, participantId);
+
+    console.log("fine")
 
     this.entityFieldRepository = this.entityManager.getRepository(EntityField);
     const promises = data.fields.map((recordField) =>
@@ -41,7 +45,7 @@ export class CreateRecordTransaction extends Transaction<
   }
 
   private async createRecord(
-    { formId, createdAt, taskId }: CreateRecordDto,
+    { id, formId, createdAt, taskId, failureReason }: CreateRecordDto,
     participantId: string,
   ): Promise<Record> {
     const recordsRepository = this.entityManager.getRepository(Record);
@@ -50,10 +54,12 @@ export class CreateRecordTransaction extends Transaction<
       throw new ConflictException('record in future error');
 
     const record = new Record();
+    record.id = id;
     record.createdAt = createdAt;
     record.formId = formId;
     record.taskId = taskId;
     record.participantId = participantId;
+    record.failureReason = failureReason;
 
     await recordsRepository.insert(record);
 

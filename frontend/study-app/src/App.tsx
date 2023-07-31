@@ -50,8 +50,6 @@ const queryClient = new QueryClient({
   },
 });
 
-console.log('test')
-
 const App = () => {
   return (
     <Suspense fallback={<LinearProgress />}>
@@ -62,9 +60,9 @@ const App = () => {
               <DateProvider>
                 <FormIdProvider>
                   <Theme>
-                      <RouterProvider router={router} />
-                      <ReactQueryDevtools initialIsOpen={false} />
-                      <AlertNotification />
+                    <RouterProvider router={router} />
+                    <ReactQueryDevtools initialIsOpen={false} />
+                    <AlertNotification />
                   </Theme>
                 </FormIdProvider>
               </DateProvider>

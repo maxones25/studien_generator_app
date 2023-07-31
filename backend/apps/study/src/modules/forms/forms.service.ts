@@ -39,6 +39,8 @@ export class FormsService {
         },
       },
       select: {
+        id: true,
+        type: true,
         form: {
           id: true,
           name: true,
@@ -71,7 +73,13 @@ export class FormsService {
       },
     });
 
-    return forms.map((formConfig) => formConfig.form);
+    return forms.map(({id, form, type}) => {
+      return {
+        id,
+        type,
+        form,
+      }
+    });
   }
 
   async getAllTimeIndependent(studyId: string, groupId: string) {

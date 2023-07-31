@@ -1,5 +1,5 @@
-import { useMessage } from '@modules/core/hooks';
-import { MessageType } from '@modules/core/types';
+import { useAccessTokenContext } from '@modules/auth/contexts';
+import { RequestHeader, apiRequest } from '@modules/core/utils';
 import React, { ReactNode } from 'react';
 
 export interface CacherProps {
@@ -9,9 +9,16 @@ export interface CacherProps {
 export const Cacher : React.FC<CacherProps>= ({
   children,
 }) => {
-  const { postMessage } = useMessage();
-  postMessage(MessageType.FetchAndCache, '/forms');
-  postMessage(MessageType.FetchAndCache, '/tasks');
+  const accessToken = useAccessTokenContext()
+  const headers: RequestHeader = {};
+
+  if (accessToken.isValid) {
+    headers["Authorization"] = `Bearer ${accessToken.value}`;
+  }
+  apiRequest('/forms', {headers}).catch((err) => {
+    console.log(err)
+  });
+  // apiRequest('/tasks', {headers});
 
   return (
     <>

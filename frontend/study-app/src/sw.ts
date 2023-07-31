@@ -6,12 +6,13 @@ import { NavigationRoute, registerRoute } from 'workbox-routing'
 import { dbPromise } from './serviceworker/indexedDB/setup'
 import { PostRecord } from './serviceworker/strategies/postRecord'
 import { GetByDate } from './serviceworker/strategies/getByDate'
-import { GetById } from './serviceworker/strategies/getById'
+import { GetFormById } from './serviceworker/strategies/getFormById'
 import { Record, Task } from '@modules/tasks/types'
 import { GetEvents } from './serviceworker/strategies/getEvents'
 import { BackgroundSyncPlugin } from 'workbox-background-sync'
 import { messageHandler } from './serviceworker/listeners/message/message-listener'
 import { pushHandler } from './serviceworker/listeners/push/push-listener'
+import { GetData } from './serviceworker/strategies/getData'
 
 declare let self: ServiceWorkerGlobalScope;
 
@@ -43,13 +44,23 @@ self.addEventListener('push', (event) => {
 })
 
 registerRoute(
+  `${BASE_URI}/forms`, 
+  new GetData(dbPromise, 'forms')
+);
+
+registerRoute(
   `${BASE_URI}/forms/time/independent`, 
   new GetEvents(dbPromise)
 );
 
 registerRoute(
   new RegExp(`${BASE_URI}/forms/*`), 
-  new GetById(dbPromise, 'forms')
+  new GetFormById(dbPromise, 'forms')
+);
+
+registerRoute(
+  `${BASE_URI}/tasks`, 
+  new GetData(dbPromise, 'tasks')
 );
 
 registerRoute(
