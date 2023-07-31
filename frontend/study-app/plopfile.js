@@ -8,6 +8,7 @@ const modules = [
   "chat",
   "events",
   "settings",
+  "hiit",
 ];
 
 const types = ["type", "interface"];
