@@ -9,7 +9,6 @@ import { GetByDate } from './serviceworker/strategies/getByDate'
 import { GetFormById } from './serviceworker/strategies/getFormById'
 import { Record, Task } from '@modules/tasks/types'
 import { GetEvents } from './serviceworker/strategies/getEvents'
-import { BackgroundSyncPlugin } from 'workbox-background-sync'
 import { messageHandler } from './serviceworker/listeners/message/message-listener'
 import { pushHandler } from './serviceworker/listeners/push/push-listener'
 import { GetData } from './serviceworker/strategies/getData'
@@ -68,15 +67,9 @@ registerRoute(
   new GetByDate<Task>(dbPromise, 'tasks', 'scheduledAt')
 );
 
-const bgSyncPlugin = new BackgroundSyncPlugin('recordsQueue', {
-  maxRetentionTime: 24 * 60, // Retry for max of 24 Hours (specified in minutes)
-});
-
 registerRoute(
   `${BASE_URI}/records`, 
-  new PostRecord(dbPromise, {
-    plugins: [bgSyncPlugin]
-  }),
+  new PostRecord(dbPromise),
   'POST'
 );
 

@@ -28,11 +28,7 @@ export class CreateRecordTransaction extends Transaction<
     // if(! await this.isCorrectForm(data.formId, data.fields.map((value) => value.entityFieldId)))
     //   throw new ConflictException('invalid form');
 
-    console.log("fine")
-
     const record = await this.createRecord(data, participantId);
-
-    console.log("fine")
 
     this.entityFieldRepository = this.entityManager.getRepository(EntityField);
     const promises = data.fields.map((recordField) =>
@@ -126,17 +122,16 @@ export class CreateRecordTransaction extends Transaction<
     });
 
     const type = entityField.type.toString().toLowerCase();
-
+    
     switch (entityField.type) {
       case FieldType.Number || FieldType.Boolean:
-        if (typeof value !== type) return false;
+        if (typeof value === type) return true;
       case FieldType.Date || FieldType.DateTime || FieldType.Time:
-        if (new Date(value).toString() === 'Invalid Date') return false;
+        if (new Date(value).toString() === 'Invalid Date') return true;
       case FieldType.Enum || FieldType.Text:
-        if (typeof value !== 'string') return false;
+        if (typeof value !== 'string') return true;
       default:
-        break;
+        return false;
     }
-    return true;
   }
 }

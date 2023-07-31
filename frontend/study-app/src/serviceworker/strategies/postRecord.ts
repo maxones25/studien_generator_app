@@ -1,12 +1,14 @@
 import { IDBPDatabase, IDBPTransaction } from 'idb';
 import { Strategy, StrategyHandler, StrategyOptions } from 'workbox-strategies';
+import { Queue } from 'workbox-background-sync';
 import { Record } from '@modules/forms/types';
 import { Task } from '@modules/tasks/types';
 
 export class PostRecord extends Strategy {
+  private queue = new Queue('RecordsQueue');
   private dbPromise: Promise<IDBPDatabase>;
 
-  constructor(dbPromise: Promise<IDBPDatabase>, options: StrategyOptions) {
+  constructor(dbPromise: Promise<IDBPDatabase>, options?: StrategyOptions) {
     super(options);
     this.dbPromise = dbPromise;
   }
@@ -26,9 +28,16 @@ export class PostRecord extends Strategy {
       }
       await tx.objectStore("records").add({
         id: record.id,
-        createdAt: record.createdAt,
+        createdAt: new Date(record.createdAt),
+        name: record.name,
       });
-      return handler.fetch(request);
+      try {
+        const response = await handler.fetch(request.clone());;
+        return response;
+      } catch (error) {
+        await this.queue.pushRequest({request: request});
+        return new Response();
+      }
     });
   }
 

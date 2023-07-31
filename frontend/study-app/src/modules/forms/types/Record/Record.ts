@@ -3,8 +3,8 @@ export type Record = {
   taskId?: string;
   createdAt: Date;
   formId: string;
-  name: string;
   fields: RecordField[];
+  name: string
 }
 
 export type RecordField = {

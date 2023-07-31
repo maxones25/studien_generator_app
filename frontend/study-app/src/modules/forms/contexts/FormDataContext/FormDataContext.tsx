@@ -21,7 +21,7 @@ const FormDataContext = createContext<FormDataContextValue | undefined>(
 );
 
 const useFormDataContextValue = () => {
-  const { resetForm, formId, taskId } = useFormIdContext();
+  const { resetForm, taskId, name } = useFormIdContext();
   const { form } = useFormContext();
   const { date: date } = useDateContext();
   const [data, setData] = useState({});
@@ -51,8 +51,9 @@ const useFormDataContextValue = () => {
       id: uuid(),
       taskId: taskId,
       createdAt: date.toDate(),
-      formId: formId!,
+      formId: form.data!.id,
       fields: entityFields,
+      name: name!,
     } ;
     console.log(record);
     await saveForm.mutateAsync(record);
