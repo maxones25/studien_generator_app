@@ -1,11 +1,10 @@
 import { Button, Column, Text } from '@modules/core/components';
 import { FormField } from '@modules/forms/types';
 import { useHiit } from '@modules/hiit/hooks';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
-import { Control, Controller, FieldValues, Path, PathValue, get } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { FailureDialog } from '..';
 
 export interface HiitProps {
   control: Control<FieldValues>;
@@ -21,12 +20,10 @@ export function Hiit ({
   componentId,
   formFields,
 }: HiitProps) {
-  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   const {
     isPlaying,
     phase,
-    isLastPhase,
     setPhases,
     setIsPlaying,
     nextPhase,
@@ -47,20 +44,8 @@ export function Hiit ({
     ])
   }, [])
 
-  const onDialogCancel = () => {
-    setOpen(false);
-    setIsPlaying(true);
-  }
-
-  const openDialog = () => {
-    setIsPlaying(false);
-    setOpen(true);
-  }
-
-
   const start: Path<FieldValues> = `${componentId}.${formFields[0].entityFieldId}` as Path<FieldValues>
-  const failure: Path<FieldValues> = `${componentId}.${formFields[1].entityFieldId}` as Path<FieldValues>
-  const end: Path<FieldValues> = `${componentId}.${formFields[2].entityFieldId}` as Path<FieldValues> 
+  const end: Path<FieldValues> = `${componentId}.${formFields[1].entityFieldId}` as Path<FieldValues> 
 
   return (
     <Column alignItems={'center'}>
@@ -69,10 +54,7 @@ export function Hiit ({
          control={control}
          name={end}
          rules={{
-          validate: () => {
-            return Boolean(get(control._formValues, failure) || get(control._formValues, end)) 
-              || 'error'
-          }
+          required: true
         }}
          render={({ field: { onChange }}) => {
           return(
@@ -97,7 +79,7 @@ export function Hiit ({
       />
       <Text>{phase?.name ?? 'Label'}</Text>
       <Text>{phase?.description ?? 'Label'}</Text>
-      {!isPlaying ? (
+      {!isPlaying && (
         <Controller 
           control={control}
           name={start}
@@ -108,38 +90,17 @@ export function Hiit ({
             return(
               <Button 
                 testId='hiit-start-done-button'
-                disabled={isLastPhase}
                 onClick={() => {
                   setIsPlaying(true)
                   onChange(new Date() as PathValue<FieldValues, Path<FieldValues>>)}
                 } 
               >
-                {t(isLastPhase ? 'done' : 'start')}
+                {t('start')}
               </Button>
             )
           }}
         />
-      ) : (
-        <Button 
-          testId='hiit-cancel-button'
-          onClick={openDialog}
-        >
-          {t('cancel')}
-        </Button>
       )}
-      <FailureDialog 
-        open={open}
-        onClose={onDialogCancel}
-        onAccept={() => setOpen(false)}
-        control={control}
-        name={failure}
-        rules={{
-          validate: () => {
-            return Boolean(get(control._formValues, failure) || get(control._formValues, end)) 
-              || 'error'
-          }
-        }}
-      />
     </Column>
   );
 };

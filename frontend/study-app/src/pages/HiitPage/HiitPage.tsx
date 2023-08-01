@@ -30,7 +30,6 @@ const HiitPage : React.FC<HiitPageProps>= ({
             formFields={[
               {entityFieldId: '2'},
               {entityFieldId: '3'},
-              {entityFieldId: '4'},
             ]}
           />
         <FormControl margin="normal">
