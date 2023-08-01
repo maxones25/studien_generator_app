@@ -1,6 +1,7 @@
 import { Button, Column, Text } from '@modules/core/components';
 import { FormField } from '@modules/forms/types';
 import { useHiit } from '@modules/hiit/hooks';
+import { HiitConfig } from '@modules/hiit/types';
 import { useEffect } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
@@ -19,29 +20,27 @@ export function Hiit ({
   control,
   componentId,
   formFields,
+  attributes,
 }: HiitProps) {
   const { t } = useTranslation();
   const {
     isPlaying,
     phase,
-    setPhases,
+    createPhases,
     setIsPlaying,
     nextPhase,
   } = useHiit();
 
+  const config: HiitConfig = {
+    repetitions: attributes?.repetitions ?? 3,
+    lowIntensity: attributes?.lowIntensity ?? 5,
+    warmUp: attributes?.warmUp ?? 5,
+    coolDown: attributes?.coolDown ?? 5,
+    highIntensity: attributes?.highIntensity ?? 5,
+  }
+
   useEffect(() => {
-    setPhases([
-      {
-        time: 5,
-        name: 'phase1',
-        description: 'Beschreibe mal die Phase'
-      },
-      {
-        time: 5,
-        name: 'phase2',
-        description: 'Beschreibe mal die Phase'
-      },
-    ])
+    createPhases(config);
   }, [])
 
   const start: Path<FieldValues> = `${componentId}.${formFields[0].entityFieldId}` as Path<FieldValues>
