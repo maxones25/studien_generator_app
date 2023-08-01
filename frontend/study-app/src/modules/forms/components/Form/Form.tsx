@@ -17,11 +17,11 @@ export const Form : React.FC<FormProps>= ({
   return (
   <Column p={2} width={"70vw"} maxWidth={"500px"}>
     <Text color="text.secondary">{name}</Text>
-    {form.isLoading ? (
+    {form?.isLoading ? (
       <CircularProgress 
         sx={{mt: 5, alignSelf: 'center'}} 
         data-testid={`loading ${name} spinner`} />
-    ) : form.isError ? (
+    ) : form?.isError ? (
       <Text data-testid={`get-${name}-error-text`} color="error.main">
         {t(`error: ${name} could not load`)}
       </Text>

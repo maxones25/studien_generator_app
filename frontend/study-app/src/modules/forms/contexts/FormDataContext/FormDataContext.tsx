@@ -51,7 +51,7 @@ const useFormDataContextValue = () => {
       id: uuid(),
       taskId: taskId,
       createdAt: date.toDate(),
-      formId: form.data!.id,
+      formId: form!.data!.id,
       fields: entityFields,
       name: name!,
     } ;
@@ -63,8 +63,8 @@ const useFormDataContextValue = () => {
     setData({...data, ...newData});
   }
 
-  const isLastPage = form.data?.pages.length === pageNumber + 1;
-  const currentPage = form.data?.pages[pageNumber];
+  const isLastPage = form?.data?.pages.length === pageNumber + 1;
+  const currentPage = form?.data?.pages[pageNumber];
 
   return {
     isLoading: saveForm.isLoading,
