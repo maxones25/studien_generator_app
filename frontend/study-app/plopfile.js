@@ -9,6 +9,7 @@ const modules = [
   "events",
   "settings",
   "hiit",
+  "calendar",
 ];
 
 const types = ["type", "interface"];

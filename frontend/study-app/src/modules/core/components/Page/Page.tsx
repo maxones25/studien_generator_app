@@ -6,9 +6,15 @@ import { AppBar } from "@modules/navigation/components";
 
 export interface PageProps extends ColumnProps {
   testId: string;
+  header?: JSX.Element
 }
 
-export const Page: React.FC<PageProps> = ({ sx, testId, ...props }) => {
+export const Page: React.FC<PageProps> = ({ 
+  sx, 
+  testId, 
+  header,
+  ...props 
+}) => {
   const accessToken = useAccessTokenContext();
 
   return (
@@ -18,6 +24,7 @@ export const Page: React.FC<PageProps> = ({ sx, testId, ...props }) => {
       flexDirection: "column",
       }}>
       {accessToken.isValid && <AppBar />}
+      {header ?? header}
       <Column
       data-testid={testId}
       sx={{

@@ -1,6 +1,6 @@
 import { AppBar as MAppBar, Toolbar, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { ArrowBack, MailOutline, Menu } from '@mui/icons-material';
+import { ArrowBack, MailOutline, Menu, CalendarMonthOutlined } from '@mui/icons-material';
 import { useNavigationHelper } from '@modules/core/hooks';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -48,13 +48,24 @@ export const AppBar : React.FC<AppBarProps>= () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {t(`${path}`)}
           </Typography>
+          { path !== "/calendar" && 
+          <IconButton
+            size="large"
+            edge="end"
+            color="inherit"
+            aria-label="menu"
+            sx={{ ml: 1 }}
+            onClick={navigate.handle('../calendar')}
+            testId='go-calendar-app-bar'
+            Icon={<CalendarMonthOutlined /> }
+          /> }
           { path !== "/chat" && 
           <IconButton
             size="large"
             edge="end"
             color="inherit"
             aria-label="menu"
-            sx={{ ml: 2 }}
+            sx={{ ml: 1 }}
             onClick={navigate.handle('../chat')}
             testId='go-mail-app-bar'
             Icon={<MailOutline /> }
@@ -64,6 +75,7 @@ export const AppBar : React.FC<AppBarProps>= () => {
             edge="end"
             color="inherit"
             aria-label="menu"
+            sx={{ ml: 1 }}
             onClick={handleToggle}
             testId='log-out-app-bar'
             Icon={<Menu />}
