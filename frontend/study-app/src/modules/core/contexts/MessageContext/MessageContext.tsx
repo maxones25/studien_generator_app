@@ -18,25 +18,26 @@ const useMessageContextValue = () => {
   const { showError, showSuccess } = useSnackBarContext();
   const [message, setMessage] = useState<string|undefined>();
 
-  navigator.serviceWorker.addEventListener("message", ({ data }) => {
-    const {
-      type,
-      body,
-    } = data
-    switch (type) {
-      case MessageType.Success:
-        showSuccess(body);
-        setMessage(body);
-        break;
-      case MessageType.Error:
-        showError(body);
-        setMessage(body);
-        break;
-      default:
-        break;
-    }
-    
-  });
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker.addEventListener("message", ({ data }) => {
+      const {
+        type,
+        body,
+      } = data
+      switch (type) {
+        case MessageType.Success:
+          showSuccess(body);
+          setMessage(body);
+          break;
+        case MessageType.Error:
+          showError(body);
+          setMessage(body);
+          break;
+        default:
+          break;
+      }
+    });
+  }
 
   return {
     message
