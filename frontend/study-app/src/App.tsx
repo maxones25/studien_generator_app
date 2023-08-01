@@ -10,7 +10,7 @@ import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { Suspense } from "react";
 import { LinearProgress } from "@mui/material";
-import { SnackBarProvider } from "@modules/core/contexts";
+import { MessageProvider, SnackBarProvider } from "@modules/core/contexts";
 import { DateProvider } from "@modules/date/contexts";
 import { FormIdProvider } from "@modules/forms/contexts";
 
@@ -56,15 +56,17 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <AccessTokenProvider>
           <SnackBarProvider>
-            <DateProvider>
-              <FormIdProvider>
-                <Theme>
+            <MessageProvider>
+              <DateProvider>
+                <FormIdProvider>
+                  <Theme>
                     <RouterProvider router={router} />
                     <ReactQueryDevtools initialIsOpen={false} />
                     <AlertNotification />
-                </Theme>
-              </FormIdProvider>
-            </DateProvider>
+                  </Theme>
+                </FormIdProvider>
+              </DateProvider>
+            </MessageProvider>
           </SnackBarProvider>
         </AccessTokenProvider>
       </QueryClientProvider>

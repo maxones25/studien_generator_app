@@ -25,8 +25,8 @@ export class CreateRecordTransaction extends Transaction<
     participantId: string;
   }): Promise<void> {
 
-    if(! await this.isCorrectForm(data.formId, data.fields.map((value) => value.entityFieldId)))
-      throw new ConflictException('invalid form');
+    // if(! await this.isCorrectForm(data.formId, data.fields.map((value) => value.entityFieldId)))
+    //   throw new ConflictException('invalid form');
 
     const record = await this.createRecord(data, participantId);
 
@@ -41,7 +41,7 @@ export class CreateRecordTransaction extends Transaction<
   }
 
   private async createRecord(
-    { formId, createdAt, taskId }: CreateRecordDto,
+    { id, formId, createdAt, taskId, failureReason }: CreateRecordDto,
     participantId: string,
   ): Promise<Record> {
     const recordsRepository = this.entityManager.getRepository(Record);
@@ -50,10 +50,12 @@ export class CreateRecordTransaction extends Transaction<
       throw new ConflictException('record in future error');
 
     const record = new Record();
+    record.id = id;
     record.createdAt = createdAt;
     record.formId = formId;
     record.taskId = taskId;
     record.participantId = participantId;
+    record.failureReason = failureReason;
 
     await recordsRepository.insert(record);
 
@@ -92,7 +94,7 @@ export class CreateRecordTransaction extends Transaction<
       select: {
         id: true,
         pages: {
-          title: true,
+          id: true,
           components: {
             id:true,
             formFields: {
@@ -120,17 +122,16 @@ export class CreateRecordTransaction extends Transaction<
     });
 
     const type = entityField.type.toString().toLowerCase();
-
+    
     switch (entityField.type) {
       case FieldType.Number || FieldType.Boolean:
-        if (typeof value !== type) return false;
+        if (typeof value === type) return true;
       case FieldType.Date || FieldType.DateTime || FieldType.Time:
-        if (new Date(value).toString() === 'Invalid Date') return false;
+        if (new Date(value).toString() === 'Invalid Date') return true;
       case FieldType.Enum || FieldType.Text:
-        if (typeof value !== 'string') return false;
+        if (typeof value !== 'string') return true;
       default:
-        break;
+        return false;
     }
-    return true;
   }
 }

@@ -3,6 +3,7 @@ import { FormPageData, Record, RecordField } from "@modules/forms/types";
 import { useFormContext, useFormIdContext } from "..";
 import { useSaveForm } from "@modules/forms/hooks";
 import { useDateContext } from "@modules/date/contexts";
+import { v4 as uuid } from 'uuid';
 
 interface FormDataContextValue {
   isLastPage: boolean;
@@ -20,7 +21,7 @@ const FormDataContext = createContext<FormDataContextValue | undefined>(
 );
 
 const useFormDataContextValue = () => {
-  const { resetForm, formId, taskId } = useFormIdContext();
+  const { resetForm, taskId, name } = useFormIdContext();
   const { form } = useFormContext();
   const { date: date } = useDateContext();
   const [data, setData] = useState({});
@@ -47,10 +48,12 @@ const useFormDataContextValue = () => {
       })
     })
     const record: Record = {
+      id: uuid(),
       taskId: taskId,
       createdAt: date.toDate(),
-      formId: formId!,
+      formId: form!.data!.id,
       fields: entityFields,
+      name: name!,
     } ;
     console.log(record);
     await saveForm.mutateAsync(record);
@@ -60,8 +63,8 @@ const useFormDataContextValue = () => {
     setData({...data, ...newData});
   }
 
-  const isLastPage = form.data?.pages.length === pageNumber + 1;
-  const currentPage = form.data?.pages[pageNumber];
+  const isLastPage = form?.data?.pages.length === pageNumber + 1;
+  const currentPage = form?.data?.pages[pageNumber];
 
   return {
     isLoading: saveForm.isLoading,

@@ -19,18 +19,22 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.5",
     "@mui/x-date-pickers": "^6.10.0",
+    "@types/uuid": "^9.0.2",
     "date-and-time": "^3.0.2",
     "dayjs": "^1.11.9",
     "i18next": "^23.2.1",
     "i18next-browser-languagedetector": "^7.0.2",
     "i18next-http-backend": "^2.2.1",
+    "idb": "^7.1.1",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
+    "react-countdown-circle-timer": "^3.2.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.0",
     "react-i18next": "^13.0.0",
     "react-query": "^3.39.3",
-    "react-router-dom": "^6.13.0"
+    "react-router-dom": "^6.13.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/date-and-time": "^0.13.0",

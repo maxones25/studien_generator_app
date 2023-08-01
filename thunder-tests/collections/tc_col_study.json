@@ -123,12 +123,12 @@
             "method": "GET",
             "sortNum": 90000,
             "created": "2023-07-21T19:20:05.934Z",
-            "modified": "2023-07-21T19:26:04.520Z",
+            "modified": "2023-07-31T14:47:01.332Z",
             "headers": [],
             "params": [],
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJ0aWNpcGFudElkIjoiNTRmZWFlNzEtYTdhZS00NzUyLWI5YjUtYTkwOGUyNDQ2ZDMxIiwiZ3JvdXBJZCI6IjQ5N2QwNTM0LWRlMGEtNDI2Ny1hZTAwLTUyMjFhMGM2YjZlZiIsInN0dWR5SWQiOiJmYzhkMmJlOS0wNjNjLTQzYmMtOTJkOS1kMjlkNWVjODRlNmIiLCJ0eXBlIjoicGFydGljaXBhbnQiLCJpYXQiOjE2ODk5Njc1MzV9.IrKPUI1xoOwxeRROjCkPcqakvJ0k43JbvIpDJeIyLX4"
+                "bearer": "{{participantToken}}"
             },
             "tests": []
         },

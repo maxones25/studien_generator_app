@@ -4,17 +4,27 @@ import {
   IsArray, 
   IsDate, 
   IsNotEmpty, 
+  IsOptional, 
   IsString, 
   IsUUID, 
   ValidateNested 
 } from "class-validator";
 
 export class CreateRecordDto {
+  @IsUUID()
+  id: string
+
+  @IsOptional()
+  @IsUUID()
   taskId?: string;
 
+  @IsUUID()
+  formId: string;
+
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  formId: string;
+  failureReason?: string;
 
   @Type(() => Date)
   @IsDate()

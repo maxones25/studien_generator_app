@@ -5,7 +5,7 @@ import { useFormIdContext } from "..";
 import { UseReadRequestResult } from "@modules/core/hooks";
 
 interface FormContextValue {
-  form: UseReadRequestResult<FormData>
+  form?: UseReadRequestResult<FormData>
 }
 
 interface FormProviderProps {
@@ -17,8 +17,10 @@ const FormContext = createContext<FormContextValue | undefined>(
 );
 
 const useFormContextValue = () => {
-  const { formId = '' } = useFormIdContext();
-  const form = useGetForm({formId})
+  const { formId } = useFormIdContext();
+  let form = undefined;
+  if (formId !== undefined)
+    form = useGetForm({formId})
 
   return {
     form,

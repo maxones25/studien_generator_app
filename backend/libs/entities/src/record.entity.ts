@@ -35,7 +35,7 @@ export class Record {
   @Column({ nullable: true })
   taskId: string;
 
-  @Column()
+  @Column({ nullable: true })
   failureReason: string;
 
   @ManyToOne(() => Task, (task) => task.records, {

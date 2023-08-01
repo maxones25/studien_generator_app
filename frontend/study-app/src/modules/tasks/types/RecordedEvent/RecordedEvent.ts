@@ -1,5 +1,6 @@
-export type RecordedEvent = {
-  id: string,
-  name: string,
-  date: Date,
+export type Record = {
+  id: string;
+  taskId?: string;
+  createdAt: Date;
+  name: string;
 }

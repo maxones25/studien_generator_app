@@ -1,5 +1,5 @@
-import { useGetEvents } from '@modules/events/hooks';
-import { useGetForms } from '@modules/forms/hooks';
+import { useAccessTokenContext } from '@modules/auth/contexts';
+import { RequestHeader, apiRequest } from '@modules/core/utils';
 import React, { ReactNode } from 'react';
 
 export interface CacherProps {
@@ -9,8 +9,15 @@ export interface CacherProps {
 export const Cacher : React.FC<CacherProps>= ({
   children,
 }) => {
-  useGetForms();
-  useGetEvents();
+  const accessToken = useAccessTokenContext()
+  const headers: RequestHeader = {};
+
+  if (accessToken.isValid) {
+    headers["Authorization"] = `Bearer ${accessToken.value}`;
+  }
+  apiRequest('/forms', {headers});
+  apiRequest('/records', {headers});
+  // apiRequest('/tasks', {headers});
 
   return (
     <>
