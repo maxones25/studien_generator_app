@@ -54,8 +54,6 @@ jobs:
         working-directory: ./backend
         run: npm run test:admin:unit
 
-      - name: Start MySQL docker container
-
       - name: Run integration tests
         working-directory: ./backend
         run: npm run test:admin:integration
