@@ -28,7 +28,7 @@ jobs:
 
   admin-tests:
     runs-on: ubuntu-latest
-    needs: setup-backend
+    needs: changes
     if: needs.changes.outputs.admin == 'true'
     steps:
       - name: Get latest code
