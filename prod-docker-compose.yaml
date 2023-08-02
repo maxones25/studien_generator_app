@@ -28,16 +28,16 @@ services:
       - PMA_PASSWORD=root
     networks:
       - study-app-network
-  api:
-    container_name: api
+  admin-api:
+    container_name: admin api
     build:
-      context: ./backend
+      context: ./backend/apps/admin
     ports:
       - 8000:8000
     networks:
       - study-app-network
     environment:
-    - DB_HOST=mysql
+      - DB_HOST=mysql
   study-app:
     container_name: study-app
     build:

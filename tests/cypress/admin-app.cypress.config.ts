@@ -9,6 +9,6 @@ export default defineConfig({
     video: false,
     specPattern: "e2e/admin-app/**/*.cy.{js,jsx,ts,tsx}",
     supportFile: "support/e2e.{js,jsx,ts,tsx}",
-    screenshotsFolder: "screenshots"
+    screenshotsFolder: "screenshots",
   },
 });
