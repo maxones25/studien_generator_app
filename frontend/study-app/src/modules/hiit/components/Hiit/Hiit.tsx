@@ -32,7 +32,7 @@ export function Hiit ({
   } = useHiit();
 
   const config: HiitConfig = {
-    repetitions: attributes?.repetitions ?? 3,
+    rounds: attributes?.rounds ?? 3,
     lowIntensity: attributes?.lowIntensity ?? 5,
     warmUp: attributes?.warmUp ?? 5,
     coolDown: attributes?.coolDown ?? 5,
