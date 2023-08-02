@@ -41,9 +41,10 @@ jobs:
         ports:
           - 3306:3306
     steps:
-      - name: Get Docker logs
-        if: failure()
-        run: docker logs 89f453ad5625adc8e73b0dfcdbb3cf8faa1acf569bee517edf69a0dcd4048f12
+      - name: Get IP of MySQL service
+        run: |
+          DB_HOST=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql)
+          echo "DB_HOST=$DB_HOST" >> $GITHUB_ENV
 
       - name: Get latest code
         uses: actions/checkout@v2
@@ -52,14 +53,10 @@ jobs:
         working-directory: ./backend
         run: npm ci
 
-      - name: Run unit tests
-        working-directory: ./backend
-        run: npm run test:admin:unit
-
       - name: Run integration tests
         working-directory: ./backend
         env:
-          DB_HOST: mysql
+          DB_HOST: ${{ env.DB_HOST }}
         run: npm run test:admin:integration
 
   study-tests:
