@@ -11,6 +11,10 @@ export abstract class Component {
     protected readonly attributes: Attribute[],
   ) {}
 
+  public getAttributes(){
+    return this.attributes;
+  }
+
   private validateFieldTypes(types: FieldType[]) {
     for (const fieldType of this.entityFields) {
       const index = types.findIndex((type) => type === fieldType);

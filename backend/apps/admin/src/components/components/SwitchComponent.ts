@@ -11,7 +11,7 @@ export class SwitchComponent extends Component {
       [FieldType.Boolean],
       [
         new LabelAttribute(false),
-        new DefaultValueAttribute(false, (value) => typeof value === 'boolean'),
+        new DefaultValueAttribute(false, "boolean", (value) => typeof value === 'boolean'),
       ],
     );
   }

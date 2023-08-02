@@ -16,7 +16,7 @@ export class NumberPickerComponent extends Component {
         new LabelAttribute(false),
         new MinAttribute(false),
         new MaxAttribute(false),
-        new DefaultValueAttribute(false, (value) => typeof value === 'number'),
+        new DefaultValueAttribute(false, "number", (value) => typeof value === 'number'),
       ],
     );
   }

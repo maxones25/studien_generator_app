@@ -63,7 +63,7 @@ const FormsPage: React.FC<FormsPageProps> = () => {
             onDelete={deleteGroupData.handleSet(form)}
           >
             <ListItemButton
-              onClick={navigate.handle(`${form.id}/pages/1`)}
+              onClick={navigate.handle(`${form.id}`)}
               selected={formId === form.id}
             >
               <ListItemText>{form.name}</ListItemText>

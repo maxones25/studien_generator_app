@@ -2,7 +2,7 @@
 
 ## Projektbeschreibung
 
-Dieses Projekt zielt darauf ab, eine generische Anwendung für wissenschaftliche Studien zu entwickeln. Diese App wird in Zusammenarbeit mit dem Zentralinstitut für Seelische Gesundheit (ZI) in Mannheim erstellt und soll dazu dienen, das Management von Studien sowie die Erfassung und Verwaltung von Teilnehmerdaten zu ermöglichen. 
+Dieses Projekt zielt darauf ab, eine generische Anwendung für wissenschaftliche Studien zu entwickeln. Diese App wird in Zusammenarbeit mit dem Zentralinstitut für Seelische Gesundheit (ZI) in Mannheim erstellt und soll dazu dienen, das Management von Studien sowie die Erfassung und Verwaltung von Teilnehmerdaten zu ermöglichen.
 
 ## Technologie Stack
 
@@ -14,7 +14,7 @@ Die App wird mit folgenden Technologien entwickelt:
 
 ## Anwendungsfunktionen
 
-Die App besteht aus zwei Teilen: 
+Die App besteht aus zwei Teilen:
 
 1. **Admin-App:** Dient der Administration und Verwaltung der Studien. Hier können neue Studien erstellt, bestehende Studien bearbeitet und Teilnehmer verwaltet werden.
 
@@ -72,6 +72,10 @@ Navigiere in den Order frontend/admin-app
 cd frontend/admin-app
 ```
 
+Die App benötigt folgende Umgebungsvariablen:
+
+VITE_API_URI: URI des Admin-Backends
+
 Installiere alle npm Pakete
 
 ```console
@@ -91,6 +95,10 @@ Navigiere in den Order frontend/study-app
 ```console
 cd frontend/study-app
 ```
+
+Die App benötigt folgende Umgebungsvariablen:
+
+VITE_API_URI: URI des Study-Backends
 
 Installiere alle npm Pakete
 
@@ -112,6 +120,26 @@ Im Frontend wird der Code Generator "plop.js" eingesetzt.
 
 ## Testen
 
+### Integration Tests
+
+Navigiere in den Ordner backend
+
+```console
+cd backend
+```
+
+Teste die Endpoints des Admin-Backends
+
+```console
+npm run test:admin:integration
+```
+
+Teste die Endpoints des Study-Backends
+
+```console
+npm run test:study:integration
+```
+
 ### End To End Tests
 
 Starten der Anwendung
@@ -122,19 +150,19 @@ docker-compose -f "prod-docker-compose.yaml" up -d
 
 #### Cypress
 
-Navigiere in den Ordner test/cypress 
+Navigiere in den Ordner test/cypress
 
 ```console
 cd tests/cypress
 ```
 
-Teste die Admin App 
+Teste die Admin App
 
 ```console
 npm run test:admin-app
 ```
 
-Teste die Studien App 
+Teste die Studien App
 
 ```console
 npm run test:study-app
@@ -142,7 +170,7 @@ npm run test:study-app
 
 #### Puppeteer
 
-Navigiere in den Ordner test/puppeteer 
+Navigiere in den Ordner test/puppeteer
 
 ```console
 cd tests/puppeteer
@@ -153,4 +181,3 @@ Teste die Studien App
 ```console
 npm run test:study-app
 ```
-

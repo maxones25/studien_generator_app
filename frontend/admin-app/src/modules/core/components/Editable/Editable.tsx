@@ -2,6 +2,7 @@ import { useState, ChangeEventHandler, KeyboardEventHandler } from "react";
 import { IconButton, Row } from "..";
 import { Close, Edit } from "@mui/icons-material";
 import { CircularProgress, Input, InputAdornment } from "@mui/material";
+import React from "react";
 
 export interface EditableProps {
   children: JSX.Element | string;

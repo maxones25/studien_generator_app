@@ -4,7 +4,7 @@ import { BadRequestException } from '@nestjs/common';
 
 export class RoundsAttribute extends Attribute {
   constructor(required: boolean) {
-    super('rounds', required);
+    super('rounds', required, "number");
   }
   
   public validate({ key, value }: FormComponentAttributeDto) {

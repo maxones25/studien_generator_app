@@ -6,37 +6,36 @@ export interface FormComponentAttributeFieldProps<
   FormData extends FieldValues
 > {
   form: UseFormReturn<FormData>;
-  keyName: string;
   name: FieldPath<FormData>;
-  required: boolean;
+  attribute: { name: string; required: boolean; type: string };
 }
 
+const convertType = (type: string): string => {
+  switch (type) {
+    case "datetime":
+      return "datetime-local";
+    case "string":
+      return "text";
+    case "boolean":
+      return "checkbox";
+    default:
+      return type;
+  }
+};
+
 export const FormComponentAttributeField = <FormData extends FieldValues>({
-  keyName,
+  name,
+  attribute,
   ...props
 }: FormComponentAttributeFieldProps<FormData>) => {
   const { t } = useTranslation();
-  switch (keyName) {
-    case "label":
-    case "defaultValue":
-      return <ExperimentalFormTextField label={t(keyName)} {...props} />;
-    case "min":
-    case "max":
-    case "rounds":
-    case "warmUp":
-    case "coolDown":
-    case "highIntensity":
-    case "lowIntensity":
-      return (
-        <ExperimentalFormTextField
-          label={t(keyName)}
-          type="number"
-          {...props}
-        />
-      );
-    default:
-      throw new Error(
-        `${keyName} is not defined as FormComponentAttributeField`
-      );
-  }
+  return (
+    <ExperimentalFormTextField
+      {...props}
+      name={name}
+      label={t(attribute.name)}
+      type={convertType(attribute.type)}
+      required={attribute.required}
+    />
+  );
 };

@@ -17,41 +17,42 @@ services:
       - 3306:3306
     networks:
       - study-app-network
-  phpmyadmin:
-    container_name: phpmyadmin
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - 8080:80
-    environment:
-      - PMA_HOST=mysql
-      - PMA_USER=root
-      - PMA_PASSWORD=root
-    networks:
-      - study-app-network
-  admin-api:
-    container_name: admin api
+  admin-backend:
+    container_name: admin-backend
     build:
-      context: ./backend/apps/admin
+      context: ./backend
+      dockerfile: admin.dockerfile
     ports:
       - 8000:8000
-    networks:
-      - study-app-network
     environment:
       - DB_HOST=mysql
-  study-app:
-    container_name: study-app
-    build:
-      context: ./frontend/study-app
-    ports:
-      - 4000:4000
     networks:
       - study-app-network
-  admin-app:
-    container_name: admin-app
+  study-backend:
+    container_name: study-backend
+    build:
+      context: ./backend
+      dockerfile: study.dockerfile
+    ports:
+      - 9000:9000
+    environment:
+      - DB_HOST=mysql
+    networks:
+      - study-app-network
+  admin-frontend:
+    container_name: admin-frontend
     build:
       context: ./frontend/admin-app
     ports:
       - 3000:3000
+    networks:
+      - study-app-network
+  study-frontend:
+    container_name: study-frontend
+    build:
+      context: ./frontend/study-app
+    ports:
+      - 4000:4000
     networks:
       - study-app-network
 networks:

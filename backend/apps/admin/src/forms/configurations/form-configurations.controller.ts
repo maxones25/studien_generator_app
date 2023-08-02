@@ -1,9 +1,10 @@
-import { Controller, Post, Param, Body, Get, Put } from '@nestjs/common';
+import { Controller, Post, Param, Body, Get, Put, Query } from '@nestjs/common';
 import { FormConfigurationsService } from './form-configurations.service';
 import { CreateFormConfigurationDto } from './dtos/CreateFormConfigurationDto';
 import { Roles } from '@admin/roles/roles.decorator';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { UpdateFormConfigurationDto } from './dtos/UpdateFormConfigurationDto';
+import { GetAllFormConfigurationsQueryParams } from './dtos/GetAllFormConfigurationsQueryParams';
 
 @Controller('studies/:studyId/forms/:formId/configurations')
 export class FormConfigurationsController {
@@ -23,8 +24,11 @@ export class FormConfigurationsController {
 
   @Roles('admin', 'employee')
   @Get()
-  async getAll(@Param('formId', new ValidateIdPipe()) formId: string) {
-    return this.formConfigurationService.getAll(formId);
+  async getAll(
+    @Param('formId', new ValidateIdPipe()) formId: string,
+    @Query() params: GetAllFormConfigurationsQueryParams,
+  ) {
+    return this.formConfigurationService.getAll(formId, params);
   }
 
   @Roles('admin', 'employee')

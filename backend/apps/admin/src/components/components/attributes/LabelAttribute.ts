@@ -4,11 +4,11 @@ import { BadRequestException } from '@nestjs/common';
 
 export class LabelAttribute extends Attribute {
   constructor(required: boolean) {
-    super('label', required);
+    super('label', required, "string");
   }
 
   validate({ key, value }: FormComponentAttributeDto) {
-    if (typeof value !== 'string')
-      throw new BadRequestException(`attribute ${key} must be a string`);
+    if (typeof value !== this.type)
+      throw new BadRequestException(`attribute ${key} must be a ${this.type}`);
   }
 }

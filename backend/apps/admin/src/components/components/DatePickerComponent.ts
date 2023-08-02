@@ -12,7 +12,7 @@ export class DatePickerComponent extends Component {
       [FieldType.Date],
       [
         new LabelAttribute(false),
-        new DefaultValueAttribute(false, (value) =>
+        new DefaultValueAttribute(false, "date", (value) =>
           datetime.isValid(value, 'YYYY-MM-DD'),
         ),
       ],

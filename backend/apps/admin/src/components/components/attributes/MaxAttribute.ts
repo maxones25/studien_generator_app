@@ -4,11 +4,11 @@ import { BadRequestException } from '@nestjs/common';
 
 export class MaxAttribute extends Attribute {
   constructor(required: boolean) {
-    super('max', required);
+    super('max', required, "number");
   }
 
   validate({ key, value }: FormComponentAttributeDto) {
-    if (typeof value !== 'number')
-      throw new BadRequestException(`attribute ${key} must be a number`);
+    if (typeof value !== this.type)
+      throw new BadRequestException(`attribute ${key} must be a ${this.type}`);
   }
 }

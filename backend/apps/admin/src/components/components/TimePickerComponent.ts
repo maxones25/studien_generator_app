@@ -12,7 +12,7 @@ export class TimePickerComponent extends Component {
       [FieldType.Time],
       [
         new LabelAttribute(false),
-        new DefaultValueAttribute(false, (value) =>
+        new DefaultValueAttribute(false, "time", (value) =>
           datetime.isValid(value, 'HH:mm:ss'),
         ),
       ],

@@ -21,6 +21,7 @@ export const useAddMember = () => {
           params: {
             name: variables.directorId,
             record: "member",
+            mainRecord: "study"
           },
         };
       },

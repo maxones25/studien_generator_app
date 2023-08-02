@@ -11,7 +11,7 @@ export class SelectComponent extends Component {
       [FieldType.Enum],
       [
         new LabelAttribute(false),
-        new DefaultValueAttribute(false, (value) => typeof value === 'string'),
+        new DefaultValueAttribute(false, "string", (value) => typeof value === 'string'),
       ],
     );
   }

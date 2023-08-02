@@ -2,7 +2,6 @@ import {
   Form,
   FormSelect,
   FormTextField,
-  Switch,
   Text,
 } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
@@ -18,9 +17,7 @@ import {
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
-export interface FieldFormProps extends FormProps<FieldFormData> {
-  groupId: string;
-}
+export interface FieldFormProps extends FormProps<FieldFormData> {}
 
 export const FieldForm: React.FC<FieldFormProps> = ({
   onSubmit,
@@ -49,7 +46,7 @@ export const FieldForm: React.FC<FieldFormProps> = ({
         label="Type"
         control={form.control}
         name="type"
-        rules={{ required: "required"}}
+        rules={{ required: "required" }}
         options={[
           { label: "Text", value: "Text" },
           { label: "Nummer", value: "Number" },

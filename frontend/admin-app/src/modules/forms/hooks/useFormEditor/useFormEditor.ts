@@ -1,4 +1,5 @@
 import { Component } from "@modules/components/types";
+import { useNavigationHelper } from "@modules/core/hooks";
 import { FormEntity, FormEntityField } from "@modules/formEntities/types";
 import { FormPage } from "@modules/formPages/types";
 import { useFormEditorContext } from "@modules/forms/contexts";
@@ -26,6 +27,7 @@ export const useFormEditor = (): UseFormEditorResult => {
     dispatch,
     state: { fields, component },
   } = useFormEditorContext();
+  const navigate = useNavigationHelper();
 
   const toggleFormEntityField = (
     entity: FormEntity,
@@ -51,7 +53,8 @@ export const useFormEditor = (): UseFormEditorResult => {
   };
 
   const setPage = (page: FormPage) => {
-    dispatch({ type: "set page number", pageNumber: page.number });
+    navigate.to(`../pages/${page.id}`);
+    // dispatch({ type: "set page number", pageNumber: page.number });
   };
 
   return {

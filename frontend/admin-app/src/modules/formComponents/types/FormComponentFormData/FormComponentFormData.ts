@@ -1,4 +1,9 @@
 export type FormComponentFormData = {
   id?: string;
-  attributes: { key: string; value: any }[];
+  type: string;
+  formFields: {
+    entityId: string;
+    fieldId: string;
+  }[];
+  attributes: Record<string, any>;
 };

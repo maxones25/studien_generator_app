@@ -1,6 +1,13 @@
 import { FormEntityField } from "@modules/formEntities/types";
 import { EnhancedFormEntityField } from "@modules/forms/contexts/FormEditorContext/hooks";
-import { ListItemButton, ListItemText, Theme } from "@mui/material";
+import { Check } from "@mui/icons-material";
+import {
+  Avatar,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+  Theme,
+} from "@mui/material";
 import React from "react";
 
 export interface FormEntityFieldListItemProps {
@@ -19,6 +26,8 @@ export const FormEntityFieldListItem: React.FC<
       }
     : {};
 
+  const isUsedInForm = field.data.component !== null;
+
   return (
     <ListItemButton
       sx={{
@@ -29,7 +38,15 @@ export const FormEntityFieldListItem: React.FC<
         ...selectedStyle,
       }}
       onClick={() => onSelect(field.data)}
+      disabled={isUsedInForm}
     >
+      {isUsedInForm && (
+        <ListItemAvatar>
+          <Avatar>
+            <Check />
+          </Avatar>
+        </ListItemAvatar>
+      )}
       <ListItemText primary={field.data.name} secondary={field.data.type} />
     </ListItemButton>
   );

@@ -6,6 +6,7 @@ export interface DataListProps<Data> {
   client: UseReadRequestResult<Data[]>;
   errorText: string;
   noDataText: string;
+  items?: Data[];
   renderItem: (
     item: Data,
     options: { i: number; arr: Data[]; isLast: boolean }

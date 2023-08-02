@@ -5,8 +5,5 @@ export type FormComponent = {
     entityId: string;
     fieldId: string;
   }[];
-  attributes: {
-    key: string;
-    value: any;
-  }[];
+  attributes: Record<string, any>;
 };

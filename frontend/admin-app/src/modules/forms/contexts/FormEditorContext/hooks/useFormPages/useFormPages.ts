@@ -10,13 +10,13 @@ export type UseFormPagesResult = EnhancedFormPage[];
 
 export const useFormPages = (
   formPages: FormPage[],
-  pageNumber: number
+  pageId: string
 ): UseFormPagesResult =>
   useMemo(
     () =>
       formPages.map((data) => ({
         data,
-        isSelected: pageNumber === data.number,
+        isSelected: pageId === data.id,
       })),
-    [formPages, pageNumber]
+    [formPages, pageId]
   );

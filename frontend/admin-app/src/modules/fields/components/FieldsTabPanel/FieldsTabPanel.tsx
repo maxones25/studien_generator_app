@@ -15,7 +15,6 @@ import {
   useUpdateField,
 } from "@modules/fields/hooks";
 import { FieldFormData } from "@modules/fields/types";
-import { useGroupId } from "@modules/navigation/hooks";
 import { Chip, Divider, Drawer, ListItemButton } from "@mui/material";
 import React from "react";
 import { DeleteFieldForm, FieldForm } from "..";
@@ -31,7 +30,6 @@ export const FieldsTabPanel: React.FC<FieldsTabPanelProps> = () => {
   const createField = useCreateField();
   const updateField = useUpdateField();
   const deleteField = useDeleteField();
-  const groupId = useGroupId();
 
   const handeSave = (data: FieldFormData) => {
     if (data.id) {
@@ -53,7 +51,6 @@ export const FieldsTabPanel: React.FC<FieldsTabPanelProps> = () => {
           onClick={editData.handleSet({
             name: "",
             type: "Text",
-            groupId: null,
           })}
           sx={{ ml: 1 }}
         >
@@ -102,7 +99,6 @@ export const FieldsTabPanel: React.FC<FieldsTabPanelProps> = () => {
           isNew={editData.isNew}
           values={editData.data}
           formProps={{ p: 1 }}
-          groupId={groupId!}
         />
       </Drawer>
       <DataDialog

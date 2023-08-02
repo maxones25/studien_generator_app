@@ -20,17 +20,18 @@ export const FormComponentForm: React.FC<FormComponentFormFormProps> = ({
 }) => {
   const form = useForm<FormComponentFormData>({ values });
 
-  console.log(values);
+  const handleSubmit = (data: FormComponentFormData) => {
+    onSubmit(data)
+  }
 
   return (
-    <Form form={form} onSubmit={onSubmit} {...formProps}>
-      {component.attributes.map((attribute, i) => {
+    <Form form={form} onSubmit={handleSubmit} {...formProps}>
+      {Object.values(component.attributes).map((attribute) => {
         return (
           <FormComponentAttributeField
             form={form}
-            keyName={attribute.name}
-            name={`attributes.${i}.value`}
-            required={attribute.required}
+            name={`attributes.${attribute.name}`}
+            attribute={attribute}
           />
         );
       })}

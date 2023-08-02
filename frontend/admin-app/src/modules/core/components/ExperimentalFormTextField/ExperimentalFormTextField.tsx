@@ -36,12 +36,15 @@ export function ExperimentalFormTextField<
   required = false,
   withPlaceholder = false,
   label,
+  type,
   equals,
   ...props
 }: ExperimentalFormTextFieldProps<FormData, FieldName>) {
   const { t } = useTranslation();
 
-  const translatedName = t(name.toString());
+  const attributeName = name.split(".").pop()
+
+  const translatedName = t(attributeName ?? "value");
 
   const requiredRule = required
     ? typeof required === "string"
@@ -90,11 +93,14 @@ export function ExperimentalFormTextField<
     return errors;
   }, [form.formState.errors, name]);
 
+  const valueAsNumber = type === "number"
+
   return (
     <TextField
       margin="normal"
       {...props}
       label={translatedLabel}
+      type={type}
       error={Boolean(error)}
       placeholder={withPlaceholder ? translatedName : placeholder}
       helperText={error?.message?.toString()}
@@ -106,6 +112,7 @@ export function ExperimentalFormTextField<
           ...validate,
           ...equalsRules,
         },
+        valueAsNumber
       })}
     />
   );

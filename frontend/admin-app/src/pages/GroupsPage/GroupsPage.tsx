@@ -29,7 +29,7 @@ export interface GroupsPageProps {}
 
 const GroupsPage: React.FC<GroupsPageProps> = () => {
   const { t } = useTranslation();
-  const groupId = useGroupId();
+  const groupId = useGroupId(false);
   const navigate = useNavigationHelper();
   const editGroupData = useFormData<GroupFormData>();
   const deleteGroupData = useFormData<GroupFormData>();

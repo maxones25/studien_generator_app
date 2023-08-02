@@ -88,7 +88,10 @@ export class FormComponentsService {
     await this.componentsService.validateFormComponent(
       type,
       entityFieldsIds,
-      attributes,
+      Object.keys(attributes).map((key) => ({
+        key,
+        value: attributes[key],
+      })),
     );
   }
 

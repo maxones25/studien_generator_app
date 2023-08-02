@@ -4,7 +4,7 @@ import { BadRequestException } from '@nestjs/common';
 
 export class PositiveIntegerAttribute extends Attribute {
   constructor(name: string, required: boolean) {
-    super(name, required);
+    super(name, required, 'number');
   }
 
   public validate({ key, value }: FormComponentAttributeDto) {

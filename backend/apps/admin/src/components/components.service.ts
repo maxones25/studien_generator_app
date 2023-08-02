@@ -15,6 +15,7 @@ import { SliderComponent } from './components/SliderComponent';
 import { SwitchComponent } from './components/SwitchComponent';
 import { TextFieldComponent } from './components/TextFieldComponent';
 import { HIITComponent } from './components/HIITComponents';
+import { AttributeType } from './Attribute';
 
 @Injectable()
 export class ComponentsService {
@@ -59,6 +60,25 @@ export class ComponentsService {
   }
 
   getAll() {
-    return Object.values(Object.fromEntries(this.components));
+    return Object.values(Object.fromEntries(this.components)).map(
+      (component) => ({
+        ...component,
+        attributes: component
+          .getAttributes()
+          .reduce<
+            Record<
+              string,
+              { name: String; required: boolean; type: AttributeType }
+            >
+          >((map, attribute) => {
+            map[attribute.name] = {
+              name: attribute.name,
+              required: attribute.required,
+              type: attribute.type,
+            };
+            return map;
+          }, {}),
+      }),
+    );
   }
 }

@@ -6,7 +6,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 export interface DeleteEntityFormProps
-  extends FormProps<EntityFormData, { name: string }> {}
+  extends FormProps<EntityFormData> {}
 
 export const DeleteEntityForm: React.FC<DeleteEntityFormProps> = ({
   onSubmit,

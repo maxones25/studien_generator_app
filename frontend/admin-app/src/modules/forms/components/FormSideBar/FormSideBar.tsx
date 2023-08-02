@@ -4,11 +4,30 @@ import { useFormEditor } from "@modules/forms/hooks";
 import { Close } from "@mui/icons-material";
 import React from "react";
 import { FormEntitySideBar } from "..";
+import { FormComponentFormData } from "@modules/formComponents/types";
+import { useCreateFormComponent } from "@modules/formComponents/hooks";
+import { useFormEditorContext } from "@modules/forms/contexts";
 
 export interface FormSideBarProps {}
 
 export const FormSideBar: React.FC<FormSideBarProps> = () => {
   const formEditor = useFormEditor();
+  const { state } = useFormEditorContext();
+  const createFormComponent = useCreateFormComponent();
+
+  const handleSave = ({ attributes }: FormComponentFormData) => {
+    createFormComponent.mutateAsync({
+      attributes,
+      type: state.component.data!.name,
+      formFields: state.fields.map(({ entity, data }) => ({
+        entityId: entity.id,
+        fieldId: data.id,
+      })),
+    }).then(() => {
+      formEditor.component.clear()
+      formEditor.selected.fields.clear()
+    })
+  };
 
   return (
     <Column
@@ -31,7 +50,7 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
           </Row>
           <FormComponentForm
             component={formEditor.component.data!}
-            onSubmit={console.log}
+            onSubmit={handleSave}
             formProps={{ p: 1 }}
           />
         </>

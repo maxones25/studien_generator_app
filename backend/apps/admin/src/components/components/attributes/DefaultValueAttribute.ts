@@ -1,12 +1,12 @@
-import { Attribute } from '@admin/components/Attribute';
+import { Attribute, AttributeType } from '@admin/components/Attribute';
 import { FormComponentAttributeDto } from '@admin/forms/pages/components/attributes/dtos/FormComponentAttributeDto';
 import { BadRequestException } from '@nestjs/common';
 
 export class DefaultValueAttribute extends Attribute {
   public readonly validateCallback: (value: any) => boolean;
 
-  constructor(required: boolean, validateCallback: (value: any) => boolean) {
-    super('defaultValue', required);
+  constructor(required: boolean, type: AttributeType, validateCallback: (value: any) => boolean) {
+    super('defaultValue', required, type);
     this.validateCallback = validateCallback;
   }
 

@@ -63,10 +63,17 @@
   "record created": "{{record}} '{{name}}' wurde erstellt!",
   "record updated": "{{record}} '{{name}}' wurde geändert!",
   "record deleted": "{{record}} '{{name}}' wurde gelöscht!",
-  "record added": "{{record}} '{{name}}' wurde hinzugefügt!",
+  "record added": "{{record}} '{{name}}' wurde zu {{mainRecord}} hinzugefügt!",
   "sign up successfull": "{{email}} wurde erfolgreich registriert",
   "min": "Minimum",
   "max": "Maximum",
   "defaultValue": "Standardwert",
-  "label": "Label"
+  "label": "Label",
+  "value": "Wert",
+  "warmUp": "Warm-Up (in Sekunden)",
+  "coolDown": "Cool-Down (in Sekunden)",
+  "highIntensity": "hochintensives Intervall (in Sekunden)",
+  "lowIntensity": "niedrigintensives Intervall (in Sekunden)",
+  "rounds": "Runden",
+  "no records found": "keine {{records}} gefunden"
 }

@@ -5,8 +5,7 @@ import { FormControl } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-export interface DeleteFieldFormProps
-  extends FormProps<FieldFormData, { name: string }> {}
+export interface DeleteFieldFormProps extends FormProps<FieldFormData> {}
 
 export const DeleteFieldForm: React.FC<DeleteFieldFormProps> = ({
   onSubmit,

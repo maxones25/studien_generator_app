@@ -1,20 +1,28 @@
 import { useReadRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { FormConfig } from "@modules/forms/types";
-import { useGroupId, useStudyId } from "@modules/navigation/hooks";
+import { useStudyId } from "@modules/navigation/hooks";
+
+export interface UseGetGroupFormsOptions {
+  groupId: string;
+}
 
 export const getGetGroupFormsKey = (data: {
   studyId: string;
-  groupId?: string;
+  groupId: string;
 }) => ["getGroupForms", data];
 
-export const useGetGroupForms = () => {
+export const useGetGroupForms = ({ groupId }: UseGetGroupFormsOptions) => {
   const studyId = useStudyId();
-  const groupId = useGroupId();
 
   return useReadRequest<FormConfig[]>(
-    getGetGroupFormsKey({ studyId, groupId }),
-    (options) =>
-      apiRequest(`/studies/${studyId}/groups/${groupId}/forms`, { ...options })
+    getGetGroupFormsKey({
+      studyId: studyId!,
+      groupId,
+    }),
+    ({ ...options }) =>
+      apiRequest(`/studies/${studyId}/groups/${groupId}/forms`, {
+        ...options,
+      })
   );
 };

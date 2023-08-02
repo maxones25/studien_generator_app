@@ -5,6 +5,8 @@ import { useGetComponents } from "@modules/components/hooks";
 import { useGetFormPages } from "@modules/formPages/hooks";
 import { LinearProgress } from "@mui/material";
 import { useGetFormEntities } from "@modules/formEntities/hooks";
+import { usePageId } from "@modules/navigation/hooks";
+import { Navigate } from "react-router-dom";
 
 export interface FormPageProps {}
 
@@ -12,12 +14,13 @@ const FormPage: React.FC<FormPageProps> = () => {
   const getComponents = useGetComponents();
   const getFormPages = useGetFormPages();
   const getFormEntities = useGetFormEntities();
+  const pageId = usePageId(false);
 
-  if (getComponents.isLoading) {
+  if (getFormPages.isLoading) {
     return <LinearProgress />;
   }
 
-  if (getFormPages.isLoading) {
+  if (getComponents.isLoading) {
     return <LinearProgress />;
   }
 
@@ -35,6 +38,15 @@ const FormPage: React.FC<FormPageProps> = () => {
 
   if (getFormEntities.isError) {
     return <Text color="error.main">Form Entities could not be loaded</Text>;
+  }
+
+  if (!pageId && Array.isArray(getFormPages.data)) {
+    const page = [...getFormPages.data].pop();
+    return <Navigate to={`${page?.id}`} />;
+  }
+
+  if (!pageId) {
+    return <LinearProgress />;
   }
 
   return (

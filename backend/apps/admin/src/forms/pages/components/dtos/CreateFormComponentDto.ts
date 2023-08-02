@@ -2,6 +2,7 @@ import {
   ArrayMinSize,
   IsArray,
   IsEnum,
+  IsObject,
   IsUUID,
   ValidateNested,
 } from 'class-validator';
@@ -27,8 +28,6 @@ export class CreateFormComponentDto {
   @ValidateNested({ each: true })
   formFields: FormFieldDto[];
 
-  @IsArray()
-  @Type(() => FormComponentAttributeDto)
-  @ValidateNested({ each: true })
-  attributes: FormComponentAttributeDto[];
+  @IsObject()
+  attributes: Record<string, any>;
 }

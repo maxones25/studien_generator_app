@@ -16,7 +16,7 @@ export class SliderComponent extends Component {
         new LabelAttribute(false),
         new MinAttribute(true),
         new MaxAttribute(true),
-        new DefaultValueAttribute(false, (value) => typeof value === 'number'),
+        new DefaultValueAttribute(false, "number", (value) => typeof value === 'number'),
       ],
     );
   }

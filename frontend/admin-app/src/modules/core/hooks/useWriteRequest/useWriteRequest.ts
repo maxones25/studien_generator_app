@@ -22,7 +22,7 @@ export interface WriteRequestOnSuccessOptions<InputData, OutputData> {
 }
 
 export type WriteRequestOnSettledReturnValue = {
-  text: "record created" | "record deleted" | "record added" | string;
+  text: string;
   params: Record<string, string>;
 };
 

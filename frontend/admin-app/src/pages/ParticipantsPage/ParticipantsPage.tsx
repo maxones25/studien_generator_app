@@ -1,13 +1,9 @@
-import React from 'react';
+import React from "react";
 
 export interface ParticipantsPageProps {}
 
-const ParticipantsPage : React.FC<ParticipantsPageProps>= props => {
-  return (
-    <div>
-      Participants
-    </div>
-  );
+const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
+  return <div>Participants</div>;
 };
 
-export default ParticipantsPage
+export default ParticipantsPage;

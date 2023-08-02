@@ -11,7 +11,7 @@ export class TextFieldComponent extends Component {
       [FieldType.Text],
       [
         new LabelAttribute(false),
-        new DefaultValueAttribute(false, (value) => typeof value === 'string'),
+        new DefaultValueAttribute(false, "string", (value) => typeof value === 'string'),
       ],
     );
   }

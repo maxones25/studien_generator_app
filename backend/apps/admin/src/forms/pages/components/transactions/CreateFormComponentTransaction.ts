@@ -23,7 +23,6 @@ export class CreateFormComponentTransaction extends Transaction<
     number,
     data,
   }: CreateFormTransactionInput): Promise<string> {
-
     const formComponent = await this.createFormComponent(pageId, number, data);
 
     await this.addFormFields(formComponent.id, data.formFields);
@@ -47,8 +46,6 @@ export class CreateFormComponentTransaction extends Transaction<
     formComponent.number = number;
     formComponent.type = type;
 
-    console.table({ pageId, number, type })
-
     await formComponentsRepo.insert(formComponent);
 
     return formComponent;
@@ -67,27 +64,24 @@ export class CreateFormComponentTransaction extends Transaction<
       formField.entityFieldId = fieldId;
       formField.formComponentId = formComponentId;
 
-      
-      console.table(formField)
       await formFieldsRepo.insert(formField);
-      console.table("done")
     }
   }
 
   private async addAttributes(
     formComponentId: string,
-    attributes: FormComponentAttributeDto[],
+    attributes: Record<string, any>,
   ) {
     const formComponentAttributesRepo = await this.entityManager.getRepository(
       FormComponentAttribute,
     );
 
-    for (const { key, value } of attributes) {
+    for (const key in attributes) {
       const attribute = new FormComponentAttribute();
 
       attribute.componentId = formComponentId;
       attribute.key = key;
-      attribute.value = JSON.stringify(value);
+      attribute.value = JSON.stringify(attributes[key]);
 
       await formComponentAttributesRepo.insert(attribute);
     }

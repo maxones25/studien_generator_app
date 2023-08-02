@@ -4,6 +4,7 @@ import { CreateFormConfigurationDto } from './dtos/CreateFormConfigurationDto';
 import { FormConfigurationsRepository } from './form-configurations.repository';
 import { UpdateFormConfigurationDto } from './dtos/UpdateFormConfigurationDto';
 import { UpdateFormConfigTransaction } from './transactions/UpdateFormConfigTransaction';
+import { GetAllFormConfigurationsQueryParams } from './dtos/GetAllFormConfigurationsQueryParams';
 
 @Injectable()
 export class FormConfigurationsService {
@@ -32,8 +33,8 @@ export class FormConfigurationsService {
     return formConfiguration.id;
   }
 
-  async getAll(formId: string) {
-    return this.formConfigurations.getByForm(formId);
+  async getAll(formId: string, params: GetAllFormConfigurationsQueryParams) {
+    return this.formConfigurations.getByForm(formId, params);
   }
 
   async update(id: string, data: UpdateFormConfigurationDto) {

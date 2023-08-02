@@ -1,7 +1,5 @@
-import { useParams } from "react-router-dom";
+import { usePathParam } from "..";
 
-export const useGroupId = () => {
-  const { groupId } = useParams<"groupId">();
-
-  return groupId;
+export const useGroupId = (required = true) => {
+  return usePathParam("groupId", required);
 };
