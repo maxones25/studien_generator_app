@@ -32,7 +32,6 @@ jobs:
     if: needs.changes.outputs.admin == 'true'
     services:
       mysql:
-        container_name: database
         image: mysql
         command:
           [
@@ -49,7 +48,7 @@ jobs:
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=10
-    
+
     steps:
       - name: Get Docker logs
         if: failure()

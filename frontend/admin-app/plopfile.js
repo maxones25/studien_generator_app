@@ -16,7 +16,7 @@ const modules = [
   "studies",
 ];
 
-// test 1234567
+// test 12345678
 
 const types = ["type", "interface"];
 
