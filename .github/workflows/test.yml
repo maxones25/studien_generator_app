@@ -33,26 +33,17 @@ jobs:
     services:
       mysql:
         image: mysql
-        command:
-          [
-            "--character-set-server=utf8mb4",
-            "--collation-server=utf8mb4_unicode_ci",
-          ]
-        volumes:
-          - ./mysql/data:/var/lib/mysql
-          - ./mysql/schema.sql:/docker-entrypoint-initdb.d/0-schema.sql
-          - ./mysql/seed/dev-seed.sql:/docker-entrypoint-initdb.d/1-seed.sql
-        environment:
-          - MYSQL_ROOT_PASSWORD=root
-          - MYSQL_DATABASE=studien_generator_app
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: studien_generator_app
+          MYSQL_USER: root
+          MYSQL_PASSWORD: root
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=10
-
     steps:
       - name: Get Docker logs
         if: failure()
-        run: docker logs database
+        run: docker logs 89f453ad5625adc8e73b0dfcdbb3cf8faa1acf569bee517edf69a0dcd4048f12
 
       - name: Get latest code
         uses: actions/checkout@v2
