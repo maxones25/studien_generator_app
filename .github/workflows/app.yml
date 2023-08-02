@@ -36,4 +36,4 @@ jobs:
 
     - name: Run study app end to end tests
       working-directory: ./tests
-      run: npm run test:study-app
+      run: npm run test:admin-app

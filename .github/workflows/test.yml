@@ -1,0 +1,61 @@
+name: "[App] Release"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      admin: ${{ steps.filter.outputs.admin }}
+      study: ${{ steps.filter.outputs.study }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            admin:
+              - 'backend/apps/admin/**'
+              - 'backend/libs/**'
+              - 'frontend/admin-app/**'
+            study:
+              - 'backend/apps/study/**'
+              - 'backend/libs/**'
+              - 'frontend/study-app/**'
+
+  setup-backend:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.admin == 'true' || needs.changes.outputs.study == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Install packages
+        working-directory: ./backend
+        run: npm ci
+
+  admin-tests:
+    runs-on: ubuntu-latest
+    needs: setup-backend
+    if: needs.changes.outputs.admin == 'true'
+    steps:
+      - name: Run Unit Tests
+        working-directory: ./backend
+        run: npm run test:admin:unit
+
+      - name: Run Integration Tests
+        working-directory: ./backend
+        run: npm run test:admin:integration
+
+  study-tests:
+    runs-on: ubuntu-latest
+    needs: setup-backend
+    if: needs.changes.outputs.study == 'true'
+    steps:
+      - name: Run Integration Tests
+        working-directory: ./backend
+        run: npm run test:study:integration
