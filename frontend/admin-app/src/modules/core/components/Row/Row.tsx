@@ -3,8 +3,6 @@ import React from "react";
 
 export interface RowProps extends BoxProps {}
 
-export const Row: React.FC<RowProps> = ({ sx, ...props }) => {
-  return (
-    <Box sx={{ display: "flex", alignItems: "center", ...sx }} {...props}></Box>
-  );
+export const Row: React.FC<RowProps> = (props) => {
+  return <Box display="flex" alignItems="center" {...props}></Box>;
 };

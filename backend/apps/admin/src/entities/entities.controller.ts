@@ -55,4 +55,10 @@ export class EntitiesController {
   async delete(@Param('entityId', new ValidateIdPipe()) entityId: string) {
     return this.entitiesService.delete(entityId);
   }
+
+  @Get(':entityId/forms')
+  @Roles('admin')
+  async getForms(@Param('entityId', new ValidateIdPipe()) entityId: string) {
+    return this.entitiesService.getForms(entityId);
+  }
 }

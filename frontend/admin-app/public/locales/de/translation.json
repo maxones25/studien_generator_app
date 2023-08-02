@@ -64,5 +64,9 @@
   "record updated": "{{record}} '{{name}}' wurde geändert!",
   "record deleted": "{{record}} '{{name}}' wurde gelöscht!",
   "record added": "{{record}} '{{name}}' wurde hinzugefügt!",
-  "sign up successfull": "{{email}} wurde erfolgreich registriert"
+  "sign up successfull": "{{email}} wurde erfolgreich registriert",
+  "min": "Minimum",
+  "max": "Maximum",
+  "defaultValue": "Standardwert",
+  "label": "Label"
 }

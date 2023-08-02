@@ -39,7 +39,7 @@ export class Form {
     () => FormConfiguration,
     (formConfiguration) => formConfiguration.form,
   )
-  configurations: FormEntity[];
+  configurations: FormConfiguration[];
 
   @OneToMany(() => Task, (task) => task.form)
   tasks: Task[];

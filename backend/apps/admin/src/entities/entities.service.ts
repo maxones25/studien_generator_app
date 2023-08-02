@@ -3,12 +3,15 @@ import { Entity } from '@entities/entity.entity';
 import { CreateEntityDto } from './dtos/CreateEntityDto';
 import { UpdateEntityDto } from './dtos/UpdateEntityDto';
 import { EntitiesRepository } from './entities.repository';
+import { FormsRepository } from '@admin/forms/forms.repository';
 
 @Injectable()
 export class EntitiesService {
   constructor(
     @Inject(EntitiesRepository)
     private entitiesRepository: EntitiesRepository,
+    @Inject(FormsRepository)
+    private formsRepository: FormsRepository,
   ) {}
 
   async create(studyId: string, { name }: CreateEntityDto) {
@@ -39,5 +42,23 @@ export class EntitiesService {
 
   async getById(entityId: string) {
     return this.entitiesRepository.getById(entityId);
+  }
+
+  async getForms(entityId: string) {
+    const forms = await this.formsRepository.find({
+      where: { formEntities: { entityId } },
+      relations: {
+        formEntities: true,
+      },
+      select: { id: true, name: true, formEntities: { id: true, name: true } },
+    });
+
+    return forms.map(({ formEntities, ...form }) => {
+      const entity = formEntities[0]
+      return {
+        ...form,
+        entity,
+      };
+    });
   }
 }
