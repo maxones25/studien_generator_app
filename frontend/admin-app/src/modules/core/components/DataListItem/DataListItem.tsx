@@ -31,23 +31,25 @@ export function DataListItem<ItemData>({
       divider={divider}
       disablePadding={disablePadding}
       secondaryAction={
-        <>
-          <IconButton onClick={menuAnchor.open}>
-            <MoreVert />
-          </IconButton>
-          <Menu
-            anchorEl={menuAnchor.element}
-            open={menuAnchor.isOpen}
-            onClose={menuAnchor.close}
-          >
-            {onUpdate && (
-              <MenuItem onClick={handleClick(onUpdate)}>Edit</MenuItem>
-            )}
-            {onDelete && (
-              <MenuItem onClick={handleClick(onDelete)}>Delete</MenuItem>
-            )}
-          </Menu>
-        </>
+        (onUpdate || onDelete) && (
+          <>
+            <IconButton onClick={menuAnchor.open}>
+              <MoreVert />
+            </IconButton>
+            <Menu
+              anchorEl={menuAnchor.element}
+              open={menuAnchor.isOpen}
+              onClose={menuAnchor.close}
+            >
+              {onUpdate && (
+                <MenuItem onClick={handleClick(onUpdate)}>Edit</MenuItem>
+              )}
+              {onDelete && (
+                <MenuItem onClick={handleClick(onDelete)}>Delete</MenuItem>
+              )}
+            </Menu>
+          </>
+        )
       }
     >
       {children}

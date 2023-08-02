@@ -7,6 +7,7 @@ import {
   Validate,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useMemo } from "react";
 
 export type ExperimentalFormTextFieldProps<
   FormData extends FieldValues,
@@ -34,6 +35,7 @@ export function ExperimentalFormTextField<
   minLength = 0,
   required = false,
   withPlaceholder = false,
+  label,
   equals,
   ...props
 }: ExperimentalFormTextFieldProps<FormData, FieldName>) {
@@ -69,18 +71,33 @@ export function ExperimentalFormTextField<
         }
       : undefined;
 
-  const label = translatedName !== name ? translatedName : undefined;
+  const translatedLabel = label
+    ? label
+    : translatedName !== name
+    ? translatedName
+    : undefined;
 
   const equalsRules = equals ? { equals } : undefined;
+
+  const error = useMemo(() => {
+    const chunks = name.split(".");
+    let errors: { [key: string]: any } = form.formState.errors;
+    for (const chunk of chunks) {
+      const error = errors[chunk];
+      if (!error) return null;
+      errors = error;
+    }
+    return errors;
+  }, [form.formState.errors, name]);
 
   return (
     <TextField
       margin="normal"
       {...props}
-      label={label}
-      error={Boolean(form.formState.errors[name.toString()])}
+      label={translatedLabel}
+      error={Boolean(error)}
       placeholder={withPlaceholder ? translatedName : placeholder}
-      helperText={form.formState.errors[name.toString()]?.message?.toString()}
+      helperText={error?.message?.toString()}
       {...form.register(name, {
         required: requiredRule,
         minLength: minLengthRule,

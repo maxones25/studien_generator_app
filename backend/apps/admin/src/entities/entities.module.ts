@@ -5,9 +5,10 @@ import { Entity } from '@entities/entity.entity';
 import entitiesProviders from './entities.providers';
 import { EntityGuard } from './entity.guard';
 import { EntitiesRepository } from './entities.repository';
+import { FormsModule } from '@admin/forms/forms.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Entity])],
+  imports: [TypeOrmModule.forFeature([Entity]), FormsModule],
   providers: entitiesProviders,
   controllers: [EntitiesController],
   exports: [EntityGuard, EntitiesRepository]

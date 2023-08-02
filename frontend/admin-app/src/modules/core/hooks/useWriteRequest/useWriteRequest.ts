@@ -21,7 +21,7 @@ export interface WriteRequestOnSuccessOptions<InputData, OutputData> {
   snackbar: SnackBarContextValue;
 }
 
-export type WriteRequestOnSuccessReturnValue = {
+export type WriteRequestOnSettledReturnValue = {
   text: "record created" | "record deleted" | "record added" | string;
   params: Record<string, string>;
 };
@@ -34,12 +34,28 @@ export interface WriteRequestOnErrorOptions<InputData, ErrorData> {
   snackbar: SnackBarContextValue;
 }
 
+export interface WriteRequestOnSettledOptions<
+  InputData,
+  OutputData,
+  ErrorData
+> {
+  queryClient: QueryClient;
+  data?: OutputData;
+  error: ErrorData | null;
+  variables: InputData;
+  context: unknown;
+}
+
 export interface UseWriteRequestOptions<InputData, OutputData, ErrorData> {
   onSuccess?: (
     options: WriteRequestOnSuccessOptions<InputData, OutputData>
-  ) => WriteRequestOnSuccessReturnValue | void;
+  ) => WriteRequestOnSettledReturnValue | void;
   onError?: (options: WriteRequestOnErrorOptions<InputData, ErrorData>) => void;
   queryOptions?: UseMutationOptions<OutputData, unknown, InputData>;
+  onMutate?: (variables: InputData, queryClient: QueryClient) => void;
+  onSettled?: (
+    options: WriteRequestOnSettledOptions<InputData, OutputData, ErrorData>
+  ) => void | WriteRequestOnSettledReturnValue;
 }
 
 export const useWriteRequest = <
@@ -50,7 +66,8 @@ export const useWriteRequest = <
   queryFunc: WriteQueryFunction<InputData, OutputData>,
   options?: UseWriteRequestOptions<InputData, OutputData, ErrorData>
 ) => {
-  const { queryOptions, onSuccess, onError } = options || {};
+  const { queryOptions, onSuccess, onError, onMutate, onSettled } =
+    options || {};
 
   const { t } = useTranslation();
   const queryClient = useQueryClient();
@@ -73,6 +90,31 @@ export const useWriteRequest = <
     },
     {
       ...queryOptions,
+      onMutate: (variables) => {
+        if (onMutate) {
+          onMutate(variables, queryClient);
+        }
+      },
+      onSettled: (data, error, variables, context) => {
+        if (onSettled) {
+          const snackbarConfig = onSettled({
+            context,
+            data,
+            error,
+            queryClient,
+            variables,
+          });
+          if (snackbarConfig) {
+            const params = Object.keys(snackbarConfig.params).reduce<
+              Record<string, string>
+            >((obj, key) => {
+              obj[key] = t(snackbarConfig.params[key]);
+              return obj;
+            }, {});
+            snackbar.showSuccess(t(snackbarConfig.text, params));
+          }
+        }
+      },
       onSuccess: (data, variables, context) => {
         if (onSuccess) {
           const snackbarConfig = onSuccess({
@@ -89,7 +131,6 @@ export const useWriteRequest = <
               obj[key] = t(snackbarConfig.params[key]);
               return obj;
             }, {});
-            console.log(params);
             snackbar.showSuccess(t(snackbarConfig.text, params));
           }
         }

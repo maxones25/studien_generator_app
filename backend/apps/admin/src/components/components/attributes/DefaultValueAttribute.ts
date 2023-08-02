@@ -1,0 +1,17 @@
+import { Attribute } from '@admin/components/Attribute';
+import { FormComponentAttributeDto } from '@admin/forms/pages/components/attributes/dtos/FormComponentAttributeDto';
+import { BadRequestException } from '@nestjs/common';
+
+export class DefaultValueAttribute extends Attribute {
+  public readonly validateCallback: (value: any) => boolean;
+
+  constructor(required: boolean, validateCallback: (value: any) => boolean) {
+    super('defaultValue', required);
+    this.validateCallback = validateCallback;
+  }
+
+  validate({ key, value }: FormComponentAttributeDto) {
+    if (!this.validateCallback(value))
+      throw new BadRequestException(`attribute ${key} has invalid type`);
+  }
+}

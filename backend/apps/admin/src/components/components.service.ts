@@ -1,22 +1,20 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import {
-  CheckBoxComponent,
-  Component,
-  DatePickerComponent,
-  DateTimePickerComponent,
-  HIITComponent,
-  NumberPickerComponent,
-  SelectComponent,
-  SliderComponent,
-  SwitchComponent,
-  TextFieldComponent,
-  TimePickerComponent,
-} from './components';
 import { EntityField } from '@entities/entity-field.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ComponentType } from './component-type.enum';
 import { FormComponentAttributeDto } from '@admin/forms/pages/components/attributes/dtos/FormComponentAttributeDto';
+import { Component } from './Component';
+import { DateTimePickerComponent } from './components/DateTimePickerComponent';
+import { DatePickerComponent } from './components/DatePickerComponent';
+import { TimePickerComponent } from './components/TimePickerComponent';
+import { CheckBoxComponent } from './components/CheckBoxComponent';
+import { NumberPickerComponent } from './components/NumberPicker';
+import { SelectComponent } from './components/SelectComponent';
+import { SliderComponent } from './components/SliderComponent';
+import { SwitchComponent } from './components/SwitchComponent';
+import { TextFieldComponent } from './components/TextFieldComponent';
+import { HIITComponent } from './components/HIITComponents';
 
 @Injectable()
 export class ComponentsService {
