@@ -30,16 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: changes
     if: needs.changes.outputs.admin == 'true'
-    services:
-      mysql:
-        image: mysql
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: studien_generator_app
-          MYSQL_USER: root
-          MYSQL_PASSWORD: root
-        ports:
-          - 3306:3306
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
@@ -48,10 +38,13 @@ jobs:
         working-directory: ./backend
         run: npm ci
 
+      - name: Start containers
+        run: |
+          docker-compose -f database-docker-compose.yaml build
+          docker-compose -f database-docker-compose.yaml up -d
+
       - name: Run integration tests
         working-directory: ./backend
-        env:
-          DB_HOST: 127.0.0.1
         run: npm run test:admin:integration
 
   study-tests:
