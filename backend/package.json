@@ -47,7 +47,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "typeorm": "^0.3.16",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "web-push": "^3.6.4"
   },
   "devDependencies": {
     "@automock/jest": "^1.2.2",

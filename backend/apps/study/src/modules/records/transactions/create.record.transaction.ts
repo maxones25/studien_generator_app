@@ -122,9 +122,6 @@ export class CreateRecordTransaction extends Transaction<
     });
 
     const type = entityField.type.toString().toLowerCase();
-
-    console.log(new Date(value).toString())
-    console.log(new Date(value).toString())
     
     switch (entityField.type) {
       case FieldType.Number:

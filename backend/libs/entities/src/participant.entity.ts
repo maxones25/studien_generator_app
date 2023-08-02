@@ -40,6 +40,9 @@ export class Participant {
   @Column()
   studyId: string;
 
+  @Column('text', { nullable: true })
+  subscription: string;
+
   @OneToMany(() => ParticipantAttributes, (attribute) => attribute.participant)
   attributes: ParticipantAttributes[];
 

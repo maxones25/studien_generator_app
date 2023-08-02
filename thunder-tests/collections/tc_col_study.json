@@ -24,6 +24,13 @@
             "containerId": "",
             "created": "2023-07-21T18:11:52.458Z",
             "sortNum": 120000
+        },
+        {
+            "_id": "0eacf9a4-8ad2-474e-b403-f5d519713dc5",
+            "name": "Push",
+            "containerId": "",
+            "created": "2023-08-02T15:22:02.452Z",
+            "sortNum": 130000
         }
     ],
     "settings": {
@@ -147,6 +154,24 @@
             "auth": {
                 "type": "bearer",
                 "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJ0aWNpcGFudElkIjoiNTRmZWFlNzEtYTdhZS00NzUyLWI5YjUtYTkwOGUyNDQ2ZDMxIiwiZ3JvdXBJZCI6IjQ5N2QwNTM0LWRlMGEtNDI2Ny1hZTAwLTUyMjFhMGM2YjZlZiIsInN0dWR5SWQiOiJmYzhkMmJlOS0wNjNjLTQzYmMtOTJkOS1kMjlkNWVjODRlNmIiLCJ0eXBlIjoicGFydGljaXBhbnQiLCJpYXQiOjE2ODk5Njc1MzV9.IrKPUI1xoOwxeRROjCkPcqakvJ0k43JbvIpDJeIyLX4"
+            },
+            "tests": []
+        },
+        {
+            "_id": "fc045149-0088-4950-ab1a-bb3bcd90d169",
+            "colId": "bf743467-ed25-4b29-ab5d-c53806e6f040",
+            "containerId": "0eacf9a4-8ad2-474e-b403-f5d519713dc5",
+            "name": "send push",
+            "url": "/push",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2023-08-02T15:22:16.643Z",
+            "modified": "2023-08-02T16:11:24.950Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{participantToken}}"
             },
             "tests": []
         }
