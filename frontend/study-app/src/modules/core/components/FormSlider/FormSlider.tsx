@@ -25,7 +25,7 @@ export function FormSlider<TFieldValues extends FieldValues>({
 }: FormSliderProps<TFieldValues>) {
   const { t } = useTranslation();
   const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>
-
+  console.log(attributes)
 
   return (
     <Controller
@@ -44,7 +44,6 @@ export function FormSlider<TFieldValues extends FieldValues>({
           control={
             <Slider 
               aria-label='Temperature'
-              value={value ?? 0} 
               onChange={(_e, newValue) => {
                 onChange(newValue as PathValue<TFieldValues, Path<TFieldValues>>);
               }}

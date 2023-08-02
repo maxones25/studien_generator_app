@@ -39,7 +39,10 @@ export type FormComponentDataAttributes = {
   label?: string,
   options?: any[],
   min?: number,
-  max?: number
+  max?: number,
+  minLength?: number,
+  maxLength?: number,
+  defaultValue?: any,
 }
 
 export type FormComponentDataRules = {
