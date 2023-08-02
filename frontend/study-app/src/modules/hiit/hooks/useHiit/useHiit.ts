@@ -45,7 +45,6 @@ export const useHiit = () : UseHiitResult => {
 			phases.push(i % 2 === 0 ? highIntensityPhase : lowIntensityPhase);
 		};
 		phases.push(coolDownPhase);
-		console.log(phases)
 		setPhases(phases);
 	}
 

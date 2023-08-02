@@ -25,7 +25,6 @@ export function FormSlider<TFieldValues extends FieldValues>({
 }: FormSliderProps<TFieldValues>) {
   const { t } = useTranslation();
   const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>
-  console.log(attributes)
 
   return (
     <Controller

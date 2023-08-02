@@ -122,14 +122,21 @@ export class CreateRecordTransaction extends Transaction<
     });
 
     const type = entityField.type.toString().toLowerCase();
+
+    console.log(new Date(value).toString())
+    console.log(new Date(value).toString())
     
     switch (entityField.type) {
-      case FieldType.Number || FieldType.Boolean:
+      case FieldType.Number:
+      case FieldType.Boolean:
         if (typeof value === type) return true;
-      case FieldType.Date || FieldType.DateTime || FieldType.Time:
-        if (new Date(value).toString() === 'Invalid Date') return true;
-      case FieldType.Enum || FieldType.Text:
-        if (typeof value !== 'string') return true;
+      case FieldType.Date: 
+      case FieldType.DateTime:
+      case FieldType.Time:
+        if (new Date(value).toString() !== 'Invalid Date') return true;
+      case FieldType.Enum:
+      case FieldType.Text:
+        if (typeof value === 'string') return true;
       default:
         return false;
     }
