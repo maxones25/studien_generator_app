@@ -16,7 +16,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.13.5",
+    "@mui/material": "^5.14.3",
     "date-and-time": "^3.0.2",
     "i18next": "^23.2.1",
     "i18next-browser-languagedetector": "^7.0.2",
