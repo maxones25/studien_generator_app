@@ -20,11 +20,15 @@ export const PushNotificationButton : React.FC<PushNotificationButtonProps>= ({
   };
 
   useEffect(() => {
-    navigator.serviceWorker.getRegistration().then((sw) => {
-      sw?.pushManager.permissionState({userVisibleOnly: true}).then((permission) => {
-        setPermission(permission);
+    if(navigator.serviceWorker) {
+      navigator.serviceWorker.getRegistration().then((sw) => {
+        sw?.pushManager.permissionState({userVisibleOnly: true}).then((permission) => {
+          setPermission(permission);
+        })
       })
-    })
+    } else {
+      setPermission('denied')
+    }
   },[message])
 
   return (

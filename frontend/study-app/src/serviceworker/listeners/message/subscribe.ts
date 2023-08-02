@@ -22,15 +22,16 @@ export const subscribe = async () => {
       VAPID_PUBLIC_KEY
     );
     const options = { applicationServerKey, userVisibleOnly: true };
-    const subscription = await self.registration.pushManager.subscribe(options);      
+    const subscription = await self.registration.pushManager.subscribe(options);  
+    console.log(subscription);    
     postMessage(
       MessageType.Success,
-      JSON.stringify(subscription)
+      'subscribtion was a success'
     );
   } catch (err) {
     postMessage(
       MessageType.Error,
-      'Error'
+      'something must have gon wrong'
     );
   }
 }
