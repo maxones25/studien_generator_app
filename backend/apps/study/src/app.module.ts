@@ -9,6 +9,7 @@ import JwtModule from '@shared/modules/jwt/jwt.module';
 import { AuthModule } from '@study/modules/auth/auth.module';
 import { RecordsModule } from '@study/modules/records/records.module';
 import { FormsModule } from '@study/modules/forms/forms.module';
+import { PushModule } from './modules/push/push.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { FormsModule } from '@study/modules/forms/forms.module';
     AuthModule,
     FormsModule,
     RecordsModule,
+    PushModule,
   ],
   providers: [
     {

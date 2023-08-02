@@ -41,11 +41,10 @@ export const useHiit = () : UseHiitResult => {
 			description: 'cool down description',
 		}
 		phases[0] = warmUpPhase;
-		for (let i = 0; i < config.repetitions; i++) {
+		for (let i = 0; i < config.rounds; i++) {
 			phases.push(i % 2 === 0 ? highIntensityPhase : lowIntensityPhase);
 		};
 		phases.push(coolDownPhase);
-		console.log(phases)
 		setPhases(phases);
 	}
 

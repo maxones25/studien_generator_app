@@ -1,5 +1,5 @@
 import { FormCheckBox, FormDatePicker, FormDateTimePicker, FormSelect, FormSlider, FormSwitch, FormTextField, FormTimePicker } from '@modules/core/components';
-import { FormComponentData, FormComponentDataAttributes } from '@modules/forms/types';
+import { FormComponentData } from '@modules/forms/types';
 import { Hiit } from '@modules/hiit/components';
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -15,7 +15,7 @@ export const FormComponent : React.FC<FormComponentProps>= ({
   form,
 }) => {
   const { t } = useTranslation();
-  const attributes: FormComponentDataAttributes = formComponent.attributes.reduce((obj, item) => 
+  const attributes: {[x: string]: any} = formComponent.attributes.reduce((obj, item) => 
     Object.assign(obj, { [item.key]: item.value }), {}
   );
   const label = attributes?.label
@@ -58,6 +58,7 @@ export const FormComponent : React.FC<FormComponentProps>= ({
           control={form.control}
           componentId={formComponent.id}
           formFields={formComponent.formFields}
+          attributes={attributes}
         />
       default: 
         return <></>

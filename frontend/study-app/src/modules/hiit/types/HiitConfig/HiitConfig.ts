@@ -1,5 +1,5 @@
 export type HiitConfig = {
-  repetitions: number,
+  rounds: number,
   highIntensity: number,
   lowIntensity: number,
   warmUp: number,
