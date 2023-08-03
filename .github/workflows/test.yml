@@ -20,7 +20,7 @@ jobs:
             admin_backend:
               - 'backend/apps/admin/**'
               - 'backend/libs/**'
-            admin_frontend:
+            adminFrontend:
               - 'frontend/admin-app/**'
             study_backend:
               - 'backend/apps/study/**'
@@ -73,7 +73,7 @@ jobs:
   admin-frontend-tests:
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.admin_frontend == 'true'
+    if: needs.changes.outputs.adminFrontend == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
