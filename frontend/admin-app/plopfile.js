@@ -16,8 +16,6 @@ const modules = [
   "studies",
 ];
 
-// test 12345678910111213
-
 const types = ["type", "interface"];
 
 const ModulePrompt = {
