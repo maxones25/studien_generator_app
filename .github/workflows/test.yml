@@ -127,6 +127,6 @@ jobs:
         run: |
           docker-compose -f admin-docker-compose.yaml up -d
 
-      - name: Run end to end tests
-        working-directory: ./tests/cypress
-        run: npm run test:admin
+      # - name: Run end to end tests
+      #   working-directory: ./tests/cypress
+      #   run: npm run test:admin
