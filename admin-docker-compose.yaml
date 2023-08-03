@@ -20,13 +20,7 @@ services:
       - study-app-network
   admin-backend:
     container_name: admin-backend
-    build:
-      context: ./backend
-      dockerfile: admin.dockerfile
-    ports:
-      - 8000:8000
-    environment:
-      - DB_HOST=mysql
+    image: admin-backend:latest
     networks:
       - study-app-network
   admin-frontend:
