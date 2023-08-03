@@ -109,6 +109,7 @@ jobs:
             ${{ runner.os }}-npm-
 
       - name: Install packages
+        if: steps.cache.outputs.cache-hit != 'true'
         working-directory: ./tests/cypress
         run: npm ci
 
