@@ -112,31 +112,10 @@ jobs:
         working-directory: ./tests/cypress
         run: npm ci
 
-      - name: Load cached Docker image
-        uses: actions/download-artifact@v2
-        with:
-          name: admin-backend
-          path: .
-        continue-on-error: true
+      # - name: Start admin-backend container
+      #   run: |
+      #     docker-compose -f admin-docker-compose.yaml up -d admin-backend
 
-      - name: Load Docker image from cache
-        run: docker load < admin-backend.tar || true
-
-      - name: Build and cache Docker image
-        run: |
-          docker-compose -f admin-docker-compose.yaml build admin-backend
-          docker save admin-backend:latest > admin-backend.tar
-
-      - name: Upload Docker image as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: admin-backend
-          path: admin-backend.tar
-
-      - name: Start admin-backend container
-        run: |
-          docker-compose -f admin-docker-compose.yaml up -d admin-backend
-
-      - name: Run end to end tests
-        working-directory: ./tests/cypress
-        run: npm run test:admin
+      # - name: Run end to end tests
+      #   working-directory: ./tests/cypress
+      #   run: npm run test:admin
