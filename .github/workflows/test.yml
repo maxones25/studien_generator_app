@@ -119,4 +119,4 @@ jobs:
 
       - name: Run end to end tests
         working-directory: ./tests/cypress
-        run: npm run test:admin-app
+        run: npm run test:admin
