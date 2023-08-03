@@ -17,19 +17,21 @@ jobs:
         id: filter
         with:
           filters: |
-            admin:
+            admin_backend:
               - 'backend/apps/admin/**'
               - 'backend/libs/**'
+            admin_frontend:
               - 'frontend/admin-app/**'
-            study:
+            study_backend:
               - 'backend/apps/study/**'
               - 'backend/libs/**'
+            study_frontend:
               - 'frontend/study-app/**'
 
-  admin-tests:
+  admin-backend-tests:
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.admin == 'true'
+    if: needs.changes.outputs.admin_backend == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
@@ -38,7 +40,7 @@ jobs:
         working-directory: ./backend
         run: npm ci
 
-      - name: Start containers
+      - name: Start database containers
         run: |
           docker-compose -f database-docker-compose.yaml build
           docker-compose -f database-docker-compose.yaml up -d
@@ -47,11 +49,44 @@ jobs:
         working-directory: ./backend
         run: npm run test:admin:integration
 
-  study-tests:
+  study-backend-tests:
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.study == 'true'
+    if: needs.changes.outputs.study_backend == 'true'
     steps:
-      - name: Run Integration Tests
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Install packages
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Start database containers
+        run: |
+          docker-compose -f database-docker-compose.yaml build
+          docker-compose -f database-docker-compose.yaml up -d
+
+      - name: Run integration tests
         working-directory: ./backend
         run: npm run test:study:integration
+
+  admin-frontend-tests:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.admin_frontend == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Start containers
+        run: |
+          docker-compose -f test-docker-compose.yaml build --build-arg BUILDKIT_INLINE_CACHE=1
+          docker-compose -f test-docker-compose.yaml up -d
+
+      - name: Install packages
+        working-directory: ./tests
+        run: npm ci
+
+      - name: Run end to end tests
+        working-directory: ./tests
+        run: npm run test:admin-app
