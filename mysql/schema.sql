@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 27. Jul 2023 um 09:43
+-- Erstellungszeit: 03. Aug 2023 um 00:04
 -- Server-Version: 8.0.31
 -- PHP-Version: 8.0.19
 
@@ -134,8 +134,12 @@ CREATE TABLE `form_configuration` (
 --
 
 CREATE TABLE `form_entity` (
+  `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `formId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `entityId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `entityId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -145,6 +149,10 @@ CREATE TABLE `form_entity` (
 --
 
 CREATE TABLE `form_field` (
+  `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `entityId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `formComponentId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `entityFieldId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -160,8 +168,7 @@ CREATE TABLE `form_page` (
   `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modifiedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `formId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `number` int NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `number` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -208,7 +215,8 @@ CREATE TABLE `participant` (
   `number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `groupId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `studyId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `studyId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subscription` text COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -236,7 +244,7 @@ CREATE TABLE `record` (
   `formId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `participantId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `taskId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `failureReason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `failureReason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -356,14 +364,17 @@ ALTER TABLE `form_configuration`
 -- Indizes für die Tabelle `form_entity`
 --
 ALTER TABLE `form_entity`
-  ADD PRIMARY KEY (`formId`,`entityId`),
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_form_entity` (`formId`,`entityId`,`name`),
   ADD KEY `FK_59d37facb3632ac059beeea77dd` (`entityId`);
 
 --
 -- Indizes für die Tabelle `form_field`
 --
 ALTER TABLE `form_field`
-  ADD PRIMARY KEY (`formComponentId`,`entityFieldId`),
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_538bb503126c3610c8b1dcac296` (`entityId`),
+  ADD KEY `FK_a3de2d2a60f5ceda5317eeb0acd` (`formComponentId`),
   ADD KEY `FK_d91d77c9f5e22f0de43c749e9bb` (`entityFieldId`);
 
 --
@@ -496,6 +507,7 @@ ALTER TABLE `form_entity`
 -- Constraints der Tabelle `form_field`
 --
 ALTER TABLE `form_field`
+  ADD CONSTRAINT `FK_538bb503126c3610c8b1dcac296` FOREIGN KEY (`entityId`) REFERENCES `form_entity` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_a3de2d2a60f5ceda5317eeb0acd` FOREIGN KEY (`formComponentId`) REFERENCES `form_component` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_d91d77c9f5e22f0de43c749e9bb` FOREIGN KEY (`entityFieldId`) REFERENCES `entity_field` (`id`) ON DELETE CASCADE;
 
