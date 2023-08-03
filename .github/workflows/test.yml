@@ -112,7 +112,7 @@ jobs:
         working-directory: ./tests/cypress
         run: npm ci
 
-              - name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
       - name: Cache Docker layers
