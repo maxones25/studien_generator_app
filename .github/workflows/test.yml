@@ -131,8 +131,8 @@ jobs:
           push: false
           load: true
           tags: admin-backend:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=0755,dest=/tmp/.buildx-cache
+          # cache-from: type=local,src=/tmp/.buildx-cache
+          # cache-to: type=local,mode=0755,dest=/tmp/.buildx-cache
 
       - name: Start admin-backend container
         run: |
