@@ -17,21 +17,19 @@ jobs:
         id: filter
         with:
           filters: |
-            admin_backend:
+            admin:
               - 'backend/apps/admin/**'
               - 'backend/libs/**'
-            adminFrontend:
               - 'frontend/admin-app/**'
-            study_backend:
+            study:
               - 'backend/apps/study/**'
               - 'backend/libs/**'
-            study_frontend:
               - 'frontend/study-app/**'
 
   admin-backend-tests:
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.admin_backend == 'true'
+    if: needs.changes.outputs.admin == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
@@ -52,7 +50,7 @@ jobs:
   study-backend-tests:
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.study_backend == 'true'
+    if: needs.changes.outputs.study == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
@@ -73,7 +71,7 @@ jobs:
   admin-frontend-tests:
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.adminFrontend == 'true'
+    if: needs.changes.outputs.admin == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
