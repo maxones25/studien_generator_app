@@ -113,26 +113,14 @@ jobs:
         working-directory: ./tests/cypress
         run: npm ci
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
       - name: Build admin-backend containers
         run: |
-          export DOCKER_BUILDKIT=1
           docker-compose -f admin-docker-compose.yaml build
 
       - name: Start admin-backend containers
         run: |
           docker-compose -f admin-docker-compose.yaml up -d
 
-      # - name: Run end to end tests
-      #   working-directory: ./tests/cypress
-      #   run: npm run test:admin
+      - name: Run end to end tests
+        working-directory: ./tests/cypress
+        run: npm run test:admin
