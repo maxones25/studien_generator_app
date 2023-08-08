@@ -11,7 +11,7 @@ export const dbPromise = openDB('study-app', 1, {
     if (!db.objectStoreNames.contains('tasks')) {
       const tasks = db.createObjectStore('tasks', { keyPath: 'id' });
       tasks.createIndex('scheduledAt', 'scheduledAt', { unique: false })
-      tasks.createIndex('fromId', 'formId', { unique: false });
+      tasks.createIndex('formId', 'formId', { unique: false });
     }
   
     if (!db.objectStoreNames.contains('forms')) {

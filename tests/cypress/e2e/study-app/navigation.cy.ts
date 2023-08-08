@@ -1,4 +1,8 @@
 describe("navigation", () => {
+  beforeEach(() => {
+    cy.intercept('GET', '/dev-sw.js?dev-sw', {statusCode: 404});
+  })
+
   it("should redirect to login page", () => {
     cy.visit("/");
     cy.getByTestId("login page").should("exist");
@@ -28,6 +32,7 @@ describe("navigation", () => {
   it("should logout", () => {
     cy.fetchAccessToken("participant").then(() => {
       cy.visit("/");
+      cy.getByTestId("menu-app-bar").click();
       cy.getByTestId("log-out-app-bar").click();
       cy.getByTestId("accept-logout").click();
       cy.getByTestId("login page");

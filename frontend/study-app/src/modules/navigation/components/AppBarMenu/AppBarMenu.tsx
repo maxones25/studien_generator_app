@@ -51,7 +51,10 @@ export const AppBarMenu : React.FC<AppBarMenuProps>= ({
         </ListItemIcon>
         {t('settings')}
       </MenuItem>
-      <MenuItem onClick={handleLogout}>
+      <MenuItem 
+        data-testid={'log-out-app-bar'} 
+        onClick={handleLogout}
+      >
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>

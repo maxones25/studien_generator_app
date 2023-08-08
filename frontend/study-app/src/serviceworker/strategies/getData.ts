@@ -18,9 +18,10 @@ export class GetData extends Strategy {
     const db = await this.dbPromise;
     const requestClone = request.clone()
     return handler.fetch(requestClone)
-    .then((response) => {
-      if (!response.ok) 
-        return response;
+    .then(async (response) => {
+      if (!response.ok) {
+        return await this.getFromDB(db)
+      }
       const responseClone = response.clone()
       responseClone.json().then(async (data) => {
         const tx = db.transaction(this.dbName, 'readwrite');
@@ -31,6 +32,13 @@ export class GetData extends Strategy {
         }));
       })
       return response;
+    }).catch(async () => {
+      return await this.getFromDB(db)
     });
+  }
+
+  private async getFromDB(db: IDBPDatabase) {
+    const data = await db.getAll(this.dbName)
+    return new Response(JSON.stringify(data))
   }
 }

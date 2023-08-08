@@ -1,6 +1,10 @@
 import testData from "../../testData";
 
 describe("login page", () => {
+  beforeEach(() => {
+    cy.intercept('GET', '/dev-sw.js?dev-sw', {statusCode: 404});
+  })
+
   it("should show login page", () => {
     cy.visit("/login");
     cy.getByTestId("login page").should("exist");

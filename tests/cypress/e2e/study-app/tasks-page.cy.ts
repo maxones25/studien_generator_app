@@ -1,6 +1,10 @@
 import testData from "../../testData";
 
 describe("task page", () => {
+  beforeEach(() => {
+    cy.intercept('GET', '/dev-sw.js?dev-sw', {statusCode: 404});
+  })
+
   it("should show task page", () => {
     cy.fetchAccessToken("participant").then(() => {
       cy.visit("/tasks");

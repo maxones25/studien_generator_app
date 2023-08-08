@@ -32,11 +32,11 @@ export class PostRecord extends Strategy {
         name: record.name,
       });
       try {
-        const response = await handler.fetch(request.clone());;
+        const response = await handler.fetch(request.clone());
         return response;
       } catch (error) {
         await this.queue.pushRequest({request: request});
-        return new Response();
+        return new Response('', { status: 200, statusText: "queued" });
       }
     });
   }

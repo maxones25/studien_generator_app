@@ -77,7 +77,7 @@ export const AppBar : React.FC<AppBarProps>= () => {
             aria-label="menu"
             sx={{ ml: 1 }}
             onClick={handleToggle}
-            testId='log-out-app-bar'
+            testId='menu-app-bar'
             Icon={<Menu />}
           />
         </Toolbar>

@@ -5,6 +5,7 @@ const config: Config = {
   verbose: true,
   globals: {
     BASE_URL: "http://localhost:4000",
+    API_URL: "http://localhost:9000"
   },
   rootDir: '.',
   testMatch: ['<rootDir>/study/**/*.test.ts'],
