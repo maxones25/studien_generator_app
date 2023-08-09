@@ -1,11 +1,11 @@
-import { Page } from "puppeteer";
+import { Browser, Page } from "puppeteer";
 import testData from "../testData";
 
 export const testIdSelector = (testId: string) => {
   return `[data-testid="${testId}"]`;
 }
 
-export const login = async (page: Page) => {
+export const login = async () => {
   const url = global.API_URL;
   const loginData = {
     id: testData.participant.id,
@@ -24,4 +24,18 @@ export const login = async (page: Page) => {
   }, url, loginData);
   await page.reload();
   await page.waitForNetworkIdle();
+}
+
+export const setSwOfflineMode = async (value: boolean) => {
+  await page.setOfflineMode(true);
+  const targets = browser.targets();
+  const serviceWorker = targets.find((t) => t.type() === 'service_worker');
+  const serviceWorkerConnection = await serviceWorker.createCDPSession();
+  await serviceWorkerConnection.send('Network.enable');
+  await serviceWorkerConnection.send('Network.emulateNetworkConditions', {
+    offline: value,
+    latency: 0,
+    downloadThroughput: 0,
+    uploadThroughput: 0,
+  });
 }

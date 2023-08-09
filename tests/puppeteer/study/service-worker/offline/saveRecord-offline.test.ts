@@ -1,4 +1,4 @@
-import { login } from "../../utils";
+import { setSwOfflineMode, login } from "../../utils";
 
 describe('save record offline', () => {
   const url = global.API_URL
@@ -9,13 +9,12 @@ describe('save record offline', () => {
   beforeAll(async () => {
     await page.goto(global.BASE_URL);
     await page.waitForNetworkIdle();
-    await login(page);
-    await page.setOfflineMode(true);
-    await page.reload();
+    await login();
+    await setSwOfflineMode(true);
   });
 
   afterAll(async () => {
-    await page.setOfflineMode(false);
+    await setSwOfflineMode(false);
   });
 
   it('should post record in offline mode', async () => {
@@ -31,7 +30,7 @@ describe('save record offline', () => {
       });
       return response.statusText
     }, url, record)
-    // expect(statusText).toBe('queued');
+    expect(statusText).toBe('queued');
   });
 
   // it('should create queue for record in offline mode', async () => {

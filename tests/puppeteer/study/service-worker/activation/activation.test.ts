@@ -15,6 +15,7 @@ describe('service worker', () => {
   });
 
   it('service worker is activated', async () => {
+    await page.reload();
     const serviceWorker = await page.evaluate(() => {
       if (navigator.serviceWorker) {
           return navigator.serviceWorker.controller.state;
