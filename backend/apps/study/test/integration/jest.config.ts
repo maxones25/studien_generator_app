@@ -22,6 +22,7 @@ const config: Config.InitialOptions = {
     '@study/(.*)': '<rootDir>/apps/study/src/$1',
     '@shared/(.*)': '<rootDir>/libs/shared/src/$1',
     '@entities/(.*)': '<rootDir>/libs/entities/src/$1',
+    '@entities': '<rootDir>/libs/entities/src',
     '@test/(.*)': '<rootDir>/libs/test/src/$1',
   },
 };
