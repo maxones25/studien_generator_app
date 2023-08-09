@@ -20,6 +20,7 @@ const config: Config.InitialOptions = {
   coverageReporters: ['lcov'],
   moduleNameMapper: {
     '@study/(.*)': '<rootDir>/apps/study/src/$1',
+    '@admin/(.*)': '<rootDir>/apps/admin/src/$1',
     '@shared/(.*)': '<rootDir>/libs/shared/src/$1',
     '@entities/(.*)': '<rootDir>/libs/entities/src/$1',
     '@entities': '<rootDir>/libs/entities/src',
