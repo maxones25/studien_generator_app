@@ -48,6 +48,7 @@ const entityField = () => {
 const participant = () => {
   return {
     number: faker.number.int({ min: 100000, max: 999999 }).toString(),
+    password: faker.internet.password({ length: 12 }),
   };
 };
 

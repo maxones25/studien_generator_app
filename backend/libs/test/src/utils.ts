@@ -228,3 +228,19 @@ export const createFormEntity = (
       })
       .catch(reject);
   });
+
+export const getParticipantAccessToken = (
+  app: INestApplication,
+  data: LoginParticipantDto
+) => 
+  new Promise<string>((resolve, reject) => {
+    request(app.getHttpServer())
+      .post('/auth/login')
+      .send(data)
+      .expect(201)
+      .then((res) => {
+        expect(typeof res.body.accessToken).toEqual('string');
+        resolve(res.body.accessToken as string);
+      })
+      .catch((err) => reject(err));
+  })
