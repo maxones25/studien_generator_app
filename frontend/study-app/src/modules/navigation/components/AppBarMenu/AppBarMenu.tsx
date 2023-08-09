@@ -45,7 +45,10 @@ export const AppBarMenu : React.FC<AppBarMenuProps>= ({
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-      <MenuItem onClick={navigate.handle('../settings')}>
+      <MenuItem 
+        data-testid={'go-settings-app-bar'} 
+        onClick={navigate.handle('../settings')}
+      >
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>

@@ -1,13 +1,13 @@
-describe('events page', () => {
+describe('settings page', () => {
 
   beforeEach(() => {
     cy.intercept('GET', '/dev-sw.js?dev-sw', {statusCode: 404});
   })
 
-  it("should open to events page", () => {
+  it("should open to settings page", () => {
     cy.fetchAccessToken("participant").then(() => {
-      cy.visit("/events");
-      cy.getByTestId("events page").should("exist");
+      cy.visit("/settings");
+      cy.getByTestId("settings page").should("exist");
     });
   });
 

@@ -12,7 +12,7 @@ const CalendarPage : React.FC<CalendarPageProps>= ({
   return (
     <CalendarProvider>
       <Page 
-        testId='calender-page'
+        testId='calendar page'
         header={<CalendarSelect />}
       >
         <CalendarList />

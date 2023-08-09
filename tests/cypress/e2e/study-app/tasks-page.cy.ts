@@ -1,5 +1,3 @@
-import testData from "../../testData";
-
 describe("task page", () => {
   beforeEach(() => {
     cy.intercept('GET', '/dev-sw.js?dev-sw', {statusCode: 404});
