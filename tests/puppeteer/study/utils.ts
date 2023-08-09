@@ -27,7 +27,7 @@ export const login = async () => {
 }
 
 export const setSwOfflineMode = async (value: boolean) => {
-  await page.setOfflineMode(true);
+  await page.setOfflineMode(value);
   const targets = browser.targets();
   const serviceWorker = targets.find((t) => t.type() === 'service_worker');
   const serviceWorkerConnection = await serviceWorker.createCDPSession();
@@ -38,4 +38,29 @@ export const setSwOfflineMode = async (value: boolean) => {
     downloadThroughput: 0,
     uploadThroughput: 0,
   });
+}
+
+export const getRequestQueueCount = async () => {
+  const count = await page.evaluate(() => {
+    return new Promise((resolve, reject) => {
+      let request = indexedDB.open("workbox-background-sync");
+      request.onsuccess = () => {
+        const db = request.result;
+        const transaction = db.transaction("requests", "readonly");
+        const countRequest = transaction.objectStore("requests").count();
+        countRequest.onsuccess = function() {
+          resolve(countRequest.result);
+        };
+
+        countRequest.onerror = function() {
+          reject(new Error('Fehler beim Zählen der Einträge.'));
+        };
+      };
+      request.onerror = (event) => {
+        reject(new Error("There was an error opening the IndexedDB database."));
+      };
+    });
+  });
+
+  return count;
 }

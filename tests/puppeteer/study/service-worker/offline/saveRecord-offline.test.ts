@@ -1,4 +1,4 @@
-import { setSwOfflineMode, login } from "../../utils";
+import { setSwOfflineMode, login, getRequestQueueCount } from "../../utils";
 
 describe('save record offline', () => {
   const url = global.API_URL
@@ -28,36 +28,22 @@ describe('save record offline', () => {
         },
         body: JSON.stringify(record),
       });
-      return response.statusText
+      return response.statusText;
     }, url, record)
     expect(statusText).toBe('queued');
   });
 
-  // it('should create queue for record in offline mode', async () => {
-  //   const data = await page.evaluate(async (url) => {
-  //     const accessToken = localStorage.getItem('accessToken');
-  //     const response = await fetch(`${url}/records`, {
-  //       method: "GET",
-  //       headers: {
-  //         "Authorization": `Bearer ${accessToken}`
-  //       }
-  //     });
-  //     return response.json()
-  //   }, url)
-  //   expect(data).toBeTruthy();
-  // });
+  it('should create queue for record in offline mode', async () => {
+    const count = await getRequestQueueCount();
 
-  // it('should work finish queue in online mode', async () => {
-  //   const data = await page.evaluate(async (url) => {
-  //     const accessToken = localStorage.getItem('accessToken');
-  //     const response = await fetch(`${url}/records`, {
-  //       method: "GET",
-  //       headers: {
-  //         "Authorization": `Bearer ${accessToken}`
-  //       }
-  //     });
-  //     return response.json()
-  //   }, url)
-  //   expect(data).toBeTruthy();
+    expect(count).toBe(1)
+  });
+
+  // it('should finish queue in online mode', async () => {
+  //   await setSwOfflineMode(false);
+  //   await page.reload();
+  //   await page.waitForNetworkIdle();
+  //   const count = await getRequestQueueCount();
+  //   expect(count).toBe(0)
   // });
 });
