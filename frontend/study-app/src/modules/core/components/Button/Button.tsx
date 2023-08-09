@@ -26,7 +26,7 @@ export const Button: React.FC<ButtonProps> = ({
       {...props}
       disabled={props.disabled || isLoading}
       >
-      {isLoading ? <CircularProgress color="inherit" /> : children}
+      {isLoading ? <CircularProgress size="1.5rem" color="inherit" /> : children}
     </MButton>
   );
 };

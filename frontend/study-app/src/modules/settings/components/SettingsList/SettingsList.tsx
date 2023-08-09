@@ -1,7 +1,7 @@
 import { List, ListItem, ListItemText } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { PermissionButton, PushNotificationButton } from '..';
+import { PushNotificationButton } from '..';
 
 export interface SettingsListProps {}
 
@@ -12,13 +12,6 @@ export const SettingsList : React.FC<SettingsListProps>= ({
 
   return (
     <List>
-      <ListItem 
-        secondaryAction = {<PermissionButton/>}
-      >
-        <ListItemText 
-          primary={t('local notifications')}
-        />
-      </ListItem>
       <ListItem 
         secondaryAction = {<PushNotificationButton/>}
       >

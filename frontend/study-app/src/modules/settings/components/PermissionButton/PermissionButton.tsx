@@ -27,7 +27,7 @@ export const PermissionButton : React.FC<PermissionButtonProps>= ({
       disabled={permission !== 'default'}
       onClick={onAcceptNotifications}
     >
-      {t(permission)}
+      {t('permission-' + permission)}
     </Button>
   );
 };

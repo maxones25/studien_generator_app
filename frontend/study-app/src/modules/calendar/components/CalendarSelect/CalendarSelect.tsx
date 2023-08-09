@@ -10,7 +10,7 @@ export const CalendarSelect : React.FC<CalendarSelectProps>= ({
   
 }) => {
   const { t } = useTranslation();
-  const { ultraLight } = useTheme();
+  const { palette: { primary } } = useTheme();
   const {
     showAppointments,
     showTasks,
@@ -23,7 +23,8 @@ export const CalendarSelect : React.FC<CalendarSelectProps>= ({
       justifyContent={"center"} 
       paddingY={0.5} 
       width={"100%"}
-      sx={{backgroundColor: ultraLight}}>
+      sx={{backgroundColor: primary.light}}
+    >
       <FormControlLabel
         label={t("appointments")}
         control={

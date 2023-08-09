@@ -1,4 +1,9 @@
 {
+  "push notifications": "Benachrichtigungen",
+  "permission-prompt": "akzeptieren",
+  "permission-default": "akzeptieren",
+  "permission-granted": "zugelassen",
+  "permission-denied": "blockiert",
   "/tasks": "Aufgaben",
   "/events": "Ereignisse",
   "/chat": "Chat",

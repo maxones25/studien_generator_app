@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export interface UseStoredStateOptions<T> {
-  storage: Storage;
+  storage?: Storage;
   defaultValue?: T;
 }
 
