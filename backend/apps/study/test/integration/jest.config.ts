@@ -1,10 +1,11 @@
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
+  displayName: 'admin:integration',
   rootDir: '../../../../',
   testMatch: ['<rootDir>/apps/study/test/integration/**/*.test.ts'],
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.(t|j)sx?$': '@swc/jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   collectCoverageFrom: ['<rootDir>/apps/study/src/**/*.ts'],
