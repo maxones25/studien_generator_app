@@ -24,7 +24,7 @@ declare global {
 }
 
 Cypress.Commands.add("shouldBeRelativePath", (path: string) => {
-  cy.url({timeout: 10000}).should("equal", Cypress.config().baseUrl + path);
+  cy.url().should("equal", Cypress.config().baseUrl + path);
 });
 
 Cypress.Commands.add(

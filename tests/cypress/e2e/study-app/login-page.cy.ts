@@ -86,6 +86,8 @@ describe("login page", () => {
 
     cy.getByTestId("login-submit-button").click();
 
+    cy.getByTestId("login-error-text").should("be.visible");
+
     cy.shouldBeRelativePath("/tasks");
   });
 });
