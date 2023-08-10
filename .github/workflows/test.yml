@@ -161,6 +161,9 @@ jobs:
         run: |
           docker-compose -f study-docker-compose.yaml up -d
 
+      - name: Wait for 30 seconds
+        run: sleep 30
+
       - name: Run end to end tests
         working-directory: ./tests/cypress
         run: npm run test:study
