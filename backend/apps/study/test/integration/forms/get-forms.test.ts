@@ -5,7 +5,7 @@ import request from 'supertest';
 import { TEST_PARTICIPANT } from '@test/testData';
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
 
-describe('login participant', () => {
+describe('get forms', () => {
   let app: INestApplication;
   let participant: LoginParticipantDto;
   let accessToken: string;

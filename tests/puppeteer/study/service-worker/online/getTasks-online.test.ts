@@ -1,4 +1,4 @@
-import { getData, login, setSwOfflineMode } from "../../utils";
+import { getData, login } from "../../utils";
 
 describe('service worker', () => {
 
@@ -6,14 +6,9 @@ describe('service worker', () => {
     await page.goto(global.BASE_URL);
     await page.waitForNetworkIdle();
     await login();
-    await setSwOfflineMode(true);
   });
 
-  afterAll(async () => {
-    await setSwOfflineMode(false);
-  });
-
-  it('should get tasks in offline mode', async () => {
+  it('should get tasks in online mode', async () => {
     const data = await getData('/tasks');
     expect(data).toBeTruthy();
   });

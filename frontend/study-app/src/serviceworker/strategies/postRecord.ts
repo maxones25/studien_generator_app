@@ -36,7 +36,7 @@ export class PostRecord extends Strategy {
         return response;
       } catch (error) {
         await this.queue.pushRequest({request: request});
-        return new Response('', { status: 200, statusText: "queued" });
+        return new Response('', { status: 200, statusText: 'Queued' });
       }
     });
   }

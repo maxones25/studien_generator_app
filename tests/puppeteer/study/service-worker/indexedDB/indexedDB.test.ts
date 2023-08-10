@@ -6,6 +6,8 @@ describe('service worker', () => {
   beforeAll(async () => {
     await page.goto(global.BASE_URL);
     await page.waitForNetworkIdle();
+    await page.reload();
+    await page.waitForNetworkIdle();
   });
 
   it("should have an IndexedDB database", async () => {

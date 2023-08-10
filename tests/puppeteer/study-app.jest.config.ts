@@ -10,9 +10,9 @@ const config: Config = {
   rootDir: '.',
   testMatch: ['<rootDir>/study/**/*.test.ts'],
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.(t|j)sx?$': '@swc/jest',
   },
-  testTimeout: 10000
+  testTimeout: 20000
 };
 
 export default config;

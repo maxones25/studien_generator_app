@@ -1,10 +1,10 @@
-import { setSwOfflineMode, login, getRequestQueueCount } from "../../utils";
+import { setSwOfflineMode, login, getStoreCount, postData } from "../../utils";
 
 describe('save record offline', () => {
-  const url = global.API_URL
+  const url = global.API_URL;
   const record = {
     id: '1234',
-  }
+  };
 
   beforeAll(async () => {
     await page.goto(global.BASE_URL);
@@ -18,32 +18,25 @@ describe('save record offline', () => {
   });
 
   it('should post record in offline mode', async () => {
-    const statusText = await page.evaluate(async (url, record) => {
-      const accessToken = localStorage.getItem('accessToken');
-      const response = await fetch(`${url}/records`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${accessToken}`,
-          "Content-Type": `application/json`
-        },
-        body: JSON.stringify(record),
-      });
-      return response.statusText;
-    }, url, record)
-    expect(statusText).toBe('queued');
+    const statusText = await postData('/records', record)
+    expect(statusText).toBe('Queued');
   });
 
-  it('should create queue for record in offline mode', async () => {
-    const count = await getRequestQueueCount();
+  it('should create record in indexedDB', async () => {
+    const count = await getStoreCount("study-app", "records");
+    expect(count).toBe(1);
+  })
 
-    expect(count).toBe(1)
+  it('should create queue for record in offline mode', async () => {
+    const count = await getStoreCount("workbox-background-sync", "requests");
+    expect(count).toBe(1);
   });
 
   // it('should finish queue in online mode', async () => {
   //   await setSwOfflineMode(false);
   //   await page.reload();
   //   await page.waitForNetworkIdle();
-  //   const count = await getRequestQueueCount();
+  //   const count = await getStoreCount();
   //   expect(count).toBe(0)
   // });
 });

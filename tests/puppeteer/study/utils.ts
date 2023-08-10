@@ -1,5 +1,5 @@
-import { Browser, Page } from "puppeteer";
 import testData from "../testData";
+const API_URL = global.API_URL;
 
 export const testIdSelector = (testId: string) => {
   return `[data-testid="${testId}"]`;
@@ -40,14 +40,14 @@ export const setSwOfflineMode = async (value: boolean) => {
   });
 }
 
-export const getRequestQueueCount = async () => {
-  const count = await page.evaluate(() => {
+export const getStoreCount = async (dbName: string, storeName: string) => {
+  const count = await page.evaluate((dbName, storeName) => {
     return new Promise((resolve, reject) => {
-      let request = indexedDB.open("workbox-background-sync");
+      let request = indexedDB.open(dbName);
       request.onsuccess = () => {
         const db = request.result;
-        const transaction = db.transaction("requests", "readonly");
-        const countRequest = transaction.objectStore("requests").count();
+        const transaction = db.transaction(storeName, "readonly");
+        const countRequest = transaction.objectStore(storeName).count();
         countRequest.onsuccess = function() {
           resolve(countRequest.result);
         };
@@ -60,7 +60,37 @@ export const getRequestQueueCount = async () => {
         reject(new Error("There was an error opening the IndexedDB database."));
       };
     });
-  });
+  }, dbName, storeName);
 
   return count;
+}
+
+export const getData = async (endpoint: string) => {
+  const url = `${API_URL}${endpoint}`
+  return await page.evaluate(async (url) => {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${accessToken}`
+      }
+    });
+    return response.json();
+  }, url);
+}
+
+export const postData = async (endpoint: string, data: any) => {
+  const url = `${API_URL}${endpoint}`
+  return await page.evaluate(async (url, data) => {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": `application/json`
+      },
+      body: JSON.stringify(data),
+    });
+    return response.statusText;
+  }, url, data);
 }

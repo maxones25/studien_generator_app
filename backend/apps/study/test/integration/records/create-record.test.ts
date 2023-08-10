@@ -7,7 +7,7 @@ import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDt
 import { CreatePushDto } from '@study/modules/push/dto/createPushDto';
 import { CreateRecordDto } from '@study/modules/records/dtos/createRecordDto';
 
-describe('login participant', () => {
+describe('create record', () => {
   let app: INestApplication;
   let participant: LoginParticipantDto;
   let accessToken: string;
