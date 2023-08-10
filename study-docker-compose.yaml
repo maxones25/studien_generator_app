@@ -1,0 +1,41 @@
+services:
+  mysql:
+    container_name: database
+    image: mysql
+    command:
+      [
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+      ]
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/schema.sql:/docker-entrypoint-initdb.d/0-schema.sql
+      - ./mysql/seed/test-seed.sql:/docker-entrypoint-initdb.d/1-seed.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=studien_generator_app
+    ports:
+      - 3306:3306
+    networks:
+      - study-app-network
+  study-backend:
+    container_name: study-backend
+    build:
+      context: ./backend
+      dockerfile: study.dockerfile
+    ports:
+      - 9000:9000
+    environment:
+      - DB_HOST=mysql
+    networks:
+      - study-app-network
+  study-frontend:
+    container_name: study-frontend
+    build:
+      context: ./frontend/study-app
+    ports:
+      - 4000:4000
+    networks:
+      - study-app-network
+networks:
+  study-app-network:

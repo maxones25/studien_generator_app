@@ -12,7 +12,8 @@ jobs:
       pipeline: ${{ steps.filter.outputs.pipeline }}
       admin_backend: ${{ steps.filter.outputs.admin_backend }}
       admin_frontend: ${{ steps.filter.outputs.admin_frontend }}
-      study: ${{ steps.filter.outputs.study }}
+      study_backend: ${{ steps.filter.outputs.study_backend }}
+      study_frontend: ${{ steps.filter.outputs.study_frontend }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2
@@ -26,9 +27,10 @@ jobs:
               - 'backend/libs/**'
             admin_frontend:
               - 'frontend/admin-app/**'
-            study:
+            study_backend:
               - 'backend/apps/study/**'
               - 'backend/libs/**'
+            study_frontend:
               - 'frontend/study-app/**'
 
   admin-backend-tests:
@@ -63,7 +65,7 @@ jobs:
   study-backend-tests:
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.study == 'true'
+    if: needs.changes.outputs.study_backend == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
@@ -124,3 +126,39 @@ jobs:
       - name: Run end to end tests
         working-directory: ./tests/cypress
         run: npm run test:admin
+
+  study-frontend-tests:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.study_backend == 'true' ||
+      needs.changes.outputs.study_frontend == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v2
+        with:
+          path: ./tests/cypress/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('./tests/cypress/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install packages
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./tests/cypress
+        run: npm ci
+
+      - name: Build study-backend containers
+        run: |
+          docker-compose -f study-docker-compose.yaml build
+
+      - name: Start study-backend containers
+        run: |
+          docker-compose -f study-docker-compose.yaml up -d
+
+      - name: Run end to end tests
+        working-directory: ./tests/cypress
+        run: npm run test:study
