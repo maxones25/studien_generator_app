@@ -1,7 +1,7 @@
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
-  displayName: 'admin:integration',
+  displayName: 'study:integration',
   rootDir: '../../../../',
   testMatch: ['<rootDir>/apps/study/test/integration/**/*.test.ts'],
   transform: {

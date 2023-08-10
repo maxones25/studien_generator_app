@@ -15,6 +15,7 @@ import { CreateEntityDto } from '@admin/entities/dtos/CreateEntityDto';
 import { CreateFormDto } from '@admin/forms/dtos/CreateFormDto';
 import { CreateFormConfigurationDto } from '@admin/forms/configurations/dtos/CreateFormConfigurationDto';
 import { CreateFormEntityDto } from '@admin/forms/entities/dtos/CreateFormEntityDto';
+import { CreatePushDto } from '@study/modules/push/dto/createPushDto';
 
 export const createApp = async (AppModule: any) => {
   // if (global.__APP__) return global.__APP__;
@@ -243,4 +244,21 @@ export const getParticipantAccessToken = (
         resolve(res.body.accessToken as string);
       })
       .catch((err) => reject(err));
-  })
+  });
+
+export const createPush = (
+  app: INestApplication,
+  accessToken: string,
+  data: CreatePushDto
+) => 
+  new Promise<void>((resolve, reject) => {
+    request(app.getHttpServer())
+      .post('/push')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(data)
+      .expect(201)
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => reject(err));;
+  });

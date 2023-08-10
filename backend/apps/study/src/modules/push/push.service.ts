@@ -12,13 +12,23 @@ export class PushService {
     private participantsRepository: Repository<Participant>,
   ) {}
 
+  async get(id: string) {
+    const { subscription } = await this.participantsRepository.findOne({ where: { id } });
+    return { subscription };
+  }
+
   async create(id: string, { subscription }: CreatePushDto) {
-    const { affected } =  await this.participantsRepository.update(id, { subscription })
-    return affected
+    const { affected } =  await this.participantsRepository.update(id, { subscription });
+    return affected;
+  }
+
+  async remove(id: string) {
+    const { affected } = await this.participantsRepository.update(id, { subscription: null });
+    return affected;
   }
 
   async send(id: string) {
-    const { subscription } = await this.participantsRepository.findOne({ where: { id } })
+    const { subscription } = await this.participantsRepository.findOne({ where: { id } });
     const options = {
       vapidDetails: {
         subject: 'mailto:myuserid@email.com',

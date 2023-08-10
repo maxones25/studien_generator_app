@@ -19,5 +19,7 @@ export const TEST_STUDY = {
 export const TEST_PARTICIPANT = {
   ID: "54feae71-a7ae-4752-b9b5-a908e2446d31",
   PASSWORD: "0123456789AB",
+  SUBSCRIPTION: `{"endpoint":"https://fcm.googleapis.com/fcm/send/coB6AVF4RGw:APA91bGfCxfO9u7-taLZ59fOfLobeUt09t9KLvKWiLHJ344MqWKeMeNoLff6y4EZYaLVuXCfxEGUW4I9kvddtD4NUAWoIUDOqXLgNU8fCA06AC0BJfNpLbnIlo6x4S1I7GLoP_lBCNRk","expirationTime":null,"keys":{"p256dh":"BN5fMo9FWcP7g6WqFPPjRkGlYDHc6td8mWs-hYcq_sDqAFfcbjJHzxUn0lxoxnum13YKGc2LqiLwdDeXXZaf4Vc","auth":"NE9aK9PJ46FzTVqV1y8f1Q"}}`
 };
+
 
