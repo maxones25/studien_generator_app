@@ -7,17 +7,8 @@ import {
 } from 'typeorm';
 import { Task } from '.';
 import { FormConfiguration } from '.';
-
-enum ScheduleType {
-  Flexible = "Flexible",
-  Fix = "Fix",
-}
-
-enum SchedulePeriod {
-  Day = "Day",
-  Week = "Week",
-  Month = "Month",
-}
+import { FormScheduleType } from '@admin/groups/schedules/enums/FormScheduleType';
+import { FormSchedulePeriod } from '@admin/groups/schedules/enums/FormSchedulePeriod';
 
 @TypeOrmEntity()
 export class FormSchedule {
@@ -39,20 +30,20 @@ export class FormSchedule {
 
   @Column({
     type: 'enum',
-    enum: ScheduleType,
+    enum: FormScheduleType,
   })
-  type: ScheduleType;
+  type: FormScheduleType;
 
   @Column({
     type: 'enum',
-    enum: SchedulePeriod,
+    enum: FormSchedulePeriod,
   })
-  period: SchedulePeriod;
+  period: FormSchedulePeriod;
 
-  @Column("integer", { nullable: true })
+  @Column('integer', { nullable: true })
   frequency: number;
 
-  @Column("json")
+  @Column('json')
   data: any;
 
   @OneToMany(() => Task, (task) => task.form)

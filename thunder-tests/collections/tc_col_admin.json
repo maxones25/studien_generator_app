@@ -101,6 +101,13 @@
             "containerId": "8a2ad440-54d7-4bcc-95c6-991869f7fcde",
             "created": "2023-07-26T10:55:17.196Z",
             "sortNum": 160000
+        },
+        {
+            "_id": "b08a4cc4-ea56-4151-905f-8be7a8703cc2",
+            "name": "Schedules",
+            "containerId": "d01717b2-a5f4-4af4-be17-482369af049d",
+            "created": "2023-08-08T10:05:37.552Z",
+            "sortNum": 170000
         }
     ],
     "settings": {
@@ -847,6 +854,110 @@
             "body": {
                 "type": "json",
                 "raw": "{\n  \"name\": \"test\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "acaaf996-2781-4d78-9b83-46eb1598aa81",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "b08a4cc4-ea56-4151-905f-8be7a8703cc2",
+            "name": "create schedule (Fix, Week)",
+            "url": "/studies/{{studyId}}/forms/0c1707cc-6af5-43af-a2f1-36d4a8c44f8e/schedules",
+            "method": "POST",
+            "sortNum": 210000,
+            "created": "2023-08-08T10:05:55.196Z",
+            "modified": "2023-08-11T15:03:19.972Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"type\": \"Fix\",\n  \"period\": \"Week\",\n  \"frequency\": 1,\n  \"postpone\": {\n    \"isActive\": false,\n    \"times\": 0,\n    \"duration\": 0\n  },\n  \"daysOfWeek\": [\n    true,\n    false,\n    true,\n    false,\n    true,\n    false,\n    false\n  ]\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "4a4076d3-62a9-4071-9665-de5553e918c6",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "b08a4cc4-ea56-4151-905f-8be7a8703cc2",
+            "name": "get schedules",
+            "url": "/studies/{{studyId}}/forms/0c1707cc-6af5-43af-a2f1-36d4a8c44f8e/schedules",
+            "method": "GET",
+            "sortNum": 220000,
+            "created": "2023-08-08T10:29:30.100Z",
+            "modified": "2023-08-08T10:29:48.505Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "72c49cb5-2c48-44e4-a23b-45c734a02c0d",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "b08a4cc4-ea56-4151-905f-8be7a8703cc2",
+            "name": "delete schedule",
+            "url": "/studies/{{studyId}}/forms/0c1707cc-6af5-43af-a2f1-36d4a8c44f8e/schedules/3ec41976-7e25-4b9c-a8b7-037e7f17dbe9",
+            "method": "DELETE",
+            "sortNum": 230000,
+            "created": "2023-08-11T14:02:48.716Z",
+            "modified": "2023-08-11T14:26:11.929Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d4308bcc-c9db-4e53-b0bb-d4d7f72873a0",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "b08a4cc4-ea56-4151-905f-8be7a8703cc2",
+            "name": "create schedule (Fix, Day)",
+            "url": "/studies/{{studyId}}/forms/0c1707cc-6af5-43af-a2f1-36d4a8c44f8e/schedules",
+            "method": "POST",
+            "sortNum": 105000,
+            "created": "2023-08-11T14:09:24.207Z",
+            "modified": "2023-08-11T15:02:47.767Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"type\": \"Fix\",\n  \"period\": \"Day\",\n  \"frequency\": 1,\n  \"postpone\": {\n    \"isActive\": true,\n    \"times\": 1,\n    \"duration\": 24\n  }\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "4a9d647e-7e9b-40a2-a593-e29d8e57843c",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "b08a4cc4-ea56-4151-905f-8be7a8703cc2",
+            "name": "create schedule (Fix, Month)",
+            "url": "/studies/{{studyId}}/forms/0c1707cc-6af5-43af-a2f1-36d4a8c44f8e/schedules",
+            "method": "POST",
+            "sortNum": 215000,
+            "created": "2023-08-11T14:20:39.323Z",
+            "modified": "2023-08-11T15:03:51.081Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"type\": \"Fix\",\n  \"period\": \"Month\",\n  \"frequency\": 1,\n  \"postpone\": {\n    \"isActive\": false,\n    \"times\": 1,\n    \"duration\": 24\n  },\n  \"dayOfMonth\": [\n    1\n  ]\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ba32fdbe-8130-4d1f-8350-58df8bda6e9d",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "b08a4cc4-ea56-4151-905f-8be7a8703cc2",
+            "name": "update schedule",
+            "url": "/studies/{{studyId}}/forms/0c1707cc-6af5-43af-a2f1-36d4a8c44f8e/schedules/a76b7a29-7d59-4cc1-bb40-72fa5954759e",
+            "method": "PUT",
+            "sortNum": 217500,
+            "created": "2023-08-11T15:16:58.552Z",
+            "modified": "2023-08-11T15:20:05.545Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"type\": \"Fix\",\n  \"period\": \"Week\",\n  \"frequency\": 2,\n  \"postpone\": {\n    \"isActive\": true,\n    \"times\": 3,\n    \"duration\": 1\n  },\n  \"daysOfWeek\": [\n    true,\n    true,\n    true,\n    true,\n    true,\n    true,\n    true\n  ]\n}",
                 "form": []
             },
             "tests": []

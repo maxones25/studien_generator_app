@@ -1,0 +1,37 @@
+use class-validator to validate those objects for a http body payload:
+
+{
+    type: "Fix";
+    period: "Day";
+    frequency: integer, greater than 0;
+}
+
+{
+    type: "Fix";
+    period: "Week";
+    frequency: integer, greater than 0;
+    daysOfWeek: array of week days
+}
+
+{
+    type: "Fix";
+    period: "Month";
+    frequency: integer, greater than 0;
+    dayOfMonth: 1-28 or LastDay
+}
+
+{
+    type: "Flexible";
+    period: "Week";
+    frequency: null;
+    days: integer;
+    daysInBetween: integer;
+}
+
+{
+    type: "Flexible";
+    period: "Month";
+    frequency: null;
+    days: integer;
+    daysInBetween: integer;
+}

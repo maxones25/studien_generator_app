@@ -1,0 +1,11 @@
+Commands
+
+POST /studies/:studyId/{commandName}
+
+{
+
+}
+
+DELETE /studies/:studyId/{resource}/:id
+
+GET /studies/:studyId/{queryName}?{queryParams}
