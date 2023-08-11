@@ -32,7 +32,7 @@ export default defineConfig({
         name: 'Studien App',
         short_name: 'Studien App',
         description: 'Studien App Beschreibung',
-        theme_color: '#ffffff',
+        theme_color: '#006960',
         icons: [
           {
             src: 'images/pwa-64x64.png',
