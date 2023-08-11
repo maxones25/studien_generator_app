@@ -29,11 +29,16 @@ export default defineConfig({
         navigateFallback: 'index.html'
       },
       manifest: {
-        name: 'My Awesome App',
-        short_name: 'MyApp',
-        description: 'My Awesome App description',
+        name: 'Studien App',
+        short_name: 'Studien App',
+        description: 'Studien App Beschreibung',
         theme_color: '#ffffff',
         icons: [
+          {
+            src: 'images/pwa-64x64.png',
+            sizes: '64x64',
+            type: 'image/png'
+          },
           {
             src: 'images/pwa-192x192.png',
             sizes: '192x192',
@@ -42,7 +47,14 @@ export default defineConfig({
           {
             src: 'images/pwa-512x512.png',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any'  
+          },
+          {
+            src: 'images/maskable-icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
           }
         ]
       }

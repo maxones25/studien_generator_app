@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "g": "plop",
     "generate": "plop",
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/logo.svg"
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/images/logo.svg"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
