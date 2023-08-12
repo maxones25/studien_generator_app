@@ -1,4 +1,5 @@
-import { CalendarDate, CalendarEntry } from "@modules/calendar/types";
+import { CalendarDate, CalendarListItem } from "@modules/calendar/types";
+import { getDateFromItem } from "@modules/calendar/utils";
 import { useGetAppointments, useGetTasks } from "@modules/tasks/hooks";
 import { createContext, FC, ReactNode, useContext, useState } from "react";
 
@@ -32,18 +33,21 @@ const useCalendarContextValue = () => {
   let dates: CalendarDate[] | undefined;
     
   if (tasksData && appointmentsData) {
-    const calendarEntries: CalendarEntry[] = [...tasksData, ...appointmentsData];
+    const calendarEntries = [...tasksData, ...appointmentsData];
     const sortedEntries = calendarEntries.sort((a, b) => {
-      return a.scheduledAt.getTime() - b.scheduledAt.getTime();
+      const aTime = getDateFromItem(a).getTime();
+      const bTime = getDateFromItem(b).getTime();
+      return aTime - bTime;
     });
     dates = groupByDate(sortedEntries);
   }
 
-  function groupByDate(entries: CalendarEntry[]): CalendarDate[] {
-    const grouped: { [dateStr: string]: CalendarEntry[] } = {};
+  function groupByDate (entries: Array<CalendarListItem>) {
+    const grouped: { [dateStr: string]: CalendarListItem[] } = {};
 
     entries.forEach(entry => {
-        const dateStr = entry.scheduledAt.toISOString().split('T')[0];  // z.B. "2023-01-10"
+        const date = getDateFromItem(entry)
+        const dateStr = date.toISOString().split('T')[0];  // z.B. "2023-01-10"
         if (!grouped[dateStr]) {
             grouped[dateStr] = [];
         }

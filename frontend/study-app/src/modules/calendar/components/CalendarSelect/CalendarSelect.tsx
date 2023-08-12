@@ -23,6 +23,7 @@ export const CalendarSelect : React.FC<CalendarSelectProps>= ({
       justifyContent={"center"} 
       paddingY={0.5} 
       width={"100%"}
+      boxShadow={1}
       sx={{backgroundColor: primary.light}}
     >
       <FormControlLabel

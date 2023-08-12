@@ -7,12 +7,14 @@ import { AppBar } from "@modules/navigation/components";
 export interface PageProps extends ColumnProps {
   testId: string;
   header?: JSX.Element
+  footer?: JSX.Element
 }
 
 export const Page: React.FC<PageProps> = ({ 
   sx, 
   testId, 
   header,
+  footer,
   ...props 
 }) => {
   const accessToken = useAccessTokenContext();
@@ -37,7 +39,8 @@ export const Page: React.FC<PageProps> = ({
         ...sx,
       }}
       {...props}
-    />
+      />
+      {footer ?? footer}
     </Box>
   );
 };

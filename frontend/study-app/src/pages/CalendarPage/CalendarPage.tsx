@@ -14,6 +14,10 @@ const CalendarPage : React.FC<CalendarPageProps>= ({
       <Page 
         testId='calendar page'
         header={<CalendarSelect />}
+        sx={{
+          paddingX: "0",
+          paddingY: "0",
+        }}
       >
         <CalendarList />
       </Page>

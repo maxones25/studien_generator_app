@@ -1,5 +1,6 @@
-import { CalendarEntry } from "@modules/calendar/types";
-
-export interface Appointment extends CalendarEntry{
-
+export type Appointment = {
+  id: string;
+  start: Date;
+  end?: Date;
+  name: string;
 }

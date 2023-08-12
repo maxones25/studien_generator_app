@@ -1,6 +1,7 @@
-import { CalendarEntry } from "@modules/calendar/types";
-
-export interface Task extends CalendarEntry{
+export type Task = {
+  id: string;
+  scheduledAt: Date;
+  name: string;
   formId: string,
   postponedTo?: Date,
   completedAt?: Date,
