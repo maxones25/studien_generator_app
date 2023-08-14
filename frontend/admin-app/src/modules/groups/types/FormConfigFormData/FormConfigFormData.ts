@@ -1,8 +1,8 @@
-import { FormConfigType } from "@modules/forms/types";
+import { FormConfigTypeType } from "@modules/forms/types";
 
 export type FormConfigFormData = {
   formId: string;
   groupId: string;
   isActive: boolean;
-  type: FormConfigType;
+  type: FormConfigTypeType;
 };

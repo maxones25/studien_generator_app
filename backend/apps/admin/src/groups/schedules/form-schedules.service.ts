@@ -5,6 +5,7 @@ import { FormSchedule } from '@entities';
 import { FormScheduleType } from './enums/FormScheduleType';
 import { FormSchedulePeriod } from './enums/FormSchedulePeriod';
 import { UpdateFormScheduleDto } from './dtos/UpdateFormScheduleDto';
+import { GetAllSchedulesQueryParams } from './dtos/GetAllSchedulesQueryParams';
 
 @Injectable()
 export class FormSchedulesService {
@@ -13,8 +14,8 @@ export class FormSchedulesService {
     readonly formSchedulesRepository: FormSchedulesRepository,
   ) {}
 
-  async create(configId: string, data: CreateFormScheduleDto) {
-    const { type, period, frequency } = data;
+  async create(data: CreateFormScheduleDto) {
+    const { configId, type, period, frequency } = data;
     const formSchedule = new FormSchedule();
 
     formSchedule.configId = configId;
@@ -28,9 +29,9 @@ export class FormSchedulesService {
     return formSchedule.id;
   }
 
-  async getAll(configId: string) {
+  async getAll({ formId }: GetAllSchedulesQueryParams) {
     const schedules = await this.formSchedulesRepository.find({
-      where: { configId },
+      where: { configId: formId },
       order: {
         createdAt: 'ASC',
       },
@@ -45,11 +46,11 @@ export class FormSchedulesService {
     return schedules.map(({ data, ...rest }) => ({ ...rest, ...data }));
   }
 
-  async update(id: string, body: UpdateFormScheduleDto) {
-    const { type, period, frequency } = body;
+  async update(body: UpdateFormScheduleDto) {
+    const { configId, type, period, frequency } = body;
     const data = this.getData(body) as any;
 
-    const { affected } = await this.formSchedulesRepository.update(id, {
+    const { affected } = await this.formSchedulesRepository.update(configId, {
       type,
       period,
       frequency,
@@ -69,8 +70,6 @@ export class FormSchedulesService {
     period,
     postpone,
     dayOfMonth,
-    days,
-    daysInBetween,
     daysOfWeek,
   }: CreateFormScheduleDto) {
     if (type === FormScheduleType.Fix && period === FormSchedulePeriod.Day) {

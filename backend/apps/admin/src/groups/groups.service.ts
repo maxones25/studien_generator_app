@@ -6,6 +6,7 @@ import { GroupsRepository } from './groups.repository';
 import { FormConfigurationsRepository } from '@admin/forms/configurations/form-configurations.repository';
 import { FormConfiguration } from '@entities/form-configuration.entity';
 import { CreateGroupFormConfigDto } from './dtos/CreateGroupFormConfigDto';
+import { UpdateGroupFormConfigDto } from './dtos/UpdateGroupFormConfigDto';
 
 @Injectable()
 export class GroupsService {
@@ -25,6 +26,21 @@ export class GroupsService {
     await this.groupsRepository.insert(group);
 
     return group.id;
+  }
+
+  async updateForm(
+    configId: string,
+    { type, isActive }: UpdateGroupFormConfigDto,
+  ) {
+    const { affected } = await this.formConfigurationsRepository.update(
+      configId,
+      {
+        type,
+        isActive,
+      },
+    );
+
+    return affected;
   }
 
   async getByStudy(studyId: string) {

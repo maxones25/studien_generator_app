@@ -1,7 +1,6 @@
 import {
   Column,
   DataList,
-  DataListItem,
   IconButton,
   Row,
   Text,
@@ -12,16 +11,10 @@ import { FormConfigType } from "@modules/forms/types";
 import { useAddGroupForm, useGetGroupForms } from "@modules/groups/hooks";
 import { useGroupId } from "@modules/navigation/hooks";
 import { Add } from "@mui/icons-material";
-import {
-  Checkbox,
-  Divider,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-} from "@mui/material";
+import { Divider, Menu, MenuItem } from "@mui/material";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { FormListItem } from "..";
 
 export interface FormsCardProps {}
 
@@ -82,18 +75,13 @@ export const FormsCard: React.FC<FormsCardProps> = () => {
         </Menu>
       </Row>
       <Divider />
-      <Column flex={1} p={2} pt={1} pb={1}>
+      <Column flex={1} p={2} pt={1} pb={1} sx={{ overflowY: "scroll" }}>
         <DataList
           client={getGroupForms}
           errorText="error"
           noDataText="no data"
-          renderItem={(item) => (
-            <DataListItem key={item.id} item={item}>
-              <ListItemIcon>
-                <Checkbox edge="start" checked={item.isActive} />
-              </ListItemIcon>
-              <ListItemText>{item.form.name}</ListItemText>
-            </DataListItem>
+          renderItem={(form, { isLast }) => (
+            <FormListItem key={form.id} form={form} isLast={isLast} />
           )}
         />
       </Column>

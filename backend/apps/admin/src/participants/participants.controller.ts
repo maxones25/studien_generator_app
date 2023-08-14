@@ -40,6 +40,12 @@ export class ParticipantsController {
   }
 
   @Roles('admin')
+  @Post('participants/:participantId/start')
+  async start(@Param('participantId') participantId: string) {
+    return this.participantsService.regeneratePassword(participantId);
+  }
+
+  @Roles('admin')
   @Delete('participants/:participantId')
   async deleteParticipant(@Param('participantId') participantId: string) {
     this.participantsService.delete(participantId);

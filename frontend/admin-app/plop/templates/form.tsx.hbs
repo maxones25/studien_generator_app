@@ -15,7 +15,7 @@ export const {{pascalCase name}}Form: React.FC<{{pascalCase name}}FormProps> = (
   const form = useForm<{{pascalCase name}}FormData>({ values });
 
   return (
-    <Form {...formProps} onSubmit={form.handleSubmit(onSubmit)}>
+    <Form {...formProps} form={form} onSubmit={onSubmit}>
       <FormControl margin="normal">
         <Button testId="{{lowerCase name}} form submit button" type="submit">
           Save

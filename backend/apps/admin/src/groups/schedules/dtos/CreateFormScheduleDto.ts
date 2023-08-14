@@ -6,6 +6,7 @@ import {
   IsEnum,
   IsInt,
   IsObject,
+  IsUUID,
   Max,
   Min,
   ValidateIf,
@@ -17,6 +18,9 @@ import { FormSchedulePostpone } from './FormSchedulePostpone';
 import { Type } from 'class-transformer';
 
 export class CreateFormScheduleDto {
+  @IsUUID()
+  readonly configId: string;
+
   @IsEnum(FormScheduleType)
   readonly type: FormScheduleType;
 

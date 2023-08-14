@@ -26,7 +26,11 @@ export function DataList<Data>({
   const hasData = (data?.length ?? 0) > 0;
 
   return (
-    <Column alignItems="center">
+    <Column
+      alignItems="center"
+      position="relative"
+      sx={{ overflowY: "hidden" }}
+    >
       {isLoading ? (
         <CircularProgress data-testid="loading spinner" />
       ) : isError ? (
@@ -36,7 +40,10 @@ export function DataList<Data>({
       ) : !hasData ? (
         <Text>{noDataText}</Text>
       ) : (
-        <List sx={{ width: "100%" }} disablePadding={disablePadding}>
+        <List
+          sx={{ width: "100%", overflowY: "scroll" }}
+          disablePadding={disablePadding}
+        >
           {data?.map((item, i, arr) =>
             renderItem(item, { i, arr, isLast: i === arr.length - 1 })
           )}

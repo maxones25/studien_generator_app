@@ -15,6 +15,7 @@ import { CreateGroupDto } from './dtos/CreateGroupDto';
 import { GroupGuard } from './guards/group.guard';
 import { Roles } from '@admin/roles/roles.decorator';
 import { CreateGroupFormConfigDto } from './dtos/CreateGroupFormConfigDto';
+import { UpdateGroupFormConfigDto } from './dtos/UpdateGroupFormConfigDto';
 
 @Controller('studies/:studyId/groups')
 @UseGuards(GroupGuard)
@@ -71,5 +72,14 @@ export class GroupsController {
   @Roles('admin', 'employee')
   async getForms(@Param('groupId', new ValidateIdPipe()) groupId: string) {
     return this.groupsService.getForms(groupId);
+  }
+
+  @Put(':groupId/forms/:configId')
+  @Roles('admin', 'employee')
+  async updateForm(
+    @Param('configId', new ValidateIdPipe()) configId: string,
+    @Body() body: UpdateGroupFormConfigDto,
+  ) {
+    return this.groupsService.updateForm(configId, body);
   }
 }

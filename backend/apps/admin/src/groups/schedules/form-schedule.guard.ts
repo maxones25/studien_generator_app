@@ -18,10 +18,8 @@ export class FormScheduleGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
 
-    const formId = request.params.formId;
     const scheduleId = request.params.scheduleId;
 
-    if (!formId) throw new UnauthorizedException();
     if (!scheduleId) return true;
 
     const schedule = await this.formSchedulesRepository.findOne({
