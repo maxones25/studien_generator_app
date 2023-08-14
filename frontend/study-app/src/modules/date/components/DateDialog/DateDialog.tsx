@@ -1,5 +1,5 @@
 import { useDateContext } from '@modules/date/contexts';
-import { Dialog } from '@mui/material';
+import { Dialog, styled } from '@mui/material';
 import { StaticDatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import React from 'react';
@@ -9,6 +9,13 @@ export interface DateDialogProps {
   onClose: () => void;
 }
 
+const StyledDialog = styled(Dialog)(({  }) => ({
+  '& .MuiDialog-paper': {
+    margin: 0,
+    // Hier können Sie weitere Styles hinzufügen, wenn Sie möchten
+  },
+}));
+
 export const DateDialog : React.FC<DateDialogProps> = ({
   open,
   onClose
@@ -16,7 +23,7 @@ export const DateDialog : React.FC<DateDialogProps> = ({
   const { date, set } = useDateContext();
 
   return (
-    <Dialog data-testid={"date-dialog"} open={open} onClose={onClose} sx={{m: 0}}>
+    <StyledDialog data-testid={"date-dialog"} open={open} onClose={onClose} >
       <StaticDatePicker 
         defaultValue={dayjs(date)} 
         slots={{
@@ -30,6 +37,6 @@ export const DateDialog : React.FC<DateDialogProps> = ({
         onAccept={(value) => set(value!)}
         onClose={onClose}
       />
-    </Dialog>
+    </StyledDialog>
   );
 };
