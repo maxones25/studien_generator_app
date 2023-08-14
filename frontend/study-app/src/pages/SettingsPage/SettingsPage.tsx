@@ -8,7 +8,7 @@ const SettingsPage : React.FC<SettingsPageProps>= ({
   
 }) => {
   return (
-    <Page testId='settings page'>
+    <Page sx={{padding: 0}} testId='settings page'>
       <SettingsList />
     </Page>
   );
