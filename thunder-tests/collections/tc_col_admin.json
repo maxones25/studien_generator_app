@@ -896,11 +896,11 @@
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
             "containerId": "b08a4cc4-ea56-4151-905f-8be7a8703cc2",
             "name": "delete schedule",
-            "url": "/studies/{{studyId}}/forms/0c1707cc-6af5-43af-a2f1-36d4a8c44f8e/schedules/3ec41976-7e25-4b9c-a8b7-037e7f17dbe9",
+            "url": "/studies/{{studyId}}/schedules/123",
             "method": "DELETE",
             "sortNum": 230000,
             "created": "2023-08-11T14:02:48.716Z",
-            "modified": "2023-08-11T14:26:11.929Z",
+            "modified": "2023-08-14T14:17:18.171Z",
             "headers": [],
             "params": [],
             "tests": []

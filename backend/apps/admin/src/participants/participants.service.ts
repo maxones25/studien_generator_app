@@ -1,15 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Participant } from '@entities/participant.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ParticipantDto } from './dtos/participantDto';
 import { PasswordService } from '@shared/modules/password/password.service';
+import { StartParticipantStudyTransaction } from './transactions/StartParticipantStudyTransaction';
 
 @Injectable()
 export class ParticipantsService {
   constructor(
     @InjectRepository(Participant)
     private participantsRepository: Repository<Participant>,
+    @Inject(StartParticipantStudyTransaction)
+    private startParticipantStudyTransaction: StartParticipantStudyTransaction,
     private passwordService: PasswordService,
   ) {}
 
@@ -32,6 +35,10 @@ export class ParticipantsService {
       { password: hashedPassword },
     );
     return { password: password };
+  }
+
+  async start(participantId: string) {
+    this.startParticipantStudyTransaction.run({ participantId });
   }
 
   async update(participantId: string, { number }: ParticipantDto) {

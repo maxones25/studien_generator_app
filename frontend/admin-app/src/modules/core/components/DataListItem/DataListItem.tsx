@@ -4,9 +4,10 @@ import { IconButton, ListItem, Menu, MenuItem } from "@mui/material";
 
 export interface DataListItemProps<ItemData> {
   item: ItemData;
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[] | false;
   divider?: boolean;
   disablePadding?: boolean;
+  accordion?: JSX.Element;
   onUpdate?: (item: ItemData) => void;
   onDelete?: (item: ItemData) => void;
 }
@@ -14,6 +15,7 @@ export interface DataListItemProps<ItemData> {
 export function DataListItem<ItemData>({
   item,
   children,
+  accordion,
   divider = false,
   disablePadding = true,
   onDelete,
@@ -31,25 +33,27 @@ export function DataListItem<ItemData>({
       divider={divider}
       disablePadding={disablePadding}
       secondaryAction={
-        (onUpdate || onDelete) && (
-          <>
-            <IconButton onClick={menuAnchor.open}>
-              <MoreVert />
-            </IconButton>
-            <Menu
-              anchorEl={menuAnchor.element}
-              open={menuAnchor.isOpen}
-              onClose={menuAnchor.close}
-            >
-              {onUpdate && (
-                <MenuItem onClick={handleClick(onUpdate)}>Edit</MenuItem>
-              )}
-              {onDelete && (
-                <MenuItem onClick={handleClick(onDelete)}>Delete</MenuItem>
-              )}
-            </Menu>
-          </>
-        )
+        accordion
+          ? accordion
+          : (onUpdate || onDelete) && (
+              <>
+                <IconButton onClick={menuAnchor.open}>
+                  <MoreVert />
+                </IconButton>
+                <Menu
+                  anchorEl={menuAnchor.element}
+                  open={menuAnchor.isOpen}
+                  onClose={menuAnchor.close}
+                >
+                  {onUpdate && (
+                    <MenuItem onClick={handleClick(onUpdate)}>Edit</MenuItem>
+                  )}
+                  {onDelete && (
+                    <MenuItem onClick={handleClick(onDelete)}>Delete</MenuItem>
+                  )}
+                </Menu>
+              </>
+            )
       }
     >
       {children}
