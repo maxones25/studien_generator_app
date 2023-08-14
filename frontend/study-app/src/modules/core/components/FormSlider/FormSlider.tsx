@@ -24,7 +24,19 @@ export function FormSlider<TFieldValues extends FieldValues>({
   attributes
 }: FormSliderProps<TFieldValues>) {
   const { t } = useTranslation();
-  const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>
+  const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>;
+  const min = attributes?.min ?? 0;
+  const max =  attributes?.max ?? 100;
+  const marks = [
+    {
+      value: min,
+      label: min,
+    },
+    {
+      value: max,
+      label: max,
+    },
+  ];
 
   return (
     <Controller
@@ -42,10 +54,11 @@ export function FormSlider<TFieldValues extends FieldValues>({
           <FormControlLabel
           control={
             <Slider 
-              aria-label='Temperature'
               onChange={(_e, newValue) => {
                 onChange(newValue as PathValue<TFieldValues, Path<TFieldValues>>);
               }}
+              valueLabelDisplay="on"
+              marks={marks}
               {...field} 
               {...attributes}
             />

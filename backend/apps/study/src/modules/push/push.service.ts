@@ -36,7 +36,6 @@ export class PushService {
         privateKey: process.env.VAPID_PRIVATE_KEY,
       },
     }
-    
     webpush
     .sendNotification(
       JSON.parse(subscription),

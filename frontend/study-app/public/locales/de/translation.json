@@ -1,4 +1,6 @@
 {
+  "continue": "fortsetzen",
+  "cancel form question": "Wollen Sie wirklich das Formular abbrechen?",
   "queue status": "Datenstand",
   "push notifications": "Benachrichtigungen",
   "permission-prompt": "akzeptieren",

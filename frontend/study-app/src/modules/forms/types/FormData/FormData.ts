@@ -43,6 +43,7 @@ export type FormComponentDataAttributes = {
   minLength?: number,
   maxLength?: number,
   defaultValue?: any,
+  step?: number
 }
 
 export type FormComponentDataRules = {

@@ -1,13 +1,11 @@
-import React from 'react';
+import { FormTextField, FormTextFieldProps } from '..';
+import { FieldValues } from 'react-hook-form';
 
-export interface FormNumberPickerProps {}
+export interface FormNumberPickerProps<FormData extends FieldValues>
+extends FormTextFieldProps<FormData> {}
 
-export const FormNumberPicker : React.FC<FormNumberPickerProps>= ({
-  
-}) => {
-  return (
-    <div>
-      FormNumberPicker
-    </div>
-  );
+export const FormNumberPicker = <FormData extends FieldValues>(
+  props: FormNumberPickerProps<FormData>
+) => {
+  return <FormTextField {...props} type="number" />;
 };

@@ -44,7 +44,8 @@ export function Hiit ({
   }, [])
 
   const start: Path<FieldValues> = `${componentId}.${formFields[0].entityFieldId}` as Path<FieldValues>
-  const end: Path<FieldValues> = `${componentId}.${formFields[1].entityFieldId}` as Path<FieldValues> 
+  const failure: Path<FieldValues> = `${componentId}.${formFields[1].entityFieldId}` as Path<FieldValues>
+  const end: Path<FieldValues> = `${componentId}.${formFields[2].entityFieldId}` as Path<FieldValues> 
 
   return (
     <Column alignItems={'center'}>
@@ -53,7 +54,10 @@ export function Hiit ({
          control={control}
          name={end}
          rules={{
-          required: true
+          validate: () => {
+            return Boolean(get(control._formValues, failure) || get(control._formValues, end)) 
+              || 'error'
+          }
         }}
          render={({ field: { onChange }}) => {
           return(
@@ -78,7 +82,7 @@ export function Hiit ({
       />
       <Text>{phase?.name ?? 'Label'}</Text>
       <Text>{phase?.description ?? 'Label'}</Text>
-      {!isPlaying && (
+      {!isPlaying ? (
         <Controller 
           control={control}
           name={start}
@@ -89,17 +93,38 @@ export function Hiit ({
             return(
               <Button 
                 testId='hiit-start-done-button'
+                disabled={isLastPhase}
                 onClick={() => {
                   setIsPlaying(true)
                   onChange(new Date() as PathValue<FieldValues, Path<FieldValues>>)}
                 } 
               >
-                {t('start')}
+                {t(isLastPhase ? 'done' : 'start')}
               </Button>
             )
           }}
         />
+      ) : (
+        <Button 
+          testId='hiit-cancel-button'
+          onClick={openDialog}
+        >
+          {t('cancel')}
+        </Button>
       )}
+      <FailureDialog 
+        open={open}
+        onClose={onDialogCancel}
+        onAccept={() => setOpen(false)}
+        control={control}
+        name={failure}
+        rules={{
+          validate: () => {
+            return Boolean(get(control._formValues, failure) || get(control._formValues, end)) 
+              || 'error'
+          }
+        }}
+      />
     </Column>
   );
 };

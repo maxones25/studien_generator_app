@@ -1,3 +1,4 @@
+import { FormComponentDataAttributes } from "@modules/forms/types";
 import { TextFieldProps, TextField, SxProps, Theme } from "@mui/material";
 import { FieldValues, FormState, get } from "react-hook-form";
 
@@ -10,6 +11,7 @@ export interface FormTextFieldProps<FormData extends FieldValues> {
   type?: React.InputHTMLAttributes<unknown>["type"];
   fullWidth?: boolean;
   placeholder?: string;
+  attributes?: FormComponentDataAttributes
 }
 
 export const FormTextField = <FormData extends FieldValues>({
@@ -21,6 +23,7 @@ export const FormTextField = <FormData extends FieldValues>({
   type = "text",
   isVisible = true,
   fullWidth = false,
+  attributes
 }: FormTextFieldProps<FormData>) => {
   const { name, inputProps } = textFieldProps;
   const error = get(formState.errors, name);
@@ -31,7 +34,7 @@ export const FormTextField = <FormData extends FieldValues>({
   return isVisible ? (
     <TextField
       sx={sx}
-      error={Boolean(formState.errors[name])}
+      error={error}
       margin="normal"
       helperText={error?.message?.toString() ?? null}
       label={label}
@@ -39,6 +42,7 @@ export const FormTextField = <FormData extends FieldValues>({
       fullWidth={fullWidth}
       placeholder={placeholder}
       inputProps={{
+        ...attributes,
         ...inputProps,
         "data-testid": `${name}-input`,
       }}

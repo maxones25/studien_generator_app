@@ -1,4 +1,4 @@
-import { FormCheckBox, FormDatePicker, FormDateTimePicker, FormSelect, FormSlider, FormSwitch, FormTextField, FormTimePicker } from '@modules/core/components';
+import { FormCheckBox, FormDatePicker, FormDateTimePicker, FormNumberPicker, FormSelect, FormSlider, FormSwitch, FormTextField, FormTimePicker } from '@modules/core/components';
 import { FormComponentData } from '@modules/forms/types';
 import { Hiit } from '@modules/hiit/components';
 import React from 'react';
@@ -18,7 +18,8 @@ export const FormComponent : React.FC<FormComponentProps>= ({
   const attributes: {[x: string]: any} = formComponent.attributes.reduce((obj, item) => 
     Object.assign(obj, { [item.key]: item.value }), {}
   );
-  const label = attributes?.label
+  const label = attributes?.label;
+  const name = `${formComponent.id}.${formComponent.formFields[0].entityFieldId}`;
   const props = {
     label: label,
     control: form.control,
@@ -26,7 +27,7 @@ export const FormComponent : React.FC<FormComponentProps>= ({
     entityFieldId: formComponent.formFields[0].entityFieldId,
     rules: {required: t("value required")},
     attributes: attributes
-  }
+  };
 
   const createField = ():JSX.Element => {
     switch (formComponent.type) {
@@ -34,9 +35,20 @@ export const FormComponent : React.FC<FormComponentProps>= ({
         return <FormTextField 
           label={label}
           formState={form.formState}
-          textFieldProps={form.register(`${formComponent.id}.${formComponent.formFields[0].entityFieldId}`, 
+          textFieldProps={form.register(name, 
             props.rules
           )}
+          attributes={props.attributes}
+        />
+      case "NumberPicker":
+        return <FormNumberPicker 
+          label={label}
+          type={'number'}
+          formState={form.formState}
+          textFieldProps={form.register(name, 
+            props.rules
+          )}
+          attributes={props.attributes}
         />
       case "Select":
         return <FormSelect {...props} />

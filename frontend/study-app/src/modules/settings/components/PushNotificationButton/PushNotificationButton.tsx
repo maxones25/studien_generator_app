@@ -1,7 +1,7 @@
 import { Button } from '@modules/core/components';
 import { useSnackBarContext } from '@modules/core/contexts';
 import { useSubscribePush } from '@modules/settings/hooks';
-import { urlB64ToUint8Array } from '@modules/settings/utils/utils';
+import { urlB64ToUint8Array } from '@modules/settings/utils';
 import { useTheme } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
