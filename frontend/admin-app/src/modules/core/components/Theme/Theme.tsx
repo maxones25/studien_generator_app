@@ -3,7 +3,16 @@ import React from "react";
 
 const theme = createTheme({
   palette: {
-    // mode: "dark",
+    primary: {
+      main: "#00588F",
+      light: "#0071B8",
+      dark: "#003E65",
+    },
+    secondary: {
+      main: "#5DABD5",
+      light: "#7DBCDE",
+      dark: "#3A98CC",
+    },
   },
 });
 
