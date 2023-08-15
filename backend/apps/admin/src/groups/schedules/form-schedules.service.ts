@@ -6,12 +6,15 @@ import { FormScheduleType } from './enums/FormScheduleType';
 import { FormSchedulePeriod } from './enums/FormSchedulePeriod';
 import { UpdateFormScheduleDto } from './dtos/UpdateFormScheduleDto';
 import { GetAllSchedulesQueryParams } from './dtos/GetAllSchedulesQueryParams';
+import { DeleteScheduleTransaction } from './transactions/DeleteScheduleTransaction';
 
 @Injectable()
 export class FormSchedulesService {
   constructor(
     @Inject(FormSchedulesRepository)
     readonly formSchedulesRepository: FormSchedulesRepository,
+    @Inject(DeleteScheduleTransaction)
+    readonly deleteScheduleTransaction: DeleteScheduleTransaction,
   ) {}
 
   async create(data: CreateFormScheduleDto) {
@@ -41,16 +44,21 @@ export class FormSchedulesService {
         period: true,
         frequency: true,
         data: true,
+        configId: true,
       },
     });
-    return schedules.map(({ data, ...rest }) => ({ ...rest, ...data }));
+    return schedules.map(({ data, configId, ...rest }) => ({
+      ...rest,
+      formId: configId,
+      ...data,
+    }));
   }
 
-  async update(body: UpdateFormScheduleDto) {
-    const { configId, type, period, frequency } = body;
+  async update(id: string, body: UpdateFormScheduleDto) {
+    const { type, period, frequency } = body;
     const data = this.getData(body) as any;
 
-    const { affected } = await this.formSchedulesRepository.update(configId, {
+    const { affected } = await this.formSchedulesRepository.update(id, {
       type,
       period,
       frequency,
@@ -60,9 +68,8 @@ export class FormSchedulesService {
     return affected;
   }
 
-  async delete(id: string) {
-    const { affected } = await this.formSchedulesRepository.delete(id);
-    return affected;
+  async delete(scheduleId: string) {
+    return await this.deleteScheduleTransaction.run({ scheduleId });
   }
 
   private getData({

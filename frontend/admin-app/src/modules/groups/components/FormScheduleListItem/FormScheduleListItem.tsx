@@ -14,10 +14,10 @@ import { ListItemButton } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-const formatDayOfWeek = (dayOfWeek: FormScheduleDaysOfWeek) => {
+const formatDayOfWeek = (dayOfWeek: FormScheduleDaysOfWeek): string[] => {
   return dayOfWeek
-    .filter((active) => active)
-    .map((_, i) => {
+    .map((active, i) => {
+      if (!active) return "-";
       switch (i) {
         case 0:
           return "mo";
@@ -36,23 +36,26 @@ const formatDayOfWeek = (dayOfWeek: FormScheduleDaysOfWeek) => {
         default:
           return "-";
       }
-    });
+    })
+    .filter((day) => day !== "-");
 };
 
 const formatDayOfMonth = (dayOfMonth: FormScheduleDayOfMonth) => {
-  return dayOfMonth.map((day) => `${day}.`).join(", ");
+  return dayOfMonth.sort((a, b) => (a < b ? -1 : 1)).join(", ");
 };
 
 export interface FormScheduleListItemProps {
   schedule: FormSchedule;
   isLast: boolean;
   onSelect: (schedule: FormSchedule) => void;
+  onDelete: (schedule: FormSchedule) => void;
 }
 
 export const FormScheduleListItem: React.FC<FormScheduleListItemProps> = ({
   schedule,
   isLast,
   onSelect,
+  onDelete,
 }) => {
   const { t } = useTranslation();
   const { type, period } = schedule;
@@ -85,7 +88,11 @@ export const FormScheduleListItem: React.FC<FormScheduleListItemProps> = ({
           )
         )}
       </ListItemButton>
-      <IconButton testId="delete schedule item button" Icon={<Delete />} />
+      <IconButton
+        testId="delete schedule item button"
+        Icon={<Delete />}
+        onClick={() => onDelete(schedule)}
+      />
     </DataListItem>
   );
 };

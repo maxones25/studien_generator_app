@@ -3,6 +3,7 @@ import {
   Column,
   ExperimentalFormTextField,
   Form,
+  FormChip,
   FormSelect,
   FormSwitch,
   Row,
@@ -13,9 +14,9 @@ import {
   FormScheduleFormData,
   FormSchedulePeriod,
 } from "@modules/groups/types";
-import { Divider, FormControl, InputAdornment } from "@mui/material";
+import { Chip, Divider, FormControl, InputAdornment } from "@mui/material";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 const daysOfWeek = [
@@ -27,6 +28,14 @@ const daysOfWeek = [
   "saturday",
   "sunday",
 ];
+
+const daysOfMonth = new Array(28).fill(null).map((_, i) => i + 1);
+
+const transformToMatrix = (arr: number[], rows: number, cols: number) => {
+  return Array.from({ length: rows }, (_, rowIndex) => {
+    return arr.slice(rowIndex * cols, (rowIndex + 1) * cols);
+  });
+};
 
 export interface FormScheduleFormProps
   extends FormProps<FormScheduleFormData> {}
@@ -91,6 +100,50 @@ export const FormScheduleForm: React.FC<FormScheduleFormProps> = ({
               label={t(day)}
             />
           ))}
+          <Divider sx={{ mt: 1, mb: 1 }} />
+        </>
+      )}
+      {period === "Month" && (
+        <>
+          <Divider sx={{ mt: 1, mb: 1 }} />
+          <Text variant="body2" sx={{ mb: 1 }}>
+            {t("days")}
+          </Text>
+          <Controller
+            control={form.control}
+            name="dayOfMonth"
+            render={({ field: { value } }) => {
+              return (
+                <Column>
+                  {transformToMatrix(daysOfMonth, 4, 7).map((row) => (
+                    <Row flexWrap="wrap">
+                      {row.map((day) => (
+                        <Chip
+                          key={day}
+                          label={day}
+                          color={value?.includes(day) ? "primary" : "default"}
+                          sx={{ m: 0.5, width: 40 }}
+                          size="small"
+                          onClick={() => {
+                            if (!value) {
+                              form.setValue("dayOfMonth", [day]);
+                            } else if (value.includes(day)) {
+                              form.setValue(
+                                "dayOfMonth",
+                                value.filter((v) => v !== day)
+                              );
+                            } else {
+                              form.setValue("dayOfMonth", [...value, day]);
+                            }
+                          }}
+                        />
+                      ))}
+                    </Row>
+                  ))}
+                </Column>
+              );
+            }}
+          />
           <Divider sx={{ mt: 1, mb: 1 }} />
         </>
       )}

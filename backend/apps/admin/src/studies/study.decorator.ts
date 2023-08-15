@@ -11,6 +11,6 @@ export const StudyParam = createParamDecorator(
 
     if (!request?.study) throw new UnauthorizedException();
 
-    return request?.study as Study;
+    return request.study as Study;
   },
 );

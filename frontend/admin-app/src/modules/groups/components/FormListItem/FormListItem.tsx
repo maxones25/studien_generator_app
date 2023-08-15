@@ -1,7 +1,6 @@
 import { DataListItem, IconButton, Row } from "@modules/core/components";
 import { useOpen } from "@modules/core/hooks";
-import { FormConfig, FormConfigTypeType } from "@modules/forms/types";
-import { useUpdateGroupForm } from "@modules/groups/hooks";
+import { FormConfig } from "@modules/forms/types";
 import { Delete, ExpandLess, ExpandMore } from "@mui/icons-material";
 import {
   Checkbox,
@@ -13,6 +12,12 @@ import {
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { FormSchedulesCard } from "..";
+import {
+  useActivateForm,
+  useDeactivateForm,
+  useSetFormTimeDependent,
+  useSetFormTimeIndependent,
+} from "@modules/formConfigs/hooks";
 
 export interface FormListItemProps {
   form: FormConfig;
@@ -22,29 +27,31 @@ export interface FormListItemProps {
 export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
   const { t } = useTranslation();
   const subcard = useOpen();
-  const updateGroupForm = useUpdateGroupForm();
+  const setFormTimeDependent = useSetFormTimeDependent();
+  const setFormTimeIndependent = useSetFormTimeIndependent();
+  const activateForm = useActivateForm();
+  const deactivateForm = useDeactivateForm();
 
   const isTimeDependent = form.type === "TimeDependent";
 
   const handleChangeType = () => {
-    const type: FormConfigTypeType = isTimeDependent
-      ? "TimeIndependent"
-      : "TimeDependent";
+    if (isTimeDependent) {
+      setFormTimeIndependent.mutate(form);
+    } else {
+      setFormTimeDependent.mutate(form);
+    }
     subcard.close();
-    updateGroupForm.mutate({
-      id: form.id,
-      type,
-    });
   };
 
   const handleChangeIsActive = (
     _: React.ChangeEvent<HTMLInputElement>,
     isActive: boolean
   ) => {
-    updateGroupForm.mutate({
-      id: form.id,
-      isActive,
-    });
+    if (isActive) {
+      activateForm.mutate(form);
+    } else {
+      deactivateForm.mutate(form);
+    }
   };
 
   return (

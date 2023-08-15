@@ -15,12 +15,12 @@ import { EntitiesModule } from '@admin/entities/entities.module';
 import { ParticipantsModule } from '@admin/participants/participants.module';
 import { FormsModule } from '@admin/forms/forms.module';
 import { FormEntitiesModule } from '@admin/forms/entities/form-entities.module';
-import { FormConfigurationsModule } from '@admin/forms/configurations/form-configurations.module';
 import { FormPagesModule } from '@admin/forms/pages/form-pages.module';
 import { FormComponentsModule } from '@admin/forms/pages/components/form-components.module';
 import { EntityFieldsModule } from '@admin/entities/fields/entity-fields.module';
 import { StudyMembersModule } from '@admin/studies/members/study-members.module';
 import { FormSchedulesModule } from '@admin/groups/schedules/form-schedules.module';
+import { FormConfigsModule } from '@admin/formConfigs/form-configs.module';
 
 @Module({
   imports: [
@@ -39,10 +39,10 @@ import { FormSchedulesModule } from '@admin/groups/schedules/form-schedules.modu
     EntityFieldsModule,
     FormsModule,
     FormEntitiesModule,
-    FormConfigurationsModule,
     FormPagesModule,
     FormComponentsModule,
     FormSchedulesModule,
+    FormConfigsModule,
   ],
   providers: appProviders,
 })

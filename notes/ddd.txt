@@ -1,11 +1,34 @@
-Commands
+Create
 
-POST /studies/:studyId/{commandName}
+- multiple options
+- References to other records
+- Authorization (role based)
+- body payload
+- POST Request?
 
-{
+Read
 
-}
+- multiple options
+- Authorization (role based)
+- query params payload
+- GET Request
 
-DELETE /studies/:studyId/{resource}/:id
+Update
 
-GET /studies/:studyId/{queryName}?{queryParams}
+- multiple options
+- Authorization (role based)
+- body payload
+- id as identifier (always ?)
+- PUT Request
+
+Delete
+- multiple options
+- Authorization (role based)
+- id as identifier (always ?)
+- DELETE Request
+
+
+POST    /studies/id/schedules?formId
+GET     /studies/id/schedules?formId
+PUT     /studies/id/schedules?id
+DELETE  /studies/id/schedules?id

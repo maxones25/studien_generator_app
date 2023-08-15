@@ -21,12 +21,13 @@ export const FormSchedulePeriod = {
 export type FormScheduleTypeType =
   (typeof FormScheduleType)[keyof typeof FormScheduleType];
 
-  export type FormSchedulePeriodType =
+export type FormSchedulePeriodType =
   (typeof FormSchedulePeriod)[keyof typeof FormSchedulePeriod];
 
 export type FormSchedule =
   | {
       id: string;
+      formId: string;
       type: "Fix";
       period: "Day";
       frequency: number;
@@ -34,6 +35,7 @@ export type FormSchedule =
     }
   | {
       id: string;
+      formId: string;
       type: "Fix";
       period: "Week";
       frequency: number;
@@ -42,6 +44,7 @@ export type FormSchedule =
     }
   | {
       id: string;
+      formId: string;
       type: "Fix";
       period: "Month";
       frequency: number;

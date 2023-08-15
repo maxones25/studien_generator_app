@@ -8,7 +8,7 @@ import {
 import { useMenuAnchor } from "@modules/core/hooks";
 import { useGetForms } from "@modules/forms/hooks";
 import { FormConfigType } from "@modules/forms/types";
-import { useAddGroupForm, useGetGroupForms } from "@modules/groups/hooks";
+import { useAddGroupForm, useGetGroupForms } from "@modules/formConfigs/hooks";
 import { useGroupId } from "@modules/navigation/hooks";
 import { Add } from "@mui/icons-material";
 import { Divider, Menu, MenuItem } from "@mui/material";

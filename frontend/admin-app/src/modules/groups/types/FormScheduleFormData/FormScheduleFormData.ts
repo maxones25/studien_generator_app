@@ -1,4 +1,5 @@
 import {
+  FormScheduleDayOfMonth,
   FormScheduleDaysOfWeek,
   FormSchedulePeriodType,
   FormScheduleTypeType,
@@ -16,4 +17,5 @@ export type FormScheduleFormData = {
     duration: number;
   };
   daysOfWeek?: FormScheduleDaysOfWeek;
+  dayOfMonth?: FormScheduleDayOfMonth;
 };

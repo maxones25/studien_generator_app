@@ -108,6 +108,13 @@
             "containerId": "d01717b2-a5f4-4af4-be17-482369af049d",
             "created": "2023-08-08T10:05:37.552Z",
             "sortNum": 170000
+        },
+        {
+            "_id": "85e74b4c-6504-4ce8-9065-c59fd1ed0655",
+            "name": "GroupForms",
+            "containerId": "",
+            "created": "2023-08-15T06:07:21.543Z",
+            "sortNum": 180000
         }
     ],
     "settings": {
@@ -269,12 +276,12 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-28T16:35:40.316Z",
-            "modified": "2023-07-26T10:56:36.808Z",
+            "modified": "2023-08-15T06:08:30.577Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Gruppe 1\"\n}",
+                "raw": "{\n  \"name\": \"Gruppe 3\"\n}",
                 "form": []
             },
             "tests": []
@@ -354,12 +361,12 @@
             "method": "POST",
             "sortNum": 130000,
             "created": "2023-07-06T13:21:06.909Z",
-            "modified": "2023-07-22T09:08:16.659Z",
+            "modified": "2023-08-15T06:08:53.951Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Schlaf erfassen\"\n}",
+                "raw": "{\n  \"name\": \"test\"\n}",
                 "form": []
             },
             "tests": []
@@ -960,6 +967,136 @@
                 "raw": "{\n  \"type\": \"Fix\",\n  \"period\": \"Week\",\n  \"frequency\": 2,\n  \"postpone\": {\n    \"isActive\": true,\n    \"times\": 3,\n    \"duration\": 1\n  },\n  \"daysOfWeek\": [\n    true,\n    true,\n    true,\n    true,\n    true,\n    true,\n    true\n  ]\n}",
                 "form": []
             },
+            "tests": []
+        },
+        {
+            "_id": "9d40c697-7163-4f9c-862e-22f99c9de496",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "85e74b4c-6504-4ce8-9065-c59fd1ed0655",
+            "name": "add form to group",
+            "url": "/studies/{{studyId}}/addFormToGroup?formId=1af5149a-687b-4997-be6a-7d1e292b6585&groupId=0347e76a-e0aa-4d84-b9ba-b70ef6f24775",
+            "method": "POST",
+            "sortNum": 230000,
+            "created": "2023-08-15T06:07:42.906Z",
+            "modified": "2023-08-15T06:09:33.633Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "formId",
+                    "value": "1af5149a-687b-4997-be6a-7d1e292b6585",
+                    "isPath": false
+                },
+                {
+                    "name": "groupId",
+                    "value": "0347e76a-e0aa-4d84-b9ba-b70ef6f24775",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"isActive\": true,\n  \"type\": \"TimeDependent\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "2e2bda61-7f17-4b35-81e1-9d2b2241caae",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "85e74b4c-6504-4ce8-9065-c59fd1ed0655",
+            "name": "get forms by group",
+            "url": "/studies/{{studyId}}/formsByGroup?groupId=0347e76a-e0aa-4d84-b9ba-b70ef6f24775",
+            "method": "GET",
+            "sortNum": 240000,
+            "created": "2023-08-15T06:16:03.340Z",
+            "modified": "2023-08-15T06:17:46.003Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "groupId",
+                    "value": "0347e76a-e0aa-4d84-b9ba-b70ef6f24775",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "7d064fe1-ff64-47a9-bcae-7bde01377c45",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "85e74b4c-6504-4ce8-9065-c59fd1ed0655",
+            "name": "activate form",
+            "url": "/studies/{{studyId}}/activateForm?formConfigId=d9ccb9f3-9d23-439e-9d21-660e75c5fe8f",
+            "method": "POST",
+            "sortNum": 250000,
+            "created": "2023-08-15T06:30:12.884Z",
+            "modified": "2023-08-15T06:33:34.713Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "formConfigId",
+                    "value": "d9ccb9f3-9d23-439e-9d21-660e75c5fe8f",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "4eb7e034-4310-4467-9644-a9d2ced97024",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "85e74b4c-6504-4ce8-9065-c59fd1ed0655",
+            "name": "remove form from group",
+            "url": "/studies/{{studyId}}/removeFormFromGroup?formConfigId=d9ccb9f3-9d23-439e-9d21-660e75c5fe8f",
+            "method": "POST",
+            "sortNum": 235000,
+            "created": "2023-08-15T06:37:55.465Z",
+            "modified": "2023-08-15T09:44:53.777Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "formConfigId",
+                    "value": "d9ccb9f3-9d23-439e-9d21-660e75c5fe8f",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "7796de4b-ff4b-4d85-b376-4cccd2b70b14",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "85e74b4c-6504-4ce8-9065-c59fd1ed0655",
+            "name": "deactivate form",
+            "url": "/studies/{{studyId}}/deactivateForm?formConfigId=d9ccb9f3-9d23-439e-9d21-660e75c5fe8f",
+            "method": "POST",
+            "sortNum": 260000,
+            "created": "2023-08-15T06:39:13.393Z",
+            "modified": "2023-08-15T06:39:27.948Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "formConfigId",
+                    "value": "d9ccb9f3-9d23-439e-9d21-660e75c5fe8f",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "117efa70-eb93-43d0-8622-8f896f1c84e4",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "85e74b4c-6504-4ce8-9065-c59fd1ed0655",
+            "name": "set form time dependent",
+            "url": "/studies/{{studyId}}/deactivateForm?formConfigId=d9ccb9f3-9d23-439e-9d21-660e75c5fe8f",
+            "method": "POST",
+            "sortNum": 270000,
+            "created": "2023-08-15T06:41:47.539Z",
+            "modified": "2023-08-15T06:41:47.539Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "formConfigId",
+                    "value": "d9ccb9f3-9d23-439e-9d21-660e75c5fe8f",
+                    "isPath": false
+                }
+            ],
             "tests": []
         }
     ]

@@ -11,7 +11,7 @@ import {
 import { FormsService } from './forms.service';
 import { CreateFormDto } from './dtos/CreateFormDto';
 import { UpdateFormDto } from './dtos/UpdateFormDto';
-import { FormGuard } from './form.guard';
+import { FormGuard } from './guards/form.guard';
 import { Roles } from '@admin/roles/roles.decorator';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 

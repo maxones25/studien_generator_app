@@ -4,7 +4,7 @@ import { FormPageGuard } from './guards/form-page.guard';
 import { EntityManager } from 'typeorm';
 import { FormPage } from '@entities/form-page.entity';
 import { FormPagesRepository } from './form-pages.repository';
-import { FormGuard } from '../form.guard';
+import { FormGuard } from '../guards/form.guard';
 
 const formPagesProviders: Provider[] = [
   FormPagesService,

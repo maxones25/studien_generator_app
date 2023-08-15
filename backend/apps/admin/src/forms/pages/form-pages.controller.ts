@@ -10,7 +10,7 @@ import { FormPagesService } from './form-pages.service';
 import { FormPageGuard } from './guards/form-page.guard';
 import { Roles } from '@admin/roles/roles.decorator';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
-import { FormGuard } from '../form.guard';
+import { FormGuard } from '../guards/form.guard';
 
 @Controller('studies/:studyId/forms/:formId/pages')
 @UseGuards(FormGuard, FormPageGuard)

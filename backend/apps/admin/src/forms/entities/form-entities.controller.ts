@@ -13,7 +13,7 @@ import { FormEntitiesService } from './form-entities.service';
 import { Roles } from '@admin/roles/roles.decorator';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { FormEntityGuard } from './form-entity.guard';
-import { FormGuard } from '../form.guard';
+import { FormGuard } from '../guards/form.guard';
 import { UpdateFormEntityDto } from './dtos/UpdateFormEntityDto';
 
 @Controller('studies/:studyId/forms/:formId/entities')
