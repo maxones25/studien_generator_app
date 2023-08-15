@@ -57,29 +57,4 @@ export class GroupsController {
   async delete(@Param('groupId', new ValidateIdPipe()) groupId: string) {
     return this.groupsService.delete(groupId);
   }
-
-  @Post(':groupId/forms')
-  @Roles('admin', 'employee')
-  async createForm(
-    @Param('studyId', new ValidateIdPipe()) studyId: string,
-    @Param('groupId', new ValidateIdPipe()) groupId: string,
-    @Body() body: CreateGroupFormConfigDto,
-  ) {
-    return this.groupsService.createForm(studyId, groupId, body);
-  }
-
-  @Get(':groupId/forms')
-  @Roles('admin', 'employee')
-  async getForms(@Param('groupId', new ValidateIdPipe()) groupId: string) {
-    return this.groupsService.getForms(groupId);
-  }
-
-  @Put(':groupId/forms/:configId')
-  @Roles('admin', 'employee')
-  async updateForm(
-    @Param('configId', new ValidateIdPipe()) configId: string,
-    @Body() body: UpdateGroupFormConfigDto,
-  ) {
-    return this.groupsService.updateForm(configId, body);
-  }
 }

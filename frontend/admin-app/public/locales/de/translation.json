@@ -101,7 +101,11 @@
   "tuesday": "Dienstag",
   "wednesday": "Mittwoch",
   "thursday": "Donnerstag",
-  "Friday": "Freitag",
+  "friday": "Freitag",
   "saturday": "Samstag",
-  "sunday": "Sonntag"
+  "sunday": "Sonntag",
+  "set form time dependent": "Formular '{{form}}' ist jetzt zeitabhängig",
+  "set form time independent": "Formular '{{form}}' ist jetzt zeitunabhängig",
+  "activate form": "Formular '{{form}}' aktiviert",
+  "deactivate form": "Formular '{{form}}' deaktiviert"
 }

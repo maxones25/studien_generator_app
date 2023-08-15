@@ -8,7 +8,9 @@ import {
 import { FormConfig } from "@modules/forms/types";
 import {
   useCreateFormSchedule,
+  useDeleteFormSchedule,
   useGetFormSchedules,
+  useUpdateFormSchedule,
 } from "@modules/groups/hooks";
 import React from "react";
 import { FormScheduleForm, FormScheduleListItem } from "..";
@@ -28,12 +30,20 @@ export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
   const { t } = useTranslation();
   const getFormSchedules = useGetFormSchedules(form.id);
   const createFormSchedule = useCreateFormSchedule();
+  const updateFormSchedule = useUpdateFormSchedule();
+  const deleteFormSchedule = useDeleteFormSchedule();
   const scheduleData = useFormData<FormScheduleFormData>();
 
   const handleSaveSchedule = (data: FormScheduleFormData) => {
-    createFormSchedule.mutateAsync(data).then(() => {
-      scheduleData.reset();
-    });
+    if (data.id) {
+      updateFormSchedule.mutateAsync(data).then(() => {
+        scheduleData.reset();
+      });
+    } else {
+      createFormSchedule.mutateAsync(data).then(() => {
+        scheduleData.reset();
+      });
+    }
   };
 
   return (
@@ -69,6 +79,7 @@ export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
             onSelect={(schedule) =>
               scheduleData.set({ configId: form.id, ...schedule })
             }
+            onDelete={deleteFormSchedule.mutate}
           />
         )}
       />

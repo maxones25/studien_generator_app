@@ -4,6 +4,7 @@ import { Group } from '@entities/group.entity';
 import { GroupsService } from './groups.service';
 import { GroupsRepository } from './groups.repository';
 import { GroupGuard } from './guards/group.guard';
+import { QueryGroupGuard } from './guards/query-group.guard';
 
 const groupsProviders: Provider[] = [
   GroupsService,
@@ -12,6 +13,10 @@ const groupsProviders: Provider[] = [
     useFactory: (entityManager: EntityManager) =>
       new GroupsRepository(Group, entityManager),
     inject: [EntityManager],
+  },
+  {
+    provide: QueryGroupGuard,
+    useClass: QueryGroupGuard,
   },
   {
     provide: GroupGuard,

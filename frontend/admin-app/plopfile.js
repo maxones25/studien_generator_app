@@ -6,6 +6,7 @@ const modules = [
   "entities",
   "fields",
   "forms",
+  "formConfigs",
   "formEntities",
   "formPages",
   "formComponents",

@@ -13,7 +13,7 @@ import { CreateFormScheduleDto } from './dtos/CreateFormScheduleDto';
 import { Roles } from '@admin/roles/roles.decorator';
 import { UpdateFormScheduleDto } from './dtos/UpdateFormScheduleDto';
 import { GetAllSchedulesQueryParams } from './dtos/GetAllSchedulesQueryParams';
-import { DeleteScheduleParamsDto } from './dtos/DeleteScheduleParamsDto';
+import { ScheduleParamsDto } from './dtos/ScheduleParamsDto';
 
 @Controller('studies/:studyId/schedules')
 export class FormSchedulesController {
@@ -33,13 +33,16 @@ export class FormSchedulesController {
 
   @Put(':scheduleId')
   @Roles('admin', 'employee')
-  async update(@Body() body: UpdateFormScheduleDto) {
-    return this.formSchedulesService.update(body);
+  async update(
+    @Param() { scheduleId }: ScheduleParamsDto,
+    @Body() body: UpdateFormScheduleDto,
+  ) {
+    return this.formSchedulesService.update(scheduleId, body);
   }
 
   @Delete(':scheduleId')
   @Roles('admin')
-  async delete(@Param() { scheduleId }: DeleteScheduleParamsDto) {
+  async delete(@Param() { scheduleId }: ScheduleParamsDto) {
     return this.formSchedulesService.delete(scheduleId);
   }
 }
