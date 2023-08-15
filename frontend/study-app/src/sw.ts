@@ -68,6 +68,16 @@ registerRoute(
 );
 
 registerRoute(
+  `${BASE_URI}/appointments`, 
+  new GetData(dbPromise, 'appointments')
+);
+
+registerRoute(
+  new RegExp(`${BASE_URI}/appointments/*`), 
+  new GetByDate<Task>(dbPromise, 'appointments', 'start')
+);
+
+registerRoute(
   `${BASE_URI}/records`, 
   new GetData(dbPromise, 'records'),
 );
