@@ -1,4 +1,4 @@
-import { useGetForms } from '@modules/forms/hooks';
+import { useGetForms, useGetRecords } from '@modules/forms/hooks';
 import { useGetTasks } from '@modules/tasks/hooks';
 import React, { ReactNode } from 'react';
 
@@ -12,6 +12,7 @@ export const Cacher : React.FC<CacherProps>= ({
 
   useGetForms();
   useGetTasks();
+  useGetRecords();
 
   return (
     <>

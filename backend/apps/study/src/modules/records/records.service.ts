@@ -30,18 +30,16 @@ export class RecordsService {
       relations: {
         form: true,
       },
-      select: {
-        id: true,
-        createdAt: true,
-        form: {
-          name: true,
-        }
-      }
     });
 
-    return records.map(({form, id, createdAt}) => {
-      return {name: form.name, id: id, createdAt: createdAt};
-    })
+    return records.map(({id, taskId, createdAt, form}) => {
+      return {
+        id,
+        taskId,
+        createdAt,
+        name: form.name,
+      }
+    });
   }
 
   async findRecordedEventsByDate(participantId: string, date: Date) {

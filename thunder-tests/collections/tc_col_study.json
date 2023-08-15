@@ -162,11 +162,11 @@
             "colId": "bf743467-ed25-4b29-ab5d-c53806e6f040",
             "containerId": "0eacf9a4-8ad2-474e-b403-f5d519713dc5",
             "name": "send push",
-            "url": "/push",
+            "url": "/push/send",
             "method": "GET",
             "sortNum": 110000,
             "created": "2023-08-02T15:22:16.643Z",
-            "modified": "2023-08-02T16:11:24.950Z",
+            "modified": "2023-08-14T23:50:17.627Z",
             "headers": [],
             "params": [],
             "auth": {
