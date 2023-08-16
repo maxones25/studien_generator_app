@@ -1,5 +1,5 @@
-import { useGetForms, useGetRecords } from '@modules/forms/hooks';
-import { useGetTasks } from '@modules/tasks/hooks';
+import { useGetForms } from '@modules/forms/hooks';
+import { useGetAppointments, useGetTasks, useGetRecords } from '@modules/tasks/hooks';
 import React, { ReactNode } from 'react';
 
 export interface CacherProps {
@@ -13,6 +13,7 @@ export const Cacher : React.FC<CacherProps>= ({
   useGetForms();
   useGetTasks();
   useGetRecords();
+  useGetAppointments();
 
   return (
     <>

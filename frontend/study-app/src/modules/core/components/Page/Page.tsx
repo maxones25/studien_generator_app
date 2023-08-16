@@ -34,8 +34,6 @@ export const Page: React.FC<PageProps> = ({
         overflowY: "hidden",
         bgcolor: "background.default",
         flexGrow: "1",
-        paddingX: "5vw",
-        paddingY: "3vw",
         ...sx,
       }}
       {...props}
