@@ -4,21 +4,18 @@ import { Task } from '@modules/tasks/types';
 
 export interface TaskItemProps {
   task: Task;
-  divider: boolean;
 }
 
 export const TaskItem : React.FC<TaskItemProps>= ({
   task,
-  divider
 }) => {
   const handleClick = (id: string, name: string) => {
-
-  }
+    console.log(id, name);
+  };
 
   return (
     <ListItem
       key={task.id}
-      divider={divider}
     >
       <ListItemButton onClick={() => handleClick(task.id, task.name)}>
         <ListItemText primary={task.name}/>

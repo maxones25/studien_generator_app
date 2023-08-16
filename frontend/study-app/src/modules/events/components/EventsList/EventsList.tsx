@@ -1,21 +1,24 @@
 import { List } from '@modules/core/components';
 import { useGetEvents } from '@modules/events/hooks';
-import { useFormIdContext } from '@modules/forms/contexts';
 import React from 'react';
+import { EventsListItem } from '..';
 
 export interface EventsListProps {}
 
 export const EventsList : React.FC<EventsListProps> = ({
 
 }) => {
-  const getEvents = useGetEvents();
-  const { setForm } = useFormIdContext();
+  const { data, isError, isLoading } = useGetEvents();
 
   return (
     <List 
       title='events'
-      getListItems={getEvents}
-      handleClick={setForm}
-    />
+      isLoading={isLoading}
+      isError={isError}
+    >
+      {data?.map((item) => {
+        return <EventsListItem key={item.id} event={item} />
+      })}
+    </List>
   );
 };

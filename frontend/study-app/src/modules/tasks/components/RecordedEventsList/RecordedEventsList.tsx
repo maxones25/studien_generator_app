@@ -18,7 +18,7 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
   const { t } = useTranslation();
 
   return (
-    <Column padding={2} overflow={"hidden"}>
+    <Column overflow={"hidden"}>
       <Row justifyContent={"space-between"}>
         <Text>{t('recorded events')}</Text>
         <IconButton
@@ -37,8 +37,8 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
         isLoading={isLoading}
         isError={isError}
       >
-        {data?.map((record, i, arr) => 
-          <RecordedEventsListItem key={record.id} record={record} divider={i < arr.length - 1}/>
+        {data?.map((record) => 
+          <RecordedEventsListItem key={record.id} record={record} />
         )}
       </List>
     </Column>

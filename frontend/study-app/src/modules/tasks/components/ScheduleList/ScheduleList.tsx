@@ -13,18 +13,17 @@ export const ScheduleList : React.FC<ScheduleListProps>= ({
   const { dates, isLoading, isError } = useGetSchedule();
 
   return (
-    <Column padding={2} overflow={"hidden"}>
+    <Column overflow={"hidden"}>
       <Text>{t('schedule')}</Text>
       <List 
         title='schedule'
         isLoading={isLoading}
         isError={isError}
       >
-        {dates?.map((item, i, arr) => {
-          const divider = i < arr.length - 1;
+        {dates?.map((item) => {
           return 'scheduledAt' in item ? 
-            <TaskItem key={item.id} task={item} divider={divider}/> : 
-            <AppointmentItem key={item.id} appointment={item} divider={divider}/>
+            <TaskItem key={item.id} task={item} /> : 
+            <AppointmentItem key={item.id} appointment={item} />
         })}
       </List>
     </Column>

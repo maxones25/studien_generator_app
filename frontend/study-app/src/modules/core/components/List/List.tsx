@@ -20,7 +20,7 @@ export const List : React.FC<ListProps> = ({
   const hasItems = Boolean(children);
 
   return (
-    <Column alignItems="center" py={1} px={2} overflow={"hidden"}>
+    <Column alignItems="center" overflow={"hidden"}>
       {isLoading ? (
         <CircularProgress sx={{mt: 5}} data-testid={`loading ${title} spinner`} />
       ) : isError ? (
