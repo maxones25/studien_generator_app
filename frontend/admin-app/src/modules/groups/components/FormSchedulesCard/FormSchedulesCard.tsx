@@ -63,6 +63,7 @@ export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
               duration: 1,
               times: 1,
             },
+            times: [],
           })}
         />
       </Row>

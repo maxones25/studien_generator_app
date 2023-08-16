@@ -76,12 +76,16 @@ export class FormSchedulesService {
     type,
     period,
     postpone,
-    dayOfMonth,
+    dayOfMonth: rawDayOfMonth,
     daysOfWeek,
+    times: rawTimes,
   }: CreateFormScheduleDto) {
+    const times = rawTimes.sort((a, b) => (a < b ? -1 : 0));
+    const dayOfMonth = rawDayOfMonth?.sort((a, b) => (a < b ? -1 : 0));
     if (type === FormScheduleType.Fix && period === FormSchedulePeriod.Day) {
       return {
         postpone,
+        times,
       };
     } else if (
       type === FormScheduleType.Fix &&
@@ -90,6 +94,7 @@ export class FormSchedulesService {
       return {
         daysOfWeek,
         postpone,
+        times,
       };
     } else if (
       type === FormScheduleType.Fix &&
@@ -98,6 +103,7 @@ export class FormSchedulesService {
       return {
         dayOfMonth,
         postpone,
+        times,
       };
     } else if (
       type === FormScheduleType.Fix &&
@@ -106,6 +112,7 @@ export class FormSchedulesService {
       return {
         dayOfMonth,
         postpone,
+        times,
       };
     } else {
       throw new BadRequestException();

@@ -95,7 +95,6 @@
   "weeks": "Wochen",
   "months": "Monate",
   "postponable": "verschiebbar",
-  "times": "Anzahl",
   "maxDurationInDays": "max. Dauer (in Tage)",
   "monday": "Montag",
   "tuesday": "Dienstag",
@@ -107,5 +106,15 @@
   "set form time dependent": "Formular '{{form}}' ist jetzt zeitabhängig",
   "set form time independent": "Formular '{{form}}' ist jetzt zeitunabhängig",
   "activate form": "Formular '{{form}}' aktiviert",
-  "deactivate form": "Formular '{{form}}' deaktiviert"
+  "deactivate form": "Formular '{{form}}' deaktiviert",
+  "record added to record": "{{addedRecord}} '{{addedName}}' zu {{record}} '{{name}}' hinzugefügt",
+  "how often": "Wie oft?",
+  "how many days": "Wie viele Tage?",
+  "times": "Zeiten",
+  "activate record": "{{record}} aktivieren",
+  "deactivate record": "{{record}} deaktivieren",
+  "delete record": "{{record}} löschen",
+  "add record": "{{record}} hinzufügen",
+  "close view": "{{view}} schließen",
+  "search...": "Suche..."
 }

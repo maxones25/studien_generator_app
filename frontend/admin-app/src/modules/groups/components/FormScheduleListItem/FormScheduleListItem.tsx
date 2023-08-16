@@ -2,6 +2,7 @@ import {
   Column,
   DataListItem,
   IconButton,
+  Row,
   Text,
 } from "@modules/core/components";
 import {
@@ -10,7 +11,7 @@ import {
   FormScheduleDaysOfWeek,
 } from "@modules/groups/types";
 import { Delete } from "@mui/icons-material";
-import { ListItemButton } from "@mui/material";
+import { Chip, ListItemButton } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -87,6 +88,16 @@ export const FormScheduleListItem: React.FC<FormScheduleListItemProps> = ({
             </Column>
           )
         )}
+        <Row ml={1} flex={1} justifyContent="flex-end">
+          {schedule.times.map((time) => (
+            <Chip
+              size="small"
+              color="secondary"
+              label={time}
+              sx={{ ml: 0.5 }}
+            />
+          ))}
+        </Row>
       </ListItemButton>
       <IconButton
         testId="delete schedule item button"

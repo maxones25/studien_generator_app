@@ -34,7 +34,7 @@ export class Participant {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   groupId: string;
 
   @Column()
