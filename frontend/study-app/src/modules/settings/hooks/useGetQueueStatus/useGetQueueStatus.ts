@@ -13,14 +13,21 @@ export const useGetQueueStatus = () : UseGetQueueStatusResult => {
   let request = indexedDB.open("workbox-background-sync");
   request.onsuccess = () => {
     const db = request.result;
-    const transaction = db.transaction("requests", "readonly");
-    const countRequest = transaction.objectStore("requests").count();
-    countRequest.onsuccess = function() {
-      setCount(countRequest.result);
-    };
-    transaction.oncomplete = function() {
-      db.close();
-    };
+    try {
+      const transaction = db.transaction("requests", "readonly");
+      const countRequest = transaction.objectStore("requests").count();
+      countRequest.onsuccess = function() {
+        setCount(countRequest.result);
+      };
+      countRequest.onerror = function() {
+        setCount(0);
+      };
+      transaction.oncomplete = function() {
+        db.close();
+      };
+    } catch {
+      setCount(0);
+    }
   };
 
   const getQueueStatus = () => {
