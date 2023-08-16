@@ -29,6 +29,7 @@ const useDateContextValue = () => {
   });
   const [locale, setLocale] = useState('de');
   const date = dayjs(timeStemp);
+  dayjs.locale(locale)
 
   const set = (date: Dayjs) => {
     setTimeStemp(date.toString());
@@ -45,7 +46,7 @@ const useDateContextValue = () => {
   const isFuture = date.isAfter(dayjs(), 'day')
 
   return {
-    date: date.locale(locale),
+    date,
     set,
     increase,
     decrease,

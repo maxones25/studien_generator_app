@@ -1,6 +1,7 @@
-import { ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { ListItemButton, ListItemText } from '@mui/material';
 import { Record } from '@modules/tasks/types';
 import React from 'react';
+import { StyledListItem } from '@modules/core/components';
 
 export interface RecordedEventsListItemProps {
   record: Record;
@@ -14,12 +15,12 @@ export const RecordedEventsListItem : React.FC<RecordedEventsListItemProps>= ({
   };
 
   return (
-    <ListItem
+    <StyledListItem
       key={record.id}
     >
       <ListItemButton onClick={() => handleClick(record.id, record.name)}>
         <ListItemText primary={record.name}/>
       </ListItemButton>
-    </ListItem>
+    </StyledListItem>
   );
 };

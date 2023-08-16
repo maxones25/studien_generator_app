@@ -16,7 +16,8 @@ export const DatePicker : React.FC<DatePickerProps>= ({
 
   return (
     <Row sx={{
-      justifyContent: "center"
+      justifyContent: "center",
+      paddingBottom: "0.5rem"
     }}>
       <IconButton 
         onClick={decrease}
@@ -30,7 +31,9 @@ export const DatePicker : React.FC<DatePickerProps>= ({
           },
           minWidth: "10em",
           textAlign: "center",
-          textTransform: 'none'
+          textTransform: 'none',
+          fontSize: ".9em",
+          borderWidth: "2px"
         }}
         onClick={handleClick}
         testId='button-date-picker'

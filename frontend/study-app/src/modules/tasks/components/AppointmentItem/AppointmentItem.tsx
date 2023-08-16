@@ -1,6 +1,8 @@
-import { ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { ListItemButton, ListItemText } from '@mui/material';
 import React from 'react';
 import { Appointment } from '@modules/tasks/types';
+import { StyledListItem } from '@modules/core/components';
+import dayjs from 'dayjs';
 
 export interface AppointmentItemProps {
   appointment: Appointment;
@@ -13,13 +15,16 @@ export const AppointmentItem : React.FC<AppointmentItemProps>= ({
     console.log(id, name);
   };
 
+  const endString = appointment.end ? `- ${dayjs(appointment.end).format('HH:mm')}` : '';
+  const dateString = dayjs(appointment.start).format('HH:mm') + endString;
+
   return (
-    <ListItem
+    <StyledListItem
       key={appointment.id}
     >
       <ListItemButton onClick={() => handleClick(appointment.id, appointment.name)}>
-        <ListItemText primary={appointment.name}/>
+        <ListItemText primary={appointment.name} secondary={dateString}/>
       </ListItemButton>
-    </ListItem>
+    </StyledListItem>
   );
 }

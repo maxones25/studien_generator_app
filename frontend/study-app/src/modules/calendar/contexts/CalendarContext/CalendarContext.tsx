@@ -10,6 +10,7 @@ interface CalendarContextValue {
   setShowTasks: (value: boolean) => void;
   dates?: CalendarDate[];
   isLoading: boolean;
+  isError: boolean;
 }
 
 interface CalendarProviderProps {
@@ -27,6 +28,7 @@ const useCalendarContextValue = () => {
   const appointments = useGetAppointments();
 
   const isLoading = tasks.isLoading || appointments.isLoading;
+  const isError = tasks.isError || appointments.isError;
   const tasksData = showTasks ? tasks.data : [];
   const appointmentsData = showAppointments ? appointments.data : [];
 
@@ -44,6 +46,7 @@ const useCalendarContextValue = () => {
     setShowTasks,
     dates,
     isLoading,
+    isError,
   }
 };
 

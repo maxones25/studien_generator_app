@@ -20,7 +20,7 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
   return (
     <Column overflow={"hidden"}>
       <Row justifyContent={"space-between"}>
-        <Text>{t('recorded events')}</Text>
+        <Text variant='h6'>{t('recorded events')}</Text>
         <IconButton
             size="large"
             edge="end"

@@ -14,7 +14,7 @@ export const ScheduleList : React.FC<ScheduleListProps>= ({
 
   return (
     <Column overflow={"hidden"}>
-      <Text>{t('schedule')}</Text>
+      <Text variant='h6'>{t('schedule')}</Text>
       <List 
         title='schedule'
         isLoading={isLoading}
