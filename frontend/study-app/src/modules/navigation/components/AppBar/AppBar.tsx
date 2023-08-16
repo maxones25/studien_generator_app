@@ -4,7 +4,7 @@ import { ArrowBack, MailOutline, Menu, CalendarMonthOutlined } from '@mui/icons-
 import { useNavigationHelper } from '@modules/core/hooks';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { IconButton } from '@modules/core/components';
+import { IconButton, ZiIcon } from '@modules/core/components';
 import { AppBarMenu, LogOutDialog } from '..';
 
 export interface AppBarProps {}
@@ -40,12 +40,12 @@ export const AppBar : React.FC<AppBarProps>= () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2, visibility: path === "/tasks" ? "hidden" : "inherit"}}
-            onClick={changePage()}
+            sx={{ mr: 2 }}
+            onClick={path === "/tasks" ? undefined : changePage()}
             testId={'go-back-app-bar'}
-            Icon={<ArrowBack /> }
+            Icon={path === "/tasks" ? <ZiIcon /> : <ArrowBack /> }
           />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, pl: 1}}>
             {t(`${path}`)}
           </Typography>
           { path !== "/calendar" && 

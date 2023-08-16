@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["vite-plugin-svgr/client"],
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["ESNext", "DOM", "DOM.Iterable", "WebWorker"],
