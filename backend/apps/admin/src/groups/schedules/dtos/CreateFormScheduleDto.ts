@@ -3,10 +3,14 @@ import {
   ArrayMinSize,
   IsArray,
   IsBoolean,
+  IsDateString,
   IsEnum,
+  IsISO8601,
   IsInt,
+  IsNotEmpty,
   IsObject,
   IsUUID,
+  Matches,
   Max,
   Min,
   ValidateIf,
@@ -36,6 +40,15 @@ export class CreateFormScheduleDto {
   @Type(() => FormSchedulePostpone)
   readonly postpone: FormSchedulePostpone;
 
+  @IsArray()
+  @ArrayMinSize(1)
+  @IsNotEmpty({ each: true })
+  @Matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, {
+    each: true,
+    message: 'Invalid time format. Expected HH:mm',
+  })
+  readonly times: string[];
+
   @ValidateIf(
     ({ type, period }) =>
       type === FormScheduleType.Fix && period === FormSchedulePeriod.Week,
@@ -44,7 +57,7 @@ export class CreateFormScheduleDto {
   @ArrayMinSize(7)
   @ArrayMaxSize(7)
   @IsBoolean({ each: true })
-  readonly daysOfWeek: boolean[];
+  readonly daysOfWeek?: boolean[];
 
   @ValidateIf(
     ({ type, period }) =>
@@ -55,7 +68,7 @@ export class CreateFormScheduleDto {
   @IsInt({ each: true })
   @Min(1, { each: true })
   @Max(28, { each: true })
-  readonly dayOfMonth: number[];
+  readonly dayOfMonth?: number[];
 
   @ValidateIf(
     ({ type, period }) =>
@@ -63,16 +76,5 @@ export class CreateFormScheduleDto {
   )
   @IsInt()
   @Min(1)
-  readonly days: number;
-
-  @ValidateIf(
-    ({ type, period }) =>
-      (type === FormScheduleType.Flexible &&
-        period === FormSchedulePeriod.Week) ||
-      (type === FormScheduleType.Flexible &&
-        period === FormSchedulePeriod.Month),
-  )
-  @IsInt()
-  @Min(0)
-  readonly daysInBetween: number;
+  readonly days?: number;
 }

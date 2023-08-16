@@ -1,12 +1,11 @@
-import { IsString, IsNotEmpty, IsUUID } from 'class-validator';
+import { IsString, IsNotEmpty, IsUUID, IsOptional } from 'class-validator';
 
 export class ParticipantDto {
   @IsString()
   @IsNotEmpty()
   readonly number: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @IsUUID()
-  readonly groupId: string;
+  readonly groupId?: string;
 }

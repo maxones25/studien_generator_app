@@ -1,12 +1,18 @@
-import { UseReadRequestResult } from "@modules/core/hooks";
+import {
+  SearchFields,
+  UseReadRequestResult,
+  useSearchFilter,
+} from "@modules/core/hooks";
 import { Column, Text } from "..";
 import { CircularProgress, List } from "@mui/material";
 
-export interface DataListProps<Data> {
+export interface DataListProps<Data extends Record<string, any>> {
   client: UseReadRequestResult<Data[]>;
   errorText: string;
   noDataText: string;
   items?: Data[];
+  searchFields?: SearchFields<Data>;
+  searchValue?: string;
   renderItem: (
     item: Data,
     options: { i: number; arr: Data[]; isLast: boolean }
@@ -14,16 +20,20 @@ export interface DataListProps<Data> {
   disablePadding?: boolean;
 }
 
-export function DataList<Data>({
+export function DataList<Data extends Record<string, any>>({
   client,
   errorText,
   noDataText,
+  searchFields,
+  searchValue,
   renderItem,
   disablePadding = false,
 }: DataListProps<Data>) {
   const { isLoading, isError, data } = client;
 
   const hasData = (data?.length ?? 0) > 0;
+
+  const filteredItems = useSearchFilter(data, searchValue, searchFields);
 
   return (
     <Column
@@ -44,7 +54,7 @@ export function DataList<Data>({
           sx={{ width: "100%", overflowY: "scroll" }}
           disablePadding={disablePadding}
         >
-          {data?.map((item, i, arr) =>
+          {filteredItems.map((item, i, arr) =>
             renderItem(item, { i, arr, isLast: i === arr.length - 1 })
           )}
         </List>

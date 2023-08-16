@@ -6,7 +6,14 @@ import { getGetGroupFormsKey } from "..";
 
 export const useAddGroupForm = () => {
   const studyId = useStudyId();
-  return useWriteRequest<FormConfigFormData, string>(
+  return useWriteRequest<
+    FormConfigFormData,
+    {
+      id: string;
+      form: { id: string; name: string };
+      group: { id: string; name: string };
+    }
+  >(
     ({ body: { formId, groupId, ...body }, ...options }) =>
       apiRequest(`/studies/${studyId}/addFormToGroup`, {
         method: "POST",
@@ -18,7 +25,7 @@ export const useAddGroupForm = () => {
         },
       }),
     {
-      onSuccess: ({ queryClient, variables }) => {
+      onSuccess: ({ queryClient, variables, data }) => {
         queryClient.invalidateQueries(
           getGetGroupFormsKey({
             groupId: variables.groupId!,
@@ -26,11 +33,12 @@ export const useAddGroupForm = () => {
           })
         );
         return {
-          text: "record added",
+          text: "record added to record",
           params: {
-            record: "form",
-            mainRecord: "group",
-            name: variables.formId,
+            addedRecord: "form",
+            addedName: data.form.name,
+            record: "group",
+            name: data.group.name,
           },
         };
       },

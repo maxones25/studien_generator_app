@@ -115,6 +115,13 @@
             "containerId": "",
             "created": "2023-08-15T06:07:21.543Z",
             "sortNum": 180000
+        },
+        {
+            "_id": "b7b7b821-c0c0-463c-8a3c-4a502c3c2560",
+            "name": "Participants",
+            "containerId": "",
+            "created": "2023-08-16T12:37:52.265Z",
+            "sortNum": 190000
         }
     ],
     "settings": {
@@ -1097,6 +1104,25 @@
                     "isPath": false
                 }
             ],
+            "tests": []
+        },
+        {
+            "_id": "b4bddf90-a3c9-413a-a2c1-766226eee124",
+            "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
+            "containerId": "b7b7b821-c0c0-463c-8a3c-4a502c3c2560",
+            "name": "create participant",
+            "url": "/studies/{{studyId}}/participants",
+            "method": "POST",
+            "sortNum": 280000,
+            "created": "2023-08-16T12:40:11.920Z",
+            "modified": "2023-08-16T12:40:49.660Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"number\": \"001\"\n}",
+                "form": []
+            },
             "tests": []
         }
     ]

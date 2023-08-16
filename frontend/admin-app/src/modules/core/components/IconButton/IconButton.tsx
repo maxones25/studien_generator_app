@@ -1,4 +1,4 @@
-import React from "react";
+import { forwardRef } from "react";
 import {
   IconButton as MIconButton,
   IconButtonProps as MIconButtonProps,
@@ -13,23 +13,20 @@ export interface IconButtonProps extends MIconButtonProps {
   };
 }
 
-export const IconButton: React.FC<IconButtonProps> = ({
-  Icon,
-  testId,
-  tooltipProps,
-  ...props
-}) => {
-  return tooltipProps ? (
-    <Tooltip title={tooltipProps.title}>
-      <span>
-        <MIconButton data-testid={testId} {...props}>
-          {Icon}
-        </MIconButton>
-      </span>
-    </Tooltip>
-  ) : (
-    <MIconButton data-testid={testId} {...props}>
-      {Icon}
-    </MIconButton>
-  );
-};
+export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+  ({ Icon, testId, tooltipProps, ...props }, ref) => {
+    return tooltipProps ? (
+      <Tooltip title={tooltipProps.title}>
+        <span>
+          <MIconButton data-testid={testId} {...props}>
+            {Icon}
+          </MIconButton>
+        </span>
+      </Tooltip>
+    ) : (
+      <MIconButton ref={ref} data-testid={testId} {...props}>
+        {Icon}
+      </MIconButton>
+    );
+  }
+);

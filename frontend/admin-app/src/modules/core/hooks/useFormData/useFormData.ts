@@ -9,15 +9,17 @@ export interface UseFormDataResult<TFormData extends FormData> {
   isNew: boolean;
 }
 
-export interface UseFormDataOptions {}
-
-export interface FormData {
-  id?: string;
+export interface UseFormDataOptions {
+  idField?: string;
 }
 
+export type FormData = Record<string, any>;
+
 export const useFormData = <TFormData extends FormData>(
-  defaultData: TFormData | undefined = undefined
+  defaultData: TFormData | undefined = undefined,
+  options: UseFormDataOptions = {}
 ): UseFormDataResult<TFormData> => {
+  const { idField = "id" } = options;
   const [data, setData] = useState<TFormData | undefined>(defaultData);
 
   const set = (formData: TFormData) => {
@@ -33,7 +35,7 @@ export const useFormData = <TFormData extends FormData>(
   };
 
   const hasData = data !== undefined;
-  const isNew = data?.id === undefined;
+  const isNew = data !== undefined && data[idField] === undefined;
 
   return {
     set,

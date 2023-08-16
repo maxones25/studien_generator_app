@@ -9,6 +9,7 @@ import GroupPage from "@pages/GroupPage/GroupPage";
 import GroupsPage from "@pages/GroupsPage/GroupsPage";
 import LoginPage from "@pages/LoginPage/LoginPage";
 import MembersPage from "@pages/MembersPage/MembersPage";
+import ParticipantPage from "@pages/ParticipantPage/ParticipantPage";
 import ParticipantsPage from "@pages/ParticipantsPage/ParticipantsPage";
 import SignUpPage from "@pages/SignUpPage/SignUpPage";
 import StudiesPage from "@pages/StudiesPage/StudiesPage";
@@ -86,7 +87,18 @@ const router = createBrowserRouter([
               },
               {
                 path: "participants",
-                element: <ParticipantsPage />,
+                element: (
+                  <>
+                    <ParticipantsPage />
+                    <Outlet />
+                  </>
+                ),
+                children: [
+                  {
+                    path: ":participantId",
+                    element: <ParticipantPage />,
+                  },
+                ],
               },
               {
                 path: "entities",

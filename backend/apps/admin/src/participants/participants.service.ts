@@ -18,13 +18,18 @@ export class ParticipantsService {
 
   async create(studyId: string, { number, groupId }: ParticipantDto) {
     const participant = new Participant();
+
     const password = await this.passwordService.generate();
+    const hashPassword = await this.passwordService.hash(password, 10);
+
     participant.studyId = studyId;
     participant.groupId = groupId;
     participant.number = number;
-    participant.password = await this.passwordService.hash(password, 10);
+    participant.password = hashPassword;
+
     await this.participantsRepository.insert(participant);
-    return { ...participant, password: password };
+
+    return participant.id;
   }
 
   async regeneratePassword(participantId: string) {
@@ -46,7 +51,12 @@ export class ParticipantsService {
   }
 
   async getByStudy(studyId: string): Promise<Participant[]> {
-    return this.participantsRepository.find({ where: { studyId } });
+    return this.participantsRepository.find({
+      where: { studyId },
+      order: {
+        number: 'ASC',
+      },
+    });
   }
 
   async getByGroup(groupId: string): Promise<Participant[]> {

@@ -1,13 +1,20 @@
 import { DataListItem, IconButton, Row } from "@modules/core/components";
 import { useOpen } from "@modules/core/hooks";
 import { FormConfig } from "@modules/forms/types";
-import { Delete, ExpandLess, ExpandMore } from "@mui/icons-material";
+import {
+  Close,
+  Delete,
+  ExpandLess,
+  ExpandMore,
+  MoreTime,
+} from "@mui/icons-material";
 import {
   Checkbox,
   Chip,
   Collapse,
   ListItemIcon,
   ListItemText,
+  Tooltip,
 } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -56,38 +63,52 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
 
   return (
     <>
-      <DataListItem
-        item={form}
-        divider={!isLast}
-        accordion={
-          <IconButton
-            testId="expand list item icon button"
-            Icon={subcard.isOpen ? <ExpandLess /> : <ExpandMore />}
-            onClick={subcard.toggle}
-            disabled={!isTimeDependent}
-          />
-        }
-        disablePadding={false}
-      >
+      <DataListItem item={form} divider={!isLast} disablePadding={false}>
         <ListItemIcon>
-          <Checkbox
-            edge="start"
-            checked={form.isActive}
-            onChange={handleChangeIsActive}
-          />
+          <Tooltip
+            title={t(form.isActive ? "deactivate record" : "activate record", {
+              record: t("form"),
+            })}
+          >
+            <Checkbox
+              edge="start"
+              checked={form.isActive}
+              onChange={handleChangeIsActive}
+            />
+          </Tooltip>
         </ListItemIcon>
-        <Row flex={1} pr={8}>
+        <Row flex={1}>
           <ListItemText>{form.form.name}</ListItemText>
           <Chip
             color={isTimeDependent ? "primary" : "default"}
             onClick={handleChangeType}
             label={t("TimeDependent")}
           />
-          <IconButton
-            testId="delete form icon button"
-            Icon={<Delete />}
-            sx={{ ml: 1 }}
-          />
+          <Tooltip
+            title={t("delete record", {
+              record: t("form"),
+            })}
+          >
+            <IconButton
+              testId="delete form icon button"
+              Icon={<Delete />}
+              sx={{ ml: 1 }}
+            />
+          </Tooltip>
+          <Tooltip
+            title={
+              subcard.isOpen
+                ? t("close view", { view: t("schedules") })
+                : t("add record", { record: t("schedules") })
+            }
+          >
+            <IconButton
+              testId="open schedules button"
+              Icon={subcard.isOpen ? <Close /> : <MoreTime />}
+              onClick={subcard.toggle}
+              disabled={!isTimeDependent}
+            />
+          </Tooltip>
         </Row>
       </DataListItem>
       <Collapse in={subcard.isOpen}>

@@ -32,22 +32,25 @@ export type FormSchedule =
       period: "Day";
       frequency: number;
       postpone: FormSchedulePostpone;
+      times: string[];
     }
-  | {
+    | {
       id: string;
       formId: string;
       type: "Fix";
       period: "Week";
       frequency: number;
       postpone: FormSchedulePostpone;
+      times: string[];
       daysOfWeek: FormScheduleDaysOfWeek;
     }
-  | {
+    | {
       id: string;
       formId: string;
       type: "Fix";
       period: "Month";
       frequency: number;
       postpone: FormSchedulePostpone;
+      times: string[];
       dayOfMonth: FormScheduleDayOfMonth;
     };

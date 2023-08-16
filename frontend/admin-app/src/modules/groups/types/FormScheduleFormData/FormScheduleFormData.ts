@@ -18,4 +18,5 @@ export type FormScheduleFormData = {
   };
   daysOfWeek?: FormScheduleDaysOfWeek;
   dayOfMonth?: FormScheduleDayOfMonth;
+  times: string[];
 };

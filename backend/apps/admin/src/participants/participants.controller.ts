@@ -21,9 +21,9 @@ export class ParticipantsController {
   @Post('participants')
   async create(
     @Param('studyId') studyId: string,
-    @Body() participantDto: ParticipantDto,
+    @Body() body: ParticipantDto,
   ) {
-    return this.participantsService.create(studyId, participantDto);
+    return this.participantsService.create(studyId, body);
   }
 
   @Get('participants')
