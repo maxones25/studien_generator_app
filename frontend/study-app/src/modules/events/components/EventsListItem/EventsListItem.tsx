@@ -1,7 +1,8 @@
-import { ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { ListItemButton, ListItemText } from '@mui/material';
 import React from 'react';
 import { Event } from '@modules/events/types';
 import { useFormIdContext } from '@modules/forms/contexts';
+import { StyledListItem } from '@modules/core/components';
 
 export interface EventsListItemProps {
   event: Event;
@@ -17,12 +18,13 @@ export const EventsListItem : React.FC<EventsListItemProps>= ({
   };
 
   return (
-    <ListItem
+    <StyledListItem
       key={event.id}
+      sx={{marginX: 2}}
     >
       <ListItemButton onClick={() => handleClick(event.id, event.name)}>
         <ListItemText primary={event.name}/>
       </ListItemButton>
-    </ListItem>
+    </StyledListItem>
   );
 }

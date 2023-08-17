@@ -1,5 +1,6 @@
 import { Page } from '@modules/core/components';
 import { DatePicker } from '@modules/date/components';
+import { FormDialog } from '@modules/forms/components';
 import { RecordedEventsList, ScheduleList } from '@modules/tasks/components';
 import React from 'react';
 
@@ -12,6 +13,7 @@ const TasksPage : React.FC<TasksPageProps> = () => {
       <DatePicker />
       <ScheduleList />
       <RecordedEventsList />
+      <FormDialog />
     </Page>
   );
 };
