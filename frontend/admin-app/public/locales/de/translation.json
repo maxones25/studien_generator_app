@@ -116,5 +116,9 @@
   "delete record": "{{record}} löschen",
   "add record": "{{record}} hinzufügen",
   "close view": "{{view}} schließen",
-  "search...": "Suche..."
+  "search...": "Suche...",
+  "enter value": "{{value}} eingeben",
+  "invalid": "ungültig",
+  "cancel": "Abbrechen",
+  "no group": "keine Gruppe"
 }

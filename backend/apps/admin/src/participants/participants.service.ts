@@ -1,22 +1,22 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Participant } from '@entities/participant.entity';
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ParticipantDto } from './dtos/participantDto';
 import { PasswordService } from '@shared/modules/password/password.service';
 import { StartParticipantStudyTransaction } from './transactions/StartParticipantStudyTransaction';
+import { ParticipantsRepository } from './participants.repository';
+import { CreateParticipantDto } from './dtos/CreateParticipantDto';
 
 @Injectable()
 export class ParticipantsService {
   constructor(
-    @InjectRepository(Participant)
-    private participantsRepository: Repository<Participant>,
+    @InjectRepository(ParticipantsRepository)
+    private participantsRepository: ParticipantsRepository,
     @Inject(StartParticipantStudyTransaction)
     private startParticipantStudyTransaction: StartParticipantStudyTransaction,
     private passwordService: PasswordService,
   ) {}
 
-  async create(studyId: string, { number, groupId }: ParticipantDto) {
+  async create(studyId: string, { number, groupId }: CreateParticipantDto) {
     const participant = new Participant();
 
     const password = await this.passwordService.generate();
@@ -30,6 +30,43 @@ export class ParticipantsService {
     await this.participantsRepository.insert(participant);
 
     return participant.id;
+  }
+
+  async getById(id: string) {
+    const participant = await this.participantsRepository.findOneOrFail({
+      where: { id },
+      relations: {
+        group: true,
+        attributes: true,
+      },
+      select: {
+        id: true,
+        number: true,
+        group: {
+          id: true,
+          name: true,
+        },
+        attributes: {
+          key: true,
+          value: true,
+        },
+      },
+    });
+    return this.convertParticipant(participant);
+  }
+
+  async changeNumber(id: string, number: string) {
+    const { affected } = await this.participantsRepository.update(id, {
+      number,
+    });
+    return affected;
+  }
+
+  async changeGroup(id: string, groupId: string) {
+    const { affected } = await this.participantsRepository.update(id, {
+      groupId,
+    });
+    return affected;
   }
 
   async regeneratePassword(participantId: string) {
@@ -46,24 +83,49 @@ export class ParticipantsService {
     this.startParticipantStudyTransaction.run({ participantId });
   }
 
-  async update(participantId: string, { number }: ParticipantDto) {
-    await this.participantsRepository.update({ id: participantId }, { number });
-  }
-
-  async getByStudy(studyId: string): Promise<Participant[]> {
-    return this.participantsRepository.find({
+  async getByStudy(studyId: string) {
+    const participants = await this.participantsRepository.find({
       where: { studyId },
       order: {
         number: 'ASC',
       },
+      relations: {
+        group: true,
+        attributes: true,
+      },
+      select: {
+        id: true,
+        number: true,
+        group: {
+          id: true,
+          name: true,
+        },
+        attributes: {
+          key: true,
+          value: true,
+        },
+      },
     });
+    return participants.map(this.convertParticipant);
   }
 
   async getByGroup(groupId: string): Promise<Participant[]> {
     return this.participantsRepository.find({ where: { groupId } });
   }
 
-  async delete(participantId: string) {
-    await this.participantsRepository.delete({ id: participantId });
+  async delete(id: string) {
+    const { affected } = await this.participantsRepository.delete({ id });
+    return affected;
+  }
+
+  private convertParticipant(participant: Participant) {
+    const { attributes, ...data } = participant;
+    return {
+      ...data,
+      ...attributes.reduce((obj, { key, value }) => {
+        obj[key] = value;
+        return obj;
+      }, {}),
+    };
   }
 }

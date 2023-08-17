@@ -1,12 +1,14 @@
 import { useReadRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
+import { useStudyId } from "@modules/navigation/hooks";
 
 export interface Use{{pascalCase name}}Options {}
 
-export const get{{pascalCase name}}Key = (deps: {}) => ["{{camelCase name}}", deps];
+export const get{{pascalCase name}}Key = (deps: { studyId: string }) => ["{{camelCase name}}", deps];
 
 export const use{{pascalCase name}} = (options? : Use{{pascalCase name}}Options) => {
-  return useReadRequest<unknown>(get{{pascalCase name}}Key({}), (options) =>
-    apiRequest(`/`, { ...options })
+  const studyId = useStudyId()!;
+  return useReadRequest<unknown>(get{{pascalCase name}}Key({ studyId }), (options) =>
+    apiRequest(`/studies/${studyId}/`, { ...options })
   );
 }

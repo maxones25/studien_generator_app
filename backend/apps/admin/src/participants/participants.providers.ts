@@ -1,8 +1,11 @@
 import { Provider } from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
-import { ParticipantGuard } from './guards/participant.guard';
 import { PasswordService } from '@shared/modules/password/password.service';
 import { StartParticipantStudyTransaction } from './transactions/StartParticipantStudyTransaction';
+import { ParticipantsRepository } from './participants.repository';
+import { Participant } from '@entities';
+import { EntityManager } from 'typeorm';
+import { ParticipantGuard } from './participant.guard';
 
 const participantsProviders: Provider[] = [
   PasswordService,
@@ -11,6 +14,12 @@ const participantsProviders: Provider[] = [
   {
     provide: ParticipantGuard,
     useClass: ParticipantGuard,
+  },
+  {
+    provide: ParticipantsRepository,
+    useFactory: (entitityManager) =>
+      new ParticipantsRepository(Participant, entitityManager),
+    inject: [EntityManager],
   },
 ];
 

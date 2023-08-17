@@ -1,4 +1,4 @@
 export enum ParticipantAttribute {
-  StartedAt = 'StartedAt',
-  EndedAt = 'EndedAt',
+  StartedAt = 'startedAt',
+  EndedAt = 'endedAt',
 }

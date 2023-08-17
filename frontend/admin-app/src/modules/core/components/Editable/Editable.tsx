@@ -1,28 +1,28 @@
-import { useState, ChangeEventHandler, KeyboardEventHandler } from "react";
+import { useState, KeyboardEventHandler, useRef } from "react";
 import { IconButton, Row } from "..";
 import { Close, Edit } from "@mui/icons-material";
-import { CircularProgress, Input, InputAdornment } from "@mui/material";
-import React from "react";
+import {
+  CircularProgress,
+  ClickAwayListener,
+  Input,
+  InputAdornment,
+} from "@mui/material";
 
 export interface EditableProps {
   children: JSX.Element | string;
   defaultText: string;
-  isLoading: boolean;
+  isLoading?: boolean;
   onSubmit: (value: string) => void;
 }
 
 export const Editable: React.FC<EditableProps> = ({
   children,
   defaultText,
-  isLoading,
+  isLoading = false,
   onSubmit,
 }) => {
   const [edit, setEdit] = useState<boolean>(false);
-  const [value, setValue] = useState(defaultText);
-
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setValue(e.target.value);
-  };
+  const inputRef = useRef<HTMLInputElement>();
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === "Enter") {
@@ -31,7 +31,9 @@ export const Editable: React.FC<EditableProps> = ({
   };
 
   const handleSubmit = () => {
-    if (value !== defaultText) {
+    const value = inputRef.current?.value;
+    console.log(value, inputRef);
+    if (value && value !== defaultText) {
       onSubmit(value);
       setEdit(false);
     } else {
@@ -41,29 +43,33 @@ export const Editable: React.FC<EditableProps> = ({
 
   const handleClose = () => {
     setEdit(false);
-    setValue(defaultText);
+    if (inputRef.current) {
+      inputRef.current.value = defaultText;
+    }
   };
 
   return (
     <Row>
       {edit ? (
-        <Input
-          size="small"
-          placeholder={defaultText}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          value={value}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                testId="close icon button"
-                size="small"
-                Icon={<Close />}
-                onClick={handleClose}
-              />
-            </InputAdornment>
-          }
-        />
+        <ClickAwayListener onClickAway={handleSubmit}>
+          <Input
+            size="small"
+            placeholder={defaultText}
+            onKeyDown={handleKeyDown}
+            defaultValue={defaultText}
+            inputRef={inputRef}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  testId="close icon button"
+                  size="small"
+                  Icon={<Close />}
+                  onClick={handleClose}
+                />
+              </InputAdornment>
+            }
+          />
+        </ClickAwayListener>
       ) : (
         <>
           {children}

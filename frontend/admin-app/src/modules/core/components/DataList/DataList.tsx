@@ -13,6 +13,7 @@ export interface DataListProps<Data extends Record<string, any>> {
   items?: Data[];
   searchFields?: SearchFields<Data>;
   searchValue?: string;
+  filter?: (item: Data) => boolean;
   renderItem: (
     item: Data,
     options: { i: number; arr: Data[]; isLast: boolean }
@@ -26,14 +27,17 @@ export function DataList<Data extends Record<string, any>>({
   noDataText,
   searchFields,
   searchValue,
-  renderItem,
   disablePadding = false,
+  filter,
+  renderItem,
 }: DataListProps<Data>) {
   const { isLoading, isError, data } = client;
 
   const hasData = (data?.length ?? 0) > 0;
 
   const filteredItems = useSearchFilter(data, searchValue, searchFields);
+
+  const items = filter ? filteredItems.filter(filter) : filteredItems;
 
   return (
     <Column
@@ -54,7 +58,7 @@ export function DataList<Data extends Record<string, any>>({
           sx={{ width: "100%", overflowY: "scroll" }}
           disablePadding={disablePadding}
         >
-          {filteredItems.map((item, i, arr) =>
+          {items.map((item, i, arr) =>
             renderItem(item, { i, arr, isLast: i === arr.length - 1 })
           )}
         </List>

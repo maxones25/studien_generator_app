@@ -9,7 +9,7 @@ export const GlobalStyle: React.FC<GlobalStyleProps> = () => {
   return (
     <GlobalStyles
       styles={{
-        "*::-webkit-scrollbar": { width: "8px" },
+        "*::-webkit-scrollbar": { width: "8px", height: "8px" },
         "*::-webkit-scrollbar-thumb": {
           background: theme.palette.primary.main,
           borderRadius: "4px",
@@ -19,8 +19,8 @@ export const GlobalStyle: React.FC<GlobalStyleProps> = () => {
         },
         "*::-webkit-scrollbar-track": {
           backgroundColor: theme.palette.background.default,
-          borderRadius: "4px"
-        }
+          borderRadius: "4px",
+        },
       }}
     />
   );

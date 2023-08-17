@@ -1,4 +1,5 @@
 import {
+  ChipSelect,
   DataList,
   DataListItem,
   EditableListItem,
@@ -19,14 +20,28 @@ import {
 import { ParticipantFormData } from "@modules/participants/types";
 import { Add, Search, SearchOff } from "@mui/icons-material";
 import {
+  ClickAwayListener,
+  Divider,
+  Input,
   ListItemButton,
   ListItemText,
-  TextField,
   Toolbar,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 export interface ParticipantsPageProps {}
+
+const filterOptions = [
+  {
+    label: "Aktuell",
+    value: "current",
+  },
+  {
+    label: "ohne Gruppe",
+    value: "no group",
+  },
+];
 
 const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
   const { t } = useTranslation();
@@ -35,6 +50,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
   const participantData = useFormData<ParticipantFormData>();
   const createParticipant = useCreateParticipant();
   const search = useSearch();
+  const [filter, setFilter] = useState<string | undefined>(undefined);
 
   const handleCreateParticipant = () => {
     if (participantData.data) {
@@ -51,6 +67,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
           <IconButton
             testId="create participant button"
             Icon={<Add />}
+            color={participantData.hasData ? "primary" : "default"}
             onClick={participantData.handleSet({ number: "" })}
           />
           <IconButton
@@ -61,32 +78,60 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
           />
         </Row>
       </Toolbar>
+      <Divider />
+      <ChipSelect
+        options={filterOptions}
+        onSelect={setFilter}
+        value={filter}
+        chipProps={{
+          sx: {
+            flex: 1,
+          },
+        }}
+        containerProps={{
+          justifyContent: "space-around",
+        }}
+      />
+      {search.isActive && (
+        <ClickAwayListener onClickAway={search.stop}>
+          <Input
+            sx={{ ml: 2, mr: 2 }}
+            placeholder={t("search...")}
+            onChange={(e) => search.set(e.currentTarget.value)}
+            autoFocus
+            size="small"
+          />
+        </ClickAwayListener>
+      )}
       {participantData.hasData && (
         <EditableListItem
           onCancel={participantData.reset}
           onChange={(number) => participantData.set({ number })}
           onSave={handleCreateParticipant}
-        />
-      )}
-      {search.isActive && (
-        <TextField
-          variant="standard"
-          sx={{ ml: 2, mr: 2 }}
-          placeholder={t("search...")}
-          onChange={(e) => search.set(e.currentTarget.value)}
-          size="small"
+          inputProps={{
+            placeholder: t("enter value", { value: t("name") }),
+          }}
         />
       )}
       <DataList
         client={getParticipants}
         errorText="error"
         noDataText="no data"
-        searchFields={["number"]}
+        searchFields={["number", "group.name"]}
         searchValue={search.value}
+        filter={(item) => {
+          if (!filter) return true;
+          if (filter === "no group" && item.group === null) return true;
+          if (filter === "current" && item.endedAt && !item.endedAt) return true;
+          return false;
+        }}
         renderItem={(participant) => (
           <DataListItem key={participant.id} item={participant}>
             <ListItemButton onClick={navigate.handle(`${participant.id}`)}>
-              <ListItemText>{participant.number}</ListItemText>
+              <ListItemText
+                primary={participant.number}
+                secondary={participant.group?.name ?? t("no group")}
+              />
             </ListItemButton>
           </DataListItem>
         )}

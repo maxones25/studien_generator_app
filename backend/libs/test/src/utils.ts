@@ -4,7 +4,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { SignupDirectorDto } from '@admin/auth/dtos/SignupDirectorDto';
 import { CreateStudyDto } from '@admin/studies/dtos/createStudyDto';
 import { CreateGroupDto } from '@admin/groups/dtos/CreateGroupDto';
-import { ParticipantDto } from '@admin/participants/dtos/participantDto';
+import { ParticipantDto } from '@admin/participants/dtos/CreateParticipantDto';
 
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
 import { validateUUID } from '@shared/modules/uuid/uuid';
@@ -232,8 +232,8 @@ export const createFormEntity = (
 
 export const getParticipantAccessToken = (
   app: INestApplication,
-  data: LoginParticipantDto
-) => 
+  data: LoginParticipantDto,
+) =>
   new Promise<string>((resolve, reject) => {
     request(app.getHttpServer())
       .post('/auth/login')
@@ -249,8 +249,8 @@ export const getParticipantAccessToken = (
 export const createPush = (
   app: INestApplication,
   accessToken: string,
-  data: CreatePushDto
-) => 
+  data: CreatePushDto,
+) =>
   new Promise<void>((resolve, reject) => {
     request(app.getHttpServer())
       .post('/push')
@@ -260,5 +260,5 @@ export const createPush = (
       .then(() => {
         resolve();
       })
-      .catch((err) => reject(err));;
+      .catch((err) => reject(err));
   });

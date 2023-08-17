@@ -19,7 +19,7 @@ export const useSearch = (): UseSearchResult => {
   };
 
   const stop = () => {
-    setIsActive(true);
+    setIsActive(false);
   };
 
   const toggle = () => {

@@ -1,8 +1,14 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
+import { useStudyId } from "@modules/navigation/hooks";
 
 export const use{{pascalCase name}} = () => {
+  const studyId = useStudyId()!;
   return useWriteRequest<unknown, unknown>((options) =>
-    apiRequest(`/`, { method: "POST", ...options })
+    apiRequest(`/studies/${studyId}/`, { ...options, method: "POST" }), {
+      onSuccess({ queryClient }){
+        queryClient.invalidateQueries()
+      }
+    }
   );
 }

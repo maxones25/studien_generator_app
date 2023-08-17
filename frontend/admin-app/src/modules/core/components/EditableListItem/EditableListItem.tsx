@@ -1,15 +1,17 @@
-import { ListItem, TextField } from "@mui/material";
+import { ClickAwayListener, Input, InputProps, ListItem } from "@mui/material";
 import { KeyboardEventHandler } from "react";
 import { IconButton, Row } from "..";
 import { Check, Close } from "@mui/icons-material";
 
 export interface EditableListItemProps {
+  inputProps?: InputProps;
   onCancel: () => void;
   onSave: () => void;
   onChange: (text: string) => void;
 }
 
 export const EditableListItem: React.FC<EditableListItemProps> = ({
+  inputProps,
   onCancel,
   onChange,
   onSave,
@@ -21,28 +23,31 @@ export const EditableListItem: React.FC<EditableListItemProps> = ({
   };
 
   return (
-    <ListItem sx={{ flexDirection: "column" }}>
-      <TextField
-        variant="standard"
-        onKeyDown={handleKeyDown}
-        onChange={(e) => {
-          onChange(e.currentTarget.value);
-        }}
-      />
-      <Row>
-        <IconButton
-          testId="save participant"
-          Icon={<Check />}
-          size="small"
-          onClick={onSave}
+    <ClickAwayListener onClickAway={onCancel}>
+      <ListItem sx={{ flexDirection: "column" }}>
+        <Input
+          onKeyDown={handleKeyDown}
+          onChange={(e) => {
+            onChange(e.currentTarget.value);
+          }}
+          autoFocus
+          {...inputProps}
         />
-        <IconButton
-          testId="cancel participant"
-          Icon={<Close />}
-          size="small"
-          onClick={onCancel}
-        />
-      </Row>
-    </ListItem>
+        <Row>
+          <IconButton
+            testId="save participant"
+            Icon={<Check />}
+            size="small"
+            onClick={onSave}
+          />
+          <IconButton
+            testId="cancel participant"
+            Icon={<Close />}
+            size="small"
+            onClick={onCancel}
+          />
+        </Row>
+      </ListItem>
+    </ClickAwayListener>
   );
 };
