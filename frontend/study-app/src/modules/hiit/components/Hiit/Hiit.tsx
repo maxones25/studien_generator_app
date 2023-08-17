@@ -5,7 +5,7 @@ import { useHiit } from '@modules/hiit/hooks';
 import { HiitConfig } from '@modules/hiit/types';
 import { useEffect, useState } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
-import { Control, Controller, FieldValues, Path, PathValue, get } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 export interface HiitProps {
@@ -57,20 +57,16 @@ export function Hiit ({
   }, [])
 
   const start: Path<FieldValues> = `${componentId}.${formFields[0].entityFieldId}` as Path<FieldValues>
-  const failure: Path<FieldValues> = `${componentId}.${formFields[1].entityFieldId}` as Path<FieldValues>
   const end: Path<FieldValues> = `${componentId}.${formFields[2].entityFieldId}` as Path<FieldValues> 
 
   return (
     <Column alignItems={'center'}>
       <Text>{label ?? 'Label'}</Text>
       <Controller 
-         control={control}
-         name={end}
-         rules={{
-          validate: () => {
-            return Boolean(get(control._formValues, failure) || get(control._formValues, end)) 
-              || 'error'
-          }
+        control={control}
+        name={end}
+        rules={{
+          required: true
         }}
          render={({ field: { onChange }}) => {
           return(
@@ -129,14 +125,6 @@ export function Hiit ({
         open={open}
         onClose={onDialogCancel}
         onAccept={() => setOpen(false)}
-        control={control}
-        name={failure}
-        rules={{
-          validate: () => {
-            return Boolean(get(control._formValues, failure) || get(control._formValues, end)) 
-              || 'error'
-          }
-        }}
       />
     </Column>
   );

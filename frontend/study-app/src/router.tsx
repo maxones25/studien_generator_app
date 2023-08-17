@@ -7,7 +7,6 @@ import EventsPage from "@pages/Eventspage/EventsPage";
 import { Cacher } from "@modules/core/components";
 import { DateGuard } from "@modules/date/components";
 import SettingsPage from "@pages/SettingsPage/SettingsPage";
-import HiitPage from "@pages/HiitPage/HiitPage";
 import CalendarPage from "@pages/CalendarPage/CalendarPage";
 
 const router = createBrowserRouter([
@@ -52,10 +51,6 @@ const router = createBrowserRouter([
       {
         path: "settings",
         element: <SettingsPage />
-      },
-      {
-        path: "hiit",
-        element: <HiitPage />
       },
       {
         path: "calendar",
