@@ -7,7 +7,8 @@ import { v4 as uuid } from 'uuid';
 
 interface FormDataContextValue {
   isLastPage: boolean;
-  handleSubmit: (data: Object, failureReason?: string) => void;
+  handleSubmit: (data: Object) => void;
+  handleFailure: (data: Object, failureReason: string) => void;
   currentPage?: FormPageData;
   isLoading: boolean;
 }
@@ -28,13 +29,17 @@ const useFormDataContextValue = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const saveForm = useSaveForm();
 
-  const handleSubmit = async (newData: Object, failureReason?: string) => {
-    if (isLastPage || failureReason) {
-      await save(newData, failureReason);
+  const handleSubmit = async (newData: Object) => {
+    if (isLastPage) {
+      await save(newData);
       return;
     }
     addData(newData);
     setPageNumber(pageNumber + 1);
+  }
+
+  const handleFailure = async (newData: Object, failureReason: string) => {
+    await save(newData, failureReason);
   }
 
   const save = async (newData: Object, failureReason?: string) => {
@@ -72,8 +77,8 @@ const useFormDataContextValue = () => {
     isLoading: saveForm.isLoading,
     isLastPage,
     handleSubmit,
-
-    currentPage
+    handleFailure,
+    currentPage,
   }
 };
 

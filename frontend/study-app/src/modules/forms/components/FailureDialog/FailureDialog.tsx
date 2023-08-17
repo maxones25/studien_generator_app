@@ -22,10 +22,10 @@ export const FailureDialog : React.FC<FailureDialogProps>= ({
 }) => {
 
   const form = useForm<FailureReason>();
-  const { handleSubmit } = useFormDataContext();
+  const { handleFailure } = useFormDataContext();
 
   const handleAccept = async (data: FailureReason) => {
-    handleSubmit({}, data.failureReason);
+    handleFailure({}, data.failureReason);
     onAccept();
   };
 
