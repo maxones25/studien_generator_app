@@ -1,4 +1,6 @@
 export * from './useGetDirectors/useGetDirectors'
 export * from './useGetMembers/useGetMembers'
 export * from './useAddMember/useAddMember'
-export * from './useUpdateMember/useUpdateMember'
+export * from './useChangeMemberRole/useChangeMemberRole'
+export * from './useGetNonStudyMembers/useGetNonStudyMembers'
+export * from './useRemoveMember/useRemoveMember'

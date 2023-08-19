@@ -5,8 +5,8 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { StudiesRepository } from './studies.repository';
 import { Request } from 'express';
+import { StudiesRepository } from './repositories/studies.repository';
 
 @Injectable()
 export class StudyGuard implements CanActivate {
@@ -18,18 +18,17 @@ export class StudyGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
 
-    const studyId = request.params.studyId;
+    const id = request.query.studyId;
 
-    if (!studyId) return true;
+    if (typeof id !== 'string') throw new UnauthorizedException();
 
     const study = await this.studiesRepository.findOne({
-      where: { id: studyId },
+      where: { id },
     });
 
     if (!study) throw new UnauthorizedException();
 
-    // @ts-ignore
-    request.study = study;
+    (request as any).study = study;
 
     return true;
   }

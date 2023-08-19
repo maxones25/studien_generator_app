@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
 import { Group } from '@entities/group.entity';
 import { GroupsService } from '@admin/groups/groups.service';
-import { StudiesController } from '@admin/studies/studies.controller';
+import { StudiesController } from '@admin/studies/controllers/studies.commands';
 import { StudiesService } from '@admin/studies/studies.service';
 import { StudiesRepository } from '@admin/studies/studies.repository';
 import { StudyGuard } from '@admin/studies/study.guard';
@@ -77,11 +77,11 @@ describe('StudiesController', () => {
 
     const body = fakeData.study();
 
-    service.update.mockResolvedValueOnce(1);
+    service.changeName.mockResolvedValueOnce(1);
 
     const result = await controller.update(studyId, body);
 
-    expect(service.update).toBeCalledWith(studyId, body);
+    expect(service.changeName).toBeCalledWith(studyId, body);
     expect(result).toEqual(1);
   });
 

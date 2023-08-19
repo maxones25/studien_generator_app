@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Participant } from '@entities/participant.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { PasswordService } from '@shared/modules/password/password.service';
 import { StartParticipantStudyTransaction } from './transactions/StartParticipantStudyTransaction';
 import { ParticipantsRepository } from './participants.repository';
@@ -10,24 +9,24 @@ import { CreateParticipantTransaction } from './transactions/CreateParticipantTr
 @Injectable()
 export class ParticipantsService {
   constructor(
-    @InjectRepository(ParticipantsRepository)
+    @Inject(ParticipantsRepository)
     private participantsRepository: ParticipantsRepository,
     @Inject(StartParticipantStudyTransaction)
     private startParticipantStudyTransaction: StartParticipantStudyTransaction,
     @Inject(CreateParticipantTransaction)
     private createParticipantTransaction: CreateParticipantTransaction,
+    @Inject(PasswordService)
     private passwordService: PasswordService,
   ) {}
 
   async create(studyId: string, { number, groupId }: CreateParticipantDto) {
-    const password = await this.passwordService.generate();
-    const hashPassword = await this.passwordService.hash(password, 10);
+    const password = await this.generatePassword();
 
     const id = await this.createParticipantTransaction.run({
       studyId, 
       number, 
       groupId, 
-      password: hashPassword
+      password
     });
 
     return id;
@@ -56,6 +55,10 @@ export class ParticipantsService {
     return this.convertParticipant(participant);
   }
 
+  async startStudy(studyId: string, participantId: string) {
+    await this.startParticipantStudyTransaction.run({ studyId, participantId });
+  }
+
   async changeNumber(id: string, number: string) {
     const { affected } = await this.participantsRepository.update(id, {
       number,
@@ -71,17 +74,13 @@ export class ParticipantsService {
   }
 
   async regeneratePassword(participantId: string) {
-    const password = await this.passwordService.generate();
-    const hashedPassword = await this.passwordService.hash(password, 10);
+    const password = await this.generatePassword();
+
     await this.participantsRepository.update(
       { id: participantId },
-      { password: hashedPassword },
+      { password },
     );
     return { password: password };
-  }
-
-  async start(participantId: string) {
-    this.startParticipantStudyTransaction.run({ participantId });
   }
 
   async getByStudy(studyId: string) {
@@ -128,5 +127,10 @@ export class ParticipantsService {
         return obj;
       }, {}),
     };
+  }
+
+  private async generatePassword() {
+    const password = await this.passwordService.generate();
+    return await this.passwordService.hash(password, 10);
   }
 }

@@ -1,7 +1,13 @@
-import { useState, KeyboardEventHandler, useRef } from "react";
+import {
+  useState,
+  KeyboardEventHandler,
+  useRef,
+  HTMLInputTypeAttribute,
+} from "react";
 import { IconButton, Row } from "..";
 import { Close, Edit } from "@mui/icons-material";
 import {
+  Button,
   CircularProgress,
   ClickAwayListener,
   Input,
@@ -10,15 +16,21 @@ import {
 
 export interface EditableProps {
   children: JSX.Element | string;
+  type?: HTMLInputTypeAttribute;
   defaultText: string;
   isLoading?: boolean;
+  disabled?: boolean;
+  showClose?: boolean;
   onSubmit: (value: string) => void;
 }
 
 export const Editable: React.FC<EditableProps> = ({
   children,
   defaultText,
+  type = "text",
+  showClose = true,
   isLoading = false,
+  disabled = false,
   onSubmit,
 }) => {
   const [edit, setEdit] = useState<boolean>(false);
@@ -32,7 +44,6 @@ export const Editable: React.FC<EditableProps> = ({
 
   const handleSubmit = () => {
     const value = inputRef.current?.value;
-    console.log(value, inputRef);
     if (value && value !== defaultText) {
       onSubmit(value);
       setEdit(false);
@@ -54,38 +65,42 @@ export const Editable: React.FC<EditableProps> = ({
         <ClickAwayListener onClickAway={handleSubmit}>
           <Input
             size="small"
-            placeholder={defaultText}
-            onKeyDown={handleKeyDown}
-            defaultValue={defaultText}
+            type={type}
             inputRef={inputRef}
+            placeholder={defaultText}
+            defaultValue={defaultText}
+            onKeyDown={handleKeyDown}
+            // sx={{ m: 1 }}
             endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  testId="close icon button"
-                  size="small"
-                  Icon={<Close />}
-                  onClick={handleClose}
-                />
-              </InputAdornment>
+              showClose && (
+                <InputAdornment position="end">
+                  <IconButton
+                    testId="close icon button"
+                    size="small"
+                    Icon={<Close />}
+                    onClick={handleClose}
+                  />
+                </InputAdornment>
+              )
             }
           />
         </ClickAwayListener>
       ) : (
-        <>
+        <Button
+          data-testid="edit icon button"
+          onClick={() => setEdit(true)}
+          disabled={disabled}
+          sx={{ textTransform: "none" }}
+        >
           {children}
           {isLoading ? (
             <Row ml={1}>
               <CircularProgress size={20} />
             </Row>
           ) : (
-            <IconButton
-              testId="edit icon button"
-              size="small"
-              Icon={<Edit fontSize="small" />}
-              onClick={() => setEdit(true)}
-            />
+            <Edit sx={{ ml: 1 }} fontSize="small" />
           )}
-        </>
+        </Button>
       )}
     </Row>
   );

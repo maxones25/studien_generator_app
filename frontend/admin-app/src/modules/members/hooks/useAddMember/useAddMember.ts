@@ -1,27 +1,30 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
-import { MemberFormData } from "@modules/members/types";
+import { Director, MemberFormData } from "@modules/members/types";
 import { useStudyId } from "@modules/navigation/hooks";
-import { getGetMembersKey } from "..";
+import { getGetMembersKey, getGetNonStudyMembersKey } from "..";
 
 export const useAddMember = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
 
-  return useWriteRequest<MemberFormData, void>(
-    (options) =>
-      apiRequest(`/studies/${studyId}/directors`, {
-        method: "POST",
+  return useWriteRequest<MemberFormData, Director>(
+    ({ body: { directorId, ...body }, ...options }) =>
+      apiRequest(`/members/add`, {
         ...options,
+        method: "POST",
+        params: { studyId, directorId },
+        body,
       }),
     {
-      onSuccess: ({ queryClient, variables }) => {
-        queryClient.invalidateQueries(getGetMembersKey());
+      onSuccess: ({ queryClient, data: director }) => {
+        queryClient.invalidateQueries(getGetMembersKey({ studyId }));
+        queryClient.invalidateQueries(getGetNonStudyMembersKey({ studyId }));
         return {
           text: "record added",
           params: {
-            name: variables.directorId,
+            name: director.email,
             record: "member",
-            mainRecord: "study"
+            mainRecord: "study",
           },
         };
       },

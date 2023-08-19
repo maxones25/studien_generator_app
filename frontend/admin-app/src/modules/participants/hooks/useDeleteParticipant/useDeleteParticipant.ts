@@ -8,10 +8,10 @@ export const useDeleteParticipant = () => {
   const studyId = useStudyId()!;
   return useWriteRequest<Participant, unknown>(
     ({ body: { id: participantId }, ...options }) =>
-      apiRequest(`/studies/${studyId}/deleteParticipant`, {
+      apiRequest(`/participants/delete`, {
         ...options,
         method: "POST",
-        params: { participantId },
+        params: { studyId, participantId },
       }),
     {
       onSuccess({ queryClient, variables: participant }) {

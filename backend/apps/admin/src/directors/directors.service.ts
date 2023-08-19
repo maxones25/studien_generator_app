@@ -10,8 +10,12 @@ export class DirectorsService {
     private directosRepository: DirectorsRepository,
   ) {}
 
-  async getAll() {
-    return this.directosRepository.getAll()
+  async getStudyMembers(studyId: string) {
+    return await this.directosRepository.getStudyMembers(studyId);
+  }
+
+  async getNonStudyMembers(studyId: string) {
+    return await this.directosRepository.getNonStudyMembers(studyId);
   }
 
   async delete(directorId: string) {

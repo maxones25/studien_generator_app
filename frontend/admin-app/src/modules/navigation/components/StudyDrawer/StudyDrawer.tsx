@@ -1,7 +1,9 @@
 import { useAccessTokenContext } from "@modules/auth/contexts";
-import { Column, Text } from "@modules/core/components";
+import { Column, Row, Text } from "@modules/core/components";
 import { useNavigationHelper } from "@modules/core/hooks";
-import { useStudyContext } from "@modules/studies/contexts";
+import { isoDate } from "@modules/date/utils";
+import { Study } from "@modules/studies/types";
+import { Construction, Done, Loop, Schedule } from "@mui/icons-material";
 import {
   Divider,
   List,
@@ -13,14 +15,10 @@ import {
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-export interface StudyDrawerProps {
-  title?: string;
-}
-
 const menu = [
   {
-    path: "members",
-    label: "members",
+    path: "",
+    label: "study",
   },
   {
     path: "groups",
@@ -48,16 +46,30 @@ const menu = [
   },
 ];
 
-export const StudyDrawer: React.FC<StudyDrawerProps> = ({ title }) => {
+export interface StudyDrawerProps {
+  study: Study;
+}
+
+export const StudyDrawer: React.FC<StudyDrawerProps> = ({ study }) => {
   const { t } = useTranslation();
   const navigate = useNavigationHelper();
-  const getStudy = useStudyContext();
   const accessToken = useAccessTokenContext();
+
+  const currentDate = isoDate();
+
+  const StatusIcon = study.isActive
+    ? study.startDate && currentDate < study.startDate
+      ? Schedule
+      : study.endDate && currentDate > study.endDate
+      ? Done
+      : Loop
+    : Construction;
 
   return (
     <Column width={200} boxShadow={6} zIndex={1000}>
       <Toolbar>
-        <Text variant="body2">{title ?? "-"}</Text>
+        <Row mr={1}>{StatusIcon && <StatusIcon fontSize="small" />}</Row>
+        <Text variant="body2">{study.name}</Text>
       </Toolbar>
       <Divider />
       <Column justifyContent="space-between" height="100%">
@@ -74,10 +86,7 @@ export const StudyDrawer: React.FC<StudyDrawerProps> = ({ title }) => {
           <Divider></Divider>
           <List>
             <ListItem divider>
-              <ListItemText
-                primary={t(getStudy.data?.role ?? "-")}
-                secondary={t("role")}
-              />
+              <ListItemText primary={t(study.role)} secondary={t("role")} />
             </ListItem>
             <ListItem disablePadding divider>
               <ListItemButton onClick={navigate.handle("/studies")}>

@@ -6,6 +6,6 @@ export const getGetStudiesKey = () => ["getStudies"];
 
 export const useGetStudies = () => {
   return useReadRequest<Study[]>(getGetStudiesKey(), (options) =>
-    apiRequest(`/studies`, { ...options })
+    apiRequest(`/studies/getAll`, { ...options })
   );
 };
