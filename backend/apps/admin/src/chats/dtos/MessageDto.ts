@@ -11,6 +11,10 @@ export class MessageDto {
   participantNumber?: string;
 
   @IsOptional()
+  @IsUUID()
+  directorId?: string;
+
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   directorName?: string;
