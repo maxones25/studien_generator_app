@@ -1,84 +1,62 @@
-import { Column, Row, Text, Button } from '@modules/core/components';
-import { Dialog, FormControl, TextField } from '@mui/material';
+import { Row, Text, Button, Form } from '@modules/core/components';
+import { useFormDataContext } from '@modules/forms/contexts';
+import { Dialog, TextField } from '@mui/material';
 import { t } from 'i18next';
 import React from 'react';
-import { Control, Controller, FieldValues, Path, PathValue, RegisterOptions, get, set } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 export interface FailureDialogProps {
   open: boolean,
   onClose: () => void,
-  onAccept: () => void
-  control: Control<FieldValues>;
-  name: Path<FieldValues>
-  rules?: Omit<
-      RegisterOptions<FieldValues, Path<FieldValues>>,
-      "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
-    >;
+  onAccept: () => void,
+}
+
+interface FailureReason {
+  failureReason: string,
 }
 
 export const FailureDialog : React.FC<FailureDialogProps>= ({
   open,
   onClose,
   onAccept,
-  control,
-  name,
-  rules,
 }) => {
 
-  const handleAccept = async () => {
-    const submit = control.handleSubmit((data) => console.log(data))
-    await submit();
-    const err = get(control._formState.errors, name);
-    if(!err) onAccept();
-  }
+  const form = useForm<FailureReason>();
+  const { handleFailure } = useFormDataContext();
 
-  const handleCancel = () => {
-    set(control._formValues, name, undefined);
-    onClose();
-  }
+  const handleAccept = async (data: FailureReason) => {
+    handleFailure({}, data.failureReason);
+    onAccept();
+  };
+
+  const error = form.formState.errors.failureReason
 
   return (
-    <Dialog open={open} onClose={handleCancel}>
-      <Column m={2}>
-        <Text>{t('hiit cancel')}</Text>
-        <Controller
-          control={control}
-          name={name}
-          rules={rules}
-          render={({ field: { onChange, value, ...field}, formState }) => {
-          const error = get(formState.errors, name);
-
-          return(
-            <TextField 
-              fullWidth={true}
-              variant={'outlined'}
-              error={Boolean(error)}
-              helperText={error?.message?.toString() ?? null}
-              label={t('reason for failure')}
-              onChange={(event) => {
-                onChange(event.target.value as PathValue<FieldValues, Path<FieldValues>>);
-              }}
-              {...field} 
-            />
-          )}}
+    <Dialog open={open} onClose={onClose}>
+      <Form sx={{p: 2}} onSubmit={form.handleSubmit(handleAccept)}>
+        <Text pb={2}>{t('hiit cancel')}</Text>
+        <TextField 
+          fullWidth={true}
+          variant={'outlined'}
+          inputProps={form.register('failureReason', {
+            required: t("value required", { value: t("failure reason") })
+          })}
+          error={Boolean(error)}
+          helperText={error?.message?.toString() ?? null}
+          label={t('reason for failure')}
         />
-        <Row mt={2}>
+        <Row pt={2} gap={2}>
           <Button 
             testId='cancel-failure-hiit'
-            onClick={handleCancel}
-            sx={{m: 1}}
+            onClick={onClose}
+          >{t("continue")}</Button>
+          <Button 
+            color='error'
+            testId='save-failure-hiit'
+            type='submit'
           >{t("cancel")}</Button>
-          <FormControl margin="normal">
-            <Button 
-              color='error'
-              testId='save-failure-hiit'
-              onClick={handleAccept}
-              sx={{m: 1}}
-              type="submit"
-            >{t("save")}</Button>
-          </FormControl>
         </Row>
-      </Column>
+      </Form>
     </Dialog>
   );
 };

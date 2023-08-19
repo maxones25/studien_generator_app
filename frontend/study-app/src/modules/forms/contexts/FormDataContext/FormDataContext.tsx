@@ -8,6 +8,7 @@ import { v4 as uuid } from 'uuid';
 interface FormDataContextValue {
   isLastPage: boolean;
   handleSubmit: (data: Object) => void;
+  handleFailure: (data: Object, failureReason: string) => void;
   currentPage?: FormPageData;
   isLoading: boolean;
 }
@@ -31,14 +32,18 @@ const useFormDataContextValue = () => {
   const handleSubmit = async (newData: Object) => {
     if (isLastPage) {
       await save(newData);
-      resetForm();
       return;
     }
     addData(newData);
     setPageNumber(pageNumber + 1);
   }
 
-  const save = async (newData: Object) => {
+  const handleFailure = async (newData: Object, failureReason: string) => {
+    await save(newData, failureReason);
+  }
+
+  const save = async (newData: Object, failureReason?: string) => {
+    
     const components: Object = {...data, ...newData};
     const componentsArray = Object.entries(components);
     let entityFields: RecordField[] = [];
@@ -52,11 +57,13 @@ const useFormDataContextValue = () => {
       taskId: taskId,
       createdAt: date.toDate(),
       formId: form!.data!.id,
+      failureReason: failureReason,
       fields: entityFields,
       name: name!,
     } ;
     console.log(record);
     await saveForm.mutateAsync(record);
+    resetForm();
   }
 
   const addData = (newData: Object) => {
@@ -70,7 +77,8 @@ const useFormDataContextValue = () => {
     isLoading: saveForm.isLoading,
     isLastPage,
     handleSubmit,
-    currentPage
+    handleFailure,
+    currentPage,
   }
 };
 

@@ -3,6 +3,7 @@ export type Record = {
   taskId?: string;
   createdAt: Date;
   formId: string;
+  failureReason?: string;
   fields: RecordField[];
   name: string
 }

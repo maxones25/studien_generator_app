@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
+import { IconButton, Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useTranslation } from 'react-i18next';
 
@@ -28,18 +28,13 @@ export const HelpButton: React.FC<HelpButtonProps> = ({
       <IconButton color="primary" onClick={handleOpen}>
         <HelpOutlineIcon />
       </IconButton>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="help-dialog-title">
+      <Dialog maxWidth='sm' fullWidth open={open} onClose={handleClose} aria-labelledby="help-dialog-title">
         <DialogTitle id="help-dialog-title">{t(title)}</DialogTitle>
         <DialogContent>
           <DialogContentText>
           {t(body)}
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Schließen
-          </Button>
-        </DialogActions>
       </Dialog>
     </>
   );

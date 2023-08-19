@@ -1,11 +1,12 @@
 import { Column, IconButton, List, Row, Text } from '@modules/core/components';
-import { useNavigationHelper } from '@modules/core/hooks';
 import { useDateContext } from '@modules/date/contexts';
 import { useGetRecordedEventsByDate } from '@modules/tasks/hooks';
 import { AddOutlined } from '@mui/icons-material';
-import React from 'react';
+import React, { useState } from 'react';
 import { RecordedEventsListItem } from '..';
 import { useTranslation } from 'react-i18next';
+import { EventsList } from '@modules/events/components';
+import { Dialog, DialogTitle } from '@mui/material';
 
 export interface RecordedEventsListProps {}
 
@@ -14,7 +15,7 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
 }) => {
   const { date, isFuture } = useDateContext();
   const { data, isError, isLoading } = useGetRecordedEventsByDate({ date });
-  const navigate = useNavigationHelper();
+  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
   return (
@@ -27,7 +28,7 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
             color="inherit"
             aria-label="menu"
             disabled = {isFuture}
-            onClick={navigate.handle('../events')}
+            onClick={() => setOpen(true)}
             testId={'add-event'}
             Icon={<AddOutlined />}
           />
@@ -41,6 +42,10 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
           <RecordedEventsListItem key={record.id} record={record} />
         )}
       </List>
+      <Dialog maxWidth='sm' fullWidth open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>{t('events')}</DialogTitle>
+        <EventsList />
+      </Dialog>
     </Column>
   );
 };
