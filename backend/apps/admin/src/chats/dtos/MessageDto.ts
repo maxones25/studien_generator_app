@@ -1,0 +1,25 @@
+import { Type } from "class-transformer";
+import { IsDate, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator"
+
+export class MessageDto {
+  @IsUUID()
+  id: string;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  participantNumber?: string;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  directorName?: string;
+
+  @Type(() => Date)
+  @IsDate()
+  sendAt: Date;
+
+  @IsString()
+  @IsNotEmpty()
+  content: string;
+}

@@ -22,6 +22,7 @@ import { FormConfigsModule } from '@admin/formConfigs/form-configs.module';
 import { StudiesApp } from '@admin/studies/studies.app';
 import { DirectorsApp } from '@admin/directors/directors.app';
 import { MembersApp } from '@admin/studies/members/members.app';
+import { ChatsModule } from './chats/chats.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { MembersApp } from '@admin/studies/members/members.app';
     FormComponentsModule,
     FormSchedulesModule,
     FormConfigsModule,
+    ChatsModule,
   ],
   providers: appProviders,
 })
