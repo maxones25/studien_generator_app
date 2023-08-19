@@ -55,7 +55,7 @@ export class ChatService {
     const messages = result.messages.map(({
       director, participantId, content, sendAt, id
     }) => {
-      const directorName = director ? `${director.firstName} + ${director.lastName}` : undefined
+      const directorName = director ? `${director.firstName} ${director.lastName}` : undefined
       return {
         id,
         participantId,
