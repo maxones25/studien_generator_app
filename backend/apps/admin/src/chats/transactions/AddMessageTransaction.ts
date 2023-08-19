@@ -43,6 +43,7 @@ export class AddMessageTransaction extends Transaction<
       },
       select: {
         id: true,
+        participantId: true,
         study: {
           id: true,
           members: {
@@ -52,7 +53,7 @@ export class AddMessageTransaction extends Transaction<
       }
     });
     const members = result.study.members;
-    members.forEach(member => {
+    members?.forEach(member => {
       if (member.directorId === directorId) return;
       const receipt = new ChatMessageReceipt();
       receipt.messageId = messageId;

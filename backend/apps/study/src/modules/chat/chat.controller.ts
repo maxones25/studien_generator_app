@@ -16,11 +16,11 @@ export class ChatController {
   }
 
   @Put()
-  async readMessage(
+  async readMessages(
     @ParticipantId() participantId: string,
     @Body() data: ReadMessagesDto
     ) {
-    return this.chatService.readMessage(data, participantId);
+    return this.chatService.readMessages(data, participantId);
   }
 
   @Post()

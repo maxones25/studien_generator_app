@@ -6,7 +6,7 @@ import { TEST_CHAT, TEST_PARTICIPANT } from '@test/testData';
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
 import faker from '@test/fakeData'; 
 
-describe('post message', () => {
+describe('update message receipts', () => {
   let app: INestApplication;
   let participant: LoginParticipantDto;
   let chatId: string;

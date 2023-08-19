@@ -68,7 +68,7 @@ export class ChatService {
     return messages;
   };
 
-  async readMessage({ readAt }: ReadMessagesDto, participantId: string) {
+  async readMessages({ readAt }: ReadMessagesDto, participantId: string) {
     const { affected } = await this.receiptRepository.update({
       participantId
     }, {
