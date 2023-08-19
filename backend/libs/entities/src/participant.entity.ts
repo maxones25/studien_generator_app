@@ -5,8 +5,9 @@ import {
   ManyToOne,
   Unique,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
-import { Group } from '.';
+import { Chat, ChatMessage, ChatMessageReceipt, Group } from '.';
 import { Study } from '.';
 import { Record } from '.';
 import { Task } from '.';
@@ -63,4 +64,13 @@ export class Participant {
     onDelete: 'CASCADE',
   })
   group: Group;
+
+  @OneToOne(() => Chat, (chat) => chat.participant)
+  chat: Chat;
+
+  @OneToMany(() => ChatMessage, (message) => message.director)
+  messages: ChatMessage[];
+
+  @OneToMany(() => ChatMessageReceipt, (messageReceipt) => messageReceipt.director)
+  messageReceipts: ChatMessageReceipt[];
 }

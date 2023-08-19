@@ -1,8 +1,7 @@
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsString, IsUUID, Length } from 'class-validator';
 
 export class LoginParticipantDto {
-  @IsString()
-  @IsNotEmpty()
+  @IsUUID()
   readonly id: string;
 
   @IsString()

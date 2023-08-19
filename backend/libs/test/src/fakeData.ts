@@ -73,6 +73,20 @@ const formEntity = (entityId: string) => {
   };
 };
 
+const chatMessageParticipant = (participantId: string, chatId: string) => {
+  return {
+    id: id(),
+    chatId,
+    participantId,
+    sendAt: new Date(),
+    content: faker.word.sample(),
+  }
+}
+
+// const chatMessageAdmin = (directorId: string) => {
+
+// }
+
 export const id = () => faker.string.uuid();
 
 export default {
@@ -87,4 +101,5 @@ export default {
   form,
   formConfig,
   formEntity,
+  chatMessageParticipant,
 };

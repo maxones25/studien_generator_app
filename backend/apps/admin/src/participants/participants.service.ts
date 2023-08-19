@@ -5,6 +5,7 @@ import { PasswordService } from '@shared/modules/password/password.service';
 import { StartParticipantStudyTransaction } from './transactions/StartParticipantStudyTransaction';
 import { ParticipantsRepository } from './participants.repository';
 import { CreateParticipantDto } from './dtos/CreateParticipantDto';
+import { CreateParticipantTransaction } from './transactions/CreateParticipantTransaction';
 
 @Injectable()
 export class ParticipantsService {
@@ -13,23 +14,23 @@ export class ParticipantsService {
     private participantsRepository: ParticipantsRepository,
     @Inject(StartParticipantStudyTransaction)
     private startParticipantStudyTransaction: StartParticipantStudyTransaction,
+    @Inject(CreateParticipantTransaction)
+    private createParticipantTransaction: CreateParticipantTransaction,
     private passwordService: PasswordService,
   ) {}
 
   async create(studyId: string, { number, groupId }: CreateParticipantDto) {
-    const participant = new Participant();
-
     const password = await this.passwordService.generate();
     const hashPassword = await this.passwordService.hash(password, 10);
 
-    participant.studyId = studyId;
-    participant.groupId = groupId;
-    participant.number = number;
-    participant.password = hashPassword;
+    const id = await this.createParticipantTransaction.run({
+      studyId, 
+      number, 
+      groupId, 
+      password: hashPassword
+    });
 
-    await this.participantsRepository.insert(participant);
-
-    return participant.id;
+    return id;
   }
 
   async getById(id: string) {

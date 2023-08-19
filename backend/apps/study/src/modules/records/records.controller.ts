@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { RecordsService } from './records.service';
-import { CreateRecordDto } from './dtos/createRecordDto';
+import { CreateRecordDto } from './dtos/CreateRecordDto';
 import { ParticipantId } from '@study/decorators/participant-id.decorator';
 
 @Controller('records')

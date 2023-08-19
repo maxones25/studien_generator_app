@@ -10,6 +10,7 @@ import { AuthModule } from '@study/modules/auth/auth.module';
 import { RecordsModule } from '@study/modules/records/records.module';
 import { FormsModule } from '@study/modules/forms/forms.module';
 import { PushModule } from './modules/push/push.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { PushModule } from './modules/push/push.module';
     FormsModule,
     RecordsModule,
     PushModule,
+    ChatModule,
   ],
   providers: [
     {

@@ -6,11 +6,13 @@ import { ParticipantsRepository } from './participants.repository';
 import { Participant } from '@entities';
 import { EntityManager } from 'typeorm';
 import { ParticipantGuard } from './participant.guard';
+import { CreateParticipantTransaction } from './transactions/CreateParticipantTransaction';
 
 const participantsProviders: Provider[] = [
   PasswordService,
   ParticipantsService,
   StartParticipantStudyTransaction,
+  CreateParticipantTransaction,
   {
     provide: ParticipantGuard,
     useClass: ParticipantGuard,

@@ -20,6 +20,14 @@ export class AuthService {
       where: {
         id,
       },
+      relations: {
+        chat: true,
+      },
+      select: {
+        chat: {
+          id: true,
+        },
+      },
     });
 
     if (!participant) throw new UnauthorizedException();
@@ -31,6 +39,7 @@ export class AuthService {
       participantId: participant.id,
       groupId: participant.groupId,
       studyId: participant.studyId,
+      chatId: participant.chat.id,
       type: 'participant',
     });
 

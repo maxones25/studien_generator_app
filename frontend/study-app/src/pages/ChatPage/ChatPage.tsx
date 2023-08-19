@@ -1,17 +1,15 @@
-import { Page, Text } from '@modules/core/components';
+import { ChatInput } from '@modules/chat/components';
+import Chat from '@modules/chat/components/Chat/Chat';
+import { Page } from '@modules/core/components';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Outlet } from 'react-router-dom';
 
 export interface ChatPageProps {}
 
 const ChatPage : React.FC<ChatPageProps> = () => {
-  const { t } = useTranslation();
 
   return (
-    <Page testId="chat page">
-      <Text>{t("test")}</Text>
-      <Outlet />
+    <Page testId="chat page" footer={<ChatInput />}>
+      <Chat />
     </Page>
   );
 };

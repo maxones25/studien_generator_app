@@ -1,4 +1,4 @@
-import { AppBar as MAppBar, Toolbar, Typography } from '@mui/material';
+import { Badge, AppBar as MAppBar, Toolbar, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { ArrowBack, MailOutline, Menu, CalendarMonthOutlined } from '@mui/icons-material';
 import { useNavigationHelper } from '@modules/core/hooks';
@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { IconButton, ZiIcon } from '@modules/core/components';
 import { AppBarMenu, LogOutDialog } from '..';
+import { getNewMessagesCount } from '@modules/chat/utils';
+import { useReadMessages } from '@modules/chat/hooks';
 
 export interface AppBarProps {}
 
@@ -16,6 +18,8 @@ export const AppBar : React.FC<AppBarProps>= () => {
   const [open, setOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
+  const newMessagesCount = getNewMessagesCount();
+  const readMessages = useReadMessages();
 
   const changePage = () => {
     if (path === "/tasks")
@@ -28,6 +32,13 @@ export const AppBar : React.FC<AppBarProps>= () => {
   const handleToggle = () => {
     setOpenMenu((prevOpen) => !prevOpen);
   };
+
+  const openMessages = async () => {
+    await readMessages.mutateAsync({
+      readAt: new Date()
+    });
+    navigate.to('../chat');
+  }
 
   return (
       <MAppBar 
@@ -66,9 +77,13 @@ export const AppBar : React.FC<AppBarProps>= () => {
             color="inherit"
             aria-label="menu"
             sx={{ ml: 1 }}
-            onClick={navigate.handle('../chat')}
+            onClick={openMessages}
             testId='go-mail-app-bar'
-            Icon={<MailOutline /> }
+            Icon={
+              <Badge color='error' badgeContent={newMessagesCount}>
+                <MailOutline /> 
+              </Badge>
+            }
           /> }
           <IconButton
             size="large"

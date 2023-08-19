@@ -1,4 +1,4 @@
-import { CreateRecordDto, RecordFieldDto } from '../dtos/createRecordDto';
+import { CreateRecordDto, RecordFieldDto } from '../dtos/CreateRecordDto';
 import { EntityField } from '@entities/entity-field.entity';
 import { Record } from '@entities/record.entity';
 import { RecordField } from '@entities/record-field.entity';

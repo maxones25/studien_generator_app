@@ -19,6 +19,9 @@ import { RecordField } from '@entities';
 import { Record } from '@entities';
 import { Task } from '@entities';
 import { FormSchedule } from '@entities';
+import { Chat } from '@entities/chat.entity';
+import { ChatMessage } from '@entities/chat-message.entity';
+import { ChatMessageReceipt } from '@entities/chat-message-receipt.entity';
 
 const DbModule = TypeOrmModule.forRootAsync({
   useFactory: async () => {
@@ -49,6 +52,9 @@ const DbModule = TypeOrmModule.forRootAsync({
         Study,
         Task,
         FormSchedule,
+        Chat,
+        ChatMessage,
+        ChatMessageReceipt,
       ],
     };
   },

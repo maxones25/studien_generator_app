@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { ParticipantId } from '@study/decorators/participant-id.decorator';
 import { PushService } from './push.service';
-import { CreatePushDto } from './dto/createPushDto';
+import { CreatePushDto } from './dto/CreatePushDto';
 
 @Controller('push')
 export class PushController {

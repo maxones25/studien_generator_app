@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { Record } from '@entities/record.entity';
 import { Between, EntityManager, Repository } from 'typeorm';
-import { CreateRecordDto } from './dtos/createRecordDto';
+import { CreateRecordDto } from './dtos/CreateRecordDto';
 import { CreateRecordTransaction } from './transactions/create.record.transaction';
 
 @Injectable()
