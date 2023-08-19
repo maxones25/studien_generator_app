@@ -3,12 +3,12 @@ import { apiRequest } from "@modules/core/utils";
 import { useStudyId } from "@modules/navigation/hooks";
 import { Study } from "@modules/studies/types";
 
-export const getGetStudyKey = () => ["getStudy"];
+export const getGetStudyKey = (deps: { studyId: string }) => ["getStudy", deps];
 
 export const useGetStudy = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
 
-  return useReadRequest<Study>(getGetStudyKey(), (options) =>
-    apiRequest(`/studies/${studyId}`, { ...options })
+  return useReadRequest<Study>(getGetStudyKey({ studyId }), (options) =>
+    apiRequest(`/studies/getById`, { ...options, params: { studyId } })
   );
 };

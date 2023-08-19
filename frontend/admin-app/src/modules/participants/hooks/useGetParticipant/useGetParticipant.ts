@@ -16,7 +16,7 @@ export const useGetParticipant = () => {
   return useReadRequest<Participant>(
     getGetParticipantKey({ participantId: participantId! }),
     (options) =>
-      apiRequest(`/studies/${studyId}/participant`, {
+      apiRequest(`/studies/${studyId}/participants/getById`, {
         ...options,
         params: { participantId },
       })

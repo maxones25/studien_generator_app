@@ -5,12 +5,12 @@ import {
   Controller,
   Get,
   Inject,
+  Param,
   Post,
   Query,
   UseGuards,
 } from '@nestjs/common';
 import { FormConfigsService } from './form-configs.service';
-import { StudyId } from '@admin/studies/study-id.decorator';
 import { QueryGroupGuard } from '@admin/groups/guards/query-group.guard';
 import { QueryFormGuard } from '@admin/forms/guards/query-form.guard';
 import { FormConfigGuard } from './form-config.guard';
@@ -26,6 +26,7 @@ import { GetFormsByGroupQueryDto } from './dtos/GetFormsByGroupQueryDto';
 import { AddFormToGroupBodyDto } from './dtos/AddFormToGroupBodyDto';
 import { Group } from '@admin/groups/group.decorator';
 import { Form } from '@admin/forms/form.decorator';
+import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 
 @Controller('studies/:studyId')
 export class FormConfigsController {
@@ -38,7 +39,7 @@ export class FormConfigsController {
   @Roles('admin', 'employee')
   @UseGuards(QueryGroupGuard, QueryFormGuard)
   async addFormToGroup(
-    @StudyId() studyId: string,
+    @Param('studyId', new ValidateIdPipe()) studyId: string,
     @Form() form: FormEntity,
     @Group() group: GroupEntity,
     @Body() body: AddFormToGroupBodyDto,

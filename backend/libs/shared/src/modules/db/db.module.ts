@@ -1,24 +1,27 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { StudyMember } from '@entities';
-import { Study } from '@entities';
-import { Director } from '@entities';
-import { Group } from '@entities';
-import { Participant } from '@entities';
-import { Form } from '@entities';
-import { FormPage } from '@entities';
-import { Entity } from '@entities';
-import { EntityField } from '@entities';
-import { FormEntity } from '@entities';
-import { ParticipantAttributes } from '@entities';
-import { FormComponent } from '@entities';
-import { FormConfiguration } from '@entities';
-import { FormComponentAttribute } from '@entities';
-import { FormField } from '@entities';
-import { RecordField } from '@entities';
-import { Record } from '@entities';
-import { Task } from '@entities';
-import { FormSchedule } from '@entities';
+import {
+  Study,
+  StudyAttribute,
+  StudyMember,
+  Director,
+  Group,
+  Participant,
+  Form,
+  FormPage,
+  Entity,
+  EntityField,
+  FormEntity,
+  ParticipantAttributes,
+  FormComponent,
+  FormConfiguration,
+  FormComponentAttribute,
+  FormField,
+  RecordField,
+  Record,
+  Task,
+  FormSchedule,
+} from '@entities';
 
 const DbModule = TypeOrmModule.forRootAsync({
   useFactory: async () => {
@@ -47,6 +50,7 @@ const DbModule = TypeOrmModule.forRootAsync({
         Record,
         StudyMember,
         Study,
+        StudyAttribute,
         Task,
         FormSchedule,
       ],

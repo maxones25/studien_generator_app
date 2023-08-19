@@ -9,18 +9,18 @@ export const useChangeParticipantGroup = () => {
   const studyId = useStudyId()!;
   return useWriteRequest<{ group: Group; participant: Participant }, number>(
     ({ body: { participant, group }, ...options }) =>
-      apiRequest(`/studies/${studyId}/changeParticipantGroup`, {
+      apiRequest(`/participants/changeGroup`, {
         ...options,
         method: "POST",
-        params: { participantId: participant.id },
+        params: { studyId, participantId: participant.id },
         body: { groupId: group.id },
       }),
     {
       onSuccess({ queryClient, variables: { group, participant } }) {
+        queryClient.invalidateQueries(getGetParticipantsKey({ studyId }));
         queryClient.invalidateQueries(
           getGetParticipantKey({ participantId: participant.id })
         );
-        queryClient.invalidateQueries(getGetParticipantsKey({ studyId }));
         return {
           text: "record added to record",
           params: {

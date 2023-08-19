@@ -1,4 +1,4 @@
-import { CreateStudyDto } from '../dtos/createStudyDto';
+import { CreateStudyDto } from '../dtos/CreateStudyDto';
 import { Study } from '@entities/study.entity';
 import { StudyMember } from '@entities/study-member.entity';
 import { Transaction } from '@shared/modules/transaction/transaction';

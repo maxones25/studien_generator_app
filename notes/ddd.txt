@@ -1,34 +1,195 @@
-Create
 
-- multiple options
-- References to other records
-- Authorization (role based)
-- body payload
-- POST Request?
+Domains
 
-Read
+Studies: This is a major domain that seems central to the application. This domain not only concerns itself with the definition of a study but also the attributes related to a study.
 
-- multiple options
-- Authorization (role based)
-- query params payload
-- GET Request
+Groups: Groups seem to be logical collections, possibly of participants, that belong to a particular study.
 
-Update
+Participants: This domain concerns itself with the individuals participating in the studies. It would handle the management of participants, their attributes, and their associated tasks and records.
 
-- multiple options
-- Authorization (role based)
-- body payload
-- id as identifier (always ?)
-- PUT Request
+Forms: This domain is all about form management. It includes forms themselves, the pages within the forms, components of those pages, and the fields within those components.
 
-Delete
-- multiple options
-- Authorization (role based)
-- id as identifier (always ?)
-- DELETE Request
+Entities: These seem like pre-defined structures (or schemas) that could be used within forms. It's like a template or blueprint for data.
 
+Tasks: Tasks seem to be a crucial operational aspect, detailing what needs to be done by participants and tracking their progress.
 
-POST    /studies/id/schedules?formId
-GET     /studies/id/schedules?formId
-PUT     /studies/id/schedules?id
-DELETE  /studies/id/schedules?id
+Records: They are likely the outcomes or results tied to tasks. Each record seems to have multiple fields filled out, which might be based on entities.
+
+Appointments: This domain deals with scheduling and organizing appointments, which can be linked to participants, groups, and studies.
+
+Directors: Directors are likely the managers or administrators of studies. Study members would be about the association between directors and studies, detailing who has which role in which study.
+
+Chats: This domain seems to focus on communication, particularly between participants and directors. This would include handling messages and chats tied to specific studies.
+
+Configurations: With form_schedules and form_configs, this domain might be about configuring how and when forms should be presented or filled out in the context of a study or group.
+
+DB Design
+
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table studies {
+  id varchar [pk, not null]
+  name varchar [unique, not null]
+}
+
+Table study_attributes {
+  studyId varchar [ref: > studies.id]
+  key varchar
+  value json
+}
+
+Table groups {
+  id varchar [pk, not null]
+  name varchar [unique, not null]
+  studyId varchar [ref: > studies.id]
+}
+
+Table participants {
+  id varchar [pk, not null]
+  number varchar [not null]
+  password varchar [not null]
+  groupId varchar [ref: > groups.id]
+}
+
+Table participant_attributes {
+  participantId varchar [ref: > participants.id]
+  key varchar
+  value json
+}
+
+Table forms {
+  id varchar [pk, not null]
+  name varchar [not null]
+}
+
+Table entities {
+  id varchar [pk, not null]
+  name varchar [not null]
+  studyId varchar [ref: > studies.id, not null]
+}
+
+Table entity_fields {
+  id varchar [pk, not null]
+  entityId varchar [ref: > entities.id, not null]
+  name varchar [not null]
+  type varchar [not null]
+}
+
+Table form_pages {
+  id varchar [pk, not null]
+  formId varchar [ref: > forms.id, null]
+  number int
+  title varchar
+}
+
+Table form_components {
+  id varchar [pk, not null]
+  pageId varchar [ref: > form_pages.id, null]
+  number int
+  type varchar
+}
+
+Table form_fields {
+  formComponentId varchar [ref: > form_components.id, null]
+  entityId varchar [ref: > form_entities.id, null]
+  entityFieldId varchar [ref: > entity_fields.id, null]
+}
+
+Table form_component_attributes {
+  id varchar [pk, not null]
+  formComponentId varchar [ref: > form_components.id, not null]
+  key varchar [not null]
+  value json [not null]
+}
+
+Table tasks {
+  id varchar [pk, not null]
+  participantId varchar [ref: > participants.id, not null]
+  scheduleId varchar [ref: > form_schedules.id, not null]
+  scheduledAt timestamp
+  postponedTo timestamp
+  completedAt timestamp
+  postponedTimes integer
+}
+
+Table records {
+  id varchar [pk, not null]
+  taskId varchar [ref: > tasks.id, not null]
+  participantId varchar [ref: > participants.id, not null]
+  formId varchar [ref: > forms.id, not null]
+  failureReason varchar
+}
+
+Table record_fields {
+  id varchar [pk, not null]
+  recordId varchar [ref: > records.id, not null]
+  entityFieldId varchar [ref: > entity_fields.id, not null]
+  value json
+}
+
+Table appointments {
+  id varchar [pk]
+  participantId varchar [ref: > participants.id]
+  groupId varchar [ref: > groups.id]
+  studyId varchar [ref: > studies.id]
+  start datetime
+  end datetime
+  title varchar
+  description text
+}
+
+table directors {
+  id varchar pk
+  firstName varchar
+  lastName varchar
+  email varchar unique
+  password varchar
+}
+
+table study_members {
+  directorId varchar [ref: > directors.id]
+  studyId varchar [ref: > studies.id]
+  role varchar
+}
+
+table chats {
+  id varchar pk
+  studyId varchar [ref: > studies.id]
+}
+
+table chat_messages {
+  id varchar pk
+  participantId varchar [ref: > participants.id]
+  directorId varchar [ref: > directors.id]
+  chatId varchar [ref: > chats.id]
+  sendby varchar
+  sendAt timestamp
+  readAt timestamp
+  content text
+}
+
+table form_schedules {
+  id varchar pk
+  formConfigId varchar [ref: > form_configs.id]
+  type varchar
+  frequency int
+  period varchar
+  data json
+}
+
+table form_configs {
+  id varchar pk
+  studyId varchar [ref: > studies.id]
+  groupId varchar [ref: > groups.id]
+  formId varchar [ref: > forms.id]
+  isActive boolean
+  type varchar
+}
+
+table form_entities {
+  formId varchar [ref: > forms.id]
+  id varchar pk
+  entityId varchar [ref: > entities.id]
+  name varchar
+}

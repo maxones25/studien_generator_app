@@ -7,11 +7,12 @@ export const useChangeParticipantNumber = () => {
   const participantId = useParticipantId();
   return useWriteRequest<{ number: string }, number>(
     (options) =>
-      apiRequest(`/studies/${studyId}/changeParticipantNumber`, {
+      apiRequest(`/participants/changeNumber`, {
         ...options,
         method: "POST",
         params: {
           participantId,
+          studyId
         },
       }),
     {

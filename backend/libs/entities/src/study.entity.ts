@@ -4,12 +4,8 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
-import { StudyMember } from '.';
-import { Group } from '.';
-import { Participant } from '.';
-import { Entity } from './entity.entity';
-import { Form } from './form.entity';
-import { FormConfiguration } from './form-configuration.entity';
+import { StudyAttribute, StudyMember } from '.';
+import { Group, Participant, FormConfiguration, Form, Entity } from '.';
 
 @TypeOrmEntity()
 export class Study {
@@ -28,6 +24,9 @@ export class Study {
 
   @Column({ unique: true })
   name: string;
+
+  @OneToMany(() => StudyAttribute, (attribute) => attribute.study)
+  attributes: StudyAttribute[];
 
   @OneToMany(() => Group, (group) => group.study)
   groups: Group[];

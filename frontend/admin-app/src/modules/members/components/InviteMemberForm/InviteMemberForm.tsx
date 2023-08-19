@@ -1,4 +1,10 @@
-import { Form, FormSelect, Row, IconButton } from "@modules/core/components";
+import {
+  Form,
+  FormSelect,
+  Row,
+  IconButton,
+  OnlyAdmin,
+} from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
 import { Director, MemberFormData } from "@modules/members/types";
 import { Add } from "@mui/icons-material";
@@ -9,7 +15,6 @@ import { useTranslation } from "react-i18next";
 
 export interface InviteMemberFormProps extends FormProps<MemberFormData> {
   directors: Director[];
-  isAdmin: boolean;
 }
 
 export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
@@ -17,7 +22,6 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
   values,
   formProps,
   directors,
-  isAdmin,
 }) => {
   const { t } = useTranslation();
   const form = useForm<MemberFormData>({
@@ -50,14 +54,26 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
           getOptionLabel={({ firstName, lastName }) =>
             `${firstName} ${lastName}`
           }
-          options={directors ?? []}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              size="small"
-              placeholder={t("search directors")}
-            />
-          )}
+          filterOptions={(options, { inputValue, getOptionLabel }) => {
+            const searchValue = inputValue.toLowerCase();
+            return options.filter((director) => {
+              if (director.email.toLowerCase().includes(searchValue))
+                return true;
+              if (getOptionLabel(director).toLowerCase().includes(searchValue))
+                return true;
+              return false;
+            });
+          }}
+          options={directors}
+          renderInput={(params) => {
+            return (
+              <TextField
+                {...params}
+                size="small"
+                placeholder={t("search directors")}
+              />
+            );
+          }}
         />
         <input
           type="hidden"
@@ -82,14 +98,17 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
           ]}
         />
         <FormControl margin="normal" sx={{ ml: 1 }}>
-          <IconButton
-            type="submit"
-            color="success"
-            testId="invite member form submit button"
-            disabled={!isAdmin}
-            tooltipProps={!isAdmin ? { title: t("admin only") } : undefined}
-            Icon={<Add />}
-          />
+          <OnlyAdmin>
+            {({ disabled }) => (
+              <IconButton
+                type="submit"
+                color="success"
+                testId="submit invite member"
+                disabled={disabled}
+                Icon={<Add />}
+              />
+            )}
+          </OnlyAdmin>
         </FormControl>
       </Row>
     </Form>

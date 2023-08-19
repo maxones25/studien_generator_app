@@ -9,6 +9,7 @@ import { Reflector } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudyMember } from '@entities/study-member.entity';
+import { validateUUID } from '@shared/modules/uuid/uuid';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -25,14 +26,10 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest()
+    const request = context.switchToHttp().getRequest();
 
-    if(!request?.payload) throw new UnauthorizedException()
-
-    const { directorId } = request.payload;
-    const studyId = request.params.studyId;
-
-    if(!studyId) throw new BadRequestException("studyId required")
+    const directorId = this.getDirectorId(request);
+    const studyId = this.getStudyId(request);
 
     const director = await this.studyMembersRepository.findOne({
       where: { directorId, studyId },
@@ -43,5 +40,19 @@ export class RolesGuard implements CanActivate {
     if (!roles.includes(director.role)) throw new UnauthorizedException();
 
     return true;
+  }
+
+  private getDirectorId(request: any) {
+    if (typeof request?.payload?.directorId !== 'string')
+      throw new UnauthorizedException();
+    const directorId = request.payload.directorId as string;
+    if (!validateUUID(directorId)) throw new UnauthorizedException();
+    return directorId;
+  }
+
+  private getStudyId(request: any) {
+    if (request.params.studyId) return request.params.studyId;
+    if (request.query.studyId) return request.query.studyId;
+    throw new BadRequestException('studyId required');
   }
 }

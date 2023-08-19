@@ -17,10 +17,10 @@ export abstract class RecordGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
 
-    const studyId = request.params.studyId;
+    const studyId = this.getStudyId(request)
+    
     const id = request.query[this.paramName];
 
-    if (!studyId) throw new UnauthorizedException();
     if (typeof id !== 'string') throw new UnauthorizedException();
 
     const item = await this.validate({ studyId, id, params: request.params });
@@ -33,4 +33,10 @@ export abstract class RecordGuard implements CanActivate {
   }
 
   protected abstract validate(options: ValidateOptions): any;
+
+  private getStudyId(request: Request){
+    if(typeof request?.params?.studyId === "string") return request.params.studyId;
+    if(typeof request?.query?.studyId === "string") return request.query.studyId;
+    throw new UnauthorizedException();
+  }
 }

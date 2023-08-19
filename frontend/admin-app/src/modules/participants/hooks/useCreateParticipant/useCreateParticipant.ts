@@ -8,9 +8,12 @@ export const useCreateParticipant = () => {
   const studyId = useStudyId();
   return useWriteRequest<ParticipantFormData, string>(
     (options) =>
-      apiRequest(`/studies/${studyId}/participants`, {
-        method: "POST",
+      apiRequest(`/participants/create`, {
         ...options,
+        method: "POST",
+        params: {
+          studyId,
+        },
       }),
     {
       onSuccess({ queryClient, variables }) {

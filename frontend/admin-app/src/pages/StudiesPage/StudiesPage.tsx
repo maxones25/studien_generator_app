@@ -15,7 +15,7 @@ import {
 import {
   useCreateStudy,
   useDeleteStudy,
-  useUpdateStudy,
+  useChangeStudyName,
 } from "@modules/studies/hooks";
 import { StudyFormData } from "@modules/studies/types";
 import React from "react";
@@ -29,7 +29,7 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
   const editFormData = useFormData<StudyFormData>();
   const deleteFormData = useFormData<StudyFormData>();
   const createStudy = useCreateStudy();
-  const updateStudy = useUpdateStudy();
+  const updateStudy = useChangeStudyName();
   const deleteStudy = useDeleteStudy();
 
   return (

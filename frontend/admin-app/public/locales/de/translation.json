@@ -64,6 +64,7 @@
   "record updated": "{{record}} '{{name}}' wurde geändert!",
   "record deleted": "{{record}} '{{name}}' wurde gelöscht!",
   "record added": "{{record}} '{{name}}' wurde zu {{mainRecord}} hinzugefügt!",
+  "record removed": "{{record}} '{{name}}' wurde von {{mainRecord}} entfernt!",
   "sign up successfull": "{{email}} wurde erfolgreich registriert",
   "min": "Minimum",
   "max": "Maximum",
@@ -120,5 +121,12 @@
   "enter value": "{{value}} eingeben",
   "invalid": "ungültig",
   "cancel": "Abbrechen",
-  "no group": "keine Gruppe"
+  "no group": "keine Gruppe",
+  "study started": "Studie '{{name}}' wurde am {{date}} gestartet",
+  "set value": "{{name}} geändert",
+  "duration": "Dauer",
+  "can not remove last admin from study": "Es muss immer einen Administrator geben",
+  "startDate": "Startdatum",
+  "endDate": "Enddatum",
+  "isActive": "aktiv"
 }

@@ -1,4 +1,6 @@
 import {
+  Button,
+  Column,
   DeleteDialog,
   Editable,
   IconButton,
@@ -14,7 +16,9 @@ import {
   useChangeParticipantNumber,
   useDeleteParticipant,
   useGetParticipant,
+  useStartStudy,
 } from "@modules/participants/hooks";
+import { useStudyContext } from "@modules/studies/contexts";
 import { Delete } from "@mui/icons-material";
 import { Divider, LinearProgress, Toolbar } from "@mui/material";
 import React from "react";
@@ -30,6 +34,8 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
   const changeParticipantNumber = useChangeParticipantNumber();
   const changeParticipantGroup = useChangeParticipantGroup();
   const deleteParticipant = useDeleteParticipant();
+  const study = useStudyContext();
+  const startStudy = useStartStudy();
 
   if (getParticipant.isLoading) {
     return <LinearProgress />;
@@ -44,6 +50,8 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
       navigate.to("../");
     });
   };
+
+  const isStarted = Boolean(participant.startedAt);
 
   return (
     <Page testId="participant page" flex={1}>
@@ -83,16 +91,32 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
             />
           )}
         </OnlyAdmin>
+        <DeleteDialog
+          open={deleteDialog.isOpen}
+          record="participant"
+          onConfirm={handleDeleteParticipant}
+          onCancel={deleteDialog.close}
+          target={getParticipant.data?.number!}
+          isLoading={deleteParticipant.isLoading}
+        />
       </Toolbar>
       <Divider />
-      <DeleteDialog
-        open={deleteDialog.isOpen}
-        record="participant"
-        onConfirm={handleDeleteParticipant}
-        onCancel={deleteDialog.close}
-        target={getParticipant.data?.number!}
-        isLoading={deleteParticipant.isLoading}
-      />
+      <Row m={2} p={1} boxShadow={4}>
+        {isStarted ? (
+          <Text>
+            {participant.startedAt &&
+              new Date(participant.startedAt).toLocaleDateString("de")}
+          </Text>
+        ) : (
+          <Button
+            testId="start study"
+            disabled={!Boolean(study.data?.isActive)}
+            onClick={() => startStudy.mutate(participant)}
+          >
+            {t("start study")}
+          </Button>
+        )}
+      </Row>
     </Page>
   );
 };

@@ -10,11 +10,17 @@ export interface StudyContainerProps {
 export const StudyContainer: React.FC<StudyContainerProps> = ({ children }) => {
   const getStudy = useStudyContext();
 
-  return getStudy.isLoading ? (
-    <LinearProgress />
-  ) : (
+  if (getStudy.isLoading) {
+    return <LinearProgress />;
+  }
+
+  if (getStudy.isError) throw new Error()
+
+  const study = getStudy.data!
+
+  return (
     <Box height="100vh" width="100vw" display="flex" alignItems="stretch">
-      <StudyDrawer title={getStudy.data?.name} />
+      <StudyDrawer study={study} />
       {children}
     </Box>
   );
