@@ -13,14 +13,13 @@ export const ChatMessage : React.FC<ChatMessageProps>= ({
   const { palette } = useTheme();
 
   return (
-    <ListItem style={{ justifyContent: message.participantId ? "flex-end" : "flex-start" }}>
+    <ListItem style={{ justifyContent: message.participantId ? "flex-end" : "flex-start", padding: '.5rem' }}>
       <Paper style={{
         padding: '10px',
         maxWidth: '70%',
         wordBreak: 'break-word',
         backgroundColor: message.participantId ? palette.primary.light : palette.grey[200],
         boxShadow: '0 3px 5px rgba(0,0,0,0.2)',
-        marginBottom: '10px',
         borderRadius: '15px'
       }}>
         <Typography variant="body1">{message.content}</Typography>
