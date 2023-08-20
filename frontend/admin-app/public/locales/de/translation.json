@@ -129,5 +129,6 @@
   "startDate": "Startdatum",
   "endDate": "Enddatum",
   "isActive": "aktiv",
-  "date must be between": "{{name}} muss zwischen dem {{start}} und {{end}} sein"
+  "date must be between": "{{name}} muss zwischen dem {{start}} und {{end}} sein",
+  "number": "Nummer"
 }

@@ -120,7 +120,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
           onChange={(number) => participantData.set({ number })}
           onSave={handleCreateParticipant}
           inputProps={{
-            placeholder: t("enter value", { value: t("name") }),
+            placeholder: t("enter value", { value: t("number") }),
           }}
         />
       )}
@@ -146,7 +146,15 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
           <DataListItem key={participant.id} item={participant} disablePadding>
             <ListItemButton onClick={navigate.handle(`${participant.id}`)}>
               <ListItemIcon>
-                {participant.startedAt ? participant.endedAt ? <Check/> : <Loop /> : <Construction />}
+                {participant.startedAt ? (
+                  participant.endedAt ? (
+                    <Check />
+                  ) : (
+                    <Loop />
+                  )
+                ) : (
+                  <Construction />
+                )}
               </ListItemIcon>
               <ListItemText
                 primary={participant.number}

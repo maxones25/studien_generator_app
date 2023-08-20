@@ -8,7 +8,11 @@ export const useCreateForm = () => {
   const studyId = useStudyId();
   return useWriteRequest<FormFormData, string>(
     (options) =>
-      apiRequest(`/studies/${studyId}/forms`, { method: "POST", ...options }),
+      apiRequest(`/forms/create`, {
+        ...options,
+        method: "POST",
+        params: { studyId },
+      }),
     {
       onSuccess: ({ queryClient, variables }) => {
         queryClient.invalidateQueries(getGetFormsKey());

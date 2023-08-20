@@ -52,7 +52,12 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
     });
   };
 
+  
   const isStarted = Boolean(participant.startedAt);
+
+  const isStudyStarted = Boolean(study.isActive)
+
+  const canStart = isStudyStarted && !isStarted && participant.group !== null
 
   return (
     <Page testId="participant page" flex={1}>
@@ -111,7 +116,7 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
         ) : (
           <Button
             testId="open start study dialog"
-            disabled={!Boolean(study.isActive)}
+            disabled={!canStart}
             onClick={startStudyDialog.open}
           >
             {t("start study")}

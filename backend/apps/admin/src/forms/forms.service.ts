@@ -15,7 +15,7 @@ export class FormsService {
   ) {}
 
   async create(studyId: string, data: CreateFormDto) {
-    return this.createFormTransaction.run({studyId, data})
+    return this.createFormTransaction.run({ studyId, data });
   }
 
   getAll(studyId: string) {
@@ -26,7 +26,7 @@ export class FormsService {
     return this.formsRepository.getById(id);
   }
 
-  update(id: string, { name }: UpdateFormDto) {
+  changeName(id: string, { name }: UpdateFormDto) {
     return this.formsRepository.update(id, { name });
   }
 

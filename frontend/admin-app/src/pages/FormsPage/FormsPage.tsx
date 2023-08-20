@@ -12,7 +12,7 @@ import {
   useCreateForm,
   useDeleteForm,
   useGetForms,
-  useUpdateForm,
+  useChangeName,
 } from "@modules/forms/hooks";
 import { FormFormData } from "@modules/forms/types";
 import { useFormId } from "@modules/navigation/hooks";
@@ -31,7 +31,7 @@ const FormsPage: React.FC<FormsPageProps> = () => {
   const deleteGroupData = useFormData<FormFormData>();
   const getGroups = useGetForms();
   const createGroup = useCreateForm();
-  const updateGroup = useUpdateForm();
+  const updateGroup = useChangeName();
   const deleteGroup = useDeleteForm();
 
   const handleDeleteForm = async (data: FormFormData) => {

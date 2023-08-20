@@ -11,7 +11,6 @@ import { appProviders } from '@admin/app.providers';
 import { ComponentsModule } from '@admin/components/components.module';
 import { EntitiesModule } from '@admin/entities/entities.module';
 import { ParticipantsModule } from '@admin/participants/participants.module';
-import { FormsModule } from '@admin/forms/forms.module';
 import { FormEntitiesModule } from '@admin/forms/entities/form-entities.module';
 import { FormPagesModule } from '@admin/forms/pages/form-pages.module';
 import { FormComponentsModule } from '@admin/forms/pages/components/form-components.module';
@@ -22,6 +21,7 @@ import { FormConfigsModule } from '@admin/formConfigs/form-configs.module';
 import { StudiesApp } from '@admin/studies/studies.app';
 import { DirectorsApp } from '@admin/directors/directors.app';
 import { MembersApp } from '@admin/studies/members/members.app';
+import { FormsApp } from '@admin/forms/forms.app';
 
 @Module({
   imports: [
@@ -38,7 +38,7 @@ import { MembersApp } from '@admin/studies/members/members.app';
     ComponentsModule,
     EntitiesModule,
     EntityFieldsModule,
-    FormsModule,
+    FormsApp,
     FormEntitiesModule,
     FormPagesModule,
     FormComponentsModule,

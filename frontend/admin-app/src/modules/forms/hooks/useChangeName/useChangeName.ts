@@ -4,14 +4,15 @@ import { FormFormData } from "@modules/forms/types";
 import { useStudyId } from "@modules/navigation/hooks";
 import { getGetFormsKey } from "..";
 
-export const useUpdateForm = () => {
+export const useChangeName = () => {
   const studyId = useStudyId();
   return useWriteRequest<FormFormData, number>(
-    ({ body: { id, ...body }, ...options }) =>
-      apiRequest(`/studies/${studyId}/forms/${id}`, {
-        method: "PUT",
-        body,
+    ({ body: { id: formId, ...body }, ...options }) =>
+      apiRequest(`/forms/changeName`, {
         ...options,
+        params: { studyId, formId },
+        method: "POST",
+        body,
       }),
     {
       onSuccess: ({ queryClient, variables }) => {
