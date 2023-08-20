@@ -7,6 +7,7 @@ import {
   Page,
   Row,
   Text,
+  TooltipGuard,
 } from "@modules/core/components";
 import { useNavigationHelper, useOpen } from "@modules/core/hooks";
 import { GroupSelect } from "@modules/groups/components";
@@ -52,12 +53,9 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
     });
   };
 
-  
   const isStarted = Boolean(participant.startedAt);
 
-  const isStudyStarted = Boolean(study.isActive)
-
-  const canStart = isStudyStarted && !isStarted && participant.group !== null
+  const hasGroup = participant.group !== null;
 
   return (
     <Page testId="participant page" flex={1}>
@@ -114,13 +112,22 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
               new Date(participant.startedAt).toLocaleDateString("de")}
           </Text>
         ) : (
-          <Button
-            testId="open start study dialog"
-            disabled={!canStart}
-            onClick={startStudyDialog.open}
+          <TooltipGuard
+            validate={{
+              "study must be active": !study.isActive,
+              "group required": !hasGroup,
+            }}
           >
-            {t("start study")}
-          </Button>
+            {(disabled) => (
+              <Button
+                testId="open start study dialog"
+                disabled={disabled}
+                onClick={startStudyDialog.open}
+              >
+                {t("start study")}
+              </Button>
+            )}
+          </TooltipGuard>
         )}
       </Row>
       <StartStudyDialog

@@ -27,3 +27,5 @@ export * from "./ChipSelect/ChipSelect";
 export * from "./OnlyAdmin/OnlyAdmin";
 export * from "./DeleteDialog/DeleteDialog";
 export * from "./Select/Select";
+
+export * from './TooltipGuard/TooltipGuard'

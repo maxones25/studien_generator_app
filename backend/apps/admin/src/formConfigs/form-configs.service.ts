@@ -31,7 +31,7 @@ export class FormConfigsService {
     return formConfiguration.id;
   }
 
-  getByGroup(groupId: string) {
+  async getByGroup(groupId: string) {
     return this.formConfigsRepository.getByGroup(groupId);
   }
 
@@ -61,13 +61,11 @@ export class FormConfigsService {
     const { affected } = await this.formConfigsRepository.update(form.id, {
       type: FormConfigType.TimeIndependent,
     });
-    // remove all open tasks
     return affected === 1;
   }
 
   async delete(id: string) {
     const { affected } = await this.formConfigsRepository.delete(id);
-    // remove all open tasks
     return affected === 1;
   }
 }

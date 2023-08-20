@@ -5,6 +5,7 @@ import { StartParticipantStudyTransaction } from './transactions/StartParticipan
 import { ParticipantsRepository } from './participants.repository';
 import { CreateParticipantDto } from './dtos/CreateParticipantDto';
 import { StartStudyDto } from './dtos/StartStudyDto';
+import { FormConfiguration, Task } from '@entities';
 
 @Injectable()
 export class ParticipantsService {
@@ -56,11 +57,15 @@ export class ParticipantsService {
   }
 
   async startStudy(
-    studyId: string,
     participantId: string,
+    tasks: Task[],
     data: StartStudyDto,
   ) {
-    await this.startParticipantStudyTransaction.run({ studyId, participantId, data });
+    await this.startParticipantStudyTransaction.run({
+      participantId,
+      tasks,
+      data,
+    });
   }
 
   async changeNumber(id: string, number: string) {

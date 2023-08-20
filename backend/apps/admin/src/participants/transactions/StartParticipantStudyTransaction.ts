@@ -1,10 +1,10 @@
-import { ParticipantAttribute, Task } from '@entities';
+import { FormConfiguration, ParticipantAttribute, Task } from '@entities';
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { StartStudyDto } from '../dtos/StartStudyDto';
 
 type TransactionInput = {
-  studyId: string;
   participantId: string;
+  tasks: Task[];
   data: StartStudyDto;
 };
 
@@ -14,9 +14,11 @@ export class StartParticipantStudyTransaction extends Transaction<
 > {
   protected async execute({
     participantId,
+    tasks,
     data,
   }: TransactionInput): Promise<void> {
     await this.addAttributes(participantId, data);
+    await this.generateTasks(tasks);
   }
 
   private async addAttributes(
@@ -32,20 +34,11 @@ export class StartParticipantStudyTransaction extends Transaction<
     });
   }
 
-  private async generateTasks() {
+  private async generateTasks(tasks: Task[]) {
     const repo = this.entityManager.getRepository(Task);
 
-    const formId = null;
-    const participantId = null;
-    const scheduledAt = null;
-    const rescheduled = 0;
-
-    repo.insert({
-      formId,
-      participantId,
-      originalScheduledAt: scheduledAt,
-      scheduledAt,
-      rescheduled,
-    });
+    for (const task of tasks) {
+      await repo.insert(task);
+    }
   }
 }

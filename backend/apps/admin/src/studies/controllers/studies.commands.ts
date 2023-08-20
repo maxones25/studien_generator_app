@@ -12,7 +12,7 @@ import { CreateStudyDto } from '../dtos/CreateStudyDto';
 import { ChangeNameDto } from '../dtos/ChangeNameDto';
 import { Roles } from '@admin/roles/roles.decorator';
 import { DirectorId } from '@admin/directors/director-id.decorator';
-import { StudyGuard } from '../study.guard';
+import { StudyGuard } from '../guards/study.guard';
 import { SetDurationDto } from '../dtos/SetDurationDto';
 import { SetDateDto } from '../dtos/SetDateDto';
 import { StudyQueryDto } from '../dtos/StudyQueryDto';
@@ -64,7 +64,8 @@ export class StudiesCommands {
     @Query() { studyId }: StudyQueryDto,
     @Body() { date }: SetDateDto,
   ) {
-    return this.studiesService.setStartDate(studyId, date);
+    const startDate = new Date(date);
+    return this.studiesService.setStartDate(studyId, startDate);
   }
 
   @Post('setEndDate')
@@ -73,7 +74,8 @@ export class StudiesCommands {
     @Query() { studyId }: StudyQueryDto,
     @Body() { date }: SetDateDto,
   ) {
-    return this.studiesService.setEndDate(studyId, date);
+    const endDate = new Date(date);
+    return this.studiesService.setEndDate(studyId, endDate);
   }
 
   @Post('setActivation')

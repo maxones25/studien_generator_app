@@ -5,7 +5,7 @@ import { GroupsService } from '@admin/groups/groups.service';
 import { StudiesController } from '@admin/studies/controllers/studies.commands';
 import { StudiesService } from '@admin/studies/studies.service';
 import { StudiesRepository } from '@admin/studies/studies.repository';
-import { StudyGuard } from '@admin/studies/study.guard';
+import { StudyGuard } from '@admin/studies/guards/study.guard';
 import fakeData from '@test/fakeData';
 import { Study } from '@entities/study.entity';
 

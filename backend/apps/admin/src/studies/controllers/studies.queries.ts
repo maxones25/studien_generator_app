@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Roles } from '@admin/roles/roles.decorator';
 import { DirectorId } from '@admin/directors/director-id.decorator';
-import { StudyGuard } from '../study.guard';
+import { StudyGuard } from '../guards/study.guard';
 import { StudiesService } from '../studies.service';
 import { StudyQueryDto } from '../dtos/StudyQueryDto';
 import { DirectorsService } from '@admin/directors/directors.service';

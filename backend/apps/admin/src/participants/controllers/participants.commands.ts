@@ -4,6 +4,8 @@ import {
   Post,
   UseGuards,
   Query,
+  Inject,
+  BadRequestException,
 } from '@nestjs/common';
 import { ParticipantsService } from '../participants.service';
 import { CreateParticipantDto } from '../dtos/CreateParticipantDto';
@@ -14,10 +16,25 @@ import { ChangeNumberDto } from '../dtos/ChangeNumberDto';
 import { ChangeGroupDto } from '../dtos/ChangeGroupDto';
 import { StudyQueryDto } from '@admin/studies/dtos/StudyQueryDto';
 import { StartStudyDto } from '../dtos/StartStudyDto';
+import { Participant } from '../participant.decorator';
+import { Participant as ParticipantEntity } from '@entities';
+import { TasksCalculatorService } from '@admin/tasks/task-calculator.service';
+import { FormSchedulesService } from '@admin/groups/schedules/form-schedules.service';
+import { StudiesService } from '@admin/studies/studies.service';
+import { IsStudyActiveGuard } from '@admin/studies/guards/IsStudyActiveGuard';
 
 @Controller('participants')
 export class ParticipantsCommands {
-  constructor(private readonly participantsService: ParticipantsService) {}
+  constructor(
+    @Inject(ParticipantsService)
+    private readonly participantsService: ParticipantsService,
+    @Inject(FormSchedulesService)
+    private readonly scheduleService: FormSchedulesService,
+    @Inject(TasksCalculatorService)
+    private readonly tasksCalculatorService: TasksCalculatorService,
+    @Inject(StudiesService)
+    private readonly studiesService: StudiesService,
+  ) {}
 
   @Post('create')
   @Roles('admin', 'employee')
@@ -57,12 +74,31 @@ export class ParticipantsCommands {
 
   @Post('startStudy')
   @Roles('admin')
+  @UseGuards(ParticipantGuard, IsStudyActiveGuard)
   async startStudy(
-    @Query() { participantId }: ParticipantQueryDto,
+    @Participant() participant: ParticipantEntity,
     @Query() { studyId }: StudyQueryDto,
-    @Body() body: StartStudyDto
+    @Body() body: StartStudyDto,
   ) {
-    return this.participantsService.startStudy(studyId, participantId, body);
+    const startDate = new Date(body.startDate);
+
+    const schedules = await this.scheduleService.getActiveByGroup(
+      participant.groupId,
+    );
+
+    if (schedules.length === 0)
+      throw new BadRequestException('no active schedules');
+
+    const duration = await this.studiesService.getDuration(studyId);
+
+    const tasks = this.tasksCalculatorService.generate({
+      participantId: participant.id,
+      schedules,
+      startDate,
+      duration,
+    });
+
+    return this.participantsService.startStudy(participant.id, tasks, body);
   }
 
   @Post('resetPassword')

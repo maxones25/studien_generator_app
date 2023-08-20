@@ -7,6 +7,7 @@ import { GroupsModule } from '@admin/groups/groups.module';
 import { FormsModule } from '@admin/forms/forms.module';
 import { FormConfigGuard } from './form-config.guard';
 import { FormConfigsRepository } from './form-configs.repository';
+import { FormConfigsService } from './form-configs.service';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { FormConfigsRepository } from './form-configs.repository';
   ],
   controllers: [FormConfigsController],
   providers,
-  exports: [FormConfigGuard, FormConfigsRepository],
+  exports: [FormConfigGuard, FormConfigsRepository, FormConfigsService],
 })
 export class FormConfigsModule {}

@@ -43,6 +43,20 @@ export class FormSchedule {
   @Column('integer', { nullable: true })
   frequency: number;
 
+  @Column({
+    type: 'json',
+    transformer: {
+      from(value: string[]) {
+        return value;
+      },
+      to(value: string[]) {
+        console.log('to', value);
+        return JSON.stringify(value);
+      },
+    },
+  })
+  times: string[];
+
   @Column('json')
   data: any;
 

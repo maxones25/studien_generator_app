@@ -1,7 +1,7 @@
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
-import { StudyGuard } from '@admin/studies/study.guard';
+import { StudyGuard } from '@admin/studies/guards/study.guard';
 import { StudiesRepository } from '@admin/studies/studies.repository';
 
 describe('StudyGuard', () => {

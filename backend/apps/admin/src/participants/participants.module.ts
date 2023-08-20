@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
-import { ParticipantsQueries } from './controllers/participants.queries';
-import { ParticipantsCommands } from './controllers/participants.commands';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Participant } from '@entities/participant.entity';
 import participantsProviders from './participants.providers';
+import { ParticipantGuard } from './participant.guard';
+import { ParticipantsService } from './participants.service';
+import { ParticipantsRepository } from './participants.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Participant])],
-  controllers: [ParticipantsQueries, ParticipantsCommands],
   providers: participantsProviders,
+  exports: [ParticipantsService, ParticipantGuard, ParticipantsRepository],
 })
 export class ParticipantsModule {}

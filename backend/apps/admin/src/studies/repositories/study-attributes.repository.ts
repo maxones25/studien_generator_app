@@ -20,7 +20,7 @@ export class StudyAttributesRepository extends Repository<StudyAttributeEntity> 
     );
   }
 
-  async get(studyId: string, key: StudyAttribute) {
+  async get<T>(studyId: string, key: StudyAttribute) {
     const attribute = await this.findOne({
       where: {
         studyId,
@@ -28,7 +28,7 @@ export class StudyAttributesRepository extends Repository<StudyAttributeEntity> 
       },
     });
     if (attribute === null) return null;
-    return attribute.value;
+    return attribute.value as T;
   }
 
   async isSet(studyId: string, key: StudyAttribute) {

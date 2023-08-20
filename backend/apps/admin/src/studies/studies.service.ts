@@ -13,7 +13,7 @@ export class StudiesService {
     @Inject(StudiesRepository)
     private studiesRepository: StudiesRepository,
     @Inject(StudyAttributesRepository)
-    private studyAttributesRepository: StudyAttributesRepository,
+    private attributesRepository: StudyAttributesRepository,
     @Inject(CreateStudyTransaction)
     private createStudyTransaction: CreateStudyTransaction,
   ) {}
@@ -27,32 +27,26 @@ export class StudiesService {
 
   async activate(studyId: string) {
     if (
-      !(await this.studyAttributesRepository.isSet(
+      !(await this.attributesRepository.isSet(
         studyId,
         StudyAttribute.StartDate,
       ))
     )
       throw new BadRequestException('startDate must be set');
     if (
-      !(await this.studyAttributesRepository.isSet(
-        studyId,
-        StudyAttribute.EndDate,
-      ))
+      !(await this.attributesRepository.isSet(studyId, StudyAttribute.EndDate))
     )
       throw new BadRequestException('endDate must be set');
     if (
-      !(await this.studyAttributesRepository.isSet(
-        studyId,
-        StudyAttribute.Duration,
-      ))
+      !(await this.attributesRepository.isSet(studyId, StudyAttribute.Duration))
     )
       throw new BadRequestException('duration must be set');
 
-    this.studyAttributesRepository.set(studyId, StudyAttribute.IsActive, true);
+    this.attributesRepository.set(studyId, StudyAttribute.IsActive, true);
   }
 
   async deactivate(studyId: string) {
-    this.studyAttributesRepository.set(studyId, StudyAttribute.IsActive, false);
+    this.attributesRepository.set(studyId, StudyAttribute.IsActive, false);
   }
 
   async changeName(id: string, name: string) {
@@ -69,7 +63,7 @@ export class StudiesService {
       studyId,
       directorId,
     );
-    const attributes = await this.studyAttributesRepository.getAll(studyId);
+    const attributes = await this.attributesRepository.getAll(studyId);
 
     return {
       ...study,
@@ -83,26 +77,27 @@ export class StudiesService {
     if (totalDuration && totalDuration < duration)
       throw new BadRequestException('duration is too big');
 
-    await this.studyAttributesRepository.set(
+    await this.attributesRepository.set(
       studyId,
       StudyAttribute.Duration,
       duration,
     );
   }
 
-  async setStartDate(studyId: string, startDate: string) {
-    const endDate = await this.studyAttributesRepository.get(
-      studyId,
-      StudyAttribute.EndDate,
-    );
-
-    if (endDate && datetime.isBefore(new Date(endDate), new Date(startDate)))
-      throw new BadRequestException('start date must be smaller than end date');
-
-    const duration = await this.studyAttributesRepository.get(
+  async getDuration(studyId: string) {
+    return await this.attributesRepository.get<number>(
       studyId,
       StudyAttribute.Duration,
     );
+  }
+
+  async setStartDate(studyId: string, startDate: Date) {
+    const endDate = await this.getEndDate(studyId);
+
+    if (endDate && datetime.isBefore(endDate, startDate))
+      throw new BadRequestException('start date must be smaller than end date');
+
+    const duration = await this.getDuration(studyId);
 
     if (
       duration &&
@@ -111,26 +106,29 @@ export class StudiesService {
     )
       throw new BadRequestException('total duration is to small');
 
-    await this.studyAttributesRepository.set(
+    await this.attributesRepository.set(
       studyId,
       StudyAttribute.StartDate,
       startDate,
     );
   }
 
-  async setEndDate(studyId: string, endDate: string) {
-    const startDate = await this.studyAttributesRepository.get(
+  async getStartDate(studyId: string) {
+    const date = await this.attributesRepository.get<string>(
       studyId,
       StudyAttribute.StartDate,
     );
+    if (date === null) return null;
+    return new Date(date);
+  }
 
-    if (startDate && datetime.isAfter(new Date(startDate), new Date(endDate)))
+  async setEndDate(studyId: string, endDate: Date) {
+    const startDate = await this.getStartDate(studyId);
+
+    if (startDate && datetime.isAfter(startDate, endDate))
       throw new BadRequestException('end date must be greater than start date');
 
-    const duration = await this.studyAttributesRepository.get(
-      studyId,
-      StudyAttribute.Duration,
-    );
+    const duration = await this.getDuration(studyId);
 
     if (
       duration &&
@@ -139,17 +137,26 @@ export class StudiesService {
     )
       throw new BadRequestException('total duration is to small');
 
-    await this.studyAttributesRepository.set(
+    await this.attributesRepository.set(
       studyId,
       StudyAttribute.EndDate,
       endDate,
     );
   }
 
+  async getEndDate(studyId: string) {
+    const date = await this.attributesRepository.get<string>(
+      studyId,
+      StudyAttribute.EndDate,
+    );
+    if (date === null) return null;
+    return new Date(date);
+  }
+
   async start(studyId: string) {
     const date = datetime.isoDate();
 
-    await this.studyAttributesRepository.insert({
+    await this.attributesRepository.insert({
       studyId,
       key: StudyAttribute.StartDate,
       value: JSON.stringify(date) as any,
@@ -164,19 +171,20 @@ export class StudiesService {
   }
 
   async getTotalStudyDuration(studyId: string) {
-    const startDate = await this.studyAttributesRepository.get(
+    const startDate = await this.getStartDate(studyId);
+    const endDate = await this.getEndDate(studyId);
+
+    if (startDate === null || endDate === null) return null;
+
+    return datetime.daysInBetween(startDate, endDate);
+  }
+
+  async isActive(studyId: string) {
+    const isActive = await this.attributesRepository.get<boolean>(
       studyId,
-      StudyAttribute.StartDate,
+      StudyAttribute.IsActive,
     );
-
-    const endDate = await this.studyAttributesRepository.get(
-      studyId,
-      StudyAttribute.EndDate,
-    );
-
-    if (startDate === null) return null;
-    if (endDate === null) return null;
-
-    return datetime.daysInBetween(new Date(startDate), new Date(endDate));
+    if (isActive === null) return false;
+    return isActive;
   }
 }

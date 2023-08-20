@@ -130,5 +130,8 @@
   "endDate": "Enddatum",
   "isActive": "aktiv",
   "date must be between": "{{name}} muss zwischen dem {{start}} und {{end}} sein",
-  "number": "Nummer"
+  "number": "Nummer",
+  "no active schedules": "keine aktiven Formulare gefunden",
+  "study must be active": "Studie muss aktiviert sein",
+  "group required": "Gruppe notwendig"
 }
