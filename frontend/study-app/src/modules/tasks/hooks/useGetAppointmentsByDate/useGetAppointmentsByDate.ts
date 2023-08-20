@@ -7,11 +7,14 @@ export interface UseGetAppointmentsByDatesOptions {
   date: Dayjs;
 }
 
-export const getGetAppointmentsByDatesKey = (date: Dayjs) => ["getAppointmentsByDate" + date];
+export const getGetAppointmentsByDatesKey = (date: Dayjs) => ["getAppointmentsByDate", date];
 
 export const useGetAppointmentsByDate = (options : UseGetAppointmentsByDatesOptions) => {
   const date = options.date;
   return useReadRequest<Appointment[]>(getGetAppointmentsByDatesKey(date), (options) =>
-    apiRequest(`/appointments/${date.toDate()}`, { ...options })
+    apiRequest(`/appointments/${date.toDate()}`, { ...options }),
+    {
+      keepPreviousData: true
+    }
   );
 }
