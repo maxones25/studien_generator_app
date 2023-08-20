@@ -1,6 +1,5 @@
 import {
   Button,
-  Column,
   DeleteDialog,
   Editable,
   IconButton,
@@ -11,6 +10,7 @@ import {
 } from "@modules/core/components";
 import { useNavigationHelper, useOpen } from "@modules/core/hooks";
 import { GroupSelect } from "@modules/groups/components";
+import { StartStudyDialog } from "@modules/participants/components";
 import {
   useChangeParticipantGroup,
   useChangeParticipantNumber,
@@ -18,7 +18,7 @@ import {
   useGetParticipant,
   useStartStudy,
 } from "@modules/participants/hooks";
-import { useStudyContext } from "@modules/studies/contexts";
+import { useStudy } from "@modules/studies/contexts";
 import { Delete } from "@mui/icons-material";
 import { Divider, LinearProgress, Toolbar } from "@mui/material";
 import React from "react";
@@ -34,8 +34,9 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
   const changeParticipantNumber = useChangeParticipantNumber();
   const changeParticipantGroup = useChangeParticipantGroup();
   const deleteParticipant = useDeleteParticipant();
-  const study = useStudyContext();
+  const study = useStudy();
   const startStudy = useStartStudy();
+  const startStudyDialog = useOpen();
 
   if (getParticipant.isLoading) {
     return <LinearProgress />;
@@ -109,14 +110,23 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
           </Text>
         ) : (
           <Button
-            testId="start study"
-            disabled={!Boolean(study.data?.isActive)}
-            onClick={() => startStudy.mutate(participant)}
+            testId="open start study dialog"
+            disabled={!Boolean(study.isActive)}
+            onClick={startStudyDialog.open}
           >
             {t("start study")}
           </Button>
         )}
       </Row>
+      <StartStudyDialog
+        open={startStudyDialog.isOpen}
+        onCancel={startStudyDialog.close}
+        onSubmit={({ startDate }) => {
+          startStudy.mutateAsync({ participant, startDate }).then(() => {
+            startStudyDialog.close();
+          });
+        }}
+      />
     </Page>
   );
 };

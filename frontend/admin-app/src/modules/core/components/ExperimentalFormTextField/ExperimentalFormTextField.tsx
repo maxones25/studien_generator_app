@@ -1,6 +1,7 @@
 import { TextField, TextFieldProps } from "@mui/material";
 import {
   FieldPath,
+  FieldPathValue,
   FieldValue,
   FieldValues,
   UseFormReturn,
@@ -19,7 +20,10 @@ export type ExperimentalFormTextFieldProps<
   maxLength?: number;
   minLength?: number;
   equals?: Validate<FieldValue<FormData>, FormData>;
-  validate?: Record<string, Validate<FieldValue<FormData>, FormData>>;
+  validate?: Record<
+    string,
+    Validate<FieldPathValue<FormData, FieldName>, FormData>
+  >;
   withPlaceholder?: boolean;
 } & TextFieldProps;
 
@@ -42,7 +46,7 @@ export function ExperimentalFormTextField<
 }: ExperimentalFormTextFieldProps<FormData, FieldName>) {
   const { t } = useTranslation();
 
-  const attributeName = name.split(".").pop()
+  const attributeName = name.split(".").pop();
 
   const translatedName = t(attributeName ?? "value");
 
@@ -93,7 +97,7 @@ export function ExperimentalFormTextField<
     return errors;
   }, [form.formState.errors, name]);
 
-  const valueAsNumber = type === "number"
+  const valueAsNumber = type === "number";
 
   return (
     <TextField
@@ -112,7 +116,7 @@ export function ExperimentalFormTextField<
           ...validate,
           ...equalsRules,
         },
-        valueAsNumber
+        valueAsNumber,
       })}
     />
   );

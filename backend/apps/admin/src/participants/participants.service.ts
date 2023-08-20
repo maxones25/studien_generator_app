@@ -4,6 +4,7 @@ import { PasswordService } from '@shared/modules/password/password.service';
 import { StartParticipantStudyTransaction } from './transactions/StartParticipantStudyTransaction';
 import { ParticipantsRepository } from './participants.repository';
 import { CreateParticipantDto } from './dtos/CreateParticipantDto';
+import { StartStudyDto } from './dtos/StartStudyDto';
 
 @Injectable()
 export class ParticipantsService {
@@ -54,8 +55,12 @@ export class ParticipantsService {
     return this.convertParticipant(participant);
   }
 
-  async startStudy(studyId: string, participantId: string) {
-    await this.startParticipantStudyTransaction.run({ studyId, participantId });
+  async startStudy(
+    studyId: string,
+    participantId: string,
+    data: StartStudyDto,
+  ) {
+    await this.startParticipantStudyTransaction.run({ studyId, participantId, data });
   }
 
   async changeNumber(id: string, number: string) {

@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Param,
   Post,
   UseGuards,
   Query,
@@ -14,6 +13,7 @@ import { ParticipantGuard } from '../participant.guard';
 import { ChangeNumberDto } from '../dtos/ChangeNumberDto';
 import { ChangeGroupDto } from '../dtos/ChangeGroupDto';
 import { StudyQueryDto } from '@admin/studies/dtos/StudyQueryDto';
+import { StartStudyDto } from '../dtos/StartStudyDto';
 
 @Controller('participants')
 export class ParticipantsCommands {
@@ -60,8 +60,9 @@ export class ParticipantsCommands {
   async startStudy(
     @Query() { participantId }: ParticipantQueryDto,
     @Query() { studyId }: StudyQueryDto,
+    @Body() body: StartStudyDto
   ) {
-    return this.participantsService.startStudy(studyId, participantId);
+    return this.participantsService.startStudy(studyId, participantId, body);
   }
 
   @Post('resetPassword')

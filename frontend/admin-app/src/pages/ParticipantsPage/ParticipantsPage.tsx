@@ -18,17 +18,26 @@ import {
   useGetParticipants,
 } from "@modules/participants/hooks";
 import { ParticipantFormData } from "@modules/participants/types";
-import { Add, Search, SearchOff } from "@mui/icons-material";
+import {
+  Add,
+  Check,
+  Construction,
+  Loop,
+  Search,
+  SearchOff,
+} from "@mui/icons-material";
 import {
   ClickAwayListener,
   Divider,
   Input,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   Toolbar,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { isoDate } from "@modules/date/utils";
 
 export interface ParticipantsPageProps {}
 
@@ -58,6 +67,8 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
       participantData.reset();
     }
   };
+
+  const currentDate = isoDate();
 
   return (
     <Page testId="participants page" width={250} boxShadow={6} zIndex={900}>
@@ -122,12 +133,21 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
         filter={(item) => {
           if (!filter) return true;
           if (filter === "no group" && item.group === null) return true;
-          if (filter === "current" && item.endedAt && !item.endedAt) return true;
+          if (
+            filter === "current" &&
+            item.startedAt &&
+            !item.endedAt &&
+            item.startedAt < currentDate
+          )
+            return true;
           return false;
         }}
         renderItem={(participant) => (
-          <DataListItem key={participant.id} item={participant}>
+          <DataListItem key={participant.id} item={participant} disablePadding>
             <ListItemButton onClick={navigate.handle(`${participant.id}`)}>
+              <ListItemIcon>
+                {participant.startedAt ? participant.endedAt ? <Check/> : <Loop /> : <Construction />}
+              </ListItemIcon>
               <ListItemText
                 primary={participant.number}
                 secondary={participant.group?.name ?? t("no group")}

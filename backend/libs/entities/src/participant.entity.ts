@@ -10,7 +10,7 @@ import { Group } from '.';
 import { Study } from '.';
 import { Record } from '.';
 import { Task } from '.';
-import { ParticipantAttributes } from '.';
+import { ParticipantAttribute } from '.';
 
 @Entity()
 @Unique('unique_number_for_study', ['number', 'studyId'])
@@ -43,8 +43,8 @@ export class Participant {
   @Column('text', { nullable: true })
   subscription: string;
 
-  @OneToMany(() => ParticipantAttributes, (attribute) => attribute.participant)
-  attributes: ParticipantAttributes[];
+  @OneToMany(() => ParticipantAttribute, (attribute) => attribute.participant)
+  attributes: ParticipantAttribute[];
 
   @OneToMany(() => Record, (record) => record.participant)
   records: Record[];

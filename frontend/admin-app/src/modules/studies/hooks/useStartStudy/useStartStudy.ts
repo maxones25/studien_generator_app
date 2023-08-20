@@ -5,7 +5,7 @@ import { Study } from "@modules/studies/types";
 
 export const useStartStudy = () => {
   return useWriteRequest<Study, string>(
-    ({body: { id }, ...options}) =>
+    ({ body: { id }, ...options }) =>
       apiRequest(`/studies/${id}/startStudy`, {
         ...options,
         method: "POST",
@@ -15,10 +15,11 @@ export const useStartStudy = () => {
       onSuccess({ queryClient, variables: study, data: date }) {
         queryClient.invalidateQueries(getGetStudyKey({ studyId: study.id }));
         return {
-          text: "study started",
+          text: "record started",
           params: {
+            record: "study",
             name: study.name,
-            date,
+            date: new Date(date).toLocaleDateString("de"),
           },
         };
       },
