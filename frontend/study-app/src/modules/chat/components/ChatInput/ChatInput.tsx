@@ -1,6 +1,6 @@
 import { useAccessTokenContext } from '@modules/auth/contexts';
 import { usePostChatMessage } from '@modules/chat/hooks';
-import { TextField, Button } from '@mui/material';
+import { TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
@@ -48,10 +48,9 @@ export const ChatInput : React.FC<ChatInputProps> = ({
           }
       }}
         label={t('type your message')}
+        multiline 
+        maxRows={4}
       />
-      <Button variant="contained" color="primary" onClick={handleSend}>
-        {t('send')}
-      </Button>
     </div>
   );
 };
