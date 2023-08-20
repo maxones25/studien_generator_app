@@ -23,6 +23,16 @@ export class FormsController {
     return await this.formsService.getAll(studyId, groupId);
   }
 
+  @Get('/:lastUpdated')
+  async getAllNew(
+    @Param('lastUpdated') lastUpdated: string,
+    @StudyId() studyId: string, 
+    @GroupId() groupId: string,
+  ) {
+    const date = new Date(lastUpdated);
+    return await this.formsService.getAll(studyId, groupId, date);
+  }
+
   @Get('time/independent')
   async getTimeIndependent(
     @StudyId() studyId: string,

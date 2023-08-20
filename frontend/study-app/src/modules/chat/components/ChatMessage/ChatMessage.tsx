@@ -24,7 +24,7 @@ export const ChatMessage : React.FC<ChatMessageProps>= ({
         <Typography variant="body1">{message.content}</Typography>
         {message.directorName && <Typography variant="caption" display="block">{message.directorName}</Typography>}
         <Typography variant="caption" display="block" align="right">
-          {dayjs(message.sendAt).format('HH:mm')}
+          {dayjs(message.sentAt).format('HH:mm')}
         </Typography>
       </Paper>
     </ListItem>

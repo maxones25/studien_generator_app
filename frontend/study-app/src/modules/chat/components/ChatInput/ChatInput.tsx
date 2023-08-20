@@ -21,7 +21,7 @@ export const ChatInput : React.FC<ChatInputProps> = ({
         id: uuid(),
         chatId: chatId ?? '',
         participantId,
-        sendAt: new Date(),
+        sentAt: new Date(),
         content: inputValue
       });
       setInputValue("");

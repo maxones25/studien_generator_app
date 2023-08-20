@@ -15,16 +15,23 @@ export class GetData extends Strategy {
     request: Request, 
     handler: StrategyHandler
   ): Promise<Response | undefined> {
+    // create new last updated date to set at the end. Important to do it now 
+    // so you don't run the risk of it being newer than the actual data
+    const newLastUpdated = new Date();
     const db = await this.dbPromise;
-    const requestClone = request.clone()
-    const myRequest = getData(this.dbName) ?? handler.fetch(requestClone);
-    return myRequest
+    const lastUpdated = await this.getMetaData(db);
+    const newRequest = lastUpdated ? new Request(
+      `${request.url}/${lastUpdated}`, 
+      { headers: request.headers }
+    ) : request;
+    const myPromise = getData(this.dbName) ?? handler.fetch(newRequest);
+    return myPromise
     .then(async (response) => {
       if (!response.ok) {
         return await this.getFromDB(db)
       }
       const responseClone = response.clone()
-      responseClone.json().then(async (data) => {
+      await responseClone.json().then(async (data) => {
         const tx = db.transaction(this.dbName, 'readwrite');
         await Promise.all(data.map((record: Record<string, any>) => {
           if (record.createdAt) record.createdAt = new Date(record.createdAt);
@@ -33,16 +40,31 @@ export class GetData extends Strategy {
           return tx.store.put(record);
         }));
       })
-
-      return response;
+      await this.setMetaData(db, newLastUpdated);
+      return await this.getFromDB(db);;
     }).catch(async () => {
-      return await this.getFromDB(db)
+      return await this.getFromDB(db);
     });
   }
 
   private async getFromDB(db: IDBPDatabase) {
-    const data = await db.getAll(this.dbName)
-    return new Response(JSON.stringify(data))
+    const data = (this.dbName === 'chat') ? 
+      await db.getAllFromIndex(this.dbName, 'sentAt') :
+      await db.getAll(this.dbName);
+    
+    return new Response(JSON.stringify(data));
+  }
+
+  private async getMetaData(db: IDBPDatabase): Promise<Date|undefined> {
+    try {
+      return await db.get('metaData', this.dbName);
+    } catch {
+      return undefined;
+    }
+  }
+
+  private async setMetaData(db: IDBPDatabase, date: Date) {
+    db.put('metaData', date, this.dbName);
   }
 }
 

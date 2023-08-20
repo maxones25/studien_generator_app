@@ -78,7 +78,7 @@ const chatMessageParticipant = (participantId: string, chatId: string) => {
     id: id(),
     chatId,
     participantId,
-    sendAt: new Date(),
+    sentAt: new Date(),
     content: faker.word.sample(),
   }
 }
@@ -88,7 +88,7 @@ const chatMessageAdmin = (directorId: string, chatId: string) => {
     id: id(),
     chatId,
     directorId,
-    sendAt: new Date(),
+    sentAt: new Date(),
     content: faker.word.sample(),
   }
 }

@@ -21,7 +21,7 @@ export class MessageDto {
 
   @Type(() => Date)
   @IsDate()
-  sendAt: Date;
+  sentAt: Date;
 
   @IsString()
   @IsNotEmpty()

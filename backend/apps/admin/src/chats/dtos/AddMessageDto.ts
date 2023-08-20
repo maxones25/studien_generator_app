@@ -13,7 +13,7 @@ export class AddMessageDto {
 
   @Type(() => Date)
   @IsDate()
-  readonly sendAt: Date;
+  readonly sentAt: Date;
 
   @IsString()
   @IsNotEmpty()

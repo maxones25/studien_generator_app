@@ -21,7 +21,7 @@ export class RecordsService {
     });
   }
 
-  async findAll(participantId: string) {
+  async findAll(participantId: string, updatedAt?: Date) {
 
     const records = await this.recordsRepository.find({
       where: {
@@ -32,7 +32,11 @@ export class RecordsService {
       },
     });
 
-    return records.map(({id, taskId, createdAt, form}) => {
+    const filteredRecords = records.filter(({ modifiedAt }) => 
+      !updatedAt || modifiedAt > updatedAt
+    );
+
+    return filteredRecords.map(({id, taskId, createdAt, form}) => {
       return {
         id,
         taskId,

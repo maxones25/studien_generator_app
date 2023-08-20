@@ -42,17 +42,17 @@ export class ChatsService {
             lastName: true,
           },
           content: true,
-          sendAt: true,
+          sentAt: true,
         }
       },
       order: {
         messages: {
-          sendAt: 'ASC'
+          sentAt: 'ASC'
         }
       }
     });
     const messages = result.messages.map(({
-      director, participant, content, sendAt, id, directorId
+      director, participant, content, sentAt, id, directorId
     }) => {
       const directorName = director ? `${director.firstName} ${director.lastName}` : undefined
       return {
@@ -61,7 +61,7 @@ export class ChatsService {
         directorId,
         directorName,
         content,
-        sendAt,
+        sentAt,
       }
     });
     return messages;

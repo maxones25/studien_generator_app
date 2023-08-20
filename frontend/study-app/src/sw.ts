@@ -93,3 +93,9 @@ registerRoute(
   new GetByDate<Record>(dbPromise, 'records', 'createdAt')
 );
 
+
+registerRoute(
+  `${BASE_URI}/chat`, 
+  new GetData(dbPromise, 'chat'),
+);
+
