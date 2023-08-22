@@ -6,5 +6,6 @@ export type Message = {
   sentAt: Date,
   readAt?: Date,
   content: string,
+  queued?: boolean,
 }
 

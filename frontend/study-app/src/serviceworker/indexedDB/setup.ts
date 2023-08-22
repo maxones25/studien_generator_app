@@ -27,6 +27,8 @@ export const dbPromise = openDB('study-app', 1, {
     if (!db.objectStoreNames.contains('chat')) {
       const chat = db.createObjectStore('chat', { keyPath: 'id' });
       chat.createIndex('sentAt', 'sentAt', { unique: false });
+      chat.createIndex('readAt', 'readAt', { unique: false });
+      chat.createIndex('queued', 'queued', { unique: false });
     };
 
     if (!db.objectStoreNames.contains('metaData')) {

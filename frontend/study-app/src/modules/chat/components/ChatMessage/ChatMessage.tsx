@@ -20,7 +20,8 @@ export const ChatMessage : React.FC<ChatMessageProps>= ({
         wordBreak: 'break-word',
         backgroundColor: message.participantId ? palette.primary.light : palette.grey[200],
         boxShadow: '0 3px 5px rgba(0,0,0,0.2)',
-        borderRadius: '15px'
+        borderRadius: '15px',
+        opacity: message.queued ? .5 : 1
       }}>
         <Typography variant="body1">{message.content}</Typography>
         {message.directorName && <Typography variant="caption" display="block">{message.directorName}</Typography>}
