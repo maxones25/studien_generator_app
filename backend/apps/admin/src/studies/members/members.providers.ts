@@ -8,12 +8,7 @@ import { MembersService } from './members.service';
 const membersProviders: Provider[] = [
   MembersService,
   MemberGuard,
-  {
-    provide: MembersRepository,
-    useFactory: (entityManager: EntityManager) =>
-      new MembersRepository(StudyMember, entityManager),
-    inject: [EntityManager],
-  },
+  MembersRepository,
 ];
 
 export default membersProviders;

@@ -6,9 +6,10 @@ import { ParticipantsRepository } from './participants.repository';
 import { CreateParticipantDto } from './dtos/CreateParticipantDto';
 import { StartStudyDto } from './dtos/StartStudyDto';
 import { FormConfiguration, Task } from '@entities';
+import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
-export class ParticipantsService {
+export class ParticipantsService implements StudyRelatedDataAccessor {
   constructor(
     @Inject(ParticipantsRepository)
     private participantsRepository: ParticipantsRepository,
@@ -17,6 +18,12 @@ export class ParticipantsService {
     @Inject(PasswordService)
     private passwordService: PasswordService,
   ) {}
+
+  async getRelatedByStudy(studyId: string, id: string): Promise<any> {
+    return await this.participantsRepository.findOne({
+      where: { id, studyId },
+    });
+  }
 
   async create(studyId: string, { number, groupId }: CreateParticipantDto) {
     const participant = new Participant();
@@ -56,11 +63,7 @@ export class ParticipantsService {
     return this.convertParticipant(participant);
   }
 
-  async startStudy(
-    participantId: string,
-    tasks: Task[],
-    data: StartStudyDto,
-  ) {
+  async startStudy(participantId: string, tasks: Task[], data: StartStudyDto) {
     await this.startParticipantStudyTransaction.run({
       participantId,
       tasks,

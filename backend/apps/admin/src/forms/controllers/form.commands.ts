@@ -4,7 +4,7 @@ import { Roles } from '@admin/roles/roles.decorator';
 import { FormQueryDto } from '../dtos/FormQueryDto';
 import { UpdateFormDto } from '../dtos/UpdateFormDto';
 import { FormsService } from '../forms.service';
-import { StudyQueryDto } from '@admin/studies/dtos/StudyQueryDto';
+import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 
 @Controller('forms')
 export class FormsCommands {

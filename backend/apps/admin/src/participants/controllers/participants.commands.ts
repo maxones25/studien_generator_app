@@ -14,14 +14,14 @@ import { ParticipantQueryDto } from '../dtos/ParticipantQueryDto';
 import { ParticipantGuard } from '../participant.guard';
 import { ChangeNumberDto } from '../dtos/ChangeNumberDto';
 import { ChangeGroupDto } from '../dtos/ChangeGroupDto';
-import { StudyQueryDto } from '@admin/studies/dtos/StudyQueryDto';
+import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { StartStudyDto } from '../dtos/StartStudyDto';
 import { Participant } from '../participant.decorator';
 import { Participant as ParticipantEntity } from '@entities';
 import { TasksCalculatorService } from '@admin/tasks/task-calculator.service';
 import { FormSchedulesService } from '@admin/groups/schedules/form-schedules.service';
-import { StudiesService } from '@admin/studies/studies.service';
-import { IsStudyActiveGuard } from '@admin/studies/guards/IsStudyActiveGuard';
+import { StudiesService } from '@admin/studies/studies/studies.service';
+import { IsStudyActiveGuard } from '@admin/studies/studies/guards/IsStudyActiveGuard';
 
 @Controller('participants')
 export class ParticipantsCommands {

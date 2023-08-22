@@ -4,6 +4,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
+import { StudyRelatedDataAccessor } from './StudyRelatedDataAccessor';
 
 export type ValidateOptions = {
   studyId: string;
@@ -12,18 +13,22 @@ export type ValidateOptions = {
 };
 
 export abstract class RecordGuard implements CanActivate {
-  constructor(private record: string, private paramName: string) {}
+  constructor(
+    private readonly accessor: StudyRelatedDataAccessor,
+    private readonly record: string,
+    private readonly paramName: string,
+  ) {}
 
   async canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
 
-    const studyId = this.getStudyId(request)
-    
+    const studyId = this.getStudyId(request);
+
     const id = request.query[this.paramName];
 
     if (typeof id !== 'string') throw new UnauthorizedException();
 
-    const item = await this.validate({ studyId, id, params: request.params });
+    const item = await this.accessor.getRelatedByStudy(studyId, id);
 
     if (!item) throw new UnauthorizedException();
 
@@ -32,11 +37,11 @@ export abstract class RecordGuard implements CanActivate {
     return true;
   }
 
-  protected abstract validate(options: ValidateOptions): any;
-
-  private getStudyId(request: Request){
-    if(typeof request?.params?.studyId === "string") return request.params.studyId;
-    if(typeof request?.query?.studyId === "string") return request.query.studyId;
+  private getStudyId(request: Request) {
+    if (typeof request?.params?.studyId === 'string')
+      return request.params.studyId;
+    if (typeof request?.query?.studyId === 'string')
+      return request.query.studyId;
     throw new UnauthorizedException();
   }
 }

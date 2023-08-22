@@ -11,6 +11,7 @@ import {
   FormPage,
   Entity,
   EntityField,
+  EntityFieldAttribute,
   FormEntity,
   ParticipantAttribute,
   FormComponent,
@@ -34,8 +35,9 @@ const DbModule = TypeOrmModule.forRootAsync({
       database: process.env.DB_NAME,
       entities: [
         Director,
-        EntityField,
         Entity,
+        EntityField,
+        EntityFieldAttribute,
         FormComponent,
         FormComponentAttribute,
         FormConfiguration,

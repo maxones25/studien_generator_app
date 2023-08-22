@@ -2,7 +2,7 @@ import request from 'supertest';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 
 import { SignupDirectorDto } from '@admin/auth/dtos/SignupDirectorDto';
-import { CreateStudyDto } from '@admin/studies/dtos/CreateStudyDto';
+import { CreateStudyDto } from '@admin/studies/studies/dtos/CreateStudyDto';
 import { CreateGroupDto } from '@admin/groups/dtos/CreateGroupDto';
 import { ParticipantDto } from '@admin/participants/dtos/CreateParticipantDto';
 
@@ -11,7 +11,7 @@ import { validateUUID } from '@shared/modules/uuid/uuid';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { AddMemberDto } from '@admin/studies/members/dtos/AddMemberDto';
-import { CreateEntityDto } from '@admin/entities/dtos/CreateEntityDto';
+import { CreateEntityDto } from '@admin/entities/entities/dtos/CreateEntityDto';
 import { CreateFormDto } from '@admin/forms/dtos/CreateFormDto';
 import { CreateFormConfigurationDto } from '@admin/forms/configurations/dtos/CreateFormConfigurationDto';
 import { CreateFormEntityDto } from '@admin/forms/entities/dtos/CreateFormEntityDto';
