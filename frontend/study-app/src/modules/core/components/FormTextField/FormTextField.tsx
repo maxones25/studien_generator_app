@@ -23,7 +23,6 @@ export const FormTextField = <FormData extends FieldValues>({
   type = "text",
   isVisible = true,
   fullWidth = false,
-  attributes
 }: FormTextFieldProps<FormData>) => {
   const { name, inputProps } = textFieldProps;
   const error = get(formState.errors, name);
@@ -42,7 +41,6 @@ export const FormTextField = <FormData extends FieldValues>({
       fullWidth={fullWidth}
       placeholder={placeholder}
       inputProps={{
-        ...attributes,
         ...inputProps,
         "data-testid": `${name}-input`,
       }}

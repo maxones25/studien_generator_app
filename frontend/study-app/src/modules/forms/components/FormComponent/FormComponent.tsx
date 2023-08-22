@@ -18,37 +18,52 @@ export const FormComponent : React.FC<FormComponentProps>= ({
   const attributes: {[x: string]: any} = formComponent.attributes.reduce((obj, item) => 
     Object.assign(obj, { [item.key]: item.value }), {}
   );
-  const label = attributes?.label;
   const name = `${formComponent.id}.${formComponent.formFields[0].entityFieldId}`;
   const props = {
-    label: label,
+    label: attributes.label,
     control: form.control,
     componentId: formComponent.id,
     entityFieldId: formComponent.formFields[0].entityFieldId,
-    rules: {required: t("value required")},
-    attributes: attributes
+    rules: {
+      required: (!attributes.required) ? false: t("required"),
+      minLength: {
+        value: attributes.minLength,
+        message: t('min length', { value: attributes.minLength }),
+      },
+      maxLength: {
+        value: attributes.maxLength,
+        message: t('max length', { value: attributes.maxLength }),
+      },
+      min: {
+        value: attributes.min,
+        message: t('min', { value: attributes.min }),
+      },
+      max: {
+        value: attributes.max,
+        message: t('max', { value: attributes.max }),
+      },
+    },
+    attributes: attributes,
   };
 
   const createField = ():JSX.Element => {
     switch (formComponent.type) {
       case "TextField":
         return <FormTextField 
-          label={label}
+          label={props.label}
           formState={form.formState}
           textFieldProps={form.register(name, 
             props.rules
           )}
-          attributes={props.attributes}
         />
       case "NumberPicker":
         return <FormNumberPicker 
-          label={label}
+          label={props.label}
           type={'number'}
           formState={form.formState}
           textFieldProps={form.register(name, 
             props.rules
           )}
-          attributes={props.attributes}
         />
       case "Select":
         return <FormSelect {...props} />
@@ -66,7 +81,7 @@ export const FormComponent : React.FC<FormComponentProps>= ({
         return <FormCheckBox {...props} />
       case "HIIT":
         return <Hiit 
-          label={label}
+          label={props.label}
           control={form.control}
           componentId={formComponent.id}
           formFields={formComponent.formFields}
