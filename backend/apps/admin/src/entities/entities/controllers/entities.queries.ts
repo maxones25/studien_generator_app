@@ -1,29 +1,33 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards, Query } from '@nestjs/common';
 import { EntitiesService } from '../entities.service';
-import { EntityGuard } from '../entity.guard';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { Roles } from '@admin/roles/roles.decorator';
+import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
+import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { EntityGuard } from '../entity.guard';
+import { EntityQueryDto } from '../dtos/EntityQueryDto';
 
-@Controller('studies/:studyId/entities')
-@UseGuards(EntityGuard)
+@Controller('entities')
+@UseGuards(StudyGuard)
 export class EntitiesQueries {
   constructor(private readonly entitiesService: EntitiesService) {}
 
-  @Get()
+  @Get('getAll')
   @Roles('admin', 'employee')
-  async getAll(@Param('studyId', new ValidateIdPipe()) studyId: string) {
+  async getAll(@Query() { studyId }: StudyQueryDto) {
     return this.entitiesService.getAll(studyId);
   }
 
-  @Get(':entityId')
+  @Get('getById')
+  @UseGuards(EntityGuard)
   @Roles('admin', 'employee')
-  async getById(@Param('entityId', new ValidateIdPipe()) entityId: string) {
+  async getById(@Query() { entityId }: EntityQueryDto) {
     return this.entitiesService.getById(entityId);
   }
 
-  @Get(':entityId/forms')
+  @Get('getForms')
   @Roles('admin', 'employee')
-  async getForms(@Param('entityId', new ValidateIdPipe()) entityId: string) {
+  async getForms(@Query() { entityId }: EntityQueryDto) {
     return this.entitiesService.getForms(entityId);
   }
 }

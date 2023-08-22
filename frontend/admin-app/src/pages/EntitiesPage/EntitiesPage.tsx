@@ -11,7 +11,7 @@ import {
   useCreateEntity,
   useDeleteEntity,
   useGetEntities,
-  useUpdateEntity,
+  useChangeName,
 } from "@modules/entities/hooks";
 import { EntityFormData } from "@modules/entities/types";
 import { useEntityId } from "@modules/navigation/hooks";
@@ -35,7 +35,7 @@ const EntitiesPage: React.FC<EntitiesPageProps> = () => {
   const deleteData = useFormData<EntityFormData>();
   const getEntities = useGetEntities();
   const createEntity = useCreateEntity();
-  const updateEntity = useUpdateEntity();
+  const updateEntity = useChangeName();
   const deleteEntity = useDeleteEntity();
 
   return (

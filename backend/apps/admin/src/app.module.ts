@@ -19,7 +19,7 @@ import { DirectorsApp } from '@admin/directors/directors.app';
 import { MembersApp } from '@admin/studies/members/members.app';
 import { FormsApp } from '@admin/forms/forms.app';
 import { ParticipantsApp } from '@admin/participants/participants.app';
-import { EntitiesApp } from '@admin/entities/entities/entities.app';
+import { EntitiesApp } from '@admin/entities/entities.app';
 
 @Module({
   imports: [

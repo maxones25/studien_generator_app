@@ -63,7 +63,7 @@ export const FieldForm: React.FC<FieldFormProps> = ({
           rules={{
             required: "required",
           }}
-          name="data.enum"
+          name="values"
           render={({ field: { onChange, ...field } }) => (
             <Autocomplete
               multiple
@@ -91,8 +91,8 @@ export const FieldForm: React.FC<FieldFormProps> = ({
                     label="Enum (Werte)"
                     multiline
                     margin="normal"
-                    error={Boolean(form.formState.errors.data?.enum)}
-                    helperText={form.formState.errors.data?.enum?.message}
+                    error={Boolean(form.formState.errors.values)}
+                    helperText={form.formState.errors?.values?.message}
                   />
                 );
               }}

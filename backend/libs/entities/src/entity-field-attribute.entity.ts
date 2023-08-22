@@ -8,7 +8,7 @@ import { EntityField } from '.';
 import { AttributeKey } from '@shared/modules/records/attribute.repository';
 
 export type EntityFieldAttributes = {
-  values: string[];
+  values?: string[];
 };
 
 @TypeOrmEntity()
@@ -30,8 +30,18 @@ export class EntityFieldAttribute {
   })
   key: AttributeKey<EntityFieldAttributes>;
 
-  @Column('json')
-  data: any;
+  @Column({
+    type: 'json',
+    transformer: {
+      from(value) {
+        return value;
+      },
+      to(value) {
+        return JSON.stringify(value)
+      },
+    },
+  })
+  value: any;
 
   @ManyToOne(() => EntityField, (field) => field.attributes, {
     cascade: true,

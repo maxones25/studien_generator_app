@@ -4,19 +4,20 @@ import { EntityFormData } from "@modules/entities/types";
 import { useStudyId } from "@modules/navigation/hooks";
 import { getGetEntitiesKey } from "..";
 
-export const useUpdateEntity = () => {
-  const studyId = useStudyId();
+export const useChangeName = () => {
+  const studyId = useStudyId()!;
 
   return useWriteRequest<EntityFormData, unknown>(
-    ({ body: { id, ...body }, ...options }) =>
-      apiRequest(`/studies/${studyId}/entities/${id}`, {
-        method: "PUT",
+    ({ body: { id: entityId, name }, ...options }) =>
+      apiRequest(`/entities/changeName`, {
         ...options,
-        body,
+        method: "POST",
+        params: { studyId, entityId },
+        body: { name },
       }),
     {
       onSuccess: ({ variables, queryClient }) => {
-        queryClient.invalidateQueries(getGetEntitiesKey());
+        queryClient.invalidateQueries(getGetEntitiesKey({ studyId }));
         return {
           text: "record updated",
           params: {

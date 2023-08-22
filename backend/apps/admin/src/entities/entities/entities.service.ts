@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { EntitiesRepository } from './entities.repository';
 import { FormsRepository } from '@admin/forms/forms.repository';
 import { CreateEntityDto } from './dtos/CreateEntityDto';
-import { UpdateEntityDto } from './dtos/UpdateEntityDto';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
@@ -33,7 +32,7 @@ export class EntitiesService implements StudyRelatedDataAccessor {
     return await this.entitiesRepository.delete(entityId);
   }
 
-  getAll(studyId: string) {
+  async getAll(studyId: string) {
     return this.entitiesRepository.getAll(studyId);
   }
 

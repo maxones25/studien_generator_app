@@ -9,14 +9,18 @@ export const getGetEntityFormsKey = (deps: {
 }) => ["getEntityForms", deps];
 
 export const useGetEntityForms = () => {
-  const studyId = useStudyId();
-  const entityId = useEntityId();
+  const studyId = useStudyId()!;
+  const entityId = useEntityId()!;
 
   return useReadRequest<EntityForm[]>(
-    getGetEntityFormsKey({ studyId: studyId!, entityId: entityId! }),
+    getGetEntityFormsKey({ studyId, entityId }),
     (options) =>
-      apiRequest(`/studies/${studyId}/entities/${entityId}/forms`, {
+      apiRequest(`/entities/getForms`, {
         ...options,
+        params: {
+          studyId,
+          entityId,
+        },
       })
   );
 };

@@ -22,7 +22,16 @@ export interface AttritbuteRepository<
     rawValue: AttributeValue<RecordAttributes, Key>,
   ): Promise<void>;
 
+  remove<Key extends AttributeKey<RecordAttributes>>(
+    id: string,
+    key: Key,
+  ): Promise<number>;
+
   isSet(id: string, key: AttributeKey<RecordAttributes>): Promise<boolean>;
 
   getAll(id: string): Promise<RecordAttributes>;
+
+  removeAll(
+    id: string,
+  ): Promise<number>;
 }

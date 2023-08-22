@@ -11,7 +11,7 @@ import {
   ValidateIf,
 } from 'class-validator';
 
-export class CreateEntityFieldDto {
+export class CreateFieldDto {
   @IsString()
   @IsNotEmpty()
   readonly name: string;

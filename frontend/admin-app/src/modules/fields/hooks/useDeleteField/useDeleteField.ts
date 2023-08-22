@@ -5,19 +5,26 @@ import { useEntityId, useStudyId } from "@modules/navigation/hooks";
 import { getGetFieldsKey } from "..";
 
 export const useDeleteField = () => {
-  const studyId = useStudyId();
-  const entityId = useEntityId();
+  const studyId = useStudyId()!;
+  const entityId = useEntityId()!;
 
   return useWriteRequest<FieldFormData, unknown>(
-    ({ body: { id }, ...options }) =>
-      apiRequest(`/studies/${studyId}/entities/${entityId}/fields/${id}`, {
-        method: "DELETE",
+    ({ body: { id: fieldId }, ...options }) =>
+      apiRequest(`/entities/removeField`, {
         ...options,
+        method: "POST",
+        params: { studyId, fieldId },
       }),
     {
-      onSuccess: ({ queryClient, snackbar, variables }) => {
-        queryClient.invalidateQueries(getGetFieldsKey({ entityId: entityId! }));
-        snackbar.showSuccess(`{{ field '${variables.name}' deleted! }}`);
+      onSuccess: ({ queryClient, variables: field }) => {
+        queryClient.invalidateQueries(getGetFieldsKey({ studyId, entityId }));
+        return {
+          text: "record deleted",
+          params: {
+            record: "field",
+            name: field.name,
+          },
+        };
       },
     }
   );

@@ -9,6 +9,6 @@ import { EntitiesService } from './entities.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Entity]), FormsModule],
   providers: entitiesProviders,
-  exports: [EntityGuard, EntitiesService],
+  exports: [EntitiesService, EntityGuard],
 })
 export class EntitiesModule {}

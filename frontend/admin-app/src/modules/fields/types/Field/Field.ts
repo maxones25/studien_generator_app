@@ -1,6 +1,12 @@
-export type Field = {
-  id: string;
-  name: string;
-  type: string;
-  groupId: string | null
-};
+export type Field =
+  | {
+      id: string;
+      name: string;
+      type: Exclude<string, "Enum">;
+    }
+  | {
+      id: string;
+      name: string;
+      type: "Enum";
+      values: string[];
+    };

@@ -25,7 +25,7 @@ export class CreateEntityFieldAttributeTable1692636040995
             isPrimary: true,
           },
           {
-            name: 'data',
+            name: 'value',
             type: 'json',
           },
         ],

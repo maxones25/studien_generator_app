@@ -10,7 +10,7 @@ export class RecordRepository<Entity extends ObjectLiteral> {
 
   async create(data: DeepPartial<Entity>) {
     await this.db.insert(data);
-    return data;
+    return data as Entity;
   }
 
   async update(id: string | FindOptionsWhere<Entity>, data: Partial<Entity>) {

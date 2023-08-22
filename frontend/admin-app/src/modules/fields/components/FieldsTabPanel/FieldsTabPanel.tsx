@@ -9,7 +9,7 @@ import {
 } from "@modules/core/components";
 import { useFormData } from "@modules/core/hooks";
 import {
-  useCreateField,
+  useAddField,
   useDeleteField,
   useGetFields,
   useUpdateField,
@@ -27,7 +27,7 @@ export const FieldsTabPanel: React.FC<FieldsTabPanelProps> = () => {
   const editData = useFormData<FieldFormData>();
   const deleteData = useFormData<FieldFormData>();
   const getFields = useGetFields();
-  const createField = useCreateField();
+  const createField = useAddField();
   const updateField = useUpdateField();
   const deleteField = useDeleteField();
 

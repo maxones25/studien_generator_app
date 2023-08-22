@@ -4,22 +4,23 @@ import { StudyMember } from '@entities/study-member.entity';
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { Roles } from '@admin/roles/roles.enum';
 
+type CreateStudyInput = {
+  directorId: string;
+  data: CreateStudyDto;
+};
+
 export class CreateStudyTransaction extends Transaction<
-  {
-    directorId: string;
-    data: CreateStudyDto;
-  },
+  CreateStudyInput,
   string
 > {
   protected async execute({
     directorId,
     data,
-  }: {
-    directorId: string;
-    data: CreateStudyDto;
-  }): Promise<string> {
+  }: CreateStudyInput): Promise<string> {
     const study = await this.createStudy(data);
+
     await this.addDirectorAsAdminMember(study.id, directorId);
+
     return study.id;
   }
 

@@ -1,5 +1,4 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { StudyMember } from '@entities/study-member.entity';
 import { Roles } from '@admin/roles/roles.enum';
 import { MembersRepository } from './members.repository';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';

@@ -21,7 +21,7 @@ import { EntityQueryDto } from '../dtos/EntityQueryDto';
 export class EntitiesCommands {
   constructor(private readonly entitiesService: EntitiesService) {}
 
-  @Post('create')
+  @Post('createEntity')
   @Roles('admin', 'employee')
   async create(
     @Query() { studyId }: StudyQueryDto,
@@ -40,7 +40,7 @@ export class EntitiesCommands {
     return this.entitiesService.setName(entityId, name);
   }
 
-  @Post('delete')
+  @Post('deleteEntity')
   @Roles('admin')
   @UseGuards(EntityGuard)
   async delete(@Query() { entityId }: EntityQueryDto) {

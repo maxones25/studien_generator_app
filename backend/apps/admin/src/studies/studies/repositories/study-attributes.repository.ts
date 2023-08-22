@@ -53,6 +53,13 @@ export class StudyAttributesRepository
     return attribute.value as AttributeValue<StudyAttributes, Key>;
   }
 
+  remove<Key extends keyof StudyAttributes>(
+    id: string,
+    key: Key,
+  ): Promise<number> {
+    throw new Error('Method not implemented.');
+  }
+
   async isSet(studyId: string, key: AttributeKey<StudyAttributes>) {
     return (await this.get(studyId, key)) !== null;
   }
@@ -74,5 +81,9 @@ export class StudyAttributesRepository
         duration: null,
       },
     );
+  }
+
+  removeAll(id: string): Promise<number> {
+    throw new Error('Method not implemented.');
   }
 }
