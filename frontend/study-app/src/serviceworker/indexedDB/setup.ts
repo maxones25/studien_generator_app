@@ -31,6 +31,12 @@ export const dbPromise = openDB('study-app', 1, {
       chat.createIndex('queued', 'queued', { unique: false });
     };
 
+    if (!db.objectStoreNames.contains('notifications')) {
+      const chat = db.createObjectStore('notifications', { keyPath: 'id' });
+      chat.createIndex('readAt', 'readAt', { unique: false });
+    };
+
+
     if (!db.objectStoreNames.contains('metaData')) {
       db.createObjectStore('metaData');
     };

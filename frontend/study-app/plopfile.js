@@ -10,6 +10,7 @@ const modules = [
   "settings",
   "hiit",
   "calendar",
+  "notifications",
 ];
 
 const types = ["type", "interface"];
