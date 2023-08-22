@@ -15,7 +15,7 @@ export const useGetEntityForms = () => {
   return useReadRequest<EntityForm[]>(
     getGetEntityFormsKey({ studyId, entityId }),
     (options) =>
-      apiRequest(`/entities/getForms`, {
+      apiRequest(`/forms/getByEntity`, {
         ...options,
         params: {
           studyId,

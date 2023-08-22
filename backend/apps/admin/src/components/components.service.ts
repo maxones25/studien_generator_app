@@ -3,7 +3,6 @@ import { EntityField } from '@entities/entity-field.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ComponentType } from './component-type.enum';
-import { FormComponentAttributeDto } from '@admin/forms/pages/components/attributes/dtos/FormComponentAttributeDto';
 import { Component } from './Component';
 import { DateTimePickerComponent } from './components/DateTimePickerComponent';
 import { DatePickerComponent } from './components/DatePickerComponent';
@@ -16,6 +15,7 @@ import { SwitchComponent } from './components/SwitchComponent';
 import { TextFieldComponent } from './components/TextFieldComponent';
 import { HIITComponent } from './components/HIITComponents';
 import { AttributeType } from './Attribute';
+import { FormComponentAttributeDto } from '@admin/forms/forms/dtos/FormComponentAttributeDto';
 
 @Injectable()
 export class ComponentsService {

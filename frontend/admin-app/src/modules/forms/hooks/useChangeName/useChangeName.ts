@@ -5,7 +5,8 @@ import { useStudyId } from "@modules/navigation/hooks";
 import { getGetFormsKey } from "..";
 
 export const useChangeName = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
+
   return useWriteRequest<FormFormData, number>(
     ({ body: { id: formId, ...body }, ...options }) =>
       apiRequest(`/forms/changeName`, {
@@ -16,7 +17,7 @@ export const useChangeName = () => {
       }),
     {
       onSuccess: ({ queryClient, variables }) => {
-        queryClient.invalidateQueries(getGetFormsKey());
+        queryClient.invalidateQueries(getGetFormsKey({ studyId }));
         return {
           text: "record  updated",
           params: {

@@ -1,5 +1,5 @@
 import { Attribute } from '@admin/components/Attribute';
-import { FormComponentAttributeDto } from '@admin/forms/pages/components/attributes/dtos/FormComponentAttributeDto';
+import { FormComponentAttributeDto } from '@admin/forms/forms/dtos/FormComponentAttributeDto';
 import { BadRequestException } from '@nestjs/common';
 
 export class LabelAttribute extends Attribute {

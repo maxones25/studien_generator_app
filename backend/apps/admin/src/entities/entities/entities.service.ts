@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { EntitiesRepository } from './entities.repository';
-import { FormsRepository } from '@admin/forms/forms.repository';
 import { CreateEntityDto } from './dtos/CreateEntityDto';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
 
@@ -9,8 +8,6 @@ export class EntitiesService implements StudyRelatedDataAccessor {
   constructor(
     @Inject(EntitiesRepository)
     private entitiesRepository: EntitiesRepository,
-    @Inject(FormsRepository)
-    private formsRepository: FormsRepository,
   ) {}
 
   getRelatedByStudy(studyId: string, id: string) {
@@ -38,23 +35,5 @@ export class EntitiesService implements StudyRelatedDataAccessor {
 
   async getById(entityId: string) {
     return this.entitiesRepository.getById(entityId);
-  }
-
-  async getForms(entityId: string) {
-    const forms = await this.formsRepository.find({
-      where: { formEntities: { entityId } },
-      relations: {
-        formEntities: true,
-      },
-      select: { id: true, name: true, formEntities: { id: true, name: true } },
-    });
-
-    return forms.map(({ formEntities, ...form }) => {
-      const entity = formEntities[0];
-      return {
-        ...form,
-        entity,
-      };
-    });
   }
 }

@@ -24,10 +24,4 @@ export class EntitiesQueries {
   async getById(@Query() { entityId }: EntityQueryDto) {
     return this.entitiesService.getById(entityId);
   }
-
-  @Get('getForms')
-  @Roles('admin', 'employee')
-  async getForms(@Query() { entityId }: EntityQueryDto) {
-    return this.entitiesService.getForms(entityId);
-  }
 }

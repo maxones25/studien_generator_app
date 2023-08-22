@@ -1,3 +1,3 @@
-export * from './useGetFormPages/useGetFormPages'
-export * from './useAddFormPage/useAddFormPage'
-export * from './useRemoveFormPage/useRemoveFormPage'
+export * from "./useGetPages/useGetPages";
+export * from "./useAddPage/useAddPage";
+export * from "./useRemovePage/useRemovePage";

@@ -2,6 +2,7 @@ import {
   CanActivate,
   ExecutionContext,
   UnauthorizedException,
+  BadRequestException,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { StudyRelatedDataAccessor } from './StudyRelatedDataAccessor';
@@ -26,7 +27,8 @@ export abstract class RecordGuard implements CanActivate {
 
     const id = request.query[this.paramName];
 
-    if (typeof id !== 'string') throw new UnauthorizedException();
+    if (typeof id !== 'string')
+      throw new BadRequestException(`${this.paramName} required`);
 
     const item = await this.accessor.getRelatedByStudy(studyId, id);
 

@@ -3,7 +3,6 @@ import { FormConfiguration } from '@entities/form-configuration.entity';
 import { FormConfigsRepository } from './form-configs.repository';
 import { AddFormToGroupBodyDto } from './dtos/AddFormToGroupBodyDto';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
-import { FormsRepository } from '@admin/forms/forms.repository';
 
 @Injectable()
 export class FormConfigsService {

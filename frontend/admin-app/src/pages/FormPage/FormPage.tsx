@@ -2,7 +2,7 @@ import { Page, Text } from "@modules/core/components";
 import React from "react";
 import { FormEditor } from "@modules/forms/components";
 import { useGetComponents } from "@modules/components/hooks";
-import { useGetFormPages } from "@modules/formPages/hooks";
+import { useGetPages } from "@modules/formPages/hooks";
 import { LinearProgress } from "@mui/material";
 import { useGetFormEntities } from "@modules/formEntities/hooks";
 import { usePageId } from "@modules/navigation/hooks";
@@ -12,7 +12,7 @@ export interface FormPageProps {}
 
 const FormPage: React.FC<FormPageProps> = () => {
   const getComponents = useGetComponents();
-  const getFormPages = useGetFormPages();
+  const getFormPages = useGetPages();
   const getFormEntities = useGetFormEntities();
   const pageId = usePageId(false);
 
