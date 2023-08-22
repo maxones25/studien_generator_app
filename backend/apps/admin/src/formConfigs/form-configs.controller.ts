@@ -24,7 +24,7 @@ import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import { GetFormsByGroupQueryDto } from './dtos/GetFormsByGroupQueryDto';
 import { AddFormToGroupBodyDto } from './dtos/AddFormToGroupBodyDto';
 import { Group } from '@admin/groups/group.decorator';
-import { Form } from '@admin/forms/forms/form.decorator';
+import { Form } from '@admin/forms/forms/decorators/form.decorator';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { FormGuard } from '@admin/forms/forms/guards/form.guard';
 

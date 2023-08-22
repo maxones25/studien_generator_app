@@ -5,7 +5,7 @@ import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { FormGuard } from '../guards/form.guard';
 import { PageGuard } from '../guards/page.guard';
 import { PagesService } from '../services/page.service';
-import { Page } from '../page.decorator';
+import { Page } from '../decorators/page.decorator';
 import { FormPage } from '@entities';
 
 @Controller('forms')

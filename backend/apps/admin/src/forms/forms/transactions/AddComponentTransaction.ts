@@ -14,7 +14,7 @@ type CreateFormTransactionInput = {
   data: CreateFormComponentDto;
 };
 
-export class CreateFormComponentTransaction extends Transaction<
+export class AddComponentTransaction extends Transaction<
   CreateFormTransactionInput,
   string
 > {
