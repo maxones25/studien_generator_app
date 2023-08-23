@@ -22,6 +22,7 @@ import {
   Record,
   Task,
   FormSchedule,
+  FormScheduleAttribute,
 } from '@entities';
 
 const DbModule = TypeOrmModule.forRootAsync({
@@ -55,6 +56,7 @@ const DbModule = TypeOrmModule.forRootAsync({
         StudyAttribute,
         Task,
         FormSchedule,
+        FormScheduleAttribute,
       ],
     };
   },

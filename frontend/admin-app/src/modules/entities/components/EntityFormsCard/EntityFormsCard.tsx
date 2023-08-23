@@ -11,7 +11,7 @@ import { useGetEntityForms } from "@modules/entities/hooks";
 import { Entity } from "@modules/entities/types";
 import { useCreateForm } from "@modules/forms/hooks";
 import { Add } from "@mui/icons-material";
-import { Divider, ListItemButton, ListItemText } from "@mui/material";
+import { Chip, Divider, ListItemButton, ListItemText } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -64,7 +64,12 @@ export const EntityFormsCard: React.FC<EntityFormsCardProps> = ({ entity }) => {
         renderItem={(form, { isLast }) => (
           <DataListItem key={form.id} item={form} divider={!isLast}>
             <ListItemButton onClick={() => openForm(form.id)}>
-              <ListItemText primary={form.name} secondary={form.entity.name} />
+              <ListItemText
+                primary={form.name}
+                secondary={form.formEntities
+                  .map((entity) => entity.name)
+                  .join(", ")}
+              />
             </ListItemButton>
           </DataListItem>
         )}

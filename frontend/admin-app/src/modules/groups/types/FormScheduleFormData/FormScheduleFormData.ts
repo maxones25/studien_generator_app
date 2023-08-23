@@ -1,22 +1,51 @@
 import {
   FormScheduleDayOfMonth,
   FormScheduleDaysOfWeek,
-  FormSchedulePeriodType,
-  FormScheduleTypeType,
+  FormSchedulePeriod,
+  FormScheduleType,
 } from "..";
 
-export type FormScheduleFormData = {
+type BaseFormSchedule = {
   id?: string;
   configId: string;
-  type: FormScheduleTypeType;
-  period: FormSchedulePeriodType;
-  frequency: number;
   postpone: {
-    isActive: boolean;
     times: number;
     duration: number;
-  };
-  daysOfWeek?: FormScheduleDaysOfWeek;
-  dayOfMonth?: FormScheduleDayOfMonth;
-  times: string[];
+  } | null;
 };
+
+type SpecificFormSchedule =
+  | {
+      type: typeof FormScheduleType.Fix;
+      period: typeof FormSchedulePeriod.Day;
+      times: string[];
+      frequency: number;
+    }
+  | {
+      type: typeof FormScheduleType.Fix;
+      period: typeof FormSchedulePeriod.Week;
+      times: string[];
+      frequency: number;
+      daysOfWeek: FormScheduleDaysOfWeek;
+    }
+  | {
+      type: typeof FormScheduleType.Fix;
+      period: typeof FormSchedulePeriod.Month;
+      times: string[];
+      frequency: number;
+      dayOfMonth: FormScheduleDayOfMonth;
+    }
+  | {
+      type: typeof FormScheduleType.Flexible;
+      period: typeof FormSchedulePeriod.Week;
+      times: string[];
+      amount: number;
+    }
+  | {
+      type: typeof FormScheduleType.Flexible;
+      period: typeof FormSchedulePeriod.Month;
+      times: string[];
+      amount: number;
+    };
+
+export type FormScheduleFormData = BaseFormSchedule & SpecificFormSchedule;

@@ -133,5 +133,8 @@
   "number": "Nummer",
   "no active schedules": "keine aktiven Formulare gefunden",
   "study must be active": "Studie muss aktiviert sein",
-  "group required": "Gruppe notwendig"
+  "group required": "Gruppe notwendig",
+  "tasks": "Aufgaben",
+  "type": "Art",
+  "howOften": "Wie oft?"
 }

@@ -11,8 +11,10 @@ import {
 } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
 import {
+  FormScheduleDaysOfWeek,
   FormScheduleFormData,
   FormSchedulePeriod,
+  FormScheduleType,
 } from "@modules/groups/types";
 import { Add, Remove } from "@mui/icons-material";
 import {
@@ -55,15 +57,22 @@ export const FormScheduleForm: React.FC<FormScheduleFormProps> = ({
   const { t } = useTranslation();
   const form = useForm<FormScheduleFormData>({ values });
 
+  const type = form.watch("type");
   const period = form.watch("period");
 
   const frequencyUnit =
     period === "Day" ? t("days") : period === "Week" ? t("weeks") : t("months");
 
   const handleSubmit = (data: FormScheduleFormData) => {
-    const daysOfWeek = data.daysOfWeek?.map((active) => Boolean(active));
-    // @ts-ignore
-    onSubmit({ ...data, daysOfWeek });
+    const postpone = data.postpone ? data.postpone : null;
+    if (data.type === "Fix" && data.period === "Week") {
+      const daysOfWeek = data.daysOfWeek.map((active) =>
+        Boolean(active)
+      ) as FormScheduleDaysOfWeek;
+      onSubmit({ ...data, postpone, daysOfWeek });
+    } else {
+      onSubmit({ ...data, postpone });
+    }
   };
 
   return (
@@ -74,31 +83,62 @@ export const FormScheduleForm: React.FC<FormScheduleFormProps> = ({
             <Column flex={1}>
               <FormSelect
                 control={form.control}
-                name="period"
-                label={t("period")}
-                options={Object.keys(FormSchedulePeriod).map((type) => ({
+                name="type"
+                label={t("type")}
+                options={Object.keys(FormScheduleType).map((type) => ({
                   label: t(type),
                   value: type,
                 }))}
               />
             </Column>
-            <ExperimentalFormTextField
-              form={form}
-              name="frequency"
-              type="number"
-              label={t("all")}
-              inputProps={{ step: 1 }}
-              sx={{ ml: 1, flex: 1 }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Text>{frequencyUnit}</Text>
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <Column flex={1} ml={1}>
+              <FormSelect
+                control={form.control}
+                name="period"
+                label={t("period")}
+                options={Object.keys(FormSchedulePeriod)
+                  .filter((period) => type === "Fix" || period !== "Day")
+                  .map((period) => ({
+                    label: t(period),
+                    value: period,
+                  }))}
+              />
+            </Column>
+            {type === "Fix" ? (
+              <ExperimentalFormTextField
+                form={form}
+                name="frequency"
+                type="number"
+                label={t("all")}
+                inputProps={{ step: 1 }}
+                sx={{ ml: 1, flex: 1 }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Text>{frequencyUnit}</Text>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            ) : (
+              <ExperimentalFormTextField
+                form={form}
+                name="amount"
+                type="number"
+                label={t("howOften")}
+                inputProps={{ step: 1 }}
+                sx={{ ml: 1, flex: 1 }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Text>{frequencyUnit}</Text>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            )}
           </Row>
-          {period === "Week" && (
+          {period === "Week" && type === "Fix" && (
             <>
               {daysOfWeek.map((day, i) => (
                 <FormSwitch
@@ -112,7 +152,7 @@ export const FormScheduleForm: React.FC<FormScheduleFormProps> = ({
               <Divider sx={{ mt: 1, mb: 1 }} />
             </>
           )}
-          {period === "Month" && (
+          {period === "Month" && type === "Fix" && (
             <>
               <Divider sx={{ mt: 1, mb: 1 }} />
               <Text variant="body2" sx={{ mb: 1 }}>
@@ -160,26 +200,29 @@ export const FormScheduleForm: React.FC<FormScheduleFormProps> = ({
           )}
           <FormSwitch
             control={form.control}
-            name="postpone.isActive"
+            name="postpone"
             label={t("postponable")}
           />
-          {form.watch("postpone.isActive") && (
-            <>
+          {form.watch("postpone") && (
+            <Row>
               <ExperimentalFormTextField
                 form={form}
                 name="postpone.times"
                 label={t("how often")}
                 type="number"
+                required
                 inputProps={{ step: 1 }}
               />
               <ExperimentalFormTextField
                 form={form}
                 name="postpone.duration"
-                type="number"
                 label={t("how many days")}
+                type="number"
+                required
                 inputProps={{ step: 1 }}
+                sx={{ ml: 1 }}
               />
-            </>
+            </Row>
           )}
           <FormControl margin="normal">
             <Button testId="form schedule form submit button" type="submit">
@@ -187,62 +230,71 @@ export const FormScheduleForm: React.FC<FormScheduleFormProps> = ({
             </Button>
           </FormControl>
         </Column>
-        <Divider orientation="vertical" flexItem={true} sx={{ ml: 3, mr: 3 }} />
-        <Controller
-          control={form.control}
-          name="times"
-          rules={{
-            validate: {
-              minLength: (times) =>
-                times.length > 0 || t("value required", { value: t("times") }),
-            },
-          }}
-          render={({
-            field: { value: times, onChange },
-            formState: { errors },
-          }) => {
-            const hasError = Boolean(errors.times?.message);
-            const color = hasError ? "error" : "default";
-            return (
-              <Column>
-                <Row justifyContent="space-between">
-                  <Text color={color}>{t("times")}</Text>
-                  <IconButton
-                    testId="add time button"
-                    Icon={<Add />}
-                    color={color}
-                    onClick={() => {
-                      onChange([...times, "00:00"]);
-                    }}
-                  />
-                </Row>
-                <Column>
-                  {times.map((time, i) => (
-                    <Row key={time} mt={1}>
-                      <TextField
-                        type="time"
-                        size="small"
-                        value={time}
-                        onChange={(e) => {
-                          const time = e.currentTarget.value;
-                          times[i] = time;
-                          onChange(times);
-                        }}
-                      />
+        {type === "Fix" && (
+          <>
+            <Divider
+              orientation="vertical"
+              flexItem={true}
+              sx={{ ml: 3, mr: 3 }}
+            />
+            <Controller
+              control={form.control}
+              name="times"
+              rules={{
+                validate: {
+                  minLength: (times) =>
+                    times.length > 0 ||
+                    t("value required", { value: t("times") }),
+                },
+              }}
+              render={({
+                field: { value: times, onChange },
+                formState: { errors },
+              }) => {
+                const hasError = Boolean(errors.times?.message);
+                const color = hasError ? "error" : "default";
+                return (
+                  <Column>
+                    <Row justifyContent="space-between">
+                      <Text color={color}>{t("times")}</Text>
                       <IconButton
-                        testId="remove time button"
-                        Icon={<Remove />}
+                        testId="add time button"
+                        Icon={<Add />}
+                        color={color}
                         onClick={() => {
-                          onChange(times.filter((_, j) => i !== j));
+                          onChange([...times, "00:00"]);
                         }}
                       />
                     </Row>
-                  ))}
-                </Column>
-              </Column>
-            );
-          }}
-        />
+                    <Column>
+                      {times.map((time, i) => (
+                        <Row key={time} mt={1}>
+                          <TextField
+                            type="time"
+                            size="small"
+                            value={time}
+                            onChange={(e) => {
+                              const time = e.currentTarget.value;
+                              times[i] = time;
+                              onChange(times);
+                            }}
+                          />
+                          <IconButton
+                            testId="remove time button"
+                            Icon={<Remove />}
+                            onClick={() => {
+                              onChange(times.filter((_, j) => i !== j));
+                            }}
+                          />
+                        </Row>
+                      ))}
+                    </Column>
+                  </Column>
+                );
+              }}
+            />
+          </>
+        )}
       </Row>
     </Form>
   );

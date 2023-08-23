@@ -26,9 +26,9 @@ export class FormsQueries {
     return this.formsService.getById(formId);
   }
 
-  @Get('getById')
+  @Get('getByEntity')
   @Roles('admin', 'employee')
-  @UseGuards(FormGuard, EntityGuard)
+  @UseGuards(EntityGuard)
   async getByEntity(@Query() { entityId }: EntityQueryDto) {
     return this.formsService.getByEntity(entityId);
   }

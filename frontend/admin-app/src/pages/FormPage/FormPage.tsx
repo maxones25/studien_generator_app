@@ -4,7 +4,7 @@ import { FormEditor } from "@modules/forms/components";
 import { useGetComponents } from "@modules/components/hooks";
 import { useGetPages } from "@modules/formPages/hooks";
 import { LinearProgress } from "@mui/material";
-import { useGetFormEntities } from "@modules/formEntities/hooks";
+import { useGetEntities } from "@modules/formEntities/hooks";
 import { usePageId } from "@modules/navigation/hooks";
 import { Navigate } from "react-router-dom";
 
@@ -13,7 +13,7 @@ export interface FormPageProps {}
 const FormPage: React.FC<FormPageProps> = () => {
   const getComponents = useGetComponents();
   const getFormPages = useGetPages();
-  const getFormEntities = useGetFormEntities();
+  const getFormEntities = useGetEntities();
   const pageId = usePageId(false);
 
   if (getFormPages.isLoading) {

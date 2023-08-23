@@ -16,6 +16,7 @@ export class CreateEntityFieldAttributeTable1692636040995
           {
             name: 'fieldId',
             type: 'varchar',
+            length: '36',
             isPrimary: true,
           },
           {

@@ -9,6 +9,12 @@ import { Task } from '.';
 import { FormConfiguration } from '.';
 import { FormScheduleType } from '@admin/groups/schedules/enums/FormScheduleType';
 import { FormSchedulePeriod } from '@admin/groups/schedules/enums/FormSchedulePeriod';
+import { FormScheduleAttribute } from './form-schedule-attribute.entity';
+
+export type Postpone = {
+  times: number;
+  duration: number;
+};
 
 @TypeOrmEntity()
 export class FormSchedule {
@@ -40,9 +46,6 @@ export class FormSchedule {
   })
   period: FormSchedulePeriod;
 
-  @Column('integer', { nullable: true })
-  frequency: number;
-
   @Column({
     type: 'json',
     transformer: {
@@ -50,18 +53,31 @@ export class FormSchedule {
         return value;
       },
       to(value: string[]) {
-        console.log('to', value);
         return JSON.stringify(value);
       },
     },
   })
   times: string[];
 
-  @Column('json')
-  data: any;
+  @Column({
+    type: 'json',
+    nullable: true,
+    transformer: {
+      from(value: Postpone) {
+        return value;
+      },
+      to(value: Postpone) {
+        return JSON.stringify(value);
+      },
+    },
+  })
+  postpone: Postpone;
 
   @OneToMany(() => Task, (task) => task.form)
   tasks: Task[];
+
+  @OneToMany(() => FormScheduleAttribute, (attribute) => attribute.schedule)
+  attributes: FormScheduleAttribute[];
 
   @ManyToOne(() => FormConfiguration, (form) => form.schedules, {
     cascade: true,

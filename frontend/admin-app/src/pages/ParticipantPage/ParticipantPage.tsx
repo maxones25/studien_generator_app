@@ -11,7 +11,7 @@ import {
 } from "@modules/core/components";
 import { useNavigationHelper, useOpen } from "@modules/core/hooks";
 import { GroupSelect } from "@modules/groups/components";
-import { StartStudyDialog } from "@modules/participants/components";
+import { StartStudyDialog, TasksCard } from "@modules/participants/components";
 import {
   useChangeParticipantGroup,
   useChangeParticipantNumber,
@@ -105,30 +105,33 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
         />
       </Toolbar>
       <Divider />
-      <Row m={2} p={1} boxShadow={4}>
-        {isStarted ? (
-          <Text>
-            {participant.startedAt &&
-              new Date(participant.startedAt).toLocaleDateString("de")}
-          </Text>
-        ) : (
-          <TooltipGuard
-            validate={{
-              "study must be active": !study.isActive,
-              "group required": !hasGroup,
-            }}
-          >
-            {(disabled) => (
-              <Button
-                testId="open start study dialog"
-                disabled={disabled}
-                onClick={startStudyDialog.open}
-              >
-                {t("start study")}
-              </Button>
-            )}
-          </TooltipGuard>
-        )}
+      <Row flex={1} alignItems="flex-start">
+        <Row m={2} p={1} boxShadow={4}>
+          {isStarted ? (
+            <Text>
+              {participant.startedAt &&
+                new Date(participant.startedAt).toLocaleDateString("de")}
+            </Text>
+          ) : (
+            <TooltipGuard
+              validate={{
+                "study must be active": !study.isActive,
+                "group required": !hasGroup,
+              }}
+            >
+              {(disabled) => (
+                <Button
+                  testId="open start study dialog"
+                  disabled={disabled}
+                  onClick={startStudyDialog.open}
+                >
+                  {t("start study")}
+                </Button>
+              )}
+            </TooltipGuard>
+          )}
+        </Row>
+        {isStarted && <TasksCard flex={1} m={2} ml={0} alignSelf="stretch" />}
       </Row>
       <StartStudyDialog
         open={startStudyDialog.isOpen}

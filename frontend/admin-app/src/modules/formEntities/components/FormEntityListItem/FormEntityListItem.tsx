@@ -5,8 +5,8 @@ import { FormEntityFieldList } from "..";
 import { EnhancedFormEntity } from "@modules/forms/contexts/FormEditorContext/hooks";
 import { useFormEditor } from "@modules/forms/hooks";
 import {
-  useDeleteFormEntity,
-  useUpdateFormEntity,
+  useRemoveEntity,
+  useChangeEntityName,
 } from "@modules/formEntities/hooks";
 import { Delete } from "@mui/icons-material";
 
@@ -18,8 +18,8 @@ export const FormEntityListItem: React.FC<FormEntityListItemProps> = ({
   formEntity,
 }) => {
   const formEditor = useFormEditor();
-  const updateFormEntity = useUpdateFormEntity();
-  const deleteFormEntity = useDeleteFormEntity();
+  const updateFormEntity = useChangeEntityName();
+  const deleteFormEntity = useRemoveEntity();
 
   const handleDeleteFormEntity = () => {
     deleteFormEntity.mutate(formEntity.data);

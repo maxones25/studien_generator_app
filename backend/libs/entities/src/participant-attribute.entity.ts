@@ -1,6 +1,11 @@
 import { Entity, Column, ManyToOne, PrimaryColumn } from 'typeorm';
+import { AttributeKey } from '@shared/modules/records/attribute.repository';
 import { Participant } from '.';
-import { ParticipantAttributeType } from '@admin/participants/ParticipantAttribute';
+
+export type ParticipantsAttributes = {
+  startedAt: string | null;
+  endedAt: string | null;
+};
 
 @Entity({ name: 'participant_attributes' })
 export class ParticipantAttribute {
@@ -11,12 +16,11 @@ export class ParticipantAttribute {
     type: 'varchar',
     length: 255,
     transformer: {
-      to: (value: ParticipantAttributeType): string => value,
-      from: (value: string): ParticipantAttributeType =>
-        value as ParticipantAttributeType,
+      to: (value) => value,
+      from: (value) => value as AttributeKey<ParticipantsAttributes>,
     },
   })
-  key: ParticipantAttributeType;
+  key: AttributeKey<ParticipantsAttributes>;
 
   @Column('json')
   value: any;

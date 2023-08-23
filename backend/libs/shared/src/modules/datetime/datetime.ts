@@ -1,4 +1,4 @@
-import { isValid, format, subtract, addDays } from 'date-and-time';
+import { isValid, format, subtract, addDays, addMinutes } from 'date-and-time';
 
 export type Time = { hours: number; minutes: number };
 
@@ -18,20 +18,12 @@ const isAfter = (source: Date, target: Date) => {
   return daysInBetween(source, target) < 0;
 };
 
-const generateDays = (startDate: Date, duration: number, times: Time[]) => {
-  return Array.from({ length: duration }, (_, i) =>
-    addDays(startDate, i),
-  ).reduce(
-    (days, day) => [
-      ...days,
-      ...times.map(({ hours, minutes }) => {
-        day.setHours(hours);
-        day.setMinutes(minutes);
-        return day;
-      }),
-    ],
-    [],
-  );
+const generateDays = (startDate: Date, duration: number) => {
+  return Array.from({ length: duration }, (_, i) => addDays(startDate, i));
+};
+
+const addTime = (date: Date, { hours, minutes }: Time) => {
+  return addMinutes(date, hours * 60 + minutes, false);
 };
 
 export default {
@@ -41,5 +33,6 @@ export default {
   isBefore,
   isAfter,
   addDays,
+  addTime,
   generateDays,
 };

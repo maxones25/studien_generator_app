@@ -3,7 +3,7 @@ import { useMenuAnchor } from "@modules/core/hooks";
 import { useGetEntities } from "@modules/entities/hooks";
 import { Entity } from "@modules/entities/types";
 import { FormEntityList } from "@modules/formEntities/components";
-import { useCreateFormEntity } from "@modules/formEntities/hooks";
+import { useAddEntity } from "@modules/formEntities/hooks";
 import { Add } from "@mui/icons-material";
 import { Divider, Menu, MenuItem } from "@mui/material";
 import React from "react";
@@ -13,7 +13,7 @@ export interface FormEntitySideBarProps {}
 
 export const FormEntitySideBar: React.FC<FormEntitySideBarProps> = () => {
   const { t } = useTranslation();
-  const createFormEntity = useCreateFormEntity();
+  const createFormEntity = useAddEntity();
   const menuAnchor = useMenuAnchor();
   const getEntities = useGetEntities();
 

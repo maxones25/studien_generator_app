@@ -10,7 +10,7 @@ export const getGetFormSchedulesKey = (deps: {
   formId: string;
 }) => ["getFormSchedules", deps];
 
-export const useGetFormSchedules = (formId: string) => {
+export const useGetFormSchedules = (formId: string, enabled = true) => {
   const studyId = useStudyId();
 
   return useReadRequest<FormSchedule[]>(
@@ -21,6 +21,8 @@ export const useGetFormSchedules = (formId: string) => {
         params: {
           formId,
         },
-      })
-  );
+      }), {
+        enabled
+      }
+  )
 };

@@ -14,6 +14,8 @@ import {
 } from '@entities';
 import { EntitiesService } from './services/entities.service';
 import { EntityGuard } from './guards/entity.guard';
+import { ComponentsService } from './services/components.service';
+import { ComponentGuard } from './guards/component.guard';
 
 @Module({
   imports: [
@@ -28,11 +30,13 @@ import { EntityGuard } from './guards/entity.guard';
   providers: formsProviders,
   exports: [
     FormGuard,
-    PageGuard,
     EntityGuard,
+    PageGuard,
+    ComponentGuard,
     FormsService,
-    PagesService,
     EntitiesService,
+    PagesService,
+    ComponentsService,
   ],
 })
 export class FormsModule {}

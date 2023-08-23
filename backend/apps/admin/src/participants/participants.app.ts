@@ -1,18 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ParticipantsQueries } from './controllers/participants.queries';
-import { ParticipantsCommands } from './controllers/participants.commands';
-import { ParticipantsModule } from './participants.module';
-import { FormSchedulesModule } from '@admin/groups/schedules/form-schedules.module';
-import { TasksModule } from '@admin/tasks/tasks.module';
-import { StudiesModule } from '@admin/studies/studies/studies.module';
+import { ParticipantsApp as RootParticipantsApp } from './participants/participants.app';
+import { TasksApp } from './tasks/tasks.app';
 
-@Module({
-  imports: [
-    ParticipantsModule,
-    FormSchedulesModule,
-    TasksModule,
-    StudiesModule,
-  ],
-  controllers: [ParticipantsQueries, ParticipantsCommands],
-})
+@Module({ imports: [RootParticipantsApp, TasksApp] })
 export class ParticipantsApp {}

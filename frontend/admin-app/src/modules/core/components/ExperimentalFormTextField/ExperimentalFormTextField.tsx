@@ -6,9 +6,9 @@ import {
   FieldValues,
   UseFormReturn,
   Validate,
+  get,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useMemo } from "react";
 
 export type ExperimentalFormTextFieldProps<
   FormData extends FieldValues,
@@ -86,18 +86,9 @@ export function ExperimentalFormTextField<
 
   const equalsRules = equals ? { equals } : undefined;
 
-  const error = useMemo(() => {
-    const chunks = name.split(".");
-    let errors: { [key: string]: any } = form.formState.errors;
-    for (const chunk of chunks) {
-      const error = errors[chunk];
-      if (!error) return null;
-      errors = error;
-    }
-    return errors;
-  }, [form.formState.errors, name]);
-
   const valueAsNumber = type === "number";
+
+  const error = get(form.formState.errors, name);
 
   return (
     <TextField

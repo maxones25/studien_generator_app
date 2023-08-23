@@ -1,4 +1,4 @@
-import { FormSchedule } from '@entities';
+import { FormSchedule, FormScheduleAttribute } from '@entities';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FormSchedulesController } from './form-schedules.controller';
@@ -7,7 +7,7 @@ import { FormSchedulesRepository } from './form-schedules.repository';
 import { FormSchedulesService } from './form-schedules.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([FormSchedule])],
+  imports: [TypeOrmModule.forFeature([FormSchedule, FormScheduleAttribute])],
   controllers: [FormSchedulesController],
   providers: formSchedulesProviders,
   exports: [FormSchedulesRepository, FormSchedulesService],
