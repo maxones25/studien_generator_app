@@ -41,7 +41,7 @@ export class GetData extends Strategy {
         }));
       })
       await this.setMetaData(db, newLastUpdated);
-      return await this.getFromDB(db);;
+      return await this.getFromDB(db);
     }).catch(async () => {
       return await this.getFromDB(db);
     });

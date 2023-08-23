@@ -12,6 +12,7 @@ import { Study } from '.';
 import { Record } from '.';
 import { Task } from '.';
 import { ParticipantAttributes } from '.';
+import { ParticipantNotification } from './participant-notification.entitiy';
 
 @Entity()
 @Unique('unique_number_for_study', ['number', 'studyId'])
@@ -68,9 +69,12 @@ export class Participant {
   @OneToOne(() => Chat, (chat) => chat.participant)
   chat: Chat;
 
-  @OneToMany(() => ChatMessage, (message) => message.director)
+  @OneToMany(() => ChatMessage, (message) => message.participant)
   messages: ChatMessage[];
 
-  @OneToMany(() => ChatMessageReceipt, (messageReceipt) => messageReceipt.director)
+  @OneToMany(() => ChatMessageReceipt, (messageReceipt) => messageReceipt.participant)
   messageReceipts: ChatMessageReceipt[];
+  
+  @OneToMany(() => ParticipantNotification, (notification) => notification.participant)
+  notifications: ParticipantNotification[];
 }

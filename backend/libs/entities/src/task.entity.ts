@@ -10,6 +10,7 @@ import { Form } from '.';
 import { Participant } from '.';
 import { Record } from '.';
 import { FormSchedule } from '.';
+import { ParticipantNotification } from './participant-notification.entitiy';
 
 @TypeOrmEntity()
 export class Task {
@@ -67,4 +68,7 @@ export class Task {
     onDelete: 'CASCADE',
   })
   participant: Participant;
+
+  @OneToMany(() => ParticipantNotification, (notification) => notification.task)
+  notifications: ParticipantNotification[];
 }
