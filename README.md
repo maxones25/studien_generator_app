@@ -73,6 +73,7 @@ npm run start:admin:dev
 Die App benötigt folgende Umgebungsvariablen:
 
 ORIGIN: URI des Admin-Frontends
+
 JWT_SECRET: Secrect zum Erstellen der JWT
 
 ### Starten des Study-Backends
@@ -98,8 +99,11 @@ npm run start:study:dev
 Die App benötigt folgende Umgebungsvariablen:
 
 ORIGIN: URI des Study-Frontends
+
 JWT_SECRET: Secrect zum Erstellen der JWT
+
 VAPID_PUBLIC_KEY: gültiger public VAPID KEY https://vapidkeys.com/
+
 VAPID_PRIVATE_KEY: gültiger und passender public VAPID KEY https://vapidkeys.com/
 
 ### Starten der Admin App (Frontend)
@@ -137,6 +141,7 @@ cd frontend/study-app
 Die App benötigt folgende Umgebungsvariablen:
 
 VITE_API_URI: URI des Study-Backends
+
 VITE_VAPID_PUBLIC_KEY: gültigen public VAPID KEY https://vapidkeys.com/
 
 Installiere alle npm Pakete
