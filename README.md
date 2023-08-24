@@ -104,7 +104,7 @@ JWT_SECRET: Secrect zum Erstellen der JWT
 
 VAPID_PUBLIC_KEY: gültiger public VAPID KEY https://vapidkeys.com/
 
-VAPID_PRIVATE_KEY: gültiger und passender public VAPID KEY https://vapidkeys.com/
+VAPID_PRIVATE_KEY: gültiger und passender private VAPID KEY https://vapidkeys.com/
 
 ### Starten der Admin App (Frontend)
 
