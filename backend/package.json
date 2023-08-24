@@ -13,7 +13,7 @@
     "start:study": "nest start study",
     "start:study:dev": "nest start study --watch",
     "start:study:debug": "nest start study --debug --watch",
-    "start:study:prod": "node dist/apps/study/main",
+    "start:study:prod": "npm run db:migration:run && node dist/apps/study/main",
     "test:admin:unit": "jest --config ./apps/admin/test/unit/jest.config.ts --coverage",
     "test:admin:unit:dev": "jest --config ./apps/admin/test/unit/jest.config.ts --onlyChanged --watch",
     "test:admin:integration": "jest --config ./apps/admin/test/integration/jest.config.ts --coverage",

@@ -7,4 +7,4 @@ RUN npm install
 COPY . .
 RUN npm run build:study
 EXPOSE 9000
-CMD ["node", "dist/apps/study/main"]
+CMD ["npm", "run", "start:study:prod"]
