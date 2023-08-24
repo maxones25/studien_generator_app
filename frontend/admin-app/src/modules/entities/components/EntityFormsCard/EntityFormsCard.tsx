@@ -11,7 +11,7 @@ import { useGetEntityForms } from "@modules/entities/hooks";
 import { Entity } from "@modules/entities/types";
 import { useCreateForm } from "@modules/forms/hooks";
 import { Add } from "@mui/icons-material";
-import { Chip, Divider, ListItemButton, ListItemText } from "@mui/material";
+import { Divider, ListItemButton, ListItemText } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
