@@ -1,6 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Participant } from "./participant.entity";
-import { Task } from "./task.entity";
+import { Task, Participant } from ".";
 
 @Entity()
 export class ParticipantNotification {

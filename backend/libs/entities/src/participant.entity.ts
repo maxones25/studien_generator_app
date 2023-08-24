@@ -11,8 +11,7 @@ import { Chat, ChatMessage, ChatMessageReceipt, Group } from '.';
 import { Study } from '.';
 import { Record } from '.';
 import { Task } from '.';
-import { ParticipantAttributes } from '.';
-import { ParticipantNotification } from './participant-notification.entitiy';
+import { ParticipantAttributes, ParticipantNotification } from '.';
 
 @Entity()
 @Unique('unique_number_for_study', ['number', 'studyId'])
