@@ -18,24 +18,49 @@ services:
       - 3306:3306
     networks:
       - study-app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   admin-backend:
     container_name: admin-backend
     build:
       context: ./backend
       dockerfile: admin.dockerfile
+    depends_on:
+      mysql:
+        condition: service_healthy
     ports:
       - 8000:8000
     environment:
       - DB_HOST=mysql
     networks:
       - study-app-network
+    healthcheck:
+      test:
+        ["CMD", "curl", "--fail", "--silent", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   admin-frontend:
     container_name: admin-frontend
     build:
       context: ./frontend/admin-app
+    depends_on:
+      admin-backend:
+        condition: service_healthy
     ports:
       - 3000:3000
     networks:
       - study-app-network
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:3000"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
 networks:
   study-app-network:

@@ -44,6 +44,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+      
   study-backend:
     container_name: study-backend
     build:
@@ -64,6 +65,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
   admin-frontend:
     container_name: admin-frontend
     build:
@@ -80,6 +82,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
   study-frontend:
     container_name: study-frontend
     build:
@@ -96,5 +99,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
 networks:
   study-app-network:
