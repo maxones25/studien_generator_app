@@ -7,4 +7,4 @@ RUN npm install
 COPY . .
 RUN npm run build:admin
 EXPOSE 8000
-CMD ["node", "dist/apps/admin/main"]
+CMD ["npm", "run", "start:admin:prod"]

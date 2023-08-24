@@ -17,12 +17,14 @@ import { MembersApp } from '@admin/studies/members/members.app';
 import { ParticipantsApp } from '@admin/participants/participants.app';
 import { EntitiesApp } from '@admin/entities/entities.app';
 import { FormsApp } from '@admin/forms/forms/forms.app';
+import { HealthModule } from '@shared/modules/health/health.module';
 
 @Module({
   imports: [
     ConfigModule(['.env.database', '.env.admin']),
     DbModule,
     JwtModule,
+    HealthModule,
     DirectorsApp,
     EntitiesApp,
     RolesModule,

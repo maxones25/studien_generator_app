@@ -10,12 +10,14 @@ import { AuthModule } from '@study/modules/auth/auth.module';
 import { RecordsModule } from '@study/modules/records/records.module';
 import { FormsModule } from '@study/modules/forms/forms.module';
 import { PushModule } from './modules/push/push.module';
+import { HealthModule } from '@shared/modules/health/health.module';
 
 @Module({
   imports: [
     ConfigModule(['.env.database', '.env.study']),
     DbModule,
     JwtModule,
+    HealthModule,
     AuthModule,
     FormsModule,
     RecordsModule,

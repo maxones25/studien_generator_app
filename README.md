@@ -34,6 +34,12 @@ Starten der Anwendung
 docker-compose -f "prod-docker-compose.yaml" up -d
 ```
 
+Ausführen der Datenbank Migrations
+
+```console
+docker-compose -f "prod-docker-compose.yaml" exec admin-backend npm run db:migration:run
+```
+
 ## Development
 
 ### Starten der Datenbank

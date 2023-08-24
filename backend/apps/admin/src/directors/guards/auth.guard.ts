@@ -19,6 +19,7 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
 
     if (request.route.path.startsWith('/auth')) return true;
+    if (request.route.path.startsWith('/health')) return true;
 
     const token = this.extractTokenFromHeader(request);
 
