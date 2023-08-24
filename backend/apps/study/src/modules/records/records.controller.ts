@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { RecordsService } from './records.service';
-import { CreateRecordDto } from './dtos/createRecordDto';
+import { CreateRecordDto } from './dtos/CreateRecordDto';
 import { ParticipantId } from '@study/decorators/participant-id.decorator';
 
 @Controller('records')
@@ -20,6 +20,15 @@ export class RecordsController {
     @ParticipantId() participantId: string,
   ) {
     return this.recordsService.findAll(participantId);
+  }
+
+  @Get('/:lastUpdated')
+  async getAllNew(
+    @Param('lastUpdated') lastUpdated: string,
+    @ParticipantId() participantId: string,
+  ) {
+    const date = new Date(lastUpdated);
+    return await this.recordsService.findAll(participantId, date);
   }
 
   @Get('events/:date')

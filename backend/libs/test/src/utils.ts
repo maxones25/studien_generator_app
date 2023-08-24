@@ -15,7 +15,9 @@ import { CreateEntityDto } from '@admin/entities/entities/dtos/CreateEntityDto';
 import { CreateFormDto } from '@admin/forms/forms/dtos/CreateFormDto';
 import { CreateFormConfigurationDto } from '@admin/forms/configurations/dtos/CreateFormConfigurationDto';
 import { CreateFormEntityDto } from '@admin/forms/entities/dtos/CreateFormEntityDto';
-import { CreatePushDto } from '@study/modules/push/dto/createPushDto';
+import { CreatePushDto } from '@study/modules/push/dto/CreatePushDto';
+import { CreateParticipantDto } from '@admin/participants/dtos/CreateParticipantDto';
+import { MessageDto } from '@study/modules/chat/dtos/MessageDto';
 
 export const createApp = async (AppModule: any) => {
   // if (global.__APP__) return global.__APP__;
@@ -130,7 +132,7 @@ export const createParticipant = (
   app: INestApplication,
   accessToken: string,
   studyId: string,
-  data: ParticipantDto,
+  data: CreateParticipantDto,
 ) =>
   new Promise<LoginParticipantDto>((resolve, reject) => {
     request(app.getHttpServer())
@@ -193,22 +195,22 @@ export const createForm = (
       .catch((err) => reject(err));
   });
 
-export const createFormConfig = (
-  app: INestApplication,
-  accessToken: string,
-  studyId: string,
-  formId: string,
-  data: CreateFormConfigurationDto,
-) =>
-  new Promise<string>((resolve, reject) => {
-    request(app.getHttpServer())
-      .post(`/studies/${studyId}/forms/${formId}/configurations`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(data)
-      .expect(201)
-      .then((res) => resolve(res.text))
-      .catch((err) => reject(err));
-  });
+// export const createFormConfig = (
+//   app: INestApplication,
+//   accessToken: string,
+//   studyId: string,
+//   formId: string,
+//   data: CreateFormConfigurationDto,
+// ) =>
+//   new Promise<string>((resolve, reject) => {
+//     request(app.getHttpServer())
+//       .post(`/studies/${studyId}/forms/${formId}/configurations`)
+//       .set('Authorization', `Bearer ${accessToken}`)
+//       .send(data)
+//       .expect(201)
+//       .then((res) => resolve(res.text))
+//       .catch((err) => reject(err));
+//   });
 
 export const createFormEntity = (
   app: INestApplication,
@@ -259,6 +261,21 @@ export const createPush = (
       .expect(201)
       .then(() => {
         resolve();
+      })
+      .catch((err) => reject(err));
+  });
+
+export const getMessagesParticipant = (
+  app: INestApplication,
+  accessToken: string,
+) =>
+  new Promise<MessageDto[]>((resolve, reject) => {
+    request(app.getHttpServer())
+      .get('/chat')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(200)
+      .then((res) => {
+        resolve(res.body);
       })
       .catch((err) => reject(err));
   });

@@ -5,12 +5,13 @@ import {
   ManyToOne,
   Unique,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
-import { Group } from '.';
+import { Chat, ChatMessage, ChatMessageReceipt, Group } from '.';
 import { Study } from '.';
 import { Record } from '.';
 import { Task } from '.';
-import { ParticipantAttribute } from '.';
+import { ParticipantAttribute, ParticipantNotification } from '.';
 
 @Entity()
 @Unique('unique_number_for_study', ['number', 'studyId'])
@@ -63,4 +64,16 @@ export class Participant {
     onDelete: 'CASCADE',
   })
   group: Group;
+
+  @OneToOne(() => Chat, (chat) => chat.participant)
+  chat: Chat;
+
+  @OneToMany(() => ChatMessage, (message) => message.participant)
+  messages: ChatMessage[];
+
+  @OneToMany(() => ChatMessageReceipt, (messageReceipt) => messageReceipt.participant)
+  messageReceipts: ChatMessageReceipt[];
+  
+  @OneToMany(() => ParticipantNotification, (notification) => notification.participant)
+  notifications: ParticipantNotification[];
 }

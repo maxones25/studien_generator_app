@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { Record } from '@entities/record.entity';
 import { Between, EntityManager, Repository } from 'typeorm';
-import { CreateRecordDto } from './dtos/createRecordDto';
+import { CreateRecordDto } from './dtos/CreateRecordDto';
 import { CreateRecordTransaction } from './transactions/create.record.transaction';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class RecordsService {
     });
   }
 
-  async findAll(participantId: string) {
+  async findAll(participantId: string, updatedAt?: Date) {
 
     const records = await this.recordsRepository.find({
       where: {
@@ -32,7 +32,11 @@ export class RecordsService {
       },
     });
 
-    return records.map(({id, taskId, createdAt, form}) => {
+    const filteredRecords = records.filter(({ modifiedAt }) => 
+      !updatedAt || modifiedAt > updatedAt
+    );
+
+    return filteredRecords.map(({id, taskId, createdAt, form}) => {
       return {
         id,
         taskId,

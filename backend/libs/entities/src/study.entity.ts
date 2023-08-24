@@ -4,7 +4,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
-import { StudyAttribute, StudyMember } from '.';
+import { StudyAttribute, Chat, StudyMember } from '.';
 import { Group, Participant, FormConfiguration, Form, Entity } from '.';
 
 @TypeOrmEntity()
@@ -48,4 +48,7 @@ export class Study {
 
   @OneToMany(() => Entity, (entity) => entity.study)
   entities: Entity[];
+
+  @OneToMany(() => Chat, (chat) => chat.study)
+  chats: Chat[];
 }

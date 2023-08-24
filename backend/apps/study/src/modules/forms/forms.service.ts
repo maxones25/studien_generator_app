@@ -14,7 +14,7 @@ export class FormsService {
     private formsConfigurationRepository: Repository<FormConfiguration>,
   ) {}
 
-  async getAll(studyId: string, groupId: string) {
+  async getAll(studyId: string, groupId: string, lastUpdated?: Date) {
     const forms = await this.formsConfigurationRepository.find({
       where: [
         {
@@ -41,6 +41,7 @@ export class FormsService {
       select: {
         id: true,
         type: true,
+        modifiedAt: true, 
         form: {
           id: true,
           name: true,
@@ -73,7 +74,11 @@ export class FormsService {
       },
     });
 
-    return forms.map(({id, form, type}) => {
+    const filteredForms = forms.filter(({ modifiedAt }) => 
+      !lastUpdated || modifiedAt > lastUpdated
+    );
+
+    return filteredForms.map(({id, form, type}) => {
       return {
         id,
         type,

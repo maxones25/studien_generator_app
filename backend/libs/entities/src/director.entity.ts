@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { StudyMember } from '.';
+import { ChatMessage, ChatMessageReceipt, StudyMember } from '.';
 
 @Entity()
 export class Director {
@@ -30,4 +30,10 @@ export class Director {
 
   @OneToMany(() => StudyMember, (studyMember) => studyMember.director)
   public studies: StudyMember[];
+
+  @OneToMany(() => ChatMessage, (message) => message.director)
+  messages: ChatMessage[];
+
+  @OneToMany(() => ChatMessageReceipt, (messageReceipt) => messageReceipt.director)
+  messageReceipts: ChatMessageReceipt[];
 }

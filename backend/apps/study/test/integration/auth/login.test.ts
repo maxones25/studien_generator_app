@@ -4,12 +4,15 @@ import { AppModule } from '@study/app.module';
 import fakeData from '@test/fakeData';
 import { JwtService } from '@nestjs/jwt';
 import request from 'supertest';
-import { TEST_PARTICIPANT } from '@test/testData';
+import { TEST_CHAT, TEST_GROUP, TEST_PARTICIPANT, TEST_STUDY } from '@test/testData';
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
 
 describe('login participant', () => {
   let app: INestApplication;
   let participant: LoginParticipantDto;
+  let studyId: string;
+  let groupId: string;
+  let chatId: string;
 
   beforeAll(async () => {
     app = await createApp(AppModule);
@@ -17,7 +20,13 @@ describe('login participant', () => {
     participant = {
       id: TEST_PARTICIPANT.ID,
       password: TEST_PARTICIPANT.PASSWORD,
-    }
+    };
+
+    studyId = TEST_STUDY.MAIN;
+
+    groupId = TEST_GROUP.ID;
+
+    chatId = TEST_CHAT.ID
 
   });
 
@@ -31,6 +40,9 @@ describe('login participant', () => {
         const jwtService = app.get(JwtService);
         const payload = jwtService.verify(res.body.accessToken);
         expect(payload.participantId).toBe(participant.id);
+        expect(payload.studyId).toBe(studyId);
+        expect(payload.groupId).toBe(groupId);
+        expect(payload.chatId).toBe(chatId);
       });
   });
 

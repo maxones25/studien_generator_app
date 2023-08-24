@@ -1,10 +1,15 @@
 import { useStoredState } from "@modules/core/hooks";
-import { createContext, FC, ReactNode, useContext, useMemo } from "react";
+import { createContext, FC, ReactNode, useContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
+import { AccessTokenData } from "@modules/auth/types";
 
 interface AccessTokenContextValue {
   isValid: boolean;
-  value: string | undefined;
+  value?: string;
+  participantId?: string;
+  studyId?: string;
+  groupId?: string;
+  chatId?: string;
   set: (accessToken: string) => void;
   reset: () => void;
 }
@@ -19,20 +24,25 @@ const AccessTokenContext = createContext<AccessTokenContextValue | undefined>(
 
 const useAccessTokenContextValue = () => {
   const [value, set] = useStoredState<string | undefined>("accessToken");
+  const [data, setData] = useState<AccessTokenData | undefined>(undefined)
 
   const reset = () => {
     set(undefined);
   };
 
-  const isValid = useMemo(() => {
-    if (typeof value !== "string") return false;
-    const { exp } = jwt_decode(value) as { exp: number };
-    const currentDateTime = Math.floor(new Date().getTime() / 1000)
-    if(exp < currentDateTime) return false
-    return true;
-  }, [value]);
+  useEffect(() => {
+    if (value) setData(jwt_decode(value));
+    if (!value) setData(undefined)
+  }, [value])
 
-  return { value, isValid, set, reset };
+  const currentDateTime = () => Math.floor(new Date().getTime() / 1000)
+  const isValid = !data ? false : data.exp < currentDateTime() ? false : true;
+  const participantId = data?.participantId;
+  const studyId = data?.participantId;
+  const groupId = data?.groupId;
+  const chatId = data?.chatId;
+
+  return { value, isValid, participantId, studyId, groupId, chatId, set, reset };
 };
 
 export const AccessTokenProvider: FC<AccessTokenProviderProps> = ({

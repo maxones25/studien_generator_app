@@ -2,7 +2,7 @@ import { Participant } from "@entities";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreatePushDto } from "./dto/createPushDto";
+import { CreatePushDto } from "./dto/CreatePushDto";
 const webpush = require('web-push');
 
 @Injectable()

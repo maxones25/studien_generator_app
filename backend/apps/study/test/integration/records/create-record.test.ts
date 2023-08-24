@@ -4,8 +4,8 @@ import { AppModule } from '@study/app.module';
 import request from 'supertest';
 import { TEST_PARTICIPANT } from '@test/testData';
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
-import { CreatePushDto } from '@study/modules/push/dto/createPushDto';
-import { CreateRecordDto } from '@study/modules/records/dtos/createRecordDto';
+import { CreatePushDto } from '@study/modules/push/dto/CreatePushDto';
+import { CreateRecordDto } from '@study/modules/records/dtos/CreateRecordDto';
 
 describe('create record', () => {
   let app: INestApplication;

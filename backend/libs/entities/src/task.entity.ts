@@ -6,7 +6,7 @@ import {
   OneToOne,
   OneToMany,
 } from 'typeorm';
-import { Form } from '.';
+import { Form, ParticipantNotification } from '.';
 import { Participant } from '.';
 import { Record } from '.';
 import { FormSchedule } from '.';
@@ -71,4 +71,7 @@ export class Task {
     onDelete: 'CASCADE',
   })
   participant: Participant;
+
+  @OneToMany(() => ParticipantNotification, (notification) => notification.task)
+  notifications: ParticipantNotification[];
 }

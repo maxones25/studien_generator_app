@@ -6,6 +6,7 @@ import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDa
 import { StartParticipantStudyTransaction } from './transactions/StartParticipantStudyTransaction';
 import { CreateParticipantDto } from './dtos/CreateParticipantDto';
 import { StartStudyDto } from './dtos/StartStudyDto';
+import { CreateParticipantTransaction } from './transactions/CreateParticipantTransaction';
 
 @Injectable()
 export class ParticipantsService implements StudyRelatedDataAccessor {
@@ -14,6 +15,8 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
     private participantsRepository: ParticipantsRepository,
     @Inject(StartParticipantStudyTransaction)
     private startParticipantStudyTransaction: StartParticipantStudyTransaction,
+    @Inject(CreateParticipantTransaction)
+    private createParticipantTransaction: CreateParticipantTransaction,
   ) {}
 
   async getRelatedByStudy(studyId: string, id: string): Promise<any> {
@@ -25,14 +28,14 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
     password: string,
     { number, groupId }: CreateParticipantDto,
   ) {
-    const participant = await this.participantsRepository.create({
-      studyId,
+    const id = await this.createParticipantTransaction.run({
       groupId,
+      studyId,
       number,
-      password,
-    });
+      password
+    })
 
-    return participant.id;
+    return id;
   }
 
   async getById(id: string) {
