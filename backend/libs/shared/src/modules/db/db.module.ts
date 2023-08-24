@@ -11,8 +11,9 @@ import {
   FormPage,
   Entity,
   EntityField,
+  EntityFieldAttribute,
   FormEntity,
-  ParticipantAttributes,
+  ParticipantAttribute,
   FormComponent,
   FormConfiguration,
   FormComponentAttribute,
@@ -21,9 +22,11 @@ import {
   Record,
   Task,
   FormSchedule,
+  FormScheduleAttribute,
   Chat,
   ChatMessage,
-  ChatMessageReceipt
+  ChatMessageReceipt,
+  ParticipantNotification
 } from '@entities';
 
 const DbModule = TypeOrmModule.forRootAsync({
@@ -38,8 +41,9 @@ const DbModule = TypeOrmModule.forRootAsync({
       timezone: "Z",
       entities: [
         Director,
-        EntityField,
         Entity,
+        EntityField,
+        EntityFieldAttribute,
         FormComponent,
         FormComponentAttribute,
         FormConfiguration,
@@ -49,7 +53,7 @@ const DbModule = TypeOrmModule.forRootAsync({
         Form,
         Group,
         Participant,
-        ParticipantAttributes,
+        ParticipantAttribute,
         RecordField,
         Record,
         StudyMember,
@@ -57,9 +61,11 @@ const DbModule = TypeOrmModule.forRootAsync({
         StudyAttribute,
         Task,
         FormSchedule,
+        FormScheduleAttribute,
         Chat,
         ChatMessage,
         ChatMessageReceipt,
+        ParticipantNotification,
       ],
     };
   },

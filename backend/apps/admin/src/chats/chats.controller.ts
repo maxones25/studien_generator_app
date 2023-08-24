@@ -2,9 +2,9 @@ import { Controller, Get, Post, Body, Put, Param } from '@nestjs/common';
 import { ChatsService } from './chats.service';
 import { AddMessageDto } from './dtos/AddMessageDto';
 import { ReadMessagesDto } from './dtos/ReadMessagesDto';
-import { DirectorId } from '@admin/directors/director-id.decorator';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { Roles } from '@admin/roles/roles.decorator';
+import { DirectorId } from '@admin/directors/decorators/director-id.decorator';
 
 @Controller('/study/:studyId/chats')
 export class ChatsController {

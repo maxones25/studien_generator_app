@@ -1,24 +1,12 @@
-import {
-  RecordGuard,
-  ValidateOptions,
-} from '@shared/modules/records/record.guard';
+import { RecordGuard } from '@shared/modules/records/record.guard';
 import { Inject } from '@nestjs/common';
-import { MembersRepository } from './members.repository';
+import { MembersService } from './members.service';
 
 export class MemberGuard extends RecordGuard {
   constructor(
-    @Inject(MembersRepository)
-    private readonly membersRepository: MembersRepository,
+    @Inject(MembersService)
+    service: MembersService,
   ) {
-    super('member', 'directorId');
-  }
-
-  protected async validate({ id, studyId }: ValidateOptions) {
-    return await this.membersRepository.findOne({
-      where: {
-        studyId,
-        directorId: id,
-      },
-    });
+    super(service, 'member', 'directorId');
   }
 }

@@ -36,6 +36,7 @@ export class FormConfigsRepository extends Repository<FormConfiguration> {
       },
       relations: {
         form: true,
+        schedules: true,
       },
       select: {
         id: true,
@@ -44,7 +45,7 @@ export class FormConfigsRepository extends Repository<FormConfiguration> {
         form: {
           id: true,
           name: true,
-        },
+        }
       },
     });
   }

@@ -3,12 +3,15 @@ import { apiRequest } from "@modules/core/utils";
 import { Entity } from "@modules/entities/types";
 import { useStudyId } from "@modules/navigation/hooks";
 
-export const getGetEntitiesKey = () => ["getEntities"];
+export const getGetEntitiesKey = (deps: { studyId: string }) => [
+  "getEntities",
+  deps,
+];
 
 export const useGetEntities = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
 
-  return useReadRequest<Entity[]>(getGetEntitiesKey(), (options) =>
-    apiRequest(`/studies/${studyId}/entities`, { ...options })
+  return useReadRequest<Entity[]>(getGetEntitiesKey({ studyId }), (options) =>
+    apiRequest(`/entities/getAll`, { ...options, params: { studyId } })
   );
 };

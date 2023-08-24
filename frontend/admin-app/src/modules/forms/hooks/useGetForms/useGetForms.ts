@@ -3,11 +3,11 @@ import { apiRequest } from "@modules/core/utils";
 import { Form } from "@modules/forms/types";
 import { useStudyId } from "@modules/navigation/hooks";
 
-export const getGetFormsKey = () => ["getForms"];
+export const getGetFormsKey = (deps: { studyId: string }) => ["getForms", deps];
 
 export const useGetForms = () => {
-  const studyId = useStudyId()
-  return useReadRequest<Form[]>(getGetFormsKey(), (options) =>
-    apiRequest(`/studies/${studyId}/forms`, { ...options })
+  const studyId = useStudyId()!;
+  return useReadRequest<Form[]>(getGetFormsKey({ studyId }), (options) =>
+    apiRequest(`/forms/getAll`, { ...options, params: { studyId } })
   );
-}
+};

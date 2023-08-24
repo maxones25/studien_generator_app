@@ -5,17 +5,20 @@ import { useStudyId } from "@modules/navigation/hooks";
 import { getGetEntitiesKey } from "..";
 
 export const useCreateEntity = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
 
   return useWriteRequest<EntityFormData, unknown>(
     (options) =>
-      apiRequest(`/studies/${studyId}/entities`, {
-        method: "POST",
+      apiRequest(`/entities/createEntity`, {
         ...options,
+        method: "POST",
+        params: {
+          studyId
+        }
       }),
     {
       onSuccess: ({ variables, queryClient }) => {
-        queryClient.invalidateQueries(getGetEntitiesKey());
+        queryClient.invalidateQueries(getGetEntitiesKey({ studyId }));
         return {
           text: "record created",
           params: {

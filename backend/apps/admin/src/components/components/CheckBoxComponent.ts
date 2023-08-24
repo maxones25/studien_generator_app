@@ -1,7 +1,6 @@
 import { FieldType } from '@shared/enums/field-type.enum';
 import { Component } from '../Component';
 import { ComponentType } from '../component-type.enum';
-import { FormComponentAttributeDto } from '@admin/forms/pages/components/attributes/dtos/FormComponentAttributeDto';
 import { LabelAttribute } from './attributes/LabelAttribute';
 import { DefaultValueAttribute } from './attributes/DefaultValueAttribute';
 
@@ -12,7 +11,11 @@ export class CheckBoxComponent extends Component {
       [FieldType.Boolean],
       [
         new LabelAttribute(false),
-        new DefaultValueAttribute(false, "boolean", (value) => typeof value === 'boolean'),
+        new DefaultValueAttribute(
+          false,
+          'boolean',
+          (value) => typeof value === 'boolean',
+        ),
       ],
     );
   }

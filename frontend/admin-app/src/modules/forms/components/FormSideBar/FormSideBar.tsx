@@ -5,7 +5,7 @@ import { Close } from "@mui/icons-material";
 import React from "react";
 import { FormEntitySideBar } from "..";
 import { FormComponentFormData } from "@modules/formComponents/types";
-import { useCreateFormComponent } from "@modules/formComponents/hooks";
+import { useAddComponent } from "@modules/formComponents/hooks";
 import { useFormEditorContext } from "@modules/forms/contexts";
 
 export interface FormSideBarProps {}
@@ -13,20 +13,22 @@ export interface FormSideBarProps {}
 export const FormSideBar: React.FC<FormSideBarProps> = () => {
   const formEditor = useFormEditor();
   const { state } = useFormEditorContext();
-  const createFormComponent = useCreateFormComponent();
+  const createFormComponent = useAddComponent();
 
   const handleSave = ({ attributes }: FormComponentFormData) => {
-    createFormComponent.mutateAsync({
-      attributes,
-      type: state.component.data!.name,
-      formFields: state.fields.map(({ entity, data }) => ({
-        entityId: entity.id,
-        fieldId: data.id,
-      })),
-    }).then(() => {
-      formEditor.component.clear()
-      formEditor.selected.fields.clear()
-    })
+    createFormComponent
+      .mutateAsync({
+        attributes,
+        type: state.component.data!.name,
+        formFields: state.fields.map(({ entity, data }) => ({
+          entityId: entity.id,
+          fieldId: data.id,
+        })),
+      })
+      .then(() => {
+        formEditor.component.clear();
+        formEditor.selected.fields.clear();
+      });
   };
 
   return (

@@ -1,13 +1,7 @@
 import { DataListItem, IconButton, Row } from "@modules/core/components";
 import { useOpen } from "@modules/core/hooks";
 import { FormConfig } from "@modules/forms/types";
-import {
-  Close,
-  Delete,
-  ExpandLess,
-  ExpandMore,
-  MoreTime,
-} from "@mui/icons-material";
+import { Close, Delete, MoreTime } from "@mui/icons-material";
 import {
   Checkbox,
   Chip,
@@ -112,7 +106,7 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
         </Row>
       </DataListItem>
       <Collapse in={subcard.isOpen}>
-        <FormSchedulesCard form={form} />
+        <FormSchedulesCard form={form} isActive={subcard.isOpen} />
       </Collapse>
     </>
   );

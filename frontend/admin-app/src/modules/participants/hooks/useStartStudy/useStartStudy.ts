@@ -6,22 +6,30 @@ import { getGetParticipantKey, getGetParticipantsKey } from "..";
 
 export const useStartStudy = () => {
   const studyId = useStudyId()!;
-  return useWriteRequest<Participant, unknown>(
-    ({ body: participant, ...options }) =>
+  return useWriteRequest<
+    { participant: Participant; startDate: string },
+    unknown
+  >(
+    ({ body: { participant, ...body }, ...options }) =>
       apiRequest(`/participants/startStudy`, {
         ...options,
         method: "POST",
         params: { studyId, participantId: participant.id },
+        body,
       }),
     {
-      onSuccess({ queryClient, variables: participant }) {
+      onSuccess({ queryClient, variables: { participant, startDate } }) {
         queryClient.invalidateQueries(getGetParticipantsKey({ studyId }));
         queryClient.invalidateQueries(
           getGetParticipantKey({ participantId: participant.id })
         );
         return {
-          text: "study started",
-          params: {},
+          text: "record started",
+          params: {
+            record: "participant",
+            name: participant.number,
+            date: new Date(startDate).toLocaleDateString("de"),
+          },
         };
       },
     }

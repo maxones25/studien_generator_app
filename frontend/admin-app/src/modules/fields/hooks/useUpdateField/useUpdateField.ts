@@ -5,20 +5,27 @@ import { useEntityId, useStudyId } from "@modules/navigation/hooks";
 import { getGetFieldsKey } from "..";
 
 export const useUpdateField = () => {
-  const studyId = useStudyId();
-  const entityId = useEntityId();
+  const studyId = useStudyId()!;
+  const entityId = useEntityId()!;
 
   return useWriteRequest<FieldFormData, unknown>(
-    ({ body: { id, ...body }, ...options }) =>
-      apiRequest(`/studies/${studyId}/entities/${entityId}/fields/${id}`, {
-        method: "PUT",
+    ({ body: { id: fieldId, ...body }, ...options }) =>
+      apiRequest(`/entities/updateField`, {
         ...options,
+        method: "POST",
+        params: { studyId, fieldId },
         body,
       }),
     {
-      onSuccess: ({ variables, queryClient, snackbar }) => {
-        snackbar.showSuccess(`{{ field '${variables.name}' updated! }}`);
-        queryClient.invalidateQueries(getGetFieldsKey({ entityId: entityId! }));
+      onSuccess: ({ variables: field, queryClient }) => {
+        queryClient.invalidateQueries(getGetFieldsKey({ studyId, entityId }));
+        return {
+          text: "record updated",
+          params: {
+            record: "field",
+            name: field.name,
+          },
+        };
       },
     }
   );

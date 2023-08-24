@@ -1,7 +1,7 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
-import { AuthGuard } from '@admin/auth/auth.guard';
+import { AuthGuard } from '@admin/directors/guards/auth.guard';
 import { JwtService } from '@nestjs/jwt';
 
 describe('AuthGuard', () => {

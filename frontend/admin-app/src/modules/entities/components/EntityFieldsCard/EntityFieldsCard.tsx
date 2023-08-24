@@ -10,7 +10,7 @@ import {
 import { useFormData } from "@modules/core/hooks";
 import { DeleteFieldForm, FieldForm } from "@modules/fields/components";
 import {
-  useCreateField,
+  useAddField,
   useDeleteField,
   useGetFields,
   useUpdateField,
@@ -28,7 +28,7 @@ export const EntityFieldsCard: React.FC<EntityFieldsCardProps> = () => {
   const editData = useFormData<FieldFormData>();
   const deleteData = useFormData<FieldFormData>();
   const getFields = useGetFields();
-  const createField = useCreateField();
+  const createField = useAddField();
   const updateField = useUpdateField();
   const deleteField = useDeleteField();
 

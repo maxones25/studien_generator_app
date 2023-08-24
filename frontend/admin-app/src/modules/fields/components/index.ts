@@ -1,3 +1,2 @@
-export * from './FieldsTabPanel/FieldsTabPanel'
-export * from './FieldForm/FieldForm'
-export * from './DeleteFieldForm/DeleteFieldForm'
+export * from "./FieldForm/FieldForm";
+export * from "./DeleteFieldForm/DeleteFieldForm";

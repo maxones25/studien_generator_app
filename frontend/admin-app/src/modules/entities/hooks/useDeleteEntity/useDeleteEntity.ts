@@ -2,25 +2,32 @@ import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { EntityFormData } from "@modules/entities/types";
 import { useStudyId } from "@modules/navigation/hooks";
-import { getGetEntitiesKey } from "..";
+import { getGetEntitiesKey, getGetEntityKey } from "..";
 
 export const useDeleteEntity = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
 
   return useWriteRequest<EntityFormData, unknown>(
-    ({ body: { id }, ...options }) =>
-      apiRequest(`/studies/${studyId}/entities/${id}`, {
-        method: "DELETE",
+    ({ body: { id: entityId }, ...options }) =>
+      apiRequest(`/entities/deleteEntity`, {
         ...options,
+        method: "POST",
+        params: {
+          studyId,
+          entityId,
+        },
       }),
     {
-      onSuccess: ({ variables, queryClient }) => {
-        queryClient.invalidateQueries(getGetEntitiesKey());
+      onSuccess: ({ variables: entity, queryClient }) => {
+        queryClient.invalidateQueries(getGetEntitiesKey({ studyId }));
+        queryClient.invalidateQueries(
+          getGetEntityKey({ studyId, entityId: entity.id! })
+        );
         return {
           text: "record deleted",
           params: {
             record: "entity",
-            name: variables.name,
+            name: entity.name,
           },
         };
       },

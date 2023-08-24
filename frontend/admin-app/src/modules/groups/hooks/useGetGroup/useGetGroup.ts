@@ -3,13 +3,13 @@ import { apiRequest } from "@modules/core/utils";
 import { Group } from "@modules/groups/types";
 import { useGroupId, useStudyId } from "@modules/navigation/hooks";
 
-export const getGetGroupKey = () => ["getGroup"];
+export const getGetGroupKey = (deps: { groupId: string }) => ["getGroup", deps];
 
 export const useGetGroup = () => {
-  const studyId = useStudyId();
-  const groupId = useGroupId();
+  const studyId = useStudyId()!;
+  const groupId = useGroupId()!;
 
-  return useReadRequest<Group>(getGetGroupKey(), (options) =>
+  return useReadRequest<Group>(getGetGroupKey({ groupId }), (options) =>
     apiRequest(`/studies/${studyId}/groups/${groupId}`, { ...options })
   );
 };

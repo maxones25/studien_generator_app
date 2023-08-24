@@ -10,6 +10,7 @@ import { Form, ParticipantNotification } from '.';
 import { Participant } from '.';
 import { Record } from '.';
 import { FormSchedule } from '.';
+import { Transform } from 'class-transformer';
 
 @TypeOrmEntity()
 export class Task {
@@ -28,7 +29,7 @@ export class Task {
 
   @Column()
   participantId: string;
-  
+
   @Column()
   formId: string;
 
@@ -43,6 +44,9 @@ export class Task {
 
   @Column('datetime')
   completedAt: Date;
+
+  @Column('boolean')
+  postponable: boolean;
 
   @Column('integer')
   rescheduled: number;

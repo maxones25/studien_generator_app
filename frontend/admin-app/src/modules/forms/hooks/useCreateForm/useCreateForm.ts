@@ -5,13 +5,17 @@ import { useStudyId } from "@modules/navigation/hooks";
 import { getGetFormsKey } from "..";
 
 export const useCreateForm = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
   return useWriteRequest<FormFormData, string>(
     (options) =>
-      apiRequest(`/studies/${studyId}/forms`, { method: "POST", ...options }),
+      apiRequest(`/forms/create`, {
+        ...options,
+        method: "POST",
+        params: { studyId },
+      }),
     {
       onSuccess: ({ queryClient, variables }) => {
-        queryClient.invalidateQueries(getGetFormsKey());
+        queryClient.invalidateQueries(getGetFormsKey({ studyId }));
         return {
           text: "record created",
           params: {

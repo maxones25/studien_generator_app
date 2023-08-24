@@ -1,18 +1,19 @@
 import { Provider } from '@nestjs/common';
 import { DirectorsService } from './directors.service';
 import { DirectorsRepository } from './directors.repository';
-import { EntityManager } from 'typeorm';
-import { Director } from '@entities/director.entity';
-import { DirectorGuard } from './director.guard';
+import { DirectorGuard } from './guards/director.guard';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './guards/auth.guard';
+import { PasswordService } from '@shared/modules/password/password.service';
 
 const directorsProviders: Provider[] = [
   DirectorsService,
   DirectorGuard,
+  DirectorsRepository,
+  PasswordService,
   {
-    provide: DirectorsRepository,
-    useFactory: (entityManager) =>
-      new DirectorsRepository(Director, entityManager),
-    inject: [EntityManager],
+    provide: APP_GUARD,
+    useClass: AuthGuard,
   },
 ];
 

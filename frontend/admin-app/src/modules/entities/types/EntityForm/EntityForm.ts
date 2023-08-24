@@ -1,8 +1,8 @@
 export type EntityForm = {
   id: string;
   name: string;
-  entity: {
+  formEntities: {
     id: string;
     name: string;
-  };
+  }[];
 };

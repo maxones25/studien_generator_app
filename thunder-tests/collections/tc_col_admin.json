@@ -12,13 +12,6 @@
             "sortNum": 40000
         },
         {
-            "_id": "5ea67d0a-b1d8-429b-a590-0de2d44b51cc",
-            "name": "Auth",
-            "containerId": "",
-            "created": "2023-06-20T10:01:06.422Z",
-            "sortNum": 30000
-        },
-        {
             "_id": "652d52a0-2ff6-4147-9811-023bf43376fb",
             "name": "Entities",
             "containerId": "",
@@ -151,11 +144,11 @@
         {
             "_id": "b807102a-10dd-4c71-9335-ef2d512495de",
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
-            "containerId": "5ea67d0a-b1d8-429b-a590-0de2d44b51cc",
+            "containerId": "edb399a4-a30e-4b23-b83f-5f7d70d959fb",
             "name": "sign up director",
             "url": "/auth/signUp",
             "method": "POST",
-            "sortNum": 20000,
+            "sortNum": 200000,
             "created": "2023-06-22T10:53:56.723Z",
             "modified": "2023-07-26T09:13:18.851Z",
             "headers": [],
@@ -173,13 +166,13 @@
         {
             "_id": "f4430d54-796a-4250-bb8e-9bf234f96bc3",
             "colId": "1e38b54f-ee67-494e-9b9d-079192b32c09",
-            "containerId": "5ea67d0a-b1d8-429b-a590-0de2d44b51cc",
+            "containerId": "edb399a4-a30e-4b23-b83f-5f7d70d959fb",
             "name": "login director",
             "url": "/auth/login",
             "method": "POST",
-            "sortNum": 30000,
+            "sortNum": 210000,
             "created": "2023-06-22T10:55:38.315Z",
-            "modified": "2023-07-26T17:17:55.639Z",
+            "modified": "2023-08-21T16:24:25.445Z",
             "headers": [],
             "params": [],
             "body": {

@@ -28,7 +28,7 @@ export class FormSchedulesController {
   @Get()
   @Roles('admin', 'employee')
   async getAll(@Query() query: GetAllSchedulesQueryParams) {
-    return this.formSchedulesService.getAll(query);
+    return this.formSchedulesService.getByForm(query);
   }
 
   @Put(':scheduleId')

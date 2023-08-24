@@ -1,33 +1,31 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { StudyMember } from '@entities/study-member.entity';
 import { Roles } from '@admin/roles/roles.enum';
 import { MembersRepository } from './members.repository';
+import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
-export class MembersService {
+export class MembersService implements StudyRelatedDataAccessor {
   constructor(
     @Inject(MembersRepository)
-    private memberRepository: MembersRepository,
+    private membersRepository: MembersRepository,
   ) {}
 
+  async getRelatedByStudy(studyId: string, directorId: string): Promise<any> {
+    return await this.membersRepository.getRelatedByStudy(studyId, directorId);
+  }
+
   async add(studyId: string, directorId: string, role: Roles) {
-    const studyMember = new StudyMember();
-
-    studyMember.studyId = studyId;
-    studyMember.directorId = directorId;
-    studyMember.role = role;
-
-    await this.memberRepository.insert(studyMember);
+    await this.membersRepository.create({ studyId, directorId, role });
   }
 
   async changeRole(studyId: string, directorId: string, role: Roles) {
     if (
       role === Roles.employee &&
-      (await this.memberRepository.isMemberLastAdmin(studyId, directorId))
+      (await this.membersRepository.isMemberLastAdmin(studyId, directorId))
     )
       throw new BadRequestException('can not remove last admin from study');
 
-    return await this.memberRepository.update(
+    return await this.membersRepository.update(
       {
         studyId,
         directorId,
@@ -37,16 +35,16 @@ export class MembersService {
   }
 
   async remove(studyId: string, directorId: string) {
-    if (await this.memberRepository.isMemberLastAdmin(studyId, directorId))
+    if (await this.membersRepository.isMemberLastAdmin(studyId, directorId))
       throw new BadRequestException('can not remove last admin from study');
-    
-    await this.memberRepository.delete({
+
+    await this.membersRepository.delete({
       directorId,
       studyId: studyId,
     });
   }
 
   async getByStudy(studyId: string) {
-    return await this.memberRepository.getByStudy(studyId);
+    return await this.membersRepository.getByStudy(studyId);
   }
 }

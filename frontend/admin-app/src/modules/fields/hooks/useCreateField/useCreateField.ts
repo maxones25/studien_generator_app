@@ -4,20 +4,35 @@ import { FieldFormData } from "@modules/fields/types";
 import { useEntityId, useStudyId } from "@modules/navigation/hooks";
 import { getGetFieldsKey } from "..";
 
-export const useCreateField = () => {
-  const studyId = useStudyId();
-  const entityId = useEntityId();
+export const useAddField = () => {
+  const studyId = useStudyId()!;
+  const entityId = useEntityId()!;
 
-  return useWriteRequest<FieldFormData, unknown>(
+  return useWriteRequest<
+    FieldFormData,
+    { id: string; entity: { id: string; name: string } }
+  >(
     (options) =>
-      apiRequest(`/studies/${studyId}/entities/${entityId}/fields`, {
-        method: "POST",
+      apiRequest(`/entities/addField`, {
         ...options,
+        method: "POST",
+        params: {
+          studyId,
+          entityId,
+        },
       }),
     {
-      onSuccess: ({ queryClient, snackbar, variables }) => {
-        snackbar.showSuccess(`{{ field '${variables.name}' created! }}`);
-        queryClient.invalidateQueries(getGetFieldsKey({ entityId: entityId! }));
+      onSuccess: ({ queryClient, variables: field, data }) => {
+        queryClient.invalidateQueries(getGetFieldsKey({ studyId, entityId }));
+        return {
+          text: "record added to record",
+          params: {
+            addedRecord: "field",
+            addedName: field.name,
+            record: "entity",
+            name: data.entity.name,
+          },
+        };
       },
     }
   );

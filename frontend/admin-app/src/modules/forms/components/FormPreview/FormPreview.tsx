@@ -1,5 +1,5 @@
 import { Column, Row, Text } from "@modules/core/components";
-import { useGetFormComponents } from "@modules/formComponents/hooks";
+import { useGetComponents } from "@modules/formComponents/hooks";
 import { useFormEditorContext } from "@modules/forms/contexts";
 import { useFormEditor } from "@modules/forms/hooks";
 import { Add } from "@mui/icons-material";
@@ -11,13 +11,19 @@ export interface FormPreviewProps {}
 export const FormPreview: React.FC<FormPreviewProps> = () => {
   const formEditor = useFormEditor();
   const { components } = useFormEditorContext();
-  const getFormComponents = useGetFormComponents();
+  const getFormComponents = useGetComponents();
 
   return (
     <Column height="100%" boxShadow={4} borderRadius={10} width={300}>
       <Column p={2}>
         {getFormComponents.data?.map((formComponent) => (
-          <Row key={formComponent.id} boxShadow={4} p={1} borderRadius={4} mt={1}>
+          <Row
+            key={formComponent.id}
+            boxShadow={4}
+            p={1}
+            borderRadius={4}
+            mt={1}
+          >
             <Text>{formComponent.type}</Text>
           </Row>
         ))}

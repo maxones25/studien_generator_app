@@ -20,6 +20,11 @@ export class PasswordService {
       lowercase: true,
       symbols: false,
       excludeSimilarCharacters: true,
-    })
+    });
+  }
+
+  async generateHashed(saltOrRounds: string | number) {
+    const password = await this.generate();
+    return await this.hash(password, saltOrRounds);
   }
 }

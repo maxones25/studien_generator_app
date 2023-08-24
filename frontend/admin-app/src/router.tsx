@@ -8,13 +8,11 @@ import FormsPage from "@pages/FormsPage/FormsPage";
 import GroupPage from "@pages/GroupPage/GroupPage";
 import GroupsPage from "@pages/GroupsPage/GroupsPage";
 import LoginPage from "@pages/LoginPage/LoginPage";
-import MembersPage from "@pages/MembersPage/MembersPage";
 import ParticipantPage from "@pages/ParticipantPage/ParticipantPage";
 import ParticipantsPage from "@pages/ParticipantsPage/ParticipantsPage";
 import SignUpPage from "@pages/SignUpPage/SignUpPage";
 import StudiesPage from "@pages/StudiesPage/StudiesPage";
 import StudyPage from "@pages/StudyPage/StudyPage";
-import TestPage from "@pages/TestPage/TestPage";
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([

@@ -1,9 +1,9 @@
 import { TestBed } from '@automock/jest';
 import { faker } from '@faker-js/faker';
 import { StudiesRepository } from '@admin/studies/studies.repository';
-import { StudiesService } from '@admin/studies/studies.service';
+import { StudiesService } from '@admin/studies/studies/studies.service';
 import fakeData from '@test/fakeData';
-import { CreateStudyTransaction } from '@admin/studies/transactions/create-study.transaction';
+import { CreateStudyTransaction } from '@admin/studies/studies/transactions/create-study.transaction';
 
 describe('StudiesService', () => {
   let service: StudiesService;

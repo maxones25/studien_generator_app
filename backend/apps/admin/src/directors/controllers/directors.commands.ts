@@ -1,22 +1,29 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Inject } from '@nestjs/common';
 import { DirectorsService } from '../directors.service';
 import { UpdateDirectorDto } from '../dtos/UpdateDirectorDto';
-import { DirectorId } from '@admin/directors/director-id.decorator';
+import { DirectorGuard } from '../guards/director.guard';
+import { Director } from '../decorators/director.decorator';
+import { Director as DirectorEntity } from '@entities';
 
 @Controller('directors')
 export class DirectorsCommands {
-  constructor(private readonly directorsService: DirectorsService) {}
+  constructor(
+    @Inject(DirectorsService)
+    private readonly directorsService: DirectorsService,
+  ) {}
 
   @Post('delete')
-  async delete(@DirectorId() directorId: string) {
-    return this.directorsService.delete(directorId);
+  @UseGuards(DirectorGuard)
+  async delete(@Director() director: DirectorEntity) {
+    return this.directorsService.delete(director.id);
   }
 
   @Post('update')
+  @UseGuards(DirectorGuard)
   async update(
-    @DirectorId() directorId: string,
+    @Director() director: DirectorEntity,
     @Body() body: UpdateDirectorDto,
   ) {
-    return this.directorsService.update(directorId, body);
+    return this.directorsService.update(director.id, body);
   }
 }

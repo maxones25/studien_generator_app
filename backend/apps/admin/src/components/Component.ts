@@ -1,8 +1,8 @@
 import { FieldType } from '@shared/enums/field-type.enum';
 import { ComponentType } from './component-type.enum';
 import { BadRequestException } from '@nestjs/common';
-import { FormComponentAttributeDto } from '@admin/forms/pages/components/attributes/dtos/FormComponentAttributeDto';
 import { Attribute } from './Attribute';
+import { FormComponentAttributeDto } from '@admin/forms/forms/dtos/FormComponentAttributeDto';
 
 export abstract class Component {
   constructor(
@@ -11,7 +11,7 @@ export abstract class Component {
     protected readonly attributes: Attribute[],
   ) {}
 
-  public getAttributes(){
+  public getAttributes() {
     return this.attributes;
   }
 

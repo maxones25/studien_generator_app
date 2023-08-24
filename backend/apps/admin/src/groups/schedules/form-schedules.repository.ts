@@ -1,6 +1,92 @@
-import { FormSchedule } from '@entities';
+import {
+  FormSchedule as FormScheduleEntity,
+  FormScheduleAttributes,
+} from '@entities';
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { RecordRepository } from '@shared/modules/records/record.repository';
 import { Repository } from 'typeorm';
 
+export type FormSchedule = Omit<FormScheduleEntity, 'attributes'> &
+  FormScheduleAttributes;
+
 @Injectable()
-export class FormSchedulesRepository extends Repository<FormSchedule> {}
+export class FormSchedulesRepository extends RecordRepository<FormScheduleEntity> {
+  constructor(
+    @InjectRepository(FormScheduleEntity)
+    db: Repository<FormScheduleEntity>,
+  ) {
+    super(db);
+  }
+
+  async getByForm(formId: string): Promise<FormSchedule[]> {
+    const schedules = await this.db.find({
+      where: { configId: formId },
+      order: {
+        createdAt: 'ASC',
+      },
+      relations: {
+        attributes: true,
+      },
+      select: {
+        id: true,
+        type: true,
+        period: true,
+        times: true,
+        configId: true,
+        postpone: {
+          duration: true,
+          times: true,
+        },
+      },
+    });
+
+    return schedules.map(({ attributes, ...rest }) => ({
+      ...rest,
+      ...attributes.reduce<FormScheduleAttributes>((obj, attribute) => {
+        obj[attribute.key] = attribute.value;
+        return obj;
+      }, {}),
+    }));
+  }
+
+  async getActiveByGroup(groupId: string): Promise<FormSchedule[]> {
+    const schedules = await this.db.find({
+      where: {
+        config: {
+          groupId,
+          isActive: true,
+        },
+      },
+      relations: {
+        config: true,
+        attributes: true,
+      },
+      select: {
+        id: true,
+        type: true,
+        period: true,
+        times: true,
+        postpone: {
+          duration: true,
+          times: true,
+        },
+        config: {
+          formId: true,
+        },
+        attributes: {
+          key: true,
+          value: true,
+        },
+      },
+    });
+
+    return schedules.map(({ attributes, ...rest }) => ({
+      ...rest,
+      ...attributes.reduce<FormScheduleAttributes>((obj, attribute) => {
+        obj[attribute.key] = attribute.value;
+        return obj;
+      }, {}),
+    }));
+  }
+}

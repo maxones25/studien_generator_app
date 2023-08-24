@@ -6,8 +6,7 @@ import {
   Unique,
   OneToMany,
 } from 'typeorm';
-import { Entity, FormField, RecordField } from '.';
-import { FieldData } from '@admin/entities/fields/dtos/FieldData';
+import { Entity, EntityFieldAttribute, FormField, RecordField } from '.';
 import { FieldType } from '@shared/enums/field-type.enum';
 
 @TypeOrmEntity()
@@ -38,8 +37,8 @@ export class EntityField {
   })
   type: FieldType;
 
-  @Column('json', { nullable: true })
-  data: FieldData;
+  @OneToMany(() => EntityFieldAttribute, (attribute) => attribute.field)
+  attributes: EntityFieldAttribute[];
 
   @OneToMany(() => FormField, (formField) => formField.entityField)
   formFields: FormField[];

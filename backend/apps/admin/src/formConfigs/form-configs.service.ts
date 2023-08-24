@@ -3,7 +3,6 @@ import { FormConfiguration } from '@entities/form-configuration.entity';
 import { FormConfigsRepository } from './form-configs.repository';
 import { AddFormToGroupBodyDto } from './dtos/AddFormToGroupBodyDto';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
-import { FormsRepository } from '@admin/forms/forms.repository';
 
 @Injectable()
 export class FormConfigsService {
@@ -31,7 +30,7 @@ export class FormConfigsService {
     return formConfiguration.id;
   }
 
-  getByGroup(groupId: string) {
+  async getByGroup(groupId: string) {
     return this.formConfigsRepository.getByGroup(groupId);
   }
 
@@ -61,13 +60,11 @@ export class FormConfigsService {
     const { affected } = await this.formConfigsRepository.update(form.id, {
       type: FormConfigType.TimeIndependent,
     });
-    // remove all open tasks
     return affected === 1;
   }
 
   async delete(id: string) {
     const { affected } = await this.formConfigsRepository.delete(id);
-    // remove all open tasks
     return affected === 1;
   }
 }

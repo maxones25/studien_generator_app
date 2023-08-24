@@ -45,7 +45,7 @@ export const DeleteDialog: React.FC<DeleteDialogProps> = ({
   record,
   target,
   question,
-  isLoading = false,
+  // isLoading = false,
   onCancel,
   onConfirm,
 }) => {

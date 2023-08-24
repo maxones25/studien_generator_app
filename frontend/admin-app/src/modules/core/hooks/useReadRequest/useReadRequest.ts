@@ -31,6 +31,6 @@ export const useReadRequest = <Result>(
 
       return queryFunc({ headers });
     },
-    options
+    { ...options, refetchOnWindowFocus: false }
   );
 };
