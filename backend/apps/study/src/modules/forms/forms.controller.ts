@@ -8,12 +8,12 @@ import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 export class FormsController {
   constructor(private readonly formsService: FormsService) {}
 
-  @Get(':formId')
-  async getById(
-    @Param('formId', new ValidateIdPipe()) formId: string,
-    ) {
-    return await this.formsService.getById(formId);
-  }
+  // @Get(':formId')
+  // async getById(
+  //   @Param('formId', new ValidateIdPipe()) formId: string,
+  //   ) {
+  //   return await this.formsService.getById(formId);
+  // }
 
   @Get()
   async getAll(
@@ -21,6 +21,16 @@ export class FormsController {
     @GroupId() groupId: string,
     ) {
     return await this.formsService.getAll(studyId, groupId);
+  }
+
+  @Get(':lastUpdated')
+  async getAllNew(
+    @Param('lastUpdated') lastUpdated: string,
+    @StudyId() studyId: string, 
+    @GroupId() groupId: string,
+  ) {
+    const date = new Date(lastUpdated);
+    return await this.formsService.getAll(studyId, groupId, date);
   }
 
   @Get('time/independent')

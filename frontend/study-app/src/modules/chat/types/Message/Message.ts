@@ -3,8 +3,9 @@ export type Message = {
   chatId: string,
   participantId?: string,
   directorName?: string,
-  sendAt: Date,
+  sentAt: Date,
   readAt?: Date,
   content: string,
+  queued?: boolean,
 }
 

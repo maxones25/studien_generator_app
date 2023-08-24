@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { IconButton, ZiIcon } from '@modules/core/components';
 import { AppBarMenu, LogOutDialog } from '..';
 import { getNewMessagesCount } from '@modules/chat/utils';
-import { useReadMessages } from '@modules/chat/hooks';
 
 export interface AppBarProps {}
 
@@ -19,7 +18,6 @@ export const AppBar : React.FC<AppBarProps>= () => {
   const [openMenu, setOpenMenu] = useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
   const newMessagesCount = getNewMessagesCount();
-  const readMessages = useReadMessages();
 
   const changePage = () => {
     if (path === "/tasks")
@@ -32,13 +30,6 @@ export const AppBar : React.FC<AppBarProps>= () => {
   const handleToggle = () => {
     setOpenMenu((prevOpen) => !prevOpen);
   };
-
-  const openMessages = async () => {
-    await readMessages.mutateAsync({
-      readAt: new Date()
-    });
-    navigate.to('../chat');
-  }
 
   return (
       <MAppBar 
@@ -77,7 +68,7 @@ export const AppBar : React.FC<AppBarProps>= () => {
             color="inherit"
             aria-label="menu"
             sx={{ ml: 1 }}
-            onClick={openMessages}
+            onClick={navigate.handle('../chat')}
             testId='go-mail-app-bar'
             Icon={
               <Badge color='error' badgeContent={newMessagesCount}>

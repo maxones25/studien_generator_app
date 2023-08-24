@@ -22,6 +22,15 @@ export class RecordsController {
     return this.recordsService.findAll(participantId);
   }
 
+  @Get('/:lastUpdated')
+  async getAllNew(
+    @Param('lastUpdated') lastUpdated: string,
+    @ParticipantId() participantId: string,
+  ) {
+    const date = new Date(lastUpdated);
+    return await this.recordsService.findAll(participantId, date);
+  }
+
   @Get('events/:date')
   async getRecordedEventsByDate(
     @ParticipantId() participantId: string,

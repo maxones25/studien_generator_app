@@ -1,11 +1,19 @@
 import React, { useEffect, useRef } from 'react';
 import { List, Container } from '@mui/material';
-import { useGetChatMessages } from '@modules/chat/hooks';
+import { useGetChatMessages, useReadMessages } from '@modules/chat/hooks';
 import { ChatMessage } from '..';
+import { getNewMessagesCount } from '@modules/chat/utils';
 
 const Chat: React.FC = () => {
   const messages = useGetChatMessages();
   const chatEndRef = useRef<HTMLDivElement | null>(null);
+  const readMessages = useReadMessages();
+  const newMessagesCount = getNewMessagesCount();
+
+  if (newMessagesCount > 0)
+  readMessages.mutate({
+    readAt: new Date()
+  });
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });

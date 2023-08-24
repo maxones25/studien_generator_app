@@ -12,6 +12,9 @@ import { GetEvents } from './serviceworker/strategies/getEvents'
 import { messageHandler } from './serviceworker/listeners/message/message-listener'
 import { pushHandler } from './serviceworker/listeners/push/push-listener'
 import { GetData } from './serviceworker/strategies/getData'
+import { PostMessage } from './serviceworker/strategies/postMessage'
+import { ReadData } from './serviceworker/strategies/readData'
+import { DeleteData } from './serviceworker/strategies/deleteData'
 
 declare let self: ServiceWorkerGlobalScope;
 
@@ -93,3 +96,36 @@ registerRoute(
   new GetByDate<Record>(dbPromise, 'records', 'createdAt')
 );
 
+registerRoute(
+  `${BASE_URI}/chat`, 
+  new PostMessage(dbPromise),
+  'POST'
+);
+
+registerRoute(
+  `${BASE_URI}/chat`, 
+  new ReadData(dbPromise, 'chat'),
+  'PUT'
+);
+
+registerRoute(
+  `${BASE_URI}/chat`, 
+  new GetData(dbPromise, 'chat'),
+);
+
+registerRoute(
+  `${BASE_URI}/notifications`, 
+  new GetData(dbPromise, 'notifications'),
+);
+
+registerRoute(
+  `${BASE_URI}/notifications`, 
+  new ReadData(dbPromise, 'notifications'),
+  'PUT'
+);
+
+registerRoute(
+  `${BASE_URI}/notifications`, 
+  new DeleteData(dbPromise, 'notifications'),
+  'DELETE'
+);
