@@ -1,0 +1,88 @@
+import { Participant, ParticipantsAttributes } from '@entities';
+import { InjectRepository } from '@nestjs/typeorm';
+import { RecordRepository } from '@shared/modules/records/record.repository';
+import { Repository } from 'typeorm';
+
+export class ParticipantsRepository extends RecordRepository<Participant> {
+  constructor(
+    @InjectRepository(Participant)
+    db: Repository<Participant>,
+  ) {
+    super(db);
+  }
+
+  async getRelatedByStudy(studyId: string, id: string) {
+    return await this.db.findOne({
+      where: { id, studyId },
+    });
+  }
+
+  async getById(id: string) {
+    const participant = await this.db.findOneOrFail({
+      where: { id },
+      relations: {
+        group: true,
+        attributes: true,
+      },
+      select: {
+        id: true,
+        number: true,
+        group: {
+          id: true,
+          name: true,
+        },
+        attributes: {
+          key: true,
+          value: true,
+        },
+      },
+    });
+    return this.convertParticipant(participant);
+  }
+
+  async getByStudy(studyId: string) {
+    const participants = await this.db.find({
+      where: { studyId },
+      order: {
+        number: 'ASC',
+      },
+      relations: {
+        group: true,
+        attributes: true,
+      },
+      select: {
+        id: true,
+        number: true,
+        group: {
+          id: true,
+          name: true,
+        },
+        attributes: {
+          key: true,
+          value: true,
+        },
+      },
+    });
+    return participants.map(this.convertParticipant);
+  }
+
+  getByGroup(groupId: string): Participant[] | PromiseLike<Participant[]> {
+    return this.db.find({ where: { groupId } });
+  }
+
+  private convertParticipant(
+    participant: Participant,
+  ): Omit<Participant, 'attributes'> & ParticipantsAttributes {
+    const { attributes, ...data } = participant;
+    return {
+      ...data,
+      ...attributes.reduce(
+        (obj, { key, value }) => {
+          obj[key] = value;
+          return obj;
+        },
+        { startedAt: null, endedAt: null },
+      ),
+    };
+  }
+}

@@ -5,16 +5,18 @@ import { getGetFormsKey } from "..";
 import { useStudyId } from "@modules/navigation/hooks";
 
 export const useDeleteForm = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
+
   return useWriteRequest<FormFormData, number>(
-    ({ body: { id }, ...options }) =>
-      apiRequest(`/studies/${studyId}/forms/${id}`, {
-        method: "DELETE",
+    ({ body: { id: formId }, ...options }) =>
+      apiRequest(`/forms/delete`, {
         ...options,
+        method: "POST",
+        params: { formId, studyId },
       }),
     {
       onSuccess: ({ queryClient, variables }) => {
-        queryClient.invalidateQueries(getGetFormsKey());
+        queryClient.invalidateQueries(getGetFormsKey({ studyId }));
         return {
           text: "record deleted",
           params: {

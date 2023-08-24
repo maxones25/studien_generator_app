@@ -5,15 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntityField } from '@entities/entity-field.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      EntityField
-    ])
-  ],
+  imports: [TypeOrmModule.forFeature([EntityField])],
   controllers: [ComponentsController],
   providers: [ComponentsService],
-  exports: [
-    ComponentsService
-  ]
+  exports: [ComponentsService],
 })
 export class ComponentsModule {}

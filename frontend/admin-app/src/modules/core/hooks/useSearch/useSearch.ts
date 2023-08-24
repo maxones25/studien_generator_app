@@ -11,27 +11,39 @@ export interface UseSearchResult {
 }
 
 export const useSearch = (): UseSearchResult => {
-  const [isActive, setIsActive] = useState(false);
-  const [value, setValue] = useState<string | undefined>(undefined);
+  const [{ isActive, value }, setData] = useState<{
+    isActive: boolean;
+    value?: string;
+  }>({ isActive: false });
 
   const start = () => {
-    setIsActive(true);
+    setData({ isActive: true, value });
   };
 
   const stop = () => {
-    setIsActive(false);
+    setData({ isActive: false, value: undefined });
   };
 
   const toggle = () => {
-    setIsActive(() => !isActive);
+    setData(() =>
+      isActive
+        ? {
+            isActive: false,
+            value: undefined,
+          }
+        : {
+            isActive: true,
+            value,
+          }
+    );
   };
 
   const set = (value: string) => {
-    setValue(value);
+    setData({ isActive, value });
   };
 
   const reset = () => {
-    setValue(undefined);
+    setData({ isActive, value: undefined });
   };
 
   return {

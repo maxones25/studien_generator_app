@@ -1,5 +1,5 @@
 import { IconButton, Row } from "@modules/core/components";
-import { useAddFormPage, useRemoveFormPage } from "@modules/formPages/hooks";
+import { useAddPage, useRemovePage } from "@modules/formPages/hooks";
 import { FormPage } from "@modules/formPages/types";
 import { useFormEditorContext } from "@modules/forms/contexts";
 import { useFormEditor } from "@modules/forms/hooks";
@@ -12,10 +12,10 @@ export interface FormPageListProps {}
 
 export const FormPageList: React.FC<FormPageListProps> = () => {
   const { t } = useTranslation();
-  const { formPages } = useFormEditorContext()
-  const formEditor = useFormEditor()
-  const addFormPage = useAddFormPage();
-  const removeFormPage = useRemoveFormPage();
+  const { formPages } = useFormEditorContext();
+  const formEditor = useFormEditor();
+  const addFormPage = useAddPage();
+  const removeFormPage = useRemovePage();
 
   const handleAddFormPage = () => {
     addFormPage.mutate({});

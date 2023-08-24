@@ -1,2 +1,2 @@
-export * from './useCreateFormComponent/useCreateFormComponent'
-export * from './useGetFormComponents/useGetFormComponents'
+export * from "./useAddComponent/useAddComponent";
+export * from "./useGetComponents/useGetComponents";

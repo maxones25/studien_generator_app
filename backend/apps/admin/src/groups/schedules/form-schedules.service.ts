@@ -1,121 +1,105 @@
-import { Inject, Injectable, BadRequestException } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateFormScheduleDto } from './dtos/CreateFormScheduleDto';
 import { FormSchedulesRepository } from './form-schedules.repository';
-import { FormSchedule } from '@entities';
+import { FormScheduleAttribute } from '@entities';
 import { FormScheduleType } from './enums/FormScheduleType';
 import { FormSchedulePeriod } from './enums/FormSchedulePeriod';
 import { UpdateFormScheduleDto } from './dtos/UpdateFormScheduleDto';
 import { GetAllSchedulesQueryParams } from './dtos/GetAllSchedulesQueryParams';
 import { DeleteScheduleTransaction } from './transactions/DeleteScheduleTransaction';
+import { CreateScheduleTransaction } from './transactions/CreateScheduleTransaction';
+import { UpdateScheduleTransaction } from './transactions/UpdateScheduleTransaction';
 
 @Injectable()
 export class FormSchedulesService {
   constructor(
     @Inject(FormSchedulesRepository)
     readonly formSchedulesRepository: FormSchedulesRepository,
+    @Inject(CreateScheduleTransaction)
+    readonly createScheduleTransaction: CreateScheduleTransaction,
+    @Inject(UpdateScheduleTransaction)
+    readonly updateScheduleTransaction: UpdateScheduleTransaction,
     @Inject(DeleteScheduleTransaction)
     readonly deleteScheduleTransaction: DeleteScheduleTransaction,
   ) {}
 
   async create(data: CreateFormScheduleDto) {
-    const { configId, type, period, frequency } = data;
-    const formSchedule = new FormSchedule();
-
-    formSchedule.configId = configId;
-    formSchedule.type = type;
-    formSchedule.period = period;
-    formSchedule.frequency = frequency;
-    formSchedule.data = this.getData(data);
-
-    await this.formSchedulesRepository.insert(formSchedule);
-
-    return formSchedule.id;
+    const attributes = this.generateAttributes(data);
+    return this.createScheduleTransaction.run({ data, attributes });
   }
 
-  async getAll({ formId }: GetAllSchedulesQueryParams) {
-    const schedules = await this.formSchedulesRepository.find({
-      where: { configId: formId },
-      order: {
-        createdAt: 'ASC',
-      },
-      select: {
-        id: true,
-        type: true,
-        period: true,
-        frequency: true,
-        data: true,
-        configId: true,
-      },
-    });
-    return schedules.map(({ data, configId, ...rest }) => ({
-      ...rest,
-      formId: configId,
-      ...data,
-    }));
+  async getByForm({ formId }: GetAllSchedulesQueryParams) {
+    return this.formSchedulesRepository.getByForm(formId);
   }
 
-  async update(id: string, body: UpdateFormScheduleDto) {
-    const { type, period, frequency } = body;
-    const data = this.getData(body) as any;
+  async getActiveByGroup(groupId: string) {
+    return this.formSchedulesRepository.getActiveByGroup(groupId);
+  }
 
-    const { affected } = await this.formSchedulesRepository.update(id, {
-      type,
-      period,
-      frequency,
-      data,
-    });
-
-    return affected;
+  async update(scheduleId: string, data: UpdateFormScheduleDto) {
+    const attributes = this.generateAttributes(data);
+    return this.updateScheduleTransaction.run({ scheduleId, data, attributes });
   }
 
   async delete(scheduleId: string) {
     return await this.deleteScheduleTransaction.run({ scheduleId });
   }
 
-  private getData({
+  private generateAttributes({
     type,
     period,
-    postpone,
-    dayOfMonth: rawDayOfMonth,
+    frequency,
+    amount,
+    daysOfMonth,
     daysOfWeek,
-    times: rawTimes,
-  }: CreateFormScheduleDto) {
-    const times = rawTimes.sort((a, b) => (a < b ? -1 : 0));
-    const dayOfMonth = rawDayOfMonth?.sort((a, b) => (a < b ? -1 : 0));
+  }: CreateFormScheduleDto): Omit<
+    FormScheduleAttribute,
+    'scheduleId' | 'schedule'
+  >[] {
     if (type === FormScheduleType.Fix && period === FormSchedulePeriod.Day) {
-      return {
-        postpone,
-        times,
-      };
+      return [
+        {
+          key: 'frequency',
+          value: frequency,
+        },
+      ];
     } else if (
       type === FormScheduleType.Fix &&
       period === FormSchedulePeriod.Week
     ) {
-      return {
-        daysOfWeek,
-        postpone,
-        times,
-      };
+      return [
+        {
+          key: 'frequency',
+          value: frequency,
+        },
+        {
+          key: 'daysOfWeek',
+          value: daysOfWeek,
+        },
+      ];
     } else if (
       type === FormScheduleType.Fix &&
       period === FormSchedulePeriod.Month
     ) {
-      return {
-        dayOfMonth,
-        postpone,
-        times,
-      };
-    } else if (
-      type === FormScheduleType.Fix &&
-      period === FormSchedulePeriod.Month
-    ) {
-      return {
-        dayOfMonth,
-        postpone,
-        times,
-      };
-    } else {
-      throw new BadRequestException();
+      return [
+        {
+          key: 'frequency',
+          value: frequency,
+        },
+        {
+          key: 'daysOfMonth',
+          value: daysOfMonth,
+        },
+      ];
+    } else if (type === FormScheduleType.Flexible) {
+      return [
+        {
+          key: 'amount',
+          value: amount,
+        },
+      ];
     }
+
+    return [];
   }
 }

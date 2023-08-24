@@ -10,6 +10,7 @@ export type FormScheduleDayOfMonth = number[];
 
 export const FormScheduleType = {
   Fix: "Fix",
+  Flexible: "Flexible",
 } as const;
 
 export const FormSchedulePeriod = {

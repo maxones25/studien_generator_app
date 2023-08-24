@@ -2,22 +2,14 @@ import { Column, Page, Row, Text } from "@modules/core/components";
 import { AddMemberCard, MembersCard } from "@modules/members/components";
 import { MembersProvider } from "@modules/members/contexts";
 import { StudyCard } from "@modules/studies/components";
-import { useStudyContext } from "@modules/studies/contexts";
-import { Divider, LinearProgress, Toolbar } from "@mui/material";
+import { useStudy } from "@modules/studies/contexts";
+import { Divider, Toolbar } from "@mui/material";
 import React from "react";
 
 export interface StudyPageProps {}
 
 const StudyPage: React.FC<StudyPageProps> = () => {
-  const getStudy = useStudyContext();
-
-  if (getStudy.isLoading) {
-    return <LinearProgress />;
-  }
-
-  if (getStudy.isError) throw new Error("study error");
-
-  const study = getStudy.data!;
+  const study = useStudy();
 
   return (
     <Page testId="study page" flex={1}>

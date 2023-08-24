@@ -1,4 +1,4 @@
-import { FormComponentAttributeDto } from '@admin/forms/pages/components/attributes/dtos/FormComponentAttributeDto';
+import { FormComponentAttributeDto } from '@admin/forms/forms/dtos/FormComponentAttributeDto';
 
 export type AttributeType =
   | 'string'

@@ -2,7 +2,7 @@ import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { GroupFormData } from "@modules/groups/types";
 import { useStudyId } from "@modules/navigation/hooks";
-import { getGetGroupsKey } from "..";
+import { getGetGroupKey, getGetGroupsKey } from "..";
 
 export const useUpdateGroup = () => {
   const studyId = useStudyId();
@@ -15,13 +15,14 @@ export const useUpdateGroup = () => {
         body,
       }),
     {
-      onSuccess: ({ variables, queryClient }) => {
+      onSuccess: ({ variables: group, queryClient }) => {
         queryClient.invalidateQueries(getGetGroupsKey());
+        queryClient.invalidateQueries(getGetGroupKey({ groupId: group.id! }));
         return {
           text: "record updated",
           params: {
             record: "group",
-            name: variables.name,
+            name: group.name,
           },
         };
       },

@@ -3,9 +3,7 @@ import {
   ArrayMinSize,
   IsArray,
   IsBoolean,
-  IsDateString,
   IsEnum,
-  IsISO8601,
   IsInt,
   IsNotEmpty,
   IsObject,
@@ -18,8 +16,9 @@ import {
 } from 'class-validator';
 import { FormScheduleType } from '../enums/FormScheduleType';
 import { FormSchedulePeriod } from '../enums/FormSchedulePeriod';
-import { FormSchedulePostpone } from './FormSchedulePostpone';
 import { Type } from 'class-transformer';
+import { DaysOfMonth, DaysOfWeek } from '@entities';
+import { PostponeDto } from './PostponeDto';
 
 export class CreateFormScheduleDto {
   @IsUUID()
@@ -31,14 +30,11 @@ export class CreateFormScheduleDto {
   @IsEnum(FormSchedulePeriod)
   readonly period: FormSchedulePeriod;
 
-  @IsInt()
-  @Min(1)
-  readonly frequency: number;
-
   @IsObject()
   @ValidateNested()
-  @Type(() => FormSchedulePostpone)
-  readonly postpone: FormSchedulePostpone;
+  @Type(() => PostponeDto)
+  @ValidateIf(({ postpone }) => postpone !== null)
+  readonly postpone: PostponeDto | null;
 
   @IsArray()
   @ArrayMinSize(1)
@@ -49,6 +45,11 @@ export class CreateFormScheduleDto {
   })
   readonly times: string[];
 
+  @ValidateIf(({ type }) => type === FormScheduleType.Fix)
+  @IsInt()
+  @Min(1)
+  readonly frequency: number;
+
   @ValidateIf(
     ({ type, period }) =>
       type === FormScheduleType.Fix && period === FormSchedulePeriod.Week,
@@ -57,7 +58,7 @@ export class CreateFormScheduleDto {
   @ArrayMinSize(7)
   @ArrayMaxSize(7)
   @IsBoolean({ each: true })
-  readonly daysOfWeek?: boolean[];
+  readonly daysOfWeek: DaysOfWeek;
 
   @ValidateIf(
     ({ type, period }) =>
@@ -68,13 +69,10 @@ export class CreateFormScheduleDto {
   @IsInt({ each: true })
   @Min(1, { each: true })
   @Max(28, { each: true })
-  readonly dayOfMonth?: number[];
+  readonly daysOfMonth: DaysOfMonth;
 
-  @ValidateIf(
-    ({ type, period }) =>
-      type === FormScheduleType.Flexible && period === FormSchedulePeriod.Week,
-  )
+  @ValidateIf(({ type }) => type === FormScheduleType.Flexible)
   @IsInt()
   @Min(1)
-  readonly days?: number;
+  readonly amount: number;
 }

@@ -22,13 +22,15 @@ import { Add } from "@mui/icons-material";
 
 export interface FormSchedulesCardProps {
   form: FormConfig;
+  isActive: boolean;
 }
 
 export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
   form,
+  isActive,
 }) => {
   const { t } = useTranslation();
-  const getFormSchedules = useGetFormSchedules(form.id);
+  const getFormSchedules = useGetFormSchedules(form.id, isActive);
   const createFormSchedule = useCreateFormSchedule();
   const updateFormSchedule = useUpdateFormSchedule();
   const deleteFormSchedule = useDeleteFormSchedule();
@@ -58,11 +60,7 @@ export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
             period: "Day",
             type: "Fix",
             frequency: 1,
-            postpone: {
-              isActive: false,
-              duration: 1,
-              times: 1,
-            },
+            postpone: null,
             times: [],
           })}
         />
