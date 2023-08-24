@@ -17,7 +17,7 @@ services:
       ports:
         - 3306:3306
       healthcheck:
-        test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+        test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
         interval: 5s
         timeout: 5s
         retries: 10
@@ -32,7 +32,7 @@ services:
         - PMA_USER=root
         - PMA_PASSWORD=root
       healthcheck:
-        test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8080"]
+        test: ["CMD", "curl", "--fail", "--silent", "http://127.0.0.1:8080"]
         interval: 5s
         timeout: 5s
         retries: 10

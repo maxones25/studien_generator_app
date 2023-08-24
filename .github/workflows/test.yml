@@ -29,6 +29,9 @@ jobs:
             admin_frontend:
               - 'frontend/admin-app/**'
               - 'tests/cypress/e2e/admin-app/**'
+              - 'admin-docker-compose.yaml'
+              - 'prod-docker-compose.yaml'
+              - 'test-docker-compose.yaml'
             study_backend:
               - 'backend/apps/study/**'
               - 'backend/libs/**'
@@ -37,6 +40,8 @@ jobs:
               - 'frontend/study-app/**'
               - 'tests/cypress/e2e/study-app/**'
               - 'study-docker-compose.yaml'
+              - 'prod-docker-compose.yaml'
+              - 'test-docker-compose.yaml'
 
   admin-backend-tests:
     runs-on: ubuntu-latest
