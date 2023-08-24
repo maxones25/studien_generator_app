@@ -2,7 +2,9 @@ import React from 'react';
 
 export interface NotificationsDropDownProps {}
 
-export const NotificationsDropDown : React.FC<NotificationsDropDownProps>= props => {
+export const NotificationsDropDown : React.FC<NotificationsDropDownProps>= ({
+  
+}) => {
   return (
     <div>
       NotificationsDropDown
