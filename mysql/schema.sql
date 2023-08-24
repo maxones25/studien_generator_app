@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 03. Aug 2023 um 00:04
+-- Erstellungszeit: 24. Aug 2023 um 13:01
 -- Server-Version: 8.0.31
 -- PHP-Version: 8.0.19
 
@@ -20,6 +20,49 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `studien_generator_app`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `chat`
+--
+
+CREATE TABLE `chat` (
+  `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `participantId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `studyId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `chat_message`
+--
+
+CREATE TABLE `chat_message` (
+  `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `chatId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `directorId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `participantId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sentAt` datetime NOT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `chat_message_receipt`
+--
+
+CREATE TABLE `chat_message_receipt` (
+  `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `messageId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `directorId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `participantId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `readAt` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -63,8 +106,19 @@ CREATE TABLE `entity_field` (
   `modifiedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `entityId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` enum('Number','Text','Boolean','Enum','DateTime','Date','Time') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` json DEFAULT NULL
+  `type` enum('Number','Text','Boolean','Enum','DateTime','Date','Time') COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `entity_field_attribute`
+--
+
+CREATE TABLE `entity_field_attribute` (
+  `fieldId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` json NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -184,8 +238,20 @@ CREATE TABLE `form_schedule` (
   `configId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` enum('Flexible','Fix') COLLATE utf8mb4_unicode_ci NOT NULL,
   `period` enum('Day','Week','Month') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `frequency` int DEFAULT NULL,
-  `data` json NOT NULL
+  `times` json NOT NULL,
+  `postpone` json DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `form_schedule_attribute`
+--
+
+CREATE TABLE `form_schedule_attribute` (
+  `scheduleId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` json NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -214,7 +280,7 @@ CREATE TABLE `participant` (
   `modifiedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `groupId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `groupId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `studyId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `subscription` text COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -229,6 +295,24 @@ CREATE TABLE `participant_attributes` (
   `participantId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` json NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `participant_notification`
+--
+
+CREATE TABLE `participant_notification` (
+  `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `participantId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `taskId` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `readAt` datetime DEFAULT NULL,
+  `processed` tinyint DEFAULT NULL,
+  `oldDate` datetime DEFAULT NULL,
+  `newDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -276,6 +360,18 @@ CREATE TABLE `study` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `study_attribute`
+--
+
+CREATE TABLE `study_attribute` (
+  `studyId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` json NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `study_member`
 --
 
@@ -301,12 +397,39 @@ CREATE TABLE `task` (
   `originalScheduledAt` datetime NOT NULL,
   `scheduledAt` datetime NOT NULL,
   `completedAt` datetime NOT NULL,
+  `postponable` tinyint NOT NULL,
   `rescheduled` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indizes der exportierten Tabellen
 --
+
+--
+-- Indizes für die Tabelle `chat`
+--
+ALTER TABLE `chat`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `REL_3f3aa88e9b715e0588e0de7664` (`participantId`),
+  ADD KEY `FK_3da286180a6bc5252080abd90d6` (`studyId`);
+
+--
+-- Indizes für die Tabelle `chat_message`
+--
+ALTER TABLE `chat_message`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_6d2db5b1118d92e561f5ebc1af0` (`chatId`),
+  ADD KEY `FK_9c97c90c33d9e3dfb9f66cadac3` (`directorId`),
+  ADD KEY `FK_5a9f8cc21d90e85d38da6f1d519` (`participantId`);
+
+--
+-- Indizes für die Tabelle `chat_message_receipt`
+--
+ALTER TABLE `chat_message_receipt`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_ecdf9d9938ab9489474c34b76bd` (`messageId`),
+  ADD KEY `FK_62ac4616e87a07e36f576926653` (`directorId`),
+  ADD KEY `FK_bd4f493711b826b89f39c224286` (`participantId`);
 
 --
 -- Indizes für die Tabelle `director`
@@ -330,6 +453,12 @@ ALTER TABLE `entity_field`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_name_for_entity` (`name`,`entityId`),
   ADD KEY `FK_332fbac71f1d14895743673f802` (`entityId`);
+
+--
+-- Indizes für die Tabelle `entity_field_attribute`
+--
+ALTER TABLE `entity_field_attribute`
+  ADD PRIMARY KEY (`fieldId`,`key`);
 
 --
 -- Indizes für die Tabelle `form`
@@ -392,6 +521,12 @@ ALTER TABLE `form_schedule`
   ADD KEY `FK_2c7456df55778cd93bfa0f100b7` (`configId`);
 
 --
+-- Indizes für die Tabelle `form_schedule_attribute`
+--
+ALTER TABLE `form_schedule_attribute`
+  ADD PRIMARY KEY (`scheduleId`,`key`);
+
+--
 -- Indizes für die Tabelle `group`
 --
 ALTER TABLE `group`
@@ -413,6 +548,14 @@ ALTER TABLE `participant`
 --
 ALTER TABLE `participant_attributes`
   ADD PRIMARY KEY (`participantId`,`key`);
+
+--
+-- Indizes für die Tabelle `participant_notification`
+--
+ALTER TABLE `participant_notification`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_e6f6210c99ddb2b1cccb0bcdcb4` (`participantId`),
+  ADD KEY `FK_0134553e5dcd951eed4e1db6156` (`taskId`);
 
 --
 -- Indizes für die Tabelle `record`
@@ -439,6 +582,12 @@ ALTER TABLE `study`
   ADD UNIQUE KEY `IDX_8b76a3627bb31d4880f7c5e9e0` (`name`);
 
 --
+-- Indizes für die Tabelle `study_attribute`
+--
+ALTER TABLE `study_attribute`
+  ADD PRIMARY KEY (`studyId`,`key`);
+
+--
 -- Indizes für die Tabelle `study_member`
 --
 ALTER TABLE `study_member`
@@ -459,6 +608,29 @@ ALTER TABLE `task`
 --
 
 --
+-- Constraints der Tabelle `chat`
+--
+ALTER TABLE `chat`
+  ADD CONSTRAINT `FK_3da286180a6bc5252080abd90d6` FOREIGN KEY (`studyId`) REFERENCES `study` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_3f3aa88e9b715e0588e0de7664c` FOREIGN KEY (`participantId`) REFERENCES `participant` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints der Tabelle `chat_message`
+--
+ALTER TABLE `chat_message`
+  ADD CONSTRAINT `FK_5a9f8cc21d90e85d38da6f1d519` FOREIGN KEY (`participantId`) REFERENCES `participant` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_6d2db5b1118d92e561f5ebc1af0` FOREIGN KEY (`chatId`) REFERENCES `chat` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_9c97c90c33d9e3dfb9f66cadac3` FOREIGN KEY (`directorId`) REFERENCES `director` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints der Tabelle `chat_message_receipt`
+--
+ALTER TABLE `chat_message_receipt`
+  ADD CONSTRAINT `FK_62ac4616e87a07e36f576926653` FOREIGN KEY (`directorId`) REFERENCES `director` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_bd4f493711b826b89f39c224286` FOREIGN KEY (`participantId`) REFERENCES `participant` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_ecdf9d9938ab9489474c34b76bd` FOREIGN KEY (`messageId`) REFERENCES `chat_message` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints der Tabelle `entity`
 --
 ALTER TABLE `entity`
@@ -469,6 +641,12 @@ ALTER TABLE `entity`
 --
 ALTER TABLE `entity_field`
   ADD CONSTRAINT `FK_332fbac71f1d14895743673f802` FOREIGN KEY (`entityId`) REFERENCES `entity` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints der Tabelle `entity_field_attribute`
+--
+ALTER TABLE `entity_field_attribute`
+  ADD CONSTRAINT `FK_8abc19c63dd4d09efde3e5ab575` FOREIGN KEY (`fieldId`) REFERENCES `entity_field` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints der Tabelle `form`
@@ -524,6 +702,12 @@ ALTER TABLE `form_schedule`
   ADD CONSTRAINT `FK_2c7456df55778cd93bfa0f100b7` FOREIGN KEY (`configId`) REFERENCES `form_configuration` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints der Tabelle `form_schedule_attribute`
+--
+ALTER TABLE `form_schedule_attribute`
+  ADD CONSTRAINT `FK_babbb93ca00b11647fab74d4450` FOREIGN KEY (`scheduleId`) REFERENCES `form_schedule` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints der Tabelle `group`
 --
 ALTER TABLE `group`
@@ -543,6 +727,13 @@ ALTER TABLE `participant_attributes`
   ADD CONSTRAINT `FK_f8f6451da7d6e9cd88c4923149a` FOREIGN KEY (`participantId`) REFERENCES `participant` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints der Tabelle `participant_notification`
+--
+ALTER TABLE `participant_notification`
+  ADD CONSTRAINT `FK_0134553e5dcd951eed4e1db6156` FOREIGN KEY (`taskId`) REFERENCES `task` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_e6f6210c99ddb2b1cccb0bcdcb4` FOREIGN KEY (`participantId`) REFERENCES `participant` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints der Tabelle `record`
 --
 ALTER TABLE `record`
@@ -556,6 +747,12 @@ ALTER TABLE `record`
 ALTER TABLE `record_field`
   ADD CONSTRAINT `FK_0243673ce23731f3927a09223ea` FOREIGN KEY (`entityFieldId`) REFERENCES `entity_field` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_b0c92e92f6128c8f8a46e4c8abe` FOREIGN KEY (`recordId`) REFERENCES `record` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints der Tabelle `study_attribute`
+--
+ALTER TABLE `study_attribute`
+  ADD CONSTRAINT `FK_e485f914bd1fff4dd9e003c6f5c` FOREIGN KEY (`studyId`) REFERENCES `study` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints der Tabelle `study_member`

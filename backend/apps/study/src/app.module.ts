@@ -13,8 +13,6 @@ import { PushModule } from './modules/push/push.module';
 import { HealthModule } from '@shared/modules/health/health.module';
 import { ChatModule } from './modules/chat/chat.module';
 
-// TEST
-
 @Module({
   imports: [
     ConfigModule(['.env.database', '.env.study']),
