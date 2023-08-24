@@ -16,7 +16,7 @@ describe("app bar", () => {
 
   it("should go back to tasks page", () => {
     cy.fetchAccessToken("participant").then(() => {
-      cy.visit("/events");
+      cy.visit("/calendar");
       cy.getByTestId("go-back-app-bar").click();
       cy.getByTestId("tasks page").should("exist");;
     });
@@ -25,7 +25,7 @@ describe("app bar", () => {
   it("should go to chat page", () => {
     cy.fetchAccessToken("participant").then(() => {
       cy.visit("/");
-      cy.getByTestId("go-mail-app-bar").click();
+      cy.getByTestId("go-chat-app-bar").click();
       cy.getByTestId("chat page").should("exist");;
     });
   });

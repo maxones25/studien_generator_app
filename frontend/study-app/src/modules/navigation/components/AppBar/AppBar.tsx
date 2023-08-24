@@ -69,7 +69,7 @@ export const AppBar : React.FC<AppBarProps>= () => {
             aria-label="menu"
             sx={{ ml: 1 }}
             onClick={navigate.handle('../chat')}
-            testId='go-mail-app-bar'
+            testId='go-chat-app-bar'
             Icon={
               <Badge color='error' badgeContent={newMessagesCount}>
                 <MailOutline /> 
