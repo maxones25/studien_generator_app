@@ -25,15 +25,18 @@ jobs:
             admin_backend:
               - 'backend/apps/admin/**'
               - 'backend/libs/**'
+              - 'database-docker-compose.yaml'
             admin_frontend:
               - 'frontend/admin-app/**'
               - 'tests/cypress/e2e/admin-app/**'
             study_backend:
               - 'backend/apps/study/**'
               - 'backend/libs/**'
+              - 'database-docker-compose.yaml'
             study_frontend:
               - 'frontend/study-app/**'
               - 'tests/cypress/e2e/study-app/**'
+              - 'study-docker-compose.yaml'
 
   admin-backend-tests:
     runs-on: ubuntu-latest
