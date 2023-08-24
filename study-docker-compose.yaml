@@ -56,11 +56,6 @@ services:
       - 4000:4000
     networks:
       - study-app-network
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:4000"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
 
 networks:
   study-app-network:

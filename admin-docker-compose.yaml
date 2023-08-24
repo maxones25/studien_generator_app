@@ -40,7 +40,7 @@ services:
       - study-app-network
     healthcheck:
       test:
-        ["CMD", "curl", "--fail", "--silent", "http://localhost:8000/health"]
+        ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -56,11 +56,6 @@ services:
       - 3000:3000
     networks:
       - study-app-network
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:3000"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
 
 networks:
   study-app-network:
