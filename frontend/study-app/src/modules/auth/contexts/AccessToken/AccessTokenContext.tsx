@@ -1,5 +1,5 @@
 import { useStoredState } from "@modules/core/hooks";
-import { createContext, FC, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, FC, ReactNode, useContext, useEffect, useMemo, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { AccessTokenData } from "@modules/auth/types";
 
@@ -35,8 +35,13 @@ const useAccessTokenContextValue = () => {
     if (!value) setData(undefined)
   }, [value])
 
-  const currentDateTime = () => Math.floor(new Date().getTime() / 1000)
-  const isValid = !data ? false : data.exp < currentDateTime() ? false : true;
+  const isValid = useMemo(() => {
+    if (typeof value !== "string") return false;
+    const { exp } = jwt_decode(value) as { exp: number };
+    const currentDateTime = Math.floor(new Date().getTime() / 1000)
+    if(exp < currentDateTime) return false
+    return true;
+  }, [value]);
   const participantId = data?.participantId;
   const studyId = data?.participantId;
   const groupId = data?.groupId;

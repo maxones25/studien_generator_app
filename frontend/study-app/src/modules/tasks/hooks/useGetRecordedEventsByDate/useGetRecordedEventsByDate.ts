@@ -12,7 +12,9 @@ export const getGetRecordedEventsByDateKey = (date: Dayjs) => ["getRecordedEvent
 export const useGetRecordedEventsByDate = (options : useGetRecordedEventsByDateOptions) => {
   const date = options.date
   return useReadRequest<Record[]>(getGetRecordedEventsByDateKey(date), (options) =>
-    apiRequest(`/records/events/${date.toDate()}`, {...options }),
+    apiRequest(`/records`, {params: {
+      date: date.toDate()
+    }, ...options }),
     {
       keepPreviousData: true
     }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Query, Post } from '@nestjs/common';
 import { RecordsService } from './records.service';
 import { CreateRecordDto } from './dtos/CreateRecordDto';
 import { ParticipantId } from '@study/decorators/participant-id.decorator';
@@ -12,30 +12,23 @@ export class RecordsController {
     @ParticipantId() participantId: string,
     @Body() data: CreateRecordDto
   ) {
-    return this.recordsService.create(participantId, data);
+    return await this.recordsService.create(participantId, data);
   }
 
   @Get()
-  async getAll(
+  async getRecords(
     @ParticipantId() participantId: string,
+    @Query('lastUpdated') lastUpdated?: string,
+    @Query('date') date?: string,
   ) {
-    return this.recordsService.findAll(participantId);
-  }
-
-  @Get('/:lastUpdated')
-  async getAllNew(
-    @Param('lastUpdated') lastUpdated: string,
-    @ParticipantId() participantId: string,
-  ) {
-    const date = new Date(lastUpdated);
-    return await this.recordsService.findAll(participantId, date);
-  }
-
-  @Get('events/:date')
-  async getRecordedEventsByDate(
-    @ParticipantId() participantId: string,
-    @Param('date') date: Date,
-  ) {
-    return this.recordsService.findRecordedEventsByDate(participantId, date);
+    if (date) {
+      const parsedDate = new Date(date);
+      return await this.recordsService.findRecordedEventsByDate(participantId, parsedDate);
+    }
+    if (lastUpdated) {
+      const parsedDate = new Date(lastUpdated);
+      return await this.recordsService.findAll(participantId, parsedDate);
+    }
+    return await this.recordsService.findAll(participantId);
   }
 }

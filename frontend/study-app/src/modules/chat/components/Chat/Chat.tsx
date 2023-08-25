@@ -10,16 +10,17 @@ const Chat: React.FC = () => {
   const readMessages = useReadMessages();
   const newMessagesCount = getNewMessagesCount();
 
-  if (newMessagesCount > 0)
-  readMessages.mutate({
-    readAt: new Date()
-  });
+
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   useEffect(() => {
+    if (newMessagesCount > 0)
+      readMessages.mutate({
+        readAt: new Date()
+      });
     chatEndRef.current?.scrollIntoView({ });
   }, []);
 

@@ -12,6 +12,8 @@ import { FormsModule } from '@study/modules/forms/forms.module';
 import { PushModule } from './modules/push/push.module';
 import { HealthModule } from '@shared/modules/health/health.module';
 import { ChatModule } from './modules/chat/chat.module';
+import { TaskModule } from './modules/tasks/tasks.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { ChatModule } from './modules/chat/chat.module';
     RecordsModule,
     PushModule,
     ChatModule,
+    TaskModule,
+    NotificationsModule
   ],
   providers: [
     {

@@ -34,6 +34,7 @@ export const dbPromise = openDB('study-app', 1, {
     if (!db.objectStoreNames.contains('notifications')) {
       const chat = db.createObjectStore('notifications', { keyPath: 'id' });
       chat.createIndex('readAt', 'readAt', { unique: false });
+      chat.createIndex('modifiedAt', 'modifiedAt', { unique: false });
     };
 
 
