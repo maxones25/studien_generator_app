@@ -15,7 +15,6 @@ import {
   Form as FormEntity,
 } from '@entities';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
-import { AddToGroupDto } from '../dtos/AddToGroupDto';
 import { Group } from '@admin/groups/group.decorator';
 import { Form } from '@admin/forms/forms/decorators/form.decorator';
 import { FormGuard } from '@admin/forms/forms/guards/form.guard';
@@ -23,12 +22,15 @@ import { Config } from '../config.decorator';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { GroupGuard } from '@admin/groups/guards/group.guard';
 import { ConfigsService } from '../services/configs.service';
+import { GroupsService } from '@admin/groups/groups.service';
 
 @Controller('forms')
-export class ConfigsController {
+export class ConfigsCommands {
   constructor(
     @Inject(ConfigsService)
     private configsService: ConfigsService,
+    @Inject(GroupsService)
+    private groupsService: GroupsService,
   ) {}
 
   @Post('addToGroup')
@@ -38,14 +40,31 @@ export class ConfigsController {
     @Query() { studyId }: StudyQueryDto,
     @Form() form: FormEntity,
     @Group() group: GroupEntity,
-    @Body() body: AddToGroupDto,
   ) {
+    const configs = await this.configsService.getByGroupAndForm(
+      group.id,
+      form.id,
+    );
+
+    if (configs.length > 1)
+      throw new BadRequestException('config already exists');
+
+    const config = configs[0];
+
+    const type =
+      configs.length === 0
+        ? FormConfigType.TimeDependent
+        : configs[0].type === FormConfigType.TimeDependent
+        ? FormConfigType.TimeIndependent
+        : FormConfigType.TimeDependent;
+
     const id = await this.configsService.create(
       form.id,
       studyId,
       group.id,
-      body,
+      type,
     );
+
     return {
       id,
       group: {
@@ -98,7 +117,16 @@ export class ConfigsController {
   @Post('removeFromGroup')
   @Roles('admin')
   @UseGuards(ConfigGuard)
-  removeFormFromGroup(@Config() form: FormConfiguration) {
-    return this.configsService.delete(form.id);
+  async removeFormFromGroup(@Config() form: FormConfiguration) {
+    const group = await this.groupsService.getById(form.groupId);
+    if (group === null)
+      throw new BadRequestException('form is not a group form');
+    await this.configsService.delete(form.id);
+    return {
+      group: {
+        id: group.id,
+        name: group.name,
+      },
+    };
   }
 }

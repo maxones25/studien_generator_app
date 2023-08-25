@@ -7,23 +7,24 @@ export interface UseGetGroupFormsOptions {
   groupId: string;
 }
 
-export const getGetGroupFormsKey = (data: {
+export const getGetGroupFormsKey = (deps: {
   studyId: string;
   groupId: string;
-}) => ["getGroupForms", data];
+}) => ["getGroupForms", deps];
 
 export const useGetGroupForms = ({ groupId }: UseGetGroupFormsOptions) => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
 
   return useReadRequest<FormConfig[]>(
     getGetGroupFormsKey({
-      studyId: studyId!,
+      studyId,
       groupId,
     }),
     ({ ...options }) =>
-      apiRequest(`/studies/${studyId}/formsByGroup`, {
+      apiRequest(`/forms/getByGroup`, {
         ...options,
         params: {
+          studyId,
           groupId,
         },
       })

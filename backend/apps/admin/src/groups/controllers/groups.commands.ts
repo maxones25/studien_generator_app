@@ -15,6 +15,7 @@ import { GroupGuard } from '../guards/group.guard';
 import { Roles } from '@admin/roles/roles.decorator';
 import { GroupQueryDto } from '../dtos/GroupQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 
 @Controller('groups')
 @UseGuards(StudyGuard)
@@ -27,7 +28,7 @@ export class GroupsCommands {
   @Post('create')
   @Roles('admin', 'employee')
   async create(
-    @Param('studyId', new ValidateIdPipe()) studyId: string,
+    @Query() { studyId }: StudyQueryDto,
     @Body() body: CreateGroupDto,
   ) {
     return this.groupsService.create(studyId, body);
@@ -43,10 +44,10 @@ export class GroupsCommands {
     return this.groupsService.changeName(groupId, name);
   }
 
-  @Post(':groupId')
+  @Post('delete')
   @Roles('admin')
   @UseGuards(GroupGuard)
-  async delete(@Param('groupId', new ValidateIdPipe()) groupId: string) {
+  async delete(@Query() { groupId }: GroupQueryDto) {
     return this.groupsService.delete(groupId);
   }
 }

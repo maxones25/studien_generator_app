@@ -5,17 +5,18 @@ import { useStudyId } from "@modules/navigation/hooks";
 import { getGetGroupsKey } from "..";
 
 export const useDeleteGroup = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
 
   return useWriteRequest<GroupFormData, void>(
-    ({ body: { id }, ...options }) =>
-      apiRequest(`/studies/${studyId}/groups/${id}`, {
-        method: "DELETE",
+    ({ body: { id: groupId }, ...options }) =>
+      apiRequest(`/groups/delete`, {
         ...options,
+        method: "POST",
+        params: { studyId, groupId },
       }),
     {
       onSuccess: ({ variables, queryClient }) => {
-        queryClient.invalidateQueries(getGetGroupsKey());
+        queryClient.invalidateQueries(getGetGroupsKey({ studyId }));
         return {
           text: "record deleted",
           params: {

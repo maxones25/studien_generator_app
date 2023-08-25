@@ -5,21 +5,22 @@ import { useGroupId, useStudyId } from "@modules/navigation/hooks";
 import { getGetGroupFormsKey } from "..";
 
 export const useDeactivateForm = () => {
-  const studyId = useStudyId();
-  const groupId = useGroupId();
+  const studyId = useStudyId()!;
+  const groupId = useGroupId()!;
   return useWriteRequest<FormConfig, unknown>(
-    ({ body: { id: formConfigId }, ...options }) =>
-      apiRequest(`/studies/${studyId}/deactivateForm`, {
-        method: "POST",
+    ({ body: { id: configId }, ...options }) =>
+      apiRequest(`/forms/deactivate`, {
         ...options,
+        method: "POST",
         params: {
-          formConfigId,
+          studyId,
+          configId,
         },
       }),
     {
       onSuccess({ variables, queryClient }) {
         queryClient.invalidateQueries(
-          getGetGroupFormsKey({ studyId: studyId!, groupId: groupId! })
+          getGetGroupFormsKey({ studyId, groupId })
         );
         return {
           text: "deactivate form",

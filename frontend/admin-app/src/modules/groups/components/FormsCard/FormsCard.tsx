@@ -4,15 +4,18 @@ import {
   IconButton,
   Row,
   Text,
+  TooltipGuard,
 } from "@modules/core/components";
 import { useMenuAnchor } from "@modules/core/hooks";
-import { useGetForms } from "@modules/forms/hooks";
-import { FormConfigType } from "@modules/forms/types";
-import { useAddGroupForm, useGetGroupForms } from "@modules/formConfigs/hooks";
+import {
+  useAddGroupForm,
+  useGetGroupForms,
+  useGetNonGroupForms,
+} from "@modules/formConfigs/hooks";
 import { useGroupId } from "@modules/navigation/hooks";
 import { Add } from "@mui/icons-material";
 import { Divider, Menu, MenuItem } from "@mui/material";
-import React, { useMemo } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { FormListItem } from "..";
 
@@ -24,26 +27,17 @@ export const FormsCard: React.FC<FormsCardProps> = () => {
   const getGroupForms = useGetGroupForms({ groupId: groupId! });
   const addGroupForm = useAddGroupForm();
   const menuAnchor = useMenuAnchor();
-  const getForms = useGetForms();
+  const getNonGroupForms = useGetNonGroupForms();
 
   const handleAddForm = (formId: string) => () => {
     addGroupForm.mutate({
-      isActive: false,
       groupId: groupId!,
-      type: FormConfigType.TimeIndependent,
       formId,
     });
     menuAnchor.close();
   };
 
-  const availableForms = useMemo(() => {
-    if (!getForms.data) return [];
-    if (!getGroupForms.data) return [];
-    return getForms.data.filter(
-      (form) =>
-        !getGroupForms.data.some((groupForm) => form.id === groupForm.form.id)
-    );
-  }, [getForms.data, getGroupForms.data]);
+  const availableForms = getNonGroupForms.data ?? [];
 
   const hasForms = availableForms.length > 0;
 
@@ -51,17 +45,23 @@ export const FormsCard: React.FC<FormsCardProps> = () => {
     <Column flex={1} boxShadow={4}>
       <Row p={2} justifyContent="space-between">
         <Text>{t("forms")}</Text>
-        <IconButton
-          testId="add group form button"
-          Icon={<Add />}
-          onClick={menuAnchor.open}
-          disabled={!hasForms}
-          tooltipProps={{
-            title: hasForms
-              ? t("add data", { data: t("form") })
-              : t("no records found", { records: t("forms") }),
+        <TooltipGuard
+          validate={{
+            "all forms added": !hasForms,
           }}
-        />
+        >
+          {(disabled) => (
+            <IconButton
+              testId="add group form button"
+              Icon={<Add />}
+              onClick={menuAnchor.open}
+              disabled={disabled}
+              tooltipProps={{
+                title: t("add data", { data: t("form") }),
+              }}
+            />
+          )}
+        </TooltipGuard>
         <Menu
           open={menuAnchor.isOpen}
           anchorEl={menuAnchor.element}

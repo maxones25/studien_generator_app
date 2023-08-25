@@ -4,19 +4,20 @@ import { GroupFormData } from "@modules/groups/types";
 import { useStudyId } from "@modules/navigation/hooks";
 import { getGetGroupKey, getGetGroupsKey } from "..";
 
-export const useUpdateGroup = () => {
-  const studyId = useStudyId();
+export const useChangeName = () => {
+  const studyId = useStudyId()!;
 
   return useWriteRequest<GroupFormData, void>(
-    ({ body: { id, ...body }, ...options }) =>
-      apiRequest(`/studies/${studyId}/groups/${id}`, {
-        method: "PUT",
+    ({ body: { id: groupId, name }, ...options }) =>
+      apiRequest(`/groups/changeName`, {
         ...options,
-        body,
+        method: "POST",
+        params: { studyId, groupId },
+        body: { name },
       }),
     {
       onSuccess: ({ variables: group, queryClient }) => {
-        queryClient.invalidateQueries(getGetGroupsKey());
+        queryClient.invalidateQueries(getGetGroupsKey({ studyId }));
         queryClient.invalidateQueries(getGetGroupKey({ groupId: group.id! }));
         return {
           text: "record updated",

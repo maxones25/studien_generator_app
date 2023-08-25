@@ -1,4 +1,9 @@
-import { DataListItem, IconButton, Row } from "@modules/core/components";
+import {
+  DataListItem,
+  DeleteDialog,
+  IconButton,
+  Row,
+} from "@modules/core/components";
 import { useOpen } from "@modules/core/hooks";
 import { FormConfig } from "@modules/forms/types";
 import { Close, Delete, MoreTime } from "@mui/icons-material";
@@ -16,6 +21,7 @@ import { FormSchedulesCard } from "..";
 import {
   useActivateForm,
   useDeactivateForm,
+  useRemoveGroupForm,
   useSetFormTimeDependent,
   useSetFormTimeIndependent,
 } from "@modules/formConfigs/hooks";
@@ -32,6 +38,8 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
   const setFormTimeIndependent = useSetFormTimeIndependent();
   const activateForm = useActivateForm();
   const deactivateForm = useDeactivateForm();
+  const removeGroupForm = useRemoveGroupForm();
+  const deleteDialog = useOpen();
 
   const isTimeDependent = form.type === "TimeDependent";
 
@@ -53,6 +61,12 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
     } else {
       deactivateForm.mutate(form);
     }
+  };
+
+  const handleRemoveGroupForm = () => {
+    removeGroupForm.mutateAsync(form).then(() => {
+      deleteDialog.close();
+    });
   };
 
   return (
@@ -78,17 +92,25 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
             onClick={handleChangeType}
             label={t("TimeDependent")}
           />
-          <Tooltip
-            title={t("delete record", {
-              record: t("form"),
-            })}
-          >
-            <IconButton
-              testId="delete form icon button"
-              Icon={<Delete />}
-              sx={{ ml: 1 }}
-            />
-          </Tooltip>
+          <IconButton
+            testId="delete form icon button"
+            Icon={<Delete />}
+            sx={{ ml: 1 }}
+            onClick={deleteDialog.open}
+            tooltipProps={{
+              title: t("delete record", {
+                record: t("form"),
+              }),
+            }}
+          />
+          <DeleteDialog
+            record="form"
+            open={deleteDialog.isOpen}
+            target={form.form.name}
+            onCancel={deleteDialog.close}
+            onConfirm={handleRemoveGroupForm}
+            isLoading={removeGroupForm.isLoading}
+          />
           <Tooltip
             title={
               subcard.isOpen

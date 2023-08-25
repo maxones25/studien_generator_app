@@ -2,24 +2,31 @@ import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { FormConfig } from "@modules/forms/types";
 import { useGroupId, useStudyId } from "@modules/navigation/hooks";
-import { getGetGroupFormsKey } from "..";
+import { getGetGroupFormsKey, getGetNonGroupFormsKey } from "..";
 
 export const useSetFormTimeIndependent = () => {
-  const studyId = useStudyId();
-  const groupId = useGroupId();
+  const studyId = useStudyId()!;
+  const groupId = useGroupId()!;
   return useWriteRequest<FormConfig, boolean>(
-    ({ body: { id: formConfigId }, ...options }) =>
-      apiRequest(`/studies/${studyId}/setFormTimeIndependent`, {
+    ({ body: { id: configId }, ...options }) =>
+      apiRequest(`/forms/setTimeIndependent`, {
         method: "POST",
         ...options,
         params: {
-          formConfigId,
+          studyId,
+          configId,
         },
       }),
     {
       onSuccess({ queryClient, variables }) {
         queryClient.invalidateQueries(
-          getGetGroupFormsKey({ studyId: studyId!, groupId: groupId! })
+          getGetGroupFormsKey({ studyId, groupId })
+        );
+        queryClient.invalidateQueries(
+          getGetNonGroupFormsKey({
+            studyId,
+            groupId,
+          })
         );
         return {
           text: "set form time independent",

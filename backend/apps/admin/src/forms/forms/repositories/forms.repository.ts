@@ -3,6 +3,8 @@ import { Form } from '@entities/form.entity';
 import { Repository } from 'typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FormConfiguration } from '@entities';
+import { FormConfigType } from '@shared/enums/form-config-type.enum';
 
 @Injectable()
 export class FormsRepository extends RecordRepository<Form> {
@@ -15,6 +17,26 @@ export class FormsRepository extends RecordRepository<Form> {
 
   getRelatedByStudy(studyId: string, id: string): Promise<any> {
     return this.db.findOne({ where: { id, studyId } });
+  }
+
+  getNonGroup(groupId: string) {
+    return this.db
+      .createQueryBuilder('f')
+      .select(['f.id', 'f.name'])
+      .leftJoin(
+        FormConfiguration,
+        'fg1',
+        'f.id = fg1.formId AND fg1.type = :independent AND fg1.groupId = :groupId',
+        { groupId, independent: FormConfigType.TimeIndependent },
+      )
+      .leftJoin(
+        FormConfiguration,
+        'fg2',
+        'f.id = fg2.formId AND fg2.type = :dependent AND fg2.groupId = :groupId',
+        { groupId, dependent: FormConfigType.TimeDependent },
+      )
+      .where('fg1.type IS NULL OR fg2.type IS NULL')
+      .getMany();
   }
 
   getByEntity(entityId: string) {

@@ -1,37 +1,37 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { FormConfig } from "@modules/forms/types";
-import { useGroupId, useStudyId } from "@modules/navigation/hooks";
+import { useStudyId } from "@modules/navigation/hooks";
 import { getGetGroupFormsKey, getGetNonGroupFormsKey } from "..";
 
-export const useSetFormTimeDependent = () => {
+export const useRemoveGroupForm = () => {
   const studyId = useStudyId()!;
-  const groupId = useGroupId()!;
-  return useWriteRequest<FormConfig, boolean>(
+
+  return useWriteRequest<FormConfig, { group: { id: string; name: string } }>(
     ({ body: { id: configId }, ...options }) =>
-      apiRequest(`/forms/setTimeDependent`, {
+      apiRequest(`/forms/removeFromGroup`, {
         ...options,
         method: "POST",
-        params: {
-          studyId,
-          configId,
-        },
+        params: { studyId, configId },
       }),
     {
-      onSuccess({ queryClient, variables }) {
+      onSuccess({ queryClient, variables: config, data: { group } }) {
         queryClient.invalidateQueries(
-          getGetGroupFormsKey({ studyId, groupId })
+          getGetGroupFormsKey({ studyId, groupId: group.id })
         );
         queryClient.invalidateQueries(
           getGetNonGroupFormsKey({
             studyId,
-            groupId,
+            groupId: group.id,
           })
         );
         return {
-          text: "set form time dependent",
+          text: "record removed to record",
           params: {
-            form: variables.form.name,
+            removedRecord: "form",
+            removedName: config.form.name,
+            record: "group",
+            name: group.name,
           },
         };
       },

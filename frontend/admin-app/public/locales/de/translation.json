@@ -136,5 +136,8 @@
   "group required": "Gruppe notwendig",
   "tasks": "Aufgaben",
   "type": "Art",
-  "howOften": "Wie oft?"
+  "howOften": "Wie oft?",
+  "record removed to record": "{{removedRecord}} '{{removedName}}' von {{record}} '{{name}}' entfernt",
+  "study is active": "Studie ist läuft bereits",
+  "all forms added": "Alle Formulare wurden bereits hinzugefügt"
 }

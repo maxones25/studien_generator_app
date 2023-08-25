@@ -6,13 +6,14 @@ import {
   Page,
   Row,
   Text,
+  TooltipGuard,
 } from "@modules/core/components";
 import { useNavigationHelper, useOpen } from "@modules/core/hooks";
 import { FormsCard } from "@modules/groups/components";
 import {
   useDeleteGroup,
   useGetGroup,
-  useUpdateGroup,
+  useChangeName,
 } from "@modules/groups/hooks";
 import { useStudy } from "@modules/studies/contexts";
 import { Delete } from "@mui/icons-material";
@@ -26,10 +27,10 @@ const GroupPage: React.FC<GroupPageProps> = () => {
   const { t } = useTranslation();
   const navigate = useNavigationHelper();
   const getGroup = useGetGroup();
-  const updateGroup = useUpdateGroup();
+  const updateGroup = useChangeName();
   const deleteGroup = useDeleteGroup();
   const deleteDialog = useOpen();
-  const study = useStudy()
+  const study = useStudy();
 
   if (getGroup.isLoading) {
     return <LinearProgress />;
@@ -54,19 +55,24 @@ const GroupPage: React.FC<GroupPageProps> = () => {
         >
           <Text variant="h6">{group.name}</Text>
         </Editable>
-        <OnlyAdmin>
-          {({ disabled }) => (
+        <TooltipGuard
+          validate={{
+            "study is active": study.isActive,
+            "admin only": study.role !== "admin",
+          }}
+        >
+          {(disabled) => (
             <IconButton
-              testId="delete participant"
+              testId="delete group"
               Icon={<Delete />}
               onClick={deleteDialog.open}
               tooltipProps={{
                 title: t("delete record", { record: t("group") }),
               }}
-              disabled={disabled || study.isActive}
+              disabled={disabled}
             />
           )}
-        </OnlyAdmin>
+        </TooltipGuard>
         <DeleteDialog
           open={deleteDialog.isOpen}
           record="group"

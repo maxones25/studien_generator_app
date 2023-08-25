@@ -11,10 +11,7 @@ const directorsProviders: Provider[] = [
   DirectorGuard,
   DirectorsRepository,
   PasswordService,
-  {
-    provide: APP_GUARD,
-    useClass: AuthGuard,
-  },
+  AuthGuard,
 ];
 
 export default directorsProviders;

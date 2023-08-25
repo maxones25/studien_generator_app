@@ -8,8 +8,8 @@ import {
 import { Task } from '.';
 import { FormConfiguration } from '.';
 import { FormScheduleAttribute } from './form-schedule-attribute.entity';
-import { FormScheduleType } from '@admin/forms/plans/enums/FormScheduleType';
-import { FormSchedulePeriod } from '@admin/forms/plans/enums/FormSchedulePeriod';
+import { FormScheduleType } from '@admin/forms/configs/enums/FormScheduleType';
+import { FormSchedulePeriod } from '@admin/forms/configs/enums/FormSchedulePeriod';
 
 export type Postpone = {
   times: number;

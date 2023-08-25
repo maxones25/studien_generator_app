@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FormConfiguration } from '@entities/form-configuration.entity';
 import { ConfigsRepository } from '../repositories/configs.repository';
-import { AddToGroupDto } from '../dtos/AddToGroupDto';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
 
@@ -12,21 +11,29 @@ export class ConfigsService implements StudyRelatedDataAccessor {
     private formConfigsRepository: ConfigsRepository,
   ) {}
 
+  // getNonGroup(groupId: string) {
+  //   this.formConfigsRepository.getNonGroup(groupId);
+  // }
+
   getRelatedByStudy(studyId: string, id: string): Promise<any> {
     return this.formConfigsRepository.getRelatedByStudy(studyId, id);
+  }
+
+  getByGroupAndForm(groupId: string, formId: string) {
+    return this.formConfigsRepository.getByGroupAndForm(groupId, formId);
   }
 
   async create(
     formId: string,
     studyId: string,
     groupId: string,
-    { type, isActive }: AddToGroupDto,
+    type: FormConfigType,
   ) {
     const config = await this.formConfigsRepository.create({
+      isActive: false,
       studyId,
       formId,
       groupId,
-      isActive,
       type,
     });
     return config.id;

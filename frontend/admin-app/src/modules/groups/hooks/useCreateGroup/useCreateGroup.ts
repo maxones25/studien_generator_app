@@ -5,14 +5,18 @@ import { useStudyId } from "@modules/navigation/hooks";
 import { getGetGroupsKey } from "..";
 
 export const useCreateGroup = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
 
   return useWriteRequest<GroupFormData, Group>(
     (options) =>
-      apiRequest(`/studies/${studyId}/groups`, { method: "POST", ...options }),
+      apiRequest(`/groups/create`, {
+        ...options,
+        method: "POST",
+        params: { studyId },
+      }),
     {
       onSuccess: ({ variables, queryClient }) => {
-        queryClient.invalidateQueries(getGetGroupsKey());
+        queryClient.invalidateQueries(getGetGroupsKey({ studyId }));
         return {
           text: "record created",
           params: {

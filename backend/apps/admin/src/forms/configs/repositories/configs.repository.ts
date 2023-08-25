@@ -14,10 +14,21 @@ export class ConfigsRepository extends RecordRepository<FormConfiguration> {
   getRelatedByStudy(studyId: any, id: string): Promise<any> {
     return this.db.findOne({ where: { id, studyId } });
   }
+
+  getByGroupAndForm(groupId: string, formId: string) {
+    return this.db.find({ where: { formId, groupId } });
+  }
+
   async getByGroup(groupId: string) {
     return this.db.find({
       where: {
         groupId,
+      },
+      order: {
+        form: {
+          name: 'DESC',
+        },
+        type: 'DESC',
       },
       relations: {
         form: true,

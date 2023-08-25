@@ -2,10 +2,10 @@ import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { FormConfigFormData } from "@modules/groups/types";
 import { useStudyId } from "@modules/navigation/hooks";
-import { getGetGroupFormsKey } from "..";
+import { getGetGroupFormsKey, getGetNonGroupFormsKey } from "..";
 
 export const useAddGroupForm = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
   return useWriteRequest<
     FormConfigFormData,
     {
@@ -14,31 +14,37 @@ export const useAddGroupForm = () => {
       group: { id: string; name: string };
     }
   >(
-    ({ body: { formId, groupId, ...body }, ...options }) =>
-      apiRequest(`/studies/${studyId}/addFormToGroup`, {
-        method: "POST",
-        body,
+    ({ body: { formId, groupId }, ...options }) =>
+      apiRequest(`/forms/addToGroup`, {
         ...options,
+        method: "POST",
         params: {
+          studyId,
           formId,
           groupId,
         },
       }),
     {
-      onSuccess: ({ queryClient, variables, data }) => {
+      onSuccess: ({ queryClient, data: { group, form } }) => {
         queryClient.invalidateQueries(
           getGetGroupFormsKey({
-            groupId: variables.groupId!,
-            studyId: studyId!,
+            groupId: group.id,
+            studyId,
+          })
+        );
+        queryClient.invalidateQueries(
+          getGetNonGroupFormsKey({
+            groupId: group.id,
+            studyId,
           })
         );
         return {
           text: "record added to record",
           params: {
             addedRecord: "form",
-            addedName: data.form.name,
+            addedName: form.name,
             record: "group",
-            name: data.group.name,
+            name: group.name,
           },
         };
       },

@@ -10,6 +10,9 @@ export const useGetGroup = () => {
   const groupId = useGroupId()!;
 
   return useReadRequest<Group>(getGetGroupKey({ groupId }), (options) =>
-    apiRequest(`/studies/${studyId}/groups/${groupId}`, { ...options })
+    apiRequest(`/groups/getById`, {
+      ...options,
+      params: { studyId, groupId },
+    })
   );
 };
