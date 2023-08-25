@@ -1,9 +1,22 @@
 import { Group } from '@entities/group.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { RecordRepository } from '@shared/modules/records/record.repository';
 import { Repository } from 'typeorm';
 
-export class GroupsRepository extends Repository<Group> {
+export class GroupsRepository extends RecordRepository<Group> {
+  constructor(
+    @InjectRepository(Group)
+    db: Repository<Group>,
+  ) {
+    super(db);
+  }
+
+  getRelatedByStudy(studyId: string, id: string) {
+    return this.db.findOne({ where: { id, studyId } });
+  }
+
   async getByStudy(studyId: string) {
-    return this.find({
+    return this.db.find({
       where: { studyId },
       select: {
         id: true,
@@ -14,7 +27,7 @@ export class GroupsRepository extends Repository<Group> {
   }
 
   async getById(id: string) {
-    return this.findOneOrFail({
+    return this.db.findOneOrFail({
       where: { id },
       select: {
         id: true,

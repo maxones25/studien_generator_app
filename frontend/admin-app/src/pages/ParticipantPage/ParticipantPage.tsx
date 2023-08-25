@@ -105,7 +105,7 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
         />
       </Toolbar>
       <Divider />
-      <Row flex={1} alignItems="flex-start">
+      <Row flex={1} alignItems="flex-start" overflowY="hidden">
         <Row m={2} p={1} boxShadow={4}>
           {isStarted ? (
             <Text>

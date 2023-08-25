@@ -7,9 +7,9 @@ import {
 } from 'typeorm';
 import { Task } from '.';
 import { FormConfiguration } from '.';
-import { FormScheduleType } from '@admin/groups/schedules/enums/FormScheduleType';
-import { FormSchedulePeriod } from '@admin/groups/schedules/enums/FormSchedulePeriod';
 import { FormScheduleAttribute } from './form-schedule-attribute.entity';
+import { FormScheduleType } from '@admin/forms/plans/enums/FormScheduleType';
+import { FormSchedulePeriod } from '@admin/forms/plans/enums/FormSchedulePeriod';
 
 export type Postpone = {
   times: number;

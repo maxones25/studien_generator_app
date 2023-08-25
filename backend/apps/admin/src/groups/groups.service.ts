@@ -1,27 +1,21 @@
-import { Group } from '@entities/group.entity';
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateGroupDto } from './dtos/CreateGroupDto';
-import { UpdateGroupDto } from './dtos/UpdateGroupDto';
 import { GroupsRepository } from './groups.repository';
-import { FormConfiguration } from '@entities/form-configuration.entity';
-import { CreateGroupFormConfigDto } from './dtos/CreateGroupFormConfigDto';
-import { UpdateGroupFormConfigDto } from './dtos/UpdateGroupFormConfigDto';
+import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
-export class GroupsService {
+export class GroupsService implements StudyRelatedDataAccessor {
   constructor(
     @Inject(GroupsRepository)
     private groupsRepository: GroupsRepository,
   ) {}
 
+  getRelatedByStudy(studyId: string, id: string): Promise<any> {
+    return this.groupsRepository.getRelatedByStudy(studyId, id);
+  }
+
   async create(studyId: string, { name }: CreateGroupDto) {
-    const group = new Group();
-
-    group.name = name;
-    group.studyId = studyId;
-
-    await this.groupsRepository.insert(group);
-
+    const group = await this.groupsRepository.create({ studyId, name });
     return group.id;
   }
 
@@ -33,13 +27,11 @@ export class GroupsService {
     return this.groupsRepository.getById(groupId);
   }
 
-  async update(groupId: string, { name }: UpdateGroupDto) {
-    const { affected } = await this.groupsRepository.update(groupId, { name });
-    return affected;
+  async changeName(groupId: string, name: string) {
+    return await this.groupsRepository.update(groupId, { name });
   }
 
   async delete(id: string) {
-    const { affected } = await this.groupsRepository.delete(id);
-    return affected;
+    return await this.groupsRepository.delete(id);
   }
 }

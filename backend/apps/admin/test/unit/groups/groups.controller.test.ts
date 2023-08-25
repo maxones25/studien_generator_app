@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
 import { Group } from '@entities/group.entity';
-import { GroupsController } from '@admin/groups/groups.controller';
+import { GroupsController } from '@admin/groups/controllers/groups.queries';
 import { GroupsService } from '@admin/groups/groups.service';
 import { GroupsRepository } from '@admin/groups/groups.repository';
 import { GroupGuard } from '@admin/groups/guards/group.guard';
@@ -74,11 +74,11 @@ describe('GroupsController', () => {
       name: faker.string.alphanumeric({ length: { min: 5, max: 15 } }),
     };
 
-    service.update.mockResolvedValueOnce(1);
+    service.changeName.mockResolvedValueOnce(1);
 
     const result = await controller.update(groupId, updateGroupDto);
 
-    expect(service.update).toBeCalledWith(groupId, updateGroupDto);
+    expect(service.changeName).toBeCalledWith(groupId, updateGroupDto);
     expect(result).toEqual(1);
   });
 

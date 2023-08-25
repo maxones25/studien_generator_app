@@ -14,6 +14,9 @@ const dataSource: DataSourceOptions = {
   database: process.env.DB_NAME,
   timezone: "Z",
   entities: [__dirname + '/libs/entities/src/*.entity.ts'],
+  migrations: [
+    __dirname + "/migrations/schema/*.ts"
+  ]
 };
 
 export function getConfig() {

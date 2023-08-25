@@ -23,7 +23,7 @@ export const TasksCard: React.FC<TasksCardProps> = ({ ...props }) => {
   const getTasks = useGetTasks();
 
   return (
-    <Column {...props} p={1} boxShadow={4}>
+    <Column {...props} p={1} boxShadow={4} overflowY="hidden">
       <Row p={1} pl={2} pr={2} mb={1}>
         <Text>{t("tasks")}</Text>
       </Row>

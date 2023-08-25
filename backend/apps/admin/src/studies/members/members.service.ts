@@ -10,7 +10,7 @@ export class MembersService implements StudyRelatedDataAccessor {
     private membersRepository: MembersRepository,
   ) {}
 
-  async getRelatedByStudy(studyId: string, directorId: string): Promise<any> {
+  async getRelatedByStudy(studyId: string, directorId: string) {
     return await this.membersRepository.getRelatedByStudy(studyId, directorId);
   }
 

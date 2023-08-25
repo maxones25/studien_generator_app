@@ -19,7 +19,6 @@ import { StudyQueryDto } from '../dtos/StudyQueryDto';
 import { SetActivationDto } from '../dtos/SetActivationDto';
 
 @Controller('studies')
-@UseGuards(StudyGuard)
 export class StudiesCommands {
   constructor(private readonly studiesService: StudiesService) {}
 
@@ -29,6 +28,7 @@ export class StudiesCommands {
   }
 
   @Post('changeName')
+  @UseGuards(StudyGuard)
   @Roles('admin')
   async update(
     @Query() { studyId }: StudyQueryDto,
@@ -37,19 +37,21 @@ export class StudiesCommands {
     return this.studiesService.changeName(studyId, name);
   }
 
-  @Delete(':studyId')
-  @Roles('admin')
-  async delete(@Param('studyId') studyId: string) {
-    return this.studiesService.delete(studyId);
-  }
-
   @Post('setDuration')
   @Roles('admin')
+  @UseGuards(StudyGuard)
   async setDuration(
     @Query() { studyId }: StudyQueryDto,
     @Body() body: SetDurationDto,
   ) {
     return this.studiesService.setDuration(studyId, body);
+  }
+
+  @Post('delete')
+  @Roles('admin')
+  @UseGuards(StudyGuard)
+  async delete(@Param('studyId') studyId: string) {
+    return this.studiesService.delete(studyId);
   }
 
   @Post('setStartDate')

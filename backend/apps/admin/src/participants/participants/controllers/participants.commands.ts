@@ -18,19 +18,19 @@ import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { StartStudyDto } from '../dtos/StartStudyDto';
 import { Participant } from '../participant.decorator';
 import { Participant as ParticipantEntity } from '@entities';
-import { FormSchedulesService } from '@admin/groups/schedules/form-schedules.service';
 import { StudiesService } from '@admin/studies/studies/studies.service';
 import { IsStudyActiveGuard } from '@admin/studies/studies/guards/IsStudyActiveGuard';
 import { TasksCalculatorService } from '@admin/participants/tasks/services/task-calculator.service';
 import { PasswordService } from '@shared/modules/password/password.service';
+import { SchedulesService } from '@admin/forms/configs/services/schedules.service';
 
 @Controller('participants')
 export class ParticipantsCommands {
   constructor(
     @Inject(ParticipantsService)
     private readonly participantsService: ParticipantsService,
-    @Inject(FormSchedulesService)
-    private readonly scheduleService: FormSchedulesService,
+    @Inject(SchedulesService)
+    private readonly scheduleService: SchedulesService,
     @Inject(TasksCalculatorService)
     private readonly tasksCalculatorService: TasksCalculatorService,
     @Inject(StudiesService)

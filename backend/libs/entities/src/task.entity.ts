@@ -3,14 +3,12 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToOne,
   OneToMany,
 } from 'typeorm';
 import { Form, ParticipantNotification } from '.';
 import { Participant } from '.';
 import { Record } from '.';
 import { FormSchedule } from '.';
-import { Transform } from 'class-transformer';
 
 @TypeOrmEntity()
 export class Task {

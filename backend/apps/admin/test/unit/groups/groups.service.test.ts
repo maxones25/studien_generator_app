@@ -58,7 +58,7 @@ describe('GroupsService', () => {
 
     repo.update.mockResolvedValue({ affected: 1 } as UpdateResult);
 
-    const affected = await service.update(groupId, updateDto);
+    const affected = await service.changeName(groupId, updateDto);
 
     expect(affected).toBe(1);
     expect(repo.update).toHaveBeenCalledWith(groupId, { name: updateDto.name });

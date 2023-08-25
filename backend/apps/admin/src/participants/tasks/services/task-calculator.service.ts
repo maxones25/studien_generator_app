@@ -1,6 +1,6 @@
-import { FormSchedulePeriod } from '@admin/groups/schedules/enums/FormSchedulePeriod';
-import { FormScheduleType } from '@admin/groups/schedules/enums/FormScheduleType';
-import { FormSchedule } from '@admin/groups/schedules/form-schedules.repository';
+import { FormSchedulePeriod } from '@admin/forms/configs/enums/FormSchedulePeriod';
+import { FormScheduleType } from '@admin/forms/configs/enums/FormScheduleType';
+import { FormSchedule } from '@admin/forms/configs/repositories/schedules.repository';
 import { DaysOfWeek, Task } from '@entities';
 import { Injectable } from '@nestjs/common';
 import datetime, { Time } from '@shared/modules/datetime/datetime';
@@ -49,7 +49,14 @@ export class TasksCalculatorService {
   }: GenerateTasksOptions) {
     return schedules
       .map(
-        ({ type, period, frequency, daysOfWeek, times: rawTimes, config: { formId } }) => {
+        ({
+          type,
+          period,
+          frequency,
+          daysOfWeek,
+          times: rawTimes,
+          config: { formId },
+        }) => {
           if (type === FormScheduleType.Flexible) return [];
 
           const times = rawTimes.map((time) => {
@@ -71,8 +78,8 @@ export class TasksCalculatorService {
               duration,
               times,
             );
-      
-            if (period === FormSchedulePeriod.Week)
+
+          if (period === FormSchedulePeriod.Week)
             return this.generateFixWeek(
               formId,
               participantId,
