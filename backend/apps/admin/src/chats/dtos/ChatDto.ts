@@ -1,5 +1,4 @@
-import { ChatMessageReceipt } from "@entities";
-import { IsArray, IsNumber, IsOptional, IsUUID } from "class-validator"
+import { IsNumber, IsOptional, IsUUID } from "class-validator"
 
 export class ChatDto {
   @IsUUID()
@@ -10,5 +9,5 @@ export class ChatDto {
 
   @IsOptional()
   @IsNumber()
-  read?: number;
+  unread?: number;
 }

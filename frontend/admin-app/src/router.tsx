@@ -1,6 +1,8 @@
 import { AuthenticationGuard, LoginGuard } from "@modules/auth/components";
 import { StudyContainer } from "@modules/navigation/components";
 import { StudyProvider } from "@modules/studies/contexts";
+import ChatPage from "@pages/ChatPage/ChatPage";
+import ChatsPage from "@pages/ChatsPage/ChatsPage";
 import EntitiesPage from "@pages/EntitiesPage/EntitiesPage";
 import EntityPage from "@pages/EntityPage/EntityPage";
 import FormPage from "@pages/FormPage/FormPage";
@@ -135,6 +137,21 @@ const router = createBrowserRouter([
                         element: <FormPage />,
                       },
                     ],
+                  },
+                ],
+              },
+              {
+                path: "chats",
+                element: (
+                  <>
+                    <ChatsPage />
+                    <Outlet />
+                  </>
+                ),
+                children: [
+                  {
+                    path: ":chatId",
+                    element: <ChatPage />,
                   },
                 ],
               },

@@ -8,3 +8,4 @@ export * from "./usePathParam/usePathParam";
 export * from "./usePageId/usePageId";
 
 export * from './useParticipantId/useParticipantId'
+export * from './useChatId/useChatId'

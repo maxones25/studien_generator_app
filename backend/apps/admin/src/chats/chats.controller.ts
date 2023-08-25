@@ -6,7 +6,7 @@ import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { Roles } from '@admin/roles/roles.decorator';
 import { DirectorId } from '@admin/directors/decorators/director-id.decorator';
 
-@Controller('/study/:studyId/chats')
+@Controller('/studies/:studyId/chats')
 export class ChatsController {
   constructor(private readonly chatService: ChatsService) {}
 
@@ -37,9 +37,13 @@ export class ChatsController {
     return this.chatService.readMessages(data, directorId, chatId);
   }
 
-  @Post()
+  @Post('/:chatId')
   @Roles('admin', 'employee')
-  async addMessage(@Body() message: AddMessageDto) {
-    return this.chatService.addMessage(message);
+  async addMessage(
+    @Param('chatId', new ValidateIdPipe()) chatId: string,
+    @DirectorId() directorId: string,
+    @Body() addMessageDto: AddMessageDto
+  ) {
+    return this.chatService.addMessage(addMessageDto, chatId, directorId);
   }
 }

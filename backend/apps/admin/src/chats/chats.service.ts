@@ -72,6 +72,20 @@ export class ChatsService {
       where: {
         studyId,
       },
+      relations: {
+        messages: true,
+        participant: true
+      },
+      select: {
+        messages: {
+          content: true,
+          sentAt: true,
+        },
+        participant: {
+          id: true,
+          number: true,
+        }
+      }
     });
     const receipts = await this.receiptRepository.find({
       where: {
@@ -91,12 +105,17 @@ export class ChatsService {
         }
       }
     });
-    const chats = result.map(({id, participantId}) => {
+    const chats = result.map(({id, participant, messages}) => {
       const chatReceipts = receipts.filter((receipt) => id === receipt.message.chatId)
       return {
         id,
-        participantId,
-        read: chatReceipts.filter((receipt) => !receipt.readAt)?.length
+        participantId: participant.id,
+        participantNumber: participant.number,
+        newestMessage: messages.reduce(
+          (maxDate, current) => (current.sentAt > maxDate.sentAt ? current : maxDate), 
+          { sentAt: new Date(0) }
+        ),
+        unread: chatReceipts.filter((receipt) => !receipt.readAt)?.length
       }
     });
     return chats;
@@ -107,20 +126,24 @@ export class ChatsService {
     directorId: string, 
     chatId: string
   ) {
-    const { affected } = await this.receiptRepository.update({
-      directorId,
-      message: {
-        chatId
-      }
-    }, {
-      readAt
-    });
-    return affected;
+    const receiptsToUpdate = await this.receiptRepository.createQueryBuilder('receipt')
+    .innerJoinAndSelect('receipt.message', 'message')
+    .where('receipt.directorId = :directorId', { directorId })
+    .andWhere('message.chatId = :chatId', { chatId })
+    .getMany();
+
+    for (let receipt of receiptsToUpdate) {
+        receipt.readAt = readAt;
+    }
+
+    await this.receiptRepository.save(receiptsToUpdate);
   };
 
-  async addMessage(message: AddMessageDto) {
-    return new AddMessageTransaction(this.entityManager).run(
-      message,
-    );
+  async addMessage(addMessageDto: AddMessageDto, chatId: string, directorId: string) {
+    return new AddMessageTransaction(this.entityManager).run({ 
+      addMessageDto,
+      chatId,
+      directorId,
+    });
   };
 }
