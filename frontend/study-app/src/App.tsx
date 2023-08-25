@@ -46,6 +46,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: Infinity,
+      refetchInterval: 1000 * 60 * 60
     },
   },
 });

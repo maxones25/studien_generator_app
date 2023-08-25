@@ -7,6 +7,10 @@ export const getGetNotificationsKey = () => ["getNotifications"];
 
 export const useGetNotifications = () => {
   return useReadRequest<Notification[]>(getGetNotificationsKey(), (options) =>
-    apiRequest(`/notifications`, { ...options })
+    apiRequest(`/notifications`, { ...options }),
+    {
+      refetchInterval: 1000 * 60,
+      refetchIntervalInBackground: true
+    }
   );
 }
