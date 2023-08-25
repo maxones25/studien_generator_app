@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, LessThanOrEqual, MoreThan, Repository } from 'typeorm';
 import { ReadNotificationsDto } from './dtos/ReadNotificationsDto';
-import { DeleteNotificationsDto } from './dtos/DeleteNotificationsDto';
 
 @Injectable()
 export class NotificationsService {

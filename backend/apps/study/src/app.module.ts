@@ -14,10 +14,14 @@ import { HealthModule } from '@shared/modules/health/health.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { TaskModule } from './modules/tasks/tasks.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { appProviders } from './app.providers';
+import { SchedulingModule } from './modules/scheduling/scheduling.module';
 
 @Module({
   imports: [
     ConfigModule(['.env.database', '.env.study']),
+    ScheduleModule.forRoot(),
     DbModule,
     JwtModule,
     HealthModule,
@@ -27,13 +31,9 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     PushModule,
     ChatModule,
     TaskModule,
-    NotificationsModule
+    NotificationsModule,
+    SchedulingModule,
   ],
-  providers: [
-    {
-      provide: APP_FILTER,
-      useClass: TypeOrmExceptionFilter,
-    },
-  ],
+  providers: appProviders,
 })
 export class AppModule {}

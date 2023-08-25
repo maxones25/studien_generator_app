@@ -38,6 +38,7 @@
     "@nestjs/jwt": "^10.1.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/schedule": "^3.0.3",
     "@nestjs/typeorm": "^10.0.0",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
