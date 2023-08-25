@@ -18,7 +18,7 @@ export class PostRecord extends Strategy {
     handler: StrategyHandler
   ): Promise<Response | undefined> {
     const db = await this.dbPromise;
-    const clone = request.clone()
+    const clone = request.clone();
     return clone.json()
     .then(async (data) => {
       const record: Record = data;
@@ -32,7 +32,7 @@ export class PostRecord extends Strategy {
         name: record.name,
       });
       try {
-        const response = await handler.fetch(request.clone());
+        const response = await handler.fetch(request);
         return response;
       } catch (error) {
         await this.queue.pushRequest({request: request});

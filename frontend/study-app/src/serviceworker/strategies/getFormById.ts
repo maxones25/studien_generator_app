@@ -1,5 +1,5 @@
 import { IDBPDatabase } from "idb";
-import { extractParam } from "../utils/utils"
+import { extractParams } from "../utils/utils"
 import { Strategy } from 'workbox-strategies';
 import { FormConfig } from "@modules/forms/types";
 
@@ -17,8 +17,8 @@ export class GetFormById extends Strategy {
     request: Request, 
   ): Promise<Response | undefined> {
       const db = await this.dbPromise;
-      const id = extractParam(request.url);
-      const data: FormConfig = await db.get(this.dbName, id);
+      const params = extractParams(request.url);
+      const data: FormConfig = await db.get(this.dbName, params.get('formId') ?? '');
       return new Response(JSON.stringify(data.form));
   } 
 }

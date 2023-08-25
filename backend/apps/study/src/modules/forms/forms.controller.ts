@@ -1,43 +1,30 @@
-import { Controller, Param, Get } from '@nestjs/common';
+import { Controller, Param, Get, Query } from '@nestjs/common';
 import { FormsService } from './forms.service';
 import { StudyId } from '@study/decorators/study-id.decorator';
 import { GroupId } from '@study/decorators/group-id.decorator';
-import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 
 @Controller('forms')
 export class FormsController {
   constructor(private readonly formsService: FormsService) {}
 
-  // @Get(':formId')
-  // async getById(
-  //   @Param('formId', new ValidateIdPipe()) formId: string,
-  //   ) {
-  //   return await this.formsService.getById(formId);
-  // }
-
   @Get()
-  async getAll(
+  async getForms(
     @StudyId() studyId: string, 
     @GroupId() groupId: string,
-    ) {
+    @Query('lastUpdated') lastUpdated?: string,
+    @Query('formId') formId?: string,
+    @Query('timeIndependent') timeIndependent?: boolean,
+  ) {
+    if (formId) {
+      return await this.formsService.getById(formId);
+    }
+    if (timeIndependent) {
+      return await this.formsService.getAllTimeIndependent(studyId, groupId);
+    }
+    if (lastUpdated) {
+      const date = new Date(lastUpdated);
+      return await this.formsService.getAll(studyId, groupId, date);
+    }
     return await this.formsService.getAll(studyId, groupId);
-  }
-
-  @Get(':lastUpdated')
-  async getAllNew(
-    @Param('lastUpdated') lastUpdated: string,
-    @StudyId() studyId: string, 
-    @GroupId() groupId: string,
-  ) {
-    const date = new Date(lastUpdated);
-    return await this.formsService.getAll(studyId, groupId, date);
-  }
-
-  @Get('time/independent')
-  async getTimeIndependent(
-    @StudyId() studyId: string,
-    @GroupId() groupId: string,
-  ) {
-    return await this.formsService.getAllTimeIndependent(studyId, groupId);
   }
 }

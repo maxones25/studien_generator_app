@@ -1,8 +1,7 @@
-export const extractParam = (url: string) => {
-  const pattern = /\/([^\/]+)\/?$/;
-  const match = url.match(pattern);
-  const result = decodeURIComponent(match?.[1] ?? '')
-  return result;
+export const extractParams = (urlString: string) => {
+  const url = new URL(urlString);
+  const params = url.searchParams;
+  return params;
 }
 
 export const dateRange = (date: string) => {
@@ -15,4 +14,19 @@ export const dateRange = (date: string) => {
 
 export const firstLetterToUpperCase = (word: string) => {
   return word.charAt(0).toUpperCase() + word.slice(1)
+}
+
+export const addParamsToUrl = (url: string, params: Record<string, any>) => {
+  const urlObject = new URL(url);
+  Object.keys(params).forEach(key => urlObject.searchParams.append(key, params[key]));
+  return urlObject
+}
+
+export const addLastUpdatedParams = async (
+  request: Request, lastUpdated: Date, body?: Record<string, any>
+) => {
+  return new Request(
+    addParamsToUrl(request.url, {lastUpdated: lastUpdated}), 
+    { headers: request.headers, method: request.method, body: JSON.stringify(body) }
+  );
 }

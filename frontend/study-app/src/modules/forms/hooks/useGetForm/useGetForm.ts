@@ -11,6 +11,8 @@ export const getGetFormKey = (formId: string) => ["getForm"+formId];
 export const useGetForm = (options : UseGetFormOptions) => {
   const formId = options.formId;
   return useReadRequest<FormData>(getGetFormKey(formId), (options) =>
-  apiRequest(`/forms/${formId}`, { ...options })
+  apiRequest(`/forms`, { params: {
+    formId: formId,
+  }, ...options })
   );
 }

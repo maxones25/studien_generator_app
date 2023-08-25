@@ -13,7 +13,7 @@ import { messageHandler } from './serviceworker/listeners/message/message-listen
 import { pushHandler } from './serviceworker/listeners/push/push-listener'
 import { GetData } from './serviceworker/strategies/getData'
 import { PostMessage } from './serviceworker/strategies/postMessage'
-import { ReadData } from './serviceworker/strategies/readData'
+import { PutData } from './serviceworker/strategies/putData'
 import { DeleteData } from './serviceworker/strategies/deleteData'
 
 declare let self: ServiceWorkerGlobalScope;
@@ -51,12 +51,12 @@ registerRoute(
 );
 
 registerRoute(
-  `${BASE_URI}/forms/time/independent`, 
+  `${BASE_URI}/forms?timeIndependent=true`, 
   new GetEvents(dbPromise)
 );
 
 registerRoute(
-  new RegExp(`${BASE_URI}/forms/*`), 
+  new RegExp(`${BASE_URI}/forms*`), 
   new GetFormById(dbPromise, 'forms')
 );
 
@@ -66,7 +66,7 @@ registerRoute(
 );
 
 registerRoute(
-  new RegExp(`${BASE_URI}/tasks/*`), 
+  new RegExp(`${BASE_URI}/tasks*`), 
   new GetByDate<Task>(dbPromise, 'tasks', 'scheduledAt')
 );
 
@@ -76,7 +76,7 @@ registerRoute(
 );
 
 registerRoute(
-  new RegExp(`${BASE_URI}/appointments/*`), 
+  new RegExp(`${BASE_URI}/appointments*`), 
   new GetByDate<Task>(dbPromise, 'appointments', 'start')
 );
 
@@ -92,7 +92,7 @@ registerRoute(
 );
 
 registerRoute(
-  new RegExp(`${BASE_URI}/records/*`), 
+  new RegExp(`${BASE_URI}/records*`), 
   new GetByDate<Record>(dbPromise, 'records', 'createdAt')
 );
 
@@ -104,7 +104,7 @@ registerRoute(
 
 registerRoute(
   `${BASE_URI}/chat`, 
-  new ReadData(dbPromise, 'chat'),
+  new PutData(dbPromise, 'chat'),
   'PUT'
 );
 
@@ -120,7 +120,7 @@ registerRoute(
 
 registerRoute(
   `${BASE_URI}/notifications`, 
-  new ReadData(dbPromise, 'notifications'),
+  new PutData(dbPromise, 'notifications'),
   'PUT'
 );
 

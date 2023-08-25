@@ -12,7 +12,9 @@ export const getGetAppointmentsByDatesKey = (date: Dayjs) => ["getAppointmentsBy
 export const useGetAppointmentsByDate = (options : UseGetAppointmentsByDatesOptions) => {
   const date = options.date;
   return useReadRequest<Appointment[]>(getGetAppointmentsByDatesKey(date), (options) =>
-    apiRequest(`/appointments/${date.toDate()}`, { ...options }),
+    apiRequest(`/appointments}`, {params: {
+      date: date.toDate()
+    }, ...options }),
     {
       keepPreviousData: true
     }

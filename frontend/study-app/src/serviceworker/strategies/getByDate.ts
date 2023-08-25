@@ -1,5 +1,5 @@
 import { IDBPDatabase } from "idb";
-import { dateRange, extractParam } from "../utils/utils"
+import { dateRange, extractParams } from "../utils/utils"
 import { Strategy } from 'workbox-strategies';
 
 export class GetByDate<T extends Record<string, any>> extends Strategy {
@@ -18,11 +18,11 @@ export class GetByDate<T extends Record<string, any>> extends Strategy {
     request: Request, 
   ): Promise<Response | undefined> {
       const db = await this.dbPromise;
-      const date = extractParam(request.url);
+      const params = extractParams(request.url);
       const data: T[] | undefined = await db.getAllFromIndex(
         this.dbName, 
         this.indexName,
-        dateRange(date),
+        dateRange(params.get('date') ?? ''),
       );
       if (data && this.dbName === 'records') {
         const filteredData = data.filter((record) => !record.taskId);

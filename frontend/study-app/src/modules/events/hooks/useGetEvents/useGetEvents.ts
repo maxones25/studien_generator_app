@@ -8,6 +8,8 @@ export const getGetEventsKey = () => ["getEvents"];
 
 export const useGetEvents = () => {
   return useReadRequest<Event[]>(getGetEventsKey(), (options) =>
-  apiRequest(`/forms/time/independent`, { ...options })
+  apiRequest(`/forms`, {params: {
+    timeIndependent: true
+  }, ...options })
   );
 }
