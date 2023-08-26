@@ -4,24 +4,34 @@ import { ChatMessageReceipt } from '@entities/chat-message-receipt.entity';
 import { Chat } from '@entities/chat.entity';
 import { ChatMessage } from '@entities';
 
-
+type AddMessageTransactionInput =   {
+  addMessageDto: AddMessageDto,
+  chatId: string,
+  directorId: string,
+}
 
 export class AddMessageTransaction extends Transaction<
-  AddMessageDto,
+  AddMessageTransactionInput,
   void
 > {
 
-  protected async execute(
-    addMessageDto: AddMessageDto
-  ): Promise<void> {
+  protected async execute({
+    addMessageDto,
+    chatId,
+    directorId
+  }: AddMessageTransactionInput): Promise<void> {
     const {
-      id,
-      directorId,
-      chatId,
+      content,
+      sentAt
     } = addMessageDto;
     const chatMessageRepo = this.entityManager.getRepository(ChatMessage);
-    await chatMessageRepo.insert(addMessageDto);
-    await this.createReceipts(id, directorId, chatId)
+    const message = new ChatMessage();
+    message.chatId = chatId;
+    message.directorId = directorId;
+    message.content = content;
+    message.sentAt = sentAt;
+    await chatMessageRepo.insert(message);
+    await this.createReceipts(message.id, directorId, chatId)
   }
 
   private async createReceipts(

@@ -7,10 +7,7 @@ import { AuthGuard } from './guards/auth.guard';
 const authProviders: Provider[] = [
   PasswordService,
   AuthService,
-  {
-    provide: APP_GUARD,
-    useClass: AuthGuard,
-  },
+  AuthGuard,
 ];
 
 export default authProviders;

@@ -15,6 +15,7 @@ const modules = [
   "navigation",
   "participants",
   "studies",
+  "chat",
 ];
 
 // test12345d
