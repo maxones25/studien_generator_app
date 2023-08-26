@@ -7,7 +7,7 @@ export interface UseGetAppointmentsByDatesOptions {
   date: Dayjs;
 }
 
-export const getGetAppointmentsByDatesKey = (date: Dayjs) => ["getAppointmentsByDate", date];
+export const getGetAppointmentsByDatesKey = (date: Dayjs) => [date, "getAppointmentsByDate"];
 
 export const useGetAppointmentsByDate = (options : UseGetAppointmentsByDatesOptions) => {
   const date = options.date;

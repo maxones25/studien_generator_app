@@ -21,20 +21,20 @@ export class PostRecord extends Strategy {
     const clone = request.clone();
     return clone.json()
     .then(async (data) => {
-      const record: Record = data;
-      const tx = db.transaction(['records', 'tasks'], 'readwrite');
-      if (record.taskId) {
-        this.putTask(tx, record.formId, record.createdAt);
-      }
-      await tx.objectStore("records").add({
-        id: record.id,
-        createdAt: new Date(record.createdAt),
-        name: record.name,
-      });
       try {
         const response = await handler.fetch(request);
         return response;
       } catch (error) {
+        const record: Record = data;
+        const tx = db.transaction(['records', 'tasks'], 'readwrite');
+        if (record.taskId) {
+          this.putTask(tx, record.formId, record.createdAt);
+        }
+        await tx.objectStore("records").add({
+          id: record.id,
+          createdAt: new Date(record.createdAt),
+          name: record.name,
+        });
         await this.queue.pushRequest({request: request});
         return new Response('', { status: 200, statusText: 'Queued' });
       }

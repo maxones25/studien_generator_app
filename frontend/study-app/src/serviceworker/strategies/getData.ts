@@ -5,8 +5,8 @@ import { AbstractStrategy } from './abstract';
 
 export class GetData extends AbstractStrategy {
 
-  constructor(dbPromise: Promise<IDBPDatabase>, dbName: string) {
-    super(dbPromise, dbName, 'GET');
+  constructor(dbPromise: Promise<IDBPDatabase>, dbName: string, indexName?: string) {
+    super(dbPromise, dbName, 'GET', indexName);
   }
 
   protected async _handle(

@@ -12,14 +12,14 @@ export const dateRange = (date: string) => {
   return IDBKeyRange.bound(dateStart, dateEnd);
 }
 
-export const firstLetterToUpperCase = (word: string) => {
-  return word.charAt(0).toUpperCase() + word.slice(1)
+export const firstLetterToUpperCase = (word?: string) => {
+  return word ? word.charAt(0).toUpperCase() + word.slice(1) : '';
 }
 
 export const addParamsToUrl = (url: string, params: Record<string, any>) => {
   const urlObject = new URL(url);
   Object.keys(params).forEach(key => urlObject.searchParams.append(key, params[key]));
-  return urlObject
+  return urlObject;
 }
 
 export const addLastUpdatedParams = async (

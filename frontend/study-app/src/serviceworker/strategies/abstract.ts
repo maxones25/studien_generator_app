@@ -7,28 +7,24 @@ export abstract class AbstractStrategy extends Strategy {
   queue: Queue;
   dbPromise: Promise<IDBPDatabase>;
   dbName: string;
+  indexName?: string;
   type: string;
 
-  constructor(dbPromise: Promise<IDBPDatabase>, dbName: string, type: string) {
+  constructor(dbPromise: Promise<IDBPDatabase>, dbName: string, type: string, indexName?: string) {
     super();
     this.dbPromise = dbPromise;
     this.dbName = dbName;
-    this.type = type
-    this.queue = new Queue(`${type}${firstLetterToUpperCase(dbName)}`)
+    this.type = type;
+    this.indexName = indexName;
+    this.queue = new Queue(`${type}${firstLetterToUpperCase(dbName)}${firstLetterToUpperCase(indexName)}`);
   }
 
   async getFromDB(db: IDBPDatabase) {
-    let data: any[]  
-    switch (this.dbName) {
-      case 'chat':
-        data = await db.getAllFromIndex(this.dbName, 'sentAt')
-        break;
-      case 'notifications':
-        data = await db.getAllFromIndex(this.dbName, 'modifiedAt')
-        break;
-      default:
-        data = await db.getAll(this.dbName);
-        break;
+    let data: any[];
+    if (this.indexName) {
+      data = await db.getAllFromIndex(this.dbName, this.indexName);
+    } else {
+      data = await db.getAll(this.dbName); 
     }
     return new Response(JSON.stringify(data));
   }

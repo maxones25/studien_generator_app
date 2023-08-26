@@ -104,23 +104,31 @@ registerRoute(
 
 registerRoute(
   `${BASE_URI}/chat`, 
-  new PutData(dbPromise, 'chat'),
+  new PutData(
+    dbPromise, 
+    'chat', 
+    ({participantId, readAt}) => !participantId && !readAt,
+  ),
   'PUT'
 );
 
 registerRoute(
   `${BASE_URI}/chat`, 
-  new GetData(dbPromise, 'chat'),
+  new GetData(dbPromise, 'chat', 'sentAt'),
 );
 
 registerRoute(
   `${BASE_URI}/notifications`, 
-  new GetData(dbPromise, 'notifications'),
+  new GetData(dbPromise, 'notifications', 'modifiedAt'),
 );
 
 registerRoute(
   `${BASE_URI}/notifications`, 
-  new PutData(dbPromise, 'notifications'),
+  new PutData(
+    dbPromise, 
+    'notifications',
+    ({readAt}) => !readAt,
+  ),
   'PUT'
 );
 
