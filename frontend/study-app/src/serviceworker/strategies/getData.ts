@@ -28,9 +28,6 @@ export class GetData extends AbstractStrategy {
       await responseClone.json().then(async (data) => {
         const tx = db.transaction(this.dbName, 'readwrite');
         await Promise.all(data.map((record: Record<string, any>) => {
-          if (record.createdAt) record.createdAt = new Date(record.createdAt);
-          if (record.scheduledAt) record.scheduledAt = new Date(record.scheduledAt);
-          if (record.start) record.start = new Date(record.start);
           return tx.store.put(record);
         }));
       })

@@ -9,7 +9,7 @@ export const dateRange = (date: string) => {
   dateStart.setHours(0, 0, 0, 0);
   const dateEnd = new Date(date);
   dateEnd.setHours(23, 59, 59, 999);
-  return IDBKeyRange.bound(dateStart, dateEnd);
+  return IDBKeyRange.bound(dateStart.toISOString(), dateEnd.toISOString());
 }
 
 export const firstLetterToUpperCase = (word?: string) => {
