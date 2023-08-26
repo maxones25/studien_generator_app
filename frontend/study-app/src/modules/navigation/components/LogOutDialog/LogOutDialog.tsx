@@ -3,6 +3,7 @@ import { Button, Column, Row, Text } from '@modules/core/components';
 import { Dialog } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { resetDB } from '../../../../serviceworker/indexedDB/resetDB';
 
 export interface LogOutDialogProps {
   open: boolean;
@@ -18,6 +19,7 @@ export const LogOutDialog : React.FC<LogOutDialogProps> = ({
 
   const logOut = () => {
     accessToken.reset();
+    resetDB();
   };
 
   return (

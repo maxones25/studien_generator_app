@@ -3,14 +3,15 @@ import { Strategy, StrategyHandler, StrategyOptions } from 'workbox-strategies';
 import { Queue } from 'workbox-background-sync';
 import { Record } from '@modules/forms/types';
 import { Task } from '@modules/tasks/types';
+import { getDB } from '../indexedDB/getDB';
 
 export class PostRecord extends Strategy {
   private queue = new Queue('RecordsQueue');
   private dbPromise: Promise<IDBPDatabase>;
 
-  constructor(dbPromise: Promise<IDBPDatabase>, options?: StrategyOptions) {
+  constructor(options?: StrategyOptions) {
     super(options);
-    this.dbPromise = dbPromise;
+    this.dbPromise = getDB();
   }
 
   protected async _handle(

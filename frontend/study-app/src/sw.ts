@@ -3,7 +3,7 @@ const DEV = import.meta.env.DEV
 import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
 import { clientsClaim } from 'workbox-core'
 import { NavigationRoute, registerRoute } from 'workbox-routing'
-import { dbPromise } from './serviceworker/indexedDB/setup'
+import { initDB } from './serviceworker/indexedDB/setup'
 import { PostRecord } from './serviceworker/strategies/postRecord'
 import { GetByDate } from './serviceworker/strategies/getByDate'
 import { GetFormById } from './serviceworker/strategies/getFormById'
@@ -45,67 +45,68 @@ self.addEventListener('push', (event) => {
   pushHandler(event);
 })
 
+initDB();
+
 registerRoute(
   `${BASE_URI}/forms`, 
-  new GetData(dbPromise, 'forms')
+  new GetData('forms')
 );
 
 registerRoute(
   `${BASE_URI}/forms?timeIndependent=true`, 
-  new GetEvents(dbPromise)
+  new GetEvents()
 );
 
 registerRoute(
   new RegExp(`${BASE_URI}/forms*`), 
-  new GetFormById(dbPromise, 'forms')
+  new GetFormById('forms')
 );
 
 registerRoute(
   `${BASE_URI}/tasks`, 
-  new GetData(dbPromise, 'tasks')
+  new GetData('tasks')
 );
 
 registerRoute(
   new RegExp(`${BASE_URI}/tasks*`), 
-  new GetByDate<Task>(dbPromise, 'tasks', 'scheduledAt')
+  new GetByDate<Task>('tasks', 'scheduledAt')
 );
 
 registerRoute(
   `${BASE_URI}/appointments`, 
-  new GetData(dbPromise, 'appointments')
+  new GetData('appointments')
 );
 
 registerRoute(
   new RegExp(`${BASE_URI}/appointments*`), 
-  new GetByDate<Task>(dbPromise, 'appointments', 'start')
+  new GetByDate<Task>('appointments', 'start')
 );
 
 registerRoute(
   `${BASE_URI}/records`, 
-  new GetData(dbPromise, 'records'),
+  new GetData('records'),
 );
 
 registerRoute(
   `${BASE_URI}/records`, 
-  new PostRecord(dbPromise),
+  new PostRecord(),
   'POST'
 );
 
 registerRoute(
   new RegExp(`${BASE_URI}/records*`), 
-  new GetByDate<Record>(dbPromise, 'records', 'createdAt')
+  new GetByDate<Record>('records', 'createdAt')
 );
 
 registerRoute(
   `${BASE_URI}/chat`, 
-  new PostMessage(dbPromise),
+  new PostMessage(),
   'POST'
 );
 
 registerRoute(
   `${BASE_URI}/chat`, 
   new PutData(
-    dbPromise, 
     'chat', 
     ({participantId, readAt}) => !participantId && !readAt,
   ),
@@ -114,18 +115,17 @@ registerRoute(
 
 registerRoute(
   `${BASE_URI}/chat`, 
-  new GetData(dbPromise, 'chat', 'sentAt'),
+  new GetData('chat', 'sentAt'),
 );
 
 registerRoute(
   `${BASE_URI}/notifications`, 
-  new GetData(dbPromise, 'notifications', 'modifiedAt'),
+  new GetData('notifications', 'modifiedAt'),
 );
 
 registerRoute(
   `${BASE_URI}/notifications`, 
-  new PutData(
-    dbPromise, 
+  new PutData( 
     'notifications',
     ({readAt}) => !readAt,
   ),
@@ -134,6 +134,6 @@ registerRoute(
 
 registerRoute(
   `${BASE_URI}/notifications`, 
-  new DeleteData(dbPromise, 'notifications'),
+  new DeleteData('notifications'),
   'DELETE'
 );

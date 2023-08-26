@@ -1,4 +1,3 @@
-import { IDBPDatabase } from 'idb';
 import { StrategyHandler } from 'workbox-strategies';
 import { AbstractStrategy } from './abstract';
 import { addLastUpdatedParams } from '../utils/utils';
@@ -6,12 +5,11 @@ import { addLastUpdatedParams } from '../utils/utils';
 export class PutData extends AbstractStrategy {
   filterFunction: (entry: Record<string, any>) => boolean;
 
-  constructor(
-    dbPromise: Promise<IDBPDatabase>, 
-    dbName: string, 
+  constructor( 
+    storeName: string, 
     filterFunction: (entry: Record<string, any>) => boolean
   ) {
-    super(dbPromise, dbName, 'PUT');
+    super(storeName, 'PUT');
     this.filterFunction = filterFunction;
   }
 
@@ -29,8 +27,8 @@ export class PutData extends AbstractStrategy {
       const response = await handler.fetch(modifiedRequest);
       return response;
     } catch (error) {
-      const tx = db.transaction(this.dbName, 'readwrite');
-      const store = tx.objectStore(this.dbName);
+      const tx = db.transaction(this.storeName, 'readwrite');
+      const store = tx.objectStore(this.storeName);
       const data: Record<string, any>[] = await store.getAll();
       const filteredMessages = data.filter(this.filterFunction)
       await Promise.all(filteredMessages.map((entry) => {

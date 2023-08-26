@@ -1,12 +1,11 @@
-import { IDBPDatabase } from 'idb';
 import { StrategyHandler } from 'workbox-strategies';
 import { AbstractStrategy } from './abstract';
 import { addLastUpdatedParams } from '../utils/utils';
 
 export class DeleteData extends AbstractStrategy {
 
-  constructor(dbPromise: Promise<IDBPDatabase>, dbName: string) {
-    super(dbPromise, dbName, 'DELETE');
+  constructor(storeName: string) {
+    super(storeName, 'DELETE');
   }
 
   protected async _handle(
@@ -14,7 +13,7 @@ export class DeleteData extends AbstractStrategy {
     handler: StrategyHandler
   ): Promise<Response | undefined> {
     const db = await this.dbPromise;
-    await db.clear(this.dbName);
+    await db.clear(this.storeName);
     const lastUpdated = await this.getMetaData(db); 
     const body = await request.json();
     const modifiedRequest = lastUpdated ? await addLastUpdatedParams(request, lastUpdated, body) : request.clone();
