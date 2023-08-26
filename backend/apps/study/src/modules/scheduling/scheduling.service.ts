@@ -25,10 +25,10 @@ export class SchedulingService {
       this.sendPushNotification(participant.subscription, type, message);
     })
     const messages = await this.dataService.getNewEntriesFromChat(this.lastChecked);
-    messages.forEach(({participant}) => {
+    messages.forEach(({chat}) => {
       const type = PushNotificationType.Chat
       const message = this.createNotificationMessage(type)
-      this.sendPushNotification(participant.subscription, type, message);
+      this.sendPushNotification(chat.participant.subscription, type, message);
     })
     const tasks = await this.dataService.getNewEntriesFromTasks(this.lastChecked);
     tasks.forEach(({participant, scheduledAt, form}) => {
