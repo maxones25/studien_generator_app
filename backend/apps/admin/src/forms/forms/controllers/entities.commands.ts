@@ -5,6 +5,7 @@ import {
   Query,
   Inject,
   UseGuards,
+  BadRequestException,
 } from '@nestjs/common';
 import { Roles } from '@admin/roles/roles.decorator';
 import { FormQueryDto } from '../dtos/FormQueryDto';
@@ -17,6 +18,8 @@ import { EntityQueryDto } from '@admin/entities/entities/dtos/EntityQueryDto';
 import { EntityQueryDto as FormEntityQueryDto } from '../dtos/EntityQueryDto';
 import { EntityGuard } from '@admin/entities/entities/entity.guard';
 import { EntityGuard as FormEntityGuard } from '../guards/entity.guard';
+import { Entity } from '../decorators/entity.decorator';
+import { FormEntity } from '@entities';
 
 @Controller('forms')
 @UseGuards(StudyGuard)
@@ -34,6 +37,18 @@ export class EntitiesCommands {
     @Query() { entityId }: EntityQueryDto,
     @Body() { name }: CreateEntityDto,
   ) {
+    let isEqual = true;
+
+    do {
+      const entity = await this.entitiesService.getByFormAndName(formId, name);
+
+      isEqual = Boolean(entity);
+
+      if (isEqual) {
+        name = name + ' 2';
+      }
+    } while (isEqual);
+
     return this.entitiesService.add(formId, entityId, name);
   }
 
@@ -41,10 +56,17 @@ export class EntitiesCommands {
   @Roles('admin', 'employee')
   @UseGuards(FormEntityGuard)
   async changeName(
-    @Query() { entityId }: FormEntityQueryDto,
+    @Entity() entity: FormEntity,
     @Body() { name }: ChangeNameDto,
   ) {
-    return this.entitiesService.changeName(entityId, name);
+    const sameNameEntity = await this.entitiesService.getByFormAndName(
+      entity.formId,
+      name,
+    );
+
+    if (Boolean(sameNameEntity)) throw new BadRequestException("name already exists");
+
+    return this.entitiesService.changeName(entity.id, name);
   }
 
   @Post('removeEntity')

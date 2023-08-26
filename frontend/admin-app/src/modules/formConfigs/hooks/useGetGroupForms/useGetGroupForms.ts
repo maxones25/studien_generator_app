@@ -1,6 +1,6 @@
 import { useReadRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
-import { FormConfig } from "@modules/forms/types";
+import { Config } from "@modules/formConfigs/types";
 import { useStudyId } from "@modules/navigation/hooks";
 
 export interface UseGetGroupFormsOptions {
@@ -15,7 +15,7 @@ export const getGetGroupFormsKey = (deps: {
 export const useGetGroupForms = ({ groupId }: UseGetGroupFormsOptions) => {
   const studyId = useStudyId()!;
 
-  return useReadRequest<FormConfig[]>(
+  return useReadRequest<Config[]>(
     getGetGroupFormsKey({
       studyId,
       groupId,

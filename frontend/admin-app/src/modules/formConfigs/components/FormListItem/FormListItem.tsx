@@ -5,7 +5,6 @@ import {
   Row,
 } from "@modules/core/components";
 import { useOpen } from "@modules/core/hooks";
-import { FormConfig } from "@modules/forms/types";
 import { Close, Delete, MoreTime } from "@mui/icons-material";
 import {
   Checkbox,
@@ -17,7 +16,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { FormSchedulesCard } from "..";
 import {
   useActivateForm,
   useDeactivateForm,
@@ -25,9 +23,11 @@ import {
   useSetFormTimeDependent,
   useSetFormTimeIndependent,
 } from "@modules/formConfigs/hooks";
+import { Config } from "@modules/formConfigs/types";
+import { FormSchedulesCard } from "..";
 
 export interface FormListItemProps {
-  form: FormConfig;
+  form: Config;
   isLast: boolean;
 }
 
@@ -128,7 +128,7 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
         </Row>
       </DataListItem>
       <Collapse in={subcard.isOpen}>
-        <FormSchedulesCard form={form} isActive={subcard.isOpen} />
+        <FormSchedulesCard form={form} />
       </Collapse>
     </>
   );

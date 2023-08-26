@@ -11,7 +11,7 @@ import { Entity } from '.';
 import { FormField } from '.';
 
 @TypeOrmEntity()
-@Unique('unique_form_entity', ['formId', 'entityId', 'name'])
+@Unique('unique_form_entity', ['formId', 'name'])
 export class FormEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

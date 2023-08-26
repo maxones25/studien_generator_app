@@ -11,6 +11,10 @@ export class EntitiesRepository extends RecordRepository<FormEntity> {
     super(db);
   }
 
+  getById(id: string) {
+    return this.db.findOne({ where: { id } });
+  }
+
   getRelatedByStudy(studyId: string, id: string): Promise<any> {
     return this.db.findOne({ where: { id, form: { studyId } } });
   }
@@ -66,5 +70,14 @@ export class EntitiesRepository extends RecordRepository<FormEntity> {
         })),
       }),
     );
+  }
+
+  getByFormAndName(formId: string, name: string) {
+    return this.db.findOne({
+      where: {
+        formId,
+        name,
+      },
+    });
   }
 }

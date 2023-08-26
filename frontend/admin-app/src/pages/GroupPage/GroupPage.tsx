@@ -2,14 +2,13 @@ import {
   DeleteDialog,
   Editable,
   IconButton,
-  OnlyAdmin,
   Page,
   Row,
   Text,
   TooltipGuard,
 } from "@modules/core/components";
 import { useNavigationHelper, useOpen } from "@modules/core/hooks";
-import { FormsCard } from "@modules/groups/components";
+import { FormsCard } from "@modules/formConfigs/components";
 import {
   useDeleteGroup,
   useGetGroup,

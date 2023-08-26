@@ -5,17 +5,15 @@ import {
   Row,
   Text,
 } from "@modules/core/components";
-import {
-  FormSchedule,
-  FormScheduleDayOfMonth,
-  FormScheduleDaysOfWeek,
-} from "@modules/groups/types";
+import { Schedule, ScheduleDaysOfWeek } from "@modules/formConfigs/types";
+import { FormScheduleDayOfMonth } from "@modules/groups/types";
 import { Delete } from "@mui/icons-material";
 import { Chip, ListItemButton } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-const formatDayOfWeek = (dayOfWeek: FormScheduleDaysOfWeek): string[] => {
+const formatDayOfWeek = (dayOfWeek?: ScheduleDaysOfWeek): string[] => {
+  if (!dayOfWeek) return [];
   return dayOfWeek
     .map((active, i) => {
       if (!active) return "-";
@@ -41,15 +39,16 @@ const formatDayOfWeek = (dayOfWeek: FormScheduleDaysOfWeek): string[] => {
     .filter((day) => day !== "-");
 };
 
-const formatDayOfMonth = (dayOfMonth: FormScheduleDayOfMonth) => {
-  return dayOfMonth.sort((a, b) => (a < b ? -1 : 1)).join(", ");
+const formatDayOfMonth = (daysOfMonth?: FormScheduleDayOfMonth) => {
+  if (!daysOfMonth) return "-";
+  return daysOfMonth.sort((a, b) => (a < b ? -1 : 1)).join(", ");
 };
 
 export interface FormScheduleListItemProps {
-  schedule: FormSchedule;
+  schedule: Schedule;
   isLast: boolean;
-  onSelect: (schedule: FormSchedule) => void;
-  onDelete: (schedule: FormSchedule) => void;
+  onSelect: (schedule: Schedule) => void;
+  onDelete: (schedule: Schedule) => void;
 }
 
 export const FormScheduleListItem: React.FC<FormScheduleListItemProps> = ({
@@ -82,15 +81,16 @@ export const FormScheduleListItem: React.FC<FormScheduleListItemProps> = ({
           period === "Month" && (
             <Column>
               <Text variant="body2">
-                am {formatDayOfMonth(schedule.dayOfMonth)} des Monats
+                am {formatDayOfMonth(schedule.daysOfMonth)} des Monats
               </Text>
               <Text variant="caption">alle {schedule.frequency} Monate</Text>
             </Column>
           )
         )}
         <Row ml={1} flex={1} justifyContent="flex-end">
-          {schedule.times.map((time) => (
+          {schedule.times.map((time, i) => (
             <Chip
+              key={`${i}-${time}`}
               size="small"
               color="secondary"
               label={time}

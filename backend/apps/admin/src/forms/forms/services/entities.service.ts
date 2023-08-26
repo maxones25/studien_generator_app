@@ -9,6 +9,10 @@ export class EntitiesService implements StudyRelatedDataAccessor {
     private entitiesRepository: EntitiesRepository,
   ) {}
 
+  getById(entityId: string) {
+    return this.entitiesRepository.getById(entityId);
+  }
+
   getRelatedByStudy(studyId: string, id: string): Promise<any> {
     return this.entitiesRepository.getRelatedByStudy(studyId, id);
   }
@@ -24,6 +28,10 @@ export class EntitiesService implements StudyRelatedDataAccessor {
 
   async getByForm(formId: string) {
     return this.entitiesRepository.getByForm(formId);
+  }
+
+  getByFormAndName(formId: string, name: string) {
+    return this.entitiesRepository.getByFormAndName(formId, name);
   }
 
   async changeName(id: string, name: string) {

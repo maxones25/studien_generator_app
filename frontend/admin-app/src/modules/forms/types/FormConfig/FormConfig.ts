@@ -1,3 +1,5 @@
+import { Schedule } from "@modules/formConfigs/types";
+
 export const FormConfigType = {
   TimeDependent: "TimeDependent",
   TimeIndependent: "TimeIndependent",
@@ -14,4 +16,5 @@ export type FormConfig = {
     id: string;
     name: string;
   };
+  schedules: Schedule[] | null;
 };

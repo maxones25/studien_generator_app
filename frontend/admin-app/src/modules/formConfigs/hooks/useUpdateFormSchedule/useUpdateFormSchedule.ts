@@ -1,14 +1,15 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
-import { FormScheduleFormData } from "@modules/groups/types";
-import { useStudyId } from "@modules/navigation/hooks";
-import { getGetFormSchedulesKey } from "..";
+import { ScheduleFormData } from "@modules/formConfigs/types";
+import { useGroupId, useStudyId } from "@modules/navigation/hooks";
+import { getGetGroupFormsKey } from "..";
 
 export const useUpdateFormSchedule = () => {
-  const studyId = useStudyId();
-  return useWriteRequest<FormScheduleFormData, number>(
+  const studyId = useStudyId()!;
+  const groupId = useGroupId()!;
+  return useWriteRequest<ScheduleFormData, number>(
     ({ body: { id, ...body }, ...options }) =>
-      apiRequest(`/studies/${studyId}/schedules/${id}`, {
+      apiRequest(`/forms/updateSchedule`, {
         method: "PUT",
         body,
         ...options,
@@ -16,10 +17,7 @@ export const useUpdateFormSchedule = () => {
     {
       onSuccess: ({ variables, queryClient }) => {
         queryClient.invalidateQueries(
-          getGetFormSchedulesKey({
-            studyId: studyId!,
-            formId: variables.configId,
-          })
+          getGetGroupFormsKey({ studyId, groupId })
         );
         return {
           text: "record updated",

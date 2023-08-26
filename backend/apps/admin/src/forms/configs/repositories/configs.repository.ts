@@ -2,6 +2,7 @@ import { FormConfiguration } from '@entities/form-configuration.entity';
 import { Repository } from 'typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FormScheduleAttributes } from '@entities';
 
 export class ConfigsRepository extends RecordRepository<FormConfiguration> {
   constructor(
@@ -20,7 +21,7 @@ export class ConfigsRepository extends RecordRepository<FormConfiguration> {
   }
 
   async getByGroup(groupId: string) {
-    return this.db.find({
+    const configs = await this.db.find({
       where: {
         groupId,
       },
@@ -32,7 +33,9 @@ export class ConfigsRepository extends RecordRepository<FormConfiguration> {
       },
       relations: {
         form: true,
-        schedules: true,
+        schedules: {
+          attributes: true,
+        },
       },
       select: {
         id: true,
@@ -42,7 +45,33 @@ export class ConfigsRepository extends RecordRepository<FormConfiguration> {
           id: true,
           name: true,
         },
+        schedules: {
+          id: true,
+          type: true,
+          period: true,
+          postpone: {
+            duration: true,
+            times: true,
+          },
+          times: true,
+          attributes: {
+            key: true,
+            value: true,
+          },
+        },
       },
     });
+
+    return configs.map((config) => ({
+      ...config,
+      schedules: config.schedules.map(({ attributes, ...schedule }) => ({
+        ...schedule,
+        ...attributes.reduce<FormScheduleAttributes>((obj, attribute) => {
+          const { key, value } = attribute;
+          obj[key] = value;
+          return obj;
+        }, {}),
+      })),
+    }));
   }
 }

@@ -11,11 +11,10 @@ import {
 } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
 import {
-  FormScheduleDaysOfWeek,
-  FormScheduleFormData,
-  FormSchedulePeriod,
-  FormScheduleType,
-} from "@modules/groups/types";
+  ScheduleDaysOfWeek,
+  ScheduleFormData,
+} from "@modules/formConfigs/types";
+import { FormSchedulePeriod, FormScheduleType } from "@modules/groups/types";
 import { Add, Remove } from "@mui/icons-material";
 import {
   Chip,
@@ -46,16 +45,15 @@ const transformToMatrix = (arr: number[], rows: number, cols: number) => {
   });
 };
 
-export interface FormScheduleFormProps
-  extends FormProps<FormScheduleFormData> {}
+export interface FormScheduleFormProps extends FormProps<ScheduleFormData> {}
 
-export const FormScheduleForm: React.FC<FormScheduleFormProps> = ({
+export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
   onSubmit,
   values,
   formProps,
 }) => {
   const { t } = useTranslation();
-  const form = useForm<FormScheduleFormData>({ values });
+  const form = useForm<ScheduleFormData>({ values });
 
   const type = form.watch("type");
   const period = form.watch("period");
@@ -63,12 +61,12 @@ export const FormScheduleForm: React.FC<FormScheduleFormProps> = ({
   const frequencyUnit =
     period === "Day" ? t("days") : period === "Week" ? t("weeks") : t("months");
 
-  const handleSubmit = (data: FormScheduleFormData) => {
+  const handleSubmit = (data: ScheduleFormData) => {
     const postpone = data.postpone ? data.postpone : null;
     if (data.type === "Fix" && data.period === "Week") {
       const daysOfWeek = data.daysOfWeek.map((active) =>
         Boolean(active)
-      ) as FormScheduleDaysOfWeek;
+      ) as ScheduleDaysOfWeek;
       onSubmit({ ...data, postpone, daysOfWeek });
     } else {
       onSubmit({ ...data, postpone });
@@ -160,7 +158,7 @@ export const FormScheduleForm: React.FC<FormScheduleFormProps> = ({
               </Text>
               <Controller
                 control={form.control}
-                name="dayOfMonth"
+                name="daysOfMonth"
                 render={({ field: { value } }) => {
                   return (
                     <Column>
@@ -177,14 +175,14 @@ export const FormScheduleForm: React.FC<FormScheduleFormProps> = ({
                               size="small"
                               onClick={() => {
                                 if (!value) {
-                                  form.setValue("dayOfMonth", [day]);
+                                  form.setValue("daysOfMonth", [day]);
                                 } else if (value.includes(day)) {
                                   form.setValue(
-                                    "dayOfMonth",
+                                    "daysOfMonth",
                                     value.filter((v) => v !== day)
                                   );
                                 } else {
-                                  form.setValue("dayOfMonth", [...value, day]);
+                                  form.setValue("daysOfMonth", [...value, day]);
                                 }
                               }}
                             />

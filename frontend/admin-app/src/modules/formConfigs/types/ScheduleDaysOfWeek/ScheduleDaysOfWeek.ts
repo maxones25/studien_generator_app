@@ -1,4 +1,4 @@
-export type FormScheduleDaysOfWeek = [
+export type ScheduleDaysOfWeek = [
   boolean,
   boolean,
   boolean,

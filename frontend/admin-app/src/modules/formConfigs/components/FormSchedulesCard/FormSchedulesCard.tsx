@@ -1,42 +1,32 @@
-import {
-  Column,
-  DataList,
-  IconButton,
-  Row,
-  Text,
-} from "@modules/core/components";
+import { Column, IconButton, Row, Text } from "@modules/core/components";
 import { FormConfig } from "@modules/forms/types";
 import {
   useCreateFormSchedule,
   useDeleteFormSchedule,
-  useGetFormSchedules,
   useUpdateFormSchedule,
-} from "@modules/groups/hooks";
+} from "@modules/formConfigs/hooks";
 import React from "react";
-import { FormScheduleForm, FormScheduleListItem } from "..";
-import { Dialog, Divider } from "@mui/material";
+import { FormScheduleListItem } from "..";
+import { Dialog, Divider, List } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useFormData } from "@modules/core/hooks";
-import { FormScheduleFormData } from "@modules/groups/types";
 import { Add } from "@mui/icons-material";
+import { ScheduleForm } from "@modules/formConfigs/components";
+import { ScheduleFormData } from "@modules/formConfigs/types";
 
 export interface FormSchedulesCardProps {
   form: FormConfig;
-  isActive: boolean;
 }
-
 export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
   form,
-  isActive,
 }) => {
   const { t } = useTranslation();
-  const getFormSchedules = useGetFormSchedules(form.id, isActive);
   const createFormSchedule = useCreateFormSchedule();
   const updateFormSchedule = useUpdateFormSchedule();
   const deleteFormSchedule = useDeleteFormSchedule();
-  const scheduleData = useFormData<FormScheduleFormData>();
+  const scheduleData = useFormData<ScheduleFormData>();
 
-  const handleSaveSchedule = (data: FormScheduleFormData) => {
+  const handleSaveSchedule = (data: ScheduleFormData) => {
     if (data.id) {
       updateFormSchedule.mutateAsync(data).then(() => {
         scheduleData.reset();
@@ -66,24 +56,25 @@ export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
         />
       </Row>
       <Divider />
-      <DataList
-        client={getFormSchedules}
-        errorText=""
-        noDataText=""
-        renderItem={(schedule, { isLast }) => (
+      <List>
+        {form.schedules?.map((schedule, i, arr) => (
           <FormScheduleListItem
             key={schedule.id}
             schedule={schedule}
-            isLast={isLast}
+            isLast={arr.length - 1 === i}
             onSelect={(schedule) =>
-              scheduleData.set({ configId: form.id, ...schedule })
+              scheduleData.set({ ...schedule, configId: form.id })
             }
             onDelete={deleteFormSchedule.mutate}
           />
-        )}
-      />
-      <Dialog open={scheduleData.hasData} onClose={scheduleData.reset}>
-        <FormScheduleForm
+        ))}
+      </List>
+      <Dialog
+        open={scheduleData.hasData}
+        onClose={scheduleData.reset}
+        maxWidth="md"
+      >
+        <ScheduleForm
           onSubmit={handleSaveSchedule}
           values={scheduleData.data}
           formProps={{ p: 2 }}

@@ -1,30 +1,31 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
-import { FormSchedule } from "@modules/groups/types";
-import { useStudyId } from "@modules/navigation/hooks";
-import { getGetFormSchedulesKey } from "..";
+import { useGroupId, useStudyId } from "@modules/navigation/hooks";
+import { Schedule } from "@modules/formConfigs/types";
+import { getGetGroupFormsKey } from "..";
 
 export const useDeleteFormSchedule = () => {
-  const studyId = useStudyId();
-  return useWriteRequest<FormSchedule, number>(
+  const studyId = useStudyId()!;
+  const groupId = useGroupId()!;
+  return useWriteRequest<Schedule, number>(
     ({ body: { id }, ...options }) =>
       apiRequest(`/studies/${studyId}/schedules/${id}`, {
         method: "DELETE",
         ...options,
       }),
     {
-      onSuccess({ queryClient, variables }) {
+      onSuccess({ queryClient, variables: schedule }) {
         queryClient.invalidateQueries(
-          getGetFormSchedulesKey({
-            studyId: studyId!,
-            formId: variables.formId,
+          getGetGroupFormsKey({
+            studyId,
+            groupId,
           })
         );
         return {
           text: "record deleted",
           params: {
             record: "schedule",
-            name: variables.id,
+            name: schedule.type,
           },
         };
       },

@@ -139,5 +139,6 @@
   "howOften": "Wie oft?",
   "record removed to record": "{{removedRecord}} '{{removedName}}' von {{record}} '{{name}}' entfernt",
   "study is active": "Studie ist läuft bereits",
-  "all forms added": "Alle Formulare wurden bereits hinzugefügt"
+  "all forms added": "Alle Formulare wurden bereits hinzugefügt",
+  "name already exists": "Name existiert bereits"
 }
