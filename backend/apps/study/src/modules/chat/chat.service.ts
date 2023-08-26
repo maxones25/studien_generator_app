@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, IsNull, MoreThan, Repository } from 'typeorm';
+import { EntityManager, IsNull, LessThan, Repository } from 'typeorm';
 import { AddMessageDto } from './dtos/AddMessageDto';
 import { AddMessageTransaction } from './transactions/AddMessageTransaction';
 import { Chat } from '@entities/chat.entity';
 import { ChatMessageReceipt } from '@entities';
 import { ReadMessagesDto } from './dtos/ReadMessagesDto';
-import { MessageDto } from './dtos/MessageDto';
 
 @Injectable()
 export class ChatService {
@@ -79,6 +78,17 @@ export class ChatService {
   async readMessages({ readAt }: ReadMessagesDto, participantId: string) {
     const { affected } = await this.receiptRepository.update({
       participantId,
+      readAt: IsNull()
+    }, {
+      readAt
+    });
+    return affected;
+  };
+
+  async readMessagesModifiedSince({ readAt }: ReadMessagesDto, participantId: string, lastUpdated: Date) {
+    const { affected } = await this.receiptRepository.update({
+      participantId,
+      modifiedAt: LessThan(lastUpdated),
       readAt: IsNull()
     }, {
       readAt
