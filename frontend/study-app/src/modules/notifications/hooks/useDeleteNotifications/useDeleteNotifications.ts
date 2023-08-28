@@ -3,7 +3,7 @@ import { apiRequest } from "@modules/core/utils";
 import { getGetNotificationsKey } from "..";
 
 export const useDeleteNotifications = () => {
-  return useWriteRequest<undefined, void>((options) =>
+  return useWriteRequest<any, void>((options) =>
     apiRequest(`/notifications`, { method: "DELETE", ...options }),
     {
       onSuccess: ({ queryClient }) => {

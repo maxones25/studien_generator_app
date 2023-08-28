@@ -22,15 +22,15 @@ export const SettingsList : React.FC<SettingsListProps>= ({
         <Text>
           {t('push notifications')}
         </Text>
-        <HelpButton title='push notifications' body=''/>
+        <HelpButton title='push notifications' body='push notifications body'/>
       </ListItem>
       <ListItem 
         secondaryAction = {<TrafficLight status={ getQueueStatus() }/>}
       >
         <Text>
-          {t('queue status')}
+          {t('data status')}
         </Text>
-        <HelpButton title='push notifications' body=''/>
+        <HelpButton title='data status' body='data status body'/>
       </ListItem>
     </List>
   );

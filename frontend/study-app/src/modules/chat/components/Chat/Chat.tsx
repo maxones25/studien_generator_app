@@ -13,14 +13,14 @@ const Chat: React.FC = () => {
 
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
-  useEffect(() => {
     if (newMessagesCount > 0)
       readMessages.mutate({
         readAt: new Date()
       });
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  useEffect(() => {
     chatEndRef.current?.scrollIntoView({ });
   }, []);
 
