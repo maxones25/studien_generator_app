@@ -3,24 +3,39 @@ import React from 'react';
 import { Task } from '@modules/tasks/types';
 import { StyledListItem } from '@modules/core/components';
 import dayjs from 'dayjs';
+import { useFormIdContext } from '@modules/forms/contexts';
 
 export interface TaskItemProps {
   task: Task;
 }
 
+enum TasksStates {
+  Active = '#85CEE4',
+  InActive = '#E4E4E4',
+  Completed = '#74BA59',
+  Failed = '#C7361B',
+}
+
 export const TaskItem : React.FC<TaskItemProps>= ({
   task,
 }) => {
-  const handleClick = (id: string, name: string) => {
-    console.log(id, name);
-  };
+  const currentDate = new Date();
+  const { setForm } = useFormIdContext();
+  const state = task.completedAt ? TasksStates.Completed : 
+  task.scheduledAt < new Date() ? TasksStates.InActive : 
+  dayjs(task.scheduledAt).diff(currentDate, 'hour') > 1 ? TasksStates.Failed :
+  TasksStates.Active;
 
+  const handleClick = () => {
+    if (state === TasksStates.Active)
+      setForm(task.formId, task.name, task.id);
+  };
   const date = task.postponedTo ? task.postponedTo : task.scheduledAt;
   const dateString = dayjs(date).format('HH:mm')
 
   return (
-    <StyledListItem>
-      <ListItemButton onClick={() => handleClick(task.id, task.name)}>
+    <StyledListItem sx={{ backgroundColor: state }}>
+      <ListItemButton onClick={() => handleClick()}>
         <ListItemText primary={task.name} secondary={dateString}/>
       </ListItemButton>
     </StyledListItem>

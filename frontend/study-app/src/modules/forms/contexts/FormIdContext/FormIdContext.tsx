@@ -4,7 +4,7 @@ interface FormIdContextValue {
   formId?: string;
   taskId?: string;
   name?: string;
-  setForm: (formId: string, title: string) => void;
+  setForm: (formId: string, title: string, taskId?: string) => void;
   resetForm: () => void;
   hasFormId: boolean;
 }
