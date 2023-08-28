@@ -107,7 +107,7 @@ const router = createBrowserRouter([
                 ),
                 children: [
                   {
-                    path: ":entityId/fields",
+                    path: ":entityId",
                     element: <EntityPage />,
                   },
                 ],

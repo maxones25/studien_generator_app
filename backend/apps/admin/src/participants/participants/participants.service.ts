@@ -32,8 +32,8 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
       groupId,
       studyId,
       number,
-      password
-    })
+      password,
+    });
 
     return id;
   }
@@ -42,11 +42,11 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
     return this.participantsRepository.getById(id);
   }
 
-  async startStudy(participantId: string, tasks: Task[], data: StartStudyDto) {
+  async startStudy(participantId: string, tasks: Task[], startDate: Date) {
     await this.startParticipantStudyTransaction.run({
       participantId,
       tasks,
-      data,
+      startDate,
     });
   }
 

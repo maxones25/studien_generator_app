@@ -1,89 +1,104 @@
 import {
-  DataDialog,
   DataList,
   DataListItem,
+  EditableListItem,
+  IconButton,
   Page,
+  Row,
   Text,
 } from "@modules/core/components";
-import { useFormData, useNavigationHelper } from "@modules/core/hooks";
-import { DeleteEntityForm, EntityForm } from "@modules/entities/components";
 import {
-  useCreateEntity,
-  useDeleteEntity,
-  useGetEntities,
-  useChangeName,
-} from "@modules/entities/hooks";
+  useFormData,
+  useNavigationHelper,
+  useSearch,
+} from "@modules/core/hooks";
+import { useCreateEntity, useGetEntities } from "@modules/entities/hooks";
 import { EntityFormData } from "@modules/entities/types";
 import { useEntityId } from "@modules/navigation/hooks";
-import { Add } from "@mui/icons-material";
+import { Add, Search, SearchOff } from "@mui/icons-material";
 import {
-  IconButton,
+  ClickAwayListener,
+  Input,
   ListItemButton,
   ListItemText,
   Toolbar,
 } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
-
 export interface EntitiesPageProps {}
 
 const EntitiesPage: React.FC<EntitiesPageProps> = () => {
   const { t } = useTranslation();
+  const search = useSearch();
   const entityId = useEntityId();
   const navigate = useNavigationHelper();
-  const editData = useFormData<EntityFormData>();
-  const deleteData = useFormData<EntityFormData>();
   const getEntities = useGetEntities();
   const createEntity = useCreateEntity();
-  const updateEntity = useChangeName();
-  const deleteEntity = useDeleteEntity();
+  const entityData = useFormData<EntityFormData>();
+
+  const handleCreate = () => {
+    if (entityData.data) {
+      createEntity.mutate(entityData.data);
+      entityData.reset();
+    }
+  };
 
   return (
-    <Page testId="entities page" width={200} boxShadow={6} zIndex={800}>
+    <Page testId="entities page" width={250} boxShadow={6} zIndex={800}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", pl: 2 }}>
         <Text variant="h6">{t("entities")}</Text>
-        <IconButton
-          data-testid="create entities button"
-          onClick={editData.handleSet({ name: "" })}
-        >
-          <Add />
-        </IconButton>
+        <Row>
+          <IconButton
+            testId="create participant button"
+            Icon={<Add />}
+            color={entityData.hasData ? "primary" : "default"}
+            onClick={entityData.handleSet({ name: "" })}
+          />
+          <IconButton
+            testId="open search button"
+            Icon={search.isActive ? <SearchOff /> : <Search />}
+            color={search.isActive ? "primary" : "default"}
+            onClick={search.toggle}
+          />
+        </Row>
       </Toolbar>
+      {search.isActive && (
+        <ClickAwayListener onClickAway={search.stop}>
+          <Input
+            sx={{ ml: 2, mr: 2 }}
+            placeholder={t("search...")}
+            onChange={(e) => search.set(e.currentTarget.value)}
+            autoFocus
+            size="small"
+          />
+        </ClickAwayListener>
+      )}
+      {entityData.hasData && (
+        <EditableListItem
+          onCancel={entityData.reset}
+          onChange={(name) => entityData.set({ name })}
+          onSave={handleCreate}
+          inputProps={{
+            placeholder: t("enter value", { value: t("number") }),
+          }}
+        />
+      )}
       <DataList
         client={getEntities}
         errorText={t("fetch error data", { data: t("entities") })}
         noDataText={t("no data found", { data: t("entities") })}
+        searchFields={["name"]}
+        searchValue={search.value}
         renderItem={(entity, { isLast }) => (
-          <DataListItem
-            key={entity.id}
-            item={entity}
-            divider={!isLast}
-            onDelete={deleteData.set}
-            onUpdate={editData.set}
-          >
+          <DataListItem key={entity.id} item={entity} divider={!isLast}>
             <ListItemButton
-              onClick={navigate.handle(`${entity.id}/fields`)}
+              onClick={navigate.handle(`${entity.id}`)}
               selected={entityId === entity.id}
             >
               <ListItemText>{entity.name}</ListItemText>
             </ListItemButton>
           </DataListItem>
         )}
-      />
-      <DataDialog
-        client={editData}
-        Form={EntityForm}
-        createTitle={t("create data", { data: t("entity") })}
-        updateTitle={t("update data", { data: t("entity") })}
-        onCreate={createEntity.mutateAsync}
-        onUpdate={updateEntity.mutateAsync}
-      />
-      <DataDialog
-        client={deleteData}
-        Form={DeleteEntityForm}
-        mode="delete"
-        deleteTitle={t("delete data", { data: t("entity") })}
-        onDelete={deleteEntity.mutateAsync}
       />
     </Page>
   );

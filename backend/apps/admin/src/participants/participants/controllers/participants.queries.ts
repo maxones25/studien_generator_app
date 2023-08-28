@@ -2,7 +2,7 @@ import { Controller, Get, Param, UseGuards, Query } from '@nestjs/common';
 import { ParticipantsService } from '../participants.service';
 import { Roles } from '@admin/roles/roles.decorator';
 import { ParticipantQueryDto } from '../dtos/ParticipantQueryDto';
-import { ParticipantGuard } from '../participant.guard';
+import { ParticipantGuard } from '../guards/participant.guard';
 
 @Controller('studies/:studyId/participants')
 export class ParticipantsQueries {

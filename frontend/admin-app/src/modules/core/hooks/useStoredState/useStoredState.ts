@@ -18,7 +18,7 @@ export function useStoredState<T>(
       const item = storage.getItem(key);
       return item ? JSON.parse(item) : defaultValue;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return defaultValue;
     }
   });
@@ -32,7 +32,7 @@ export function useStoredState<T>(
       storage.setItem(key, JSON.stringify(valueToStore));
       setStoredValue(valueToStore);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

@@ -23,7 +23,6 @@ export class CreateFormComponentDto {
   type: ComponentType;
 
   @IsArray()
-  @ArrayMinSize(1)
   @Type(() => FormFieldDto)
   @ValidateNested({ each: true })
   formFields: FormFieldDto[];

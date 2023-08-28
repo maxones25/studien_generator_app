@@ -41,7 +41,7 @@ export class SchedulesCommands {
 
   @Post('removeSchedule')
   @Roles('admin')
-  async delete(@Param() { scheduleId }: ScheduleQueryDto) {
+  async delete(@Query() { scheduleId }: ScheduleQueryDto) {
     return this.formSchedulesService.delete(scheduleId);
   }
 }

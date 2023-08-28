@@ -1,43 +1,8 @@
 import { FormSchedulePeriod } from '@admin/forms/configs/enums/FormSchedulePeriod';
-import { FormScheduleType } from '@admin/forms/configs/enums/FormScheduleType';
 import { FormSchedule } from '@admin/forms/configs/repositories/schedules.repository';
-import { DaysOfWeek, Task } from '@entities';
+import { DaysOfMonth, DaysOfWeek, Task } from '@entities';
 import { Injectable } from '@nestjs/common';
 import datetime, { Time } from '@shared/modules/datetime/datetime';
-
-type GenerateTasksOptions = {
-  participantId: string;
-  schedules: FormSchedule[];
-  startDate: Date;
-  duration: number;
-};
-
-const generateTask = ({
-  formId,
-  participantId,
-  scheduledAt,
-}: {
-  formId: string;
-  participantId: string;
-  scheduledAt: Date;
-}) => {
-  const task = new Task();
-
-  task.formId = formId;
-  task.participantId = participantId;
-  task.originalScheduledAt = scheduledAt;
-  task.scheduledAt = scheduledAt;
-  task.rescheduled = 0;
-  task.postponable = false;
-
-  return task;
-};
-
-function getMonday(d) {
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust for Sundays
-  return new Date(d.setDate(diff));
-}
 
 @Injectable()
 export class TasksCalculatorService {
@@ -46,54 +11,58 @@ export class TasksCalculatorService {
     participantId,
     schedules,
     startDate,
-  }: GenerateTasksOptions) {
-    return schedules
-      .map(
-        ({
-          type,
-          period,
-          frequency,
-          daysOfWeek,
-          times: rawTimes,
-          config: { formId },
-        }) => {
-          if (type === FormScheduleType.Flexible) return [];
+  }: {
+    participantId: string;
+    schedules: FormSchedule[];
+    startDate: Date;
+    duration: number;
+  }) {
+    return schedules.flatMap(
+      ({
+        period,
+        frequency,
+        daysOfWeek,
+        daysOfMonth,
+        times: rawTimes,
+        config: { formId },
+      }) => {
+        const times = datetime.parseTimes(rawTimes);
 
-          const times = rawTimes.map((time) => {
-            const [rawHours, rawMinutes] = time.split(':');
-            const date = new Date();
-            date.setHours(parseInt(rawHours), parseInt(rawMinutes));
-            return {
-              hours: date.getUTCHours(),
-              minutes: date.getUTCMinutes(),
-            };
-          });
+        if (period === FormSchedulePeriod.Day)
+          return this.generateFixDay(
+            formId,
+            participantId,
+            frequency,
+            startDate,
+            duration,
+            times,
+          );
 
-          if (period === FormSchedulePeriod.Day)
-            return this.generateFixDay(
-              formId,
-              participantId,
-              frequency,
-              startDate,
-              duration,
-              times,
-            );
+        if (period === FormSchedulePeriod.Week)
+          return this.generateFixWeek(
+            formId,
+            participantId,
+            frequency,
+            daysOfWeek,
+            startDate,
+            duration,
+            times,
+          );
 
-          if (period === FormSchedulePeriod.Week)
-            return this.generateFixWeek(
-              formId,
-              participantId,
-              frequency,
-              daysOfWeek,
-              startDate,
-              duration,
-              times,
-            );
+        if (period === FormSchedulePeriod.Month)
+          return this.generateFixMonth(
+            formId,
+            participantId,
+            frequency,
+            daysOfMonth,
+            startDate,
+            duration,
+            times,
+          );
 
-          throw new Error();
-        },
-      )
-      .reduce((arr, tasks) => [...arr, ...tasks], []);
+        throw new Error();
+      },
+    );
   }
 
   public generateFixDay(
@@ -123,7 +92,7 @@ export class TasksCalculatorService {
     duration: number,
     times: Time[],
   ) {
-    const referenceMonday = getMonday(startDate);
+    const referenceMonday = datetime.getLastMonday(startDate);
     return this.generateTasks(
       formId,
       participantId,
@@ -131,19 +100,38 @@ export class TasksCalculatorService {
       duration,
       times,
       (day) => {
-        const daysDifference = Math.floor(
-          (day.getTime() - referenceMonday.getTime()) / (1000 * 60 * 60 * 24),
-        );
+        const weeks = datetime.weeksInBetween(referenceMonday, day);
 
-        const weeksDifference = Math.floor(daysDifference / 7);
+        if (weeks % frequency !== 0) return false;
 
-        if (weeksDifference % frequency !== 0) {
-          return false;
-        }
-
-        const index = (day.getDay() + 6) % 7;
+        const index = datetime.getDayOfWeekIndex(day);
 
         return daysOfWeek[index];
+      },
+    );
+  }
+
+  public generateFixMonth(
+    formId: string,
+    participantId: string,
+    frequency: number,
+    daysOfMonth: DaysOfMonth,
+    startDate: Date,
+    duration: number,
+    times: Time[],
+  ) {
+    return this.generateTasks(
+      formId,
+      participantId,
+      startDate,
+      duration,
+      times,
+      (day) => {
+        const months = datetime.monthsInBetween(startDate, day);
+
+        if (months % frequency !== 0) return false;
+
+        return daysOfMonth.includes(day.getDate());
       },
     );
   }
@@ -166,7 +154,28 @@ export class TasksCalculatorService {
         ];
       }, [])
       .map((scheduledAt) =>
-        generateTask({ formId, participantId, scheduledAt }),
+        this.generateTask({ formId, participantId, scheduledAt }),
       );
+  }
+
+  private generateTask({
+    formId,
+    participantId,
+    scheduledAt,
+  }: {
+    formId: string;
+    participantId: string;
+    scheduledAt: Date;
+  }) {
+    const task = new Task();
+
+    task.formId = formId;
+    task.participantId = participantId;
+    task.originalScheduledAt = scheduledAt;
+    task.scheduledAt = scheduledAt;
+    task.rescheduled = 0;
+    task.postponable = false;
+
+    return task;
   }
 }

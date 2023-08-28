@@ -4,6 +4,7 @@ export type FormEntityField = {
   id: string;
   name: string;
   type: EntityFieldType;
+  attributes: Record<string, any>;
   component: {
     id: string;
     type: string;

@@ -2,7 +2,7 @@ import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { EntityFormData } from "@modules/entities/types";
 import { useStudyId } from "@modules/navigation/hooks";
-import { getGetEntitiesKey } from "..";
+import { getGetEntitiesKey, getGetEntityKey } from "..";
 
 export const useChangeName = () => {
   const studyId = useStudyId()!;
@@ -16,13 +16,16 @@ export const useChangeName = () => {
         body: { name },
       }),
     {
-      onSuccess: ({ variables, queryClient }) => {
+      onSuccess: ({ variables: entity, queryClient }) => {
         queryClient.invalidateQueries(getGetEntitiesKey({ studyId }));
+        queryClient.invalidateQueries(
+          getGetEntityKey({ studyId, entityId: entity.id! })
+        );
         return {
           text: "record updated",
           params: {
             record: "entity",
-            name: variables.name,
+            name: entity.name,
           },
         };
       },

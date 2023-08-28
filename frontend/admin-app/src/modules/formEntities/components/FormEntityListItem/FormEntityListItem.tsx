@@ -1,6 +1,6 @@
 import React from "react";
 import { Column, Editable, IconButton } from "@modules/core/components";
-import { ListItem, ListItemText } from "@mui/material";
+import { ListItem, ListItemText, Link, Tooltip } from "@mui/material";
 import { FormEntityFieldList } from "..";
 import { EnhancedFormEntity } from "@modules/forms/contexts/FormEditorContext/hooks";
 import { useFormEditor } from "@modules/forms/hooks";
@@ -9,6 +9,8 @@ import {
   useChangeEntityName,
 } from "@modules/formEntities/hooks";
 import { Delete } from "@mui/icons-material";
+import { Link as RouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export interface FormEntityListItemProps {
   formEntity: EnhancedFormEntity;
@@ -17,6 +19,7 @@ export interface FormEntityListItemProps {
 export const FormEntityListItem: React.FC<FormEntityListItemProps> = ({
   formEntity,
 }) => {
+  const { t } = useTranslation();
   const formEditor = useFormEditor();
   const updateFormEntity = useChangeEntityName();
   const deleteFormEntity = useRemoveEntity();
@@ -40,7 +43,18 @@ export const FormEntityListItem: React.FC<FormEntityListItemProps> = ({
               {formEntity.data.name}
             </Editable>
           }
-          secondary={formEntity.data.entity.name}
+          secondary={
+            <Tooltip title={t("open record", { record: t("entity") })}>
+              <Link
+                component={RouterLink}
+                to={`../../../entities/${formEntity.data.entity.id}`}
+                variant="caption"
+                sx={{ textDecoration: "none", ml: 1 }}
+              >
+                {formEntity.data.entity.name}
+              </Link>
+            </Tooltip>
+          }
         />
         <IconButton
           testId="delete form entity icon button"

@@ -21,17 +21,28 @@ export class ComponentsRepository extends RecordRepository<FormComponent> {
   }
 
   async getByPage(pageId: string) {
-    return this.db.find({
+    const components = await this.db.find({
       where: { pageId },
       relations: {
-        formFields: true,
+        formFields: {
+          entityField: {
+            attributes: true,
+          },
+        },
         attributes: true,
       },
       select: {
         id: true,
         type: true,
         formFields: {
-          entityFieldId: true,
+          id: true,
+          entityField: {
+            id: true,
+            attributes: {
+              key: true,
+              value: true,
+            },
+          },
         },
         attributes: {
           key: true,
@@ -42,6 +53,29 @@ export class ComponentsRepository extends RecordRepository<FormComponent> {
         number: 'ASC',
       },
     });
+
+    return components.map((component) => ({
+      ...component,
+      formFields: component.formFields.map((formField) => ({
+        ...formField,
+        entityField: {
+          ...formField.entityField,
+          attributes: formField.entityField.attributes.reduce<
+            Record<string, any>
+          >((obj, { key, value }) => {
+            obj[key] = value;
+            return obj;
+          }, {}),
+        },
+      })),
+      attributes: component.attributes.reduce<Record<string, any>>(
+        (obj, { key, value }) => {
+          obj[key] = value;
+          return obj;
+        },
+        {},
+      ),
+    }));
   }
 
   async getNextNumber(pageId: string) {

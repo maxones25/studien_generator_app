@@ -7,6 +7,7 @@ import {
 import { useOpen } from "@modules/core/hooks";
 import { Close, Delete, MoreTime } from "@mui/icons-material";
 import {
+  Badge,
   Checkbox,
   Chip,
   Collapse,
@@ -118,12 +119,14 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
                 : t("add record", { record: t("schedules") })
             }
           >
-            <IconButton
-              testId="open schedules button"
-              Icon={subcard.isOpen ? <Close /> : <MoreTime />}
-              onClick={subcard.toggle}
-              disabled={!isTimeDependent}
-            />
+            <Badge badgeContent={form.schedules?.length} color="primary">
+              <IconButton
+                testId="open schedules button"
+                Icon={subcard.isOpen ? <Close /> : <MoreTime />}
+                onClick={subcard.toggle}
+                disabled={!isTimeDependent}
+              />
+            </Badge>
           </Tooltip>
         </Row>
       </DataListItem>

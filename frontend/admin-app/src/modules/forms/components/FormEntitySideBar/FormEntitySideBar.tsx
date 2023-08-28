@@ -38,7 +38,6 @@ export const FormEntitySideBar: React.FC<FormEntitySideBarProps> = () => {
           anchorEl={menuAnchor.element}
           open={menuAnchor.isOpen}
           onClose={menuAnchor.close}
-          onChange={console.log}
         >
           {getEntities.data?.map((entity) => (
             <MenuItem key={entity.id} onClick={handleCreateFormEntity(entity)}>

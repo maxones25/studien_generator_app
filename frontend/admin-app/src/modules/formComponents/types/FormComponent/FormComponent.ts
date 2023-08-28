@@ -1,5 +1,5 @@
 export type FormComponent = {
-  id?: string;
+  id: string;
   type: string;
   formFields: {
     entityId: string;

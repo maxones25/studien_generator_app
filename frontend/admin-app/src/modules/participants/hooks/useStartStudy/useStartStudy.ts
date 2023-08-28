@@ -1,15 +1,12 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { useStudyId } from "@modules/navigation/hooks";
-import { Participant } from "@modules/participants/types";
+import { StartStudyFormData } from "@modules/participants/types";
 import { getGetParticipantKey, getGetParticipantsKey } from "..";
 
 export const useStartStudy = () => {
   const studyId = useStudyId()!;
-  return useWriteRequest<
-    { participant: Participant; startDate: string },
-    unknown
-  >(
+  return useWriteRequest<StartStudyFormData, unknown>(
     ({ body: { participant, ...body }, ...options }) =>
       apiRequest(`/participants/startStudy`, {
         ...options,

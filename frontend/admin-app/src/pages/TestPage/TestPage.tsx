@@ -11,7 +11,7 @@ const TestPage: React.FC<TestPageProps> = () => {
   const form = useForm<Data>();
 
   const handleSubmit = (data: Data) => {
-    console.log(data);
+    // console.log(data);
   };
   return (
     <Form form={form} onSubmit={handleSubmit} p={2}>

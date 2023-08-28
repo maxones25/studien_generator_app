@@ -19,6 +19,11 @@ export const useComponents = (
   useMemo(() => {
     const items = components
       .filter((component) => {
+        if (
+          component.entityFields.length === 0 &&
+          selectedFormFields.length === 0
+        )
+          return true;
         if (component.entityFields.length !== selectedFormFields.length)
           return false;
         const store: string[] = [];

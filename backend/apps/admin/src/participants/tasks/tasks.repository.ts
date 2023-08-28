@@ -16,6 +16,9 @@ export class TasksRepository extends RecordRepository<Task> {
   getAll(participantId: string) {
     return this.db.find({
       where: { participantId },
+      order: {
+        scheduledAt: 'ASC',
+      },
       relations: {
         form: true,
       },

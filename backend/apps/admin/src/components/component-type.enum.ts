@@ -1,5 +1,6 @@
 export enum ComponentType {
   DatePicker = 'DatePicker',
+  Text = 'Text',
   NumberPicker = 'NumberPicker',
   Slider = 'Slider',
   TextField = 'TextField',

@@ -1,74 +1,41 @@
-import {
-  Button,
-  ExperimentalFormTextField,
-  Form,
-} from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
-import { useStudy } from "@modules/studies/contexts";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
-import React from "react";
-import { Validate, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { Participant, StartStudyFormData } from "@modules/participants/types";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { StartStudyStepper } from "..";
+import { useGetGroupForms } from "@modules/formConfigs/hooks";
 
-type FormData = {
-  startDate: string;
-};
-
-export interface StartStudyDialogProps extends FormProps<FormData> {
+export interface StartStudyDialogProps extends FormProps<StartStudyFormData> {
   open: boolean;
+  participant: Participant;
 }
 
 export const StartStudyDialog: React.FC<StartStudyDialogProps> = ({
   open,
+  participant,
   onSubmit,
   onCancel,
 }) => {
-  const { t } = useTranslation();
-  const study = useStudy();
-  const form = useForm<FormData>();
+  const getForms = useGetGroupForms({
+    groupId: participant.group?.id!,
+    isActive: true,
+    type: "TimeDependent",
+  });
 
-  const validateStartDate: Validate<string, FormData> = (date) => {
-    const { startDate, endDate } = study;
-    if (!startDate) return "error";
-    if (!endDate) return "error";
-    if (date < startDate || date > endDate)
-      return t("date must be between", {
-        name: t("startDate"),
-        start: new Date(startDate).toLocaleDateString("de"),
-        end: new Date(endDate).toLocaleDateString("de"),
-      });
-    return true;
-  };
+  if (!getForms.data) {
+    return null;
+  }
 
   return (
-    <Dialog open={open} onClose={onCancel}>
-      <Form form={form} onSubmit={onSubmit}>
-        <DialogTitle>Studie starten</DialogTitle>
-        <DialogContent>
-          <ExperimentalFormTextField
-            form={form}
-            name="startDate"
-            type="date"
-            required
-            InputLabelProps={{
-              shrink: true,
-            }}
-            validate={{
-              validateStartDate,
-            }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button testId="start study" type="submit">
-            Starten
-          </Button>
-        </DialogActions>
-      </Form>
+    <Dialog open={open} onClose={onCancel} maxWidth="sm" fullWidth>
+      <DialogTitle>Studie starten</DialogTitle>
+      <DialogContent>
+        <StartStudyStepper
+          onSubmit={({ configs, startDate }) => {
+            onSubmit({ participant, startDate, configs });
+          }}
+          configs={getForms.data!}
+        />
+      </DialogContent>
     </Dialog>
   );
 };

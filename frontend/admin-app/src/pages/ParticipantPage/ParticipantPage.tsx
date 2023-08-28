@@ -136,8 +136,9 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
       <StartStudyDialog
         open={startStudyDialog.isOpen}
         onCancel={startStudyDialog.close}
-        onSubmit={({ startDate }) => {
-          startStudy.mutateAsync({ participant, startDate }).then(() => {
+        participant={participant}
+        onSubmit={(data) => {
+          startStudy.mutateAsync(data).then(() => {
             startStudyDialog.close();
           });
         }}

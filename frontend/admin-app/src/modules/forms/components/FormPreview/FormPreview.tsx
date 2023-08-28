@@ -1,10 +1,11 @@
-import { Column, Row, Text } from "@modules/core/components";
+import { Column, Row } from "@modules/core/components";
 import { useGetComponents } from "@modules/formComponents/hooks";
 import { useFormEditorContext } from "@modules/forms/contexts";
 import { useFormEditor } from "@modules/forms/hooks";
 import { Add } from "@mui/icons-material";
 import { Chip } from "@mui/material";
 import React from "react";
+import { ComponentPreview } from "..";
 
 export interface FormPreviewProps {}
 
@@ -15,17 +16,9 @@ export const FormPreview: React.FC<FormPreviewProps> = () => {
 
   return (
     <Column height="100%" boxShadow={4} borderRadius={10} width={300}>
-      <Column p={2}>
+      <Column p={2} pt={4} pb={4} overflowY="scroll">
         {getFormComponents.data?.map((formComponent) => (
-          <Row
-            key={formComponent.id}
-            boxShadow={4}
-            p={1}
-            borderRadius={4}
-            mt={1}
-          >
-            <Text>{formComponent.type}</Text>
-          </Row>
+          <ComponentPreview key={formComponent.id} component={formComponent} />
         ))}
         {components.isVisible && (
           <Row flexWrap="wrap" mt={2}>

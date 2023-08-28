@@ -6,10 +6,15 @@ import { FormControl } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FormComponentAttributeField } from "..";
+import { FormEntity, FormEntityField } from "@modules/formEntities/types";
 
 export interface FormComponentFormFormProps
   extends FormProps<FormComponentFormData> {
   component: Component;
+  fields: {
+    entity: FormEntity;
+    data: FormEntityField;
+  }[];
 }
 
 export const FormComponentForm: React.FC<FormComponentFormFormProps> = ({
@@ -17,12 +22,19 @@ export const FormComponentForm: React.FC<FormComponentFormFormProps> = ({
   values,
   formProps,
   component,
+  fields,
 }) => {
   const form = useForm<FormComponentFormData>({ values });
 
   const handleSubmit = (data: FormComponentFormData) => {
-    onSubmit(data)
-  }
+    if (
+      typeof data.attributes.defaultValue !== "boolean" &&
+      !Boolean(data.attributes.defaultValue)
+    ) {
+      delete data.attributes.defaultValue;
+    }
+    onSubmit(data);
+  };
 
   return (
     <Form form={form} onSubmit={handleSubmit} {...formProps}>
@@ -30,7 +42,9 @@ export const FormComponentForm: React.FC<FormComponentFormFormProps> = ({
         return (
           <FormComponentAttributeField
             form={form}
+            type={component.name}
             name={`attributes.${attribute.name}`}
+            fields={fields.map(({ data }) => data)}
             attribute={attribute}
           />
         );

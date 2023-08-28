@@ -16,6 +16,7 @@ import { TextFieldComponent } from './components/TextFieldComponent';
 import { HIITComponent } from './components/HIITComponents';
 import { AttributeType } from './Attribute';
 import { FormComponentAttributeDto } from '@admin/forms/forms/dtos/FormComponentAttributeDto';
+import { TextComponent } from './components/TextComponent';
 
 @Injectable()
 export class ComponentsService {
@@ -30,6 +31,7 @@ export class ComponentsService {
     [ComponentType.Switch, new SwitchComponent()],
     [ComponentType.TextField, new TextFieldComponent()],
     [ComponentType.HIIT, new HIITComponent()],
+    [ComponentType.Text, new TextComponent()],
   ]);
 
   constructor(
@@ -49,14 +51,16 @@ export class ComponentsService {
         `component type '${componentType}' not found`,
       );
 
-    const entityFields = await this.entityFieldsRepository.find({
-      where: entityFieldIds.map((id) => ({ id })),
-    });
+    const types = await this.getEntityTypesByIds(entityFieldIds);
 
-    component.validate(
-      entityFields.map((entityField) => entityField.type),
-      attributes,
-    );
+    component.validate(types, attributes);
+  }
+
+  async getEntityTypesByIds(ids: string[]) {
+    const entityFields = await this.entityFieldsRepository.find({
+      where: ids.map((id) => ({ id })),
+    });
+    return entityFields.map((entityField) => entityField.type);
   }
 
   getAll() {

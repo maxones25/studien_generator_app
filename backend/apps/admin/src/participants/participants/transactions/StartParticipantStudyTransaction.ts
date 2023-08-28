@@ -5,7 +5,7 @@ import { StartStudyDto } from '../dtos/StartStudyDto';
 type TransactionInput = {
   participantId: string;
   tasks: Task[];
-  data: StartStudyDto;
+  startDate: Date;
 };
 
 export class StartParticipantStudyTransaction extends Transaction<
@@ -15,22 +15,19 @@ export class StartParticipantStudyTransaction extends Transaction<
   protected async execute({
     participantId,
     tasks,
-    data,
+    startDate,
   }: TransactionInput): Promise<void> {
-    await this.addAttributes(participantId, data);
+    await this.addAttributes(participantId, startDate);
     await this.generateTasks(tasks);
   }
 
-  private async addAttributes(
-    participantId: string,
-    { startDate }: StartStudyDto,
-  ) {
+  private async addAttributes(participantId: string, startDate: Date) {
     const repo = this.entityManager.getRepository(ParticipantAttribute);
 
     await repo.insert({
       participantId,
       key: 'startedAt',
-      value: JSON.stringify(startDate) as any,
+      value: JSON.stringify(startDate.toISOString()) as any,
     });
   }
 

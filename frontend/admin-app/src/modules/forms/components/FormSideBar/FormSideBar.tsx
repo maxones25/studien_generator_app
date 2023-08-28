@@ -15,6 +15,8 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
   const { state } = useFormEditorContext();
   const createFormComponent = useAddComponent();
 
+  console.log(state)
+
   const handleSave = ({ attributes }: FormComponentFormData) => {
     createFormComponent
       .mutateAsync({
@@ -54,6 +56,7 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
             component={formEditor.component.data!}
             onSubmit={handleSave}
             formProps={{ p: 1 }}
+            fields={state.fields}
           />
         </>
       ) : (

@@ -3,6 +3,7 @@ import { FormConfiguration } from '@entities/form-configuration.entity';
 import { ConfigsRepository } from '../repositories/configs.repository';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { GetByGroupQueryDto } from '../dtos/GetByGroupQueryDto';
 
 @Injectable()
 export class ConfigsService implements StudyRelatedDataAccessor {
@@ -39,8 +40,8 @@ export class ConfigsService implements StudyRelatedDataAccessor {
     return config.id;
   }
 
-  async getByGroup(groupId: string) {
-    return this.formConfigsRepository.getByGroup(groupId);
+  async getByGroup(groupId: string, query: GetByGroupQueryDto) {
+    return this.formConfigsRepository.getByGroup(groupId, query);
   }
 
   async activate(form: FormConfiguration) {

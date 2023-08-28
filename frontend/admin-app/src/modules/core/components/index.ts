@@ -29,3 +29,4 @@ export * from "./DeleteDialog/DeleteDialog";
 export * from "./Select/Select";
 
 export * from './TooltipGuard/TooltipGuard'
+export * from './TimesPicker/TimesPicker'

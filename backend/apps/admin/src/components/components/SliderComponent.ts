@@ -6,6 +6,7 @@ import { MaxAttribute } from './attributes/MaxAttribute';
 import { DefaultValueAttribute } from './attributes/DefaultValueAttribute';
 import { LabelAttribute } from './attributes/LabelAttribute';
 import { BadRequestException } from '@nestjs/common';
+import { TextAttribute } from './attributes/TextAttribute';
 
 export class SliderComponent extends Component {
   constructor() {
@@ -15,8 +16,14 @@ export class SliderComponent extends Component {
       [
         new LabelAttribute(false),
         new MinAttribute(true),
+        new TextAttribute('minLabel', false),
         new MaxAttribute(true),
-        new DefaultValueAttribute(false, "number", (value) => typeof value === 'number'),
+        new TextAttribute('maxLabel', false),
+        new DefaultValueAttribute(
+          false,
+          'number',
+          (value) => typeof value === 'number',
+        ),
       ],
     );
   }

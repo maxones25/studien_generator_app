@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FormScheduleAttributes } from '@entities';
+import { GetByGroupQueryDto } from '../dtos/GetByGroupQueryDto';
 
 export class ConfigsRepository extends RecordRepository<FormConfiguration> {
   constructor(
@@ -20,10 +21,12 @@ export class ConfigsRepository extends RecordRepository<FormConfiguration> {
     return this.db.find({ where: { formId, groupId } });
   }
 
-  async getByGroup(groupId: string) {
+  async getByGroup(groupId: string, { isActive, type }: GetByGroupQueryDto) {
     const configs = await this.db.find({
       where: {
         groupId,
+        isActive,
+        type,
       },
       order: {
         form: {

@@ -39,6 +39,7 @@ const DbModule = TypeOrmModule.forRootAsync({
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       timezone: "Z",
+      logging: false,
       entities: [
         Director,
         Entity,
