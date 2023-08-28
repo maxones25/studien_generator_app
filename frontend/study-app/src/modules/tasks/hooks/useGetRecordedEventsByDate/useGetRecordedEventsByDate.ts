@@ -7,7 +7,7 @@ export interface useGetRecordedEventsByDateOptions {
   date: Dayjs
 }
 
-export const getGetRecordedEventsByDateKey = (date: Dayjs) => ["getRecordedEventsByDate", date];
+export const getGetRecordedEventsByDateKey = (date: Dayjs) => [date, "getRecordedEventsByDate"];
 
 export const useGetRecordedEventsByDate = (options : useGetRecordedEventsByDateOptions) => {
   const date = options.date

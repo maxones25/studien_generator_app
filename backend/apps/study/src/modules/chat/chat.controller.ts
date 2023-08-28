@@ -23,9 +23,14 @@ export class ChatController {
   @Put()
   async readMessages(
     @ParticipantId() participantId: string,
-    @Body() data: ReadMessagesDto
+    @Body() data: ReadMessagesDto,
+    @Query('lastUpdated') lastUpdated?: string,
     ) {
-    return await this.chatService.readMessages(data, participantId);
+    if (lastUpdated) {
+      const date = new Date(lastUpdated);
+      return await this.chatService.readMessagesModifiedSince(data, participantId, date);
+    }
+    return await this.chatService.readMessages(data, participantId, );
   }
 
   @Post()

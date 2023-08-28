@@ -60,16 +60,24 @@ export class DataService {
     return this.chatRepository.find({
       where: {
         modifiedAt: MoreThan(lastChecked),
-        participant: {
-          subscription: Not(IsNull()),
+        participantId: IsNull(),
+        chat: {
+          participant: {
+            subscription: Not(IsNull()),
+          }
         }
       },
       relations: {
-        participant: true
+        chat: {
+          participant: true,
+        },
       },
       select: {
-        participant: {
-          subscription: true
+        chat: {
+          id: true,
+          participant: {
+            subscription: true
+          }
         }
       }
     });

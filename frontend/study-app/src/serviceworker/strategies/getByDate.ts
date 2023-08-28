@@ -1,17 +1,10 @@
-import { IDBPDatabase } from "idb";
 import { dateRange, extractParams } from "../utils/utils"
-import { Strategy } from 'workbox-strategies';
+import { AbstractStrategy } from "./abstract";
 
-export class GetByDate<T extends Record<string, any>> extends Strategy {
-  private dbPromise: Promise<IDBPDatabase>; 
-  private dbName: string;
-  private indexName: string;
+export class GetByDate<T extends Record<string, any>> extends AbstractStrategy {
 
-  constructor(dbPromise: Promise<IDBPDatabase>, dbName: string, indexName: string) {
-    super();
-    this.dbPromise = dbPromise;
-    this.dbName = dbName;
-    this.indexName = indexName;
+  constructor(dbName: string, indexName: string) {
+    super(dbName, 'GET', indexName);
   }
 
   protected async _handle(
@@ -20,11 +13,11 @@ export class GetByDate<T extends Record<string, any>> extends Strategy {
       const db = await this.dbPromise;
       const params = extractParams(request.url);
       const data: T[] | undefined = await db.getAllFromIndex(
-        this.dbName, 
-        this.indexName,
+        this.storeName, 
+        this.indexName ?? '',
         dateRange(params.get('date') ?? ''),
       );
-      if (data && this.dbName === 'records') {
+      if (data && this.storeName === 'records') {
         const filteredData = data.filter((record) => !record.taskId);
         return new Response(JSON.stringify(filteredData));
       }

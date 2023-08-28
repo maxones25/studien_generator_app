@@ -2,13 +2,14 @@ import { IDBPDatabase } from "idb";
 import { Strategy } from 'workbox-strategies';
 import { FormConfig, FormType } from "@modules/forms/types";
 import { Event } from "@modules/events/types";
+import { getDB } from "../indexedDB/getDB";
 
 export class GetEvents extends Strategy {
   private dbPromise: Promise<IDBPDatabase>; 
 
-  constructor(dbPromise: Promise<IDBPDatabase>) {
+  constructor() {
     super();
-    this.dbPromise = dbPromise;
+    this.dbPromise = getDB();
   }
 
   protected async _handle( 

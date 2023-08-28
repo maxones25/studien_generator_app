@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { getDB } from "../../../../serviceworker/indexedDB/getDB";
+import dayjs from "dayjs";
+import { useQuery } from "react-query";
 
 export interface UseGetQueueStatusOptions {}
 
@@ -8,32 +10,40 @@ export interface UseGetQueueStatusResult {
 
 export const useGetQueueStatus = () : UseGetQueueStatusResult => {
 
-  const [count, setCount] = useState(0);
-
-  let request = indexedDB.open("workbox-background-sync");
-  request.onsuccess = () => {
-    const db = request.result;
-    try {
-      const transaction = db.transaction("requests", "readonly");
-      const countRequest = transaction.objectStore("requests").count();
-      countRequest.onsuccess = function() {
-        setCount(countRequest.result);
-      };
-      countRequest.onerror = function() {
-        setCount(0);
-      };
-      transaction.oncomplete = function() {
-        db.close();
-      };
-    } catch {
-      setCount(0);
-    }
-  };
+  const getCount = useQuery({
+    queryKey: ['queueCount'],
+    queryFn: async () => {
+      try {
+        const queueDB = await getDB("workbox-background-sync");
+        const result = await queueDB.count("requests");
+        return result;
+      } catch {
+        return 0;
+      }
+    },
+    refetchOnReconnect: 'always',
+  });
+  const getLastUpdated = useQuery({
+    queryKey: ['lastUpdated'],
+    queryFn: async () => {
+      try {
+        const studyDB = await getDB();
+        const metaData = await studyDB.getAll("metaData")
+        const oldestDate = dayjs(Math.min(...metaData as any));
+        return oldestDate;
+      } catch {
+        return dayjs();
+      }
+    },
+    refetchOnReconnect: 'always',
+    });
 
   const getQueueStatus = () => {
-    if (count === 0) return 'green';
-    if (count > 5) return 'red';
-    return 'yellow';
+    const count = getCount.data ?? 0;
+    const lastUpdated = getLastUpdated.data ?? dayjs();
+    if (count === 0 && lastUpdated.diff(dayjs(), 'hour') < 2) return 'green';
+    if (count < 5 && lastUpdated.diff(dayjs(), 'day') < 1) return 'yellow';
+    return 'red';
   }
 
   return {

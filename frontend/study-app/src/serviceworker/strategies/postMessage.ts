@@ -2,14 +2,15 @@ import { IDBPDatabase } from 'idb';
 import { Strategy, StrategyHandler, StrategyOptions } from 'workbox-strategies';
 import { Queue } from 'workbox-background-sync';
 import { Message } from '@modules/chat/types';
+import { getDB } from '../indexedDB/getDB';
 
 export class PostMessage extends Strategy {
   private queue = new Queue('MessagesQueue');
   private dbPromise: Promise<IDBPDatabase>;
 
-  constructor(dbPromise: Promise<IDBPDatabase>, options?: StrategyOptions) {
+  constructor(options?: StrategyOptions) {
     super(options);
-    this.dbPromise = dbPromise;
+    this.dbPromise = getDB();
   }
 
   protected async _handle(

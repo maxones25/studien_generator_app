@@ -3,14 +3,15 @@ import { Strategy, StrategyHandler, StrategyOptions } from 'workbox-strategies';
 import { Queue } from 'workbox-background-sync';
 import { Record } from '@modules/forms/types';
 import { Task } from '@modules/tasks/types';
+import { getDB } from '../indexedDB/getDB';
 
 export class PostRecord extends Strategy {
   private queue = new Queue('RecordsQueue');
   private dbPromise: Promise<IDBPDatabase>;
 
-  constructor(dbPromise: Promise<IDBPDatabase>, options?: StrategyOptions) {
+  constructor(options?: StrategyOptions) {
     super(options);
-    this.dbPromise = dbPromise;
+    this.dbPromise = getDB();
   }
 
   protected async _handle(
@@ -21,20 +22,20 @@ export class PostRecord extends Strategy {
     const clone = request.clone();
     return clone.json()
     .then(async (data) => {
-      const record: Record = data;
-      const tx = db.transaction(['records', 'tasks'], 'readwrite');
-      if (record.taskId) {
-        this.putTask(tx, record.formId, record.createdAt);
-      }
-      await tx.objectStore("records").add({
-        id: record.id,
-        createdAt: new Date(record.createdAt),
-        name: record.name,
-      });
       try {
         const response = await handler.fetch(request);
         return response;
       } catch (error) {
+        const record: Record = data;
+        const tx = db.transaction(['records', 'tasks'], 'readwrite');
+        if (record.taskId) {
+          this.putTask(tx, record.formId, record.createdAt);
+        }
+        await tx.objectStore("records").add({
+          id: record.id,
+          createdAt: new Date(record.createdAt),
+          name: record.name,
+        });
         await this.queue.pushRequest({request: request});
         return new Response('', { status: 200, statusText: 'Queued' });
       }

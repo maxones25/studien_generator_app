@@ -8,8 +8,9 @@ export const useGetChatMessages = () => {
   return useReadRequest<Message[]>(getGetChatMessagesKey(), (options) =>
     apiRequest(`/chat`, { ...options }),
     {
+      staleTime: 1000 * 10,
       refetchInterval: 1000 * 60,
-      refetchIntervalInBackground: true
+      refetchIntervalInBackground: true,
     }
   );
 }

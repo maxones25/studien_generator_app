@@ -22,7 +22,8 @@ export const useLogin = () => {
       return res;
     },
     {
-      onSuccess: ({ data: { accessToken: value } }) => {
+      onSuccess: ({ queryClient, data: { accessToken: value } }) => {
+        queryClient.invalidateQueries();
         accessToken.set(value);
       },
     }
