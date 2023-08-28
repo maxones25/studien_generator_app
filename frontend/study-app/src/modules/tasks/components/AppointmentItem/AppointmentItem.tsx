@@ -19,9 +19,7 @@ export const AppointmentItem : React.FC<AppointmentItemProps>= ({
   const dateString = dayjs(appointment.start).format('HH:mm') + endString;
 
   return (
-    <StyledListItem
-      key={appointment.id}
-    >
+    <StyledListItem>
       <ListItemButton onClick={() => handleClick(appointment.id, appointment.name)}>
         <ListItemText primary={appointment.name} secondary={dateString}/>
       </ListItemButton>

@@ -1,5 +1,6 @@
 import { useReadRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
+import { Notification } from "@modules/notifications/types";
 
 export interface UseGetNotificationsOptions {}
 

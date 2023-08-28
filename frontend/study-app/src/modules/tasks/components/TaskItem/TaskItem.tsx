@@ -19,9 +19,7 @@ export const TaskItem : React.FC<TaskItemProps>= ({
   const dateString = dayjs(date).format('HH:mm')
 
   return (
-    <StyledListItem
-      key={task.id}
-    >
+    <StyledListItem>
       <ListItemButton onClick={() => handleClick(task.id, task.name)}>
         <ListItemText primary={task.name} secondary={dateString}/>
       </ListItemButton>

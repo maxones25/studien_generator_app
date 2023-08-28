@@ -1,4 +1,10 @@
 {
+  "calendar entries": "Kalender Einträge",
+  "notifications": "Neuigkeiten",
+  "delete all": "Alle löschen",
+  "push notifications body": "",
+  "data status body": "",
+  "data status": "Datenstand",
   "max": "Maximal {{value}}",
   "min": "Mindestens {{value}}",
   "max length": "Maximal {{value}} Zeichen",
@@ -9,7 +15,6 @@
   "schedule": "Zeitplan",
   "continue": "fortsetzen",
   "cancel form question": "Wollen Sie wirklich das Formular abbrechen?",
-  "queue status": "Datenstand",
   "push notifications": "Benachrichtigungen",
   "permission-prompt": "akzeptieren",
   "permission-default": "akzeptieren",

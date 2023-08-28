@@ -15,9 +15,7 @@ export const RecordedEventsListItem : React.FC<RecordedEventsListItemProps>= ({
   };
 
   return (
-    <StyledListItem
-      key={record.id}
-    >
+    <StyledListItem>
       <ListItemButton onClick={() => handleClick(record.id, record.name)}>
         <ListItemText primary={record.name}/>
       </ListItemButton>
