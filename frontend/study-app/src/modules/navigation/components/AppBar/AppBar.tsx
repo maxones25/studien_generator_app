@@ -60,12 +60,11 @@ export const AppBar : React.FC<AppBarProps>= () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
             onClick={path === "/tasks" ? undefined : changePage()}
             testId={'go-back-app-bar'}
             Icon={path === "/tasks" ? <ZiIcon /> : <ArrowBack /> }
           />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, pl: 1}}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {t(`${path}`)}
           </Typography>
           <IconButton
@@ -73,7 +72,6 @@ export const AppBar : React.FC<AppBarProps>= () => {
             edge="end"
             color="inherit"
             aria-label="menu"
-            sx={{ ml: 1 }}
             onClick={handleOpenNotifications}
             testId='go-calendar-app-bar'
             Icon={
@@ -88,7 +86,6 @@ export const AppBar : React.FC<AppBarProps>= () => {
             color="inherit"
             disabled={path === "/calendar"}
             aria-label="menu"
-            sx={{ ml: 1 }}
             onClick={navigate.handle('../calendar')}
             testId='go-calendar-app-bar'
             Icon={<CalendarMonthOutlined /> }
@@ -99,7 +96,6 @@ export const AppBar : React.FC<AppBarProps>= () => {
             color="inherit"
             aria-label="menu"
             disabled={path === "/chat"}
-            sx={{ ml: 1 }}
             onClick={navigate.handle('../chat')}
             testId='go-chat-app-bar'
             Icon={
@@ -113,7 +109,6 @@ export const AppBar : React.FC<AppBarProps>= () => {
             edge="end"
             color="inherit"
             aria-label="menu"
-            sx={{ ml: 1 }}
             onClick={handleMenuToggle}
             testId='menu-app-bar'
             Icon={<Menu />}
