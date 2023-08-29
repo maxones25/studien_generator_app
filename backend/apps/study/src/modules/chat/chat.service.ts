@@ -58,7 +58,7 @@ export class ChatService {
       director, participantId, content, sentAt, id, modifiedAt
     }) => {
       const readAt = receipts?.find((receipt) => receipt.messageId === id)?.readAt
-      if (!lastUpdated || modifiedAt > lastUpdated || readAt > lastUpdated) {
+      if (!lastUpdated || modifiedAt >= lastUpdated || readAt >= lastUpdated) {
         const directorName = director ? `${director.firstName} ${director.lastName}` : undefined
         const message = {
           id,

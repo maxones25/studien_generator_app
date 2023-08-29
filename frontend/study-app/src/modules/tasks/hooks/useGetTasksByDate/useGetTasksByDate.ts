@@ -7,13 +7,13 @@ export interface UseGetTasksByDateOptions {
   date: Dayjs;
 }
 
-export const getGetTasksByDateKey = (date: Dayjs) => [date, "getTasksByDate"];
+export const getGetTasksByDateKey = (date: Dayjs) => [date.toISOString(), "getTasksByDate"];
 
 export const useGetTasksByDate = (options : UseGetTasksByDateOptions) => {
   const date = options.date;
   return useReadRequest<Task[]>(getGetTasksByDateKey(date), (options) =>
     apiRequest(`/tasks}`, {params: {
-      date: date.toDate()
+      date: encodeURIComponent(date.toISOString())
     }, ...options }),
     {
       keepPreviousData: true

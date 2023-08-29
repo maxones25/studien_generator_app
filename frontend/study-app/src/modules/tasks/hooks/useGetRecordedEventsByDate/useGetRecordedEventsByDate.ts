@@ -7,13 +7,13 @@ export interface useGetRecordedEventsByDateOptions {
   date: Dayjs
 }
 
-export const getGetRecordedEventsByDateKey = (date: Dayjs) => [date, "getRecordedEventsByDate"];
+export const getGetRecordedEventsByDateKey = (date: Dayjs) => [date.toISOString(), "getRecordedEventsByDate"];
 
 export const useGetRecordedEventsByDate = (options : useGetRecordedEventsByDateOptions) => {
   const date = options.date
   return useReadRequest<Record[]>(getGetRecordedEventsByDateKey(date), (options) =>
     apiRequest(`/records`, {params: {
-      date: date.toDate()
+      date: encodeURIComponent(date.toISOString())
     }, ...options }),
     {
       keepPreviousData: true

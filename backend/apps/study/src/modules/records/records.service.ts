@@ -33,7 +33,7 @@ export class RecordsService {
     });
 
     const filteredRecords = records.filter(({ modifiedAt }) => 
-      !updatedAt || modifiedAt > updatedAt
+      !updatedAt || modifiedAt >= updatedAt
     );
 
     return filteredRecords.map(({id, taskId, createdAt, form}) => {
