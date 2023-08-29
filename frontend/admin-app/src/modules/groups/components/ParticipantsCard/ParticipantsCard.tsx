@@ -8,7 +8,7 @@ import {
 import { useNavigationHelper } from "@modules/core/hooks";
 import { Group } from "@modules/groups/types";
 import { useGetGroupParticipants } from "@modules/participants/hooks";
-import { Divider, ListItemButton, ListItemText } from "@mui/material";
+import { Chip, Divider, ListItemButton, ListItemText } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -24,13 +24,16 @@ export const ParticipantsCard: React.FC<ParticipantsCardProps> = ({
   const getParticipants = useGetGroupParticipants(group.id);
   const navigate = useNavigationHelper()
 
+  const count = getParticipants.data?.length
+
   return (
-    <Column boxShadow={4} {...props}>
+    <Column boxShadow={4} {...props} overflowY="hidden">
       <Row p={2} justifyContent="space-between" height={40}>
         <Text>{t("participants")}</Text>
+        {count && <Chip color="primary" label={count}/>}
       </Row>
       <Divider/>
-      <Column p={2} pt={1} pb={1}>
+      <Column p={2} pt={1} pb={1} overflowY="hidden">
         <DataList
           client={getParticipants}
           errorText=""

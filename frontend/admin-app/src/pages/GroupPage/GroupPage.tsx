@@ -83,7 +83,7 @@ const GroupPage: React.FC<GroupPageProps> = () => {
         />
       </Toolbar>
       <Divider />
-      <Row p={2} flex={1} alignItems="stretch">
+      <Row p={2} flex={1} alignItems="stretch" overflowY="hidden">
         <ParticipantsCard group={group} flex={1}  />
         <FormsCard flex={2} ml={2}/>
       </Row>

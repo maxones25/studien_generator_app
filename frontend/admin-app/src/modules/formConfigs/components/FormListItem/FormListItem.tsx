@@ -2,6 +2,7 @@ import {
   DataListItem,
   DeleteDialog,
   IconButton,
+  Link,
   Row,
 } from "@modules/core/components";
 import { useOpen } from "@modules/core/hooks";
@@ -10,6 +11,7 @@ import {
   Badge,
   Checkbox,
   Chip,
+  ClickAwayListener,
   Collapse,
   ListItemIcon,
   ListItemText,
@@ -87,7 +89,9 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
           </Tooltip>
         </ListItemIcon>
         <Row flex={1}>
-          <ListItemText>{form.form.name}</ListItemText>
+          <ListItemText>
+            <Link to={`../../forms/${form.form.id}`}>{form.form.name}</Link>
+          </ListItemText>
           <Chip
             color={isTimeDependent ? "primary" : "default"}
             onClick={handleChangeType}

@@ -27,7 +27,7 @@ import {
   useStartStudy,
 } from "@modules/participants/hooks";
 import { useStudy } from "@modules/studies/contexts";
-import { Delete } from "@mui/icons-material";
+import { Delete, Launch } from "@mui/icons-material";
 import { Divider, LinearProgress, Toolbar } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -91,6 +91,16 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
               changeParticipantGroup.mutate({ participant, group });
             }}
           />
+          {hasGroup && (
+            <IconButton
+              testId="open group"
+              Icon={<Launch />}
+              onClick={navigate.handle(`../../groups/${participant.group?.id}`)}
+              tooltipProps={{
+                title: t("open record", { record: t("group") }),
+              }}
+            />
+          )}
         </Row>
         <OnlyAdmin>
           {(adminProps) => (
@@ -141,23 +151,25 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
             <TasksCard flex={1} m={2} ml={0} alignSelf="stretch" />
           </>
         ) : (
-          <TooltipGuard
-            validate={{
-              "study must be active": !study.isActive,
-              "group required": !hasGroup,
-            }}
-          >
-            {(disabled) => (
-              <Button
-                testId="open start study dialog"
-                disabled={disabled}
-                onClick={startStudyDialog.open}
-                sx={{ alignSelf: "center" }}
-              >
-                {t("start study")}
-              </Button>
-            )}
-          </TooltipGuard>
+          <Column justifyContent="center">
+            <TooltipGuard
+              validate={{
+                "study must be active": !study.isActive,
+                "group required": !hasGroup,
+              }}
+            >
+              {(disabled) => (
+                <Button
+                  testId="open start study dialog"
+                  disabled={disabled}
+                  onClick={startStudyDialog.open}
+                  sx={{ alignSelf: "center" }}
+                >
+                  {t("start study")}
+                </Button>
+              )}
+            </TooltipGuard>
+          </Column>
         )}
       </Row>
       <StartStudyDialog

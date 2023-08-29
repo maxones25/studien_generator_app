@@ -1,4 +1,10 @@
-import { Column, IconButton, Row, Text } from "@modules/core/components";
+import {
+  Column,
+  DeleteDialog,
+  IconButton,
+  Row,
+  Text,
+} from "@modules/core/components";
 import { FormConfig } from "@modules/forms/types";
 import {
   useCreateFormSchedule,
@@ -12,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import { useFormData } from "@modules/core/hooks";
 import { Add } from "@mui/icons-material";
 import { ScheduleForm } from "@modules/formConfigs/components";
-import { ScheduleFormData } from "@modules/formConfigs/types";
+import { Schedule, ScheduleFormData } from "@modules/formConfigs/types";
 
 export interface FormSchedulesCardProps {
   form: FormConfig;
@@ -25,6 +31,7 @@ export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
   const updateFormSchedule = useUpdateFormSchedule();
   const deleteFormSchedule = useDeleteFormSchedule();
   const scheduleData = useFormData<ScheduleFormData>();
+  const deleteData = useFormData<Schedule>();
 
   const handleSaveSchedule = (data: ScheduleFormData) => {
     if (data.id) {
@@ -65,7 +72,7 @@ export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
             onSelect={(schedule) =>
               scheduleData.set({ ...schedule, configId: form.id })
             }
-            onDelete={deleteFormSchedule.mutate}
+            onDelete={deleteData.handleSet(schedule)}
           />
         ))}
       </List>
@@ -80,6 +87,17 @@ export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
           formProps={{ p: 2 }}
         />
       </Dialog>
+      <DeleteDialog
+        open={deleteData.hasData}
+        onCancel={deleteData.reset}
+        onConfirm={() =>
+          deleteFormSchedule.mutateAsync(deleteData.data!).then(() => {
+            deleteData.reset();
+          })
+        }
+        record="schedule"
+        target={t(deleteData.data?.period!)}
+      />
     </Column>
   );
 };
