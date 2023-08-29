@@ -11,10 +11,14 @@ export const getGetParticipantsKey = (deps: { studyId: string }) => [
 ];
 
 export const useGetParticipants = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
+
   return useReadRequest<Participant[]>(
     getGetParticipantsKey({ studyId: studyId! }),
     (options) =>
-      apiRequest(`/studies/${studyId}/participants/getByStudy`, { ...options })
+      apiRequest(`/participants/getByStudy`, {
+        ...options,
+        params: { studyId },
+      })
   );
 };

@@ -1,5 +1,7 @@
 import {
   Button,
+  Column,
+  ConfirmDialog,
   DeleteDialog,
   Editable,
   IconButton,
@@ -9,14 +11,19 @@ import {
   Text,
   TooltipGuard,
 } from "@modules/core/components";
-import { useNavigationHelper, useOpen } from "@modules/core/hooks";
+import { useNavigationHelper, useOpen, useValue } from "@modules/core/hooks";
 import { GroupSelect } from "@modules/groups/components";
-import { StartStudyDialog, TasksCard } from "@modules/participants/components";
+import {
+  QrCodeDialog,
+  StartStudyDialog,
+  TasksCard,
+} from "@modules/participants/components";
 import {
   useChangeParticipantGroup,
   useChangeParticipantNumber,
   useDeleteParticipant,
   useGetParticipant,
+  useResetPassword,
   useStartStudy,
 } from "@modules/participants/hooks";
 import { useStudy } from "@modules/studies/contexts";
@@ -35,9 +42,12 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
   const changeParticipantNumber = useChangeParticipantNumber();
   const changeParticipantGroup = useChangeParticipantGroup();
   const deleteParticipant = useDeleteParticipant();
+  const resetPassword = useResetPassword();
   const study = useStudy();
   const startStudy = useStartStudy();
   const startStudyDialog = useOpen();
+  const resetDialog = useOpen();
+  const uri = useValue<string | undefined>("");
 
   if (getParticipant.isLoading) {
     return <LinearProgress />;
@@ -105,43 +115,70 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
         />
       </Toolbar>
       <Divider />
-      <Row flex={1} alignItems="flex-start" overflowY="hidden">
-        <Row m={2} p={1} boxShadow={4}>
-          {isStarted ? (
-            <Text>
-              {participant.startedAt &&
-                new Date(participant.startedAt).toLocaleDateString("de")}
-            </Text>
-          ) : (
-            <TooltipGuard
-              validate={{
-                "study must be active": !study.isActive,
-                "group required": !hasGroup,
-              }}
-            >
-              {(disabled) => (
-                <Button
-                  testId="open start study dialog"
-                  disabled={disabled}
-                  onClick={startStudyDialog.open}
-                >
-                  {t("start study")}
-                </Button>
-              )}
-            </TooltipGuard>
-          )}
-        </Row>
-        {isStarted && <TasksCard flex={1} m={2} ml={0} alignSelf="stretch" />}
+      <Row flex={1} justifyContent="center" alignItems="stretch" overflowY="hidden">
+        {isStarted ? (
+          <>
+            <Column m={2} p={1} boxShadow={4}>
+              <Text>
+                {participant.startedAt &&
+                  new Date(participant.startedAt).toLocaleDateString("de")}
+              </Text>
+              <Button testId="reset" onClick={resetDialog.open}>
+                Reset Password
+              </Button>
+            </Column>
+            <TasksCard flex={1} m={2} ml={0} alignSelf="stretch" />
+          </>
+        ) : (
+          <TooltipGuard
+            validate={{
+              "study must be active": !study.isActive,
+              "group required": !hasGroup,
+            }}
+          >
+            {(disabled) => (
+              <Button
+                testId="open start study dialog"
+                disabled={disabled}
+                onClick={startStudyDialog.open}
+                sx={{ alignSelf: "center" }}
+              >
+                {t("start study")}
+              </Button>
+            )}
+          </TooltipGuard>
+        )}
       </Row>
       <StartStudyDialog
         open={startStudyDialog.isOpen}
         onCancel={startStudyDialog.close}
         participant={participant}
         onSubmit={(data) => {
-          startStudy.mutateAsync(data).then(() => {
+          startStudy.mutateAsync(data).then((appUri) => {
+            uri.set(appUri);
             startStudyDialog.close();
           });
         }}
+      />
+      <QrCodeDialog fullScreen uri={uri.value} onClose={uri.reset} PaperProps={{ sx: { p: 12, boxSizing: "border-box" } }} />
+      <ConfirmDialog
+        open={resetDialog.isOpen}
+        title="Reset Password"
+        text="Bla bla"
+        onClose={resetDialog.close}
+        renderActions={
+          <Button
+            testId="reset password"
+            onClick={() => {
+              resetPassword.mutateAsync(participant).then((appUri) => {
+                uri.set(appUri);
+                resetDialog.close();
+              });
+            }}
+          >
+            Reset
+          </Button>
+        }
       />
     </Page>
   );

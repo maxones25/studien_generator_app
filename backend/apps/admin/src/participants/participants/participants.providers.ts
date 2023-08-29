@@ -5,16 +5,22 @@ import { ParticipantsRepository } from './participants.repository';
 import { ParticipantGuard } from './guards/participant.guard';
 import { StartParticipantStudyTransaction } from './transactions/StartParticipantStudyTransaction';
 import { CreateParticipantTransaction } from './transactions/CreateParticipantTransaction';
-import { TransformStartStudySchedulesGuard } from './guards/TransformStartStudySchedulesGuard';
+import { AppUriGenerator } from './services/AppUriGenerator';
+import { AttributesRepository } from './attributes.repository';
+import { SchedulesTransformer } from './services/SchedulesTransformer';
+import { ResetPasswordUseCase } from './transactions/ResetPasswordUseCase';
 
 const participantsProviders: Provider[] = [
+  ParticipantGuard,
   PasswordService,
   ParticipantsService,
   StartParticipantStudyTransaction,
   CreateParticipantTransaction,
-  ParticipantGuard,
+  ResetPasswordUseCase,
+  AttributesRepository,
   ParticipantsRepository,
-  TransformStartStudySchedulesGuard,
+  AppUriGenerator,
+  SchedulesTransformer,
 ];
 
 export default participantsProviders;

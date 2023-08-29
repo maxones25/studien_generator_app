@@ -5,8 +5,8 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { Column, IconButton, Row, Text } from "..";
-import { Input, OutlinedInput } from "@mui/material";
-import { Add, Delete, Remove } from "@mui/icons-material";
+import { OutlinedInput } from "@mui/material";
+import { Add, Remove } from "@mui/icons-material";
 
 export interface TimesPickerProps<TFieldValues extends FieldValues> {
   form: UseFormReturn<TFieldValues>;

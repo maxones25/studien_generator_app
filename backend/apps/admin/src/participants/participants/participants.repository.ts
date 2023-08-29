@@ -1,4 +1,8 @@
-import { Participant, ParticipantsAttributes } from '@entities';
+import {
+  Participant,
+  ParticipantAttribute,
+  ParticipantsAttributes,
+} from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { Repository } from 'typeorm';
@@ -66,8 +70,8 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
     return participants.map(this.convertParticipant);
   }
 
-  getByGroup(groupId: string): Participant[] | PromiseLike<Participant[]> {
-    return this.db.find({ where: { groupId } });
+  async getByGroup(groupId: string) {
+    return await this.db.find({ where: { groupId } });
   }
 
   private convertParticipant(

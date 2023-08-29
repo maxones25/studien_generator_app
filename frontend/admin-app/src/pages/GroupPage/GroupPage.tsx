@@ -9,6 +9,7 @@ import {
 } from "@modules/core/components";
 import { useNavigationHelper, useOpen } from "@modules/core/hooks";
 import { FormsCard } from "@modules/formConfigs/components";
+import { ParticipantsCard } from "@modules/groups/components";
 import {
   useDeleteGroup,
   useGetGroup,
@@ -83,7 +84,8 @@ const GroupPage: React.FC<GroupPageProps> = () => {
       </Toolbar>
       <Divider />
       <Row p={2} flex={1} alignItems="stretch">
-        <FormsCard />
+        <ParticipantsCard group={group} flex={1}  />
+        <FormsCard flex={2} ml={2}/>
       </Row>
     </Page>
   );

@@ -18,13 +18,15 @@ import { FormsApp } from '@admin/forms/forms/forms.app';
 import { HealthModule } from '@shared/modules/health/health.module';
 import { GroupsApp } from '@admin/groups/groups.app';
 import { ConfigsApp } from '@admin/forms/configs/configs.app';
-import { MembersModule } from './studies/members/members.module';
+import { MembersModule } from '@admin/studies/members/members.module';
+import { UseCaseModule } from '@shared/modules/transaction/use-case.module';
 
 @Module({
   imports: [
     ConfigModule(['.env.database', '.env.admin']),
-    DbModule,
     JwtModule,
+    DbModule,
+    UseCaseModule,
     MembersModule,
     HealthModule,
     RolesModule,

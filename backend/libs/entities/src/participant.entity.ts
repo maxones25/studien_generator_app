@@ -71,9 +71,15 @@ export class Participant {
   @OneToMany(() => ChatMessage, (message) => message.participant)
   messages: ChatMessage[];
 
-  @OneToMany(() => ChatMessageReceipt, (messageReceipt) => messageReceipt.participant)
+  @OneToMany(
+    () => ChatMessageReceipt,
+    (messageReceipt) => messageReceipt.participant,
+  )
   messageReceipts: ChatMessageReceipt[];
-  
-  @OneToMany(() => ParticipantNotification, (notification) => notification.participant)
+
+  @OneToMany(
+    () => ParticipantNotification,
+    (notification) => notification.participant,
+  )
   notifications: ParticipantNotification[];
 }

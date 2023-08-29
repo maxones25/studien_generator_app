@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import datetime, { Time } from '@shared/modules/datetime/datetime';
 
 @Injectable()
-export class TasksCalculatorService {
+export class TasksCalculator {
   generate({
     duration,
     participantId,

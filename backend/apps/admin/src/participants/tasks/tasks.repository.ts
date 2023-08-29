@@ -13,6 +13,10 @@ export class TasksRepository extends RecordRepository<Task> {
     super(db);
   }
 
+  async createBatch(tasks: Task[]) {
+    await this.db.insert(tasks);
+  }
+
   getAll(participantId: string) {
     return this.db.find({
       where: { participantId },

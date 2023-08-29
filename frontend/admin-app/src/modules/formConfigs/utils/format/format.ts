@@ -1,5 +1,8 @@
-import { Schedule, ScheduleDaysOfWeek } from "@modules/formConfigs/types";
-import { FormScheduleDayOfMonth } from "@modules/groups/types";
+import {
+  Schedule,
+  ScheduleDaysOfMonth,
+  ScheduleDaysOfWeek,
+} from "@modules/formConfigs/types";
 import { TFunction } from "@modules/translation/types";
 
 export const formatDayOfWeek = (dayOfWeek?: ScheduleDaysOfWeek): string[] => {
@@ -29,7 +32,7 @@ export const formatDayOfWeek = (dayOfWeek?: ScheduleDaysOfWeek): string[] => {
     .filter((day) => day !== "-");
 };
 
-export const formatDayOfMonth = (daysOfMonth?: FormScheduleDayOfMonth) => {
+export const formatDayOfMonth = (daysOfMonth?: ScheduleDaysOfMonth) => {
   if (!daysOfMonth) return "-";
   return daysOfMonth.sort((a, b) => (a < b ? -1 : 1)).join(", ");
 };

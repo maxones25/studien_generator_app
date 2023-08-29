@@ -1,5 +1,6 @@
 import {
   Column,
+  ColumnProps,
   DataList,
   IconButton,
   Row,
@@ -19,9 +20,9 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { FormListItem } from "..";
 
-export interface FormsCardProps {}
+export interface FormsCardProps extends ColumnProps {}
 
-export const FormsCard: React.FC<FormsCardProps> = () => {
+export const FormsCard: React.FC<FormsCardProps> = (props) => {
   const { t } = useTranslation();
   const groupId = useGroupId();
   const getGroupForms = useGetGroupForms({ groupId: groupId! });
@@ -42,7 +43,7 @@ export const FormsCard: React.FC<FormsCardProps> = () => {
   const hasForms = availableForms.length > 0;
 
   return (
-    <Column flex={1} boxShadow={4}>
+    <Column boxShadow={4} {...props}>
       <Row p={2} justifyContent="space-between">
         <Text>{t("forms")}</Text>
         <TooltipGuard

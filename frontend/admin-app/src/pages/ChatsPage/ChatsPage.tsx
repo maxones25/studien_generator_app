@@ -6,10 +6,7 @@ import {
   Page,
   Text,
 } from "@modules/core/components";
-import {
-  useNavigationHelper,
-  useSearch,
-} from "@modules/core/hooks";
+import { useNavigationHelper, useSearch } from "@modules/core/hooks";
 import { useChatId } from "@modules/navigation/hooks";
 import { Search, SearchOff } from "@mui/icons-material";
 import {
@@ -27,7 +24,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-  '& .MuiBadge-badge': {
+  "& .MuiBadge-badge": {
     right: -20,
     top: 15,
     border: `1px solid ${theme.palette.background.paper}`,
@@ -43,17 +40,16 @@ const ChatsPage: React.FC<ChatsPageProps> = () => {
   const getChats = useGetChats();
   const chatId = useChatId(false);
 
-
   return (
     <Page testId="chats page" width={250} boxShadow={6} zIndex={900}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Text variant="h6">{t("chats")}</Text>
         <IconButton
-            testId="open search"
-            Icon={search.isActive ? <SearchOff /> : <Search />}
-            color={search.isActive ? "primary" : "default"}
-            onClick={search.toggle}
-          />
+          testId="open search"
+          Icon={search.isActive ? <SearchOff /> : <Search />}
+          color={search.isActive ? "primary" : "default"}
+          onClick={search.toggle}
+        />
       </Toolbar>
       <Divider />
       {search.isActive && (
@@ -81,7 +77,10 @@ const ChatsPage: React.FC<ChatsPageProps> = () => {
               selected={chatId === chat.id}
             >
               <StyledBadge badgeContent={chat.unread} color="error" max={999}>
-                <ListItemText>{chat.participantNumber}</ListItemText>
+                <ListItemText
+                  primary={chat.participantNumber}
+                  secondary={chat.newestMessage.content ?? "-"}
+                />
               </StyledBadge>
             </ListItemButton>
           </DataListItem>

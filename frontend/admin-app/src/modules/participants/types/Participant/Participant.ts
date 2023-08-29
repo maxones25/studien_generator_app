@@ -8,3 +8,8 @@ export type Participant = {
   startedAt?: string;
   endedAt?: string;
 };
+
+export type MinimalParticipant = {
+  id: string;
+  number: string;
+};

@@ -18,10 +18,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit,
   isError,
   isLoading,
+  values,
   formProps,
 }) => {
   const { t } = useTranslation();
-  const form = useForm<LoginFormData>();
+  const form = useForm<LoginFormData>({ values });
+
+  console.log(values)
 
   return (
     <Form onSubmit={form.handleSubmit(onSubmit)} {...formProps}>

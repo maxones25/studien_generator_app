@@ -3,8 +3,9 @@ import { ParticipantsService } from '../participants.service';
 import { Roles } from '@admin/roles/roles.decorator';
 import { ParticipantQueryDto } from '../dtos/ParticipantQueryDto';
 import { ParticipantGuard } from '../guards/participant.guard';
+import { GroupQueryDto } from '@admin/groups/dtos/GroupQueryDto';
 
-@Controller('studies/:studyId/participants')
+@Controller('participants')
 export class ParticipantsQueries {
   constructor(private readonly participantsService: ParticipantsService) {}
 
@@ -12,6 +13,12 @@ export class ParticipantsQueries {
   @Roles('admin', 'employee')
   async getByStudy(@Param('studyId') studyId: string) {
     return this.participantsService.getByStudy(studyId);
+  }
+
+  @Get('getByGroup')
+  @Roles('admin', 'employee')
+  async getByGroup(@Query() { groupId }: GroupQueryDto) {
+    return this.participantsService.getByGroup(groupId);
   }
 
   @Get('getById')

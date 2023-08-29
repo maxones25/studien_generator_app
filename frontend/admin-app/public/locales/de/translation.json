@@ -143,5 +143,7 @@
   "name already exists": "Name existiert bereits",
   "open record": "gehe zu {{record}}",
   "continue": "weiter",
-  "back": "zurück"
+  "back": "zurück",
+  "password resetted": "Passwort zurückgesetzt",
+  "type your message": "Nachricht schreiben"
 }

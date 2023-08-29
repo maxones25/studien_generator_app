@@ -42,7 +42,7 @@ export const ChatInput : React.FC<ChatInputProps> = ({
               handleSend();
           }
       }}
-        label={t('type your message')}
+        placeholder={t('type your message')}
         multiline 
         maxRows={4}
       />

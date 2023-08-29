@@ -1,41 +1,78 @@
-import { FormConfiguration, ParticipantAttribute, Task } from '@entities';
+import { Participant, ParticipantAttribute, Task } from '@entities';
+import { Inject } from '@nestjs/common';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { PasswordService } from '@shared/modules/password/password.service';
 import { Transaction } from '@shared/modules/transaction/transaction';
-import { StartStudyDto } from '../dtos/StartStudyDto';
+import { EntityManager } from 'typeorm';
+import { AppUriGenerator } from '../services/AppUriGenerator';
+import { ParticipantsRepository } from '../participants.repository';
+import { TasksRepository } from '@admin/participants/tasks/tasks.repository';
+import { TasksCalculator } from '@admin/participants/tasks/services/task-calculator.service';
+import { StudiesService } from '@admin/studies/studies/studies.service';
+import { SchedulesTransformer } from '../services/SchedulesTransformer';
+import { StartStudyConfig } from '../dtos/StartStudyDto';
+import { ParticipantsService } from '../participants.service';
 
 type TransactionInput = {
-  participantId: string;
-  tasks: Task[];
+  participant: Participant;
   startDate: Date;
+  configs: StartStudyConfig[];
 };
 
 export class StartParticipantStudyTransaction extends Transaction<
   TransactionInput,
-  void
+  string
 > {
+  private readonly participantsService: ParticipantsService;
+  private readonly tasksRepository: TasksRepository;
+
+  constructor(
+    @InjectEntityManager()
+    em: EntityManager,
+    @Inject(StudiesService)
+    private readonly studiesService: StudiesService,
+    @Inject(PasswordService)
+    passwordService: PasswordService,
+    @Inject(AppUriGenerator)
+    private readonly appUriGenerator: AppUriGenerator,
+    @Inject(TasksCalculator)
+    private readonly tasksCalculator: TasksCalculator,
+    @Inject(SchedulesTransformer)
+    private readonly schedulesTransformer: SchedulesTransformer,
+  ) {
+    super(em);
+    this.participantsService = ParticipantsService.build(em, passwordService);
+    this.tasksRepository = new TasksRepository(em.getRepository(Task));
+  }
+
   protected async execute({
-    participantId,
-    tasks,
+    participant,
     startDate,
-  }: TransactionInput): Promise<void> {
-    await this.addAttributes(participantId, startDate);
-    await this.generateTasks(tasks);
-  }
+    configs,
+  }: TransactionInput): Promise<string> {
+    const schedules =
+      await this.schedulesTransformer.generateParticipantSchedules(
+        participant.id,
+        configs,
+      );
 
-  private async addAttributes(participantId: string, startDate: Date) {
-    const repo = this.entityManager.getRepository(ParticipantAttribute);
+    const duration = await this.studiesService.getDuration(participant.id);
 
-    await repo.insert({
-      participantId,
-      key: 'startedAt',
-      value: JSON.stringify(startDate.toISOString()) as any,
+    const tasks = this.tasksCalculator.generate({
+      participantId: participant.id,
+      schedules,
+      startDate,
+      duration,
     });
-  }
 
-  private async generateTasks(tasks: Task[]) {
-    const repo = this.entityManager.getRepository(Task);
+    await this.participantsService.setStartDate(participant.id, startDate);
 
-    for (const task of tasks) {
-      await repo.insert(task);
-    }
+    await this.tasksRepository.createBatch(tasks);
+
+    const password = await this.participantsService.updatePassword(
+      participant.id,
+    );
+
+    return this.appUriGenerator.generate(participant.id, password);
   }
 }

@@ -1,26 +1,44 @@
 import { Chat, Participant } from '@entities';
+import { InjectEntityManager } from '@nestjs/typeorm';
 import { Transaction } from '@shared/modules/transaction/transaction';
+import { EntityManager } from 'typeorm';
+import { Inject } from '@nestjs/common';
+import { PasswordService } from '@shared/modules/password/password.service';
 
 type TransactionInput = {
   studyId: string;
   number: string;
-  groupId: string
-  password: string,
+  groupId: string;
 };
 
 export class CreateParticipantTransaction extends Transaction<
   TransactionInput,
   string
 > {
-  protected async execute({ studyId, number, groupId, password }: TransactionInput): Promise<string> {
-    const participantRepo = this.entityManager.getRepository(Participant);
-    const participant = new Participant();
+  constructor(
+    @InjectEntityManager()
+    em: EntityManager,
+    @Inject(PasswordService)
+    private readonly passwordService: PasswordService,
+  ) {
+    super(em);
+  }
 
+  protected async execute({
+    studyId,
+    number,
+    groupId,
+  }: TransactionInput): Promise<string> {
+    const participantRepo = this.entityManager.getRepository(Participant);
+
+    const hashedPassword = await this.passwordService.generateHashed(10);
+
+    const participant = new Participant();
 
     participant.studyId = studyId;
     participant.groupId = groupId;
     participant.number = number;
-    participant.password = password;
+    participant.password = hashedPassword;
 
     await participantRepo.insert(participant);
     await this.createParticipantChat(participant.id, studyId);

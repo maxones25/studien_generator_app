@@ -6,7 +6,7 @@ import { getGetParticipantKey, getGetParticipantsKey } from "..";
 
 export const useStartStudy = () => {
   const studyId = useStudyId()!;
-  return useWriteRequest<StartStudyFormData, unknown>(
+  return useWriteRequest<StartStudyFormData, string>(
     ({ body: { participant, ...body }, ...options }) =>
       apiRequest(`/participants/startStudy`, {
         ...options,
