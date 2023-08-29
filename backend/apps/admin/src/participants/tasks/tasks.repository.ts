@@ -30,7 +30,6 @@ export class TasksRepository extends RecordRepository<Task> {
         id: true,
         originalScheduledAt: true,
         scheduledAt: true,
-        postponable: true,
         completedAt: true,
         rescheduled: true,
         form: { id: true, name: true },

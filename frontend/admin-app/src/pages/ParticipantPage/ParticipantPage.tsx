@@ -115,7 +115,12 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
         />
       </Toolbar>
       <Divider />
-      <Row flex={1} justifyContent="center" alignItems="stretch" overflowY="hidden">
+      <Row
+        flex={1}
+        justifyContent="center"
+        alignItems="stretch"
+        overflowY="hidden"
+      >
         {isStarted ? (
           <>
             <Column m={2} p={1} boxShadow={4}>
@@ -125,6 +130,12 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
               </Text>
               <Button testId="reset" onClick={resetDialog.open}>
                 Reset Password
+              </Button>
+              <Button
+                testId="send message"
+                onClick={navigate.handle(`../../chats/${participant.chat.id}`)}
+              >
+                Nachricht senden
               </Button>
             </Column>
             <TasksCard flex={1} m={2} ml={0} alignSelf="stretch" />
@@ -160,7 +171,12 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
           });
         }}
       />
-      <QrCodeDialog fullScreen uri={uri.value} onClose={uri.reset} PaperProps={{ sx: { p: 12, boxSizing: "border-box" } }} />
+      <QrCodeDialog
+        fullScreen
+        uri={uri.value}
+        onClose={uri.reset}
+        PaperProps={{ sx: { p: 12, boxSizing: "border-box" } }}
+      />
       <ConfirmDialog
         open={resetDialog.isOpen}
         title="Reset Password"

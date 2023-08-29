@@ -1,13 +1,31 @@
-import {
-  Participant,
-  ParticipantAttribute,
-  ParticipantsAttributes,
-} from '@entities';
+import { Participant, ParticipantsAttributes } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
-import { Repository } from 'typeorm';
+import { FindOptionsRelations, FindOptionsSelect, Repository } from 'typeorm';
 
 export class ParticipantsRepository extends RecordRepository<Participant> {
+  private readonly relations: FindOptionsRelations<Participant> = {
+    group: true,
+    attributes: true,
+    chat: true,
+  };
+
+  private readonly select: FindOptionsSelect<Participant> = {
+    id: true,
+    number: true,
+    group: {
+      id: true,
+      name: true,
+    },
+    chat: {
+      id: true,
+    },
+    attributes: {
+      key: true,
+      value: true,
+    },
+  };
+
   constructor(
     @InjectRepository(Participant)
     db: Repository<Participant>,
@@ -24,22 +42,8 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
   async getById(id: string) {
     const participant = await this.db.findOneOrFail({
       where: { id },
-      relations: {
-        group: true,
-        attributes: true,
-      },
-      select: {
-        id: true,
-        number: true,
-        group: {
-          id: true,
-          name: true,
-        },
-        attributes: {
-          key: true,
-          value: true,
-        },
-      },
+      relations: this.relations,
+      select: this.select,
     });
     return this.convertParticipant(participant);
   }
@@ -50,22 +54,8 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
       order: {
         number: 'ASC',
       },
-      relations: {
-        group: true,
-        attributes: true,
-      },
-      select: {
-        id: true,
-        number: true,
-        group: {
-          id: true,
-          name: true,
-        },
-        attributes: {
-          key: true,
-          value: true,
-        },
-      },
+      relations: this.relations,
+      select: this.select,
     });
     return participants.map(this.convertParticipant);
   }

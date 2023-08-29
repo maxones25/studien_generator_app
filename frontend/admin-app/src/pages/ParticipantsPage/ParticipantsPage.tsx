@@ -50,6 +50,10 @@ const filterOptions = [
     label: "ohne Gruppe",
     value: "no group",
   },
+  {
+    label: "nicht gestarted",
+    value: "unscheduled",
+  },
 ];
 
 const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
@@ -59,7 +63,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
   const participantData = useFormData<ParticipantFormData>();
   const createParticipant = useCreateParticipant();
   const search = useSearch();
-  const [filter, setFilter] = useState<string | undefined>(undefined);
+  const [filter, setFilter] = useState<string | undefined>("current");
 
   const handleCreateParticipant = () => {
     if (participantData.data) {
@@ -100,7 +104,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
           },
         }}
         containerProps={{
-          justifyContent: "space-around",
+          justifyContent: "stretch",
         }}
       />
       {search.isActive && (
@@ -132,6 +136,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
         searchValue={search.value}
         filter={(item) => {
           if (!filter) return true;
+          if (filter === "unscheduled" && !item.startedAt) return true;
           if (filter === "no group" && item.group === null) return true;
           if (
             filter === "current" &&
