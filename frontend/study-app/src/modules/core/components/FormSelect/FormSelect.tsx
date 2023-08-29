@@ -73,8 +73,8 @@ export function FormSelect<TFieldValues extends FieldValues>({
             {...field}
           >
             {attributes?.options?.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+              <MenuItem key={option} value={option}>
+                {option}
               </MenuItem>
             ))}
           </Select>
