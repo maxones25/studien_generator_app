@@ -50,6 +50,7 @@ export function FormSelect<TFieldValues extends FieldValues>({
     <Controller
       control={control}
       rules={rules}
+      defaultValue={attributes?.defaultValue}
       name={name}
       render={({ field: { onChange, value, ...field }, formState }) => {
         const error = get(formState.errors, name);

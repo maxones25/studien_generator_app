@@ -43,6 +43,7 @@ export function FormSlider<TFieldValues extends FieldValues>({
       control={control}
       name={name}
       rules={rules}
+      defaultValue={attributes?.defaultValue}
       render={({ field: { onChange, value, ...field}, formState }) => {
         const error = get(formState.errors, name);
 
@@ -58,6 +59,7 @@ export function FormSlider<TFieldValues extends FieldValues>({
                 onChange(newValue as PathValue<TFieldValues, Path<TFieldValues>>);
               }}
               valueLabelDisplay="on"
+              value={value ?? min}
               marks={marks}
               {...field} 
               {...attributes}

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MoreThan, Repository } from 'typeorm';
+import { MoreThanOrEqual, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from '@entities';
 
@@ -36,10 +36,10 @@ export class TaskService {
     });
   }
 
-  async findModifiedSince(participantId: string, lastUpdate: Date) {
+  async findModifiedSince(participantId: string, lastUpdated: Date) {
     const tasks = await this.taskRepository.find({
       where: {
-        modifiedAt: MoreThan(lastUpdate),
+        modifiedAt: MoreThanOrEqual(lastUpdated),
         participantId: participantId
       },
       select: {

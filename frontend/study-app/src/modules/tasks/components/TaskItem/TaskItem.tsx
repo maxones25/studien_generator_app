@@ -19,11 +19,11 @@ enum TasksStates {
 export const TaskItem : React.FC<TaskItemProps>= ({
   task,
 }) => {
-  const currentDate = new Date();
   const { setForm } = useFormIdContext();
+  const timeDiff = dayjs(task.scheduledAt).diff(new Date(), 'hour');
   const state = task.completedAt ? TasksStates.Completed : 
-  new Date(task.scheduledAt) > currentDate ? TasksStates.InActive : 
-  dayjs(task.scheduledAt).diff(currentDate, 'hour') > 1 ? TasksStates.Failed :
+  timeDiff >= 0 ? TasksStates.InActive : 
+  timeDiff < -1 ? TasksStates.Failed :
   TasksStates.Active;
 
   const handleClick = () => {
@@ -31,7 +31,7 @@ export const TaskItem : React.FC<TaskItemProps>= ({
       setForm(task.formId, task.name, task.id);
   };
   const date = task.scheduledAt;
-  const dateString = dayjs(date).format('HH:mm')
+  const dateString = dayjs(date).format('HH:mm');
 
   return (
     <StyledListItem sx={{ backgroundColor: state }}>

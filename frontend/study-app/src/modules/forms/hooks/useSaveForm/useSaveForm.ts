@@ -10,8 +10,10 @@ export const useSaveForm = () => {
 
   return useWriteRequest<Record, unknown>((options) =>
     apiRequest(`/records`, { method: "POST", ...options }), {
-      onSuccess: ({ queryClient, snackbar }) => {
-        queryClient.invalidateQueries([date]);
+      onSuccess: async ({ queryClient, snackbar }) => {
+        await queryClient.invalidateQueries('getTasks');
+        await queryClient.invalidateQueries('getRecords');
+        await queryClient.invalidateQueries(date.toISOString());
         snackbar.showSuccess('saved');
       },
     }

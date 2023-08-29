@@ -2,7 +2,6 @@ import { createContext, FC, ReactNode, useContext, useState } from "react";
 import { FormPageData, Record, RecordField } from "@modules/forms/types";
 import { useFormContext, useFormIdContext } from "..";
 import { useSaveForm } from "@modules/forms/hooks";
-import { useDateContext } from "@modules/date/contexts";
 import { v4 as uuid } from 'uuid';
 
 interface FormDataContextValue {
@@ -24,7 +23,6 @@ const FormDataContext = createContext<FormDataContextValue | undefined>(
 const useFormDataContextValue = () => {
   const { resetForm, taskId, name } = useFormIdContext();
   const { form } = useFormContext();
-  const { date: date } = useDateContext();
   const [data, setData] = useState({});
   const [pageNumber, setPageNumber] = useState(0);
   const saveForm = useSaveForm();
@@ -55,7 +53,7 @@ const useFormDataContextValue = () => {
     const record: Record = {
       id: uuid(),
       taskId: taskId,
-      createdAt: date.toDate(),
+      createdAt: new Date(),
       formId: form!.data!.id,
       failureReason: failureReason,
       fields: entityFields,

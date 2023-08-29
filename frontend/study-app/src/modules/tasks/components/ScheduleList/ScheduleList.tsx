@@ -13,7 +13,7 @@ export const ScheduleList : React.FC<ScheduleListProps>= ({
   const { dates, isLoading, isError } = useGetSchedule();
 
   return (
-    <Column overflow={"hidden"}>
+    <Column overflow={"hidden"} minHeight={"50vh"} maxHeight={"50vh"}>
       <Text variant='h6'>{t('schedule')}</Text>
       <List 
         title='schedule'

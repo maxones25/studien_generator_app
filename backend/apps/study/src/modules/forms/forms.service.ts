@@ -74,7 +74,7 @@ export class FormsService {
     });
 
     const filteredForms = forms.filter(({ modifiedAt }) => 
-      !lastUpdated || modifiedAt > lastUpdated
+      !lastUpdated || modifiedAt >= lastUpdated
     );
 
     return filteredForms.map(({form, type}) => {
