@@ -52,15 +52,11 @@ export class StartParticipantStudyTransaction extends Transaction<
   }: TransactionInput): Promise<string> {
     const schedules =
       await this.schedulesTransformer.generateParticipantSchedules(
-        participant.id,
+        participant.groupId,
         configs,
       );
 
-    const duration = await this.studiesService.getDuration(participant.id);
-
-    console.table(schedules);
-
-    throw new Error();
+    const duration = await this.studiesService.getDuration(participant.studyId);
 
     const tasks = this.tasksCalculator.generate({
       participantId: participant.id,
@@ -68,6 +64,7 @@ export class StartParticipantStudyTransaction extends Transaction<
       startDate,
       duration,
     });
+
 
     await this.participantsService.setStartDate(participant.id, startDate);
 
