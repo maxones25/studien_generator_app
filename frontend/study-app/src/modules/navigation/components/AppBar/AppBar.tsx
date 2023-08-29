@@ -73,7 +73,7 @@ export const AppBar : React.FC<AppBarProps>= () => {
             color="inherit"
             aria-label="menu"
             onClick={handleOpenNotifications}
-            testId='go-calendar-app-bar'
+            testId='go-notifications-app-bar'
             Icon={
               <Badge color='error' badgeContent={newNotificationsCount}>
                 <NotificationsOutlined /> 
