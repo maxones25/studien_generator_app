@@ -10,19 +10,48 @@ export class TaskService {
     private taskRepository: Repository<Task>,
   ) {}
 
-  async findByParticipant(participantId: string): Promise<Task[]> {
-    return await this.taskRepository.find({ where: { participantId } });
+  async findByParticipant(participantId: string) {
+    const tasks = await this.taskRepository.find({ 
+      where: { participantId },
+      relations: {
+        form: true,
+      },
+      select: {
+        form: {
+          name: true
+        }
+      }
+    });
+    return tasks.map((task: Task) => {
+      return {
+        name: task.form.name,
+        ...task
+      }
+    })
   }
 
-  async findOneByIdForParticipant(taskId: string, participantId: string): Promise<Task | undefined> {
-    return await this.taskRepository.findOne({ where: { id: taskId, participantId } });
+  async findOneByIdForParticipant(taskId: string, participantId: string) {
+    return await this.taskRepository.findOne({ 
+      where: { id: taskId, participantId } 
+    });
   }
 
-  async findModifiedSince(participantId: string, lastUpdate: Date): Promise<Task[]> {
-    return await this.taskRepository.find({
+  async findModifiedSince(participantId: string, lastUpdate: Date) {
+    const tasks = await this.taskRepository.find({
       where: {
         modifiedAt: MoreThan(lastUpdate),
         participantId: participantId
+      },
+      select: {
+        form: {
+          name: true
+        }
+      }
+    });
+    return tasks.map((task: Task) => {
+      return {
+        name: task.form.name,
+        ...task
       }
     });
   }

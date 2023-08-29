@@ -22,7 +22,7 @@ export const TaskItem : React.FC<TaskItemProps>= ({
   const currentDate = new Date();
   const { setForm } = useFormIdContext();
   const state = task.completedAt ? TasksStates.Completed : 
-  task.scheduledAt > new Date() ? TasksStates.InActive : 
+  new Date(task.scheduledAt) > currentDate ? TasksStates.InActive : 
   dayjs(task.scheduledAt).diff(currentDate, 'hour') > 1 ? TasksStates.Failed :
   TasksStates.Active;
 
@@ -30,7 +30,7 @@ export const TaskItem : React.FC<TaskItemProps>= ({
     if (state === TasksStates.Active)
       setForm(task.formId, task.name, task.id);
   };
-  const date = task.postponedTo ? task.postponedTo : task.scheduledAt;
+  const date = task.scheduledAt;
   const dateString = dayjs(date).format('HH:mm')
 
   return (

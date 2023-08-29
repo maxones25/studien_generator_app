@@ -3,6 +3,5 @@ export type Task = {
   scheduledAt: Date;
   name: string;
   formId: string,
-  postponedTo?: Date,
   completedAt?: Date,
 }

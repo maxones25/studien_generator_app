@@ -57,7 +57,7 @@ export function Hiit ({
   }, [])
 
   const start: Path<FieldValues> = `${componentId}.${formFields[0].entityFieldId}` as Path<FieldValues>
-  const end: Path<FieldValues> = `${componentId}.${formFields[2].entityFieldId}` as Path<FieldValues> 
+  const end: Path<FieldValues> = `${componentId}.${formFields[1].entityFieldId}` as Path<FieldValues> 
 
   return (
     <Column alignItems={'center'}>

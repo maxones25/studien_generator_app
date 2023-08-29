@@ -7,6 +7,7 @@ import { ConflictException } from '@nestjs/common';
 import { FieldType } from '@shared/enums/field-type.enum';
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { Form } from '@entities/form.entity';
+import { Task } from '@entities';
 
 export class CreateRecordTransaction extends Transaction<
   {
@@ -38,6 +39,11 @@ export class CreateRecordTransaction extends Transaction<
     await Promise.all(promises).catch(() => {
       throw new ConflictException('invalid record field');
     });
+
+    if (data.taskId) {
+      const tasksRepository = this.entityManager.getRepository(Task);
+      tasksRepository.update(data.taskId, { completedAt: data.createdAt });
+    }
   }
 
   private async createRecord(

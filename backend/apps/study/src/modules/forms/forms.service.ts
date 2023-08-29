@@ -39,7 +39,6 @@ export class FormsService {
         },
       },
       select: {
-        id: true,
         type: true,
         modifiedAt: true, 
         form: {
@@ -78,9 +77,9 @@ export class FormsService {
       !lastUpdated || modifiedAt > lastUpdated
     );
 
-    return filteredForms.map(({id, form, type}) => {
+    return filteredForms.map(({form, type}) => {
       return {
-        id,
+        id: form.id,
         type,
         form,
       }

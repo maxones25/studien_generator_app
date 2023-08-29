@@ -13,19 +13,19 @@ const Chat: React.FC = () => {
 
 
   useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+  
+  useEffect(() => {
     if (newMessagesCount > 0)
       readMessages.mutate({
         readAt: new Date()
       });
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
-  useEffect(() => {
     chatEndRef.current?.scrollIntoView({ });
   }, []);
 
   return (
-    <Container sx={{overflow: 'auto'}} maxWidth="sm">
+    <Container sx={{overflow: 'auto'}} maxWidth={false}>
       <List>
         {messages.data?.map(message => (
           <ChatMessage key={message.id} message={message} />
