@@ -13,6 +13,10 @@ export class TasksRepository extends RecordRepository<Task> {
     super(db);
   }
 
+  getRelatedByStudy(studyId: string, id: string): Promise<any> {
+    return this.db.findOne({ where: { id, form: { studyId } } });
+  }
+
   async createBatch(tasks: Task[]) {
     await this.db.insert(tasks);
   }

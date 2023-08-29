@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { CreateFieldDto } from './dtos/CreateFieldDto';
 import { UpdateFieldDto } from './dtos/UpdateFieldDto';
-import { FieldsRepository } from './repositories/fields.repository';
+import { FieldsRepository } from './fields.repository';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
 import { AddFieldTransaction } from './transactions/AddFieldTransaction';
 import { UpdateFieldTransaction } from './transactions/UpdateFieldTransaction';
@@ -25,10 +25,8 @@ export class FieldsService implements StudyRelatedDataAccessor {
     return this.addFieldTransaction.run({ entityId, data });
   }
 
-  async getByEntity(
-    entityId: string,
-  ) {
-    return this.fieldsRepository.getByEntity(entityId)
+  async getByEntity(entityId: string) {
+    return this.fieldsRepository.getByEntity(entityId);
   }
 
   async update(fieldId: string, data: UpdateFieldDto) {

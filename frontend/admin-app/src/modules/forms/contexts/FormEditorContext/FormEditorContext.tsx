@@ -57,9 +57,9 @@ const useFormEditorContextValue = ({
     page: {
       number: 1,
     },
+    formComponent: null,
     component: {
       data: null,
-      isVisible: true,
     },
     fields: [],
   });
@@ -70,8 +70,7 @@ const useFormEditorContextValue = ({
 
   const enhancedComponents = useComponents(
     components,
-    state.fields.map((field) => field.data),
-    state.component.isVisible
+    state.fields.map((field) => field.data)
   );
 
   return {

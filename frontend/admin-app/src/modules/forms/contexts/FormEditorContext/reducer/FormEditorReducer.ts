@@ -41,7 +41,6 @@ export const formEditorReducer: Reducer<FormEditorState, FormEditorAction> = (
         ...state,
         component: {
           ...component,
-          isVisible: false,
           data: action.component,
         },
       };
@@ -51,9 +50,20 @@ export const formEditorReducer: Reducer<FormEditorState, FormEditorAction> = (
         ...state,
         component: {
           ...component,
-          isVisible: true,
           data: null,
         },
+      };
+    }
+    case "set form component": {
+      return {
+        ...state,
+        formComponent: action.formComponent,
+      };
+    }
+    case "reset form component": {
+      return {
+        ...state,
+        formComponent: null,
       };
     }
     default:

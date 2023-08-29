@@ -8,6 +8,8 @@ import {
   DatePickerPreview,
   DateTimeComponent,
   DateTimePickerPreview,
+  HiitComponent,
+  HiitPreview,
   SelectComponent,
   SelectPreview,
   SliderComponent,
@@ -22,17 +24,20 @@ import {
 
 export interface ComponentPreviewProps {
   component: FormComponent;
+  onSelect: (formComponent: FormComponent) => void;
 }
 
 export const ComponentPreview: React.FC<ComponentPreviewProps> = ({
   component,
+  onSelect,
 }) => {
   return (
     <Button
       sx={{ textTransform: "none", display: "flex", justifyContent: "stretch" }}
+      onClick={() => onSelect(component)}
     >
       {component.type === "Text" ? (
-        <Text>{component.attributes.text}</Text>
+        <Text textOverflow="ellipsis">{component.attributes.text}</Text>
       ) : component.type === "Select" ? (
         <SelectPreview component={component as unknown as SelectComponent} />
       ) : component.type === "Slider" ? (
@@ -59,6 +64,8 @@ export const ComponentPreview: React.FC<ComponentPreviewProps> = ({
         <TextFieldPreview
           component={component as unknown as TextFieldComponent}
         />
+      ) : component.type === "HIIT" ? (
+        <HiitPreview component={component as unknown as HiitComponent} />
       ) : (
         <Text>{component.type}</Text>
       )}

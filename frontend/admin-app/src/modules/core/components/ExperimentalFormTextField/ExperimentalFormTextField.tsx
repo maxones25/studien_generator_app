@@ -19,6 +19,8 @@ export type ExperimentalFormTextFieldProps<
   required?: boolean | string;
   maxLength?: number;
   minLength?: number;
+  max?: number;
+  min?: number;
   equals?: Validate<FieldValue<FormData>, FormData>;
   validate?: Record<
     string,
@@ -34,8 +36,10 @@ export function ExperimentalFormTextField<
   name,
   form,
   validate,
-  maxLength,
   placeholder,
+  max,
+  min,
+  maxLength,
   minLength = 0,
   required = false,
   withPlaceholder = false,
@@ -67,6 +71,15 @@ export function ExperimentalFormTextField<
         }
       : undefined;
 
+  const minRule =
+    min !== undefined
+      ? { value: min, message: t("min x", { x: min }) }
+      : undefined;
+  const maxRule =
+    max !== undefined
+      ? { value: max, message: t("max x", { x: max }) }
+      : undefined;
+
   const maxLengthRule =
     maxLength !== undefined
       ? {
@@ -88,6 +101,8 @@ export function ExperimentalFormTextField<
 
   const valueAsNumber = type === "number";
 
+  const shrinkLabel = type === "datetime-local" ? true : undefined;
+
   const error = get(form.formState.errors, name);
 
   return (
@@ -99,10 +114,13 @@ export function ExperimentalFormTextField<
       error={Boolean(error)}
       placeholder={withPlaceholder ? translatedName : placeholder}
       helperText={error?.message?.toString()}
+      InputLabelProps={{ shrink: shrinkLabel }}
       {...form.register(name, {
         required: requiredRule,
         minLength: minLengthRule,
         maxLength: maxLengthRule,
+        min: minRule,
+        max: maxRule,
         validate: {
           ...validate,
           ...equalsRules,

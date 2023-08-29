@@ -8,7 +8,7 @@ export class SelectComponent extends Component {
   constructor() {
     super(
       ComponentType.Select,
-      [FieldType.Enum],
+      [FieldType.Text],
       [
         new LabelAttribute(false),
         new DefaultValueAttribute(false, "string", (value) => typeof value === 'string'),

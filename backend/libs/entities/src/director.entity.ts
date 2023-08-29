@@ -28,12 +28,19 @@ export class Director {
   @Column()
   password: string;
 
+  get displayName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
   @OneToMany(() => StudyMember, (studyMember) => studyMember.director)
   public studies: StudyMember[];
 
   @OneToMany(() => ChatMessage, (message) => message.director)
   messages: ChatMessage[];
 
-  @OneToMany(() => ChatMessageReceipt, (messageReceipt) => messageReceipt.director)
+  @OneToMany(
+    () => ChatMessageReceipt,
+    (messageReceipt) => messageReceipt.director,
+  )
   messageReceipts: ChatMessageReceipt[];
 }

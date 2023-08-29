@@ -44,6 +44,10 @@ export class Participant {
   @Column('text', { nullable: true })
   subscription: string;
 
+  get hasGroup() {
+    return this.group !== null;
+  }
+
   @OneToMany(() => ParticipantAttribute, (attribute) => attribute.participant)
   attributes: ParticipantAttribute[];
 

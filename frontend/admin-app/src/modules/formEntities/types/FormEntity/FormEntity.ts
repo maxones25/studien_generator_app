@@ -1,9 +1,9 @@
-import { EntityFieldType } from "@modules/fields/types";
+import { FieldType } from "@modules/fields/types";
 
 export type FormEntityField = {
   id: string;
   name: string;
-  type: EntityFieldType;
+  type: FieldType;
   attributes: Record<string, any>;
   component: {
     id: string;

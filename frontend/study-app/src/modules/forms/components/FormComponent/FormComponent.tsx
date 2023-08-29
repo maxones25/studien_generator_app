@@ -1,4 +1,4 @@
-import { FormCheckBox, FormDatePicker, FormDateTimePicker, FormNumberPicker, FormSelect, FormSlider, FormSwitch, FormTextField, FormTimePicker } from '@modules/core/components';
+import { FormCheckBox, FormDatePicker, FormDateTimePicker, FormNumberPicker, FormRadioGroup, FormSelect, FormSlider, FormSwitch, FormTextField, FormTimePicker } from '@modules/core/components';
 import { FormComponentData } from '@modules/forms/types';
 import { Hiit } from '@modules/hiit/components';
 import React from 'react';
@@ -18,12 +18,12 @@ export const FormComponent : React.FC<FormComponentProps>= ({
   const attributes: {[x: string]: any} = formComponent.attributes.reduce((obj, item) => 
     Object.assign(obj, { [item.key]: item.value }), {}
   );
-  const name = `${formComponent.id}.${formComponent.formFields[0].entityFieldId}`;
+  const name = `${formComponent.id}.${formComponent.formFields[0]?.entityFieldId}`;
   const props = {
     label: attributes.label,
     control: form.control,
     componentId: formComponent.id,
-    entityFieldId: formComponent.formFields[0].entityFieldId,
+    entityFieldId: formComponent.formFields[0]?.entityFieldId,
     rules: {
       required: (!attributes.required) ? false: t("required"),
       minLength: {
@@ -67,6 +67,8 @@ export const FormComponent : React.FC<FormComponentProps>= ({
         />
       case "Select":
         return <FormSelect {...props} />
+      case "RadioGroup":
+        return <FormRadioGroup {...props} />
       case "Switch":
         return <FormSwitch {...props} />
       case "Slider":

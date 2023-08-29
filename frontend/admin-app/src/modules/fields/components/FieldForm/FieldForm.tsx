@@ -5,17 +5,12 @@ import {
   Text,
 } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
-import { FieldFormData } from "@modules/fields/types";
+import { FieldFormData, FieldTypeMap } from "@modules/fields/types";
 import { Save } from "@mui/icons-material";
-import {
-  Autocomplete,
-  Chip,
-  IconButton,
-  TextField,
-  Toolbar,
-} from "@mui/material";
+import { IconButton, Toolbar } from "@mui/material";
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export interface FieldFormProps extends FormProps<FieldFormData> {}
 
@@ -25,6 +20,7 @@ export const FieldForm: React.FC<FieldFormProps> = ({
   formProps,
   isNew,
 }) => {
+  const { t } = useTranslation();
   const form = useForm<FieldFormData>({ values });
 
   return (
@@ -47,59 +43,11 @@ export const FieldForm: React.FC<FieldFormProps> = ({
         control={form.control}
         name="type"
         rules={{ required: "required" }}
-        options={[
-          { label: "Text", value: "Text" },
-          { label: "Nummer", value: "Number" },
-          { label: "Datum und Uhrzeit", value: "DateTime" },
-          { label: "Datum", value: "Date" },
-          { label: "Uhrzeit", value: "Time" },
-          { label: "Wahrheitswert", value: "Boolean" },
-          { label: "Enumeration", value: "Enum" },
-        ]}
+        options={Object.keys(FieldTypeMap).map((value) => ({
+          label: t(value),
+          value,
+        }))}
       />
-      {form.watch("type") === "Enum" && (
-        <Controller
-          control={form.control}
-          rules={{
-            required: "required",
-          }}
-          name="values"
-          render={({ field: { onChange, ...field } }) => (
-            <Autocomplete
-              multiple
-              id="tags-filled"
-              options={[]}
-              onChange={(_, values) => {
-                onChange(values);
-              }}
-              freeSolo
-              value={field.value}
-              renderTags={(value: readonly string[], getTagProps) =>
-                value.map((option: string, index: number) => (
-                  <Chip
-                    variant="outlined"
-                    label={option}
-                    {...getTagProps({ index })}
-                  />
-                ))
-              }
-              renderInput={(params) => {
-                return (
-                  <TextField
-                    {...params}
-                    {...field}
-                    label="Enum (Werte)"
-                    multiline
-                    margin="normal"
-                    error={Boolean(form.formState.errors.values)}
-                    helperText={form.formState.errors?.values?.message}
-                  />
-                );
-              }}
-            />
-          )}
-        />
-      )}
     </Form>
   );
 };

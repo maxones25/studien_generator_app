@@ -18,9 +18,13 @@ export const FormPreview: React.FC<FormPreviewProps> = () => {
     <Column height="100%" boxShadow={4} borderRadius={10} width={300}>
       <Column p={2} pt={4} pb={4} overflowY="scroll">
         {getFormComponents.data?.map((formComponent) => (
-          <ComponentPreview key={formComponent.id} component={formComponent} />
+          <ComponentPreview
+            key={formComponent.id}
+            component={formComponent}
+            onSelect={formEditor.formComponent.set}
+          />
         ))}
-        {components.isVisible && (
+        {formEditor.component.isVisible && (
           <Row flexWrap="wrap" mt={2}>
             {components.items.map((option) => (
               <Chip

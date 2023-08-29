@@ -2,12 +2,13 @@ import {
   DataDialog,
   DataList,
   DataListItem,
+  EditableListItem,
   IconButton,
   Page,
   Text,
 } from "@modules/core/components";
 import { useFormData, useNavigationHelper } from "@modules/core/hooks";
-import { DeleteFormForm, FormForm } from "@modules/forms/components";
+import { DeleteFormForm } from "@modules/forms/components";
 import {
   useCreateForm,
   useDeleteForm,
@@ -30,9 +31,16 @@ const FormsPage: React.FC<FormsPageProps> = () => {
   const editGroupData = useFormData<FormFormData>();
   const deleteGroupData = useFormData<FormFormData>();
   const getGroups = useGetForms();
-  const createGroup = useCreateForm();
-  const updateGroup = useChangeName();
+  const createForm = useCreateForm();
   const deleteGroup = useDeleteForm();
+  const formData = useFormData<FormFormData>();
+
+  const handleCreate = () => {
+    if (formData.data) {
+      createForm.mutate(formData.data);
+      formData.reset();
+    }
+  };
 
   const handleDeleteForm = async (data: FormFormData) => {
     await deleteGroup.mutateAsync(data);
@@ -45,10 +53,20 @@ const FormsPage: React.FC<FormsPageProps> = () => {
         <Text variant="h6">{t("forms")}</Text>
         <IconButton
           testId="create group button"
-          onClick={editGroupData.handleSet({ name: "" })}
+          onClick={formData.handleSet({ name: "" })}
           Icon={<Add />}
         />
       </Toolbar>
+      {formData.hasData && (
+        <EditableListItem
+          onCancel={formData.reset}
+          onChange={(name) => formData.set({ name })}
+          onSave={handleCreate}
+          inputProps={{
+            placeholder: t("enter value", { value: t("number") }),
+          }}
+        />
+      )}
       <DataList
         client={getGroups}
         disablePadding

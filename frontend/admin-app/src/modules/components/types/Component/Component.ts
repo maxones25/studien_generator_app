@@ -1,8 +1,8 @@
-import { EntityFieldType } from "@modules/fields/types";
+import { FieldType } from "@modules/fields/types";
 
 export type Component = {
   name: string;
-  entityFields: EntityFieldType[];
+  entityFields: FieldType[];
   attributes: Record<
     string,
     {

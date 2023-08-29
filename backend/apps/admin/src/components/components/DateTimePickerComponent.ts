@@ -13,8 +13,9 @@ export class DateTimePickerComponent extends Component {
       [
         new LabelAttribute(false),
         new DefaultValueAttribute(false, 'datetime', (value) => {
+          if (!Boolean(value)) return false;
           return (
-            Boolean(value) &&
+            value === 'CurrentDateTime' ||
             datetime.isValid(value as string, 'YYYY-MM-DDTHH:mm')
           );
         }),

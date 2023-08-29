@@ -149,5 +149,17 @@
   "please select x": "Bitte {{x}} auswählen",
   "select x more": "Bitte {{x}} weitere auswählen",
   "select x less": "Bitte {{x}} weniger auswählen",
-  "schedule": "Zeitplan"
+  "schedule": "Zeitplan",
+  "min x": "Bitte min. {{x}} eingeben",
+  "max x": "Bitte max. {{x}} eingeben",
+  "scheduledAt": "geplant am",
+  "completedAt": "abschlossen am",
+  "rescheduled": "Anzahl der Umplanungen",
+  "edit task": "Aufgabe editieren",
+  "Text": "Text",
+  "Number": "Zahl",
+  "DateTime": "Datum und Uhrzeit",
+  "Date": "Datum",
+  "Time": "Uhrzeit",
+  "Boolean": "Wahrheitswert"
 }

@@ -148,7 +148,13 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
                 Nachricht senden
               </Button>
             </Column>
-            <TasksCard flex={1} m={2} ml={0} alignSelf="stretch" />
+            <TasksCard
+              participant={participant}
+              flex={1}
+              m={2}
+              ml={0}
+              alignSelf="stretch"
+            />
           </>
         ) : (
           <Column justifyContent="center">

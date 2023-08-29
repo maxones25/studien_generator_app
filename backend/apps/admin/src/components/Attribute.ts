@@ -2,6 +2,7 @@ import { FormComponentAttributeDto } from '@admin/forms/forms/dtos/FormComponent
 
 export type AttributeType =
   | 'string'
+  | 'options'
   | 'boolean'
   | 'number'
   | 'date'

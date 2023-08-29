@@ -2,12 +2,12 @@ import {
   DeepPartial,
   FindOptionsWhere,
   ObjectLiteral,
-  Repository,
 } from 'typeorm';
+import { EntityRepository } from './entity.repository';
 
-export class RecordRepository<Entity extends ObjectLiteral> {
-  constructor(protected readonly db: Repository<Entity>) {}
-
+export abstract class RecordRepository<
+  Entity extends ObjectLiteral,
+> extends EntityRepository<Entity> {
   async create(data: DeepPartial<Entity>) {
     await this.db.insert(data);
     return data as Entity;

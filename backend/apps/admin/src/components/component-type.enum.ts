@@ -5,6 +5,8 @@ export enum ComponentType {
   Slider = 'Slider',
   TextField = 'TextField',
   Select = 'Select',
+
+  RadioGroup = 'RadioGroup',
   Switch = 'Switch',
   CheckBox = 'CheckBox',
   HIIT = 'HIIT',

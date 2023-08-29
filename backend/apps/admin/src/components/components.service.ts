@@ -17,6 +17,7 @@ import { HIITComponent } from './components/HIITComponents';
 import { AttributeType } from './Attribute';
 import { FormComponentAttributeDto } from '@admin/forms/forms/dtos/FormComponentAttributeDto';
 import { TextComponent } from './components/TextComponent';
+import { RadioGroupComponent } from './components/RadioGroupComponent';
 
 @Injectable()
 export class ComponentsService {
@@ -32,6 +33,7 @@ export class ComponentsService {
     [ComponentType.TextField, new TextFieldComponent()],
     [ComponentType.HIIT, new HIITComponent()],
     [ComponentType.Text, new TextComponent()],
+    [ComponentType.RadioGroup, new RadioGroupComponent()],
   ]);
 
   constructor(

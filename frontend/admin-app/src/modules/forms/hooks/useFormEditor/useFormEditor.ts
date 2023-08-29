@@ -1,5 +1,6 @@
 import { Component } from "@modules/components/types";
 import { useNavigationHelper } from "@modules/core/hooks";
+import { FormComponent } from "@modules/formComponents/types";
 import { FormEntity, FormEntityField } from "@modules/formEntities/types";
 import { FormPage } from "@modules/formPages/types";
 import { useFormEditorContext } from "@modules/forms/contexts";
@@ -9,10 +10,16 @@ export interface UseFormEditorResult {
     set: (page: FormPage) => void;
   };
   component: {
+    isVisible: boolean;
     data: Component | null;
     isSelected: boolean;
     set: (component: Component) => void;
     clear: () => void;
+  };
+  formComponent: {
+    data: FormComponent | null;
+    set: (formComponent: FormComponent) => void;
+    reset: () => void;
   };
   selected: {
     fields: {
@@ -25,7 +32,7 @@ export interface UseFormEditorResult {
 export const useFormEditor = (): UseFormEditorResult => {
   const {
     dispatch,
-    state: { fields, component },
+    state: { fields, component, formComponent },
   } = useFormEditorContext();
   const navigate = useNavigationHelper();
 
@@ -54,7 +61,14 @@ export const useFormEditor = (): UseFormEditorResult => {
 
   const setPage = (page: FormPage) => {
     navigate.to(`../pages/${page.id}`);
-    // dispatch({ type: "set page number", pageNumber: page.number });
+  };
+
+  const setFormComponent = (formComponent: FormComponent) => {
+    dispatch({ type: "set form component", formComponent });
+  };
+
+  const resetFormComponent = () => {
+    dispatch({ type: "reset form component" });
   };
 
   return {
@@ -62,10 +76,16 @@ export const useFormEditor = (): UseFormEditorResult => {
       set: setPage,
     },
     component: {
+      isVisible: !Boolean(component.data),
       data: component.data,
       isSelected: component.data !== null,
       clear: clearSelectedComponent,
       set: setSelectedComponent,
+    },
+    formComponent: {
+      data: formComponent,
+      set: setFormComponent,
+      reset: resetFormComponent,
     },
     selected: {
       fields: {

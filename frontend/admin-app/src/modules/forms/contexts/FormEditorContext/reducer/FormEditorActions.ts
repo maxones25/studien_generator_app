@@ -1,4 +1,5 @@
 import { Component } from "@modules/components/types";
+import { FormComponent } from "@modules/formComponents/types";
 import { FormEntity, FormEntityField } from "@modules/formEntities/types";
 
 type SelectFormField = {
@@ -30,6 +31,14 @@ type SetPageNumber = {
   pageNumber: number;
 };
 
+type SetFormComponent = {
+  type: "set form component";
+  formComponent: FormComponent;
+};
+
+type ResetFormComponent = {
+  type: "reset form component";
+};
 
 export type FormEditorAction =
   | SelectFormField
@@ -37,4 +46,6 @@ export type FormEditorAction =
   | ClearFormFields
   | ClearComponent
   | SetPageNumber
-  | SetComponent;
+  | SetComponent
+  | SetFormComponent
+  | ResetFormComponent;

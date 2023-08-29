@@ -73,9 +73,9 @@ export const EntityFieldsCard: React.FC<EntityFieldsCardProps> = () => {
             divider={!isLast}
           >
             <ListItemButton onClick={editData.handleSet(field)}>
-              <Text sx={{ width: 100 }}>{field.name}</Text>
+              <Text sx={{ minWidth: 150 }}>{field.name}</Text>
               <Chip
-                label={field.type}
+                label={t(field.type)}
                 color="primary"
                 variant="filled"
                 size="small"

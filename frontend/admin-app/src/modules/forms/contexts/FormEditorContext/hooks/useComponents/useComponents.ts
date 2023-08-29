@@ -8,13 +8,11 @@ export type EnhancedComponent = {
 
 export type UseComponentsResult = {
   items: EnhancedComponent[];
-  isVisible: boolean;
 };
 
 export const useComponents = (
   components: Component[],
-  selectedFormFields: FormEntityField[],
-  isVisible: boolean
+  selectedFormFields: FormEntityField[]
 ): UseComponentsResult =>
   useMemo(() => {
     const items = components
@@ -41,5 +39,5 @@ export const useComponents = (
         data,
       }));
 
-    return { items, isVisible };
-  }, [components, selectedFormFields, isVisible]);
+    return { items };
+  }, [components, selectedFormFields]);

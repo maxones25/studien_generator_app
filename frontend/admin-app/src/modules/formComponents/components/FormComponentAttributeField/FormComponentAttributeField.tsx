@@ -1,14 +1,23 @@
 import {
   ExperimentalFormTextField,
   FormSelect,
+  Switch,
 } from "@modules/core/components";
 import { FormEntityField } from "@modules/formEntities/types";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import {
+  Autocomplete,
+  Checkbox,
+  Chip,
+  FormControl,
+  FormControlLabel,
+  TextField,
+} from "@mui/material";
 import {
   Controller,
   FieldPath,
   FieldValues,
   UseFormReturn,
+  get,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -60,12 +69,66 @@ export const FormComponentAttributeField = <FormData extends FieldValues>({
     );
   }
 
-  if (type === "Select" && attribute.name === "defaultValue") {
-    const options = (fields[0].attributes.values as string[]).map((value) => ({
-      label: value,
-      value,
-    }));
+  if (
+    (type === "Select" || type === "RadioGroup") &&
+    attribute.name === "defaultValue"
+  ) {
+    const options =
+      form
+        // @ts-ignore
+        .watch("attributes.options")
+        ?.map((value) => ({ label: value, value })) ?? [];
     return <FormSelect control={form.control} name={name} options={options} />;
+  }
+
+  if (attribute.name === "options") {
+    return (
+      <Controller
+        control={form.control}
+        rules={{
+          required: "required",
+        }}
+        name={name}
+        render={({ field: { onChange, ...field }, formState: { errors } }) => {
+          const error = get(errors, name);
+
+          return (
+            <Autocomplete
+              multiple
+              id="tags-filled"
+              options={[]}
+              onChange={(_, values) => {
+                onChange(values);
+              }}
+              freeSolo
+              value={field.value}
+              renderTags={(value: readonly string[], getTagProps) =>
+                value.map((option: string, index: number) => (
+                  <Chip
+                    variant="outlined"
+                    label={option}
+                    {...getTagProps({ index })}
+                  />
+                ))
+              }
+              renderInput={(params) => {
+                return (
+                  <TextField
+                    {...params}
+                    {...field}
+                    label="Enum (Werte)"
+                    multiline
+                    margin="normal"
+                    error={Boolean(error)}
+                    helperText={error?.message}
+                  />
+                );
+              }}
+            />
+          );
+        }}
+      />
+    );
   }
 
   const defaultLabel =
@@ -74,14 +137,30 @@ export const FormComponentAttributeField = <FormData extends FieldValues>({
       : undefined;
 
   return (
-    <ExperimentalFormTextField
-      {...props}
-      form={form}
-      name={name}
-      label={label}
-      type={convertType(attribute.type)}
-      required={attribute.required}
-      placeholder={defaultLabel}
-    />
+    <FormControl margin="none">
+      <ExperimentalFormTextField
+        {...props}
+        form={form}
+        name={name}
+        label={label}
+        type={convertType(attribute.type)}
+        required={attribute.required}
+        placeholder={defaultLabel}
+      />
+      {attribute.type === "datetime" && (
+        <Switch
+          label={t("currentDate")}
+          onChange={(_, checked) => {
+            if (checked) {
+              console.log(checked, name);
+              form.setValue(name, "CurrentDateTime" as any);
+            } else {
+              form.setValue(name, undefined as any);
+            }
+          }}
+          value={form.watch(name) === "CurrentDateTime"}
+        />
+      )}
+    </FormControl>
   );
 };

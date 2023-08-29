@@ -1,8 +1,9 @@
 const modules = [
-  "core",
   "auth",
-  "date",
+  "chat",
   "components",
+  "core",
+  "date",
   "entities",
   "fields",
   "forms",
@@ -15,10 +16,8 @@ const modules = [
   "navigation",
   "participants",
   "studies",
-  "chat",
+  "tasks",
 ];
-
-// test12345d
 
 const types = ["type", "interface"];
 
