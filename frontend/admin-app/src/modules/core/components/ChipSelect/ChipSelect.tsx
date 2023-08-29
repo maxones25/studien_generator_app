@@ -22,13 +22,14 @@ export const ChipSelect = <T extends string>({
   onSelect,
 }: ChipSelectProps<T>) => {
   return (
-    <Row flexWrap="wrap" {...containerProps}>
-      {options.map((option) => (
+    <Row flexWrap="wrap" {...containerProps} p={1} pb={0}>
+      {options.map((option, i) => (
         <Chip
           {...chipProps}
           key={option.value}
           label={option.label}
           color={value === option.value ? "primary" : "default"}
+          size="small"
           onClick={() => {
             if (value !== option.value) {
               onSelect(option.value);
@@ -38,7 +39,8 @@ export const ChipSelect = <T extends string>({
           }}
           sx={{
             ...chipProps?.sx,
-            m: 1,
+            mb: 1,
+            ml: i === 0 ? 0 : 1
           }}
         />
       ))}

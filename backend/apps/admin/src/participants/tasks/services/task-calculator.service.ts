@@ -174,7 +174,6 @@ export class TasksCalculator {
     task.originalScheduledAt = scheduledAt;
     task.scheduledAt = scheduledAt;
     task.rescheduled = 0;
-    task.postponable = false;
 
     return task;
   }

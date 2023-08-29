@@ -1,6 +1,9 @@
 export type Participant = {
   id: string;
   number: string;
+  chat: {
+    id: string;
+  };
   group: {
     id: string;
     name: string;

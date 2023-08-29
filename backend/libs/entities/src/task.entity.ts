@@ -43,9 +43,6 @@ export class Task {
   @Column('datetime')
   completedAt: Date;
 
-  @Column('boolean')
-  postponable: boolean;
-
   @Column('integer')
   rescheduled: number;
 
