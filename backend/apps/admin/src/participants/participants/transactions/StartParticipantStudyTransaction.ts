@@ -58,6 +58,10 @@ export class StartParticipantStudyTransaction extends Transaction<
 
     const duration = await this.studiesService.getDuration(participant.id);
 
+    console.table(schedules);
+
+    throw new Error();
+
     const tasks = this.tasksCalculator.generate({
       participantId: participant.id,
       schedules,

@@ -2,7 +2,7 @@ import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { FormFormData } from "@modules/forms/types";
 import { useStudyId } from "@modules/navigation/hooks";
-import { getGetFormsKey } from "..";
+import { getGetFormKey, getGetFormsKey } from "..";
 
 export const useChangeName = () => {
   const studyId = useStudyId()!;
@@ -16,13 +16,14 @@ export const useChangeName = () => {
         body,
       }),
     {
-      onSuccess: ({ queryClient, variables }) => {
+      onSuccess: ({ queryClient, variables: form }) => {
+        queryClient.invalidateQueries(getGetFormKey({ formId: form.id! }));
         queryClient.invalidateQueries(getGetFormsKey({ studyId }));
         return {
-          text: "record  updated",
+          text: "record updated",
           params: {
             record: "form",
-            name: variables.name,
+            name: form.name,
           },
         };
       },

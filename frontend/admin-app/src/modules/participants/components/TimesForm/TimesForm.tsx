@@ -19,6 +19,7 @@ export type TimesFormData = {
   daysOfWeek?: ScheduleDaysOfWeek;
   daysOfMonth?: ScheduleDaysOfMonth;
 };
+
 export interface TimesFormProps extends FormProps<TimesFormData> {
   schedule: Schedule;
 }
@@ -36,10 +37,14 @@ export const TimesForm: React.FC<TimesFormProps> = ({
     <Form form={form} onSubmit={onSubmit}>
       <TimesPicker form={form} name="times" />
       {schedule.type === "Flexible" && schedule.period === "Week" && (
-        <DaysOfWeekPicker control={form.control} name="daysOfWeek" />
+        <DaysOfWeekPicker
+          control={form.control}
+          name="daysOfWeek"
+          amount={schedule.amount}
+        />
       )}
       {schedule.type === "Flexible" && schedule.period === "Month" && (
-        <DaysOfMonthPicker control={form.control} name="daysOfMonth" />
+        <DaysOfMonthPicker control={form.control} name="daysOfMonth"    amount={schedule.amount} />
       )}
       <FormControl margin="normal" sx={{ display: "flex" }}>
         <Row justifyContent="flex-end">

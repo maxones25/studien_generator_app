@@ -145,5 +145,8 @@
   "continue": "weiter",
   "back": "zurück",
   "password resetted": "Passwort zurückgesetzt",
-  "type your message": "Nachricht schreiben"
+  "type your message": "Nachricht schreiben",
+  "please select x": "Bitte {{x}} auswählen",
+  "select x more": "Bitte {{x}} weitere auswählen",
+  "select x less": "Bitte {{x}} weniger auswählen"
 }

@@ -1,8 +1,15 @@
-import { Column, Row, Text } from "@modules/core/components";
-import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import { Row, Text } from "@modules/core/components";
+import {
+  Control,
+  Controller,
+  FieldPath,
+  FieldValues,
+  get,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { DaysOfWeekPickerProps } from "..";
-import { Chip } from "@mui/material";
+import { Chip, FormControl, FormHelperText } from "@mui/material";
+import { ScheduleDaysOfMonth } from "@modules/formConfigs/types";
 
 const days = new Array(28).fill(null).map((_, i) => i + 1);
 
@@ -17,13 +24,25 @@ const DAYS_OF_MONTH = transformToMatrix(days, 4, 7);
 export interface DaysOfMonthPickerProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
   name: FieldPath<TFieldValues>;
+
+  amount?: number;
 }
 
 export const DaysOfMonthPicker = <TFieldValues extends FieldValues>({
   control,
   name,
+  amount,
 }: DaysOfWeekPickerProps<TFieldValues>) => {
   const { t } = useTranslation();
+
+  const validate = (value: ScheduleDaysOfMonth) => {
+    const targetAmount = amount!;
+    const currentAmount = value?.length ?? 0;
+    const diff = targetAmount - currentAmount;
+    return (
+      diff === 0 || t(diff > 0 ? "select x more" : "select x less", { x: Math.abs(diff) })
+    );
+  };
 
   return (
     <>
@@ -33,10 +52,16 @@ export const DaysOfMonthPicker = <TFieldValues extends FieldValues>({
       <Controller
         control={control}
         name={name}
-        render={({ field: { value, onChange } }) => {
+        rules={{
+          validate: amount ? validate : undefined,
+        }}
+        render={({ field: { value, onChange }, formState: { errors } }) => {
           const daysOfMonth = value as unknown as number[];
+
+          const error = get(errors, name);
+
           return (
-            <Column>
+            <FormControl>
               {DAYS_OF_MONTH.map((row) => (
                 <Row flexWrap="wrap">
                   {row.map((day) => (
@@ -59,7 +84,10 @@ export const DaysOfMonthPicker = <TFieldValues extends FieldValues>({
                   ))}
                 </Row>
               ))}
-            </Column>
+              <FormHelperText error={Boolean(error)}>
+                {error?.message}
+              </FormHelperText>
+            </FormControl>
           );
         }}
       />

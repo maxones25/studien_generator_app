@@ -47,7 +47,6 @@ i18n
 const queryClient = new QueryClient();
 
 const App = () => {
-  console.log({ test: import.meta.env });
   return (
     <Suspense fallback={<LinearProgress />}>
       <QueryClientProvider client={queryClient}>

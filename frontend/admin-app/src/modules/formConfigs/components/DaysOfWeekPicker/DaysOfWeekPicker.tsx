@@ -1,8 +1,16 @@
-import { FormSwitch } from "@modules/core/components";
-import { Control, FieldPath, FieldValues } from "react-hook-form";
+import { Switch } from "@modules/core/components";
+import { ScheduleDaysOfWeek } from "@modules/formConfigs/types";
+import { FormControl, FormHelperText } from "@mui/material";
+import {
+  Control,
+  Controller,
+  FieldPath,
+  FieldValues,
+  get,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-const daysOfWeek = [
+const DAYS_OF_WEEK = [
   "monday",
   "tuesday",
   "wednesday",
@@ -15,24 +23,59 @@ const daysOfWeek = [
 export interface DaysOfWeekPickerProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
   name: FieldPath<TFieldValues>;
+
+  amount?: number;
 }
 
 export const DaysOfWeekPicker = <TFieldValues extends FieldValues>({
   control,
   name,
+  amount,
 }: DaysOfWeekPickerProps<TFieldValues>) => {
   const { t } = useTranslation();
+
+  const validate = (value: ScheduleDaysOfWeek) => {
+    return (
+      (value?.filter((v) => Boolean(v))?.length ?? 0) === 3 ||
+      t("please select x", { x: amount })
+    );
+  };
+
   return (
-    <>
-      {daysOfWeek.map((day, i) => (
-        <FormSwitch
-          key={i}
-          control={control}
-          label={t(day)}
-          // @ts-ignore
-          name={`${name}.${i}`}
-        />
-      ))}
-    </>
+    <Controller
+      control={control}
+      name={name}
+      rules={{
+        validate: amount ? validate : undefined,
+      }}
+      // @ts-ignore
+      defaultValue={
+        [false, false, false, false, false, false, false] as ScheduleDaysOfWeek
+      }
+      render={({ field: { value, onChange }, formState: { errors } }) => {
+        const daysOfWeek = value as ScheduleDaysOfWeek;
+
+        const error = get(errors, name);
+
+        return (
+          <FormControl>
+            {DAYS_OF_WEEK.map((day, i) => (
+              <Switch
+                key={i}
+                label={t(day)}
+                onChange={(_, checked) => {
+                  daysOfWeek[i] = checked;
+                  onChange([...daysOfWeek]);
+                }}
+                value={Boolean(daysOfWeek[i])}
+              />
+            ))}
+            <FormHelperText error={Boolean(error)}>
+              {error?.message}
+            </FormHelperText>
+          </FormControl>
+        );
+      }}
+    />
   );
 };

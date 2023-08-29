@@ -59,7 +59,6 @@ const FormsPage: React.FC<FormsPageProps> = () => {
             key={form.id}
             divider={!isLast}
             item={form}
-            onUpdate={editGroupData.handleSet(form)}
             onDelete={deleteGroupData.handleSet(form)}
           >
             <ListItemButton
@@ -70,14 +69,6 @@ const FormsPage: React.FC<FormsPageProps> = () => {
             </ListItemButton>
           </DataListItem>
         )}
-      />
-      <DataDialog
-        Form={FormForm}
-        client={editGroupData}
-        createTitle={t("create data", { data: t("form") })}
-        updateTitle={t("update data", { data: t("form") })}
-        onCreate={createGroup.mutateAsync}
-        onUpdate={updateGroup.mutateAsync}
       />
       <DataDialog
         Form={DeleteFormForm}
