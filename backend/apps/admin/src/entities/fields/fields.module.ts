@@ -4,10 +4,9 @@ import { EntityField } from '@entities/entity-field.entity';
 import entityFieldsProviders from './fields.providers';
 import { FieldsService } from './fields.service';
 import { FieldGuard } from './field.guard';
-import { EntityFieldAttribute } from '@entities';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([EntityField, EntityFieldAttribute])],
+  imports: [TypeOrmModule.forFeature([EntityField])],
   providers: entityFieldsProviders,
   exports: [FieldsService, FieldGuard],
 })

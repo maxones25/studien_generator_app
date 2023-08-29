@@ -6,7 +6,7 @@ import {
   Unique,
   OneToMany,
 } from 'typeorm';
-import { Entity, EntityFieldAttribute, FormField, RecordField } from '.';
+import { Entity, FormField, RecordField } from '.';
 import { FieldType } from '@shared/enums/field-type.enum';
 
 @TypeOrmEntity()
@@ -36,9 +36,6 @@ export class EntityField {
     enum: FieldType,
   })
   type: FieldType;
-
-  @OneToMany(() => EntityFieldAttribute, (attribute) => attribute.field)
-  attributes: EntityFieldAttribute[];
 
   @OneToMany(() => FormField, (formField) => formField.entityField)
   formFields: FormField[];

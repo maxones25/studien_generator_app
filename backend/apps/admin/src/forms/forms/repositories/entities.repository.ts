@@ -26,9 +26,7 @@ export class EntitiesRepository extends RecordRepository<FormEntity> {
       },
       relations: {
         entity: {
-          fields: {
-            attributes: true,
-          },
+          fields: true,
         },
         fields: {
           formComponent: true,
@@ -51,10 +49,6 @@ export class EntitiesRepository extends RecordRepository<FormEntity> {
             id: true,
             name: true,
             type: true,
-            attributes: {
-              key: true,
-              value: true,
-            },
           },
         },
       },
@@ -68,12 +62,8 @@ export class EntitiesRepository extends RecordRepository<FormEntity> {
       }) => ({
         ...formEntity,
         entity,
-        fields: entityFields.map(({ attributes, ...field }) => ({
+        fields: entityFields.map((field) => ({
           ...field,
-          attributes: attributes.reduce((obj, { key, value }) => {
-            obj[key] = value;
-            return obj;
-          }, {}),
           component:
             fields.find((formfield) => formfield.entityFieldId === field.id)
               ?.formComponent ?? null,

@@ -1,15 +1,5 @@
 import { FieldType } from '@shared/enums/field-type.enum';
-import {
-  ArrayMinSize,
-  IsArray,
-  IsEnum,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsUUID,
-  MinLength,
-  ValidateIf,
-} from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateFieldDto {
   @IsString()
@@ -18,11 +8,4 @@ export class CreateFieldDto {
 
   @IsEnum(FieldType)
   readonly type: FieldType;
-
-  @ValidateIf(({ type }) => type === FieldType.Enum)
-  @IsArray()
-  @ArrayMinSize(1)
-  @IsString({ each: true })
-  @MinLength(1, { each: true })
-  readonly values: string[];
 }
