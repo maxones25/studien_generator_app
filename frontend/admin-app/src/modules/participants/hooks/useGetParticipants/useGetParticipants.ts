@@ -14,7 +14,7 @@ export const useGetParticipants = () => {
   const studyId = useStudyId()!;
 
   return useReadRequest<Participant[]>(
-    getGetParticipantsKey({ studyId: studyId! }),
+    getGetParticipantsKey({ studyId }),
     (options) =>
       apiRequest(`/participants/getByStudy`, {
         ...options,

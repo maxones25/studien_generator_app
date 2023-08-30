@@ -4,6 +4,8 @@ import { Roles } from '@admin/roles/roles.decorator';
 import { ParticipantQueryDto } from '../dtos/ParticipantQueryDto';
 import { ParticipantGuard } from '../guards/participant.guard';
 import { GroupQueryDto } from '@admin/groups/dtos/GroupQueryDto';
+import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
+import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 
 @Controller('participants')
 export class ParticipantsQueries {
@@ -11,7 +13,8 @@ export class ParticipantsQueries {
 
   @Get('getByStudy')
   @Roles('admin', 'employee')
-  async getByStudy(@Param('studyId') studyId: string) {
+  @UseGuards(StudyGuard)
+  async getByStudy(@Query() { studyId }: StudyQueryDto) {
     return this.participantsService.getByStudy(studyId);
   }
 

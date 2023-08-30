@@ -43,7 +43,22 @@ export const FormComponentForm: React.FC<FormComponentFormFormProps> = ({
     ) {
       delete data.attributes.defaultValue;
     }
-    onSubmit(data);
+
+    const attributes = Object.keys(data.attributes)
+      .filter((key) => {
+        if (data.attributes[key] === null) return false;
+        if (data.attributes[key] === undefined) return false;
+        if (Number.isNaN(data.attributes[key])) return false;
+        return true;
+      })
+      .reduce<Record<string, any>>((obj, key) => {
+        obj[key] = data.attributes[key];
+        return obj;
+      }, {});
+
+    console.table(attributes);
+
+    onSubmit({ ...data, attributes });
   };
 
   const options =
