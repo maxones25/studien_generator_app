@@ -1,4 +1,12 @@
 {
+  "cool down description": "Abkühlen",
+  "low intensity description": "Niedrige Intensität",
+  "high intensity description": "Hohe Intensität",
+  "warm up description": "Aufwärmen",
+  "cool down": "Abkühlen",
+  "low intensity": "Niedrige Intensität",
+  "high intensity": "Hohe Intensität",
+  "warm up": "Aufwärmen",
   "calendar entries": "Kalender Einträge",
   "notifications": "Neuigkeiten",
   "delete all": "Alle löschen",

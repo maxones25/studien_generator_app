@@ -19,13 +19,13 @@ export class PostRecord extends Strategy {
     handler: StrategyHandler
   ): Promise<Response | undefined> {
     const db = await this.dbPromise;
-    const clone = request.clone();
-    return clone.json()
-    .then(async (data) => {
-      try {
-        const response = await handler.fetch(request);
-        return response;
-      } catch (error) {
+    try {
+      const response = await handler.fetch(request.clone());
+      return response;
+    } catch (error) {
+      const clone = request.clone();
+      return clone.json()
+      .then(async (data) => {
         const record: Record = data;
         const tx = db.transaction(['records', 'tasks'], 'readwrite');
         if (record.taskId) {
@@ -33,13 +33,13 @@ export class PostRecord extends Strategy {
         }
         await tx.objectStore("records").add({
           id: record.id,
-          createdAt: new Date(record.createdAt),
+          createdAt: record.createdAt,
           name: record.name,
         });
         await this.queue.pushRequest({request: request});
         return new Response('', { status: 200, statusText: 'Queued' });
-      }
-    });
+      });
+    }
   }
 
   private async putTask(

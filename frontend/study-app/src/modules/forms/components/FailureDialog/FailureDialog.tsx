@@ -3,10 +3,11 @@ import { useFormDataContext } from '@modules/forms/contexts';
 import { Dialog, TextField } from '@mui/material';
 import { t } from 'i18next';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Control, FieldValues, useForm } from 'react-hook-form';
 
 export interface FailureDialogProps {
   open: boolean,
+  control: Control<FieldValues>;
   onClose: () => void,
   onAccept: () => void,
 }
@@ -17,6 +18,7 @@ interface FailureReason {
 
 export const FailureDialog : React.FC<FailureDialogProps>= ({
   open,
+  control,
   onClose,
   onAccept,
 }) => {
@@ -24,8 +26,9 @@ export const FailureDialog : React.FC<FailureDialogProps>= ({
   const form = useForm<FailureReason>();
   const { handleFailure } = useFormDataContext();
 
-  const handleAccept = async (data: FailureReason) => {
-    handleFailure({}, data.failureReason);
+  const handleAccept = async ({ failureReason }: FailureReason) => {
+    const data = control._formValues
+    handleFailure(data, failureReason);
     onAccept();
   };
 

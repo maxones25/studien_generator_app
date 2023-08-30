@@ -61,7 +61,7 @@ export function Hiit ({
 
   return (
     <Column alignItems={'center'}>
-      <Text>{label ?? 'Label'}</Text>
+      <Text>{label ?? 'HIIT'}</Text>
       <Controller 
         control={control}
         name={end}
@@ -123,6 +123,7 @@ export function Hiit ({
       )}
       <FailureDialog 
         open={open}
+        control={control}
         onClose={onDialogCancel}
         onAccept={() => setOpen(false)}
       />

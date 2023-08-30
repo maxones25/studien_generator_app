@@ -1,6 +1,6 @@
 import { FormComponentDataAttributes } from '@modules/forms/types';
 import { MobileDatePicker } from '@mui/x-date-pickers';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { FieldValues, Control, RegisterOptions, Path, Controller, PathValue, get } from 'react-hook-form';
 
 export interface FormDatePickerProps <TFieldValues extends FieldValues> {
@@ -23,14 +23,16 @@ export function FormDatePicker<TFieldValues extends FieldValues> ({
   rules,
   attributes,
 }: FormDatePickerProps<TFieldValues>) {
-
   const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>
+  const defaultValue = attributes?.defaultValue === "CurrentDate" ? dayjs() : dayjs(attributes?.defaultValue);
 
+  
   return (
     <Controller
     control={control}
     name={name}
     rules={rules}
+    defaultValue={defaultValue as PathValue<TFieldValues, Path<TFieldValues>>}
     render={({ field: { onChange, value, ...field}, formState }) => { 
       const error = get(formState.errors, name);
       return (
@@ -43,9 +45,10 @@ export function FormDatePicker<TFieldValues extends FieldValues> ({
             helperText: error?.message ?? null,
           }
         }}
+        value={value}
         label={label}
         onChange={(value: Dayjs | null) => {
-          onChange(value?.toDate() as PathValue<TFieldValues, Path<TFieldValues>>);
+          onChange(value as PathValue<TFieldValues, Path<TFieldValues>>);
         }}
         {...field} 
         {...attributes}
