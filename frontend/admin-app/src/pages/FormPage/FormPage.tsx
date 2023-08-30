@@ -73,8 +73,9 @@ const FormPage: React.FC<FormPageProps> = () => {
           <Text variant="h6">{form.name}</Text>
         </Editable>
       </Toolbar>
-      <Divider/>
+      <Divider />
       <FormEditor
+        pageId={pageId}
         components={getComponents.data!}
         formPages={getFormPages.data!}
         formEntities={getFormEntities.data!}

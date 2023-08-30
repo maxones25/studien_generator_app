@@ -101,7 +101,8 @@ export function ExperimentalFormTextField<
 
   const valueAsNumber = type === "number";
 
-  const shrinkLabel = type === "datetime-local" ? true : undefined;
+  const shrinkLabel =
+    type === "datetime-local" || type === "date" ? true : undefined;
 
   const error = get(form.formState.errors, name);
 

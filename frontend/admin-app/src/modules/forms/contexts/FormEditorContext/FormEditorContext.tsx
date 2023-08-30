@@ -21,13 +21,14 @@ import {
   EnhancedFormPage,
   UseComponentsResult,
 } from "./hooks";
-import { usePageId } from "@modules/navigation/hooks";
 
 interface FormEditorProviderProps extends FormEditorContextValueOptions {
   children: ReactNode;
 }
 
 interface FormEditorContextValueOptions {
+  pageId: string;
+
   components: Component[];
   formPages: FormPage[];
   formEntities: FormEntity[];
@@ -36,6 +37,7 @@ interface FormEditorContextValueOptions {
 interface FormEditorContextValue {
   state: FormEditorState;
   dispatch: Dispatch<FormEditorAction>;
+  allComponents: Component[];
   formPages: EnhancedFormPage[];
   components: UseComponentsResult;
   formEntities: EnhancedFormEntity[];
@@ -46,17 +48,14 @@ const FormEditorContext = createContext<FormEditorContextValue | undefined>(
 );
 
 const useFormEditorContextValue = ({
+  pageId,
   components,
   formPages,
   formEntities,
 }: FormEditorContextValueOptions) => {
-  const pageId = usePageId();
   const [state, dispatch] = useReducer<
     Reducer<FormEditorState, FormEditorAction>
   >(formEditorReducer, {
-    page: {
-      number: 1,
-    },
     formComponent: null,
     component: {
       data: null,
@@ -64,7 +63,7 @@ const useFormEditorContextValue = ({
     fields: [],
   });
 
-  const enhancedFormPages = useFormPages(formPages, pageId!);
+  const enhancedFormPages = useFormPages(formPages, pageId);
 
   const enhancedFormEntities = useFormEntities(formEntities, state.fields);
 
@@ -77,6 +76,7 @@ const useFormEditorContextValue = ({
     state,
     dispatch,
     formPages: enhancedFormPages,
+    allComponents: components,
     components: enhancedComponents,
     formEntities: enhancedFormEntities,
   };
@@ -84,11 +84,13 @@ const useFormEditorContextValue = ({
 
 export const FormEditorProvider: FC<FormEditorProviderProps> = ({
   children,
+  pageId,
   components,
   formPages,
   formEntities,
 }) => {
   const value = useFormEditorContextValue({
+    pageId,
     components,
     formPages,
     formEntities,

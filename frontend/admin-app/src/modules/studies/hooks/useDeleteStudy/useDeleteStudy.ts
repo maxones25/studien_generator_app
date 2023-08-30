@@ -5,8 +5,8 @@ import { getGetStudiesKey } from "..";
 
 export const useDeleteStudy = () => {
   return useWriteRequest<StudyFormData, void>(
-    ({ body: { id }, ...options }) =>
-      apiRequest(`/studies/${id}`, { method: "DELETE", ...options }),
+    ({ body: { id: studyId }, ...options }) =>
+      apiRequest(`/studies/delete`, { ...options, method: "POST" , params: { studyId } }),
     {
       onSuccess: ({ queryClient, variables }) => {
         queryClient.invalidateQueries(getGetStudiesKey());

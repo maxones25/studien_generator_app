@@ -8,18 +8,21 @@ import { FormPage } from "@modules/formPages/types";
 import { FormEntity } from "@modules/formEntities/types";
 
 export interface FormEditorProps {
+  pageId: string;
   components: Component[];
   formPages: FormPage[];
   formEntities: FormEntity[];
 }
 
 export const FormEditor: React.FC<FormEditorProps> = ({
+  pageId,
   components,
   formEntities,
   formPages,
 }) => {
   return (
     <FormEditorProvider
+      pageId={pageId}
       components={components}
       formPages={formPages}
       formEntities={formEntities}

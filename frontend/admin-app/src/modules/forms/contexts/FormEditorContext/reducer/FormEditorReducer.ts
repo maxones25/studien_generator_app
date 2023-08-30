@@ -6,18 +6,9 @@ export const formEditorReducer: Reducer<FormEditorState, FormEditorAction> = (
   state,
   action
 ) => {
-  const { fields, component, page } = state;
+  const { fields, component } = state;
 
   switch (action.type) {
-    case "set page number": {
-      return {
-        ...state,
-        page: {
-          ...page,
-          number: action.pageNumber,
-        },
-      };
-    }
     case "select form field": {
       return {
         ...state,

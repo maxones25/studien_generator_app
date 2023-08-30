@@ -69,9 +69,4 @@ export class StudiesRepository extends RecordRepository<Study> {
       role: members[0].role,
     };
   }
-
-  async delete(id: string) {
-    const { affected } = await this.db.delete(id);
-    return affected;
-  }
 }

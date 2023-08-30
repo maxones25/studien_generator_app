@@ -1,8 +1,8 @@
 import { IconButton, Row } from "@modules/core/components";
+import { useNavigationHelper } from "@modules/core/hooks";
 import { useAddPage, useRemovePage } from "@modules/formPages/hooks";
 import { FormPage } from "@modules/formPages/types";
 import { useFormEditorContext } from "@modules/forms/contexts";
-import { useFormEditor } from "@modules/forms/hooks";
 import { Add, Delete } from "@mui/icons-material";
 import { Chip } from "@mui/material";
 import React from "react";
@@ -13,9 +13,9 @@ export interface FormPageListProps {}
 export const FormPageList: React.FC<FormPageListProps> = () => {
   const { t } = useTranslation();
   const { formPages } = useFormEditorContext();
-  const formEditor = useFormEditor();
   const addFormPage = useAddPage();
   const removeFormPage = useRemovePage();
+  const navigate = useNavigationHelper();
 
   const handleAddFormPage = () => {
     addFormPage.mutate({});
@@ -37,7 +37,7 @@ export const FormPageList: React.FC<FormPageListProps> = () => {
             color={isSelected ? "primary" : "default"}
             sx={{ mr: isLast ? 0 : 1 }}
             size="medium"
-            onClick={() => formEditor.page.set(page)}
+            onClick={navigate.handle(`../pages/${page.id}`)}
             onDelete={isSelected ? handleRemoveFormPage(page) : undefined}
             deleteIcon={isSelected ? <Delete /> : undefined}
           />

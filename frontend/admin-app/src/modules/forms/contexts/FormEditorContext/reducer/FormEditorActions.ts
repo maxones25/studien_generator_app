@@ -26,11 +26,6 @@ type SetComponent = {
   component: Component;
 };
 
-type SetPageNumber = {
-  type: "set page number";
-  pageNumber: number;
-};
-
 type SetFormComponent = {
   type: "set form component";
   formComponent: FormComponent;
@@ -45,7 +40,6 @@ export type FormEditorAction =
   | UnselectFormField
   | ClearFormFields
   | ClearComponent
-  | SetPageNumber
   | SetComponent
   | SetFormComponent
   | ResetFormComponent;

@@ -161,5 +161,10 @@
   "DateTime": "Datum und Uhrzeit",
   "Date": "Datum",
   "Time": "Uhrzeit",
-  "Boolean": "Wahrheitswert"
+  "Boolean": "Wahrheitswert",
+  "options": "Auswahl",
+  "currentDatetime": "aktuelle Datumszeit",
+  "currentDate": "aktuelles Datum",
+  "component": "Komponente",
+  "text": "Text"
 }

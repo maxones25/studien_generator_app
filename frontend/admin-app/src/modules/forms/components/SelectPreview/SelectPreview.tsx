@@ -4,20 +4,10 @@ import React from "react";
 export type SelectComponent = {
   id: string;
   type: "Select";
-  formFields: [
-    {
-      id: string;
-      entityField: {
-        id: string;
-        attributes: {
-          values: string[];
-        };
-      };
-    }
-  ];
   attributes: {
     label?: string;
     defaultValue?: string;
+    options: string[];
   };
 };
 
@@ -26,20 +16,19 @@ export interface SelectPreviewProps {
 }
 
 export const SelectPreview: React.FC<SelectPreviewProps> = ({ component }) => {
-  const options =
-    component.formFields[0].entityField.attributes.values.map<SelectOption>(
-      (value) => ({
-        label: value,
-        value,
-      })
-    );
+  const { options, defaultValue, label } = component.attributes;
+  const selectOptions = options.map<SelectOption>((value) => ({
+    label: value,
+    value,
+  }));
+
   return (
     <Select
       name={component.id}
-      label={component.attributes.label}
-      options={options}
+      label={label}
+      options={selectOptions}
       readOnly={true}
-      value={component.attributes.defaultValue}
+      value={defaultValue}
       formControlProps={{ fullWidth: true }}
     />
   );

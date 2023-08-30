@@ -1,0 +1,51 @@
+{
+  "component": {
+    "name": "Slider",
+    "entityFields": ["Number"],
+    "attributes": {
+      "label": {
+        "name": "label",
+        "required": false,
+        "type": "string"
+      },
+      "min": {
+        "name": "min",
+        "required": true,
+        "type": "number"
+      },
+      "minLabel": {
+        "name": "minLabel",
+        "required": false,
+        "type": "string"
+      },
+      "max": {
+        "name": "max",
+        "required": true,
+        "type": "number"
+      },
+      "maxLabel": {
+        "name": "maxLabel",
+        "required": false,
+        "type": "string"
+      },
+      "defaultValue": {
+        "name": "defaultValue",
+        "required": false,
+        "type": "number"
+      }
+    }
+  },
+  "fields": [
+    {
+      "data": {
+        "id": "58b1c24f-10ca-418f-8852-4060de64872f",
+        "name": "Alter",
+        "type": "Number",
+        "component": null
+      },
+      "entity": {
+        "id": "60d4d4f1-1923-4f6d-8560-25bc2c36d766"
+      }
+    }
+  ]
+}

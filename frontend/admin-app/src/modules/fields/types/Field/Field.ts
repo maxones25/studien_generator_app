@@ -1,12 +1,7 @@
-export type Field =
-  | {
-      id: string;
-      name: string;
-      type: Exclude<string, "Enum">;
-    }
-  | {
-      id: string;
-      name: string;
-      type: "Enum";
-      values: string[];
-    };
+import { FieldType } from "..";
+
+export type Field = {
+  id: string;
+  name: string;
+  type: FieldType;
+};

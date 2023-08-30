@@ -31,6 +31,15 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
       });
   };
 
+  const hasFields = (state?.fields?.length ?? 0) > 0;
+
+  const hasMultipleFields = (state?.fields?.length ?? 0) > 1;
+
+  const fieldName =
+    hasMultipleFields || !hasFields
+      ? state.component.data?.name
+      : state?.fields[0].data.name;
+
   return (
     <Column
       height="100%"
@@ -43,7 +52,7 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
       {formEditor.component.isSelected ? (
         <>
           <Row p={2} justifyContent="space-between">
-            <Text>Form Component</Text>
+            <Text>{fieldName}</Text>
             <IconButton
               testId="close form component form"
               Icon={<Close />}
@@ -51,10 +60,10 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
             />
           </Row>
           <FormComponentForm
-            component={formEditor.component.data!}
+            componentAttributes={formEditor.component.data?.attributes!}
+            fieldName={fieldName}
             onSubmit={handleSave}
             formProps={{ p: 1 }}
-            fields={state.fields}
           />
         </>
       ) : (

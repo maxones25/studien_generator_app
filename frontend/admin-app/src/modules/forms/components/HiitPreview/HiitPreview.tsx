@@ -21,9 +21,7 @@ export const HiitPreview: React.FC<HiitPreviewProps> = ({ component }) => {
   return (
     <Column bgcolor="secondary.light" borderRadius={5} p={1} flex={1}>
       <Text>HIIT</Text>
-      <Text variant="caption" align="left">
-        Warm Up: {warmUp}
-      </Text>
+      <Text variant="caption">Warm Up: {warmUp}</Text>
       <Text variant="caption">Rounds: {rounds}</Text>
       <Text variant="caption">High Intensity: {highIntensity}</Text>
       <Text variant="caption">Low Intensity: {lowIntensity}</Text>

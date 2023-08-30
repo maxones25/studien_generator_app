@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Param,
   Post,
   Query,
@@ -50,7 +49,7 @@ export class StudiesCommands {
   @Post('delete')
   @Roles('admin')
   @UseGuards(StudyGuard)
-  async delete(@Param('studyId') studyId: string) {
+  async delete(@Query() { studyId }: StudyQueryDto) {
     return this.studiesService.delete(studyId);
   }
 
