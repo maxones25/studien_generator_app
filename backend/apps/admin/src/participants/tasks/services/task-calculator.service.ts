@@ -19,6 +19,7 @@ export class TasksCalculator {
   }) {
     return schedules.flatMap(
       ({
+        id: scheduleId,
         period,
         frequency,
         daysOfWeek,
@@ -31,6 +32,7 @@ export class TasksCalculator {
         if (period === FormSchedulePeriod.Day)
           return this.generateFixDay(
             formId,
+            scheduleId,
             participantId,
             frequency,
             startDate,
@@ -41,6 +43,7 @@ export class TasksCalculator {
         if (period === FormSchedulePeriod.Week)
           return this.generateFixWeek(
             formId,
+            scheduleId,
             participantId,
             frequency,
             daysOfWeek,
@@ -52,6 +55,7 @@ export class TasksCalculator {
         if (period === FormSchedulePeriod.Month)
           return this.generateFixMonth(
             formId,
+            scheduleId,
             participantId,
             frequency,
             daysOfMonth,
@@ -67,6 +71,7 @@ export class TasksCalculator {
 
   public generateFixDay(
     formId: string,
+    scheduleId: string,
     participantId: string,
     frequency: number,
     startDate: Date,
@@ -75,6 +80,7 @@ export class TasksCalculator {
   ) {
     return this.generateTasks(
       formId,
+      scheduleId,
       participantId,
       startDate,
       duration,
@@ -85,6 +91,7 @@ export class TasksCalculator {
 
   public generateFixWeek(
     formId: string,
+    scheduleId: string,
     participantId: string,
     frequency: number,
     daysOfWeek: DaysOfWeek,
@@ -95,6 +102,7 @@ export class TasksCalculator {
     const referenceMonday = datetime.getLastMonday(startDate);
     return this.generateTasks(
       formId,
+      scheduleId,
       participantId,
       startDate,
       duration,
@@ -113,6 +121,7 @@ export class TasksCalculator {
 
   public generateFixMonth(
     formId: string,
+    scheduleId: string,
     participantId: string,
     frequency: number,
     daysOfMonth: DaysOfMonth,
@@ -122,6 +131,7 @@ export class TasksCalculator {
   ) {
     return this.generateTasks(
       formId,
+      scheduleId,
       participantId,
       startDate,
       duration,
@@ -138,6 +148,7 @@ export class TasksCalculator {
 
   private generateTasks(
     formId: string,
+    scheduleId: string,
     participantId: string,
     startDate: Date,
     duration: number,
@@ -154,22 +165,25 @@ export class TasksCalculator {
         ];
       }, [])
       .map((scheduledAt) =>
-        this.generateTask({ formId, participantId, scheduledAt }),
+        this.generateTask({ formId, scheduleId, participantId, scheduledAt }),
       );
   }
 
   private generateTask({
     formId,
+    scheduleId,
     participantId,
     scheduledAt,
   }: {
     formId: string;
+    scheduleId: string;
     participantId: string;
     scheduledAt: Date;
   }) {
     const task = new Task();
 
     task.formId = formId;
+    task.scheduleId = scheduleId;
     task.participantId = participantId;
     task.originalScheduledAt = scheduledAt;
     task.scheduledAt = scheduledAt;
