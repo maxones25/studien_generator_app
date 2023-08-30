@@ -16,7 +16,7 @@ export const Form : React.FC<FormProps>= ({
 
   return (
   <Column p={2} width={"70vw"} maxWidth={"500px"}>
-    <Text color="text.secondary">{name}</Text>
+    <Text mb="2rem" variant='h5' color="text.secondary">{name}</Text>
     {form?.isLoading ? (
       <CircularProgress 
         sx={{mt: 5, alignSelf: 'center'}} 

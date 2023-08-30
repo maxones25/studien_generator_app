@@ -1,4 +1,16 @@
-import { FormCheckBox, FormDatePicker, FormDateTimePicker, FormNumberPicker, FormRadioGroup, FormSelect, FormSlider, FormSwitch, FormTextField, FormTimePicker } from '@modules/core/components';
+import { 
+  FormCheckBox, 
+  FormDatePicker, 
+  FormDateTimePicker, 
+  FormNumberPicker, 
+  FormRadioGroup, 
+  FormSelect, 
+  FormSlider, 
+  FormSwitch, 
+  FormTextField, 
+  FormTimePicker,
+  Text
+} from '@modules/core/components';
 import { FormComponentData } from '@modules/forms/types';
 import { Hiit } from '@modules/hiit/components';
 import React from 'react';
@@ -81,6 +93,8 @@ export const FormComponent : React.FC<FormComponentProps>= ({
         return <FormDateTimePicker {...props} />
       case "CheckBox":
         return <FormCheckBox {...props} />
+      case "Text": 
+        return <Text>{attributes.text}</Text>
       case "HIIT":
         return <Hiit 
           label={props.label}

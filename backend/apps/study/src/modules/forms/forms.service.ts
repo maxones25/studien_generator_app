@@ -3,7 +3,7 @@ import { Form } from '@entities/form.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
-import { Not, Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 
 @Injectable()
 export class FormsService {
@@ -20,7 +20,7 @@ export class FormsService {
         {
           studyId,
           isActive: true,
-          groupId: null,
+          groupId: IsNull(),
         },
         {
           studyId,

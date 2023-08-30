@@ -61,6 +61,7 @@ export function FormRadioGroup<TFieldValues extends FieldValues>({
         >
           <FormLabel error={error} id={name}>{label}</FormLabel>
           <RadioGroup
+            row
             sx={sx}
             value={value ?? ''}
             onChange={(e) => {
@@ -70,7 +71,7 @@ export function FormRadioGroup<TFieldValues extends FieldValues>({
             {...field}
           >
             {attributes?.options?.map((option) => (
-              <FormControlLabel key={option} value={option} control={<Radio />} label={option} />
+              <FormControlLabel labelPlacement={"bottom"} key={option} value={option} control={<Radio />} label={option} />
             ))}
           </RadioGroup>
           {Boolean(error) && <FormHelperText>{t("value required")}</FormHelperText>}

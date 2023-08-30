@@ -26,6 +26,7 @@ export const FormPage : React.FC<FormPageProps> = ({
   return (
     <Form
       onSubmit={form.handleSubmit(handleSubmit)}
+      sx={{ gap: '2rem' }}
       {...formProps}
     >
       {currentPage?.components.map((value) => 

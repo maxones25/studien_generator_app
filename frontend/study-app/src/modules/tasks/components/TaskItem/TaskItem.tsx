@@ -22,7 +22,7 @@ export const TaskItem : React.FC<TaskItemProps>= ({
   const { setForm } = useFormIdContext();
   const timeDiff = dayjs(task.scheduledAt).diff(new Date(), 'hour');
   const state = task.completedAt ? TasksStates.Completed : 
-  timeDiff >= 0 ? TasksStates.InActive : 
+  timeDiff > 0 ? TasksStates.InActive : 
   timeDiff < -1 ? TasksStates.Failed :
   TasksStates.Active;
 
