@@ -137,7 +137,6 @@ export class CreateRecordTransaction extends Transaction<
       case FieldType.DateTime:
       case FieldType.Time:
         if (new Date(value).toString() !== 'Invalid Date') return true;
-      case FieldType.Enum:
       case FieldType.Text:
         if (typeof value === 'string') return true;
       default:
