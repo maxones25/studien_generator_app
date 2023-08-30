@@ -17,8 +17,8 @@ export class FormsService implements StudyRelatedDataAccessor {
     return this.formsRepository.getRelatedByStudy(studyId, id);
   }
 
-  async getNonGroup(groupId: string) {
-    return this.formsRepository.getNonGroup(groupId);
+  async getNonGroup(studyId: string, groupId: string) {
+    return this.formsRepository.getNonGroup(studyId, groupId);
   }
 
   async create(studyId: string, data: CreateFormDto) {

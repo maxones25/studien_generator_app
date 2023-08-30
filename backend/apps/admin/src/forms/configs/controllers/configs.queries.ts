@@ -6,6 +6,7 @@ import { ConfigsService } from '../services/configs.service';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { FormsService } from '@admin/forms/forms/services/forms.service';
 import { GetByGroupQueryDto } from '../dtos/GetByGroupQueryDto';
+import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 
 @Controller('forms')
 @UseGuards(StudyGuard)
@@ -30,7 +31,10 @@ export class ConfigsQueries {
   @Get('getNonGroup')
   @Roles('admin', 'employee')
   @UseGuards(GroupGuard)
-  getNonGroup(@Query() { groupId }: GroupQueryDto) {
-    return this.formsService.getNonGroup(groupId);
+  getNonGroup(
+    @Query() { studyId }: StudyQueryDto,
+    @Query() { groupId }: GroupQueryDto,
+  ) {
+    return this.formsService.getNonGroup(studyId, groupId);
   }
 }

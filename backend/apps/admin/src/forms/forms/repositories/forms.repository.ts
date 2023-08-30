@@ -19,7 +19,7 @@ export class FormsRepository extends RecordRepository<Form> {
     return this.db.findOne({ where: { id, studyId } });
   }
 
-  getNonGroup(groupId: string) {
+  getNonGroup(studyId:string, groupId: string) {
     return this.db
       .createQueryBuilder('f')
       .select(['f.id', 'f.name'])
@@ -35,7 +35,7 @@ export class FormsRepository extends RecordRepository<Form> {
         'f.id = fg2.formId AND fg2.type = :dependent AND fg2.groupId = :groupId',
         { groupId, dependent: FormConfigType.TimeDependent },
       )
-      .where('fg1.type IS NULL OR fg2.type IS NULL')
+      .where('f.study = :studyId AND (fg1.type IS NULL OR fg2.type IS NULL)', { studyId })
       .getMany();
   }
 
