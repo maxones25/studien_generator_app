@@ -4,7 +4,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
 } from 'typeorm';
-import { Record } from '.';
+import { FormField, Record } from '.';
 import { EntityField } from '.';
 
 @TypeOrmEntity()
@@ -16,7 +16,7 @@ export class RecordField {
   recordId: string;
 
   @Column()
-  entityFieldId: string;
+  formFieldId: string;
 
   @Column('json')
   value: any;
@@ -27,9 +27,9 @@ export class RecordField {
   })
   record: Record;
 
-  @ManyToOne(() => EntityField, (entityField) => entityField.recordFields, {
+  @ManyToOne(() => FormField, (formField) => formField.recordFields, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  entityField: EntityField;
+  formField: FormField;
 }

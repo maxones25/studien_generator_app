@@ -23,7 +23,7 @@ import { useTranslation } from "react-i18next";
 export interface FormRadioGroupProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
   componentId: string;
-  entityFieldId: string;
+  formFieldId: string;
   rules?: Omit<
     RegisterOptions<TFieldValues, Path<TFieldValues>>,
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
@@ -37,14 +37,14 @@ export interface FormRadioGroupProps<TFieldValues extends FieldValues> {
 export function FormRadioGroup<TFieldValues extends FieldValues>({
   control,
   componentId,
-  entityFieldId,
+  formFieldId,
   rules,
   label,
   sx,
   attributes,
 }: FormRadioGroupProps<TFieldValues>) {
   const { t } = useTranslation();
-  const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>
+  const name: Path<TFieldValues> = `${componentId}.${formFieldId}` as Path<TFieldValues>
 
   return (
     <Controller

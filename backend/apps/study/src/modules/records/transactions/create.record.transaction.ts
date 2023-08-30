@@ -7,7 +7,7 @@ import { ConflictException } from '@nestjs/common';
 import { FieldType } from '@shared/enums/field-type.enum';
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { Form } from '@entities/form.entity';
-import { Task } from '@entities';
+import { FormField, Task } from '@entities';
 
 export class CreateRecordTransaction extends Transaction<
   {
@@ -16,7 +16,7 @@ export class CreateRecordTransaction extends Transaction<
   },
   void
 > {
-  entityFieldRepository: Repository<EntityField>;
+  formFieldsRepository: Repository<FormField>;
 
   protected async execute({
     data,
@@ -25,13 +25,13 @@ export class CreateRecordTransaction extends Transaction<
     data: CreateRecordDto;
     participantId: string;
   }): Promise<void> {
-
     // if(! await this.isCorrectForm(data.formId, data.fields.map((value) => value.entityFieldId)))
     //   throw new ConflictException('invalid form');
 
     const record = await this.createRecord(data, participantId);
 
-    this.entityFieldRepository = this.entityManager.getRepository(EntityField);
+    this.formFieldsRepository = this.entityManager.getRepository(FormField);
+
     const promises = data.fields.map((recordField) =>
       this.addRecordField(record.id, recordField),
     );
@@ -68,24 +68,27 @@ export class CreateRecordTransaction extends Transaction<
     return record;
   }
 
-  private async addRecordField(recordId: string, recordField: RecordFieldDto) {
+  private async addRecordField(
+    recordId: string,
+    { id, value }: RecordFieldDto,
+  ) {
     const recordFieldRepository = this.entityManager.getRepository(RecordField);
 
-    if (!(await this.isValidValue(recordField)))
+    if (!(await this.isValidValue({ id, value })))
       throw new ConflictException('invalid record field');
+
+    const encodedValue = JSON.stringify(value) as any
 
     recordFieldRepository.insert({
       recordId,
-      value: recordField.value,
-      entityFieldId: recordField.entityFieldId,
+      formFieldId: id,
+      value: encodedValue,
     });
   }
 
-  private async isCorrectForm(
-    formId: string,
-    entityFieldIds: string[]
-  ) {
+  private async isCorrectForm(formId: string, entityFieldIds: string[]) {
     const formRepository = this.entityManager.getRepository(Form);
+
     const result = await formRepository.findOne({
       where: {
         id: formId,
@@ -102,38 +105,48 @@ export class CreateRecordTransaction extends Transaction<
         pages: {
           id: true,
           components: {
-            id:true,
+            id: true,
             formFields: {
               entityFieldId: true,
             },
           },
         },
       },
-    })
-    const flatResult = result.pages.map((page) => 
-      page.components.map((component) => 
-        component.formFields.map((formField) => 
-          formField.entityFieldId))).flat(Infinity);
-    if (flatResult.toString() === entityFieldIds.toString())
-      return true;
+    });
+    
+    const flatResult = result.pages
+      .map((page) =>
+        page.components.map((component) =>
+          component.formFields.map((formField) => formField.entityFieldId),
+        ),
+      )
+      .flat(Infinity);
+    if (flatResult.toString() === entityFieldIds.toString()) return true;
     return false;
   }
 
-  private async isValidValue({
-    entityFieldId,
-    value,
-  }: RecordFieldDto): Promise<any> {
-    const entityField = await this.entityFieldRepository.findOneOrFail({
-      where: { id: entityFieldId },
+  private async isValidValue({ id, value }: RecordFieldDto): Promise<any> {
+    const formField = await this.formFieldsRepository.findOneOrFail({
+      where: { id },
+      relations: {
+        entityField: true
+      },
+      select: {
+        id: true,
+        entityField: {
+          id: true,
+          type: true,
+        }
+      }
     });
 
-    const type = entityField.type.toString().toLowerCase();
-    
-    switch (entityField.type) {
+    const type = formField.entityField.type.toString().toLowerCase();
+
+    switch (formField.entityField.type) {
       case FieldType.Number:
       case FieldType.Boolean:
         if (typeof value === type) return true;
-      case FieldType.Date: 
+      case FieldType.Date:
       case FieldType.DateTime:
       case FieldType.Time:
         if (new Date(value).toString() !== 'Invalid Date') return true;

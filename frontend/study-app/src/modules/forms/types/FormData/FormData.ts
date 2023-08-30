@@ -32,7 +32,7 @@ export type FormComponentDataAttribute = {
 };
 
 export type FormField = {
-  entityFieldId: string;
+  id: string;
 };
 
 export type FormComponentDataAttributes = {

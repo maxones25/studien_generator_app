@@ -22,7 +22,7 @@ import { useTranslation } from "react-i18next";
 export interface FormSelectProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
   componentId: string;
-  entityFieldId: string;
+  formFieldId: string;
   rules?: Omit<
     RegisterOptions<TFieldValues, Path<TFieldValues>>,
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
@@ -36,7 +36,7 @@ export interface FormSelectProps<TFieldValues extends FieldValues> {
 export function FormSelect<TFieldValues extends FieldValues>({
   control,
   componentId,
-  entityFieldId,
+  formFieldId,
   rules,
   size,
   label,
@@ -44,7 +44,9 @@ export function FormSelect<TFieldValues extends FieldValues>({
   attributes,
 }: FormSelectProps<TFieldValues>) {
   const { t } = useTranslation();
-  const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>
+
+  const name: Path<TFieldValues> =
+    `${componentId}.${formFieldId}` as Path<TFieldValues>;
 
   return (
     <Controller
@@ -54,34 +56,34 @@ export function FormSelect<TFieldValues extends FieldValues>({
       name={name}
       render={({ field: { onChange, value, ...field }, formState }) => {
         const error = get(formState.errors, name);
-        
+
         return (
-        <FormControl 
-          margin="normal"
-          error={error}
-        >
-          {label && <InputLabel id={`${name}-select`}>{label}</InputLabel>}
-          <Select
-            sx={sx}
-            size={size}
-            labelId={`${name}-select`}
-            label={label}
-            value={value ?? ''}
-            onChange={(e) => {
-              const value = e.target.value;
-              onChange(value as PathValue<TFieldValues, Path<TFieldValues>>);
-            }}
-            {...field}
-          >
-            {attributes?.options?.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </Select>
-          {Boolean(error) && <FormHelperText>{t("value required")}</FormHelperText>}
-        </FormControl>
-      )}}
+          <FormControl margin="normal" error={error}>
+            {label && <InputLabel id={`${name}-select`}>{label}</InputLabel>}
+            <Select
+              sx={sx}
+              size={size}
+              labelId={`${name}-select`}
+              label={label}
+              value={value ?? ""}
+              onChange={(e) => {
+                const value = e.target.value;
+                onChange(value as PathValue<TFieldValues, Path<TFieldValues>>);
+              }}
+              {...field}
+            >
+              {attributes?.options?.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+            {Boolean(error) && (
+              <FormHelperText>{t("value required")}</FormHelperText>
+            )}
+          </FormControl>
+        );
+      }}
     />
   );
 }

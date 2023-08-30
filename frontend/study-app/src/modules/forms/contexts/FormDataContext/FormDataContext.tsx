@@ -45,11 +45,13 @@ const useFormDataContextValue = () => {
     const components: Object = {...data, ...newData};
     const componentsArray = Object.entries(components);
     let entityFields: RecordField[] = [];
+
     componentsArray.forEach((value) => {
       Object.entries(value[1]).forEach((value) => {
-        entityFields.push({entityFieldId: value[0], value: value[1]})
+        entityFields.push({id: value[0], value: value[1]})
       })
     })
+
     const record: Record = {
       id: uuid(),
       taskId: taskId,

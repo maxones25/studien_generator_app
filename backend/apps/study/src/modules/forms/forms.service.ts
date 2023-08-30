@@ -33,30 +33,30 @@ export class FormsService {
           pages: {
             components: {
               formFields: true,
-              attributes:true
+              attributes: true,
             },
           },
         },
       },
       select: {
         type: true,
-        modifiedAt: true, 
+        modifiedAt: true,
         form: {
           id: true,
           name: true,
           pages: {
             number: true,
             components: {
-              id:true,
+              id: true,
               type: true,
               number: true,
               formFields: {
-                entityFieldId: true,
+                id: true,
               },
               attributes: {
                 key: true,
                 value: true,
-              }
+              },
             },
           },
         },
@@ -73,16 +73,16 @@ export class FormsService {
       },
     });
 
-    const filteredForms = forms.filter(({ modifiedAt }) => 
-      !lastUpdated || modifiedAt >= lastUpdated
+    const filteredForms = forms.filter(
+      ({ modifiedAt }) => !lastUpdated || modifiedAt >= lastUpdated,
     );
 
-    return filteredForms.map(({form, type}) => {
+    return filteredForms.map(({ form, type }) => {
       return {
         id: form.id,
         type,
         form,
-      }
+      };
     });
   }
 
@@ -125,7 +125,7 @@ export class FormsService {
         pages: {
           components: {
             formFields: true,
-            attributes:true
+            attributes: true,
           },
         },
       },
@@ -135,7 +135,7 @@ export class FormsService {
         pages: {
           number: true,
           components: {
-            id:true,
+            id: true,
             type: true,
             number: true,
             formFields: {
@@ -144,7 +144,7 @@ export class FormsService {
             attributes: {
               key: true,
               value: true,
-            }
+            },
           },
         },
       },

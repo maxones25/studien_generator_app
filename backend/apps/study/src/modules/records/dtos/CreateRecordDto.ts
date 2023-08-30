@@ -39,7 +39,7 @@ export class CreateRecordDto {
 
 export class RecordFieldDto {
   @IsUUID()
-  entityFieldId: string;
+  id: string;
 
   @IsNotEmpty()
   value: any;

@@ -9,6 +9,6 @@ export type Record = {
 }
 
 export type RecordField = {
-  entityFieldId: string;
+  id: string;
   value: any;
 }

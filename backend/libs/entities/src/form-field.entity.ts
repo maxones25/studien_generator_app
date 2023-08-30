@@ -3,8 +3,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   Column,
+  OneToMany,
 } from 'typeorm';
-import { EntityField } from '.';
+import { EntityField, RecordField } from '.';
 import { FormComponent } from '.';
 import { FormEntity } from '.';
 
@@ -31,6 +32,9 @@ export class FormField {
 
   @Column()
   entityFieldId: string;
+
+  @OneToMany(() => RecordField, recordField => recordField.formField)
+  recordFields: RecordField[];
 
   @ManyToOne(() => FormEntity, formEntity => formEntity.fields, {
     cascade: true,

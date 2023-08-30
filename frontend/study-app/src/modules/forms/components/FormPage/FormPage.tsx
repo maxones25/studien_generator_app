@@ -23,6 +23,8 @@ export const FormPage : React.FC<FormPageProps> = ({
     isLoading,
   } = useFormDataContext();
 
+  console.log(currentPage)
+
   return (
     <Form
       onSubmit={form.handleSubmit(handleSubmit)}

@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 export interface FormSliderProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
   componentId: string;
-  entityFieldId: string;
+  formFieldId: string;
   label?: string;
   rules?: Omit<
     RegisterOptions<TFieldValues, Path<TFieldValues>>,
@@ -32,13 +32,13 @@ export function FormSlider<TFieldValues extends FieldValues>({
   label,
   control,
   componentId,
-  entityFieldId,
+  formFieldId,
   rules,
   attributes,
 }: FormSliderProps<TFieldValues>) {
   const { t } = useTranslation();
   const name: Path<TFieldValues> =
-    `${componentId}.${entityFieldId}` as Path<TFieldValues>;
+    `${componentId}.${formFieldId}` as Path<TFieldValues>;
   const min = attributes?.min ?? 0;
   const max = attributes?.max ?? 100;
   const minLabel = attributes?.minLabel ? attributes.minLabel : min;

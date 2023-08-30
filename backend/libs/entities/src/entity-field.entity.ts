@@ -40,9 +40,6 @@ export class EntityField {
   @OneToMany(() => FormField, (formField) => formField.entityField)
   formFields: FormField[];
 
-  @OneToMany(() => RecordField, (recordField) => recordField.entityField)
-  recordFields: RecordField[];
-
   @ManyToOne(() => Entity, (entity) => entity.fields, {
     cascade: true,
     onDelete: 'CASCADE',

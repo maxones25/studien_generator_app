@@ -14,7 +14,7 @@ import { FormComponentDataAttributes } from "@modules/forms/types";
 export interface FormSwitchProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
   componentId: string;
-  entityFieldId: string;
+  formFieldId: string;
   label?: string;
   rules?: Omit<
     RegisterOptions<TFieldValues, Path<TFieldValues>>,
@@ -27,12 +27,12 @@ export function FormSwitch<TFieldValues extends FieldValues>({
   label,
   control,
   componentId,
-  entityFieldId,
+  formFieldId,
   rules,
   attributes
 }: FormSwitchProps<TFieldValues>) {
   const { t } = useTranslation();
-  const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>
+  const name: Path<TFieldValues> = `${componentId}.${formFieldId}` as Path<TFieldValues>
 
 
   return (

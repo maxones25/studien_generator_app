@@ -1,22 +1,28 @@
-import { Button, Column, Text } from '@modules/core/components';
-import { FailureDialog } from '@modules/forms/components';
-import { FormField } from '@modules/forms/types';
-import { useHiit } from '@modules/hiit/hooks';
-import { HiitConfig } from '@modules/hiit/types';
-import { useEffect, useState } from 'react';
-import { CountdownCircleTimer } from 'react-countdown-circle-timer'
-import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { Button, Column, Text } from "@modules/core/components";
+import { FailureDialog } from "@modules/forms/components";
+import { FormField } from "@modules/forms/types";
+import { useHiit } from "@modules/hiit/hooks";
+import { HiitConfig } from "@modules/hiit/types";
+import { useEffect, useState } from "react";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import {
+  Control,
+  Controller,
+  FieldValues,
+  Path,
+  PathValue,
+} from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export interface HiitProps {
   control: Control<FieldValues>;
   componentId: string;
   formFields: FormField[];
   label?: string;
-  attributes?: {[x: string]: any};
+  attributes?: { [x: string]: any };
 }
 
-export function Hiit ({
+export function Hiit({
   label,
   control,
   componentId,
@@ -40,37 +46,44 @@ export function Hiit ({
     warmUp: attributes?.warmUp ?? 5,
     coolDown: attributes?.coolDown ?? 5,
     highIntensity: attributes?.highIntensity ?? 5,
-  }
+  };
 
   const onDialogCancel = () => {
     setOpen(false);
     setIsPlaying(true);
-  }
+  };
 
   const openDialog = () => {
     setIsPlaying(false);
     setOpen(true);
-  }
+  };
 
   useEffect(() => {
     createPhases(config);
-  }, [])
+  }, []);
 
-  const start: Path<FieldValues> = `${componentId}.${formFields[0].entityFieldId}` as Path<FieldValues>
-  const end: Path<FieldValues> = `${componentId}.${formFields[1].entityFieldId}` as Path<FieldValues> 
+  if (formFields.length !== 2)
+    throw new Error("component must have 2 form fields");
+
+  const [startFormField, endFormField] = formFields;
+
+  const start: Path<FieldValues> =
+    `${componentId}.${startFormField.id}` as Path<FieldValues>;
+  const end: Path<FieldValues> =
+    `${componentId}.${endFormField.id}` as Path<FieldValues>;
 
   return (
-    <Column alignItems={'center'}>
-      <Text>{label ?? 'HIIT'}</Text>
-      <Controller 
+    <Column alignItems={"center"}>
+      <Text>{label ?? "HIIT"}</Text>
+      <Controller
         control={control}
         name={end}
         rules={{
-          required: true
+          required: true,
         }}
-         render={({ field: { onChange }}) => {
-          return(
-            <CountdownCircleTimer 
+        render={({ field: { onChange } }) => {
+          return (
+            <CountdownCircleTimer
               isPlaying={isPlaying}
               duration={phase?.time ?? 10}
               colors={["#F7B801", "#A30000", "#A30000"]}
@@ -78,50 +91,51 @@ export function Hiit ({
               onComplete={() => {
                 if (!nextPhase()) {
                   setIsPlaying(false);
-                  onChange(new Date() as PathValue<FieldValues, Path<FieldValues>>);
+                  onChange(
+                    new Date() as PathValue<FieldValues, Path<FieldValues>>
+                  );
                 } else {
-                  return ({ shouldRepeat: true })
+                  return { shouldRepeat: true };
                 }
               }}
             >
               {({ remainingTime }) => remainingTime}
             </CountdownCircleTimer>
-          )
+          );
         }}
       />
-      <Text>{phase?.name ?? 'Label'}</Text>
-      <Text>{phase?.description ?? 'Label'}</Text>
+      <Text>{phase?.name ?? "Label"}</Text>
+      <Text>{phase?.description ?? "Label"}</Text>
       {!isPlaying ? (
-        <Controller 
+        <Controller
           control={control}
           name={start}
           rules={{
             required: true,
           }}
-          render={({ field: { onChange }, }) => {
-            return(
-              <Button 
-                testId='hiit-start-done-button'
+          render={({ field: { onChange } }) => {
+            return (
+              <Button
+                testId="hiit-start-done-button"
                 disabled={isLastPhase}
                 onClick={() => {
-                  setIsPlaying(true)
-                  onChange(new Date() as PathValue<FieldValues, Path<FieldValues>>)}
-                } 
+                  setIsPlaying(true);
+                  onChange(
+                    new Date() as PathValue<FieldValues, Path<FieldValues>>
+                  );
+                }}
               >
-                {t(isLastPhase ? 'done' : 'start')}
+                {t(isLastPhase ? "done" : "start")}
               </Button>
-            )
+            );
           }}
         />
       ) : (
-        <Button 
-          testId='hiit-cancel-button'
-          onClick={openDialog}
-        >
-          {t('cancel')}
+        <Button testId="hiit-cancel-button" onClick={openDialog}>
+          {t("cancel")}
         </Button>
       )}
-      <FailureDialog 
+      <FailureDialog
         open={open}
         control={control}
         onClose={onDialogCancel}
@@ -129,4 +143,4 @@ export function Hiit ({
       />
     </Column>
   );
-};
+}
