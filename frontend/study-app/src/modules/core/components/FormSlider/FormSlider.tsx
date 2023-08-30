@@ -1,7 +1,20 @@
-import { FormComponentDataAttributes } from '@modules/forms/types';
-import { FormControl, FormControlLabel, FormHelperText, Slider } from '@mui/material';
-import { Control, Controller, FieldValues, Path, PathValue, RegisterOptions, get } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { FormComponentDataAttributes } from "@modules/forms/types";
+import {
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  Slider,
+} from "@mui/material";
+import {
+  Control,
+  Controller,
+  FieldValues,
+  Path,
+  PathValue,
+  RegisterOptions,
+  get,
+} from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export interface FormSliderProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
@@ -12,7 +25,7 @@ export interface FormSliderProps<TFieldValues extends FieldValues> {
     RegisterOptions<TFieldValues, Path<TFieldValues>>,
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
   >;
-  attributes?: FormComponentDataAttributes
+  attributes?: FormComponentDataAttributes;
 }
 
 export function FormSlider<TFieldValues extends FieldValues>({
@@ -21,20 +34,23 @@ export function FormSlider<TFieldValues extends FieldValues>({
   componentId,
   entityFieldId,
   rules,
-  attributes
+  attributes,
 }: FormSliderProps<TFieldValues>) {
   const { t } = useTranslation();
-  const name: Path<TFieldValues> = `${componentId}.${entityFieldId}` as Path<TFieldValues>;
+  const name: Path<TFieldValues> =
+    `${componentId}.${entityFieldId}` as Path<TFieldValues>;
   const min = attributes?.min ?? 0;
-  const max =  attributes?.max ?? 100;
+  const max = attributes?.max ?? 100;
+  const minLabel = attributes?.minLabel ? attributes.minLabel : min;
+  const maxLabel = attributes?.maxLabel ? attributes.maxLabel : max;
   const marks = [
     {
       value: min,
-      label: min,
+      label: minLabel,
     },
     {
       value: max,
-      label: max,
+      label: maxLabel,
     },
   ];
 
@@ -44,34 +60,35 @@ export function FormSlider<TFieldValues extends FieldValues>({
       name={name}
       rules={rules}
       defaultValue={attributes?.defaultValue}
-      render={({ field: { onChange, value, ...field}, formState }) => {
+      render={({ field: { onChange, value, ...field }, formState }) => {
         const error = get(formState.errors, name);
 
-        return(
-        <FormControl 
-          margin="normal"
-          error={Boolean(error)}
-          >
-          <FormControlLabel
-          control={
-            <Slider 
-              onChange={(_e, newValue) => {
-                onChange(newValue as PathValue<TFieldValues, Path<TFieldValues>>);
-              }}
-              valueLabelDisplay="on"
-              value={value ?? min}
-              marks={marks}
-              {...field} 
-              {...attributes}
+        return (
+          <FormControl margin="normal" error={Boolean(error)}>
+            <FormControlLabel
+              control={
+                <Slider
+                  onChange={(_e, newValue) => {
+                    onChange(
+                      newValue as PathValue<TFieldValues, Path<TFieldValues>>
+                    );
+                  }}
+                  valueLabelDisplay="on"
+                  value={value ?? min}
+                  marks={marks}
+                  {...field}
+                  {...attributes}
+                />
+              }
+              label={label}
+              labelPlacement="top"
             />
-          }
-          label={label}
-          labelPlacement='top'
-          />
-          {Boolean(error) && 
-          <FormHelperText>{t("value required")}</FormHelperText>}
-      </FormControl>
-      )}}
+            {Boolean(error) && (
+              <FormHelperText>{t("value required")}</FormHelperText>
+            )}
+          </FormControl>
+        );
+      }}
     />
   );
-};
+}
