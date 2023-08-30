@@ -8,7 +8,7 @@ import {
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { DaysOfWeekPickerProps } from "..";
-import { Chip, FormControl, FormHelperText } from "@mui/material";
+import { Chip, FormControl, FormHelperText, FormLabel } from "@mui/material";
 import { ScheduleDaysOfMonth } from "@modules/formConfigs/types";
 
 const days = new Array(28).fill(null).map((_, i) => i + 1);
@@ -40,15 +40,13 @@ export const DaysOfMonthPicker = <TFieldValues extends FieldValues>({
     const currentAmount = value?.length ?? 0;
     const diff = targetAmount - currentAmount;
     return (
-      diff === 0 || t(diff > 0 ? "select x more" : "select x less", { x: Math.abs(diff) })
+      diff === 0 ||
+      t(diff > 0 ? "select x more" : "select x less", { x: Math.abs(diff) })
     );
   };
 
   return (
     <>
-      <Text variant="body2" sx={{ mb: 1 }}>
-        {t("days")}
-      </Text>
       <Controller
         control={control}
         name={name}
@@ -61,7 +59,8 @@ export const DaysOfMonthPicker = <TFieldValues extends FieldValues>({
           const error = get(errors, name);
 
           return (
-            <FormControl>
+            <FormControl margin="normal">
+              <FormLabel sx={{ mb: 1 }}>{t("month")}</FormLabel>
               {DAYS_OF_MONTH.map((row) => (
                 <Row flexWrap="wrap">
                   {row.map((day) => (

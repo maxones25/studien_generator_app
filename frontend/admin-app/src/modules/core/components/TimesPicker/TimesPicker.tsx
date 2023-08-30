@@ -5,15 +5,17 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { Column, IconButton, Row, Text } from "..";
-import { OutlinedInput } from "@mui/material";
+import { FormControl, OutlinedInput } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 
 export interface TimesPickerProps<TFieldValues extends FieldValues> {
+  label?: string;
   form: UseFormReturn<TFieldValues>;
   name: FieldPath<TFieldValues>;
 }
 
 export const TimesPicker = <TFieldValues extends FieldValues>({
+  label,
   form,
   name,
 }: TimesPickerProps<TFieldValues>) => {
@@ -22,9 +24,9 @@ export const TimesPicker = <TFieldValues extends FieldValues>({
       control={form.control}
       name={name}
       render={({ field: { value: times, onChange } }) => (
-        <Column>
-          <Row justifyContent="space-between">
-            <Text>Times</Text>
+        <FormControl margin="normal">
+          <Row justifyContent="space-between" mb={1}>
+            <Text>{label}</Text>
             <IconButton
               testId="add time"
               Icon={<Add />}
@@ -50,7 +52,7 @@ export const TimesPicker = <TFieldValues extends FieldValues>({
               <IconButton testId="delete time" Icon={<Remove />} />
             </Row>
           ))}
-        </Column>
+        </FormControl>
       )}
     />
   );

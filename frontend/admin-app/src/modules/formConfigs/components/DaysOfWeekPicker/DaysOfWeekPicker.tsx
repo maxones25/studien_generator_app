@@ -1,6 +1,6 @@
 import { Switch } from "@modules/core/components";
 import { ScheduleDaysOfWeek } from "@modules/formConfigs/types";
-import { FormControl, FormHelperText } from "@mui/material";
+import { FormControl, FormHelperText, FormLabel } from "@mui/material";
 import {
   Control,
   Controller,
@@ -58,7 +58,8 @@ export const DaysOfWeekPicker = <TFieldValues extends FieldValues>({
         const error = get(errors, name);
 
         return (
-          <FormControl>
+          <FormControl margin="normal">
+            <FormLabel sx={{ mb: 1 }}>{t("week")}</FormLabel>
             {DAYS_OF_WEEK.map((day, i) => (
               <Switch
                 key={i}

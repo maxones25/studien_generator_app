@@ -166,5 +166,7 @@
   "currentDatetime": "aktuelle Datumszeit",
   "currentDate": "aktuelles Datum",
   "component": "Komponente",
-  "text": "Text"
+  "text": "Text",
+  "week": "Woche",
+  "month": "Monat"
 }

@@ -35,7 +35,7 @@ export const TimesForm: React.FC<TimesFormProps> = ({
 
   return (
     <Form form={form} onSubmit={onSubmit}>
-      <TimesPicker form={form} name="times" />
+      <TimesPicker label={t("times")} form={form} name="times" />
       {schedule.type === "Flexible" && schedule.period === "Week" && (
         <DaysOfWeekPicker
           control={form.control}

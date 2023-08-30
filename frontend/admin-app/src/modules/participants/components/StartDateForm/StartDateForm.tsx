@@ -4,6 +4,7 @@ import {
   Form,
 } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
+import { isAfter, isBefore } from "@modules/date/utils";
 import { useStudy } from "@modules/studies/contexts";
 import React from "react";
 import { Validate, useForm } from "react-hook-form";
@@ -15,16 +16,19 @@ type FormData = {
 
 export interface StartDateFormProps extends FormProps<FormData> {}
 
-export const StartDateForm: React.FC<StartDateFormProps> = ({ onSubmit }) => {
+export const StartDateForm: React.FC<StartDateFormProps> = ({
+  onSubmit,
+  values,
+}) => {
   const study = useStudy();
   const { t } = useTranslation();
-  const form = useForm<FormData>();
+  const form = useForm<FormData>({ values });
 
   const validateStartDate: Validate<string, FormData> = (date) => {
     const { startDate, endDate } = study;
     if (!startDate) return "error";
     if (!endDate) return "error";
-    if (date < startDate || date > endDate)
+    if (isBefore(date, startDate) || isAfter(endDate, date))
       return t("date must be between", {
         name: t("startDate"),
         start: new Date(startDate).toLocaleDateString("de"),
