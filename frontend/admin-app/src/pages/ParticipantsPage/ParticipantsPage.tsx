@@ -142,7 +142,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
             filter === "current" &&
             item.startedAt &&
             !item.endedAt &&
-            item.startedAt < currentDate
+            item.startedAt <= currentDate
           )
             return true;
           return false;
