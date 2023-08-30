@@ -184,11 +184,13 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
                         <TextField
                           type="time"
                           size="small"
-                          value={time}
-                          onChange={(e) => {
+                          defaultValue={time}
+                          onBlur={(e) => {
                             const time = e.currentTarget.value;
-                            times[i] = time;
-                            onChange(times);
+                            if (time) {
+                              times[i] = time;
+                              onChange(times);
+                            }
                           }}
                         />
                         <IconButton

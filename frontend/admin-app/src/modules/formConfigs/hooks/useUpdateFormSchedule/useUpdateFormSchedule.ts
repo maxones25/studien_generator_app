@@ -8,11 +8,12 @@ export const useUpdateFormSchedule = () => {
   const studyId = useStudyId()!;
   const groupId = useGroupId()!;
   return useWriteRequest<ScheduleFormData, number>(
-    ({ body: { id, ...body }, ...options }) =>
+    ({ body: { id: scheduleId, ...body }, ...options }) =>
       apiRequest(`/forms/updateSchedule`, {
-        method: "PUT",
-        body,
         ...options,
+        method: "POST",
+        params: { studyId, scheduleId },
+        body,
       }),
     {
       onSuccess: ({ variables, queryClient }) => {
