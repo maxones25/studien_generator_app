@@ -75,6 +75,11 @@ export class StudiesService {
     };
   }
 
+  async isDeleted(id: string) {
+    const study = await this.studiesRepository.getById(id);
+    return study.isDeleted;
+  }
+
   async setDuration(studyId: string, { duration }: SetDurationDto) {
     const totalDuration = await this.getTotalStudyDuration(studyId);
 
@@ -144,8 +149,16 @@ export class StudiesService {
     return new Date(date);
   }
 
-  async delete(studyId: string) {
-    return await this.studiesRepository.delete(studyId);
+  async hardDelete(studyId: string) {
+    return await this.studiesRepository.hardDelete(studyId);
+  }
+
+  async softDelete(studyId: string) {
+    return await this.studiesRepository.softDelete(studyId);
+  }
+
+  async restore(studyId: string) {
+    return this.studiesRepository.restore(studyId)
   }
 
   async getTotalStudyDuration(studyId: string) {

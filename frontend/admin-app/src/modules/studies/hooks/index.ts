@@ -8,3 +8,4 @@ export * from "./useSetStudyDuration/useSetStudyDuration";
 export * from './useSetStudyStartDate/useSetStudyStartDate'
 export * from './useSetStudyEndDate/useSetStudyEndDate'
 export * from './useSetStudyActivation/useSetStudyActivation'
+export * from './useRestoreStudy/useRestoreStudy'

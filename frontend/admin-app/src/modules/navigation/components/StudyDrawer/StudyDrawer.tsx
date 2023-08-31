@@ -3,7 +3,7 @@ import { Column, Row, Text } from "@modules/core/components";
 import { useNavigationHelper } from "@modules/core/hooks";
 import { isoDate } from "@modules/date/utils";
 import { Study } from "@modules/studies/types";
-import { Construction, Done, Loop, Schedule } from "@mui/icons-material";
+import { Construction, Delete, Done, Loop, Schedule } from "@mui/icons-material";
 import {
   Divider,
   List,
@@ -57,7 +57,9 @@ export const StudyDrawer: React.FC<StudyDrawerProps> = ({ study }) => {
 
   const currentDate = isoDate();
 
-  const StatusIcon = study.isActive
+  const isDeleted = study.deletedAt !== null;
+
+  const StatusIcon = isDeleted ? Delete : study.isActive
     ? study.startDate && currentDate < study.startDate
       ? Schedule
       : study.endDate && currentDate > study.endDate
@@ -65,11 +67,14 @@ export const StudyDrawer: React.FC<StudyDrawerProps> = ({ study }) => {
       : Loop
     : Construction;
 
+
   return (
     <Column width={200} boxShadow={6} zIndex={1000}>
       <Toolbar>
-        <Row mr={1}>{StatusIcon && <StatusIcon fontSize="small" />}</Row>
-        <Text variant="body2">{study.name}</Text>
+        <Row mr={1}>{StatusIcon && <StatusIcon color={isDeleted ? "error" : undefined} fontSize="small" />}</Row>
+        <Text variant="body2" color={isDeleted ? "error" : undefined}>
+          {study.name}
+        </Text>
       </Toolbar>
       <Divider />
       <Column justifyContent="space-between" height="100%">

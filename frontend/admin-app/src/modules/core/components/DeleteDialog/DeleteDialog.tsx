@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import React from "react";
-import { Button, ExperimentalFormTextField, Form } from "..";
+import { Button, ExperimentalFormTextField, Form, FormCheckBox } from "..";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 
@@ -36,7 +36,9 @@ export interface DeleteDialogProps {
   target: string;
   question?: Question;
   isLoading?: boolean;
-  onConfirm: () => void;
+
+  hasSoftDelete?: boolean;
+  onConfirm: (data: { hardDelete: boolean }) => void;
   onCancel: () => void;
 }
 
@@ -45,12 +47,15 @@ export const DeleteDialog: React.FC<DeleteDialogProps> = ({
   record,
   target,
   question,
+  hasSoftDelete = false,
   // isLoading = false,
   onCancel,
   onConfirm,
 }) => {
   const { t } = useTranslation();
-  const form = useForm<{ target: string }>();
+  const form = useForm<{ target: string; hardDelete: boolean }>({
+    values: { target: "", hardDelete: false },
+  });
 
   const questionText = question
     ? translateQuestion(t, question)
@@ -60,13 +65,16 @@ export const DeleteDialog: React.FC<DeleteDialogProps> = ({
       });
 
   const handleCancel = () => {
-    form.reset()
-    onCancel()
-  }
+    form.reset();
+    onCancel();
+  };
 
   return (
     <Dialog open={open} onClose={handleCancel}>
-      <Form form={form} onSubmit={() => onConfirm()}>
+      <Form
+        form={form}
+        onSubmit={({ hardDelete }) => onConfirm({ hardDelete })}
+      >
         <DialogTitle>{t("delete record", { record: t(record) })}</DialogTitle>
         <DialogContent>
           <DialogContentText>{questionText}</DialogContentText>
@@ -77,6 +85,13 @@ export const DeleteDialog: React.FC<DeleteDialogProps> = ({
             equals={(currentTarget) => currentTarget === target || t("invalid")}
             fullWidth
           />
+          {hasSoftDelete && (
+            <FormCheckBox
+              control={form.control}
+              name="hardDelete"
+              label={t("hard delete question", { record: t(record) })}
+            />
+          )}
         </DialogContent>
         <DialogActions>
           <Button

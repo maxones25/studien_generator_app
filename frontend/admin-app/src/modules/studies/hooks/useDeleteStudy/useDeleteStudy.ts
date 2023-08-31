@@ -1,20 +1,33 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
-import { StudyFormData } from "@modules/studies/types";
-import { getGetStudiesKey } from "..";
+import { Study } from "@modules/studies/types";
+import { getGetStudiesKey, getGetStudyKey } from "..";
 
 export const useDeleteStudy = () => {
-  return useWriteRequest<StudyFormData, void>(
-    ({ body: { id: studyId }, ...options }) =>
-      apiRequest(`/studies/delete`, { ...options, method: "POST" , params: { studyId } }),
+  return useWriteRequest<{ study: Study; hardDelete: boolean }, void>(
+    ({
+      body: {
+        study: { id: studyId },
+        hardDelete,
+      },
+      ...options
+    }) =>
+      apiRequest(`/studies/delete`, {
+        ...options,
+        method: "POST",
+        params: { studyId },
+        body: { hardDelete },
+      }),
     {
-      onSuccess: ({ queryClient, variables }) => {
+      onSuccess: ({ queryClient, variables: { study, hardDelete } }) => {
         queryClient.invalidateQueries(getGetStudiesKey());
+        queryClient.invalidateQueries(getGetStudyKey({ studyId: study.id }));
+        const text = hardDelete ? "record deleted" : "record soft deleted";
         return {
-          text: "record deleted",
+          text,
           params: {
             record: "study",
-            name: variables.name,
+            name: study.name,
           },
         };
       },

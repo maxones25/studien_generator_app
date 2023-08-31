@@ -1,30 +1,27 @@
 import {
+  BadRequestException,
   CanActivate,
   ExecutionContext,
   Inject,
-  Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { StudiesService } from '../studies.service';
 
-@Injectable()
-export class StudyGuard implements CanActivate {
+export class IsStudyDeletedGuard implements CanActivate {
   constructor(
-    @Inject(StudiesService)
-    private readonly studiesService: StudiesService,
   ) {}
 
-  async canActivate(context: ExecutionContext) {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
+
+    if (request.path === '/studies/restore') return true;
 
     const id = this.getStudyId(request);
 
-    const study = await this.studiesService.getById(id);
+    const isDeleted = await this.studiesService.isDeleted(id);
 
-    if (!study) throw new UnauthorizedException();
-
-    (request as any).study = study;
+    if (isDeleted) throw new BadRequestException('study is read only');
 
     return true;
   }

@@ -22,6 +22,13 @@ export class Study {
   })
   modifiedAt: Date;
 
+  @Column({ type: 'datetime', nullable: true })
+  deletedAt: Date | null;
+
+  get isDeleted(){
+    return this.deletedAt !== null;
+  }
+
   @Column({ unique: true })
   name: string;
 

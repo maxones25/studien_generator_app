@@ -12,6 +12,10 @@ const isoDate = (date = new Date()) => {
   return format(date, 'YYYY-MM-DD');
 };
 
+const isoDateTime = (date = new Date()) => {
+  return format(date, 'YYYY-MM-DDTHH:mm');
+};
+
 const daysInBetween = (start: Date, end: Date) => {
   return subtract(end, start).toDays();
 };
@@ -89,6 +93,7 @@ const formatTime = (value: string | Date) => {
 };
 
 export default {
+  isoDateTime,
   formatDate,
   formatDateTime,
   formatTime,

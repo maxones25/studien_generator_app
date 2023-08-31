@@ -1,7 +1,7 @@
 import { Column, Text } from "@modules/core/components";
 import { useGetStudies } from "@modules/studies/hooks";
 import { Study } from "@modules/studies/types";
-import { Delete, Edit } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
 import {
   CircularProgress,
   IconButton,
@@ -16,13 +16,11 @@ import { useTranslation } from "react-i18next";
 
 export interface StudiesListProps {
   onUpdate: (data: Study) => void;
-  onDelete: (data: Study) => void;
   onSelect: (data: Study) => void;
 }
 
 export const StudiesList: React.FC<StudiesListProps> = ({
   onUpdate,
-  onDelete,
   onSelect,
 }) => {
   const { t } = useTranslation();
@@ -30,10 +28,6 @@ export const StudiesList: React.FC<StudiesListProps> = ({
 
   const handleUpdateStudy = (study: Study) => () => {
     onUpdate(study);
-  };
-
-  const handleDeleteStudy = (study: Study) => () => {
-    onDelete(study);
   };
 
   const hasStudies = (getStudies.data?.length ?? 0) > 0;
@@ -73,14 +67,6 @@ export const StudiesList: React.FC<StudiesListProps> = ({
                     onClick={handleUpdateStudy(study)}
                   >
                     <Edit />
-                  </IconButton>
-                )}
-                {study.role === "admin" && (
-                  <IconButton
-                    data-testid={`delete-study-${study.name}-button`}
-                    onClick={handleDeleteStudy(study)}
-                  >
-                    <Delete />
                   </IconButton>
                 )}
               </ListItemSecondaryAction>

@@ -174,5 +174,10 @@
   "failureReason": "Abbruchgrund",
   "columns": "Spalten",
   "export data": "Daten exportieren",
-  "refresh data": "Daten aktualisieren"
+  "refresh data": "Daten aktualisieren",
+  "hard delete question": "{{record}} aus der Datenbank löschen",
+  "record soft deleted": "{{record}} '{{name}}' wurde als gelöscht markiert",
+  "study is read only": "Studie kann nicht mehr verändert werden",
+  "restore record": "{{record}} wiederherstellen",
+  "record restored": "{{record}} wiederhergestellt"
 }

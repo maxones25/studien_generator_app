@@ -7,14 +7,9 @@ import {
   Text,
 } from "@modules/core/components";
 import { useFormData, useNavigationHelper } from "@modules/core/hooks";
-import {
-  DeleteStudyForm,
-  StudiesList,
-  StudyForm,
-} from "@modules/studies/components";
+import { StudiesList, StudyForm } from "@modules/studies/components";
 import {
   useCreateStudy,
-  useDeleteStudy,
   useChangeStudyName,
 } from "@modules/studies/hooks";
 import { StudyFormData } from "@modules/studies/types";
@@ -27,10 +22,8 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
   const navigate = useNavigationHelper();
   const { t } = useTranslation();
   const editFormData = useFormData<StudyFormData>();
-  const deleteFormData = useFormData<StudyFormData>();
   const createStudy = useCreateStudy();
   const updateStudy = useChangeStudyName();
-  const deleteStudy = useDeleteStudy();
 
   return (
     <Page testId="studies page" alignItems="center">
@@ -46,7 +39,6 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
         </Row>
         <StudiesList
           onUpdate={editFormData.set}
-          onDelete={deleteFormData.set}
           onSelect={(study) => navigate.to(study.id)}
         />
       </Column>
@@ -57,13 +49,6 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
         Form={StudyForm}
         onCreate={createStudy.mutateAsync}
         onUpdate={updateStudy.mutateAsync}
-      />
-      <DataDialog
-        client={deleteFormData}
-        mode="delete"
-        deleteTitle={t("delete data", { data: t("study") })}
-        Form={DeleteStudyForm}
-        onDelete={deleteStudy.mutateAsync}
       />
     </Page>
   );

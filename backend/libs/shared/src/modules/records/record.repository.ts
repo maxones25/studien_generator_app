@@ -18,6 +18,11 @@ export abstract class RecordRepository<
     return affected;
   }
 
+  async hardDelete(id: string | FindOptionsWhere<Entity>) {
+    const { affected } = await this.db.delete(id);
+    return affected;
+  }
+  
   async delete(id: string | FindOptionsWhere<Entity>) {
     const { affected } = await this.db.delete(id);
     return affected;

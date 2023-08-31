@@ -16,8 +16,11 @@ import { SetDurationDto } from '../dtos/SetDurationDto';
 import { SetDateDto } from '../dtos/SetDateDto';
 import { StudyQueryDto } from '../dtos/StudyQueryDto';
 import { SetActivationDto } from '../dtos/SetActivationDto';
+import { DeleteDto } from '@shared/modules/records/DeleteDto';
+import { IsStudyDeletedGuard } from '../guards/IsStudyDeletedGuard';
 
 @Controller('studies')
+@UseGuards(IsStudyDeletedGuard)
 export class StudiesCommands {
   constructor(private readonly studiesService: StudiesService) {}
 
@@ -49,8 +52,22 @@ export class StudiesCommands {
   @Post('delete')
   @Roles('admin')
   @UseGuards(StudyGuard)
-  async delete(@Query() { studyId }: StudyQueryDto) {
-    return this.studiesService.delete(studyId);
+  async delete(
+    @Query() { studyId }: StudyQueryDto,
+    @Body() { hardDelete }: DeleteDto,
+  ) {
+    if (hardDelete) {
+      return this.studiesService.hardDelete(studyId);
+    } else {
+      return this.studiesService.softDelete(studyId);
+    }
+  }
+
+  @Post('restore')
+  @Roles('admin')
+  @UseGuards(StudyGuard)
+  async restore(@Query() { studyId }: StudyQueryDto) {
+    return this.studiesService.restore(studyId)
   }
 
   @Post('setStartDate')

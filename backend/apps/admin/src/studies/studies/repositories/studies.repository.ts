@@ -3,6 +3,7 @@ import { Study } from '@entities/study.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
+import datetime from '@shared/modules/datetime/datetime';
 
 @Injectable()
 export class StudiesRepository extends RecordRepository<Study> {
@@ -30,21 +31,23 @@ export class StudiesRepository extends RecordRepository<Study> {
       select: {
         id: true,
         name: true,
+        deletedAt: true,
         members: {
           role: true,
         },
       },
     });
 
-    return studies.map(({ id, name, members }) => ({
+    return studies.map(({ id, name, members, deletedAt }) => ({
       id,
       name,
+      deletedAt,
       role: members[0].role,
     }));
   }
 
   async getOneByDirector(studyId: string, directorId: string) {
-    const { id, name, members } = await this.db.findOneOrFail({
+    const { id, name, deletedAt, members } = await this.db.findOneOrFail({
       where: {
         id: studyId,
         members: {
@@ -57,6 +60,7 @@ export class StudiesRepository extends RecordRepository<Study> {
       select: {
         id: true,
         name: true,
+        deletedAt: true,
         members: {
           role: true,
         },
@@ -66,7 +70,17 @@ export class StudiesRepository extends RecordRepository<Study> {
     return {
       id,
       name,
+      deletedAt,
       role: members[0].role,
     };
+  }
+
+  async softDelete(id: string) {
+    const deletedAt = datetime.isoDateTime();
+    return await this.db.update(id, { deletedAt });
+  }
+
+  async restore(id: string) {
+    return await this.db.update(id, { deletedAt: null });
   }
 }

@@ -22,7 +22,7 @@ import { GroupsApp } from '@admin/groups/groups.app';
 import { ConfigsApp } from '@admin/forms/configs/configs.app';
 import { MembersModule } from '@admin/studies/members/members.module';
 import { RecordsApp } from '@admin/records/records.app';
-
+import { ChatsApp } from '@admin/chats/chats.app';
 
 @Module({
   imports: [
@@ -42,7 +42,7 @@ import { RecordsApp } from '@admin/records/records.app';
     ComponentsModule,
     FormsApp,
     ConfigsApp,
-    ChatsModule,
+    ChatsApp,
     RecordsApp,
   ],
   providers: appProviders,
