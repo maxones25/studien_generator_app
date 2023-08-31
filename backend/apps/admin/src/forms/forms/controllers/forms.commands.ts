@@ -14,9 +14,10 @@ import { FormsService } from '../services/forms.service';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { FormGuard } from '../guards/form.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('forms')
-@UseGuards(StudyGuard)
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class FormsCommands {
   constructor(
     @Inject(FormsService)

@@ -17,9 +17,10 @@ import { ParticipantGuard } from '@admin/participants/participants/guards/partic
 import { CreateTaskDto } from '../dtos/CreateTaskDto';
 import { FormQueryDto } from '@admin/forms/forms/dtos/FormQueryDto';
 import { FormGuard } from '@admin/forms/forms/guards/form.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('participants')
-@UseGuards(StudyGuard)
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class TasksCommands {
   constructor(
     @Inject(TasksService)

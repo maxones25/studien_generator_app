@@ -21,8 +21,11 @@ import { IsStudyActiveGuard } from '@admin/studies/studies/guards/IsStudyActiveG
 import { StartParticipantStudyTransaction } from '../transactions/StartParticipantStudyTransaction';
 import { CreateParticipantTransaction } from '../transactions/CreateParticipantTransaction';
 import { ResetPasswordUseCase } from '../transactions/ResetPasswordUseCase';
+import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('participants')
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class ParticipantsCommands {
   constructor(
     @Inject(ParticipantsService)

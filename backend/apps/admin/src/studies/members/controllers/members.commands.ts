@@ -1,11 +1,8 @@
 import {
   Body,
   Controller,
-  Delete,
   Inject,
-  Param,
   Post,
-  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -17,8 +14,11 @@ import { DirectorGuard } from '@admin/directors/guards/director.guard';
 import { MemberQueryDto } from '@admin/studies/studies/dtos/MemberQueryDto';
 import { Director } from '@admin/directors/decorators/director.decorator';
 import { Director as DirectorEntity } from '@entities';
+import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('members')
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class MembersCommands {
   constructor(
     @Inject(MembersService)

@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Param,
   Post,
   Inject,
   UseGuards,
@@ -9,16 +8,16 @@ import {
 } from '@nestjs/common';
 import { GroupsService } from '../groups.service';
 import { UpdateGroupDto } from '../dtos/UpdateGroupDto';
-import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { CreateGroupDto } from '../dtos/CreateGroupDto';
 import { GroupGuard } from '../guards/group.guard';
 import { Roles } from '@admin/roles/roles.decorator';
 import { GroupQueryDto } from '../dtos/GroupQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('groups')
-@UseGuards(StudyGuard)
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class GroupsCommands {
   constructor(
     @Inject(GroupsService)

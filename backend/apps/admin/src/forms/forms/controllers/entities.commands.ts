@@ -20,9 +20,10 @@ import { EntityGuard } from '@admin/entities/entities/entity.guard';
 import { EntityGuard as FormEntityGuard } from '../guards/entity.guard';
 import { Entity } from '../decorators/entity.decorator';
 import { FormEntity } from '@entities';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('forms')
-@UseGuards(StudyGuard)
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class EntitiesCommands {
   constructor(
     @Inject(EntitiesService)
@@ -64,7 +65,8 @@ export class EntitiesCommands {
       name,
     );
 
-    if (Boolean(sameNameEntity)) throw new BadRequestException("name already exists");
+    if (Boolean(sameNameEntity))
+      throw new BadRequestException('name already exists');
 
     return this.entitiesService.changeName(entity.id, name);
   }

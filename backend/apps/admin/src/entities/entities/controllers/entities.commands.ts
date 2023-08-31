@@ -1,23 +1,16 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Query,
-  Param,
-  Post,
-  Put,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Query, Post, UseGuards } from '@nestjs/common';
 import { EntitiesService } from '../entities.service';
 import { CreateEntityDto } from '../dtos/CreateEntityDto';
 import { UpdateEntityDto } from '../dtos/UpdateEntityDto';
 import { EntityGuard } from '../entity.guard';
-import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { Roles } from '@admin/roles/roles.decorator';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { EntityQueryDto } from '../dtos/EntityQueryDto';
+import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('entities')
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class EntitiesCommands {
   constructor(private readonly entitiesService: EntitiesService) {}
 

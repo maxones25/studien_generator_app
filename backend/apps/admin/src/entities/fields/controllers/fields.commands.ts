@@ -10,15 +10,15 @@ import { CreateFieldDto } from '../dtos/CreateFieldDto';
 import { UpdateFieldDto } from '../dtos/UpdateFieldDto';
 import { Roles } from '@admin/roles/roles.decorator';
 import { FieldsService } from '../fields.service';
-import { EntityQueryDto } from '@admin/entities/entities/dtos/EntityQueryDto';
 import { EntityGuard } from '@admin/entities/entities/entity.guard';
 import { FieldQueryDto } from '../dtos/FieldQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { Entity } from '@admin/entities/entities/entity.decorator';
 import { Entity as EntityEntity } from '@entities';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('entities')
-@UseGuards(StudyGuard)
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class FieldsCommands {
   constructor(
     @Inject(FieldsService)

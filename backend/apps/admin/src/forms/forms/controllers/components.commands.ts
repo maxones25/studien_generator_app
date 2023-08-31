@@ -14,8 +14,11 @@ import { PageQueryDto } from '../dtos/PageQueryDto';
 import { PageGuard } from '../guards/page.guard';
 import { ComponentGuard } from '../guards/component.guard';
 import { ComponentsService as UiComponentsService } from '@admin/components/components.service';
+import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('forms')
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class ComponentsCommands {
   constructor(
     @Inject(ComponentsService)

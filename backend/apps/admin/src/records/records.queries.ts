@@ -16,7 +16,7 @@ import { ExportParamsDto } from './dtos/ExportParamsDto';
 
 @Controller('records')
 @UseGuards(StudyGuard)
-export class RecordsController {
+export class RecordsQueries {
   constructor(
     @Inject(RecordsService)
     private readonly recordsService: RecordsService,

@@ -7,9 +7,10 @@ import { PageGuard } from '../guards/page.guard';
 import { PagesService } from '../services/page.service';
 import { Page } from '../decorators/page.decorator';
 import { FormPage } from '@entities';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('forms')
-@UseGuards(StudyGuard)
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class PagesCommands {
   constructor(
     @Inject(PagesService)

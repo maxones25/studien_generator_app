@@ -23,8 +23,11 @@ import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { GroupGuard } from '@admin/groups/guards/group.guard';
 import { ConfigsService } from '../services/configs.service';
 import { GroupsService } from '@admin/groups/groups.service';
+import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('forms')
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class ConfigsCommands {
   constructor(
     @Inject(ConfigsService)

@@ -14,9 +14,10 @@ import { ScheduleQueryDto } from '../dtos/ScheduleQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { ConfigGuard } from '../guards/config.guard';
 import { ConfigQueryDto } from '../dtos/ConfigQueryDto';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('forms')
-@UseGuards(StudyGuard)
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class SchedulesCommands {
   constructor(private readonly formSchedulesService: SchedulesService) {}
 
