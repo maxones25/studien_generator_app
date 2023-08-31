@@ -1,25 +1,25 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
-import { StudyFormData } from "@modules/studies/types";
-import { getGetStudiesKey } from "..";
+import { getGetStudiesKey, getGetStudyKey } from "..";
 
 export const useChangeStudyName = () => {
-  return useWriteRequest<StudyFormData, void>(
-    ({ body: { id: studyId, ...body }, ...options }) =>
+  return useWriteRequest<{ id: string; name: string }, void>(
+    ({ body: { id: studyId, name }, ...options }) =>
       apiRequest(`/studies/changeName`, {
         ...options,
         method: "POST",
-        body,
         params: { studyId },
+        body: { name },
       }),
     {
-      onSuccess: ({ queryClient, variables }) => {
+      onSuccess: ({ queryClient, variables: study }) => {
         queryClient.invalidateQueries(getGetStudiesKey());
+        queryClient.invalidateQueries(getGetStudyKey({ studyId: study.id }));
         return {
           text: "record updated",
           params: {
             record: "study",
-            name: variables.name,
+            name: study.name,
           },
         };
       },

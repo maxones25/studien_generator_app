@@ -5,6 +5,7 @@ import { StudyAttributesRepository } from './repositories/study-attributes.repos
 import datetime from '@shared/modules/datetime/datetime';
 import { SetDurationDto } from './dtos/SetDurationDto';
 import { StudiesRepository } from './repositories/studies.repository';
+import { StudyAttributes } from '@entities';
 
 @Injectable()
 export class StudiesService {
@@ -56,7 +57,10 @@ export class StudiesService {
     );
     const attributes = await this.attributesRepository.getAll(studyId);
 
+    const status = this.generateStatus(study, attributes);
+
     return {
+      status,
       ...study,
       ...attributes,
     };
@@ -158,7 +162,7 @@ export class StudiesService {
   }
 
   async restore(studyId: string) {
-    return this.studiesRepository.restore(studyId)
+    return this.studiesRepository.restore(studyId);
   }
 
   async getTotalStudyDuration(studyId: string) {
@@ -174,5 +178,29 @@ export class StudiesService {
     const isActive = await this.attributesRepository.get(studyId, 'isActive');
     if (isActive === null) return false;
     return isActive;
+  }
+
+  private generateStatus(
+    study: { id: string; name: string; deletedAt: Date; role: string },
+    attributes: StudyAttributes,
+  ) {
+    const { startDate, endDate } = attributes;
+    const currentDate = new Date();
+    if (study.deletedAt) return 'Deleted';
+    if (
+      attributes.isActive &&
+      startDate &&
+      datetime.isBefore(new Date(startDate), currentDate)
+    )
+      return 'Scheduled';
+    if (
+      attributes.isActive &&
+      endDate &&
+      datetime.isAfter(new Date(startDate), currentDate)
+    )
+      return 'Done';
+    if (attributes.isActive) return 'Ongoing';
+    if (attributes.isActive) return 'InProgress';
+    return 'None';
   }
 }

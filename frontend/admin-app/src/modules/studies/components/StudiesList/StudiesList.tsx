@@ -3,6 +3,7 @@ import { useGetStudies } from "@modules/studies/hooks";
 import { Study } from "@modules/studies/types";
 import { Edit } from "@mui/icons-material";
 import {
+  Chip,
   CircularProgress,
   IconButton,
   List,
@@ -57,8 +58,11 @@ export const StudiesList: React.FC<StudiesListProps> = ({
               disablePadding
               dense
             >
-              <ListItemButton onClick={() => onSelect(study)}>
+              <ListItemButton onClick={() => onSelect(study)} sx={{}}>
                 <ListItemText primary={study.name} secondary={t(study.role)} />
+                {study.deletedAt !== null && (
+                  <Chip color="error" label={t("deleted")} />
+                )}
               </ListItemButton>
               <ListItemSecondaryAction>
                 {study.role === "admin" && (

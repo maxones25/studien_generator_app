@@ -179,5 +179,6 @@
   "record soft deleted": "{{record}} '{{name}}' wurde als gelöscht markiert",
   "study is read only": "Studie kann nicht mehr verändert werden",
   "restore record": "{{record}} wiederherstellen",
-  "record restored": "{{record}} wiederhergestellt"
+  "record restored": "{{record}} wiederhergestellt",
+  "deleted": "gelöscht"
 }

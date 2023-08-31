@@ -1,6 +1,7 @@
 import {
   Column,
   DeleteDialog,
+  Editable,
   IconButton,
   OnlyAdmin,
   Page,
@@ -12,9 +13,13 @@ import { AddMemberCard, MembersCard } from "@modules/members/components";
 import { MembersProvider } from "@modules/members/contexts";
 import { StudyCard } from "@modules/studies/components";
 import { useStudy } from "@modules/studies/contexts";
-import { useDeleteStudy, useRestoreStudy } from "@modules/studies/hooks";
+import {
+  useChangeStudyName,
+  useDeleteStudy,
+  useRestoreStudy,
+} from "@modules/studies/hooks";
 import { Delete, RestoreFromTrash } from "@mui/icons-material";
-import { Divider, Toolbar } from "@mui/material";
+import { Chip, Divider, Toolbar } from "@mui/material";
 import { t } from "i18next";
 import React from "react";
 
@@ -25,13 +30,25 @@ const StudyPage: React.FC<StudyPageProps> = () => {
   const deleteStudy = useDeleteStudy();
   const restoreStudy = useRestoreStudy();
   const deleteDialog = useOpen();
+  const changeName = useChangeStudyName();
 
   const isDeleted = study.deletedAt !== null;
 
   return (
     <Page testId="study page" flex={1}>
       <Toolbar sx={{ justifyContent: "space-between" }}>
-        <Text variant="h6">{study.name}</Text>
+        <Row>
+          <Editable
+            defaultText={study.name}
+            onSubmit={(name) => changeName.mutate({ id: study.id, name })}
+            isLoading={changeName.isLoading}
+          >
+            <Text variant="h6">{study.name}</Text>
+          </Editable>
+          {isDeleted && (
+            <Chip label={t("deleted")} color="error" sx={{ ml: 2 }} />
+          )}
+        </Row>
         <OnlyAdmin>
           {({ disabled }) =>
             isDeleted ? (
