@@ -10,6 +10,8 @@ import { StudiesService } from '../studies.service';
 
 export class IsStudyDeletedGuard implements CanActivate {
   constructor(
+    @Inject(StudiesService)
+    private readonly studiesService: StudiesService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
