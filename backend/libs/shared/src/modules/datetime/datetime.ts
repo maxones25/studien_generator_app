@@ -67,7 +67,31 @@ const getDayOfWeekIndex = (day: Date) => {
   return (day.getDay() + 6) % 7;
 };
 
+const formatDateTime = (value: string | Date) => {
+  if (typeof value === 'string') {
+    value = new Date(value);
+  }
+  return format(value, 'YYYY-MM-DDTHH:mm');
+};
+
+const formatDate = (value: string | Date) => {
+  if (typeof value === 'string') {
+    value = new Date(value);
+  }
+  return format(value, 'YYYY-MM-DD');
+};
+
+const formatTime = (value: string | Date) => {
+  if (typeof value === 'string') {
+    value = new Date(value);
+  }
+  return format(value, 'HH:mm');
+};
+
 export default {
+  formatDate,
+  formatDateTime,
+  formatTime,
   getDayOfWeekIndex,
   isValid,
   isoDate,

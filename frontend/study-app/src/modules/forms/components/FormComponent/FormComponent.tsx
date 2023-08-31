@@ -32,20 +32,15 @@ export const FormComponent: React.FC<FormComponentProps> = ({
     {}
   );
 
-  if (formComponent.formFields.length === 0)
-    throw new Error(
-      "form fields are invalid (must have at least one form field)"
-    );
-
   const formField = formComponent.formFields[0];
 
-  const name = `${formComponent.id}.${formField.id}`;
+  const name = `${formComponent.id}.${formField?.id}`;
 
   const props = {
     label: attributes.label,
     control: form.control,
     componentId: formComponent.id,
-    formFieldId: formField.id,
+    formFieldId: formField?.id,
     rules: {
       required: !attributes.required ? false : t("required"),
       minLength: {

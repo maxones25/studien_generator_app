@@ -37,7 +37,7 @@ const menu = [
     label: "entities",
   },
   {
-    path: "data",
+    path: "records",
     label: "data",
   },
   {

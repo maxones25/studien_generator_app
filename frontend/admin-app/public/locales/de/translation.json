@@ -168,5 +168,11 @@
   "component": "Komponente",
   "text": "Text",
   "week": "Woche",
-  "month": "Monat"
+  "month": "Monat",
+  "createdAt": "erstellt am",
+  "isFailed": "abgebrochen",
+  "failureReason": "Abbruchgrund",
+  "columns": "Spalten",
+  "export data": "Daten exportieren",
+  "refresh data": "Daten aktualisieren"
 }

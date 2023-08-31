@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 export interface GroupSelectProps
   extends Omit<SelectProps, "label" | "options" | "name" | "onChange"> {
-  onChange: (group: Group) => void;
+  onChange: (group: Group | null) => void;
 }
 
 export const GroupSelect: React.FC<GroupSelectProps> = ({
@@ -30,6 +30,8 @@ export const GroupSelect: React.FC<GroupSelectProps> = ({
     const group = getGroups.data?.find((group) => group.id === groupId);
     if (group) {
       onChange(group);
+    } else {
+      onChange(null);
     }
   };
 
@@ -38,7 +40,7 @@ export const GroupSelect: React.FC<GroupSelectProps> = ({
       {...props}
       label={t("group")}
       name="groups"
-      options={options}
+      options={[{ label: "-", value: null }, ...options]}
       onChange={handleSelect}
     />
   );

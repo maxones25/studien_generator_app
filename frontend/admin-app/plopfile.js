@@ -15,6 +15,7 @@ const modules = [
   "members",
   "navigation",
   "participants",
+  "records",
   "studies",
   "tasks",
 ];

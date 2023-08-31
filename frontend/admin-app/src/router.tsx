@@ -12,6 +12,7 @@ import GroupsPage from "@pages/GroupsPage/GroupsPage";
 import LoginPage from "@pages/LoginPage/LoginPage";
 import ParticipantPage from "@pages/ParticipantPage/ParticipantPage";
 import ParticipantsPage from "@pages/ParticipantsPage/ParticipantsPage";
+import RecordsPage from "@pages/RecordsPage/RecordsPage";
 import SignUpPage from "@pages/SignUpPage/SignUpPage";
 import StudiesPage from "@pages/StudiesPage/StudiesPage";
 import StudyPage from "@pages/StudyPage/StudyPage";
@@ -154,6 +155,10 @@ const router = createBrowserRouter([
                     element: <ChatPage />,
                   },
                 ],
+              },
+              {
+                path: "records",
+                element: <RecordsPage />,
               },
             ],
           },

@@ -38,6 +38,10 @@ export class Record {
   @Column({ nullable: true })
   failureReason: string;
 
+  get isFailed() {
+    return this.failureReason !== null;
+  }
+
   @ManyToOne(() => Task, (task) => task.records, {
     onDelete: 'SET NULL',
   })
