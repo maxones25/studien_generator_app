@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Director } from '@entities/director.entity';
+import { Director } from '@entities';
 import directorsProviders from './directors.providers';
 import { DirectorsService } from './directors.service';
 import { DirectorGuard } from './guards/director.guard';

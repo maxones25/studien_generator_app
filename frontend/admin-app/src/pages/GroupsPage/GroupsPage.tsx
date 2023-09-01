@@ -1,6 +1,5 @@
 import {
   DataList,
-  DataListItem,
   EditableListItem,
   IconButton,
   Page,
@@ -12,14 +11,19 @@ import {
   useNavigationHelper,
   useSearch,
 } from "@modules/core/hooks";
-import { useCreateGroup, useGetGroups } from "@modules/groups/hooks";
+import {
+  useCreateGroup,
+  useGetGroups,
+  useRestoreGroup,
+} from "@modules/groups/hooks";
 import { GroupFormData } from "@modules/groups/types";
 import { useGroupId } from "@modules/navigation/hooks";
-import { Add, Search, SearchOff } from "@mui/icons-material";
+import { Add, RestoreFromTrash, Search, SearchOff } from "@mui/icons-material";
 import {
   ClickAwayListener,
   Divider,
   Input,
+  ListItem,
   ListItemButton,
   ListItemText,
   Toolbar,
@@ -34,8 +38,9 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
   const groupId = useGroupId(false);
   const navigate = useNavigationHelper();
   const editGroupData = useFormData<GroupFormData>();
-  const getGroups = useGetGroups();
+  const getGroups = useGetGroups({ deleted: true });
   const createGroup = useCreateGroup();
+  const restoreGroup = useRestoreGroup();
   const search = useSearch();
 
   const handleCreateGroup = () => {
@@ -93,16 +98,36 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
         noDataText={t("no data found", { data: t("groups") })}
         searchFields={["name"]}
         searchValue={search.value}
-        renderItem={(group, { isLast }) => (
-          <DataListItem key={group.id} divider={!isLast} item={group}>
-            <ListItemButton
-              onClick={navigate.handle(`${group.id}`)}
-              selected={groupId === group.id}
+        renderItem={(group, { isLast }) => {
+          const isDeleted = group.deletedAt !== null;
+          return (
+            <ListItem
+              key={group.id}
+              divider={!isLast}
+              disablePadding
+              secondaryAction={
+                isDeleted && (
+                  <IconButton
+                    testId="restore group"
+                    Icon={<RestoreFromTrash />}
+                    onClick={() => restoreGroup.mutate(group)}
+                    tooltipProps={{
+                      title: t("restore record", { record: t("group") }),
+                    }}
+                  />
+                )
+              }
             >
-              <ListItemText>{group.name}</ListItemText>
-            </ListItemButton>
-          </DataListItem>
-        )}
+              <ListItemButton
+                onClick={navigate.handle(`${group.id}`)}
+                selected={groupId === group.id}
+                disabled={isDeleted}
+              >
+                <ListItemText>{group.name}</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          );
+        }}
       />
     </Page>
   );

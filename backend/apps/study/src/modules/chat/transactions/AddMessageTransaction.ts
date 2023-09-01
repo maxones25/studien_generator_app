@@ -1,23 +1,15 @@
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { AddMessageDto } from '../dtos/AddMessageDto';
-import { ChatMessageReceipt } from '@entities/chat-message-receipt.entity';
-import { Chat } from '@entities/chat.entity';
+import { ChatMessageReceipt } from '@entities';
+import { Chat } from '@entities';
 import { ChatMessage } from '@entities';
 import { Repository } from 'typeorm';
 
-
-
-export class AddMessageTransaction extends Transaction<
-  AddMessageDto,
-  void
-> {
-
-  protected async execute(
-    addMessageDto: AddMessageDto
-  ): Promise<void> {
+export class AddMessageTransaction extends Transaction<AddMessageDto, void> {
+  protected async execute(addMessageDto: AddMessageDto): Promise<void> {
     const chatMessageRepo = this.entityManager.getRepository(ChatMessage);
     await chatMessageRepo.insert(addMessageDto);
-    await this.createReceipts(addMessageDto.id, addMessageDto.participantId)
+    await this.createReceipts(addMessageDto.id, addMessageDto.participantId);
   }
 
   private async createReceipts(messageId: string, participantId: string) {
@@ -26,12 +18,12 @@ export class AddMessageTransaction extends Transaction<
 
     const result = await chatRepo.findOne({
       where: {
-        participantId
+        participantId,
       },
       relations: {
         study: {
-          members: true
-        }
+          members: true,
+        },
       },
       select: {
         id: true,
@@ -39,16 +31,16 @@ export class AddMessageTransaction extends Transaction<
           id: true,
           members: {
             directorId: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
     const members = result.study.members;
-    members.forEach(member => {
+    members.forEach((member) => {
       const receipt = new ChatMessageReceipt();
       receipt.messageId = messageId;
       receipt.directorId = member.directorId;
       receiptRepo.insert(receipt);
-    })
+    });
   }
 }

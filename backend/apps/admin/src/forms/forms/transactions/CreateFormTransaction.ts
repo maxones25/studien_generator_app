@@ -1,7 +1,7 @@
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { CreateFormDto } from '../dtos/CreateFormDto';
-import { Form } from '@entities/form.entity';
-import { FormPage } from '@entities/form-page.entity';
+import { Form } from '@entities';
+import { FormPage } from '@entities';
 
 type InputData = {
   studyId: string;

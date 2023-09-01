@@ -5,6 +5,7 @@ import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDa
 
 @Injectable()
 export class GroupsService implements StudyRelatedDataAccessor {
+
   constructor(
     @Inject(GroupsRepository)
     private groupsRepository: GroupsRepository,
@@ -19,8 +20,8 @@ export class GroupsService implements StudyRelatedDataAccessor {
     return group.id;
   }
 
-  async getByStudy(studyId: string) {
-    return this.groupsRepository.getByStudy(studyId);
+  async getByStudy(studyId: string, deleted = false) {
+    return this.groupsRepository.getByStudy(studyId, deleted);
   }
 
   async getById(groupId: string) {
@@ -31,7 +32,19 @@ export class GroupsService implements StudyRelatedDataAccessor {
     return await this.groupsRepository.update(groupId, { name });
   }
 
-  async delete(id: string) {
-    return await this.groupsRepository.delete(id);
+  async hardDelete(id: string) {
+    return await this.groupsRepository.hardDelete(id);
+  }
+
+  async softDelete(id: string) {
+    return await this.groupsRepository.softDelete(id);
+  }
+
+  async restore(id: string) {
+    return await this.groupsRepository.restore(id);
+  }
+  
+  async isDeleted(id: string) {
+    return await this.groupsRepository.isDeleted(id);
   }
 }

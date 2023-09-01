@@ -180,5 +180,7 @@
   "study is read only": "Studie kann nicht mehr verändert werden",
   "restore record": "{{record}} wiederherstellen",
   "record restored": "{{record}} wiederhergestellt",
-  "deleted": "gelöscht"
+  "deleted": "gelöscht",
+  "group is deleted": "Gruppe ist gelöscht",
+  "hello": "Hallo"
 }

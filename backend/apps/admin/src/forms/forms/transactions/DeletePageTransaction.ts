@@ -1,5 +1,5 @@
 import { DeleteResult, Repository } from 'typeorm';
-import { FormPage } from '@entities/form-page.entity';
+import { FormPage } from '@entities';
 import { Transaction } from '@shared/modules/transaction/transaction';
 
 export class DeletePageTransaction extends Transaction<string, DeleteResult> {

@@ -36,10 +36,12 @@ const GroupPage: React.FC<GroupPageProps> = () => {
     return <LinearProgress />;
   }
 
+  console.log(getGroup.error)
+
   if (getGroup.isError) throw new Error();
 
-  const handleDeleteGroup = () => {
-    deleteGroup.mutateAsync(group).then(() => {
+  const handleDeleteGroup = ({ hardDelete }: { hardDelete: boolean }) => {
+    deleteGroup.mutateAsync({ group, hardDelete }).then(() => {
       navigate.to("../");
     });
   };
@@ -80,12 +82,13 @@ const GroupPage: React.FC<GroupPageProps> = () => {
           onCancel={deleteDialog.close}
           target={group.name}
           isLoading={deleteGroup.isLoading}
+          hasSoftDelete
         />
       </Toolbar>
       <Divider />
       <Row p={2} flex={1} alignItems="stretch" overflowY="hidden">
-        <ParticipantsCard group={group} flex={1}  />
-        <FormsCard flex={2} ml={2}/>
+        <ParticipantsCard group={group} flex={1} />
+        <FormsCard flex={2} ml={2} />
       </Row>
     </Page>
   );

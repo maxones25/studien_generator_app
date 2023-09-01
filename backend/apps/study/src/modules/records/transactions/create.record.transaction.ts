@@ -1,12 +1,12 @@
 import { CreateRecordDto, RecordFieldDto } from '../dtos/CreateRecordDto';
-import { EntityField } from '@entities/entity-field.entity';
-import { Record } from '@entities/record.entity';
-import { RecordField } from '@entities/record-field.entity';
+import { EntityField } from '@entities';
+import { Record } from '@entities';
+import { RecordField } from '@entities';
 import { Repository } from 'typeorm';
 import { ConflictException } from '@nestjs/common';
 import { FieldType } from '@shared/enums/field-type.enum';
 import { Transaction } from '@shared/modules/transaction/transaction';
-import { Form } from '@entities/form.entity';
+import { Form } from '@entities';
 import { FormField, Task } from '@entities';
 
 export class CreateRecordTransaction extends Transaction<
@@ -77,7 +77,7 @@ export class CreateRecordTransaction extends Transaction<
     if (!(await this.isValidValue({ id, value })))
       throw new ConflictException('invalid record field');
 
-    const encodedValue = JSON.stringify(value) as any
+    const encodedValue = JSON.stringify(value) as any;
 
     recordFieldRepository.insert({
       recordId,
@@ -113,7 +113,7 @@ export class CreateRecordTransaction extends Transaction<
         },
       },
     });
-    
+
     const flatResult = result.pages
       .map((page) =>
         page.components.map((component) =>
@@ -129,15 +129,15 @@ export class CreateRecordTransaction extends Transaction<
     const formField = await this.formFieldsRepository.findOneOrFail({
       where: { id },
       relations: {
-        entityField: true
+        entityField: true,
       },
       select: {
         id: true,
         entityField: {
           id: true,
           type: true,
-        }
-      }
+        },
+      },
     });
 
     const type = formField.entityField.type.toString().toLowerCase();

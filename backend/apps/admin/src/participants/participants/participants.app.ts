@@ -6,6 +6,7 @@ import { ParticipantsQueries } from './controllers/participants.queries';
 import { ParticipantsCommands } from './controllers/participants.commands';
 import { PasswordModule } from '@shared/modules/password/password.module';
 import { ConfigsModule } from '@admin/forms/configs/configs.module';
+import { GroupsModule } from '@admin/groups/groups.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ConfigsModule } from '@admin/forms/configs/configs.module';
     TasksModule,
     StudiesModule,
     PasswordModule,
+    GroupsModule,
   ],
   controllers: [ParticipantsQueries, ParticipantsCommands],
 })

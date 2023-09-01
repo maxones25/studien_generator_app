@@ -3,7 +3,7 @@ import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { EntityManager, Repository } from 'typeorm';
 import { AddMessageDto } from './dtos/AddMessageDto';
 import { AddMessageTransaction } from './transactions/AddMessageTransaction';
-import { Chat } from '@entities/chat.entity';
+import { Chat } from '@entities';
 import { ChatMessageReceipt } from '@entities';
 import { ReadMessagesDto } from './dtos/ReadMessagesDto';
 

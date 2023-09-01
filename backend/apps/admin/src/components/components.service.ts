@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { EntityField } from '@entities/entity-field.entity';
+import { EntityField } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ComponentType } from './component-type.enum';

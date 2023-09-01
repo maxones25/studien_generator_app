@@ -26,11 +26,21 @@ export class Group {
   })
   modifiedAt: Date;
 
+  @Column({
+    type: 'datetime',
+    nullable: true,
+  })
+  deletedAt: Date;
+
   @Column()
   name: string;
 
   @Column()
   studyId: string;
+
+  get isDeleted() {
+    return this.deletedAt !== null;
+  }
 
   @OneToMany(() => Participant, (participant) => participant.group)
   participants: Participant[];

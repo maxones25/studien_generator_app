@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { FormConfiguration } from '@entities/form-configuration.entity';
+import { FormConfiguration } from '@entities';
 import { ConfigsRepository } from '../repositories/configs.repository';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';

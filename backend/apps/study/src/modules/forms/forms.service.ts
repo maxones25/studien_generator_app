@@ -1,5 +1,5 @@
-import { FormConfiguration } from '@entities/form-configuration.entity';
-import { Form } from '@entities/form.entity';
+import { FormConfiguration } from '@entities';
+import { Form } from '@entities';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';

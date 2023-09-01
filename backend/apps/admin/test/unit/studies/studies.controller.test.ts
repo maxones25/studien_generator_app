@@ -1,13 +1,13 @@
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
-import { Group } from '@entities/group.entity';
+import { Group } from '@entities';
 import { GroupsService } from '@admin/groups/groups.service';
 import { StudiesController } from '@admin/studies/studies/controllers/studies.commands';
 import { StudiesService } from '@admin/studies/studies/studies.service';
 import { StudiesRepository } from '@admin/studies/studies.repository';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import fakeData from '@test/fakeData';
-import { Study } from '@entities/study.entity';
+import { Study } from '@entities';
 
 describe('StudiesController', () => {
   let controller: StudiesController;

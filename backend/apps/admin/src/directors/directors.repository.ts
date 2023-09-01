@@ -1,5 +1,5 @@
 import { StudyMember } from '@entities';
-import { Director } from '@entities/director.entity';
+import { Director } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { Repository } from 'typeorm';

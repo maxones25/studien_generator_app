@@ -80,8 +80,7 @@ export class StudiesService {
   }
 
   async isDeleted(id: string) {
-    const study = await this.studiesRepository.getById(id);
-    return study.isDeleted;
+    return this.studiesRepository.isDeleted(id)
   }
 
   async setDuration(studyId: string, { duration }: SetDurationDto) {

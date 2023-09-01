@@ -1,8 +1,4 @@
-import {
-  DeepPartial,
-  FindOptionsWhere,
-  ObjectLiteral,
-} from 'typeorm';
+import { DeepPartial, FindOptionsWhere, ObjectLiteral } from 'typeorm';
 import { EntityRepository } from './entity.repository';
 
 export abstract class RecordRepository<
@@ -22,7 +18,7 @@ export abstract class RecordRepository<
     const { affected } = await this.db.delete(id);
     return affected;
   }
-  
+
   async delete(id: string | FindOptionsWhere<Entity>) {
     const { affected } = await this.db.delete(id);
     return affected;

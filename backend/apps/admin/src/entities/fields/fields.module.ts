@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EntityField } from '@entities/entity-field.entity';
+import { EntityField } from '@entities';
 import entityFieldsProviders from './fields.providers';
 import { FieldsService } from './fields.service';
 import { FieldGuard } from './field.guard';

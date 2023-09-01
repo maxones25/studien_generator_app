@@ -1,6 +1,6 @@
-import { FormField } from '@entities/form-field.entity';
-import { FormComponent } from '@entities/form-component.entity';
-import { FormComponentAttribute } from '@entities/form-component-attribute.entity';
+import { FormField } from '@entities';
+import { FormComponent } from '@entities';
+import { FormComponentAttribute } from '@entities';
 import {
   CreateFormComponentDto,
   FormFieldDto,

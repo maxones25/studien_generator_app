@@ -1,29 +1,23 @@
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { AddMessageDto } from '../dtos/AddMessageDto';
-import { ChatMessageReceipt } from '@entities/chat-message-receipt.entity';
-import { Chat } from '@entities/chat.entity';
-import { ChatMessage } from '@entities';
+import { ChatMessage, Chat, ChatMessageReceipt } from '@entities';
 
-type AddMessageTransactionInput =   {
-  addMessageDto: AddMessageDto,
-  chatId: string,
-  directorId: string,
-}
+type AddMessageTransactionInput = {
+  addMessageDto: AddMessageDto;
+  chatId: string;
+  directorId: string;
+};
 
 export class AddMessageTransaction extends Transaction<
   AddMessageTransactionInput,
   void
 > {
-
   protected async execute({
     addMessageDto,
     chatId,
-    directorId
+    directorId,
   }: AddMessageTransactionInput): Promise<void> {
-    const {
-      content,
-      sentAt
-    } = addMessageDto;
+    const { content, sentAt } = addMessageDto;
     const chatMessageRepo = this.entityManager.getRepository(ChatMessage);
     const message = new ChatMessage();
     message.chatId = chatId;
@@ -31,13 +25,13 @@ export class AddMessageTransaction extends Transaction<
     message.content = content;
     message.sentAt = sentAt;
     await chatMessageRepo.insert(message);
-    await this.createReceipts(message.id, directorId, chatId)
+    await this.createReceipts(message.id, directorId, chatId);
   }
 
   private async createReceipts(
-    messageId: string, 
-    directorId: string, 
-    chatId: string
+    messageId: string,
+    directorId: string,
+    chatId: string,
   ) {
     const receiptRepo = this.entityManager.getRepository(ChatMessageReceipt);
     const chatRepo = this.entityManager.getRepository(Chat);
@@ -48,8 +42,8 @@ export class AddMessageTransaction extends Transaction<
       },
       relations: {
         study: {
-          members: true
-        }
+          members: true,
+        },
       },
       select: {
         id: true,
@@ -58,18 +52,18 @@ export class AddMessageTransaction extends Transaction<
           id: true,
           members: {
             directorId: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
     const members = result.study.members;
-    members?.forEach(member => {
+    members?.forEach((member) => {
       if (member.directorId === directorId) return;
       const receipt = new ChatMessageReceipt();
       receipt.messageId = messageId;
       receipt.directorId = member.directorId;
       receiptRepo.insert(receipt);
-    })
+    });
     const receipt = new ChatMessageReceipt();
     receipt.messageId = messageId;
     receipt.participantId = result.participantId;

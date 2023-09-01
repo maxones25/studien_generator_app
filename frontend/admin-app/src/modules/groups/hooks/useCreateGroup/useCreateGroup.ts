@@ -16,7 +16,12 @@ export const useCreateGroup = () => {
       }),
     {
       onSuccess: ({ variables, queryClient }) => {
-        queryClient.invalidateQueries(getGetGroupsKey({ studyId }));
+        queryClient.invalidateQueries(
+          getGetGroupsKey({ studyId, deleted: true })
+        );
+        queryClient.invalidateQueries(
+          getGetGroupsKey({ studyId, deleted: false })
+        );
         return {
           text: "record created",
           params: {

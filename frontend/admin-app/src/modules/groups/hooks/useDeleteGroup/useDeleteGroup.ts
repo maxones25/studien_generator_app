@@ -1,27 +1,30 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
-import { GroupFormData } from "@modules/groups/types";
+import { Group } from "@modules/groups/types";
 import { useStudyId } from "@modules/navigation/hooks";
 import { getGetGroupsKey } from "..";
 
 export const useDeleteGroup = () => {
   const studyId = useStudyId()!;
 
-  return useWriteRequest<GroupFormData, void>(
-    ({ body: { id: groupId }, ...options }) =>
+  return useWriteRequest<{ group: Group; hardDelete: boolean }, unknown>(
+    ({ body: { group, hardDelete }, ...options }) =>
       apiRequest(`/groups/delete`, {
         ...options,
         method: "POST",
-        params: { studyId, groupId },
+        params: { studyId, groupId: group.id },
+        body: { hardDelete },
       }),
     {
-      onSuccess: ({ variables, queryClient }) => {
-        queryClient.invalidateQueries(getGetGroupsKey({ studyId }));
+      onSuccess: ({ variables: { group, hardDelete }, queryClient }) => {
+        queryClient.invalidateQueries(getGetGroupsKey({ studyId, deleted: true }));
+        queryClient.invalidateQueries(getGetGroupsKey({ studyId, deleted: false }));
+        const text = hardDelete ? "record deleted" : "record soft deleted";
         return {
-          text: "record deleted",
+          text,
           params: {
             record: "group",
-            name: variables.name,
+            name: group.name,
           },
         };
       },

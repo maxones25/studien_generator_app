@@ -8,7 +8,7 @@ import {
   Row,
   Text,
 } from "@modules/core/components";
-import { useOpen } from "@modules/core/hooks";
+import { useNavigationHelper, useOpen } from "@modules/core/hooks";
 import { AddMemberCard, MembersCard } from "@modules/members/components";
 import { MembersProvider } from "@modules/members/contexts";
 import { StudyCard } from "@modules/studies/components";
@@ -31,6 +31,7 @@ const StudyPage: React.FC<StudyPageProps> = () => {
   const restoreStudy = useRestoreStudy();
   const deleteDialog = useOpen();
   const changeName = useChangeStudyName();
+  const navigate = useNavigationHelper()
 
   const isDeleted = study.deletedAt !== null;
 
@@ -90,6 +91,7 @@ const StudyPage: React.FC<StudyPageProps> = () => {
         onConfirm={({ hardDelete }) => {
           deleteStudy.mutateAsync({ study, hardDelete }).then(() => {
             deleteDialog.close();
+            navigate.to("/")
           });
         }}
         record="study"

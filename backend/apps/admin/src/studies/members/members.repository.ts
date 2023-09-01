@@ -1,5 +1,5 @@
 import { Roles } from '@admin/roles/roles.enum';
-import { StudyMember } from '@entities/study-member.entity';
+import { StudyMember } from '@entities';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';

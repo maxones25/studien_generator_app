@@ -25,6 +25,7 @@ import { ConfigsService } from '../services/configs.service';
 import { GroupsService } from '@admin/groups/groups.service';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { IsGroupDeletedGuard } from '@admin/groups/guards/IsGroupDeletedGuard';
 
 @Controller('forms')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -38,7 +39,7 @@ export class ConfigsCommands {
 
   @Post('addToGroup')
   @Roles('admin', 'employee')
-  @UseGuards(GroupGuard, FormGuard)
+  @UseGuards(GroupGuard, IsGroupDeletedGuard, FormGuard)
   async addFormToGroup(
     @Query() { studyId }: StudyQueryDto,
     @Form() form: FormEntity,

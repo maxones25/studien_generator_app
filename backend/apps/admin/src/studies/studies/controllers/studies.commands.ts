@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Param,
   Post,
   Query,
   UseGuards,
@@ -20,7 +19,6 @@ import { DeleteDto } from '@shared/modules/records/DeleteDto';
 import { IsStudyDeletedGuard } from '../guards/IsStudyDeletedGuard';
 
 @Controller('studies')
-@UseGuards(IsStudyDeletedGuard)
 export class StudiesCommands {
   constructor(private readonly studiesService: StudiesService) {}
 
@@ -30,7 +28,7 @@ export class StudiesCommands {
   }
 
   @Post('changeName')
-  @UseGuards(StudyGuard)
+  @UseGuards(StudyGuard, IsStudyDeletedGuard)
   @Roles('admin')
   async update(
     @Query() { studyId }: StudyQueryDto,
@@ -41,7 +39,7 @@ export class StudiesCommands {
 
   @Post('setDuration')
   @Roles('admin')
-  @UseGuards(StudyGuard)
+  @UseGuards(StudyGuard, IsStudyDeletedGuard)
   async setDuration(
     @Query() { studyId }: StudyQueryDto,
     @Body() body: SetDurationDto,
@@ -67,11 +65,12 @@ export class StudiesCommands {
   @Roles('admin')
   @UseGuards(StudyGuard)
   async restore(@Query() { studyId }: StudyQueryDto) {
-    return this.studiesService.restore(studyId)
+    return this.studiesService.restore(studyId);
   }
 
   @Post('setStartDate')
   @Roles('admin')
+  @UseGuards(StudyGuard, IsStudyDeletedGuard)
   async setStartDate(
     @Query() { studyId }: StudyQueryDto,
     @Body() { date }: SetDateDto,
@@ -82,6 +81,7 @@ export class StudiesCommands {
 
   @Post('setEndDate')
   @Roles('admin')
+  @UseGuards(StudyGuard, IsStudyDeletedGuard)
   async setEndDate(
     @Query() { studyId }: StudyQueryDto,
     @Body() { date }: SetDateDto,
@@ -92,6 +92,7 @@ export class StudiesCommands {
 
   @Post('setActivation')
   @Roles('admin')
+  @UseGuards(StudyGuard, IsStudyDeletedGuard)
   async setActivation(
     @Query() { studyId }: StudyQueryDto,
     @Body() { isActive }: SetActivationDto,

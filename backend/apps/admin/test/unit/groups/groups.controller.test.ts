@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
-import { Group } from '@entities/group.entity';
+import { Group } from '@entities';
 import { GroupsController } from '@admin/groups/controllers/groups.queries';
 import { GroupsService } from '@admin/groups/groups.service';
 import { GroupsRepository } from '@admin/groups/groups.repository';

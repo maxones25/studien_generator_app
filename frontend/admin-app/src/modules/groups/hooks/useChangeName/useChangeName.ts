@@ -17,7 +17,8 @@ export const useChangeName = () => {
       }),
     {
       onSuccess: ({ variables: group, queryClient }) => {
-        queryClient.invalidateQueries(getGetGroupsKey({ studyId }));
+        queryClient.invalidateQueries(getGetGroupsKey({ studyId, deleted: true }));
+        queryClient.invalidateQueries(getGetGroupsKey({ studyId, deleted: false }));
         queryClient.invalidateQueries(getGetGroupKey({ groupId: group.id! }));
         return {
           text: "record updated",

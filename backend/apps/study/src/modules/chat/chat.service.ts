@@ -3,7 +3,7 @@ import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { EntityManager, IsNull, LessThan, Repository } from 'typeorm';
 import { AddMessageDto } from './dtos/AddMessageDto';
 import { AddMessageTransaction } from './transactions/AddMessageTransaction';
-import { Chat } from '@entities/chat.entity';
+import { Chat } from '@entities';
 import { ChatMessageReceipt } from '@entities';
 import { ReadMessagesDto } from './dtos/ReadMessagesDto';
 
@@ -26,7 +26,7 @@ export class ChatService {
       relations: {
         messages: {
           director: true,
-        }
+        },
       },
       select: {
         id: true,
@@ -40,65 +40,85 @@ export class ChatService {
           content: true,
           sentAt: true,
           modifiedAt: true,
-        }
+        },
       },
       order: {
         messages: {
-          sentAt: 'ASC'
-        }
-      }
+          sentAt: 'ASC',
+        },
+      },
     });
     const receipts = await this.receiptRepository.find({
       where: {
-        participantId: id
-      }
+        participantId: id,
+      },
     });
 
-    const messages = result.messages.reduce((filtered, {
-      director, participantId, content, sentAt, id, modifiedAt
-    }) => {
-      const readAt = receipts?.find((receipt) => receipt.messageId === id)?.readAt
-      if (!lastUpdated || modifiedAt >= lastUpdated || readAt >= lastUpdated) {
-        const directorName = director ? `${director.firstName} ${director.lastName}` : undefined
-        const message = {
-          id,
-          participantId,
-          directorName,
-          content,
-          sentAt,
-          readAt: readAt,
+    const messages = result.messages.reduce(
+      (
+        filtered,
+        { director, participantId, content, sentAt, id, modifiedAt },
+      ) => {
+        const readAt = receipts?.find(
+          (receipt) => receipt.messageId === id,
+        )?.readAt;
+        if (
+          !lastUpdated ||
+          modifiedAt >= lastUpdated ||
+          readAt >= lastUpdated
+        ) {
+          const directorName = director
+            ? `${director.firstName} ${director.lastName}`
+            : undefined;
+          const message = {
+            id,
+            participantId,
+            directorName,
+            content,
+            sentAt,
+            readAt: readAt,
+          };
+          filtered.push(message);
         }
-        filtered.push(message)
-      }
-      return filtered
-    }, []);
+        return filtered;
+      },
+      [],
+    );
     return messages;
-  };
+  }
 
   async readMessages({ readAt }: ReadMessagesDto, participantId: string) {
-    const { affected } = await this.receiptRepository.update({
-      participantId,
-      readAt: IsNull()
-    }, {
-      readAt
-    });
+    const { affected } = await this.receiptRepository.update(
+      {
+        participantId,
+        readAt: IsNull(),
+      },
+      {
+        readAt,
+      },
+    );
     return affected;
-  };
+  }
 
-  async readMessagesModifiedSince({ readAt }: ReadMessagesDto, participantId: string, lastUpdated: Date) {
-    const { affected } = await this.receiptRepository.update({
-      participantId,
-      modifiedAt: LessThan(lastUpdated),
-      readAt: IsNull()
-    }, {
-      readAt
-    });
+  async readMessagesModifiedSince(
+    { readAt }: ReadMessagesDto,
+    participantId: string,
+    lastUpdated: Date,
+  ) {
+    const { affected } = await this.receiptRepository.update(
+      {
+        participantId,
+        modifiedAt: LessThan(lastUpdated),
+        readAt: IsNull(),
+      },
+      {
+        readAt,
+      },
+    );
     return affected;
-  };
+  }
 
   async addMessage(message: AddMessageDto) {
-    return new AddMessageTransaction(this.entityManager).run(
-      message,
-    );
-  };
+    return new AddMessageTransaction(this.entityManager).run(message);
+  }
 }

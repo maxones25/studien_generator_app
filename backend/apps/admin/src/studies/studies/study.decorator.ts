@@ -1,4 +1,4 @@
-import { Study } from '@entities/study.entity';
+import { Study } from '@entities';
 import {
   createParamDecorator,
   ExecutionContext,

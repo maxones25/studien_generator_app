@@ -21,7 +21,9 @@ export const useDeleteStudy = () => {
     {
       onSuccess: ({ queryClient, variables: { study, hardDelete } }) => {
         queryClient.invalidateQueries(getGetStudiesKey());
-        queryClient.invalidateQueries(getGetStudyKey({ studyId: study.id }));
+        if (!hardDelete) {
+          queryClient.invalidateQueries(getGetStudyKey({ studyId: study.id }));
+        }
         const text = hardDelete ? "record deleted" : "record soft deleted";
         return {
           text,

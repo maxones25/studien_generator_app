@@ -1,7 +1,8 @@
-import { Group } from '@entities/group.entity';
+import { Group } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
+import datetime from '@shared/modules/datetime/datetime';
 import { RecordRepository } from '@shared/modules/records/record.repository';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 
 export class GroupsRepository extends RecordRepository<Group> {
   constructor(
@@ -11,28 +12,59 @@ export class GroupsRepository extends RecordRepository<Group> {
     super(db);
   }
 
-  getRelatedByStudy(studyId: string, id: string) {
-    return this.db.findOne({ where: { id, studyId } });
+  async isDeleted(id: string) {
+    const group = await this.db.findOneBy({ id });
+    if (!group) return true;
+    return group.isDeleted;
   }
 
-  async getByStudy(studyId: string) {
+  getRelatedByStudy(studyId: string, id: string) {
+    return this.db.findOne({
+      where: {
+        id,
+        studyId,
+      },
+    });
+  }
+
+  async getByStudy(studyId: string, deleted = false) {
+    const deletedAt = deleted ? undefined : IsNull();
     return this.db.find({
-      where: { studyId },
+      where: {
+        studyId,
+        deletedAt,
+      },
       select: {
         id: true,
         name: true,
+        deletedAt: true,
       },
-      order: { name: 'ASC' },
+      order: {
+        deletedAt: 'ASC',
+        name: 'ASC',
+      },
     });
   }
 
   async getById(id: string) {
     return this.db.findOneOrFail({
-      where: { id },
+      where: {
+        id,
+        deletedAt: IsNull(),
+      },
       select: {
         id: true,
         name: true,
       },
     });
+  }
+
+  async softDelete(id: string) {
+    const deletedAt = datetime.isoDateTime();
+    return this.db.update(id, { deletedAt });
+  }
+
+  restore(id: string) {
+    return this.db.update(id, { deletedAt: null });
   }
 }

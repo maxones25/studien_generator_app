@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
-import { Participant } from '@entities/participant.entity';
+import { Participant } from '@entities';
 import { LoginParticipantDto } from './dtos/LoginParticipantDto';
 import { PasswordService } from '@shared/modules/password/password.service';
 

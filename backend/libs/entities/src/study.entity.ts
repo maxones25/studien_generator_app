@@ -1,34 +1,10 @@
-import {
-  Entity as TypeOrmEntity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-} from 'typeorm';
+import { Column, OneToMany, Entity as TypeOrmEntity } from 'typeorm';
 import { StudyAttribute, Chat, StudyMember } from '.';
 import { Group, Participant, FormConfiguration, Form, Entity } from '.';
+import { DatabaseEntity } from './database-entity';
 
 @TypeOrmEntity()
-export class Study {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
-
-  @Column({
-    type: 'datetime',
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
-  })
-  modifiedAt: Date;
-
-  @Column({ type: 'datetime', nullable: true })
-  deletedAt: Date | null;
-
-  get isDeleted(){
-    return this.deletedAt !== null;
-  }
-
+export class Study extends DatabaseEntity {
   @Column({ unique: true })
   name: string;
 

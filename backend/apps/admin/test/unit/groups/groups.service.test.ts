@@ -1,5 +1,5 @@
 import { TestBed } from '@automock/jest';
-import { Group } from '@entities/group.entity';
+import { Group } from '@entities';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { faker } from '@faker-js/faker';
 import { GroupsService } from '@admin/groups/groups.service';

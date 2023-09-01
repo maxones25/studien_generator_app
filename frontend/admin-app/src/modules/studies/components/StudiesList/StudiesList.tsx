@@ -16,20 +16,12 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 export interface StudiesListProps {
-  onUpdate: (data: Study) => void;
   onSelect: (data: Study) => void;
 }
 
-export const StudiesList: React.FC<StudiesListProps> = ({
-  onUpdate,
-  onSelect,
-}) => {
+export const StudiesList: React.FC<StudiesListProps> = ({ onSelect }) => {
   const { t } = useTranslation();
   const getStudies = useGetStudies();
-
-  const handleUpdateStudy = (study: Study) => () => {
-    onUpdate(study);
-  };
 
   const hasStudies = (getStudies.data?.length ?? 0) > 0;
 
@@ -64,16 +56,6 @@ export const StudiesList: React.FC<StudiesListProps> = ({
                   <Chip color="error" label={t("deleted")} />
                 )}
               </ListItemButton>
-              <ListItemSecondaryAction>
-                {study.role === "admin" && (
-                  <IconButton
-                    data-testid={`update-study-${study.name}-button`}
-                    onClick={handleUpdateStudy(study)}
-                  >
-                    <Edit />
-                  </IconButton>
-                )}
-              </ListItemSecondaryAction>
             </ListItem>
           ))}
         </List>

@@ -1,4 +1,4 @@
-import { FormConfiguration } from '@entities/form-configuration.entity';
+import { FormConfiguration } from '@entities';
 import { Repository } from 'typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { InjectRepository } from '@nestjs/typeorm';

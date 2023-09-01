@@ -1,4 +1,4 @@
-import { FormPage } from '@entities/form-page.entity';
+import { FormPage } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { Repository } from 'typeorm';

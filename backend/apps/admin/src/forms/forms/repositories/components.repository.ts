@@ -1,5 +1,5 @@
 import { FormComponent } from '@entities';
-import { FormEntity } from '@entities/form-entity.entity';
+import { FormEntity } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { Repository } from 'typeorm';

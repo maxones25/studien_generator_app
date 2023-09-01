@@ -4,6 +4,7 @@ const modules = [
   "components",
   "core",
   "date",
+  "directors",
   "entities",
   "fields",
   "forms",

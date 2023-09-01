@@ -1,5 +1,5 @@
 import { Repository, DeepPartial } from 'typeorm';
-import { Study } from '@entities/study.entity';
+import { Study } from '@entities';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
@@ -82,5 +82,11 @@ export class StudiesRepository extends RecordRepository<Study> {
 
   async restore(id: string) {
     return await this.db.update(id, { deletedAt: null });
+  }
+
+  async isDeleted(id: string) {
+    const study = await this.db.findOneBy({ id });
+    if (!study) return true;
+    return study.isDeleted;
   }
 }

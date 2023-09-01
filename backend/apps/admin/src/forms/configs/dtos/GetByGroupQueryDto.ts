@@ -1,6 +1,6 @@
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import { Transform } from 'class-transformer';
-import { IsBooleanString, IsEnum, IsOptional } from 'class-validator';
+import { IsEnum, IsOptional } from 'class-validator';
 
 export class GetByGroupQueryDto {
   @IsOptional()

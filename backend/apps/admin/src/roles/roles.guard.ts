@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Repository } from 'typeorm';
-import { StudyMember } from '@entities/study-member.entity';
+import { StudyMember } from '@entities';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { MembersService } from '@admin/studies/members/members.service';
 
