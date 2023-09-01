@@ -13,7 +13,7 @@ const dataSource: DataSourceOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   timezone: "Z",
-  entities: [__dirname + '/libs/entities/src/*.entity.ts'],
+  entities: [__dirname + '/libs/entities/src/entities/**/*.entity.ts'],
   migrations: [
     __dirname + "/migrations/schema/*.ts"
   ]

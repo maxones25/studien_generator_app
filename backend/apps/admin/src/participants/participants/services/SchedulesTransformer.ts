@@ -25,6 +25,7 @@ export class SchedulesTransformer {
         throw new InternalServerErrorException('schedule not found');
       return {
         ...schedule,
+        isDeleted: schedule.isDeleted,
         times: updateSchedule.times,
         daysOfWeek:
           schedule.type === 'Flexible'

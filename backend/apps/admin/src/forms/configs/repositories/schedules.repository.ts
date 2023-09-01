@@ -7,8 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { Repository } from 'typeorm';
 
-export type FormSchedule = Omit<FormScheduleEntity, 'attributes'> &
-  FormScheduleAttributes;
+export type FormSchedule = FormScheduleEntity & FormScheduleAttributes;
 
 @Injectable()
 export class SchedulesRepository extends RecordRepository<FormScheduleEntity> {
@@ -41,12 +40,16 @@ export class SchedulesRepository extends RecordRepository<FormScheduleEntity> {
       },
     });
 
-    return schedules.map(({ attributes, ...rest }) => ({
-      ...rest,
-      ...attributes.reduce<FormScheduleAttributes>((obj, attribute) => {
-        obj[attribute.key] = attribute.value;
-        return obj;
-      }, {}),
+    return schedules.map((schedule) => ({
+      ...schedule,
+      isDeleted: schedule.isDeleted,
+      ...schedule.attributes.reduce<FormScheduleAttributes>(
+        (obj, attribute) => {
+          obj[attribute.key] = attribute.value;
+          return obj;
+        },
+        {},
+      ),
     }));
   }
 
@@ -81,12 +84,16 @@ export class SchedulesRepository extends RecordRepository<FormScheduleEntity> {
       },
     });
 
-    return schedules.map(({ attributes, ...rest }) => ({
-      ...rest,
-      ...attributes.reduce<FormScheduleAttributes>((obj, attribute) => {
-        obj[attribute.key] = attribute.value;
-        return obj;
-      }, {}),
+    return schedules.map((schedule) => ({
+      ...schedule,
+      isDeleted: schedule.isDeleted,
+      ...schedule.attributes.reduce<FormScheduleAttributes>(
+        (obj, attribute) => {
+          obj[attribute.key] = attribute.value;
+          return obj;
+        },
+        {},
+      ),
     }));
   }
 }

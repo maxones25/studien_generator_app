@@ -25,7 +25,7 @@ import {
   Chat,
   ChatMessage,
   ChatMessageReceipt,
-  ParticipantNotification
+  ParticipantNotification,
 } from '@entities';
 
 const DbModule = TypeOrmModule.forRootAsync({
@@ -37,7 +37,7 @@ const DbModule = TypeOrmModule.forRootAsync({
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      timezone: "Z",
+      timezone: 'Z',
       logging: false,
       entities: [
         Director,

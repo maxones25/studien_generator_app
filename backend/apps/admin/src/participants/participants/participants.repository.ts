@@ -66,7 +66,7 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
 
   private convertParticipant(
     participant: Participant,
-  ): Omit<Participant, 'attributes'> & ParticipantsAttributes {
+  ): Omit<Participant, 'attributes' | 'isDeleted'> & ParticipantsAttributes {
     const { attributes, ...data } = participant;
     return {
       ...data,

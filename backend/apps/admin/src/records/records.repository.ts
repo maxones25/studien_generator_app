@@ -78,7 +78,10 @@ export class RecordsRepository extends RecordRepository<Record> {
     super(db);
   }
 
-  async get(studyId: string, { entityId, participantId, groupId, formId }: RecordsQueryDto) {
+  async get(
+    studyId: string,
+    { entityId, participantId, groupId, formId }: RecordsQueryDto,
+  ) {
     const records = await this.db.find({
       where: {
         participantId,
@@ -105,6 +108,7 @@ export class RecordsRepository extends RecordRepository<Record> {
     return records.map((record) => {
       return {
         ...record,
+        isDeleted: record.isDeleted,
         isFailed: record.isFailed,
         fields: record.fields.reduce<
           globalThis.Record<string, TransformedRecordField>

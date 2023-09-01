@@ -1,11 +1,16 @@
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { AddScheduleDto } from '../dtos/AddScheduleDto';
-import { FormSchedule, FormScheduleAttribute } from '@entities';
+import {
+  FormSchedule,
+  FormScheduleAttribute,
+  FormScheduleAttributes,
+} from '@entities';
+import { BaseAttribute } from '@shared/types/BaseAttribute';
 
 type CreateScheduleInput = {
   configId: string;
   data: AddScheduleDto;
-  attributes: Omit<FormScheduleAttribute, 'schedule' | 'scheduleId'>[];
+  attributes: BaseAttribute<FormScheduleAttributes>[];
 };
 
 export class CreateScheduleTransaction extends Transaction<
@@ -45,7 +50,7 @@ export class CreateScheduleTransaction extends Transaction<
 
   private async createAttributes(
     scheduleId: string,
-    attributes: Omit<FormScheduleAttribute, 'schedule' | 'scheduleId'>[],
+    attributes: BaseAttribute<FormScheduleAttributes>[],
   ) {
     const repo = this.entityManager.getRepository(FormScheduleAttribute);
 

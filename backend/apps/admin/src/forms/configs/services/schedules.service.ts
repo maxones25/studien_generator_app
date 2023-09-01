@@ -1,13 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { AddScheduleDto } from '../dtos/AddScheduleDto';
 import { SchedulesRepository } from '../repositories/schedules.repository';
-import { FormScheduleAttribute } from '@entities';
 import { FormScheduleType } from '../enums/FormScheduleType';
 import { FormSchedulePeriod } from '../enums/FormSchedulePeriod';
 import { UpdateScheduleDto } from '../dtos/UpdateScheduleDto';
 import { DeleteScheduleTransaction } from '../transactions/DeleteScheduleTransaction';
 import { CreateScheduleTransaction } from '../transactions/CreateScheduleTransaction';
 import { UpdateScheduleTransaction } from '../transactions/UpdateScheduleTransaction';
+import { BaseAttribute } from '@shared/types/BaseAttribute';
+import { FormScheduleAttributes } from '@entities';
 
 @Injectable()
 export class SchedulesService {
@@ -51,7 +52,7 @@ export class SchedulesService {
     amount,
     daysOfMonth,
     daysOfWeek,
-  }: AddScheduleDto): Omit<FormScheduleAttribute, 'scheduleId' | 'schedule'>[] {
+  }: AddScheduleDto): BaseAttribute<FormScheduleAttributes>[] {
     if (type === FormScheduleType.Fix && period === FormSchedulePeriod.Day) {
       return [
         {
