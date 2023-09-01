@@ -38,7 +38,7 @@ export class FormsService implements StudyRelatedDataAccessor {
   }
 
   async delete(id: string) {
-    return this.formsRepository.delete(id);
+    return this.formsRepository.hardDelete(id);
   }
 
   async getByEntity(entityId: string) {

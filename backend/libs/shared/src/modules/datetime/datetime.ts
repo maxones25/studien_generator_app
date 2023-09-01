@@ -8,6 +8,10 @@ import {
 
 export type Time = { hours: number; minutes: number };
 
+const currentDate = () => {
+  return new Date()
+}
+
 const isoDate = (date = new Date()) => {
   return format(date, 'YYYY-MM-DD');
 };
@@ -93,6 +97,7 @@ const formatTime = (value: string | Date) => {
 };
 
 export default {
+  currentDate,
   isoDateTime,
   formatDate,
   formatDateTime,

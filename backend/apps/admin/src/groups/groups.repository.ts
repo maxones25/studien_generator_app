@@ -12,12 +12,6 @@ export class GroupsRepository extends RecordRepository<Group> {
     super(db);
   }
 
-  async isDeleted(id: string) {
-    const group = await this.db.findOneBy({ id });
-    if (!group) return true;
-    return group.isDeleted;
-  }
-
   getRelatedByStudy(studyId: string, id: string) {
     return this.db.findOne({
       where: {
@@ -57,14 +51,5 @@ export class GroupsRepository extends RecordRepository<Group> {
         name: true,
       },
     });
-  }
-
-  async softDelete(id: string) {
-    const deletedAt = datetime.isoDateTime();
-    return this.db.update(id, { deletedAt });
-  }
-
-  restore(id: string) {
-    return this.db.update(id, { deletedAt: null });
   }
 }

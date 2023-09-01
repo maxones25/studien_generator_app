@@ -3,7 +3,6 @@ import { Study } from '@entities';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
-import datetime from '@shared/modules/datetime/datetime';
 
 @Injectable()
 export class StudiesRepository extends RecordRepository<Study> {
@@ -73,20 +72,5 @@ export class StudiesRepository extends RecordRepository<Study> {
       deletedAt,
       role: members[0].role,
     };
-  }
-
-  async softDelete(id: string) {
-    const deletedAt = datetime.isoDateTime();
-    return await this.db.update(id, { deletedAt });
-  }
-
-  async restore(id: string) {
-    return await this.db.update(id, { deletedAt: null });
-  }
-
-  async isDeleted(id: string) {
-    const study = await this.db.findOneBy({ id });
-    if (!study) return true;
-    return study.isDeleted;
   }
 }

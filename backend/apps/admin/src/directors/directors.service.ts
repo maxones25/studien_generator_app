@@ -62,7 +62,7 @@ export class DirectorsService {
   }
 
   async delete(directorId: string) {
-    return this.directosRepository.delete(directorId);
+    return this.directosRepository.hardDelete(directorId);
   }
 
   async update(

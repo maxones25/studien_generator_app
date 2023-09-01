@@ -19,7 +19,7 @@ export class RemoveComponentTransaction extends Transaction<
       this.entityManager.getRepository(FormComponent),
     );
 
-    const affected = await repo.delete(id);
+    const affected = await repo.hardDelete(id);
 
     const components = await repo.getByPage(pageId);
 

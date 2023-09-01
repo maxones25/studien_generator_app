@@ -74,6 +74,6 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
   }
 
   async delete(id: string) {
-    return await this.participantsRepository.delete({ id });
+    return await this.participantsRepository.hardDelete({ id });
   }
 }

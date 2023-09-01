@@ -13,7 +13,6 @@ import { ComponentsModule } from '@admin/components/components.module';
 import { StudiesApp } from '@admin/studies/studies/studies.app';
 import { DirectorsApp } from '@admin/directors/directors.app';
 import { MembersApp } from '@admin/studies/members/members.app';
-import { ChatsModule } from './chats/chats.module';
 import { ParticipantsApp } from '@admin/participants/participants.app';
 import { EntitiesApp } from '@admin/entities/entities.app';
 import { FormsApp } from '@admin/forms/forms/forms.app';

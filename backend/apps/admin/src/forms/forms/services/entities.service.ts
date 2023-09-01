@@ -39,6 +39,6 @@ export class EntitiesService implements StudyRelatedDataAccessor {
   }
 
   async remove(id: string) {
-    return this.entitiesRepository.delete(id);
+    return this.entitiesRepository.hardDelete(id);
   }
 }

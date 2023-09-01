@@ -38,7 +38,7 @@ export class MembersService implements StudyRelatedDataAccessor {
     if (await this.membersRepository.isMemberLastAdmin(studyId, directorId))
       throw new BadRequestException('can not remove last admin from study');
 
-    await this.membersRepository.delete({
+    await this.membersRepository.hardDelete({
       directorId,
       studyId: studyId,
     });

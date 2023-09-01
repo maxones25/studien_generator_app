@@ -26,7 +26,7 @@ export class EntitiesService implements StudyRelatedDataAccessor {
   }
 
   async delete(entityId: string) {
-    return await this.entitiesRepository.delete(entityId);
+    return await this.entitiesRepository.hardDelete(entityId);
   }
 
   async getAll(studyId: string) {

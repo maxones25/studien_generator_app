@@ -69,6 +69,6 @@ export class ConfigsService implements StudyRelatedDataAccessor {
   }
 
   async delete(id: string) {
-    return await this.formConfigsRepository.delete(id);
+    return await this.formConfigsRepository.hardDelete(id);
   }
 }

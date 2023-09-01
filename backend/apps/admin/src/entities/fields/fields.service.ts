@@ -34,7 +34,7 @@ export class FieldsService implements StudyRelatedDataAccessor {
   }
 
   async delete(fieldId: string) {
-    return this.fieldsRepository.delete({
+    return this.fieldsRepository.hardDelete({
       id: fieldId,
     });
   }
