@@ -175,12 +175,14 @@
   "columns": "Spalten",
   "export data": "Daten exportieren",
   "refresh data": "Daten aktualisieren",
-  "hard delete question": "{{record}} aus der Datenbank löschen",
+  "hard delete question": "Daten aus der Datenbank löschen",
   "record soft deleted": "{{record}} '{{name}}' wurde als gelöscht markiert",
   "study is read only": "Studie kann nicht mehr verändert werden",
   "restore record": "{{record}} wiederherstellen",
   "record restored": "{{record}} wiederhergestellt",
   "deleted": "gelöscht",
   "group is deleted": "Gruppe ist gelöscht",
-  "hello": "Hallo"
+  "hello": "Hallo",
+  "participant is deleted": "Participant ist gelöscht",
+  "delete related question": "verknüpfte Daten löschen"
 }

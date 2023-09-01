@@ -4,9 +4,16 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  FormControl,
 } from "@mui/material";
 import React from "react";
-import { Button, ExperimentalFormTextField, Form, FormCheckBox } from "..";
+import {
+  Button,
+  Column,
+  ExperimentalFormTextField,
+  Form,
+  FormCheckBox,
+} from "..";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 
@@ -37,8 +44,9 @@ export interface DeleteDialogProps {
   question?: Question;
   isLoading?: boolean;
 
+  hasDeleteRelated?: boolean;
   hasSoftDelete?: boolean;
-  onConfirm: (data: { hardDelete: boolean }) => void;
+  onConfirm: (data: { hardDelete: boolean; deleteRelated: boolean }) => void;
   onCancel: () => void;
 }
 
@@ -48,13 +56,18 @@ export const DeleteDialog: React.FC<DeleteDialogProps> = ({
   target,
   question,
   hasSoftDelete = false,
+  hasDeleteRelated = false,
   // isLoading = false,
   onCancel,
   onConfirm,
 }) => {
   const { t } = useTranslation();
-  const form = useForm<{ target: string; hardDelete: boolean }>({
-    values: { target: "", hardDelete: false },
+  const form = useForm<{
+    target: string;
+    hardDelete: boolean;
+    deleteRelated: boolean;
+  }>({
+    values: { target: "", hardDelete: false, deleteRelated: false },
   });
 
   const questionText = question
@@ -73,7 +86,9 @@ export const DeleteDialog: React.FC<DeleteDialogProps> = ({
     <Dialog open={open} onClose={handleCancel}>
       <Form
         form={form}
-        onSubmit={({ hardDelete }) => onConfirm({ hardDelete })}
+        onSubmit={({ hardDelete, deleteRelated }) =>
+          onConfirm({ hardDelete, deleteRelated })
+        }
       >
         <DialogTitle>{t("delete record", { record: t(record) })}</DialogTitle>
         <DialogContent>
@@ -85,13 +100,26 @@ export const DeleteDialog: React.FC<DeleteDialogProps> = ({
             equals={(currentTarget) => currentTarget === target || t("invalid")}
             fullWidth
           />
-          {hasSoftDelete && (
-            <FormCheckBox
-              control={form.control}
-              name="hardDelete"
-              label={t("hard delete question", { record: t(record) })}
-            />
-          )}
+          <Column>
+            {hasSoftDelete && (
+              <FormControl>
+                <FormCheckBox
+                  control={form.control}
+                  name="hardDelete"
+                  label={t("hard delete question")}
+                />
+              </FormControl>
+            )}
+            {hasDeleteRelated && (
+              <FormControl>
+                <FormCheckBox
+                  control={form.control}
+                  name="deleteRelated"
+                  label={t("delete related question")}
+                />
+              </FormControl>
+            )}
+          </Column>
         </DialogContent>
         <DialogActions>
           <Button

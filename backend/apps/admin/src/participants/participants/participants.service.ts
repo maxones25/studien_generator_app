@@ -18,7 +18,10 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
     private passwordService: PasswordService,
   ) {}
 
-  static build(entityManager: EntityManager, passwordService: PasswordService) {
+  static build(
+    entityManager: EntityManager,
+    passwordService: PasswordService = new PasswordService(),
+  ) {
     return new ParticipantsService(
       new ParticipantsRepository(entityManager.getRepository(Participant)),
       new AttributesRepository(
@@ -26,6 +29,14 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
       ),
       passwordService,
     );
+  }
+
+  hardDeleteByGroup(groupId: string) {
+    return this.participantsRepository.hardDeleteByGroup(groupId);
+  }
+
+  softDeleteByGroup(groupId: string) {
+    return this.participantsRepository.softDeleteByGroup(groupId);
   }
 
   async getRelatedByStudy(studyId: string, id: string): Promise<any> {
@@ -48,6 +59,10 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
     });
   }
 
+  async removeGroup(id: string) {
+    return await this.participantsRepository.removeGroup(id);
+  }
+
   async updatePassword(participantId: string) {
     const password = await this.passwordService.generate();
     const hashedPassword = await this.passwordService.hash(password, 10);
@@ -65,15 +80,31 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
     );
   }
 
-  async getByStudy(studyId: string) {
-    return this.participantsRepository.getByStudy(studyId);
+  async getByStudy(studyId: string, deleted = false) {
+    return this.participantsRepository.getByStudy(studyId, deleted);
   }
 
   async getByGroup(groupId: string): Promise<Participant[]> {
     return this.participantsRepository.getByGroup(groupId);
   }
 
-  async delete(id: string) {
-    return await this.participantsRepository.hardDelete({ id });
+  async hardDelete(id: string) {
+    return await this.participantsRepository.hardDelete(id);
+  }
+
+  async softDelete(id: string) {
+    return await this.participantsRepository.softDelete(id);
+  }
+
+  async restore(id: string) {
+    return await this.participantsRepository.restore(id);
+  }
+
+  async isDeleted(id: string) {
+    return this.participantsRepository.isDeleted(id);
+  }
+
+  removeGroupByGroup(groupId: string) {
+    return this.participantsRepository.removeGroupByGroup(groupId);
   }
 }

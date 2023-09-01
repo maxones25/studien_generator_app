@@ -1,7 +1,6 @@
 import {
   ChipSelect,
   DataList,
-  DataListItem,
   EditableListItem,
   IconButton,
   Page,
@@ -16,6 +15,7 @@ import {
 import {
   useCreateParticipant,
   useGetParticipants,
+  useRestoreParticipant,
 } from "@modules/participants/hooks";
 import { ParticipantFormData } from "@modules/participants/types";
 import {
@@ -23,6 +23,7 @@ import {
   Check,
   Construction,
   Loop,
+  RestoreFromTrash,
   Search,
   SearchOff,
 } from "@mui/icons-material";
@@ -30,6 +31,7 @@ import {
   ClickAwayListener,
   Divider,
   Input,
+  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -63,6 +65,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
   const participantData = useFormData<ParticipantFormData>();
   const createParticipant = useCreateParticipant();
   const search = useSearch();
+  const restoreParticipant = useRestoreParticipant();
   const [filter, setFilter] = useState<string | undefined>("current");
 
   const handleCreateParticipant = () => {
@@ -148,8 +151,26 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
           return false;
         }}
         renderItem={(participant) => (
-          <DataListItem key={participant.id} item={participant} disablePadding>
-            <ListItemButton onClick={navigate.handle(`${participant.id}`)}>
+          <ListItem
+            key={participant.id}
+            disablePadding
+            secondaryAction={
+              participant.isDeleted && (
+                <IconButton
+                  testId="restore participant"
+                  Icon={<RestoreFromTrash />}
+                  onClick={() => restoreParticipant.mutate(participant)}
+                  tooltipProps={{
+                    title: t("restore record", { record: t("participant") })
+                  }}
+                />
+              )
+            }
+          >
+            <ListItemButton
+              onClick={navigate.handle(`${participant.id}`)}
+              disabled={participant.isDeleted}
+            >
               <ListItemIcon>
                 {participant.startedAt ? (
                   participant.endedAt ? (
@@ -166,7 +187,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
                 secondary={participant.group?.name ?? t("no group")}
               />
             </ListItemButton>
-          </DataListItem>
+          </ListItem>
         )}
       />
     </Page>

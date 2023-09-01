@@ -1,6 +1,8 @@
 export type Participant = {
   id: string;
   number: string;
+  deletedAt: string | null;
+  isDeleted: boolean;
   chat: {
     id: string;
   };

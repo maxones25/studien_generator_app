@@ -23,6 +23,8 @@ import { CreateParticipantTransaction } from '../transactions/CreateParticipantT
 import { ResetPasswordUseCase } from '../transactions/ResetPasswordUseCase';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { DeleteDto } from '@shared/modules/records/DeleteDto';
+import { IsParticipantDeletedGuard } from '../guards/IsParticipantDeletedGuard';
 
 @Controller('participants')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -53,7 +55,7 @@ export class ParticipantsCommands {
 
   @Post('changeNumber')
   @Roles('admin', 'employee')
-  @UseGuards(ParticipantGuard)
+  @UseGuards(ParticipantGuard, IsParticipantDeletedGuard)
   async changeNumber(
     @Query() { participantId }: ParticipantQueryDto,
     @Body() { number }: ChangeNumberDto,
@@ -63,7 +65,7 @@ export class ParticipantsCommands {
 
   @Post('changeGroup')
   @Roles('admin', 'employee')
-  @UseGuards(ParticipantGuard)
+  @UseGuards(ParticipantGuard, IsParticipantDeletedGuard)
   async changeGroup(
     @Query() { participantId }: ParticipantQueryDto,
     @Body() { groupId }: ChangeGroupDto,
@@ -71,16 +73,37 @@ export class ParticipantsCommands {
     return await this.participantsService.changeGroup(participantId, groupId);
   }
 
+  @Post('removeGroup')
+  @Roles('admin', 'employee')
+  @UseGuards(ParticipantGuard, IsParticipantDeletedGuard)
+  async removeGroup(@Query() { participantId }: ParticipantQueryDto) {
+    return await this.participantsService.removeGroup(participantId);
+  }
+
   @Post('delete')
   @Roles('admin')
   @UseGuards(ParticipantGuard)
-  async delete(@Query() { participantId }: ParticipantQueryDto) {
-    return await this.participantsService.delete(participantId);
+  async delete(
+    @Query() { participantId }: ParticipantQueryDto,
+    @Body() { hardDelete }: DeleteDto,
+  ) {
+    if (hardDelete) {
+      return await this.participantsService.hardDelete(participantId);
+    } else {
+      return await this.participantsService.softDelete(participantId);
+    }
+  }
+
+  @Post('restore')
+  @Roles('admin')
+  @UseGuards(ParticipantGuard)
+  async restore(@Query() { participantId }: ParticipantQueryDto) {
+    return await this.participantsService.restore(participantId);
   }
 
   @Post('startStudy')
   @Roles('admin')
-  @UseGuards(ParticipantGuard, IsStudyActiveGuard)
+  @UseGuards(ParticipantGuard, IsParticipantDeletedGuard, IsStudyActiveGuard)
   async startStudy(
     @Participant() participant: ParticipantEntity,
     @Body() { startDate, configs }: StartStudyDto,
@@ -94,8 +117,8 @@ export class ParticipantsCommands {
 
   @Post('resetPassword')
   @Roles('admin')
+  @UseGuards(ParticipantGuard, IsParticipantDeletedGuard)
   async resetPassword(@Query() { participantId }: ParticipantQueryDto) {
-    const result = await this.resetPasswordUseCase.run({ participantId });
-    return result.commit();
+    return this.resetPasswordUseCase.run({ participantId });
   }
 }

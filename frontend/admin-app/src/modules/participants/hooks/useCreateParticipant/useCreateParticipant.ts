@@ -5,7 +5,7 @@ import { ParticipantFormData } from "@modules/participants/types";
 import { getGetParticipantsKey } from "..";
 
 export const useCreateParticipant = () => {
-  const studyId = useStudyId();
+  const studyId = useStudyId()!;
   return useWriteRequest<ParticipantFormData, string>(
     (options) =>
       apiRequest(`/participants/create`, {
@@ -18,7 +18,10 @@ export const useCreateParticipant = () => {
     {
       onSuccess({ queryClient, variables }) {
         queryClient.invalidateQueries(
-          getGetParticipantsKey({ studyId: studyId! })
+          getGetParticipantsKey({ studyId, deleted: true })
+        );
+        queryClient.invalidateQueries(
+          getGetParticipantsKey({ studyId, deleted: false })
         );
         return {
           text: "record created",

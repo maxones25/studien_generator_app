@@ -17,7 +17,8 @@ export const useChangeParticipantGroup = () => {
       }),
     {
       onSuccess({ queryClient, variables: { group, participant } }) {
-        queryClient.invalidateQueries(getGetParticipantsKey({ studyId }));
+        queryClient.invalidateQueries(getGetParticipantsKey({ studyId, deleted: true }));
+        queryClient.invalidateQueries(getGetParticipantsKey({ studyId, deleted: false }));
         queryClient.invalidateQueries(
           getGetParticipantKey({ participantId: participant.id })
         );

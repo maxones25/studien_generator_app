@@ -1,36 +1,32 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { useStudyId } from "@modules/navigation/hooks";
-import { StartStudyFormData } from "@modules/participants/types";
-import { getGetParticipantKey, getGetParticipantsKey } from "..";
+import { Participant } from "@modules/participants/types";
+import { getGetParticipantsKey } from "..";
 
-export const useStartStudy = () => {
+export const useRestoreParticipant = () => {
   const studyId = useStudyId()!;
-  return useWriteRequest<StartStudyFormData, string>(
-    ({ body: { participant, ...body }, ...options }) =>
-      apiRequest(`/participants/startStudy`, {
+  return useWriteRequest<Participant, unknown>(
+    ({ body: participant, ...options }) =>
+      apiRequest(`/participants/restore`, {
         ...options,
         method: "POST",
         params: { studyId, participantId: participant.id },
-        body,
       }),
     {
-      onSuccess({ queryClient, variables: { participant, startDate } }) {
+      onSuccess({ queryClient, variables: participant }) {
         queryClient.invalidateQueries(
           getGetParticipantsKey({ studyId, deleted: true })
         );
         queryClient.invalidateQueries(
           getGetParticipantsKey({ studyId, deleted: false })
         );
-        queryClient.invalidateQueries(
-          getGetParticipantKey({ participantId: participant.id })
-        );
+
         return {
-          text: "record started",
+          text: "record restored",
           params: {
             record: "participant",
             name: participant.number,
-            date: new Date(startDate).toLocaleDateString("de"),
           },
         };
       },

@@ -2,25 +2,32 @@ import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { useStudyId } from "@modules/navigation/hooks";
 import { Participant } from "@modules/participants/types";
-import { getGetParticipantKey, getGetParticipantsKey } from "..";
+import { getGetParticipantsKey } from "..";
 
 export const useDeleteParticipant = () => {
   const studyId = useStudyId()!;
-  return useWriteRequest<Participant, unknown>(
-    ({ body: { id: participantId }, ...options }) =>
+  return useWriteRequest<
+    { participant: Participant; hardDelete: boolean },
+    unknown
+  >(
+    ({ body: { hardDelete, participant }, ...options }) =>
       apiRequest(`/participants/delete`, {
         ...options,
         method: "POST",
-        params: { studyId, participantId },
+        params: { studyId, participantId: participant.id },
+        body: { hardDelete },
       }),
     {
-      onSuccess({ queryClient, variables: participant }) {
+      onSuccess({ queryClient, variables: { participant, hardDelete } }) {
         queryClient.invalidateQueries(
-          getGetParticipantKey({ participantId: participant.id })
+          getGetParticipantsKey({ studyId, deleted: true })
         );
-        queryClient.invalidateQueries(getGetParticipantsKey({ studyId }));
+        queryClient.invalidateQueries(
+          getGetParticipantsKey({ studyId, deleted: false })
+        );
+        const text = hardDelete ? "record deleted" : "record soft deleted";
         return {
-          text: "record deleted",
+          text,
           params: {
             record: "participant",
             name: participant.number,

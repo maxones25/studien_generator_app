@@ -23,6 +23,7 @@ import {
   useChangeParticipantNumber,
   useDeleteParticipant,
   useGetParticipant,
+  useRemoveGroup,
   useResetPassword,
   useStartStudy,
 } from "@modules/participants/hooks";
@@ -42,6 +43,7 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
   const changeParticipantNumber = useChangeParticipantNumber();
   const changeParticipantGroup = useChangeParticipantGroup();
   const deleteParticipant = useDeleteParticipant();
+  const removeGroup = useRemoveGroup();
   const resetPassword = useResetPassword();
   const study = useStudy();
   const startStudy = useStartStudy();
@@ -57,8 +59,8 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
 
   const participant = getParticipant.data!;
 
-  const handleDeleteParticipant = () => {
-    deleteParticipant.mutateAsync(participant).then(() => {
+  const handleDeleteParticipant = ({ hardDelete }: { hardDelete: boolean }) => {
+    deleteParticipant.mutateAsync({ participant, hardDelete }).then(() => {
       navigate.to("../");
     });
   };
@@ -88,7 +90,11 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
             value={participant.group?.id}
             sx={{ minWidth: 200 }}
             onChange={(group) => {
-              changeParticipantGroup.mutate({ participant, group });
+              if (group) {
+                changeParticipantGroup.mutate({ participant, group });
+              } else {
+                removeGroup.mutate(participant);
+              }
             }}
           />
           {hasGroup && (
@@ -122,6 +128,7 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
           onCancel={deleteDialog.close}
           target={getParticipant.data?.number!}
           isLoading={deleteParticipant.isLoading}
+          hasSoftDelete
         />
       </Toolbar>
       <Divider />

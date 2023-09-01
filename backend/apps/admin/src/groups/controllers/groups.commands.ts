@@ -17,6 +17,7 @@ import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
 import { IsGroupDeletedGuard } from '../guards/IsGroupDeletedGuard';
+import { DeleteGroupTransaction } from '../transactions/DeleteGroupTransaction';
 
 @Controller('groups')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -24,6 +25,8 @@ export class GroupsCommands {
   constructor(
     @Inject(GroupsService)
     private readonly groupsService: GroupsService,
+    @Inject(DeleteGroupTransaction)
+    private readonly deleteGroup: DeleteGroupTransaction,
   ) {}
 
   @Post('create')
@@ -50,13 +53,9 @@ export class GroupsCommands {
   @UseGuards(GroupGuard)
   async delete(
     @Query() { groupId }: GroupQueryDto,
-    @Body() { hardDelete }: DeleteDto,
+    @Body() { hardDelete, deleteRelated }: DeleteDto,
   ) {
-    if (hardDelete) {
-      return this.groupsService.hardDelete(groupId);
-    } else {
-      return this.groupsService.softDelete(groupId);
-    }
+    return this.deleteGroup.run({ groupId, hardDelete, deleteRelated });
   }
 
   @Post('restore')

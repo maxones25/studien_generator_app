@@ -1,21 +1,20 @@
 import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { useStudyId } from "@modules/navigation/hooks";
-import { StartStudyFormData } from "@modules/participants/types";
+import { Participant } from "@modules/participants/types";
 import { getGetParticipantKey, getGetParticipantsKey } from "..";
 
-export const useStartStudy = () => {
+export const useRemoveGroup = () => {
   const studyId = useStudyId()!;
-  return useWriteRequest<StartStudyFormData, string>(
-    ({ body: { participant, ...body }, ...options }) =>
-      apiRequest(`/participants/startStudy`, {
+  return useWriteRequest<Participant, unknown>(
+    ({ body: participant, ...options }) =>
+      apiRequest(`/participants/removeGroup`, {
         ...options,
         method: "POST",
         params: { studyId, participantId: participant.id },
-        body,
       }),
     {
-      onSuccess({ queryClient, variables: { participant, startDate } }) {
+      onSuccess({ queryClient, variables: participant }) {
         queryClient.invalidateQueries(
           getGetParticipantsKey({ studyId, deleted: true })
         );
@@ -25,12 +24,13 @@ export const useStartStudy = () => {
         queryClient.invalidateQueries(
           getGetParticipantKey({ participantId: participant.id })
         );
+
         return {
-          text: "record started",
+          text: "record removed",
           params: {
-            record: "participant",
-            name: participant.number,
-            date: new Date(startDate).toLocaleDateString("de"),
+            mainRecord: "participant",
+            record: "group",
+            name: participant.group?.name ?? "-",
           },
         };
       },

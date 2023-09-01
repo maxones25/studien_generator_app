@@ -1,7 +1,12 @@
 import { Participant, ParticipantsAttributes } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
-import { FindOptionsRelations, FindOptionsSelect, Repository } from 'typeorm';
+import {
+  FindOptionsRelations,
+  FindOptionsSelect,
+  IsNull,
+  Repository,
+} from 'typeorm';
 
 export class ParticipantsRepository extends RecordRepository<Participant> {
   private readonly relations: FindOptionsRelations<Participant> = {
@@ -13,6 +18,7 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
   private readonly select: FindOptionsSelect<Participant> = {
     id: true,
     number: true,
+    deletedAt: true,
     group: {
       id: true,
       name: true,
@@ -48,9 +54,13 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
     return this.convertParticipant(participant);
   }
 
-  async getByStudy(studyId: string) {
+  async getByStudy(studyId: string, deleted: boolean = false) {
+    const deletedAt = deleted ? IsNull() : undefined;
     const participants = await this.db.find({
-      where: { studyId },
+      where: {
+        studyId,
+        deletedAt,
+      },
       order: {
         number: 'ASC',
       },
@@ -64,13 +74,25 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
     return await this.db.find({ where: { groupId } });
   }
 
+  async removeGroup(id: string) {
+    return this.db.update(id, { groupId: null });
+  }
+
+  async hardDeleteByGroup(groupId: string) {
+    return this.hardDelete({ groupId });
+  }
+
+  async softDeleteByGroup(groupId: string) {
+    return this.softDelete({ groupId });
+  }
+
   private convertParticipant(
     participant: Participant,
-  ): Omit<Participant, 'attributes' | 'isDeleted'> & ParticipantsAttributes {
-    const { attributes, ...data } = participant;
+  ): Participant & ParticipantsAttributes {
     return {
-      ...data,
-      ...attributes.reduce(
+      ...participant,
+      isDeleted: participant.isDeleted,
+      ...participant.attributes.reduce(
         (obj, { key, value }) => {
           obj[key] = value;
           return obj;
@@ -78,5 +100,9 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
         { startedAt: null, endedAt: null },
       ),
     };
+  }
+
+  removeGroupByGroup(groupId: string) {
+    return this.update({ groupId }, { group: null });
   }
 }
