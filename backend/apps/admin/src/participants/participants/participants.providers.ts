@@ -9,6 +9,7 @@ import { AppUriGenerator } from './services/AppUriGenerator';
 import { AttributesRepository } from './attributes.repository';
 import { SchedulesTransformer } from './services/SchedulesTransformer';
 import { ResetPasswordUseCase } from './transactions/ResetPasswordUseCase';
+import { DeleteParticipantTransaction } from './transactions/DeleteParticipantTransaction';
 
 const participantsProviders: Provider[] = [
   ParticipantGuard,
@@ -16,6 +17,7 @@ const participantsProviders: Provider[] = [
   ParticipantsService,
   StartParticipantStudyTransaction,
   CreateParticipantTransaction,
+  DeleteParticipantTransaction,
   ResetPasswordUseCase,
   AttributesRepository,
   ParticipantsRepository,

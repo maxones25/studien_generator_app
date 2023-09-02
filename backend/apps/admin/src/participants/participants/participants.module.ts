@@ -11,6 +11,7 @@ import { TasksModule } from '../tasks/tasks.module';
 import { StartParticipantStudyTransaction } from './transactions/StartParticipantStudyTransaction';
 import { CreateParticipantTransaction } from './transactions/CreateParticipantTransaction';
 import { ResetPasswordUseCase } from './transactions/ResetPasswordUseCase';
+import { DeleteParticipantTransaction } from './transactions/DeleteParticipantTransaction';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ResetPasswordUseCase } from './transactions/ResetPasswordUseCase';
     ParticipantsService,
     StartParticipantStudyTransaction,
     CreateParticipantTransaction,
+    DeleteParticipantTransaction,
     ResetPasswordUseCase,
   ],
 })

@@ -37,6 +37,12 @@ const translateQuestion = (t: Translator, question: Question) => {
   );
 };
 
+export type DeleteDialogData = {
+  target: string;
+  hardDelete: boolean;
+  deleteRelated: boolean;
+};
+
 export interface DeleteDialogProps {
   open: boolean;
   record: string;
@@ -46,7 +52,7 @@ export interface DeleteDialogProps {
 
   hasDeleteRelated?: boolean;
   hasSoftDelete?: boolean;
-  onConfirm: (data: { hardDelete: boolean; deleteRelated: boolean }) => void;
+  onConfirm: (data: DeleteDialogData) => void;
   onCancel: () => void;
 }
 
@@ -62,11 +68,7 @@ export const DeleteDialog: React.FC<DeleteDialogProps> = ({
   onConfirm,
 }) => {
   const { t } = useTranslation();
-  const form = useForm<{
-    target: string;
-    hardDelete: boolean;
-    deleteRelated: boolean;
-  }>({
+  const form = useForm<DeleteDialogData>({
     values: { target: "", hardDelete: false, deleteRelated: false },
   });
 
@@ -84,12 +86,7 @@ export const DeleteDialog: React.FC<DeleteDialogProps> = ({
 
   return (
     <Dialog open={open} onClose={handleCancel}>
-      <Form
-        form={form}
-        onSubmit={({ hardDelete, deleteRelated }) =>
-          onConfirm({ hardDelete, deleteRelated })
-        }
-      >
+      <Form form={form} onSubmit={(data) => onConfirm(data)}>
         <DialogTitle>{t("delete record", { record: t(record) })}</DialogTitle>
         <DialogContent>
           <DialogContentText>{questionText}</DialogContentText>

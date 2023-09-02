@@ -7,15 +7,19 @@ import { getGetParticipantsKey } from "..";
 export const useDeleteParticipant = () => {
   const studyId = useStudyId()!;
   return useWriteRequest<
-    { participant: Participant; hardDelete: boolean },
+    {
+      participant: Participant;
+      hardDelete: boolean;
+      deleteRelated: boolean;
+    },
     unknown
   >(
-    ({ body: { hardDelete, participant }, ...options }) =>
+    ({ body: { hardDelete, participant, deleteRelated }, ...options }) =>
       apiRequest(`/participants/delete`, {
         ...options,
         method: "POST",
         params: { studyId, participantId: participant.id },
-        body: { hardDelete },
+        body: { hardDelete, deleteRelated },
       }),
     {
       onSuccess({ queryClient, variables: { participant, hardDelete } }) {

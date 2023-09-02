@@ -1,7 +1,8 @@
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { ParticipantsRepository } from '@admin/participants/participants/participants.repository';
-import { Group, Participant } from '@entities';
+import { FormConfiguration, Group, Participant } from '@entities';
 import { GroupsRepository } from '../groups.repository';
+import { ConfigsRepository } from '@admin/forms/configs/repositories/configs.repository';
 
 type Input = {
   groupId: string;
@@ -17,12 +18,17 @@ export class DeleteGroupTransaction extends Transaction<Input, number> {
     const groupsRepo = new GroupsRepository(
       this.entityManager.getRepository(Group),
     );
+    const configsRepo = new ConfigsRepository(
+      this.entityManager.getRepository(FormConfiguration),
+    );
 
     if (deleteRelated) {
       if (hardDelete) {
-        await participantsRepo.hardDeleteByGroup(groupId);
+        await participantsRepo.hardDelete({ groupId });
+        await configsRepo.hardDelete({ groupId });
       } else {
-        await participantsRepo.softDeleteByGroup(groupId);
+        await configsRepo.softDelete({ groupId });
+        await participantsRepo.softDelete({ groupId });
       }
     } else {
       await participantsRepo.removeGroupByGroup(groupId);

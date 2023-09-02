@@ -1,6 +1,7 @@
 import { AuthenticationGuard, LoginGuard } from "@modules/auth/components";
 import { StudyContainer } from "@modules/navigation/components";
 import { StudyProvider } from "@modules/studies/contexts";
+import AdminLoginPage from "@pages/AdminLoginPage/AdminLoginPage";
 import ChatPage from "@pages/ChatPage/ChatPage";
 import ChatsPage from "@pages/ChatsPage/ChatsPage";
 import EntitiesPage from "@pages/EntitiesPage/EntitiesPage";
@@ -20,9 +21,39 @@ import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
+    path: "/admin",
+    children: [
+      {
+        index: true,
+        element: <Navigate to="directors" />,
+      },
+      {
+        path: "login",
+        element: (
+          <LoginGuard path="/admin/directors" topic="Admin">
+            <AdminLoginPage />
+          </LoginGuard>
+        ),
+      },
+      {
+        element: (
+          <AuthenticationGuard path="/admin/login" topic="Admin">
+            <Outlet />
+          </AuthenticationGuard>
+        ),
+        children: [
+          {
+            path: "directors",
+            element: <div>Directors</div>,
+          },
+        ],
+      },
+    ],
+  },
+  {
     path: "/login",
     element: (
-      <LoginGuard>
+      <LoginGuard path="/" topic="Director">
         <LoginPage />
       </LoginGuard>
     ),
@@ -30,7 +61,7 @@ const router = createBrowserRouter([
   {
     path: "/signUp",
     element: (
-      <LoginGuard>
+      <LoginGuard path="/" topic="Director">
         <SignUpPage />
       </LoginGuard>
     ),
@@ -38,7 +69,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <AuthenticationGuard>
+      <AuthenticationGuard path="/login" topic="Director">
         <Outlet />
       </AuthenticationGuard>
     ),

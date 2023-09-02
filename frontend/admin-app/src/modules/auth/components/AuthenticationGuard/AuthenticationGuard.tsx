@@ -1,15 +1,21 @@
-import { useAccessTokenContext } from "@modules/auth/contexts";
+import { Topic, useAccessTokenContext } from "@modules/auth/contexts";
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, To } from "react-router-dom";
 
 export interface AuthenticationGuardProps {
   children: JSX.Element;
+  path: To;
+  topic: Topic;
 }
 
 export const AuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
   children,
+  path,
+  topic,
 }) => {
   const accessToken = useAccessTokenContext();
 
-  return accessToken.isValid ? children : <Navigate to="/login" />;
+  const isValid = accessToken.isValid && accessToken.topic === topic;
+
+  return isValid ? children : <Navigate to={path} />;
 };

@@ -3,6 +3,7 @@ import {
   Column,
   ConfirmDialog,
   DeleteDialog,
+  DeleteDialogData,
   Editable,
   IconButton,
   OnlyAdmin,
@@ -59,10 +60,15 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
 
   const participant = getParticipant.data!;
 
-  const handleDeleteParticipant = ({ hardDelete }: { hardDelete: boolean }) => {
-    deleteParticipant.mutateAsync({ participant, hardDelete }).then(() => {
-      navigate.to("../");
-    });
+  const handleDeleteParticipant = ({
+    hardDelete,
+    deleteRelated,
+  }: DeleteDialogData) => {
+    deleteParticipant
+      .mutateAsync({ participant, hardDelete, deleteRelated })
+      .then(() => {
+        navigate.to("../");
+      });
   };
 
   const isStarted = Boolean(participant.startedAt);
@@ -128,6 +134,7 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
           onCancel={deleteDialog.close}
           target={getParticipant.data?.number!}
           isLoading={deleteParticipant.isLoading}
+          hasDeleteRelated
           hasSoftDelete
         />
       </Toolbar>

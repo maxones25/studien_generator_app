@@ -40,4 +40,12 @@ export class TasksRepository extends RecordRepository<Task> {
       },
     });
   }
+
+  hardDeleteByParticipant(participantId: string) {
+    return this.hardDelete({ participantId });
+  }
+
+  softDeleteByParticipant(participantId: string) {
+    return this.softDelete({ participantId });
+  }
 }

@@ -25,6 +25,7 @@ import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
 import { IsParticipantDeletedGuard } from '../guards/IsParticipantDeletedGuard';
+import { DeleteParticipantTransaction } from '../transactions/DeleteParticipantTransaction';
 
 @Controller('participants')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -38,6 +39,8 @@ export class ParticipantsCommands {
     private readonly createParticipantTransaction: CreateParticipantTransaction,
     @Inject(ResetPasswordUseCase)
     private readonly resetPasswordUseCase: ResetPasswordUseCase,
+    @Inject(DeleteParticipantTransaction)
+    private readonly deleteParticipant: DeleteParticipantTransaction,
   ) {}
 
   @Post('create')
@@ -85,13 +88,13 @@ export class ParticipantsCommands {
   @UseGuards(ParticipantGuard)
   async delete(
     @Query() { participantId }: ParticipantQueryDto,
-    @Body() { hardDelete }: DeleteDto,
+    @Body() { hardDelete, deleteRelated }: DeleteDto,
   ) {
-    if (hardDelete) {
-      return await this.participantsService.hardDelete(participantId);
-    } else {
-      return await this.participantsService.softDelete(participantId);
-    }
+    return this.deleteParticipant.run({
+      participantId,
+      hardDelete,
+      deleteRelated,
+    });
   }
 
   @Post('restore')

@@ -11,9 +11,9 @@ import {
 import { useFormData, useNavigationHelper } from "@modules/core/hooks";
 import { useGetMe } from "@modules/directors/hooks";
 import { StudiesList, StudyForm } from "@modules/studies/components";
-import { useCreateStudy, useChangeStudyName } from "@modules/studies/hooks";
+import { useCreateStudy } from "@modules/studies/hooks";
 import { StudyFormData } from "@modules/studies/types";
-import { Logout } from "@mui/icons-material";
+import { AdminPanelSettings, Logout } from "@mui/icons-material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -39,12 +39,14 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
                 " " +
                 getMe.data?.lastName}
           </Text>
-          <IconButton
-            testId="logout director"
-            Icon={<Logout />}
-            tooltipProps={{ title: t("logout") }}
-            onClick={accessToken.reset}
-          />
+          <Row>
+            <IconButton
+              testId="logout director"
+              Icon={<Logout />}
+              tooltipProps={{ title: t("logout") }}
+              onClick={accessToken.reset}
+            />
+          </Row>
         </Row>
         <Row justifyContent="space-between" mb={2}>
           <Text variant="h6">{t("studies")}</Text>
