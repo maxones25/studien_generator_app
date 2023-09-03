@@ -5,6 +5,7 @@ export type TextFieldComponent = {
   attributes: {
     label?: string;
     defaultValue: string;
+    required: boolean;
   };
 };
 export interface TextFieldPreviewProps {
@@ -15,6 +16,7 @@ export const TextFieldPreview: React.FC<TextFieldPreviewProps> = ({
   component,
 }) => {
   const { label, defaultValue } = component.attributes;
+
   return (
     <TextField
       label={label}

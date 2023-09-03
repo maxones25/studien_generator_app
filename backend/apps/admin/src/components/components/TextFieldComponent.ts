@@ -11,8 +11,8 @@ export class TextFieldComponent extends Component {
       ComponentType.TextField,
       [FieldType.Text],
       [
-        new LabelAttribute(false),
         new RequiredAttribute(true),
+        new LabelAttribute(false),
         new DefaultValueAttribute(
           false,
           'string',

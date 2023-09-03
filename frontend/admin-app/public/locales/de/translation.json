@@ -188,5 +188,6 @@
   "director": "Studienleiter",
   "directors": "Studienleiter",
   "password changed": "Password geändert",
-  "change value": "{{value}} ändern"
+  "change value": "{{value}} ändern",
+  "required": "notwendig"
 }
