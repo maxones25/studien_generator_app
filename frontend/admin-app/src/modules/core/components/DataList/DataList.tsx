@@ -3,10 +3,11 @@ import {
   UseReadRequestResult,
   useSearchFilter,
 } from "@modules/core/hooks";
-import { Column, Text } from "..";
-import { CircularProgress, List } from "@mui/material";
+import { Column, ColumnProps, Text } from "..";
+import { CircularProgress, List, ListProps } from "@mui/material";
 
-export interface DataListProps<Data extends Record<string, any>> {
+export interface DataListProps<Data extends Record<string, any>>
+  extends ColumnProps {
   client: UseReadRequestResult<Data[]>;
   errorText: string;
   noDataText: string;
@@ -19,6 +20,8 @@ export interface DataListProps<Data extends Record<string, any>> {
     options: { i: number; arr: Data[]; isLast: boolean }
   ) => JSX.Element;
   disablePadding?: boolean;
+
+  listProps?: ListProps;
 }
 
 export function DataList<Data extends Record<string, any>>({
@@ -27,9 +30,11 @@ export function DataList<Data extends Record<string, any>>({
   noDataText,
   searchFields,
   searchValue,
+  listProps,
   disablePadding = false,
   filter,
   renderItem,
+  ...props
 }: DataListProps<Data>) {
   const { isLoading, isError, data } = client;
 
@@ -43,7 +48,8 @@ export function DataList<Data extends Record<string, any>>({
     <Column
       alignItems="center"
       position="relative"
-      sx={{ overflowY: "hidden" }}
+      overflowY="hidden"
+      {...props}
     >
       {isLoading ? (
         <CircularProgress data-testid="loading spinner" />
@@ -55,7 +61,8 @@ export function DataList<Data extends Record<string, any>>({
         <Text>{noDataText}</Text>
       ) : (
         <List
-          sx={{ width: "100%", overflowY: "scroll" }}
+          {...listProps}
+          sx={{ width: "100%", overflowY: "scroll", ...listProps?.sx }}
           disablePadding={disablePadding}
         >
           {items.map((item, i, arr) =>

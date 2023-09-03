@@ -13,4 +13,9 @@ export class DirectorsQueries {
   async me(@DirectorId() directorId: string) {
     return this.directorsService.getById(directorId);
   }
+
+  @Get('getAll')
+  async getAll() {
+    return this.directorsService.get();
+  }
 }

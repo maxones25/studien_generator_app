@@ -13,7 +13,7 @@ import { SignupDirectorDto } from './dtos/SignupDirectorDto';
 export class DirectorsService {
   constructor(
     @Inject(DirectorsRepository)
-    private directosRepository: DirectorsRepository,
+    private directorsRepository: DirectorsRepository,
     @Inject(PasswordService)
     private passwordService: PasswordService,
   ) {}
@@ -24,13 +24,13 @@ export class DirectorsService {
     firstName,
     lastName,
   }: Omit<SignupDirectorDto, 'activationPassword'>) {
-    const director = await this.directosRepository.getByEmail(email);
+    const director = await this.directorsRepository.getByEmail(email, true);
 
     if (director) throw new BadRequestException('director already exists');
 
     const password = await this.passwordService.hash(rawPassword, 10);
 
-    return await this.directosRepository.create({
+    return await this.directorsRepository.create({
       email,
       password,
       firstName,
@@ -38,12 +38,18 @@ export class DirectorsService {
     });
   }
 
+  async get() {
+    return await this.directorsRepository.get();
+  }
+
   async getById(id: string) {
-    return await this.directosRepository.getById(id);
+    return await this.directorsRepository.getById(id);
   }
 
   async getByCredentials(email: string, password: string) {
-    const director = await this.directosRepository.getByEmail(email);
+    const director = await this.directorsRepository.getByEmail(email, false);
+
+    console.log({ director });
 
     if (!director) throw new UnauthorizedException();
 
@@ -54,25 +60,42 @@ export class DirectorsService {
   }
 
   async getStudyMembers(studyId: string) {
-    return await this.directosRepository.getStudyMembers(studyId);
+    return await this.directorsRepository.getStudyMembers(studyId);
   }
 
   async getNonStudyMembers(studyId: string) {
-    return await this.directosRepository.getNonStudyMembers(studyId);
+    return await this.directorsRepository.getNonStudyMembers(studyId);
   }
 
-  async delete(directorId: string) {
-    return this.directosRepository.hardDelete(directorId);
+  isDeleted(id: string) {
+    return this.directorsRepository.isDeleted(id);
+  }
+
+  async hardDelete(directorId: string) {
+    return this.directorsRepository.hardDelete(directorId);
+  }
+
+  async softDelete(directorId: string) {
+    return this.directorsRepository.softDelete(directorId);
+  }
+
+  restore(directorId: string) {
+    return this.directorsRepository.restore(directorId);
   }
 
   async update(
     directorId: string,
     { email, firstName, lastName }: UpdateDirectorDto,
   ) {
-    return await this.directosRepository.update(directorId, {
+    return await this.directorsRepository.update(directorId, {
       email,
       firstName,
       lastName,
     });
+  }
+
+  async changePassword(id: string, password: string) {
+    const hashedPassword = await this.passwordService.hash(password, 10);
+    return this.directorsRepository.changePassword(id, hashedPassword);
   }
 }

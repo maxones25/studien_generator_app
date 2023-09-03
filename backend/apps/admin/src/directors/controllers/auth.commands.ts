@@ -31,7 +31,7 @@ export class AuthCommands {
     );
 
     const accessToken = await this.jwtService.signAsync({
-      topic: "Director",
+      topic: 'Director',
       directorId,
     });
 

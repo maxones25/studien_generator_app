@@ -4,6 +4,7 @@ import { StudyProvider } from "@modules/studies/contexts";
 import AdminLoginPage from "@pages/AdminLoginPage/AdminLoginPage";
 import ChatPage from "@pages/ChatPage/ChatPage";
 import ChatsPage from "@pages/ChatsPage/ChatsPage";
+import DirectorsPage from "@pages/DirectorsPage/DirectorsPage";
 import EntitiesPage from "@pages/EntitiesPage/EntitiesPage";
 import EntityPage from "@pages/EntityPage/EntityPage";
 import FormPage from "@pages/FormPage/FormPage";
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "directors",
-            element: <div>Directors</div>,
+            element: <DirectorsPage/>,
           },
         ],
       },

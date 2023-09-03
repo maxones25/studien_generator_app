@@ -22,12 +22,14 @@ import { ConfigsApp } from '@admin/forms/configs/configs.app';
 import { MembersModule } from '@admin/studies/members/members.module';
 import { RecordsApp } from '@admin/records/records.app';
 import { ChatsApp } from '@admin/chats/chats.app';
+import { DirectorsModule } from './directors/directors.module';
 
 @Module({
   imports: [
     ConfigModule(['.env.database', '.env.admin']),
     JwtModule,
     DbModule,
+    DirectorsModule,
     UseCaseModule,
     MembersModule,
     HealthModule,

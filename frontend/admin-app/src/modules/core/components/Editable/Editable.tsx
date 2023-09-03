@@ -4,7 +4,7 @@ import {
   useRef,
   HTMLInputTypeAttribute,
 } from "react";
-import { IconButton, Row } from "..";
+import { IconButton, Row, RowProps } from "..";
 import { Close, Edit } from "@mui/icons-material";
 import {
   Button,
@@ -14,7 +14,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 
-export interface EditableProps {
+export interface EditableProps extends Omit<RowProps, "onSubmit"> {
   children: JSX.Element | string;
   type?: HTMLInputTypeAttribute;
   defaultText: string;
@@ -32,6 +32,7 @@ export const Editable: React.FC<EditableProps> = ({
   isLoading = false,
   disabled = false,
   onSubmit,
+  ...props
 }) => {
   const [edit, setEdit] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>();
@@ -60,7 +61,7 @@ export const Editable: React.FC<EditableProps> = ({
   };
 
   return (
-    <Row>
+    <Row {...props}>
       {edit ? (
         <ClickAwayListener onClickAway={handleSubmit}>
           <Input
@@ -70,7 +71,6 @@ export const Editable: React.FC<EditableProps> = ({
             placeholder={defaultText}
             defaultValue={defaultText}
             onKeyDown={handleKeyDown}
-            // sx={{ m: 1 }}
             endAdornment={
               showClose && (
                 <InputAdornment position="end">
@@ -90,7 +90,7 @@ export const Editable: React.FC<EditableProps> = ({
           data-testid="edit icon button"
           onClick={() => setEdit(true)}
           disabled={disabled}
-          sx={{ textTransform: "none" }}
+          sx={{ textTransform: "none", flex: 1, display: "flex", justifyContent: "space-between" }}
         >
           {children}
           {isLoading ? (

@@ -5,10 +5,11 @@ import directorsProviders from './directors.providers';
 import { DirectorsService } from './directors.service';
 import { DirectorGuard } from './guards/director.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { IsDirectorDeletedGuard } from './guards/IsDirectorDeletedGuard';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Director])],
   providers: directorsProviders,
-  exports: [DirectorsService, DirectorGuard, AuthGuard],
+  exports: [IsDirectorDeletedGuard, DirectorGuard, AuthGuard, DirectorsService],
 })
 export class DirectorsModule {}

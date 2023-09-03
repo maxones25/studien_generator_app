@@ -1,1 +1,6 @@
 export * from './useGetMe/useGetMe'
+export * from './useGetDirectors/useGetDirectors'
+export * from './useDeleteDirector/useDeleteDirector'
+export * from './useUpdateDirector/useUpdateDirector'
+export * from './useResetPassword/useResetPassword'
+export * from './useRestoreDirector/useRestoreDirector'

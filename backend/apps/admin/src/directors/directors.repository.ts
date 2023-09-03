@@ -2,7 +2,7 @@ import { StudyMember } from '@entities';
 import { Director } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 
 export class DirectorsRepository extends RecordRepository<Director> {
   constructor(
@@ -24,14 +24,30 @@ export class DirectorsRepository extends RecordRepository<Director> {
     });
   }
 
-  async getByEmail(email: string) {
+  async getByEmail(email: string, deleted = false) {
+    const deletedAt = deleted ? undefined : IsNull();
     return this.db.findOne({
       where: {
         email,
+        deletedAt,
       },
       select: {
         id: true,
         password: true,
+      },
+    });
+  }
+
+  get() {
+    return this.db.find({
+      select: {
+        id: true,
+        deletedAt: true,
+        createdAt: true,
+        modifiedAt: true,
+        email: true,
+        firstName: true,
+        lastName: true,
       },
     });
   }
@@ -60,5 +76,9 @@ export class DirectorsRepository extends RecordRepository<Director> {
       .where('sm.studyId IS NULL')
       .groupBy('d.id')
       .getMany();
+  }
+
+  changePassword(id: string, password: string) {
+    return this.update(id, { password });
   }
 }

@@ -2,16 +2,17 @@ import { Provider } from '@nestjs/common';
 import { DirectorsService } from './directors.service';
 import { DirectorsRepository } from './directors.repository';
 import { DirectorGuard } from './guards/director.guard';
-import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth.guard';
 import { PasswordService } from '@shared/modules/password/password.service';
+import { IsDirectorDeletedGuard } from './guards/IsDirectorDeletedGuard';
 
 const directorsProviders: Provider[] = [
-  DirectorsService,
+  AuthGuard,
   DirectorGuard,
+  IsDirectorDeletedGuard,
+  DirectorsService,
   DirectorsRepository,
   PasswordService,
-  AuthGuard,
 ];
 
 export default directorsProviders;

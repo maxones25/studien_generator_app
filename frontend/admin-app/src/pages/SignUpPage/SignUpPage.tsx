@@ -1,11 +1,10 @@
 import { SignUpForm } from "@modules/auth/components";
 import { useSignUp } from "@modules/auth/hooks";
 import { SignUpFormData } from "@modules/auth/types";
-import { Column, Page, Text } from "@modules/core/components";
+import { Column, Page, Text, Link } from "@modules/core/components";
 import { useNavigationHelper } from "@modules/core/hooks";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 
 export interface SignUpPageProps {}
 
@@ -31,7 +30,7 @@ const SignUpPage: React.FC<SignUpPageProps> = () => {
           isError={signUp.isError}
           isLoading={signUp.isLoading}
         />
-        <Link data-testid="login-link" to="/login">
+        <Link data-testid="login-link" to="/login" sx={{ mt: 2 }}>
           {t("login link")}
         </Link>
       </Column>

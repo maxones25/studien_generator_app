@@ -1,11 +1,12 @@
 import { AdminLoginForm } from "@modules/auth/components";
 import { useLoginAdmin } from "@modules/auth/hooks";
-import { Column, Page, Text } from "@modules/core/components";
+import { Column, Link, Page, Text } from "@modules/core/components";
 import React from "react";
-
+import { useTranslation } from "react-i18next";
 export interface AdminLoginPageProps {}
 
 const AdminLoginPage: React.FC<AdminLoginPageProps> = () => {
+  const { t } = useTranslation();
   const loginAdmin = useLoginAdmin();
   return (
     <Page testId="admin login page" alignItems="center">
@@ -14,9 +15,10 @@ const AdminLoginPage: React.FC<AdminLoginPageProps> = () => {
           Admin Login
         </Text>
         <AdminLoginForm onSubmit={loginAdmin.mutate} />
+        <Link to={"/login"} sx={{ mt: 2 }}>{t("login link")}</Link>
       </Column>
     </Page>
-  );
+  ); 
 };
 
 export default AdminLoginPage;

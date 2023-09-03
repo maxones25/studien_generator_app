@@ -184,5 +184,9 @@
   "group is deleted": "Gruppe ist gelöscht",
   "hello": "Hallo",
   "participant is deleted": "Participant ist gelöscht",
-  "delete related question": "verknüpfte Daten löschen"
+  "delete related question": "verknüpfte Daten löschen",
+  "director": "Studienleiter",
+  "directors": "Studienleiter",
+  "password changed": "Password geändert",
+  "change value": "{{value}} ändern"
 }

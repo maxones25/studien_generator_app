@@ -66,7 +66,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
   const createParticipant = useCreateParticipant();
   const search = useSearch();
   const restoreParticipant = useRestoreParticipant();
-  const [filter, setFilter] = useState<string | undefined>("current");
+  const [filter, setFilter] = useState<string | undefined>(undefined);
 
   const handleCreateParticipant = () => {
     if (participantData.data) {
@@ -161,7 +161,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
                   Icon={<RestoreFromTrash />}
                   onClick={() => restoreParticipant.mutate(participant)}
                   tooltipProps={{
-                    title: t("restore record", { record: t("participant") })
+                    title: t("restore record", { record: t("participant") }),
                   }}
                 />
               )
