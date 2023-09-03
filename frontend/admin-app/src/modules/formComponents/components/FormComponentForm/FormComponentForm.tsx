@@ -98,6 +98,7 @@ export const FormComponentForm: React.FC<FormComponentFormFormProps> = ({
             control={form.control}
             name={`attributes.${attribute.name}`}
             label={label}
+            defaultValue={attribute.name === "required" ? true : false}
           />
         ) : attribute.type === "options" ? (
           <FormTagsField

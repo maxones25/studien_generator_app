@@ -4,6 +4,7 @@ import {
   Controller,
   FieldValues,
   Path,
+  PathValue,
   RegisterOptions,
 } from "react-hook-form";
 
@@ -11,6 +12,8 @@ export interface FormCheckBoxProps<TFieldValues extends FieldValues> {
   label?: string;
   control: Control<TFieldValues>;
   name: Path<TFieldValues>;
+
+  defaultValue?: PathValue<TFieldValues, Path<TFieldValues>>;
   rules?: Omit<
     RegisterOptions<TFieldValues, Path<TFieldValues>>,
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
@@ -21,14 +24,21 @@ export const FormCheckBox = <TFieldValues extends FieldValues>({
   name,
   label,
   rules,
+  defaultValue,
 }: FormCheckBoxProps<TFieldValues>) => {
+  console.log(defaultValue);
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
-      render={({ field }) => (
-        <FormControlLabel control={<Checkbox {...field} />} label={label} />
+      defaultValue={defaultValue}
+      render={({ field: { value, ...field } }) => (
+        <FormControlLabel
+          control={<Checkbox {...field} />}
+          label={label}
+          checked={value}
+        />
       )}
     />
   );
