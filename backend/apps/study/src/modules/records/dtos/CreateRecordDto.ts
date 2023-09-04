@@ -41,6 +41,6 @@ export class RecordFieldDto {
   @IsUUID()
   id: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   value: any;
 }

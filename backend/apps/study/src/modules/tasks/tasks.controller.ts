@@ -1,6 +1,7 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, Put, Query } from '@nestjs/common';
 import { TaskService } from './tasks.service';
 import { ParticipantId } from '@study/decorators/participant-id.decorator';
+import { RescheduleTaskDto } from './dtos/RescheduleTaskDto';
 
 @Controller('tasks')
 export class TaskController {
@@ -19,5 +20,12 @@ export class TaskController {
       return await this.taskService.findOneByIdForParticipant(taskId, participantId);
     }
     return await this.taskService.findByParticipant(participantId);
+  }
+
+  @Put() 
+  async rescheduleTask(
+    @Body() {id, date}: RescheduleTaskDto,
+  ) {
+    return await this.taskService.rescheduleTask(id, date);
   }
 }

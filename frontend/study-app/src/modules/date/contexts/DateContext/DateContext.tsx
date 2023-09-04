@@ -13,7 +13,7 @@ interface DateContextValue {
   decrease: () => void;
   locale: string
   setLocale: (value: string) => void;
-  isFuture: boolean;
+  isToday: boolean;
 }
 
 interface DateProviderProps {
@@ -43,7 +43,7 @@ const useDateContextValue = () => {
     set(date.subtract(1, 'day'));
   };
 
-  const isFuture = date.isAfter(dayjs(), 'day')
+  const isToday = date.isSame(dayjs(), 'day')
 
   return {
     date,
@@ -52,7 +52,7 @@ const useDateContextValue = () => {
     decrease,
     locale,
     setLocale,
-    isFuture
+    isToday
   };
 };
 

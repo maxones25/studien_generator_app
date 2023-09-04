@@ -13,7 +13,7 @@ export interface RecordedEventsListProps {}
 export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
   
 }) => {
-  const { date, isFuture } = useDateContext();
+  const { date, isToday } = useDateContext();
   const { data, isError, isLoading } = useGetRecordedEventsByDate({ date });
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
@@ -27,7 +27,7 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
             edge="end"
             color="inherit"
             aria-label="menu"
-            disabled = {isFuture}
+            disabled = {!isToday}
             onClick={() => setOpen(true)}
             testId={'add-event'}
             Icon={<AddOutlined />}

@@ -7,7 +7,7 @@ export interface useGetRecordedEventsByDateOptions {
   date: Dayjs
 }
 
-export const getGetRecordedEventsByDateKey = (date: Dayjs) => [date.toISOString(), "getRecordedEventsByDate"];
+export const getGetRecordedEventsByDateKey = (date: Dayjs) => ["getRecordedEventsByDate", date.toISOString()];
 
 export const useGetRecordedEventsByDate = (options : useGetRecordedEventsByDateOptions) => {
   const date = options.date
