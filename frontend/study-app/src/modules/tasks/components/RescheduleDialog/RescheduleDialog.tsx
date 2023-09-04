@@ -23,7 +23,7 @@ export const RescheduleDialog : React.FC<RescheduleDialogProps>= ({
   task,
 }) => {
   const { t } = useTranslation();
-  const { handleSubmit, formState, register } = useForm<RescheduleData>();
+  const form = useForm<RescheduleData>();
   const rescheduleTask = useRescheduleTask();
 
   const onSubmit = (data: RescheduleData) => {
@@ -36,13 +36,20 @@ export const RescheduleDialog : React.FC<RescheduleDialogProps>= ({
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form m={2} onSubmit={form.handleSubmit(onSubmit)}>
         <FormNumberPicker 
-          formState={formState}
-          textFieldProps={register("days", {
-            required: true,
-            min: 1,
-            max: task.schedule.postpone?.duration,
+          label={t("select days")}
+          formState={form.formState}
+          textFieldProps={form.register("days", {
+            required: t("value required", { value: t("days") }),
+            min: {
+              value: 1,
+              message: t("min days", { value: 1})
+            },
+            max: {
+              value: task.schedule.postpone?.duration ?? 1,
+              message: t("max days", { value: task.schedule.postpone?.duration})
+            },
           })}
         />
         <Row mt={2}>
