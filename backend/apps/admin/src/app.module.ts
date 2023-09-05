@@ -23,12 +23,15 @@ import { MembersModule } from '@admin/studies/members/members.module';
 import { RecordsApp } from '@admin/records/records.app';
 import { ChatsApp } from '@admin/chats/chats.app';
 import { DirectorsModule } from './directors/directors.module';
+import { TestApp } from './studies/test/test.app';
+import { Test1234Gateway } from './test1234/test1234.gateway';
 
 @Module({
   imports: [
     ConfigModule(['.env.database', '.env.admin']),
     JwtModule,
     DbModule,
+    TestApp,
     DirectorsModule,
     UseCaseModule,
     MembersModule,

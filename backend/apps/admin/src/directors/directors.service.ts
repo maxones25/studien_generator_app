@@ -28,7 +28,7 @@ export class DirectorsService {
 
     if (director) throw new BadRequestException('director already exists');
 
-    const password = await this.passwordService.hash(rawPassword, 10);
+    const password = await this.passwordService.hash(rawPassword);
 
     return await this.directorsRepository.create({
       email,
@@ -95,7 +95,7 @@ export class DirectorsService {
   }
 
   async changePassword(id: string, password: string) {
-    const hashedPassword = await this.passwordService.hash(password, 10);
+    const hashedPassword = await this.passwordService.hash(password);
     return this.directorsRepository.changePassword(id, hashedPassword);
   }
 }

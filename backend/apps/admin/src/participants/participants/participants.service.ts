@@ -65,7 +65,7 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
 
   async updatePassword(participantId: string) {
     const password = await this.passwordService.generate();
-    const hashedPassword = await this.passwordService.hash(password, 10);
+    const hashedPassword = await this.passwordService.hash(password);
     await this.participantsRepository.update(participantId, {
       password: hashedPassword,
     });

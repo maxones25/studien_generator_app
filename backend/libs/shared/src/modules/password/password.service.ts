@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { generate } from 'generate-password';
+import { IHashPassword } from './IHashPassword';
 
 @Injectable()
-export class PasswordService {
+export class PasswordService implements IHashPassword {
   async compare(data: string, encrypted: string) {
     return await bcrypt.compare(data, encrypted);
   }
 
-  async hash(data: string, saltOrRounds: string | number) {
-    return await bcrypt.hash(data, saltOrRounds);
+  async hash(data: string) {
+    return await bcrypt.hash(data, 10);
   }
 
   async generate() {
@@ -23,8 +24,8 @@ export class PasswordService {
     });
   }
 
-  async generateHashed(saltOrRounds: string | number) {
+  async generateHashed() {
     const password = await this.generate();
-    return await this.hash(password, saltOrRounds);
+    return await this.hash(password);
   }
 }

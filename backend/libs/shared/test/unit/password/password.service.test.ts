@@ -31,9 +31,8 @@ describe('PasswordService', () => {
 
   it('should call bcrypt.hash with correct arguments', async () => {
     const data = 'testData';
-    const saltOrRounds = 10;
-    await passwordService.hash(data, saltOrRounds);
-    expect(bcrypt.hash).toHaveBeenCalledWith(data, saltOrRounds);
+    await passwordService.hash(data);
+    expect(bcrypt.hash).toHaveBeenCalledWith(data);
   });
 
   it('should call generate with correct arguments', async () => {

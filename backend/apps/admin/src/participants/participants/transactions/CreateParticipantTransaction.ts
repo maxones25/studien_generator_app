@@ -31,7 +31,7 @@ export class CreateParticipantTransaction extends Transaction<
   }: TransactionInput): Promise<string> {
     const participantRepo = this.entityManager.getRepository(Participant);
 
-    const hashedPassword = await this.passwordService.generateHashed(10);
+    const hashedPassword = await this.passwordService.generateHashed();
 
     const participant = new Participant();
 

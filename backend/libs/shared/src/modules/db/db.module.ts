@@ -27,6 +27,8 @@ import {
   ChatMessageReceipt,
   ParticipantNotification,
 } from '@entities';
+import { addTransactionalDataSource } from 'typeorm-transactional';
+import { DataSource } from 'typeorm';
 
 const DbModule = TypeOrmModule.forRootAsync({
   useFactory: async () => {
@@ -67,6 +69,13 @@ const DbModule = TypeOrmModule.forRootAsync({
         ParticipantNotification,
       ],
     };
+  },
+  async dataSourceFactory(options) {
+    if (!options) {
+      throw new Error('Invalid options passed');
+    }
+
+    return addTransactionalDataSource(new DataSource(options));
   },
 });
 
