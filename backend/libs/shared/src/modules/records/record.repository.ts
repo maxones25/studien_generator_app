@@ -1,6 +1,6 @@
 import { DeepPartial, FindOptionsWhere, ObjectLiteral } from 'typeorm';
 import { EntityRepository } from './entity.repository';
-import { BaseEntity } from '@entities/modules/BaseEntity';
+import { BaseEntity } from '@entities/modules/schema/BaseEntity';
 import datetime from '../datetime/datetime';
 
 export abstract class RecordRepository<
