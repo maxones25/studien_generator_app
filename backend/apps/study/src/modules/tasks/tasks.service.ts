@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { MoreThanOrEqual, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from '@entities';
@@ -15,10 +15,18 @@ export class TaskService {
       where: { participantId },
       relations: {
         form: true,
+        schedule: true
       },
       select: {
         form: {
           name: true
+        },
+        schedule: {
+          id: true,
+          postpone: {
+            times: true,
+            duration: true,
+          }
         }
       }
     });
@@ -42,9 +50,19 @@ export class TaskService {
         modifiedAt: MoreThanOrEqual(lastUpdated),
         participantId: participantId
       },
+      relations: {
+        form: true,
+        schedule: true,
+      },
       select: {
         form: {
           name: true
+        },
+        schedule: {
+          postpone: {
+            times: true,
+            duration: true,
+          }
         }
       }
     });
@@ -54,5 +72,33 @@ export class TaskService {
         ...task
       }
     });
+  }
+
+  async rescheduleTask(id: string, date: Date) {
+    const task = await this.taskRepository.findOne({ 
+      where: { id },
+      relations: {         
+        schedule: true,
+      },
+      select: { 
+        schedule: {
+          postpone: {
+            times: true,
+            duration: true,
+          }
+        }
+      }
+    });
+
+    if (!task.schedule.postpone) 
+      throw new ConflictException('task cannot be rescheduled');
+
+    if (task.rescheduled < task.schedule.postpone.times) {
+      return await this.taskRepository.update(id, {
+        scheduledAt: date,
+        rescheduled: task.rescheduled + 1
+      });
+    }
+    throw new ConflictException('task cannot be rescheduled again');
   }
 }

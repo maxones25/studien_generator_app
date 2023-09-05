@@ -1,4 +1,8 @@
 {
+  "select days": "Wie viele Tage",
+  "days": "Tage",
+  "max days": "Maximal {{value}} Tage",
+  "min days": "Mindestens {{value}} Tage",
   "cool down description": "Abkühlen",
   "low intensity description": "Niedrige Intensität",
   "high intensity description": "Hohe Intensität",

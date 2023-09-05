@@ -1,9 +1,11 @@
 import { ListItemButton, ListItemText } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { Task } from '@modules/tasks/types';
-import { StyledListItem } from '@modules/core/components';
+import { IconButton, StyledListItem } from '@modules/core/components';
 import dayjs from 'dayjs';
 import { useFormIdContext } from '@modules/forms/contexts';
+import { ArrowForwardOutlined } from '@mui/icons-material';
+import { RescheduleDialog } from '..';
 
 export interface TaskItemProps {
   task: Task;
@@ -21,23 +23,40 @@ export const TaskItem : React.FC<TaskItemProps>= ({
 }) => {
   const { setForm } = useFormIdContext();
   const timeDiff = dayjs(task.scheduledAt).diff(new Date(), 'hour');
+  const [ open, setOpen ] = useState(false); 
   const state = task.completedAt ? TasksStates.Completed : 
   timeDiff > 0 ? TasksStates.InActive : 
   timeDiff < -1 ? TasksStates.Failed :
   TasksStates.Active;
 
-  const handleClick = () => {
+  const handleStart = () => {
     if (state === TasksStates.Active)
       setForm(task.formId, task.name, task.id);
-  };
+  }
+
   const date = task.scheduledAt;
   const dateString = dayjs(date).format('HH:mm');
 
   return (
-    <StyledListItem sx={{ backgroundColor: state }}>
-      <ListItemButton onClick={() => handleClick()}>
+    <StyledListItem 
+      secondaryAction={
+        task.schedule.postpone && 
+        task.rescheduled < task.schedule.postpone.times &&
+        state !== TasksStates.Failed &&
+        state !== TasksStates.Completed &&
+        <IconButton 
+          testId={'reschedule task'}
+          Icon={
+            <ArrowForwardOutlined />
+          }
+          onClick={() => setOpen(true)}
+        />
+      }
+      sx={{ backgroundColor: state }}>
+      <ListItemButton onClick={handleStart}>
         <ListItemText primary={task.name} secondary={dateString}/>
       </ListItemButton>
+      <RescheduleDialog task={task} open={open} onClose={() => setOpen(false)} />
     </StyledListItem>
   );
 }

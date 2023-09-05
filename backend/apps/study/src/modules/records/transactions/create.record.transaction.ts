@@ -77,6 +77,8 @@ export class CreateRecordTransaction extends Transaction<
     if (!(await this.isValidValue({ id, value })))
       throw new ConflictException('invalid record field');
 
+    if (!value) return;
+
     const encodedValue = JSON.stringify(value) as any;
 
     recordFieldRepository.insert({
@@ -130,6 +132,9 @@ export class CreateRecordTransaction extends Transaction<
       where: { id },
       relations: {
         entityField: true,
+        formComponent: {
+          attributes: true,
+        },
       },
       select: {
         id: true,
@@ -137,8 +142,22 @@ export class CreateRecordTransaction extends Transaction<
           id: true,
           type: true,
         },
+        formComponent: {
+          id: true,
+          attributes: {
+            key: true,
+            value: true
+          }
+        }
       },
     });
+    console.log(formField)
+
+    const isRequired: boolean = formField.formComponent.attributes.find(({key}) => 
+      key === 'required'
+    )?.value
+    console.log(isRequired, value)
+    if (!value && !isRequired) return true;
 
     const type = formField.entityField.type.toString().toLowerCase();
 

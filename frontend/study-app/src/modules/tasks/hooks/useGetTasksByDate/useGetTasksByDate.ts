@@ -7,7 +7,7 @@ export interface UseGetTasksByDateOptions {
   date: Dayjs;
 }
 
-export const getGetTasksByDateKey = (date: Dayjs) => [date.toISOString(), "getTasksByDate"];
+export const getGetTasksByDateKey = (date: Dayjs) => ["getTasksByDate", date.toISOString()];
 
 export const useGetTasksByDate = (options : UseGetTasksByDateOptions) => {
   const date = options.date;

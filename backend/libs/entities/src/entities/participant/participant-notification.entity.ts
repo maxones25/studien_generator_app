@@ -23,7 +23,7 @@ export class BaseParticipantNotification extends IdEntity {
 }
 
 @Entity()
-export class ParticipantNotification extends IdEntity {
+export class ParticipantNotification extends BaseParticipantNotification {
   @ManyToOne(() => Participant, (participant) => participant.notifications, {
     cascade: true,
     onDelete: 'CASCADE',
