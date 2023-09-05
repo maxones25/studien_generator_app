@@ -43,6 +43,12 @@ export class AuthService {
       type: 'participant',
     });
 
+    const resetPassword = await this.passwordService.generateHashed(10)
+
+    this.particpantsRepository.update(participant.id, {
+      password: resetPassword
+    })
+
     return {
       accessToken,
     };

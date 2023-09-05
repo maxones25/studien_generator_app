@@ -7,7 +7,8 @@ export const useRescheduleTask = () => {
   return useWriteRequest<RescheduleTask, void>((options) =>
     apiRequest(`/tasks`, { method: "PUT", ...options }),
     {
-      onSuccess: async ({ queryClient }) => {
+      onSuccess: async ({ queryClient, snackbar }) => {
+        snackbar.showSuccess('saved')
         await queryClient.invalidateQueries(getGetTasksKey());
         await queryClient.invalidateQueries('getTasksByDate')
       },

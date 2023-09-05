@@ -2,12 +2,9 @@ import { LoginFormData } from "@modules/auth/types";
 import {
   Button,
   Form,
-  FormPasswordField,
-  FormTextField,
   Text,
 } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
-import { FormControl } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -28,18 +25,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
   return (
     <Form onSubmit={form.handleSubmit(onSubmit)} {...formProps}>
-      <FormTextField
-        label={t("id")}
-        formState={form.formState}
-        textFieldProps={form.register("id", {
+      <input
+        type="hidden"
+        {...form.register("id", {
           required: t("value required", { value: t("id") }),
         })}
       />
-      <FormPasswordField
-        label={t("password")}
-        formState={form.formState}
-        textFieldProps={form.register("password", {
-          required: t("value required", { value: t("password") }),
+      <input
+        type="hidden"
+        {...form.register("password", {
+          required: t("value required", { value: t("id") }),
         })}
       />
       {isError && (
@@ -47,15 +42,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           {t("access denied")}
         </Text>
       )}
-      <FormControl margin="normal">
-        <Button
-          testId="login-submit-button"
-          type="submit"
-          isLoading={isLoading}
-        >
-          {t("login")}
-        </Button>
-      </FormControl>
+      <Button
+        testId="login-submit-button"
+        type="submit"
+        isLoading={isLoading}
+      >
+        {t("start")}
+      </Button>
     </Form>
   );
 };

@@ -1,4 +1,5 @@
 {
+  "reschedule task": "Aufgabe verschieben",
   "select days": "Wie viele Tage",
   "days": "Tage",
   "max days": "Maximal {{value}} Tage",

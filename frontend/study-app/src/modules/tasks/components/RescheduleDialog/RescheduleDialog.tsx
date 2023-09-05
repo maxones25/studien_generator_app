@@ -1,7 +1,7 @@
 import { Row, Button, Form, FormNumberPicker } from '@modules/core/components';
 import { useRescheduleTask } from '@modules/tasks/hooks';
 import { Task } from '@modules/tasks/types';
-import { Dialog } from '@mui/material';
+import { Dialog, DialogTitle } from '@mui/material';
 import dayjs from 'dayjs';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -36,6 +36,7 @@ export const RescheduleDialog : React.FC<RescheduleDialogProps>= ({
 
   return (
     <Dialog open={open} onClose={onClose}>
+      <DialogTitle>{t('reschedule task')}</DialogTitle>
       <Form m={2} onSubmit={form.handleSubmit(onSubmit)}>
         <FormNumberPicker 
           label={t("select days")}

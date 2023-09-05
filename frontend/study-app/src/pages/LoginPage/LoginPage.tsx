@@ -14,7 +14,12 @@ const LoginPage: React.FC<LoginPageProps> = () => {
   console.log({ id, password })
 
   return (
-    <Page testId="login page">
+    <Page 
+      sx={{
+        justifyContent: "center",
+        alignItems: "center",
+      }} 
+      testId="login page">
       <LoginForm
         onSubmit={login.mutate}
         isError={login.isError}

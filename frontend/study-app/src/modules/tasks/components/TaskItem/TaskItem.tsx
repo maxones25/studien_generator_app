@@ -45,7 +45,8 @@ export const TaskItem : React.FC<TaskItemProps>= ({
         state !== TasksStates.Failed &&
         state !== TasksStates.Completed &&
         <IconButton 
-          testId={'reschedule task'}
+          testId='reschedule task'
+          edge="end"
           Icon={
             <ArrowForwardOutlined />
           }
