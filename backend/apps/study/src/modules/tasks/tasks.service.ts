@@ -26,6 +26,10 @@ export class TaskService {
           postpone: {
             times: true,
             duration: true,
+          },
+          restrict: {
+            before: true,
+            after: true,
           }
         }
       }
@@ -62,6 +66,10 @@ export class TaskService {
           postpone: {
             times: true,
             duration: true,
+          },
+          restrict: {
+            before: true,
+            after: true,
           }
         }
       }
@@ -85,7 +93,7 @@ export class TaskService {
           postpone: {
             times: true,
             duration: true,
-          }
+          },
         }
       }
     });

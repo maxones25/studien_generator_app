@@ -4,15 +4,21 @@ export type Task = {
   name: string;
   formId: string;
   completedAt?: Date;
-  schedule: Schedule;
+  schedule?: Schedule;
   rescheduled: number;
 }
 
 export type Schedule = {
   postpone?: PostPone;
+  restrict?: Restrict;
 }
 
 export type PostPone = {
   times: number;
   duration: number;
+}
+
+export type Restrict = {
+  before: number;
+  after: number;
 }

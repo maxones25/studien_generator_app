@@ -1,10 +1,11 @@
-import { Row, Button, Form, FormNumberPicker } from '@modules/core/components';
+import { Row, Button, Form } from '@modules/core/components';
 import { useRescheduleTask } from '@modules/tasks/hooks';
 import { Task } from '@modules/tasks/types';
 import { Dialog, DialogTitle } from '@mui/material';
-import dayjs from 'dayjs';
+import { MobileDateTimePicker } from '@mui/x-date-pickers';
+import dayjs, { Dayjs } from 'dayjs';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, FieldValues, Path, PathValue, get, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 export interface RescheduleDialogProps {
@@ -14,7 +15,7 @@ export interface RescheduleDialogProps {
 }
 
 export interface RescheduleData {
-  days: number,
+  date: Dayjs,
 }
 
 export const RescheduleDialog : React.FC<RescheduleDialogProps>= ({
@@ -27,32 +28,53 @@ export const RescheduleDialog : React.FC<RescheduleDialogProps>= ({
   const rescheduleTask = useRescheduleTask();
 
   const onSubmit = (data: RescheduleData) => {
-    const newDate = dayjs(task.scheduledAt).add(data.days, 'day').toDate();
     rescheduleTask.mutateAsync({
       id: task.id,
-      date: newDate,
-    })
+      date: data.date.toDate(),
+    });
+    onClose();
   }
+
+  const dayjsScheduledAt = dayjs(task.scheduledAt);
+  const thirtyMinutesFromNow = dayjs().add(30, 'minutes');
+  let minDateTime = dayjsScheduledAt.add(30, 'minutes');
+  minDateTime = minDateTime < thirtyMinutesFromNow ? thirtyMinutesFromNow : minDateTime
+  const maxDateTime = dayjsScheduledAt.add(
+    task?.schedule?.postpone?.duration ?? 0, 'days');
 
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{t('reschedule task')}</DialogTitle>
       <Form m={2} onSubmit={form.handleSubmit(onSubmit)}>
-        <FormNumberPicker 
-          label={t("select days")}
-          formState={form.formState}
-          textFieldProps={form.register("days", {
-            required: t("value required", { value: t("days") }),
-            min: {
-              value: 1,
-              message: t("min days", { value: 1})
-            },
-            max: {
-              value: task.schedule.postpone?.duration ?? 1,
-              message: t("max days", { value: task.schedule.postpone?.duration})
-            },
-          })}
-        />
+        <Controller
+        control={form.control}
+        name={'date'}
+        rules={{required: t("value required", { value: t("days") })}}
+        defaultValue={minDateTime as PathValue<FieldValues, Path<FieldValues>>}
+        render={({ field: { onChange, value, ...field }, formState }) => {
+          const error = get(formState.errors, 'date');
+          return (
+            <MobileDateTimePicker
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                  variant: "outlined",
+                  error: Boolean(error),
+                  helperText: error?.message?.toString() ?? null,
+                },
+              }}
+              minDateTime={minDateTime}
+              maxDateTime={maxDateTime}
+              value={value}
+              label={t("select date")}
+              onChange={(value: Dayjs | null) => {
+                onChange(value as PathValue<FieldValues, Path<FieldValues>>);
+              }}
+              {...field}
+            />
+          );
+        }}
+      />
         <Row mt={2}>
           <Button 
             color='error'

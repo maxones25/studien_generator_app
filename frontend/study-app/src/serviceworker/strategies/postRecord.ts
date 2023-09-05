@@ -29,13 +29,9 @@ export class PostRecord extends Strategy {
         const record: Record = data;
         const tx = db.transaction(['records', 'tasks'], 'readwrite');
         if (record.taskId) {
-          this.putTask(tx, record.formId, record.createdAt);
+          this.putTask(tx, record.taskId, record.createdAt);
         }
-        await tx.objectStore("records").add({
-          id: record.id,
-          createdAt: record.createdAt,
-          name: record.name,
-        });
+        await tx.objectStore("records").add(record);
         await this.queue.pushRequest({request: request});
         return new Response('', { status: 200, statusText: 'Queued' });
       });
@@ -44,11 +40,11 @@ export class PostRecord extends Strategy {
 
   private async putTask(
     tx: IDBPTransaction<unknown, string[], 'readwrite'>, 
-    formId: string, 
+    taskId: string, 
     createdAt: Date
   ) {
     const objectStore = tx.objectStore("tasks")
-    const task: Task = await objectStore.get(formId);
+    const task: Task = await objectStore.get(taskId);
     task.completedAt = createdAt;
     await objectStore.put(task);
   }
