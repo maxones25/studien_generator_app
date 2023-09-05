@@ -113,6 +113,32 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
           )}
           <FormSwitch
             control={form.control}
+            name="restrict"
+            label={t("restrict submit")}
+          />
+          {form.watch("restrict") && (
+            <Row>
+              <ExperimentalFormTextField
+                form={form}
+                name="restrict.before"
+                label={t("restrict before")}
+                type="number"
+                required
+                inputProps={{ step: 1 }}
+              />
+              <ExperimentalFormTextField
+                form={form}
+                name="restrict.after"
+                label={t("restrict after")}
+                type="number"
+                required
+                inputProps={{ step: 1 }}
+                sx={{ ml: 1 }}
+              />
+            </Row>
+          )}
+          <FormSwitch
+            control={form.control}
             name="postpone"
             label={t("postponable")}
           />

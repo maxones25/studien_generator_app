@@ -189,5 +189,8 @@
   "directors": "Studienleiter",
   "password changed": "Password geändert",
   "change value": "{{value}} ändern",
-  "required": "notwendig"
+  "required": "notwendig",
+  "restrict submit": "Eingebbarkeit einschränken",
+  "restrict before": "eingebbar ab (in h)",
+  "restrict after": "eingebbar bis (in h)"
 }

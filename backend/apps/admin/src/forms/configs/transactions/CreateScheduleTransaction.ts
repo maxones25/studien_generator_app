@@ -31,7 +31,13 @@ export class CreateScheduleTransaction extends Transaction<
 
   private async createSchedule(
     configId: string,
-    { type, period, postpone = null, times = [] }: AddScheduleDto,
+    {
+      type,
+      period,
+      postpone = null,
+      restrict = null,
+      times = [],
+    }: AddScheduleDto,
   ) {
     const repo = this.entityManager.getRepository(FormSchedule);
 
@@ -41,6 +47,7 @@ export class CreateScheduleTransaction extends Transaction<
     schedule.type = type;
     schedule.period = period;
     schedule.postpone = postpone;
+    schedule.restrict = restrict;
     schedule.times = times;
 
     await repo.insert(schedule);

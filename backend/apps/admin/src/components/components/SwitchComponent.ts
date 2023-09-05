@@ -3,6 +3,7 @@ import { Component } from '../Component';
 import { ComponentType } from '../component-type.enum';
 import { LabelAttribute } from './attributes/LabelAttribute';
 import { DefaultValueAttribute } from './attributes/DefaultValueAttribute';
+import { RequiredAttribute } from './attributes/RequiredAttribute';
 
 export class SwitchComponent extends Component {
   constructor() {
@@ -10,6 +11,7 @@ export class SwitchComponent extends Component {
       ComponentType.Switch,
       [FieldType.Boolean],
       [
+        new RequiredAttribute(true),
         new LabelAttribute(false),
         new DefaultValueAttribute(false, "boolean", (value) => typeof value === 'boolean'),
       ],

@@ -4,6 +4,7 @@ import { ComponentType } from '../component-type.enum';
 import { LabelAttribute } from './attributes/LabelAttribute';
 import { DefaultValueAttribute } from './attributes/DefaultValueAttribute';
 import { OptionsAttribute } from './attributes/OptionsAttribute';
+import { RequiredAttribute } from './attributes/RequiredAttribute';
 
 export class SelectComponent extends Component {
   constructor() {
@@ -11,6 +12,7 @@ export class SelectComponent extends Component {
       ComponentType.Select,
       [FieldType.Text],
       [
+        new RequiredAttribute(true),
         new LabelAttribute(false),
         new OptionsAttribute(true),
         new DefaultValueAttribute(false, "string", (value) => typeof value === 'string'),

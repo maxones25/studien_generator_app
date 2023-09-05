@@ -18,6 +18,7 @@ import { FormSchedulePeriod } from '../enums/FormSchedulePeriod';
 import { Type } from 'class-transformer';
 import { DaysOfMonth, DaysOfWeek } from '@entities';
 import { PostponeDto } from './PostponeDto';
+import { RestrictDto } from './RestrictDto';
 
 export class AddScheduleDto {
   @IsEnum(FormScheduleType)
@@ -31,6 +32,12 @@ export class AddScheduleDto {
   @Type(() => PostponeDto)
   @ValidateIf(({ postpone }) => postpone !== null)
   readonly postpone: PostponeDto | null;
+
+  @IsObject()
+  @ValidateNested()
+  @Type(() => RestrictDto)
+  @ValidateIf(({ restrict }) => restrict !== null)
+  readonly restrict: RestrictDto | null;
 
   @IsArray()
   @ArrayMinSize(1)

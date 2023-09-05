@@ -6,6 +6,7 @@ import { DefaultValueAttribute } from './attributes/DefaultValueAttribute';
 import { MinAttribute } from './attributes/MinAttribute';
 import { MaxAttribute } from './attributes/MaxAttribute';
 import { BadRequestException } from '@nestjs/common';
+import { RequiredAttribute } from './attributes/RequiredAttribute';
 
 export class NumberPickerComponent extends Component {
   constructor() {
@@ -13,6 +14,7 @@ export class NumberPickerComponent extends Component {
       ComponentType.NumberPicker,
       [FieldType.Number],
       [
+        new RequiredAttribute(true),
         new LabelAttribute(false),
         new MinAttribute(false),
         new MaxAttribute(false),

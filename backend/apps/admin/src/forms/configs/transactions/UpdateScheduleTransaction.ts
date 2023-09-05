@@ -33,7 +33,7 @@ export class UpdateScheduleTransaction extends Transaction<
 
   private async updateSchedule(
     id: string,
-    { type, period, postpone = null, times = [] }: UpdateScheduleDto,
+    { type, period, postpone = null, restrict = null, times = [] }: UpdateScheduleDto,
   ) {
     const repo = this.entityManager.getRepository(FormSchedule);
 
@@ -42,6 +42,7 @@ export class UpdateScheduleTransaction extends Transaction<
     schedule.type = type;
     schedule.period = period;
     schedule.postpone = postpone;
+    schedule.restrict = restrict;
     schedule.times = times;
 
     const { affected } = await repo.update(id, schedule);

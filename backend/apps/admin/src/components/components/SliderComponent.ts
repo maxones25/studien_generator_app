@@ -7,6 +7,7 @@ import { DefaultValueAttribute } from './attributes/DefaultValueAttribute';
 import { LabelAttribute } from './attributes/LabelAttribute';
 import { BadRequestException } from '@nestjs/common';
 import { TextAttribute } from './attributes/TextAttribute';
+import { RequiredAttribute } from './attributes/RequiredAttribute';
 
 export class SliderComponent extends Component {
   constructor() {
@@ -14,6 +15,7 @@ export class SliderComponent extends Component {
       ComponentType.Slider,
       [FieldType.Number],
       [
+        new RequiredAttribute(true),
         new LabelAttribute(false),
         new MinAttribute(true),
         new TextAttribute('minLabel', false),

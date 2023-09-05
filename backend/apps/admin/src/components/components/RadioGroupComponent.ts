@@ -4,6 +4,7 @@ import { ComponentType } from '../component-type.enum';
 import { LabelAttribute } from './attributes/LabelAttribute';
 import { DefaultValueAttribute } from './attributes/DefaultValueAttribute';
 import { OptionsAttribute } from './attributes/OptionsAttribute';
+import { RequiredAttribute } from './attributes/RequiredAttribute';
 
 export class RadioGroupComponent extends Component {
   constructor() {
@@ -11,6 +12,7 @@ export class RadioGroupComponent extends Component {
       ComponentType.RadioGroup,
       [FieldType.Text],
       [
+        new RequiredAttribute(true),
         new LabelAttribute(false),
         new DefaultValueAttribute(
           false,

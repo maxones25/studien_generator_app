@@ -10,6 +10,11 @@ export type Postpone = {
   duration: number;
 };
 
+export type Restrict = {
+  before: number;
+  after: number;
+};
+
 export class BaseFormSchedule extends IdEntity {
   @Column()
   configId: string;
@@ -52,6 +57,20 @@ export class BaseFormSchedule extends IdEntity {
     },
   })
   postpone: Postpone;
+
+  @Column({
+    type: 'json',
+    nullable: true,
+    transformer: {
+      from(value: Restrict) {
+        return value;
+      },
+      to(value: Restrict) {
+        return JSON.stringify(value);
+      },
+    },
+  })
+  restrict: Restrict;
 }
 
 @TypeOrmEntity()

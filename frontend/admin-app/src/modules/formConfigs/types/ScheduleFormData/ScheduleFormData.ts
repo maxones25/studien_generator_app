@@ -12,6 +12,10 @@ type BaseFormSchedule = {
     times: number;
     duration: number;
   } | null;
+  restrict: {
+    before: number;
+    after: number;
+  } | null;
 };
 
 type SpecificFormSchedule =
