@@ -15,7 +15,7 @@ export const AppointmentItem : React.FC<AppointmentItemProps>= ({
     console.log(id, name);
   };
 
-  const endString = appointment.end ? `- ${dayjs(appointment.end).format('HH:mm')}` : '';
+  const endString = appointment.end ? ` - ${dayjs(appointment.end).format('HH:mm')}` : '';
   const dateString = dayjs(appointment.start).format('HH:mm') + endString;
 
   return (

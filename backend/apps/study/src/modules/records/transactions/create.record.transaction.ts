@@ -151,12 +151,10 @@ export class CreateRecordTransaction extends Transaction<
         }
       },
     });
-    console.log(formField)
 
     const isRequired: boolean = formField.formComponent.attributes.find(({key}) => 
       key === 'required'
     )?.value
-    console.log(isRequired, value)
     if (!value && !isRequired) return true;
 
     const type = formField.entityField.type.toString().toLowerCase();

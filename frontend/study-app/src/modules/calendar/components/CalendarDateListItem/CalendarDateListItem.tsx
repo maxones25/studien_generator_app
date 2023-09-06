@@ -1,7 +1,6 @@
 import { CalendarListItem } from '@modules/calendar/types';
-import { getDateFromItem } from '@modules/calendar/utils';
+import { getDateStringFromItem } from '@modules/calendar/utils';
 import { ListItemText, ListItem, styled, useTheme } from '@mui/material';
-import dayjs from 'dayjs';
 import React from 'react';
 
 const StyledListItem = styled(ListItem)(({  }) => ({
@@ -25,8 +24,6 @@ export const CalendarDateListItem : React.FC<CalendarDateListItemProps>= ({
   item,
   divider,
 }) => {
-
-  const date = getDateFromItem(item);
   const { palette } = useTheme();
   const color = 'scheduledAt' in item ? palette.error.light : palette.secondary.main;
 
@@ -34,7 +31,7 @@ export const CalendarDateListItem : React.FC<CalendarDateListItemProps>= ({
     <StyledListItem
       divider={divider}
       secondaryAction={
-        <ListItemText primary={dayjs(date).format('HH:mm')}/>
+        <ListItemText primary={getDateStringFromItem(item)}/>
       }
     >
       <ListItemText  

@@ -13,6 +13,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
 import { ScheduleModule } from '@nestjs/schedule';
 import { appProviders } from './app.providers';
 import { SchedulingModule } from './modules/scheduling/scheduling.module';
+import { AppointmentsModule } from './modules/appointments/appointments.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { SchedulingModule } from './modules/scheduling/scheduling.module';
     TaskModule,
     NotificationsModule,
     SchedulingModule,
+    AppointmentsModule,
   ],
   providers: appProviders,
 })
