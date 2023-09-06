@@ -3,7 +3,7 @@ import { Group } from '@entities';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { faker } from '@faker-js/faker';
 import { GroupsService } from '@admin/groups/groups.service';
-import { GroupsRepository } from '@admin/groups/groups.repository';
+import { GroupsRepository } from '@admin/groups/repositories/groups.repository';
 import { CreateGroupDto } from '@admin/groups/dtos/CreateGroupDto';
 import { UpdateGroupDto } from '@admin/groups/dtos/UpdateGroupDto';
 

@@ -26,6 +26,7 @@ import {
   ChatMessage,
   ChatMessageReceipt,
   ParticipantNotification,
+  Appointment,
 } from '@entities';
 
 const DbModule = TypeOrmModule.forRootAsync({
@@ -65,6 +66,7 @@ const DbModule = TypeOrmModule.forRootAsync({
         ChatMessage,
         ChatMessageReceipt,
         ParticipantNotification,
+        Appointment,
       ],
     };
   },

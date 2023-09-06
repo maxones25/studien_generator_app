@@ -14,7 +14,10 @@ export class GroupsQueries {
 
   @Get('getByStudy')
   @Roles('admin', 'employee')
-  async getAll(@Query() { studyId }: StudyQueryDto, @Query() { deleted } : DeletedDto) {
+  async getAll(
+    @Query() { studyId }: StudyQueryDto,
+    @Query() { deleted }: DeletedDto,
+  ) {
     return this.groupsService.getByStudy(studyId, deleted);
   }
 

@@ -12,6 +12,9 @@ import { StartParticipantStudyTransaction } from './transactions/StartParticipan
 import { CreateParticipantTransaction } from './transactions/CreateParticipantTransaction';
 import { ResetPasswordUseCase } from './transactions/ResetPasswordUseCase';
 import { DeleteParticipantTransaction } from './transactions/DeleteParticipantTransaction';
+import { CreateAppointmentUseCase } from './transactions/CreateAppointmentUseCase';
+import { AppointmentsModule } from '@admin/appointments/appointments.module';
+import { GetAppointmentsUseCase } from './transactions/GetAppointmentsUseCase';
 
 @Module({
   imports: [
@@ -20,6 +23,7 @@ import { DeleteParticipantTransaction } from './transactions/DeleteParticipantTr
     StudiesModule,
     TasksModule,
     ConfigsModule,
+    AppointmentsModule,
   ],
   providers: participantsProviders,
   exports: [
@@ -29,6 +33,8 @@ import { DeleteParticipantTransaction } from './transactions/DeleteParticipantTr
     CreateParticipantTransaction,
     DeleteParticipantTransaction,
     ResetPasswordUseCase,
+    CreateAppointmentUseCase,
+    GetAppointmentsUseCase,
   ],
 })
 export class ParticipantsModule {}

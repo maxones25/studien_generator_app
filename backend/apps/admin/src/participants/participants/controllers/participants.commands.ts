@@ -15,7 +15,7 @@ import { ChangeNumberDto } from '../dtos/ChangeNumberDto';
 import { ChangeGroupDto } from '../dtos/ChangeGroupDto';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { StartStudyDto } from '../dtos/StartStudyDto';
-import { Participant } from '../participant.decorator';
+import { GetParticipant } from '../participant.decorator';
 import { Participant as ParticipantEntity } from '@entities';
 import { IsStudyActiveGuard } from '@admin/studies/studies/guards/IsStudyActiveGuard';
 import { StartParticipantStudyTransaction } from '../transactions/StartParticipantStudyTransaction';
@@ -108,7 +108,7 @@ export class ParticipantsCommands {
   @Roles('admin')
   @UseGuards(ParticipantGuard, IsParticipantDeletedGuard, IsStudyActiveGuard)
   async startStudy(
-    @Participant() participant: ParticipantEntity,
+    @GetParticipant() participant: ParticipantEntity,
     @Body() { startDate, configs }: StartStudyDto,
   ) {
     return this.startParticipantStudyTransaction.run({

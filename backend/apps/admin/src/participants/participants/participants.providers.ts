@@ -10,6 +10,9 @@ import { AttributesRepository } from './attributes.repository';
 import { SchedulesTransformer } from './services/SchedulesTransformer';
 import { ResetPasswordUseCase } from './transactions/ResetPasswordUseCase';
 import { DeleteParticipantTransaction } from './transactions/DeleteParticipantTransaction';
+import { CreateAppointmentUseCase } from './transactions/CreateAppointmentUseCase';
+import { AppointmentsRepository } from '@admin/appointments/appointment.repository';
+import { GetAppointmentsUseCase } from './transactions/GetAppointmentsUseCase';
 
 const participantsProviders: Provider[] = [
   ParticipantGuard,
@@ -23,6 +26,20 @@ const participantsProviders: Provider[] = [
   ParticipantsRepository,
   AppUriGenerator,
   SchedulesTransformer,
+  {
+    provide: CreateAppointmentUseCase,
+    useFactory(appointmentsRepository: AppointmentsRepository) {
+      return new CreateAppointmentUseCase(appointmentsRepository);
+    },
+    inject: [AppointmentsRepository],
+  },
+  {
+    provide: GetAppointmentsUseCase,
+    useFactory(appointmentsRepository: AppointmentsRepository) {
+      return new GetAppointmentsUseCase(appointmentsRepository);
+    },
+    inject: [AppointmentsRepository],
+  },
 ];
 
 export default participantsProviders;

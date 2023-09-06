@@ -1,3 +1,4 @@
+import { AppointmentsCard } from "@modules/appointments/components";
 import {
   DeleteDialog,
   Editable,
@@ -14,6 +15,8 @@ import {
   useDeleteGroup,
   useGetGroup,
   useChangeName,
+  useGetAppointments,
+  useCreateAppointment,
 } from "@modules/groups/hooks";
 import { useStudy } from "@modules/studies/contexts";
 import { Delete } from "@mui/icons-material";
@@ -29,6 +32,8 @@ const GroupPage: React.FC<GroupPageProps> = () => {
   const getGroup = useGetGroup();
   const updateGroup = useChangeName();
   const deleteGroup = useDeleteGroup();
+  const getAppointments = useGetAppointments();
+  const createAppointment = useCreateAppointment();
   const deleteDialog = useOpen();
   const study = useStudy();
 
@@ -93,6 +98,11 @@ const GroupPage: React.FC<GroupPageProps> = () => {
       <Divider />
       <Row p={2} flex={1} alignItems="stretch" overflowY="hidden">
         <ParticipantsCard group={group} flex={1} />
+        <AppointmentsCard
+          ml={2}
+          readClient={getAppointments}
+          createClient={createAppointment}
+        />
         <FormsCard flex={2} ml={2} />
       </Row>
     </Page>

@@ -1,8 +1,8 @@
 export { StudySchema as Study } from './schema/study/study.entity';
 export * from './schema/director/director.entity';
-export * from './schema/group/group.entity';
+export { GroupSchema as Group } from './schema/group/group.entity';
 export { StudyMemberSchema as StudyMember } from './schema/study/study-member.entity';
-export * from './schema/participant/participant.entity';
+export { ParticipantSchema as Participant } from './schema/participant/participant.entity';
 export * from './schema/form/form.entity';
 export * from './schema/entity/entity.entity';
 export * from './schema/entity/entity-field.entity';
@@ -23,3 +23,4 @@ export * from './schema/chat/chat-message-receipt.entity';
 export * from './schema/study/study-attribute.entity';
 export * from './schema/participant/participant-notification.entity';
 export * from './schema/group/form-schedule-attribute.entity';
+export { AppointmentSchema as Appointment } from './schema/appointment/appointment.entity';

@@ -3,27 +3,31 @@ import {
   StudyAttribute,
   Chat,
   StudyMemberSchema,
-  Group,
-  Participant,
+  GroupSchema,
+  ParticipantSchema,
   FormConfiguration,
   Form,
   Entity,
 } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 import { Study } from '@entities/core/study';
+import { AppointmentSchema } from '../appointment/appointment.entity';
 
 export class BaseStudySchema extends IdEntity implements Study {
   @Column({ unique: true })
   name: string;
 }
 
-@TypeOrmEntity("study")
+@TypeOrmEntity('study')
 export class StudySchema extends BaseStudySchema {
   @OneToMany(() => StudyAttribute, (attribute) => attribute.study)
   attributes: StudyAttribute[];
 
-  @OneToMany(() => Group, (group) => group.study)
-  groups: Group[];
+  @OneToMany(() => GroupSchema, (group) => group.study)
+  groups: GroupSchema[];
+
+  @OneToMany(() => AppointmentSchema, (appointment) => appointment.study)
+  appointments: AppointmentSchema[];
 
   @OneToMany(
     () => FormConfiguration,
@@ -37,8 +41,8 @@ export class StudySchema extends BaseStudySchema {
   @OneToMany(() => StudyMemberSchema, (studyMember) => studyMember.study)
   members: StudyMemberSchema[];
 
-  @OneToMany(() => Participant, (participant) => participant.study)
-  participants: Participant[];
+  @OneToMany(() => ParticipantSchema, (participant) => participant.study)
+  participants: ParticipantSchema[];
 
   @OneToMany(() => Entity, (entity) => entity.study)
   entities: Entity[];
