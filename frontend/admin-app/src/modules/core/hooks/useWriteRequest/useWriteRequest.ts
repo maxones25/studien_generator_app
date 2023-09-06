@@ -10,6 +10,7 @@ import {
   QueryClient,
   useMutation,
   UseMutationOptions,
+  UseMutationResult,
   useQueryClient,
 } from "react-query";
 
@@ -58,6 +59,12 @@ export interface UseWriteRequestOptions<InputData, OutputData, ErrorData> {
   ) => void | WriteRequestOnSettledReturnValue;
 }
 
+export type UseWriteRequestResult<
+  InputData,
+  OutputData,
+  ErrorData extends ApiError = ApiError
+> = UseMutationResult<OutputData, ErrorData, InputData>;
+
 export const useWriteRequest = <
   InputData,
   OutputData,
@@ -65,7 +72,7 @@ export const useWriteRequest = <
 >(
   queryFunc: WriteQueryFunction<InputData, OutputData>,
   options?: UseWriteRequestOptions<InputData, OutputData, ErrorData>
-) => {
+): UseWriteRequestResult<InputData, OutputData, ErrorData> => {
   const { queryOptions, onSuccess, onError, onMutate, onSettled } =
     options || {};
 

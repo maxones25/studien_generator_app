@@ -11,7 +11,7 @@ import {
 import { useNavigationHelper, useOpen } from "@modules/core/hooks";
 import { AddMemberCard, MembersCard } from "@modules/members/components";
 import { MembersProvider } from "@modules/members/contexts";
-import { StudyCard } from "@modules/studies/components";
+import { AppointmentsCard, StudyCard } from "@modules/studies/components";
 import { useStudy } from "@modules/studies/contexts";
 import {
   useChangeStudyName,
@@ -83,6 +83,7 @@ const StudyPage: React.FC<StudyPageProps> = () => {
               <MembersCard flex={1} />
             </MembersProvider>
           </Column>
+          <AppointmentsCard flex={1}/>
         </Row>
       </Column>
       <DeleteDialog

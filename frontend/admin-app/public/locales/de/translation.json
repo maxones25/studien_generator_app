@@ -192,5 +192,10 @@
   "required": "notwendig",
   "restrict submit": "Eingebbarkeit einschränken",
   "restrict before": "eingebbar ab (in h)",
-  "restrict after": "eingebbar bis (in h)"
+  "restrict after": "eingebbar bis (in h)",
+  "appointment": "Termin",
+  "appointments": "Termine",
+  "startTime": "Startzeit",
+  "endTime": "Endzeit",
+  "subject": "Betreff"
 }

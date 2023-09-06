@@ -1,11 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateGroupDto } from './dtos/CreateGroupDto';
-import { GroupsRepository } from './groups.repository';
+import { GroupsRepository } from './repositories/groups.repository';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
 export class GroupsService implements StudyRelatedDataAccessor {
-
   constructor(
     @Inject(GroupsRepository)
     private groupsRepository: GroupsRepository,
@@ -43,7 +42,7 @@ export class GroupsService implements StudyRelatedDataAccessor {
   async restore(id: string) {
     return await this.groupsRepository.restore(id);
   }
-  
+
   async isDeleted(id: string) {
     return await this.groupsRepository.isDeleted(id);
   }

@@ -1,14 +1,10 @@
 import { Entity, Column, ManyToOne, OneToMany, Unique } from 'typeorm';
 import { Study, Participant, FormConfiguration } from '../..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
+import { AppointmentSchema } from '../appointment/appointment.entity';
+import { Group } from '@entities/core/group/Group';
 
-export class BaseGroup extends IdEntity {
-  @Column({
-    type: 'datetime',
-    nullable: true,
-  })
-  deletedAt: Date;
-
+export class BaseGroupSchema extends IdEntity implements Group {
   @Column()
   name: string;
 
@@ -16,9 +12,9 @@ export class BaseGroup extends IdEntity {
   studyId: string;
 }
 
-@Entity()
+@Entity("group")
 @Unique('unique_name_for_study', ['name', 'studyId'])
-export class Group extends BaseGroup {
+export class GroupSchema extends BaseGroupSchema {
   @OneToMany(() => Participant, (participant) => participant.group)
   participants: Participant[];
 
@@ -27,6 +23,9 @@ export class Group extends BaseGroup {
     (formConfiguration) => formConfiguration.group,
   )
   forms: FormConfiguration[];
+
+  @OneToMany(() => AppointmentSchema, (appointment) => appointment.group)
+  appointments: AppointmentSchema[];
 
   @ManyToOne(() => Study, (study) => study.groups, {
     cascade: true,

@@ -1,7 +1,7 @@
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { ParticipantsRepository } from '@admin/participants/participants/participants.repository';
 import { FormConfiguration, Group, Participant } from '@entities';
-import { GroupsRepository } from '../groups.repository';
+import { GroupsRepository } from '../repositories/groups.repository';
 import { ConfigsRepository } from '@admin/forms/configs/repositories/configs.repository';
 
 type Input = {

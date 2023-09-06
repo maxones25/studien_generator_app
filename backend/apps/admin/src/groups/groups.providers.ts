@@ -1,9 +1,12 @@
 import { Provider } from '@nestjs/common';
 import { GroupsService } from './groups.service';
-import { GroupsRepository } from './groups.repository';
+import { GroupsRepository } from './repositories/groups.repository';
 import { GroupGuard } from './guards/group.guard';
 import { IsGroupDeletedGuard } from './guards/IsGroupDeletedGuard';
 import { DeleteGroupTransaction } from './transactions/DeleteGroupTransaction';
+import { GetAppointmentsUseCase } from './transactions/GetAppointmentsUseCase';
+import { CreateAppointmentUseCase } from './transactions/CreateAppointmentUseCase';
+import { AppointmentsRepository } from '@admin/appointments/appointment.repository';
 
 const groupsProviders: Provider[] = [
   GroupGuard,
@@ -11,6 +14,20 @@ const groupsProviders: Provider[] = [
   GroupsService,
   GroupsRepository,
   DeleteGroupTransaction,
+  {
+    provide: GetAppointmentsUseCase,
+    useFactory(appointmentsRepository: AppointmentsRepository) {
+      return new GetAppointmentsUseCase(appointmentsRepository);
+    },
+    inject: [AppointmentsRepository],
+  },
+  {
+    provide: CreateAppointmentUseCase,
+    useFactory(appointmentsRepository: AppointmentsRepository) {
+      return new CreateAppointmentUseCase(appointmentsRepository);
+    },
+    inject: [AppointmentsRepository],
+  },
 ];
 
 export default groupsProviders;

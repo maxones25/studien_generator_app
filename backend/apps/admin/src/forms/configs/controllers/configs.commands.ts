@@ -15,7 +15,7 @@ import {
   Form as FormEntity,
 } from '@entities';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
-import { Group } from '@admin/groups/group.decorator';
+import { GetGroup } from '@admin/groups/group.decorator';
 import { Form } from '@admin/forms/forms/decorators/form.decorator';
 import { FormGuard } from '@admin/forms/forms/guards/form.guard';
 import { Config } from '../config.decorator';
@@ -43,7 +43,7 @@ export class ConfigsCommands {
   async addFormToGroup(
     @Query() { studyId }: StudyQueryDto,
     @Form() form: FormEntity,
-    @Group() group: GroupEntity,
+    @GetGroup() group: GroupEntity,
   ) {
     const configs = await this.configsService.getByGroupAndForm(
       group.id,

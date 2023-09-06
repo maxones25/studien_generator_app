@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 
-export const Group = createParamDecorator(
+export const GetGroup = createParamDecorator(
   (data: unknown, ctx: ExecutionContext): GroupEntity => {
     const request = ctx.switchToHttp().getRequest();
 

@@ -1,4 +1,5 @@
 const modules = [
+  "appointments",
   "auth",
   "chat",
   "components",

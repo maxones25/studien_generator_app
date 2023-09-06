@@ -1,3 +1,4 @@
+import { AppointmentsCard } from "@modules/appointments/components";
 import {
   Button,
   Column,
@@ -22,7 +23,9 @@ import {
 import {
   useChangeParticipantGroup,
   useChangeParticipantNumber,
+  useCreateAppointment,
   useDeleteParticipant,
+  useGetAppointments,
   useGetParticipant,
   useRemoveGroup,
   useResetPassword,
@@ -48,6 +51,8 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
   const resetPassword = useResetPassword();
   const study = useStudy();
   const startStudy = useStartStudy();
+  const getAppointments = useGetAppointments();
+  const createAppointment = useCreateAppointment();
   const startStudyDialog = useOpen();
   const resetDialog = useOpen();
   const uri = useValue<string | undefined>("");
@@ -162,6 +167,12 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
                 Nachricht senden
               </Button>
             </Column>
+            <AppointmentsCard
+              readClient={getAppointments}
+              createClient={createAppointment}
+              m={2}
+              ml={0}
+            />
             <TasksCard
               participant={participant}
               flex={1}

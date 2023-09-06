@@ -47,7 +47,7 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
       boxShadow={4}
       ml={2}
       position="relative"
-      sx={{ overflowY: "hidden" }}
+      overflowY="hidden"
     >
       {formEditor.component.isSelected ? (
         <>
@@ -63,7 +63,7 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
             componentAttributes={formEditor.component.data?.attributes!}
             fieldName={fieldName}
             onSubmit={handleSave}
-            formProps={{ p: 1 }}
+            formProps={{ p: 1, overflowY: "scroll" }}
           />
         </>
       ) : (

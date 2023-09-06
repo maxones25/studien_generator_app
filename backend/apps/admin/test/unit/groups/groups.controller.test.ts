@@ -3,7 +3,7 @@ import { TestBed } from '@automock/jest';
 import { Group } from '@entities';
 import { GroupsController } from '@admin/groups/controllers/groups.queries';
 import { GroupsService } from '@admin/groups/groups.service';
-import { GroupsRepository } from '@admin/groups/groups.repository';
+import { GroupsRepository } from '@admin/groups/repositories/groups.repository';
 import { GroupGuard } from '@admin/groups/guards/group.guard';
 
 describe('GroupsController', () => {
