@@ -53,4 +53,10 @@ export class AuthService {
       accessToken,
     };
   }
+
+  async isDeleted(id: string) {
+    const entity = await this.particpantsRepository.findOneBy({ id } as any);
+    if (!entity) return true;
+    return entity.isDeleted;
+  }
 }
