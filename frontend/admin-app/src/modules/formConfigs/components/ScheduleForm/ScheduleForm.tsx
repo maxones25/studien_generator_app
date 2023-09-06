@@ -43,13 +43,14 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
 
   const handleSubmit = (data: ScheduleFormData) => {
     const postpone = data.postpone ? data.postpone : null;
+    const restrict = data.restrict ? data.restrict : null;
     if (data.type === "Fix" && data.period === "Week") {
       const daysOfWeek = data.daysOfWeek.map((active) =>
         Boolean(active)
       ) as ScheduleDaysOfWeek;
-      onSubmit({ ...data, postpone, daysOfWeek });
+      onSubmit({ ...data, postpone, restrict, daysOfWeek });
     } else {
-      onSubmit({ ...data, postpone });
+      onSubmit({ ...data, postpone, restrict });
     }
   };
 

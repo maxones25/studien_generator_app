@@ -47,7 +47,7 @@ export const formatInputDateTime = (
 ) => {
   if (date === undefined || date === null) return "";
   if (typeof date === "string") {
-    return dateApi.format(new Date(date), "YYYY-MM-DDTH:mm", false);
+    return dateApi.format(new Date(date), "YYYY-MM-DDTHH:mm", false);
   }
-  return dateApi.format(date, "YYYY-MM-DDTH:mm", false);
+  return dateApi.format(date, "YYYY-MM-DDTHH:mm", false);
 };
