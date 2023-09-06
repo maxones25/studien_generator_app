@@ -13,7 +13,7 @@ import { useGetMe } from "@modules/directors/hooks";
 import { StudiesList, StudyForm } from "@modules/studies/components";
 import { useCreateStudy } from "@modules/studies/hooks";
 import { StudyFormData } from "@modules/studies/types";
-import { AdminPanelSettings, Logout } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 

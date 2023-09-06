@@ -1,15 +1,12 @@
 import { Column, Text } from "@modules/core/components";
 import { useGetStudies } from "@modules/studies/hooks";
 import { Study } from "@modules/studies/types";
-import { Edit } from "@mui/icons-material";
 import {
   Chip,
   CircularProgress,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
-  ListItemSecondaryAction,
   ListItemText,
 } from "@mui/material";
 import React from "react";

@@ -11,7 +11,6 @@ import {
   Badge,
   Checkbox,
   Chip,
-  ClickAwayListener,
   Collapse,
   ListItemIcon,
   ListItemText,

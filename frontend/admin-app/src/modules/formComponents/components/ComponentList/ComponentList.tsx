@@ -1,4 +1,3 @@
-import { Column } from "@modules/core/components";
 import { FormComponent } from "@modules/formComponents/types";
 import React, { useState } from "react";
 import {

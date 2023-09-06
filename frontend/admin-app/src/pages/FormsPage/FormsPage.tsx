@@ -13,7 +13,6 @@ import {
   useCreateForm,
   useDeleteForm,
   useGetForms,
-  useChangeName,
 } from "@modules/forms/hooks";
 import { FormFormData } from "@modules/forms/types";
 import { useFormId } from "@modules/navigation/hooks";
@@ -28,7 +27,6 @@ const FormsPage: React.FC<FormsPageProps> = () => {
   const { t } = useTranslation();
   const navigate = useNavigationHelper();
   const formId = useFormId(false);
-  const editGroupData = useFormData<FormFormData>();
   const deleteGroupData = useFormData<FormFormData>();
   const getGroups = useGetForms();
   const createForm = useCreateForm();

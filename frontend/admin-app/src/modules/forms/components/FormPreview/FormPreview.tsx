@@ -1,4 +1,4 @@
-import { Column, ColumnProps, Row, TestDnD } from "@modules/core/components";
+import { Column, Row } from "@modules/core/components";
 import {
   useGetComponents,
   useRemoveComponent,
@@ -9,14 +9,6 @@ import { Add } from "@mui/icons-material";
 import { Chip } from "@mui/material";
 import React from "react";
 import { ComponentPreview } from "..";
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  OnDragEndResponder,
-} from "react-beautiful-dnd";
-import { FormComponent } from "@modules/formComponents/types";
-import { ComponentList } from "@modules/formComponents/components";
 
 export interface FormPreviewProps {}
 

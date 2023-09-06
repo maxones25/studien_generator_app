@@ -59,6 +59,7 @@ export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
             frequency: 1,
             postpone: null,
             times: [],
+            restrict: null,
           })}
         />
       </Row>

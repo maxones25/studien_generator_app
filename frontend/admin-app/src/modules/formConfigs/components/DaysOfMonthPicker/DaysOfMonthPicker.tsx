@@ -1,4 +1,4 @@
-import { Row, Text } from "@modules/core/components";
+import { Row } from "@modules/core/components";
 import {
   Control,
   Controller,

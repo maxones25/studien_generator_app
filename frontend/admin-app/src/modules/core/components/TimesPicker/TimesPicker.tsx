@@ -4,7 +4,7 @@ import {
   FieldValues,
   UseFormReturn,
 } from "react-hook-form";
-import { Column, IconButton, Row, Text } from "..";
+import { IconButton, Row, Text } from "..";
 import { FormControl, OutlinedInput } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 
