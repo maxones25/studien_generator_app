@@ -22,9 +22,12 @@ export interface DataListProps<Data extends Record<string, any>>
   disablePadding?: boolean;
 
   listProps?: ListProps;
+
+  testId?: string;
 }
 
 export function DataList<Data extends Record<string, any>>({
+  testId,
   client,
   errorText,
   noDataText,
@@ -64,6 +67,7 @@ export function DataList<Data extends Record<string, any>>({
           {...listProps}
           sx={{ width: "100%", overflowY: "scroll", ...listProps?.sx }}
           disablePadding={disablePadding}
+          data-testid={testId}
         >
           {items.map((item, i, arr) =>
             renderItem(item, { i, arr, isLast: i === arr.length - 1 })

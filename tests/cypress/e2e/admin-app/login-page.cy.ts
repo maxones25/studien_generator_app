@@ -88,8 +88,17 @@ describe("login page", () => {
     cy.visit("/login");
 
     cy.getByTestId("signup-link").click();
-    
+
     cy.shouldBeRelativePath("/signUp");
     cy.getByTestId("sign up page").should("exist");
+  });
+
+  it("should open admin login page", () => {
+    cy.visit("/login");
+
+    cy.getByTestId("open admin page").click();
+
+    cy.shouldBeRelativePath("/admin/login");
+    cy.getByTestId("admin login page").should("exist");
   });
 });

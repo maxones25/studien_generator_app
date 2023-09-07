@@ -30,7 +30,7 @@ const SignUpPage: React.FC<SignUpPageProps> = () => {
           isError={signUp.isError}
           isLoading={signUp.isLoading}
         />
-        <Link data-testid="login-link" to="/login" sx={{ mt: 2 }}>
+        <Link testId="login-link" to="/login" sx={{ mt: 2 }}>
           {t("login link")}
         </Link>
       </Column>

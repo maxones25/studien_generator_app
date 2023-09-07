@@ -89,7 +89,9 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
         </ListItemIcon>
         <Row flex={1}>
           <ListItemText>
-            <Link to={`../../forms/${form.form.id}`}>{form.form.name}</Link>
+            <Link testId="open form" to={`../../forms/${form.form.id}`}>
+              {form.form.name}
+            </Link>
           </ListItemText>
           <Chip
             color={isTimeDependent ? "primary" : "default"}

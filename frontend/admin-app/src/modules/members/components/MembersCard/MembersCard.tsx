@@ -48,47 +48,51 @@ export const MembersCard: React.FC<MembersCardProps> = (props) => {
         client={getMembers}
         errorText={t("fetch error data", { data: t("members") })}
         noDataText={t("no data found", { data: t("members") })}
-        renderItem={(member, { isLast }) => (
-          <ListItem key={member.director.id} divider={!isLast} disablePadding>
-            <ListItemText
-              primary={`${member.director.firstName} ${member.director.lastName}`}
-              secondary={member.director.email}
-            />
-            <Row ml={2}>
-              <FormControl margin="normal">
-                <OnlyAdmin>
-                  {({ disabled }) => (
-                    <Select
-                      size="small"
-                      value={member.role}
-                      sx={{ minWidth: 150 }}
-                      onChange={handleChangeRole(member)}
-                      readOnly={disabled}
-                    >
-                      <MenuItem value="admin">{t("admin")}</MenuItem>
-                      <MenuItem value="employee">{t("member")}</MenuItem>
-                    </Select>
-                  )}
-                </OnlyAdmin>
-              </FormControl>
-              <FormControl margin="normal" sx={{ ml: 1 }}>
-                <OnlyAdmin>
-                  {({ disabled }) => (
-                    <IconButton
-                      testId="remove member button"
-                      color="error"
-                      disabled={disabled}
-                      Icon={<Remove />}
-                      onClick={() => {
-                        removeMember.mutate(member);
-                      }}
-                    />
-                  )}
-                </OnlyAdmin>
-              </FormControl>
-            </Row>
-          </ListItem>
-        )}
+        renderItem={(member, { isLast }) => {
+          const displayName = `${member.director.firstName} ${member.director.lastName}`;
+          return (
+            <ListItem key={member.director.id} divider={!isLast} disablePadding>
+              <ListItemText
+                primary={displayName}
+                secondary={member.director.email}
+              />
+              <Row ml={2}>
+                <FormControl margin="normal">
+                  <OnlyAdmin>
+                    {({ disabled }) => (
+                      <Select
+                        size="small"
+                        value={member.role}
+                        sx={{ minWidth: 150 }}
+                        onChange={handleChangeRole(member)}
+                        readOnly={disabled}
+                        data-testid={`select ${displayName} role`}
+                      >
+                        <MenuItem value="admin">{t("admin")}</MenuItem>
+                        <MenuItem value="employee">{t("member")}</MenuItem>
+                      </Select>
+                    )}
+                  </OnlyAdmin>
+                </FormControl>
+                <FormControl margin="normal" sx={{ ml: 1 }}>
+                  <OnlyAdmin>
+                    {({ disabled }) => (
+                      <IconButton
+                        testId="remove member button"
+                        color="error"
+                        disabled={disabled}
+                        Icon={<Remove />}
+                        onClick={() => {
+                          removeMember.mutate(member);
+                        }}
+                      />
+                    )}
+                  </OnlyAdmin>
+                </FormControl>
+              </Row>
+            </ListItem>
+          );
+        }}
       />
     </Column>
   );

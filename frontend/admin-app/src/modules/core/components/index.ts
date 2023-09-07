@@ -27,7 +27,7 @@ export * from "./ChipSelect/ChipSelect";
 export * from "./OnlyAdmin/OnlyAdmin";
 export * from "./DeleteDialog/DeleteDialog";
 export * from "./Select/Select";
-
+export * from "./NetworkProvider/NetworkProvider"
 export * from './TooltipGuard/TooltipGuard'
 export * from './TimesPicker/TimesPicker'
 export * from './ConfirmDialog/ConfirmDialog'

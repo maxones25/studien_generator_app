@@ -75,6 +75,7 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                   <TableCell key={column.id}>
                     {isRef ? (
                       <Link
+                        testId="open entity"
                         to={`../${column.ref?.name}/${get(
                           record,
                           column.ref?.id

@@ -31,7 +31,7 @@ const LoginPage: React.FC<LoginPageProps> = () => {
           isError={login.isError}
           isLoading={login.isLoading}
         />
-        <Link data-testid="signup-link" to="/signUp" sx={{ mt: 2 }}>
+        <Link testId="signup-link" to="/signUp" sx={{ mt: 2 }}>
           {t("sign up link")}
         </Link>
         <Row justifyContent="center" mt={2}>

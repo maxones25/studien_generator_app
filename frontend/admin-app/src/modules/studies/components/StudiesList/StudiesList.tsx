@@ -47,7 +47,7 @@ export const StudiesList: React.FC<StudiesListProps> = ({ onSelect }) => {
               disablePadding
               dense
             >
-              <ListItemButton onClick={() => onSelect(study)} sx={{}}>
+              <ListItemButton data-testid={`open study ${i}`} onClick={() => onSelect(study)} sx={{}}>
                 <ListItemText primary={study.name} secondary={t(study.role)} />
                 {study.deletedAt !== null && (
                   <Chip color="error" label={t("deleted")} />

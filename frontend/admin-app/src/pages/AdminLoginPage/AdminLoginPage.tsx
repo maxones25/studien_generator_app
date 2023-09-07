@@ -15,10 +15,12 @@ const AdminLoginPage: React.FC<AdminLoginPageProps> = () => {
           Admin Login
         </Text>
         <AdminLoginForm onSubmit={loginAdmin.mutate} />
-        <Link to={"/login"} sx={{ mt: 2 }}>{t("login link")}</Link>
+        <Link testId="open login page" to={"/login"} sx={{ mt: 2 }}>
+          {t("login link")}
+        </Link>
       </Column>
     </Page>
-  ); 
+  );
 };
 
 export default AdminLoginPage;

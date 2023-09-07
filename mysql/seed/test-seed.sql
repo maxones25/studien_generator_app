@@ -19,6 +19,24 @@ INSERT INTO `director` (`firstName`, `lastName`, `email`, `password`, `id`) VALU
 INSERT INTO `director` (`firstName`, `lastName`, `email`, `password`, `id`) VALUES
 ('John', 'Doe', 'john.doe@test.de', @otherDirectorPassword, @otherDirectorId);
 
+-- Random Directors
+
+INSERT INTO `director` (`firstName`, `lastName`, `email`, `password`, `id`) VALUES
+('Alice', 'Smith', 'alice.smith@test.de', @otherDirectorPassword, '1b163c55-d8ee-4325-951d-baa07bc146ea');
+
+INSERT INTO `director` (`firstName`, `lastName`, `email`, `password`, `id`) VALUES
+('Bob', 'Johnson', 'bob.johnson@test.de', @otherDirectorPassword, '2d28f5cb-8f49-4895-8545-e3e37566e388');
+
+INSERT INTO `director` (`firstName`, `lastName`, `email`, `password`, `id`) VALUES
+('Catherine', 'Williams', 'catherine.williams@test.de', @otherDirectorPassword, '61b3172f-b71b-4f19-8edf-5021dd6b20e1');
+
+INSERT INTO `director` (`firstName`, `lastName`, `email`, `password`, `id`) VALUES
+('David', 'Brown', 'david.brown@test.de', @otherDirectorPassword, '9271d4dd-2ee7-4544-bc56-57f45f38833d');
+
+INSERT INTO `director` (`firstName`, `lastName`, `email`, `password`, `id`) VALUES
+('Eva', 'Jones', 'eva.jones@test.de', @otherDirectorPassword, 'b6723b20-38a8-4516-9eac-42bda8b7412f');
+
+
 INSERT INTO `study`(`id`, `name`) VALUES (@studyId,'Test Studie 1');
 INSERT INTO `study`(`id`, `name`) VALUES (@studyId2,'Test Studie 2');
 

@@ -33,6 +33,8 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
     form.reset();
   };
 
+  // console.log(directors);
+
   return (
     <Form
       {...formProps}
@@ -71,6 +73,10 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
                 {...params}
                 size="small"
                 placeholder={t("search directors")}
+                inputProps={{
+                  "data-testid": "search member",
+                  ...params.inputProps,
+                }}
               />
             );
           }}
@@ -82,6 +88,7 @@ export const InviteMemberForm: React.FC<InviteMemberFormProps> = ({
       </FormControl>
       <Row>
         <FormSelect
+          testId="select role"
           control={form.control}
           sx={{ ml: 1, minWidth: 150 }}
           size="small"

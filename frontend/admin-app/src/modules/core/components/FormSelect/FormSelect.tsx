@@ -33,9 +33,12 @@ export interface FormSelectProps<TFieldValues extends FieldValues> {
   sx?: SxProps<Theme>;
   size?: "small" | "medium";
   label?: string;
+
+  testId?: string;
 }
 
 export function FormSelect<TFieldValues extends FieldValues>({
+  testId,
   control,
   name,
   options,
@@ -60,6 +63,7 @@ export function FormSelect<TFieldValues extends FieldValues>({
               size={size}
               labelId={`${name}-select`}
               label={label}
+              data-testid={testId}
               error={isError}
               onChange={(e) => {
                 const value = e.target.value;
@@ -67,8 +71,8 @@ export function FormSelect<TFieldValues extends FieldValues>({
               }}
               {...field}
             >
-              {options.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
+              {options.map((option, i) => (
+                <MenuItem key={option.value} value={option.value} data-testid={`${testId} option ${i}`}>
                   {option.label}
                 </MenuItem>
               ))}
