@@ -1,7 +1,7 @@
 services:
   mysql:
     container_name: database
-    image: ./mysql/test.dockerfile
+    image: ghcr.io/maxones25/studien_generator_app/test-database:latest
     command:
       [
         "--character-set-server=utf8mb4",
