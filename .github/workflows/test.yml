@@ -169,14 +169,7 @@ jobs:
         run: docker-compose -f database-docker-compose.yaml up -d
 
       - name: Wait for MySQL
-        run: |
-          for i in {1..5}; do
-            if docker-compose exec database mysql --user=root --password=root -e "SELECT 1" > /dev/null; then
-              break
-            fi
-            echo "Waiting for MySQL..."
-            sleep 5
-          done
+        run: sleep 10s
 
       - name: Run Migrations
         working-directory: ./backend
