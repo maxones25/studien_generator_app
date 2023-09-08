@@ -1,3 +1,4 @@
+export * from './study/study.entity';
 export * from './director/director.entity';
 export * from './group/group.entity';
 export * from './study/study-member.entity';
@@ -23,4 +24,3 @@ export * from './study/study-attribute.entity';
 export * from './participant/participant-notification.entity';
 export * from './group/form-schedule-attribute.entity';
 export * from './appointment/appointment.entity';
-export * from './study/study.entity';
