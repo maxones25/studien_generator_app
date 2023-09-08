@@ -43,6 +43,22 @@ jobs:
               - 'prod-docker-compose.yaml'
               - 'test-docker-compose.yaml'
 
+  build-admin-frontend-container:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.admin_frontend == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Log into GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and Push admin-frontend container
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}/admin-frontend:latest -f ./frontend/admin-app/dockerfile
+          docker push ghcr.io/${{ github.repository }}/admin-frontend:latest
+
   admin-backend-tests:
     runs-on: ubuntu-latest
     needs: changes
