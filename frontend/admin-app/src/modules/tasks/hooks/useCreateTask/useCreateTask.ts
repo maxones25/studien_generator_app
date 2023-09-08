@@ -7,7 +7,7 @@ import { TaskFormData } from "@modules/tasks/types";
 export const useCreateTask = () => {
   const studyId = useStudyId()!;
   return useWriteRequest<TaskFormData, unknown>(
-    ({ body: { id: taskId, participantId, formId, ...body }, ...options }) =>
+    ({ body: { participantId, formId, ...body }, ...options }) =>
       apiRequest(`/participants/createTask`, {
         ...options,
         method: "POST",

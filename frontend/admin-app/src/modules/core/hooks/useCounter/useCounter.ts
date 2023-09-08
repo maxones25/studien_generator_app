@@ -7,7 +7,7 @@ export interface UseCounterResult {
   decrease: () => void;
 }
 
-export const useCounter = (defaultValue: number = 0): UseCounterResult => {
+export const useCounter = (defaultValue = 0): UseCounterResult => {
   const [value, set] = useState<number>(defaultValue);
 
   const increase = () => {

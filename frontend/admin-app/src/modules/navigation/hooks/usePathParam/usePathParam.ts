@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-export const usePathParam = (name: string, required: boolean = true) => {
+export const usePathParam = (name: string, required = true) => {
   const params = useParams();
 
   const value = params[name];

@@ -51,7 +51,7 @@ export const useListSelector = <Data extends Record<string, any>>({
         isSelected,
       };
     });
-  }, [items, selection]);
+  }, [items, selection, selector]);
 
   return {
     items: selectedItems,

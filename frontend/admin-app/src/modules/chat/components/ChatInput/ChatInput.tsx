@@ -1,13 +1,11 @@
-import { usePostChatMessage } from '@modules/chat/hooks';
-import { TextField } from '@mui/material';
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { usePostChatMessage } from "@modules/chat/hooks";
+import { TextField } from "@mui/material";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export interface ChatInputProps {}
 
-export const ChatInput : React.FC<ChatInputProps> = ({
-  
-}) => {
+export const ChatInput: React.FC<ChatInputProps> = () => {
   const sendMessage = usePostChatMessage();
   const [inputValue, setInputValue] = useState<string>("");
   const { t } = useTranslation();
@@ -15,20 +13,20 @@ export const ChatInput : React.FC<ChatInputProps> = ({
   const handleSend = async () => {
     if (inputValue.trim()) {
       sendMessage.mutateAsync({
-        directorId: '',
+        directorId: "",
         sentAt: new Date(),
-        content: inputValue
+        content: inputValue,
       });
       setInputValue("");
     }
   };
 
   return (
-    <div 
-      style={{ 
-        display: 'flex',
-        width: '100%', 
-        paddingTop: '10px', 
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        paddingTop: "10px",
       }}
     >
       <TextField
@@ -37,13 +35,13 @@ export const ChatInput : React.FC<ChatInputProps> = ({
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-              handleSend();
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
           }
-      }}
-        placeholder={t('type your message')}
-        multiline 
+        }}
+        placeholder={t("type your message")}
+        multiline
         maxRows={4}
       />
     </div>

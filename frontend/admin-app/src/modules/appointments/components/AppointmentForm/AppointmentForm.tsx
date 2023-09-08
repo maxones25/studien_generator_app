@@ -6,7 +6,6 @@ import {
   Row,
 } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
-import { Remove } from "@mui/icons-material";
 import { FormControl } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";

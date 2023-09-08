@@ -29,7 +29,7 @@ export const useClipboard = (): UseClipboardResult => {
         clearTimeout(id);
       };
     }
-  }, [isCopied.value]);
+  }, [isCopied]);
 
   return {
     isCopied: isCopied.value,

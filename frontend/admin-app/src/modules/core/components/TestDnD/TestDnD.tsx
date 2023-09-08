@@ -54,10 +54,10 @@ const getListStyle = (isDraggingOver: boolean) => ({
 });
 
 export class TestDnD extends Component<
-  {},
+  { test?: string },
   { items: { id: string; content: string }[] }
 > {
-  constructor(props: {}) {
+  constructor(props: { test?: string }) {
     super(props);
     this.state = {
       items: getItems(10),

@@ -1,10 +1,10 @@
 import dateApi from "date-and-time";
 
-export const addDays = (date: Date, days: number = 1) => {
+export const addDays = (date: Date, days = 1) => {
   return dateApi.addDays(date, days);
 };
 
-export const removeDays = (date: Date, days: number = 1) => {
+export const removeDays = (date: Date, days = 1) => {
   return dateApi.addDays(date, -days);
 };
 

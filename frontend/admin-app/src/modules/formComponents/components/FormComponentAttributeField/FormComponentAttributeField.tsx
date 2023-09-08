@@ -27,9 +27,7 @@ export interface FormComponentAttributeFieldProps<
 
 export const FormComponentAttributeField = <FormData extends FieldValues>({
   name,
-  type,
   attribute,
-  placeholder,
   form,
   ...props
 }: FormComponentAttributeFieldProps<FormData>) => {
