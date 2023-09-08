@@ -36,8 +36,6 @@ INSERT INTO `director` (`firstName`, `lastName`, `email`, `password`, `id`) VALU
 INSERT INTO `director` (`firstName`, `lastName`, `email`, `password`, `id`) VALUES
 ('Eva', 'Jones', 'eva.jones@test.de', @otherDirectorPassword, 'b6723b20-38a8-4516-9eac-42bda8b7412f');
 
--- test
-
 INSERT INTO `study`(`id`, `name`) VALUES (@studyId,'Test Studie 1');
 INSERT INTO `study`(`id`, `name`) VALUES (@studyId2,'Test Studie 2');
 

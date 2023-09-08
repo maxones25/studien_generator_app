@@ -54,15 +54,13 @@ jobs:
     needs: changes
     steps:
       - name: Get latest code
-        if: needs.changes.outputs.db == 'true'
         uses: actions/checkout@v2
 
       - name: Log into GitHub Container Registry
-        if: needs.changes.outputs.db == 'true'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and Push admin-frontend container
-        if: needs.changes.outputs.db == 'true'
+        # if: needs.changes.outputs.db == 'true'
         run: |
           docker build ./mysql -t ghcr.io/${{ github.repository }}/test-database:latest -f ./mysql/test.dockerfile
           docker push ghcr.io/${{ github.repository }}/test-database:latest
