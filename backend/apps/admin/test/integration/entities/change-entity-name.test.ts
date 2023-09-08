@@ -1,12 +1,12 @@
 import { TEST_DIRECTOR } from '@test/testData';
-import { createApp, createStudy, getDirectorAccessToken } from '@test/utils';
+import { createApp, getDirectorAccessToken } from '@test/utils';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
-import request from 'supertest';
 import { changeEntityName } from '@test/entities/changeEntityName';
 import { getEntityById } from '@test/entities/getEntityById';
 import { createEntity, createEntityId } from '@test/entities/createEntity';
+import { createStudyId } from '@test/studies/createStudy';
 
 describe('Change Entity Name', () => {
   let app: INestApplication;
@@ -23,7 +23,7 @@ describe('Change Entity Name', () => {
       TEST_DIRECTOR.MAX.PASSWORD,
     );
 
-    studyId = await createStudy(app, accessToken, fakeData.study());
+    studyId = await createStudyId(app, { accessToken, data: fakeData.study() });
 
     entityId = await createEntityId(app, {
       accessToken,
@@ -130,8 +130,10 @@ describe('Change Entity Name', () => {
   });
 
   it('should update entity even if entity already exists on other study', async () => {
-    const otherStudyId = await createStudy(app, accessToken, fakeData.study());
-
+    const otherStudyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
     const data = fakeData.entity();
 
     await createEntity(app, {

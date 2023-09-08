@@ -1,12 +1,12 @@
 import { TEST_DIRECTOR } from '@test/testData';
-import { createApp, createStudy, getDirectorAccessToken } from '@test/utils';
+import { createApp, getDirectorAccessToken } from '@test/utils';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
-import request from 'supertest';
 import { deleteEntity } from '@test/entities/deleteEntity';
-import { createEntity, createEntityId } from '@test/entities/createEntity';
+import { createEntityId } from '@test/entities/createEntity';
 import { getEntityById } from '@test/entities/getEntityById';
+import { createStudyId } from '@test/studies/createStudy';
 
 describe('Delete Entity', () => {
   let app: INestApplication;
@@ -22,7 +22,7 @@ describe('Delete Entity', () => {
       TEST_DIRECTOR.MAX.PASSWORD,
     );
 
-    studyId = await createStudy(app, accessToken, fakeData.study());
+    studyId = await createStudyId(app, { accessToken, data: fakeData.study() });
   });
 
   afterAll(async () => {

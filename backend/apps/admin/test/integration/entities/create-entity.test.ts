@@ -5,6 +5,7 @@ import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { createEntity } from '@test/entities/createEntity';
+import { createStudyId } from '@test/studies/createStudy';
 
 describe('Create Entity', () => {
   let app: INestApplication;
@@ -18,7 +19,7 @@ describe('Create Entity', () => {
       TEST_DIRECTOR.MAX.EMAIL,
       TEST_DIRECTOR.MAX.PASSWORD,
     );
-    studyId = await createStudy(app, accessToken, fakeData.study());
+    studyId = await createStudyId(app, { accessToken, data: fakeData.study() });
   });
 
   afterAll(async () => {

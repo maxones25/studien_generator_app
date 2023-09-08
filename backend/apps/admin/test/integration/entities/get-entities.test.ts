@@ -1,16 +1,11 @@
 import { TEST_DIRECTOR } from '@test/testData';
-import {
-  createApp,
-  createEntity,
-  createStudy,
-  getDirectorAccessToken,
-} from '@test/utils';
+import { createApp, getDirectorAccessToken } from '@test/utils';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
-import request from 'supertest';
 import { createEntityId } from '@test/entities/createEntity';
 import { getEntities } from '@test/entities/getEntities';
+import { createStudyId } from '@test/studies/createStudy';
 
 describe('Get Entities', () => {
   let app: INestApplication;
@@ -25,7 +20,7 @@ describe('Get Entities', () => {
       TEST_DIRECTOR.MAX.EMAIL,
       TEST_DIRECTOR.MAX.PASSWORD,
     );
-    studyId = await createStudy(app, accessToken, fakeData.study());
+    studyId = await createStudyId(app, { accessToken, data: fakeData.study() });
 
     entities = [];
 
@@ -62,7 +57,10 @@ describe('Get Entities', () => {
   });
 
   it('should return an empty list if no entities exist for the given studyId', async () => {
-    const studyId = await createStudy(app, accessToken, fakeData.study());
+    const studyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
 
     return getEntities(app, { accessToken, studyId })
       .expect(200)
@@ -73,7 +71,10 @@ describe('Get Entities', () => {
   });
 
   it('should only return entites of the given study', async () => {
-    const studyId = await createStudy(app, accessToken, fakeData.study());
+    const studyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
 
     const entityId = await createEntityId(app, {
       accessToken,

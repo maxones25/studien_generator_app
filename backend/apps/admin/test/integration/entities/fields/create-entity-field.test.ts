@@ -1,12 +1,12 @@
 import { TEST_DIRECTOR } from '@test/testData';
-import { createApp, createStudy, getDirectorAccessToken } from '@test/utils';
+import { createApp, getDirectorAccessToken } from '@test/utils';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
-import request from 'supertest';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { createEntityId } from '@test/entities/createEntity';
 import { createField } from '@test/entities/fields/createField';
+import { createStudyId } from '@test/studies/createStudy';
 
 describe('Create Entity Field', () => {
   let app: INestApplication;
@@ -21,7 +21,7 @@ describe('Create Entity Field', () => {
       TEST_DIRECTOR.MAX.EMAIL,
       TEST_DIRECTOR.MAX.PASSWORD,
     );
-    studyId = await createStudy(app, accessToken, fakeData.study());
+    studyId = await createStudyId(app, { accessToken, data: fakeData.study() });
     entityId = await createEntityId(app, {
       accessToken,
       studyId,
@@ -83,7 +83,10 @@ describe('Create Entity Field', () => {
   });
 
   it('should fail because entityId belongs to other study', async () => {
-    const studyId = await createStudy(app, accessToken, fakeData.study());
+    const studyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
     return createField(app, {
       accessToken,
       studyId,
