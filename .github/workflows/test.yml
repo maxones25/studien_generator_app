@@ -46,9 +46,7 @@ jobs:
   build-admin-frontend-container:
     runs-on: ubuntu-latest
     needs: changes
-    if: |
-      needs.changes.outputs.pipeline == 'true' ||
-      needs.changes.outputs.admin_frontend == 'true'
+    if: needs.changes.outputs.admin_frontend == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
@@ -64,9 +62,7 @@ jobs:
   build-admin-backend-container:
     runs-on: ubuntu-latest
     needs: changes
-    if: |
-      needs.changes.outputs.pipeline == 'true' ||
-      needs.changes.outputs.admin_backend == 'true'
+    if: needs.changes.outputs.admin_backend == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
@@ -78,6 +74,38 @@ jobs:
         run: |
           docker build ./backend -t ghcr.io/${{ github.repository }}/admin-backend:latest -f ./backend/admin.dockerfile
           docker push ghcr.io/${{ github.repository }}/admin-backend:latest
+
+  build-study-frontend-container:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.study_frontend == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Log into GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and Push study-frontend container
+        run: |
+          docker build ./frontend/study-app -t ghcr.io/${{ github.repository }}/study-frontend:latest -f ./frontend/study-app/dockerfile
+          docker push ghcr.io/${{ github.repository }}/study-frontend:latest
+
+  build-study-backend-container:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.study_backend == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Log into GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and Push admin-frontend container
+        run: |
+          docker build ./backend -t ghcr.io/${{ github.repository }}/study-backend:latest -f ./backend/study.dockerfile
+          docker push ghcr.io/${{ github.repository }}/study-backend:latest
 
   admin-backend-tests:
     runs-on: ubuntu-latest
@@ -112,7 +140,7 @@ jobs:
 
   study-backend-tests:
     runs-on: ubuntu-latest
-    needs: changes
+    needs: [changes, build-study-backend-container]
     if: needs.changes.outputs.study_backend == 'true'
     steps:
       - name: Get latest code
@@ -177,7 +205,7 @@ jobs:
 
   study-frontend-tests:
     runs-on: ubuntu-latest
-    needs: changes
+    needs: [changes, build-study-frontend-container, build-study-backend-container]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.study_backend == 'true' ||
