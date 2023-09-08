@@ -64,15 +64,17 @@ jobs:
   build-admin-backend-container:
     runs-on: ubuntu-latest
     needs: changes
-    if: needs.changes.outputs.admin_backend == 'true'
     steps:
       - name: Get latest code
+        if: needs.changes.outputs.admin_backend == 'true'
         uses: actions/checkout@v2
 
       - name: Log into GitHub Container Registry
+        if: needs.changes.outputs.admin_backend == 'true'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and Push admin-frontend container
+        if: needs.changes.outputs.admin_backend == 'true'
         run: |
           docker build ./backend -t ghcr.io/${{ github.repository }}/admin-backend:latest -f ./backend/admin.dockerfile
           docker push ghcr.io/${{ github.repository }}/admin-backend:latest
