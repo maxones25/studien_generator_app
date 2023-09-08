@@ -168,6 +168,16 @@ jobs:
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
 
+      - name: Wait for MySQL
+        run: |
+          for i in {1..10}; do
+            if docker-compose exec -T mysql mysqladmin ping -h localhost > /dev/null; then
+              break
+            fi
+            echo "Waiting for MySQL..."
+            sleep 5
+          done
+
       - name: Run Migrations
         working-directory: ./backend
         run: npm run db:migration:run
