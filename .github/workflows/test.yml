@@ -23,15 +23,21 @@ jobs:
             pipeline:
               - '.github/workflows/**'
             admin_backend:
-              - 'backend/apps/admin/**'
-              - 'backend/libs/**'
+              - 'backend/apps/admin/src/**'
+              - 'backend/libs/entities/**'
+              - 'backend/libs/shared/**'
+            admin_backend_tests:
+              - 'backend/apps/admin/test/**'
             admin_frontend:
               - 'frontend/admin-app/**'
             admin_frontend_tests:
               - 'tests/cypress/e2e/admin-app/**'
             study_backend:
-              - 'backend/apps/study/**'
-              - 'backend/libs/**'
+              - 'backend/apps/study/src/**'
+              - 'backend/libs/entities/**'
+              - 'backend/libs/shared/**'
+            study_backend_tests:
+              - 'backend/apps/study/test/**'
             study_frontend:
               - 'frontend/study-app/**'
             study_frontend_tests:
@@ -114,7 +120,8 @@ jobs:
     needs: [changes, build-admin-backend-container]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
-      needs.changes.outputs.admin_backend == 'true'
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_backend_tests == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
@@ -143,7 +150,10 @@ jobs:
   study-backend-tests:
     runs-on: ubuntu-latest
     needs: [changes, build-study-backend-container]
-    if: needs.changes.outputs.study_backend == 'true'
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.study_backend == 'true' ||
+      needs.changes.outputs.study_backend_tests == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2

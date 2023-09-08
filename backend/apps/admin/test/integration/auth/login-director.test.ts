@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import request from 'supertest';
 import { SignupDirectorDto } from '@admin/directors/dtos/SignupDirectorDto';
 
+// rtest
 describe('login director', () => {
   let app: INestApplication;
   let directorId: string;

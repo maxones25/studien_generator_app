@@ -24,18 +24,20 @@ export class DirectorsService {
     firstName,
     lastName,
   }: Omit<SignupDirectorDto, 'activationPassword'>) {
-    const director = await this.directorsRepository.getByEmail(email, true);
+    const foundDirector = await this.directorsRepository.getByEmail(email, true);
 
-    if (director) throw new BadRequestException('director already exists');
+    if (foundDirector) throw new BadRequestException('director already exists');
 
     const password = await this.passwordService.hash(rawPassword, 10);
 
-    return await this.directorsRepository.create({
+    const director = await this.directorsRepository.create({
       email,
       password,
       firstName,
       lastName,
     });
+
+    return director.id;
   }
 
   async get() {
