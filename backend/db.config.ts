@@ -12,11 +12,12 @@ const dataSource: DataSourceOptions = {
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  timezone: "Z",
+  timezone: 'Z',
+  extra: {
+    connectTimeout: 60000,
+  },
   entities: [__dirname + '/libs/entities/src/entities/**/*.entity.ts'],
-  migrations: [
-    __dirname + "/migrations/schema/*.ts"
-  ]
+  migrations: [__dirname + '/migrations/schema/*.ts'],
 };
 
 export function getConfig() {
