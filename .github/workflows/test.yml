@@ -171,7 +171,7 @@ jobs:
 
   study-backend-tests:
     runs-on: ubuntu-latest
-    needs: [changes, build-study-backend-container]
+    needs: [changes, build-database-container, build-study-backend-container]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.study_backend == 'true' ||
