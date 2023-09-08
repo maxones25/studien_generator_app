@@ -44,7 +44,7 @@ describe('signUp director', () => {
         ...director,
         activationPassword,
       })
-      .expect(409);
+      .expect(400);
   });
 
   it('should fail because email is not valid', async () => {

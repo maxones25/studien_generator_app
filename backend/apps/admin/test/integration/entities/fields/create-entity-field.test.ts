@@ -1,15 +1,12 @@
 import { TEST_DIRECTOR } from '@test/testData';
-import {
-  createApp,
-  createEntity,
-  createStudy,
-  getDirectorAccessToken,
-} from '@test/utils';
+import { createApp, createStudy, getDirectorAccessToken } from '@test/utils';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
 import request from 'supertest';
 import { validateUUID } from '@shared/modules/uuid/uuid';
+import { createEntityId } from '@test/entities/createEntity';
+import { createField } from '@test/entities/fields/createField';
 
 describe('Create Entity Field', () => {
   let app: INestApplication;
@@ -25,7 +22,11 @@ describe('Create Entity Field', () => {
       TEST_DIRECTOR.MAX.PASSWORD,
     );
     studyId = await createStudy(app, accessToken, fakeData.study());
-    entityId = await createEntity(app, accessToken, studyId, fakeData.entity());
+    entityId = await createEntityId(app, {
+      accessToken,
+      studyId,
+      data: fakeData.entity(),
+    });
   });
 
   afterAll(async () => {
@@ -33,125 +34,128 @@ describe('Create Entity Field', () => {
   });
 
   it('should create an entity field successfully', () => {
-    const entityField = fakeData.entityField();
-
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities/${entityId}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(entityField)
+    const data = fakeData.entityField();
+    return createField(app, { accessToken, studyId, entityId, data })
       .expect(201)
       .then((res) => {
-        expect(validateUUID(res.text)).toBeTruthy();
+        expect(validateUUID(res.body.id)).toBeTruthy();
       });
   });
 
   it('should fail because studyId invalid', () => {
-    return request(app.getHttpServer())
-      .post(`/studies/${false}/entities/${entityId}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(fakeData.entityField())
-      .expect(401);
+    const data = fakeData.entityField();
+    return createField(app, {
+      accessToken,
+      studyId: 'false',
+      entityId,
+      data,
+    }).expect(401);
   });
 
   it('should fail because entityId invalid', () => {
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities/${123}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(fakeData.entityField())
-      .expect(401);
+    const data = fakeData.entityField();
+    return createField(app, {
+      accessToken,
+      studyId,
+      entityId: 'invalid',
+      data,
+    }).expect(401);
   });
 
   it('should fail because studyId does not exist', () => {
-    return request(app.getHttpServer())
-      .post(`/studies/${fakeData.id()}/entities/${entityId}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(fakeData.entityField())
-      .expect(401);
+    const data = fakeData.entityField();
+    return createField(app, {
+      accessToken,
+      studyId: fakeData.id(),
+      entityId,
+      data,
+    }).expect(401);
   });
 
   it('should fail because entityId does not exist', () => {
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities/${fakeData.id()}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(fakeData.entityField())
-      .expect(401);
+    const data = fakeData.entityField();
+    return createField(app, {
+      accessToken,
+      studyId,
+      entityId: fakeData.id(),
+      data,
+    }).expect(401);
   });
 
   it('should fail because entityId belongs to other study', async () => {
     const studyId = await createStudy(app, accessToken, fakeData.study());
-
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities/${entityId}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(fakeData.entityField())
-      .expect(401);
+    return createField(app, {
+      accessToken,
+      studyId,
+      entityId,
+      data: fakeData.entityField(),
+    }).expect(401);
   });
 
   it('should fail because name is missing', async () => {
-    const entityField = fakeData.entityField();
-    delete entityField.name;
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities/${entityId}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(entityField)
-      .expect(400);
+    const data = fakeData.entityField();
+    delete data.name;
+    return createField(app, {
+      accessToken,
+      studyId,
+      entityId,
+      data,
+    }).expect(400);
   });
 
   it('should fail because name is empty', async () => {
-    const entityField = fakeData.entityField();
-    entityField.name = '';
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities/${entityId}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(entityField)
-      .expect(400);
+    const data = fakeData.entityField();
+    data.name = '';
+    return createField(app, {
+      accessToken,
+      studyId,
+      entityId,
+      data,
+    }).expect(400);
   });
 
   it('should fail because type is empty', async () => {
-    const entityField = fakeData.entityField();
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities/${entityId}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({ ...entityField, type: '' })
-      .expect(400);
+    const data = fakeData.entityField();
+    return createField(app, {
+      accessToken,
+      studyId,
+      entityId,
+      data: { ...data, type: '' },
+    }).expect(400);
   });
 
   it('should fail because type invalid', async () => {
-    const entityField = fakeData.entityField();
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities/${entityId}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({ ...entityField, type: 'invalid-type' })
-      .expect(400);
+    const data = fakeData.entityField();
+    return createField(app, {
+      accessToken,
+      studyId,
+      entityId,
+      data: { ...data, type: 'invalid' },
+    }).expect(400);
   });
 
   it('should fail because entity field already exists', async () => {
-    const entityField = fakeData.entityField();
+    const data = fakeData.entityField();
 
-    await request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities/${entityId}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(entityField)
-      .expect(201);
+    await createField(app, { accessToken, studyId, entityId, data }).expect(
+      201,
+    );
 
-    await request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities/${entityId}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(entityField)
-      .expect(422);
+    await createField(app, { accessToken, studyId, entityId, data }).expect(
+      422,
+    );
   });
 
   it('should fail because director is not a member of the study', async () => {
+    const data = fakeData.entityField();
     const accessToken = await getDirectorAccessToken(
       app,
       TEST_DIRECTOR.JOHN.EMAIL,
       TEST_DIRECTOR.JOHN.PASSWORD,
     );
 
-    await request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities/${entityId}/fields`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(fakeData.entityField())
-      .expect(401);
+    await createField(app, { accessToken, studyId, entityId, data }).expect(
+      401,
+    );
   });
 });

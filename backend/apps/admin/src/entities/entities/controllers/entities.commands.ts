@@ -1,4 +1,12 @@
-import { Body, Controller, Query, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Query,
+  Post,
+  UseGuards,
+  HttpStatus,
+  HttpCode,
+} from '@nestjs/common';
 import { EntitiesService } from '../entities.service';
 import { CreateEntityDto } from '../dtos/CreateEntityDto';
 import { UpdateEntityDto } from '../dtos/UpdateEntityDto';
@@ -25,6 +33,7 @@ export class EntitiesCommands {
 
   @Post('changeName')
   @Roles('admin', 'employee')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(EntityGuard)
   async changeName(
     @Query() { entityId }: EntityQueryDto,
@@ -34,6 +43,7 @@ export class EntitiesCommands {
   }
 
   @Post('deleteEntity')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(EntityGuard)
   async delete(@Query() { entityId }: EntityQueryDto) {

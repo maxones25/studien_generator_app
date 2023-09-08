@@ -3,8 +3,8 @@ import { createApp, createStudy, getDirectorAccessToken } from '@test/utils';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
-import request from 'supertest';
 import { validateUUID } from '@shared/modules/uuid/uuid';
+import { createEntity } from '@test/entities/createEntity';
 
 describe('Create Entity', () => {
   let app: INestApplication;
@@ -26,12 +26,9 @@ describe('Create Entity', () => {
   });
 
   it('should create an entity with a valid request', () => {
-    const entity = fakeData.entity();
+    const data = fakeData.entity();
 
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(entity)
+    return createEntity(app, { accessToken, studyId, data })
       .expect(201)
       .then((res) => {
         expect(validateUUID(res.text)).toBeTruthy();
@@ -39,69 +36,49 @@ describe('Create Entity', () => {
   });
 
   it('should fail because body is empty', () => {
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({})
-      .expect(400);
+    const data = {};
+    return createEntity(app, { accessToken, studyId, data }).expect(400);
   });
 
   it('should fail because name is empty', () => {
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({ name: '' })
-      .expect(400);
+    const data = { name: '' };
+    return createEntity(app, { accessToken, studyId, data }).expect(400);
   });
 
   it('should fail because name is not a string', () => {
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({ name: 123 })
-      .expect(400);
+    const data = { name: 123 };
+    return createEntity(app, { accessToken, studyId, data }).expect(400);
   });
 
   it('should fail because studyId does not exist', () => {
     const studyId = fakeData.id();
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(fakeData.entity())
-      .expect(401);
+    const data = fakeData.entity();
+    return createEntity(app, { accessToken, studyId, data }).expect(401);
   });
 
   it('should fail if entity already exists', async () => {
-    const entity = fakeData.entity();
+    const data = fakeData.entity();
 
-    await request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(entity)
-      .expect(201);
+    await createEntity(app, { accessToken, studyId, data }).expect(201);
 
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(entity)
-      .expect(422);
+    return createEntity(app, { accessToken, studyId, data }).expect(422);
   });
 
   it('should create entity even if entity already exists in other study', async () => {
     const otherStudyId = await createStudy(app, accessToken, fakeData.study());
 
-    const entity = fakeData.entity();
+    const data = fakeData.entity();
 
-    await request(app.getHttpServer())
-      .post(`/studies/${otherStudyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(entity)
-      .expect(201);
+    await createEntity(app, {
+      accessToken,
+      studyId: otherStudyId,
+      data,
+    }).expect(201);
 
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(entity)
-      .expect(201);
+    return createEntity(app, {
+      accessToken,
+      studyId,
+      data,
+    }).expect(201);
   });
 });

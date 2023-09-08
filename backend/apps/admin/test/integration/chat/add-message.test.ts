@@ -1,4 +1,4 @@
-import { createApp, getDirectorAccessToken, getParticipantAccessToken } from '@test/utils';
+import { createApp, getDirectorAccessToken } from '@test/utils';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import request from 'supertest';
@@ -34,8 +34,7 @@ describe('post message', () => {
       .post(`/chat`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send(addMessageDto)
-      .expect(201).then((res) => {
-      });
+      .expect(201)
   });
 
   afterAll(async () => {

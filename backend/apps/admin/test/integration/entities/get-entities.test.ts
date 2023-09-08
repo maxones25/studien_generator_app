@@ -9,6 +9,8 @@ import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
 import request from 'supertest';
+import { createEntityId } from '@test/entities/createEntity';
+import { getEntities } from '@test/entities/getEntities';
 
 describe('Get Entities', () => {
   let app: INestApplication;
@@ -29,7 +31,11 @@ describe('Get Entities', () => {
 
     for (let i = 0; i < 3; i++) {
       entities.push(
-        await createEntity(app, accessToken, studyId, fakeData.entity()),
+        await createEntityId(app, {
+          accessToken,
+          studyId,
+          data: fakeData.entity(),
+        }),
       );
     }
   });
@@ -39,9 +45,7 @@ describe('Get Entities', () => {
   });
 
   it('should return a list of entities for a valid studyId', () => {
-    return request(app.getHttpServer())
-      .get(`/studies/${studyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
+    return getEntities(app, { accessToken, studyId })
       .expect(200)
       .then((res) => {
         expect(Array.isArray(res.body)).toBeTruthy();
@@ -54,18 +58,13 @@ describe('Get Entities', () => {
   });
 
   it('should fail because studyId is not valid', () => {
-    return request(app.getHttpServer())
-      .get(`/studies/invalid-id/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(401);
+    return getEntities(app, { accessToken, studyId: 'invalid-id' }).expect(401);
   });
 
   it('should return an empty list if no entities exist for the given studyId', async () => {
     const studyId = await createStudy(app, accessToken, fakeData.study());
 
-    return request(app.getHttpServer())
-      .get(`/studies/${studyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
+    return getEntities(app, { accessToken, studyId })
       .expect(200)
       .then((res) => {
         expect(Array.isArray(res.body)).toBeTruthy();
@@ -76,16 +75,13 @@ describe('Get Entities', () => {
   it('should only return entites of the given study', async () => {
     const studyId = await createStudy(app, accessToken, fakeData.study());
 
-    const entityId = await createEntity(
-      app,
+    const entityId = await createEntityId(app, {
       accessToken,
       studyId,
-      fakeData.entity(),
-    );
+      data: fakeData.entity(),
+    });
 
-    return request(app.getHttpServer())
-      .get(`/studies/${studyId}/entities`)
-      .set('Authorization', `Bearer ${accessToken}`)
+    return getEntities(app, { accessToken, studyId })
       .expect(200)
       .then((res) => {
         expect(Array.isArray(res.body)).toBeTruthy();

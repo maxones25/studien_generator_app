@@ -24,6 +24,7 @@ jobs:
               - '.github/workflows/**'
             admin_backend:
               - 'backend/apps/admin/src/**'
+              - 'backend/migrations/**'
               - 'backend/libs/entities/**'
               - 'backend/libs/shared/**'
             admin_backend_tests:
@@ -34,6 +35,7 @@ jobs:
               - 'tests/cypress/e2e/admin-app/**'
             study_backend:
               - 'backend/apps/study/src/**'
+              - 'backend/migrations/**'
               - 'backend/libs/entities/**'
               - 'backend/libs/shared/**'
             study_backend_tests:
