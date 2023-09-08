@@ -5,7 +5,7 @@ import fakeData from '@test/fakeData';
 import { JwtService } from '@nestjs/jwt';
 import request from 'supertest';
 import { SignupDirectorDto } from '@admin/directors/dtos/SignupDirectorDto';
-
+// test
 describe('login director', () => {
   let app: INestApplication;
   let directorId: string;
