@@ -1,5 +1,5 @@
 import { Entity, Column, OneToMany } from 'typeorm';
-import { ChatMessage, ChatMessageReceipt, StudyMemberSchema } from '..';
+import { ChatMessage, ChatMessageReceipt, StudyMember } from '../..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 
 export class BaseDirector extends IdEntity {
@@ -22,8 +22,8 @@ export class Director extends BaseDirector {
     return `${this.firstName} ${this.lastName}`;
   }
 
-  @OneToMany(() => StudyMemberSchema, (studyMember) => studyMember.director)
-  public studies: StudyMemberSchema[];
+  @OneToMany(() => StudyMember, (studyMember) => studyMember.director)
+  public studies: StudyMember[];
 
   @OneToMany(() => ChatMessage, (message) => message.director)
   messages: ChatMessage[];

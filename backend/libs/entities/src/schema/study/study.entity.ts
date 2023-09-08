@@ -2,19 +2,16 @@ import { Column, OneToMany, Entity as TypeOrmEntity } from 'typeorm';
 import {
   StudyAttribute,
   Chat,
-  StudyMemberSchema,
-  GroupSchema,
-  ParticipantSchema,
+  StudyMember,
+  Group,
+  Participant,
   FormConfiguration,
   Form,
   Entity,
-  AppointmentSchema,
-} from '..';
+  Appointment,
+} from '../..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 import { Study } from '@entities/core/study';
-
-// export class BaseStudySchema extends IdEntity implements Study {
-// }
 
 @TypeOrmEntity('study')
 export class StudySchema extends IdEntity implements Study {
@@ -24,11 +21,11 @@ export class StudySchema extends IdEntity implements Study {
   @OneToMany(() => StudyAttribute, (attribute) => attribute.study)
   attributes: StudyAttribute[];
 
-  @OneToMany(() => GroupSchema, (group) => group.study)
-  groups: GroupSchema[];
+  @OneToMany(() => Group, (group) => group.study)
+  groups: Group[];
 
-  @OneToMany(() => AppointmentSchema, (appointment) => appointment.study)
-  appointments: AppointmentSchema[];
+  @OneToMany(() => Appointment, (appointment) => appointment.study)
+  appointments: Appointment[];
 
   @OneToMany(
     () => FormConfiguration,
@@ -39,11 +36,11 @@ export class StudySchema extends IdEntity implements Study {
   @OneToMany(() => Form, (form) => form.study)
   forms: Form[];
 
-  @OneToMany(() => StudyMemberSchema, (studyMember) => studyMember.study)
-  members: StudyMemberSchema[];
+  @OneToMany(() => StudyMember, (studyMember) => studyMember.study)
+  members: StudyMember[];
 
-  @OneToMany(() => ParticipantSchema, (participant) => participant.study)
-  participants: ParticipantSchema[];
+  @OneToMany(() => Participant, (participant) => participant.study)
+  participants: Participant[];
 
   @OneToMany(() => Entity, (entity) => entity.study)
   entities: Entity[];
