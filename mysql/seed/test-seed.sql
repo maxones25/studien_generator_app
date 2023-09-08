@@ -38,7 +38,7 @@ INSERT INTO `director` (`firstName`, `lastName`, `email`, `password`, `id`) VALU
 
 INSERT INTO `study`(`id`, `name`) VALUES (@studyId,'Test Studie 1');
 INSERT INTO `study`(`id`, `name`) VALUES (@studyId2,'Test Studie 2');
-
+--test
 INSERT INTO `study_member` (`studyId`, `directorId`, `role`) VALUES (@studyId, @directorId, 'admin');
 INSERT INTO `study_member` (`studyId`, `directorId`, `role`) VALUES (@studyId, @otherDirectorId, 'admin');
 
