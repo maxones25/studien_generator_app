@@ -1,4 +1,4 @@
-import { AppointmentSchema } from '@entities/schema/appointment/appointment.entity';
+import { AppointmentSchema } from '@entities/schema';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import { Appointment } from '@entities/core/appointment/Appointment';
