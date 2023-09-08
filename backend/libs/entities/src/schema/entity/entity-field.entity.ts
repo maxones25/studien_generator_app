@@ -5,7 +5,7 @@ import {
   Unique,
   OneToMany,
 } from 'typeorm';
-import { Entity, FormField } from '../..';
+import { Entity, FormField } from '..';
 import { FieldType } from '@shared/enums/field-type.enum';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 

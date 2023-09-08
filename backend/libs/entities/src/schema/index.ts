@@ -23,3 +23,4 @@ export * from './chat/chat-message-receipt.entity';
 export * from './study/study-attribute.entity';
 export * from './participant/participant-notification.entity';
 export * from './group/form-schedule-attribute.entity';
+export * from './appointment/appointment.entity';

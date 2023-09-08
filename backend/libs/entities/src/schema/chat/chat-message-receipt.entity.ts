@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { ChatMessage, Director, Participant } from '../..';
+import { ChatMessage, Director, ParticipantSchema} from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 
 export class BaseChatMessageReceipt extends IdEntity {
@@ -30,9 +30,9 @@ export class ChatMessageReceipt extends BaseChatMessageReceipt {
   })
   director: Director;
 
-  @ManyToOne(() => Participant, (participant) => participant.messageReceipts, {
+  @ManyToOne(() => ParticipantSchema, (participant) => participant.messageReceipts, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  participant: Participant;
+  participant: ParticipantSchema;
 }

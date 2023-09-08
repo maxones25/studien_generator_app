@@ -6,7 +6,7 @@ import {
   Unique,
 } from 'typeorm';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
-import { Group, Study, Form, FormSchedule } from '../..';
+import { GroupSchema, StudySchema, Form, FormSchedule } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 
 export class BaseFormConfiguration extends IdEntity {
@@ -41,15 +41,15 @@ export class FormConfiguration extends BaseFormConfiguration {
   })
   form: Form;
 
-  @ManyToOne(() => Study, (study) => study.formConfigurations, {
+  @ManyToOne(() => StudySchema, (study) => study.formConfigurations, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  study: Study;
+  study: StudySchema;
 
-  @ManyToOne(() => Group, (group) => group.forms, {
+  @ManyToOne(() => GroupSchema, (group) => group.forms, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  group: Group;
+  group: GroupSchema;
 }

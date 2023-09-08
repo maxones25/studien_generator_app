@@ -5,7 +5,7 @@ import {
   Unique,
   OneToMany,
 } from 'typeorm';
-import { Study, EntityField, FormEntity } from '../..';
+import { StudySchema, EntityField, FormEntity } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 
 export class BaseEntity extends IdEntity {
@@ -25,9 +25,9 @@ export class Entity extends BaseEntity {
   @OneToMany(() => FormEntity, (formEntity) => formEntity.entity)
   formEntities: FormEntity[];
 
-  @ManyToOne(() => Study, (study) => study.entities, {
+  @ManyToOne(() => StudySchema, (study) => study.entities, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  study: Study;
+  study: StudySchema;
 }

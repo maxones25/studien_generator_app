@@ -8,10 +8,10 @@ import {
   FormConfiguration,
   Form,
   Entity,
+  AppointmentSchema,
 } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 import { Study } from '@entities/core/study';
-import { AppointmentSchema } from '../appointment/appointment.entity';
 
 export class BaseStudySchema extends IdEntity implements Study {
   @Column({ unique: true })

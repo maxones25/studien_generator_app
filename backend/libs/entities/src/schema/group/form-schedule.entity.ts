@@ -1,6 +1,5 @@
 import { Entity as TypeOrmEntity, Column, ManyToOne, OneToMany } from 'typeorm';
-import { Task } from '../..';
-import { FormConfiguration, FormScheduleAttribute } from '../..';
+import { FormConfiguration, FormScheduleAttribute, Task } from '..';
 import { FormScheduleType } from '@admin/forms/configs/enums/FormScheduleType';
 import { FormSchedulePeriod } from '@admin/forms/configs/enums/FormSchedulePeriod';
 import { IdEntity } from '@entities/modules/schema/IdEntity';

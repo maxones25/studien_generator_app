@@ -4,7 +4,7 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
-import { FormSchedule } from '../..';
+import { FormSchedule } from '..';
 import { AttributeKey } from '@shared/modules/records/attribute.repository';
 import { BaseEntity } from '@entities/modules/schema/BaseEntity';
 
