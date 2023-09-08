@@ -119,7 +119,7 @@ jobs:
 
   admin-frontend-tests:
     runs-on: ubuntu-latest
-    needs: changes
+    needs: [changes, build-admin-frontend-container]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.admin_backend == 'true' ||
