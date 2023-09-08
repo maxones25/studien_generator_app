@@ -26,9 +26,7 @@ services:
 
   admin-backend:
     container_name: admin-backend
-    build:
-      context: ./backend
-      dockerfile: admin.dockerfile
+    image: ghcr.io/maxones25/studien_generator_app/admin-backend:latest
     depends_on:
       mysql:
         condition: service_healthy
@@ -47,8 +45,7 @@ services:
 
   admin-frontend:
     container_name: admin-frontend
-    build:
-      context: ./frontend/admin-app
+    image: ghcr.io/maxones25/studien_generator_app/admin-frontend:latest
     depends_on:
       admin-backend:
         condition: service_healthy
