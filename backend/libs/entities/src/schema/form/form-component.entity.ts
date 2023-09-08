@@ -5,7 +5,7 @@ import {
   Unique,
   OneToMany,
 } from 'typeorm';
-import { FormPage, FormField, FormComponentAttribute } from '../..';
+import { FormPage, FormField, FormComponentAttribute } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 
 export class BaseFormComponent extends IdEntity {

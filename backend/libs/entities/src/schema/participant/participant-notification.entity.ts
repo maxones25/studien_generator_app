@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { Task, Participant } from '../..';
+import { Task, ParticipantSchema } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 
 export class BaseParticipantNotification extends IdEntity {
@@ -24,11 +24,11 @@ export class BaseParticipantNotification extends IdEntity {
 
 @Entity()
 export class ParticipantNotification extends BaseParticipantNotification {
-  @ManyToOne(() => Participant, (participant) => participant.notifications, {
+  @ManyToOne(() => ParticipantSchema, (participant) => participant.notifications, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  participant: Participant;
+  participant: ParticipantSchema;
 
   @ManyToOne(() => Task, (task) => task.notifications, {
     cascade: true,

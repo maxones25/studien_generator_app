@@ -4,7 +4,7 @@ import {
   PrimaryColumn,
   ManyToOne,
 } from 'typeorm';
-import { Study } from '../..';
+import { StudySchema } from '..';
 import { AttributeKey } from '@shared/modules/records/attribute.repository';
 import { BaseEntity } from '@entities/modules/schema/BaseEntity';
 
@@ -36,9 +36,9 @@ export class BaseStudyAttribute extends BaseEntity {
 
 @TypeOrmEntity()
 export class StudyAttribute extends BaseStudyAttribute {
-  @ManyToOne(() => Study, (study) => study.attributes, {
+  @ManyToOne(() => StudySchema, (study) => study.attributes, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  study: Study;
+  study: StudySchema;
 }

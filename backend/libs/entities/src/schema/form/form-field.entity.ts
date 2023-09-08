@@ -1,5 +1,5 @@
 import { Entity as TypeOrmEntity, ManyToOne, Column, OneToMany } from 'typeorm';
-import { EntityField, RecordField, FormComponent, FormEntity } from '../..';
+import { EntityField, RecordField, FormComponent, FormEntity } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 
 export class BaseFormField extends IdEntity {

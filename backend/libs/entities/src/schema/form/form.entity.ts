@@ -10,9 +10,9 @@ import {
   FormEntity,
   FormPage,
   Record,
-  Study,
+  StudySchema,
   Task,
-} from '../..';
+} from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 
 export class BaseForm extends IdEntity {
@@ -44,9 +44,9 @@ export class Form extends BaseForm {
   @OneToMany(() => Record, (record) => record.form)
   records: Record[];
 
-  @ManyToOne(() => Study, (study) => study.forms, {
+  @ManyToOne(() => StudySchema, (study) => study.forms, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  study: Study;
+  study: StudySchema;
 }

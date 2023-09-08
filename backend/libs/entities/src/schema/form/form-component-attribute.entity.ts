@@ -4,7 +4,7 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
-import { FormComponent } from '../..';
+import { FormComponent } from '..';
 import { BaseEntity } from '@entities/modules/schema/BaseEntity';
 
 export class BaseFormComponentAttribute extends BaseEntity {

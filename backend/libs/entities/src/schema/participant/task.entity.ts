@@ -2,10 +2,10 @@ import { Entity as TypeOrmEntity, Column, ManyToOne, OneToMany } from 'typeorm';
 import {
   Form,
   FormSchedule,
-  Participant,
+  ParticipantSchema,
   ParticipantNotification,
   Record,
-} from '../..';
+} from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 
 export class BaseTask extends IdEntity {
@@ -48,11 +48,11 @@ export class Task extends BaseTask {
   })
   schedule: FormSchedule;
 
-  @ManyToOne(() => Participant, (participant) => participant.tasks, {
+  @ManyToOne(() => ParticipantSchema, (participant) => participant.tasks, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  participant: Participant;
+  participant: ParticipantSchema;
 
   @OneToMany(() => ParticipantNotification, (notification) => notification.task)
   notifications: ParticipantNotification[];

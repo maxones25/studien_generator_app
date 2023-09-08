@@ -1,10 +1,9 @@
 import {
   Entity as TypeOrmEntity,
   Column,
-  PrimaryGeneratedColumn,
   ManyToOne,
 } from 'typeorm';
-import { FormField, Record } from '../..';
+import { FormField, Record } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 
 export class BaseRecordField extends IdEntity {

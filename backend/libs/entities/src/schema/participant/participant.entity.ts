@@ -10,13 +10,13 @@ import {
   Chat,
   ChatMessage,
   ChatMessageReceipt,
-  Group,
+  GroupSchema,
   ParticipantAttribute,
   ParticipantNotification,
   Record,
-  Study,
+  StudySchema,
   Task,
-} from '../..';
+} from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 import { AppointmentSchema } from '../appointment/appointment.entity';
 import { Participant } from '@entities/core/participant/Participant';
@@ -53,17 +53,17 @@ export class ParticipantSchema extends BaseParticipantSchema {
   @OneToMany(() => Task, (task) => task.participant)
   tasks: Task[];
 
-  @ManyToOne(() => Study, (study) => study.participants, {
+  @ManyToOne(() => StudySchema, (study) => study.participants, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  study: Study;
+  study: StudySchema;
 
-  @ManyToOne(() => Group, (group) => group.participants, {
+  @ManyToOne(() => GroupSchema, (group) => group.participants, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  group: Group;
+  group: GroupSchema;
 
   @OneToOne(() => Chat, (chat) => chat.participant)
   chat: Chat;

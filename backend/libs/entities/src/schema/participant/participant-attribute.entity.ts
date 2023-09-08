@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, PrimaryColumn } from 'typeorm';
 import { AttributeKey } from '@shared/modules/records/attribute.repository';
-import { Participant } from '../..';
+import { ParticipantSchema } from '..';
 import { BaseEntity } from '@entities/modules/schema/BaseEntity';
 
 export type ParticipantsAttributes = {
@@ -28,9 +28,9 @@ export class BaseParticipantAttribute extends BaseEntity {
 
 @Entity({ name: 'participant_attributes' })
 export class ParticipantAttribute extends BaseParticipantAttribute {
-  @ManyToOne(() => Participant, (participant) => participant.attributes, {
+  @ManyToOne(() => ParticipantSchema, (participant) => participant.attributes, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  participant: Participant;
+  participant: ParticipantSchema;
 }
