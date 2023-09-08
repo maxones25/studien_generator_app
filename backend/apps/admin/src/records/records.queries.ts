@@ -30,7 +30,7 @@ export class RecordsQueries {
 
   @Post('export')
   @Roles('admin', 'employee')
-  export(@Query() { studyId }: StudyQueryDto, @Body() body: ExportParamsDto) {
+  exportData(@Query() { studyId }: StudyQueryDto, @Body() body: ExportParamsDto) {
     return this.recordsService.export(studyId, body);
   }
 }
