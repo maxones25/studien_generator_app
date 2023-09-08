@@ -14,6 +14,7 @@ export const IsActiveForm: React.FC<IsActiveFormProps> = ({ study }) => {
   const { t } = useTranslation();
   return (
     <Switch
+    testId="change isActive"
       label={t("isActive")}
       value={isActive}
       onChange={(e) => {

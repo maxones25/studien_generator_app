@@ -1,4 +1,4 @@
-import testData from "../../testData";
+import testData from "../../../testData";
 
 describe("login page", () => {
   it("should show login page", () => {

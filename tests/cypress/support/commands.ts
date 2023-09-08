@@ -2,7 +2,7 @@
 
 import "cypress-wait-until";
 import "cypress-localstorage-commands";
-import testData from "../testData";
+import { FakeStudy } from "../fakeData";
 
 declare global {
   namespace Cypress {
@@ -19,67 +19,25 @@ declare global {
             Cypress.Shadow
         >
       ): Chainable<any>;
+      createStudy(study: FakeStudy): Chainable<string>;
+      addMember(
+        studyId: string,
+        name: string,
+        role: "admin" | "employee"
+      ): Chainable<any>;
+      openStudyPage(studyId: string): void;
+      shouldShowAlert(type: "success" | "error", text?: string): void;
     }
   }
 }
 
-Cypress.Commands.add("shouldBeRelativePath", (path: string) => {
-  cy.url().should("equal", Cypress.config().baseUrl + path);
-});
+import "./api/fetchAccessToken";
+import "./api/createStudy";
 
-Cypress.Commands.add(
-  "getByTestId",
-  (
-    name: string,
-    options?: Partial<
-      Cypress.Loggable &
-        Cypress.Timeoutable &
-        Cypress.Withinable &
-        Cypress.Shadow
-    >
-  ) => {
-    return cy.get(`[data-testid="${name}"]`, options);
-  }
-);
+import "./ui/shouldBeRelativePath";
+import "./ui/getByTestId";
+import "./ui/setAccessToken";
+import "./ui/addMember";
+import "./ui/shouldShowAlert";
 
-Cypress.Commands.add("fetchAccessToken", (type: "director" | "participant") => {
-  if (type === "director") {
-    return cy
-      .request({
-        method: "POST",
-        url: `${Cypress.env("apiUrl")}/auth/login`,
-        body: {
-          email: testData.director.email,
-          password: testData.director.password,
-        },
-      })
-      .its("body")
-      .then(({ accessToken }) => {
-        Cypress.env("directorAccessToken", accessToken);
-        cy.setLocalStorage("accessToken", JSON.stringify(accessToken));
-        cy.saveLocalStorage();
-      });
-  } else if (type === "participant") {
-    return cy
-      .request({
-        method: "POST",
-        url: `${Cypress.env("apiUrl")}/auth/login`,
-        body: {
-          id: testData.participant.id,
-          password: testData.participant.password,
-        },
-      })
-      .its("body")
-      .then(({ accessToken }) => {
-        Cypress.env("participantAccessToken", accessToken);
-        cy.setLocalStorage("accessToken", JSON.stringify(accessToken));
-        cy.saveLocalStorage();
-      });
-  }
-});
-
-Cypress.Commands.add("setAccessToken", (type: "director" | "participant") => {
-  const accessToken = Cypress.env(type + "AccessToken");
-  cy.setLocalStorage("accessToken", JSON.stringify(accessToken));
-  cy.saveLocalStorage();
-});
+import "./router/openStudyPage";

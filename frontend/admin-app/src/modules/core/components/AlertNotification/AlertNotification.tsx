@@ -14,7 +14,12 @@ export const AlertNotification: React.FC<AlertNotificationProps> = () => {
       autoHideDuration={duration}
       onClose={reset}
     >
-      <Alert data-testid={`${color} alert`} variant="filled" color={color} onClose={reset}>
+      <Alert
+        data-testid={`${color} alert`}
+        variant="filled"
+        color={color}
+        onClose={reset}
+      >
         {message}
       </Alert>
     </Snackbar>

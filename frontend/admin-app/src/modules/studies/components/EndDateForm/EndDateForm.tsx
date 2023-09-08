@@ -22,6 +22,8 @@ export const EndDateForm: React.FC<EndDateFormProps> = ({ study }) => {
       <OnlyAdmin>
         {({ disabled }) => (
           <Editable
+            testId="edit end date"
+            inputTestId="change end date"
             type="date"
             defaultText={study.endDate ? study.endDate : ""}
             disabled={disabled}

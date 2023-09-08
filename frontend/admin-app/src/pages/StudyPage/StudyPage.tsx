@@ -9,9 +9,11 @@ import {
   Text,
 } from "@modules/core/components";
 import { useNavigationHelper, useOpen } from "@modules/core/hooks";
-import { AddMemberCard, MembersCard } from "@modules/members/components";
-import { MembersProvider } from "@modules/members/contexts";
-import { AppointmentsCard, StudyCard } from "@modules/studies/components";
+import {
+  AppointmentsCard,
+  MembersCard,
+  StudyCard,
+} from "@modules/studies/components";
 import { useStudy } from "@modules/studies/contexts";
 import {
   useChangeStudyName,
@@ -31,7 +33,7 @@ const StudyPage: React.FC<StudyPageProps> = () => {
   const restoreStudy = useRestoreStudy();
   const deleteDialog = useOpen();
   const changeName = useChangeStudyName();
-  const navigate = useNavigationHelper()
+  const navigate = useNavigationHelper();
 
   const isDeleted = study.deletedAt !== null;
 
@@ -40,6 +42,8 @@ const StudyPage: React.FC<StudyPageProps> = () => {
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Row>
           <Editable
+            testId="edit name"
+            inputTestId="change name"
             defaultText={study.name}
             onSubmit={(name) => changeName.mutate({ id: study.id, name })}
             isLoading={changeName.isLoading}
@@ -77,13 +81,8 @@ const StudyPage: React.FC<StudyPageProps> = () => {
       <Column flex={1} overflowY="hidden">
         <StudyCard study={study} />
         <Row flex={1} alignItems="stretch" overflowY="hidden">
-          <Column m={2} mt={0} p={2} boxShadow={4} overflowY="hidden">
-            <MembersProvider>
-              <AddMemberCard />
-              <MembersCard flex={1} />
-            </MembersProvider>
-          </Column>
-          <AppointmentsCard flex={1}/>
+          <MembersCard m={2} mt={0} p={2} />
+          <AppointmentsCard minWidth={400} />
         </Row>
       </Column>
       <DeleteDialog
@@ -92,7 +91,7 @@ const StudyPage: React.FC<StudyPageProps> = () => {
         onConfirm={({ hardDelete }) => {
           deleteStudy.mutateAsync({ study, hardDelete }).then(() => {
             deleteDialog.close();
-            navigate.to("/")
+            navigate.to("/");
           });
         }}
         record="study"

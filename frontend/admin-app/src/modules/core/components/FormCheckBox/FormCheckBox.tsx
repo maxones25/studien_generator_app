@@ -26,7 +26,6 @@ export const FormCheckBox = <TFieldValues extends FieldValues>({
   rules,
   defaultValue,
 }: FormCheckBoxProps<TFieldValues>) => {
-  console.log(defaultValue);
   return (
     <Controller
       control={control}
@@ -35,7 +34,7 @@ export const FormCheckBox = <TFieldValues extends FieldValues>({
       defaultValue={defaultValue}
       render={({ field: { value, ...field } }) => (
         <FormControlLabel
-          control={<Checkbox {...field} />}
+          control={<Checkbox data-testid={`change ${name}`} {...field} />}
           label={label}
           checked={value}
         />

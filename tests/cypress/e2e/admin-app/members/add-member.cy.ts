@@ -1,17 +1,22 @@
-import { faker } from "@faker-js/faker";
-import testData from "../../testData";
+import fakeData from "../../../fakeData";
 
-describe("add members", () => {
+describe("add member", () => {
+  let study;
+
   before(() => {
     return cy.fetchAccessToken("director");
   });
 
   beforeEach(() => {
-    cy.setAccessToken("director");
+    study = fakeData.study();
+    cy.createStudy(study).then((id) => {
+      study.id = id;
+      cy.setAccessToken("director");
+    });
   });
 
-  it.only("should add member as employee", () => {
-    cy.visit(`/studies/${testData.study.id}`);
+  it("should add member as employee", () => {
+    cy.openStudyPage(study.id);
 
     cy.contains("Mitarbeiter hinzufügen").should("exist");
 
@@ -30,8 +35,8 @@ describe("add members", () => {
     cy.getByTestId("select David Brown role").contains("Mitarbeiter");
   });
 
-  it.only("should add member as admin", () => {
-    cy.visit(`/studies/${testData.study.id}`);
+  it("should add member as admin", () => {
+    cy.openStudyPage(study.id);
 
     cy.contains("Mitarbeiter hinzufügen").should("exist");
 

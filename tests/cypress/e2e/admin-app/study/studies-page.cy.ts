@@ -1,9 +1,16 @@
 import { faker } from "@faker-js/faker";
-import testData from "../../testData";
+import fakeData from "../../../fakeData";
 
 describe("studies page", () => {
+  let study;
+
   before(() => {
-    return cy.fetchAccessToken("director");
+    return cy.fetchAccessToken("director").then(() => {
+      study = fakeData.study();
+      cy.createStudy(study).then((id) => {
+        study.id = id;
+      });
+    });
   });
 
   beforeEach(() => {
@@ -26,7 +33,7 @@ describe("studies page", () => {
 
     cy.getByTestId("loading studies spinner").should("exist");
 
-    cy.contains(testData.study.name).should("exist");
+    cy.contains(study.name).should("exist");
   });
 
   it("should open create study dialog", () => {
@@ -73,7 +80,6 @@ describe("studies page", () => {
     cy.getByTestId("open study 0").click();
 
     cy.getByTestId("study page").should("exist");
-
   });
 
   it("should logout director", () => {

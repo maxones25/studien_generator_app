@@ -21,10 +21,14 @@ export interface EditableProps extends Omit<RowProps, "onSubmit"> {
   isLoading?: boolean;
   disabled?: boolean;
   showClose?: boolean;
+  testId?: string;
+  inputTestId?: string;
   onSubmit: (value: string) => void;
 }
 
 export const Editable: React.FC<EditableProps> = ({
+  testId,
+  inputTestId,
   children,
   defaultText,
   type = "text",
@@ -71,6 +75,9 @@ export const Editable: React.FC<EditableProps> = ({
             placeholder={defaultText}
             defaultValue={defaultText}
             onKeyDown={handleKeyDown}
+            inputProps={{
+              "data-testid": inputTestId,
+            }}
             endAdornment={
               showClose && (
                 <InputAdornment position="end">
@@ -87,10 +94,15 @@ export const Editable: React.FC<EditableProps> = ({
         </ClickAwayListener>
       ) : (
         <Button
-          data-testid="edit icon button"
+          data-testid={testId}
           onClick={() => setEdit(true)}
           disabled={disabled}
-          sx={{ textTransform: "none", flex: 1, display: "flex", justifyContent: "space-between" }}
+          sx={{
+            textTransform: "none",
+            flex: 1,
+            display: "flex",
+            justifyContent: "space-between",
+          }}
         >
           {children}
           {isLoading ? (

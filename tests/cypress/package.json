@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:admin": "cypress run --spec 'e2e/admin-app/*' --config-file admin-app.cypress.config.ts",
+    "test:admin": "cypress run --config-file admin-app.cypress.config.ts",
     "test:study": "cypress run --spec 'e2e/study-app/*' --config-file study-app.cypress.config.ts",
     "cypress:open:admin": "cypress open --config-file admin-app.cypress.config.ts",
     "cypress:open:study": "cypress open --config-file study-app.cypress.config.ts"

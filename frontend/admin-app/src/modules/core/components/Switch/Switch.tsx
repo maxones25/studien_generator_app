@@ -7,14 +7,20 @@ import React, { forwardRef } from "react";
 
 export interface SwitchProps extends MSwitchProps {
   label?: string;
+  testId?: string;
 }
 
 export const Switch: React.FC<SwitchProps> = forwardRef(
-  ({ label, ...props }, ref) => {
+  ({ label, testId, ...props }, ref) => {
     return (
       <FormControlLabel
         control={
-          <MSwitch {...props} ref={ref} checked={props.value ? true : false} />
+          <MSwitch
+            {...props}
+            ref={ref}
+            data-testid={testId}
+            checked={props.value ? true : false}
+          />
         }
         label={label}
       />

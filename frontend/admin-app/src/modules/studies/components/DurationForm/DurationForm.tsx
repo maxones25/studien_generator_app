@@ -18,6 +18,7 @@ export const DurationForm: React.FC<DurationFormProps> = ({ study }) => {
     <OnlyAdmin>
       {({ disabled }) => (
         <TextField
+          data-testid="change duration"
           label={t("duration")}
           type="number"
           sx={{ ml: 2, width: 160 }}

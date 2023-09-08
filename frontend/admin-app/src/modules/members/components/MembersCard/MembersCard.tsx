@@ -68,8 +68,18 @@ export const MembersCard: React.FC<MembersCardProps> = (props) => {
                         readOnly={disabled}
                         data-testid={`select ${displayName} role`}
                       >
-                        <MenuItem value="admin">{t("admin")}</MenuItem>
-                        <MenuItem value="employee">{t("member")}</MenuItem>
+                        <MenuItem
+                          value="employee"
+                          data-testid={`select ${displayName} role option employee`}
+                        >
+                          {t("member")}
+                        </MenuItem>
+                        <MenuItem
+                          data-testid={`select ${displayName} role option admin`}
+                          value="admin"
+                        >
+                          {t("admin")}
+                        </MenuItem>
                       </Select>
                     )}
                   </OnlyAdmin>
@@ -78,7 +88,7 @@ export const MembersCard: React.FC<MembersCardProps> = (props) => {
                   <OnlyAdmin>
                     {({ disabled }) => (
                       <IconButton
-                        testId="remove member button"
+                        testId={`remove member ${displayName}`}
                         color="error"
                         disabled={disabled}
                         Icon={<Remove />}

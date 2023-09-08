@@ -39,7 +39,7 @@ export const StudiesList: React.FC<StudiesListProps> = ({ onSelect }) => {
       ) : !hasStudies ? (
         <Text>{t("no studies found")}</Text>
       ) : (
-        <List sx={{ width: "100%" }}>
+        <List data-testid="studies list" sx={{ width: "100%" }}>
           {getStudies.data?.map((study, i, arr) => (
             <ListItem
               key={study.id}
