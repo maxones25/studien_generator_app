@@ -57,6 +57,7 @@ const FormsPage: React.FC<FormsPageProps> = () => {
       </Toolbar>
       {formData.hasData && (
         <EditableListItem
+        record="form"
           onCancel={formData.reset}
           onChange={(name) => formData.set({ name })}
           onSave={handleCreate}

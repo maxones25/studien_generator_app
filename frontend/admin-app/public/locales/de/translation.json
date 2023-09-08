@@ -21,7 +21,7 @@
   "login link": "Schon registriert? Hier gehts zum Login.",
   "studies": "Studien",
   "study": "Studie",
-  "create data": "{{data}} anlegen",
+  "create record": "{{record}} anlegen",
   "update data": "{{data}} editieren",
   "delete data": "{{data}} löschen",
   "delete study question": "Wollen Sie die Studie '{{name}}' wirklich löschen? Alle erhobenen Daten werden hierbei ebenfalls gelöscht. Geben Sie hierfür den Namen der Studie ein:",
@@ -197,5 +197,6 @@
   "appointments": "Termine",
   "startTime": "Startzeit",
   "endTime": "Endzeit",
-  "subject": "Betreff"
+  "subject": "Betreff",
+  "name should not be empty": "Name darf nicht leer sein"
 }

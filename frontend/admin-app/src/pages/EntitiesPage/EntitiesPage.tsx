@@ -49,7 +49,7 @@ const EntitiesPage: React.FC<EntitiesPageProps> = () => {
         <Text variant="h6">{t("entities")}</Text>
         <Row>
           <IconButton
-            testId="create participant button"
+            testId="open entity input"
             Icon={<Add />}
             color={entityData.hasData ? "primary" : "default"}
             onClick={entityData.handleSet({ name: "" })}
@@ -75,6 +75,7 @@ const EntitiesPage: React.FC<EntitiesPageProps> = () => {
       )}
       {entityData.hasData && (
         <EditableListItem
+          record="entity"
           onCancel={entityData.reset}
           onChange={(name) => entityData.set({ name })}
           onSave={handleCreate}
@@ -84,6 +85,7 @@ const EntitiesPage: React.FC<EntitiesPageProps> = () => {
         />
       )}
       <DataList
+        testId="entities list"
         client={getEntities}
         errorText={t("fetch error data", { data: t("entities") })}
         noDataText={t("no data found", { data: t("entities") })}

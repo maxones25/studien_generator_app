@@ -4,6 +4,7 @@ import { IconButton, Row } from "..";
 import { Check, Close } from "@mui/icons-material";
 
 export interface EditableListItemProps {
+  record: string;
   inputProps?: InputProps;
   onCancel: () => void;
   onSave: () => void;
@@ -11,6 +12,7 @@ export interface EditableListItemProps {
 }
 
 export const EditableListItem: React.FC<EditableListItemProps> = ({
+  record,
   inputProps,
   onCancel,
   onChange,
@@ -26,6 +28,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = ({
     <ClickAwayListener onClickAway={onCancel}>
       <ListItem sx={{ flexDirection: "column" }}>
         <Input
+          data-testid={`change ${record} text`}
           onKeyDown={handleKeyDown}
           onChange={(e) => {
             onChange(e.currentTarget.value);
@@ -35,13 +38,13 @@ export const EditableListItem: React.FC<EditableListItemProps> = ({
         />
         <Row>
           <IconButton
-            testId="save participant"
+            testId={`submit ${record}`}
             Icon={<Check />}
             size="small"
             onClick={onSave}
           />
           <IconButton
-            testId="cancel participant"
+            testId={`cancel ${record}`}
             Icon={<Close />}
             size="small"
             onClick={onCancel}

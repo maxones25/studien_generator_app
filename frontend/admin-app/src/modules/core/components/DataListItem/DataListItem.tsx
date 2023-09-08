@@ -1,8 +1,8 @@
 import { useMenuAnchor } from "@modules/core/hooks";
 import { MoreVert } from "@mui/icons-material";
-import { IconButton, ListItem, Menu, MenuItem } from "@mui/material";
+import { IconButton, ListItem, ListItemProps, Menu, MenuItem } from "@mui/material";
 
-export interface DataListItemProps<ItemData> {
+export interface DataListItemProps<ItemData> extends ListItemProps {
   item: ItemData;
   children: JSX.Element | JSX.Element[] | false;
   divider?: boolean;
@@ -20,6 +20,7 @@ export function DataListItem<ItemData>({
   disablePadding = true,
   onDelete,
   onUpdate,
+  ...props
 }: DataListItemProps<ItemData>) {
   const menuAnchor = useMenuAnchor();
 
@@ -30,6 +31,7 @@ export function DataListItem<ItemData>({
 
   return (
     <ListItem
+    {...props}
       divider={divider}
       disablePadding={disablePadding}
       secondaryAction={

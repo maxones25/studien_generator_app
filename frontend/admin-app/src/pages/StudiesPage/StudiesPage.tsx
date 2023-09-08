@@ -35,7 +35,7 @@ const StudiesPage: React.FC<StudiesPageProps> = () => {
             testId="create-study-button"
             onClick={editFormData.handleSet({ name: "" })}
           >
-            {t("create data", { data: t("study") })}
+            {t("create record", { record: t("study") })}
           </Button>
         </Row>
         <StudiesList onSelect={(study) => navigate.to(study.id)} />

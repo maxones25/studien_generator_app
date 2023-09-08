@@ -26,7 +26,7 @@ describe("add member", () => {
 
     cy.getByTestId("select role").click();
 
-    cy.getByTestId("select role option 0").click();
+    cy.getByTestId("select role option employee").click();
 
     cy.getByTestId("submit invite member").click();
 
@@ -46,7 +46,7 @@ describe("add member", () => {
 
     cy.getByTestId("select role").click();
 
-    cy.getByTestId("select role option 1").click();
+    cy.getByTestId("select role option admin").click();
 
     cy.getByTestId("submit invite member").click();
 

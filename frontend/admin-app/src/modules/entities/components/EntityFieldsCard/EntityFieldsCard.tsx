@@ -17,7 +17,14 @@ import {
 } from "@modules/fields/hooks";
 import { FieldFormData } from "@modules/fields/types";
 import { Add } from "@mui/icons-material";
-import { Chip, Divider, Drawer, ListItemButton } from "@mui/material";
+import {
+  Chip,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  ListItemButton,
+} from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -49,7 +56,7 @@ export const EntityFieldsCard: React.FC<EntityFieldsCardProps> = () => {
       <Row m={2} mt={1} mb={1} justifyContent="space-between">
         <Text>{t("fields")}</Text>
         <IconButton
-          testId="add field group button"
+          testId="open field dialog"
           onClick={editData.handleSet({
             name: "",
             type: "Text",
@@ -67,6 +74,7 @@ export const EntityFieldsCard: React.FC<EntityFieldsCardProps> = () => {
         noDataText={t("no data found", { data: t("fields") })}
         renderItem={(field, { isLast }) => (
           <DataListItem
+            data-testid={`field item ${field.name}`}
             key={field.id}
             item={field}
             onDelete={deleteData.handleSet(field)}
@@ -75,6 +83,7 @@ export const EntityFieldsCard: React.FC<EntityFieldsCardProps> = () => {
             <ListItemButton onClick={editData.handleSet(field)}>
               <Text sx={{ minWidth: 150 }}>{field.name}</Text>
               <Chip
+                data-testid="field type"
                 label={t(field.type)}
                 color="primary"
                 variant="filled"
@@ -85,19 +94,16 @@ export const EntityFieldsCard: React.FC<EntityFieldsCardProps> = () => {
           </DataListItem>
         )}
       />
-      <Drawer
-        open={editData.hasData}
-        variant="temporary"
-        anchor="right"
-        onClose={editData.reset}
-      >
-        <FieldForm
-          onSubmit={handeSave}
-          isNew={editData.isNew}
-          values={editData.data}
-          formProps={{ p: 1 }}
-        />
-      </Drawer>
+      <Dialog open={editData.hasData} onClose={editData.reset}>
+        <DialogTitle>
+          {editData.isNew
+            ? t("create record", { record: t("field") })
+            : editData.data?.name}
+        </DialogTitle>
+        <DialogContent>
+          <FieldForm onSubmit={handeSave} values={editData.data} />
+        </DialogContent>
+      </Dialog>
       <DataDialog
         Form={DeleteFieldForm}
         mode="delete"

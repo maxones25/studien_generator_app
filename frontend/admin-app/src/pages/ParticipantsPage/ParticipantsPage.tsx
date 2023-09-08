@@ -123,6 +123,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
       )}
       {participantData.hasData && (
         <EditableListItem
+          record="participant"
           onCancel={participantData.reset}
           onChange={(number) => participantData.set({ number })}
           onSave={handleCreateParticipant}

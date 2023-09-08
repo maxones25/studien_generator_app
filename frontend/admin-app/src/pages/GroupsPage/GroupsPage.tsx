@@ -83,6 +83,7 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
       )}
       {editGroupData.hasData && (
         <EditableListItem
+          record="group"
           onCancel={editGroupData.reset}
           onChange={(name) => editGroupData.set({ name })}
           onSave={handleCreateGroup}

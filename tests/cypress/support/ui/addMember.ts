@@ -11,11 +11,7 @@ Cypress.Commands.add(
 
     cy.getByTestId("select role").click();
 
-    if (role === "admin") {
-      cy.getByTestId("select role option 1").click();
-    } else {
-      cy.getByTestId("select role option 0").click();
-    }
+    cy.getByTestId(`select role option ${role}`).click();
 
     cy.getByTestId("submit invite member").click();
 

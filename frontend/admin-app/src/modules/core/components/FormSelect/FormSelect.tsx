@@ -38,9 +38,9 @@ export interface FormSelectProps<TFieldValues extends FieldValues> {
 }
 
 export function FormSelect<TFieldValues extends FieldValues>({
-  testId,
   control,
   name,
+  testId = `change ${name}`,
   options,
   rules,
   size,
@@ -71,8 +71,12 @@ export function FormSelect<TFieldValues extends FieldValues>({
               }}
               {...field}
             >
-              {options.map((option, i) => (
-                <MenuItem key={option.value} value={option.value} data-testid={`${testId} option ${i}`}>
+              {options.map((option,) => (
+                <MenuItem
+                  key={option.value}
+                  value={option.value}
+                  data-testid={`${testId} option ${option.value}`}
+                >
                   {option.label}
                 </MenuItem>
               ))}

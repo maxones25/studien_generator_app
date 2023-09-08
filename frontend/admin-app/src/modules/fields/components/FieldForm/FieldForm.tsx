@@ -1,13 +1,12 @@
 import {
+  Button,
+  ExperimentalFormTextField,
   Form,
   FormSelect,
-  FormTextField,
-  Text,
 } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
 import { FieldFormData, FieldTypeMap } from "@modules/fields/types";
-import { Save } from "@mui/icons-material";
-import { IconButton, Toolbar } from "@mui/material";
+import { FormControl } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -18,26 +17,13 @@ export const FieldForm: React.FC<FieldFormProps> = ({
   onSubmit,
   values,
   formProps,
-  isNew,
 }) => {
   const { t } = useTranslation();
   const form = useForm<FieldFormData>({ values });
 
   return (
     <Form form={form} {...formProps} onSubmit={onSubmit}>
-      <Toolbar sx={{ justifyContent: "space-between" }}>
-        <Text variant="h6">{isNew ? "New Field" : "Update Field"}</Text>
-        <IconButton data-testid="field form submit button" type="submit">
-          <Save />
-        </IconButton>
-      </Toolbar>
-      <FormTextField
-        label="Name"
-        formState={form.formState}
-        textFieldProps={form.register("name", {
-          required: "required",
-        })}
-      />
+      <ExperimentalFormTextField form={form} name="name" required />
       <FormSelect
         label="Type"
         control={form.control}
@@ -48,6 +34,11 @@ export const FieldForm: React.FC<FieldFormProps> = ({
           value,
         }))}
       />
+      <FormControl margin="normal">
+        <Button testId="submit field form" type="submit">
+          {t("save")}
+        </Button>
+      </FormControl>
     </Form>
   );
 };
