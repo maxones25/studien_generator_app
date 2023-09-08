@@ -56,7 +56,7 @@ jobs:
 
       - name: Build and Push admin-frontend container
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/admin-frontend:latest -f ./frontend/admin-app/dockerfile
+          docker build ./frontend/admin-app -t ghcr.io/${{ github.repository }}/admin-frontend:latest -f ./frontend/admin-app/dockerfile
           docker push ghcr.io/${{ github.repository }}/admin-frontend:latest
 
   admin-backend-tests:
