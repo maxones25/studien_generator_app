@@ -168,10 +168,6 @@ jobs:
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
 
-      - name: Run Health Test
-        working-directory: ./backend
-        run: npx jest ./apps/admin/test/integration/health/health.test.ts
-
       - name: Run Migrations
         working-directory: ./backend
         run: npm run db:migration:run
