@@ -1,7 +1,6 @@
 import { Entity, Column, ManyToOne, OneToMany, Unique } from 'typeorm';
-import { StudySchema, ParticipantSchema, FormConfiguration } from '..';
+import { StudySchema, ParticipantSchema, FormConfiguration, AppointmentSchema } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
-import { AppointmentSchema } from '../appointment/appointment.entity';
 import { Group } from '@entities/core/group/Group';
 
 export class BaseGroupSchema extends IdEntity implements Group {
