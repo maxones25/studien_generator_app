@@ -163,6 +163,10 @@ jobs:
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
 
+      - name: Run Migrations
+        working-directory: ./backend
+        run: npm run db:migration:run
+
       - name: Run integration tests
         working-directory: ./backend
         run: npm run test:admin:integration
@@ -201,7 +205,8 @@ jobs:
 
   admin-frontend-tests:
     runs-on: ubuntu-latest
-    needs: [changes, build-admin-frontend-container, build-admin-backend-container]
+    needs:
+      [changes, build-admin-frontend-container, build-admin-backend-container]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.admin_backend == 'true' ||
@@ -238,7 +243,8 @@ jobs:
 
   study-frontend-tests:
     runs-on: ubuntu-latest
-    needs: [changes, build-study-frontend-container, build-study-backend-container]
+    needs:
+      [changes, build-study-frontend-container, build-study-backend-container]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.study_backend == 'true' ||
