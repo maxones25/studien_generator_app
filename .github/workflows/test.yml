@@ -28,20 +28,16 @@ jobs:
               - 'database-docker-compose.yaml'
             admin_frontend:
               - 'frontend/admin-app/**'
+            admin_frontend_tests:
               - 'tests/cypress/e2e/admin-app/**'
-              - 'admin-docker-compose.yaml'
-              - 'prod-docker-compose.yaml'
-              - 'test-docker-compose.yaml'
             study_backend:
               - 'backend/apps/study/**'
               - 'backend/libs/**'
               - 'database-docker-compose.yaml'
             study_frontend:
               - 'frontend/study-app/**'
+            study_frontend_tests:
               - 'tests/cypress/e2e/study-app/**'
-              - 'study-docker-compose.yaml'
-              - 'prod-docker-compose.yaml'
-              - 'test-docker-compose.yaml'
 
   build-admin-frontend-container:
     runs-on: ubuntu-latest
@@ -177,7 +173,8 @@ jobs:
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.admin_backend == 'true' ||
-      needs.changes.outputs.admin_frontend == 'true'
+      needs.changes.outputs.admin_frontend == 'true' ||
+      needs.changes.outputs.admin_frontend_tests == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
@@ -213,7 +210,8 @@ jobs:
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.study_backend == 'true' ||
-      needs.changes.outputs.study_frontend == 'true'
+      needs.changes.outputs.study_frontend == 'true' ||
+      needs.changes.outputs.study_frontend_tests == 'true'
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
