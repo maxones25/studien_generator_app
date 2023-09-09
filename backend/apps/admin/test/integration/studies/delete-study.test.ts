@@ -1,10 +1,11 @@
 import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
 import fakeData from '@test/fakeData';
-import { createApp, getDirectorAccessToken, createStudy } from '@test/utils';
+import { createApp, getDirectorAccessToken } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
-import { Roles } from '@admin/roles/roles.enum';
 import { AppModule } from '@admin/app.module';
+import { createStudyId } from '@test/studies/createStudy';
+import { deleteStudy } from '@test/studies/deleteStudy';
+import { getStudyById } from '@test/studies/getStudyById';
 
 describe('Delete Study', () => {
   let app: INestApplication;
@@ -26,35 +27,47 @@ describe('Delete Study', () => {
     );
   });
 
-  it('should delete a study', async () => {
-    const study = fakeData.study();
-    const studyId = await createStudy(app, accessToken, study);
+  afterAll(async () => {
+    await app.close();
+  });
 
-    await request(app.getHttpServer())
-      .delete(`/studies/${studyId}`)
-      .set('Authorization', `Bearer ${accessToken}`)
+  it('should hard delete a study', async () => {
+    const data = fakeData.study();
+    const studyId = await createStudyId(app, { accessToken, data });
+
+    await deleteStudy(app, { accessToken, studyId })
       .expect(200)
       .then((res) => {
         expect(parseInt(res.text)).toEqual(1);
       });
 
-    await request(app.getHttpServer())
-      .get(`/studies/${studyId}`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(401);
+    await getStudyById(app, { accessToken, studyId }).expect(401);
+  });
+
+  it('should soft delete a study', async () => {
+    const data = fakeData.study();
+    const studyId = await createStudyId(app, { accessToken, data });
+
+    await deleteStudy(app, { accessToken, studyId, hardDelete: false })
+      .expect(200)
+      .then((res) => {
+        expect(parseInt(res.text)).toEqual(1);
+      });
+
+    await getStudyById(app, { accessToken, studyId })
+      .expect(200)
+      .then((res) => {
+        expect(res.body.deletedAt).not.toBeNull();
+      });
   });
 
   it('should fail because user is not an admin', async () => {
-    const study = fakeData.study();
-    const studyId = await createStudy(app, accessToken, study);
+    const data = fakeData.study();
+    const studyId = await createStudyId(app, {
+      accessToken: johnAccessToken,
+      data,
+    });
 
-    return request(app.getHttpServer())
-      .delete(`/studies/${studyId}`)
-      .set('Authorization', `Bearer ${johnAccessToken}`)
-      .expect(401);
-  });
-
-  afterAll(async () => {
-    await app.close();
+    return deleteStudy(app, { accessToken, studyId }).expect(401);
   });
 });

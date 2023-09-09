@@ -4,6 +4,8 @@ import {
   Post,
   Query,
   UseGuards,
+  HttpCode,
+  HttpStatus
 } from '@nestjs/common';
 import { StudiesService } from '../studies.service';
 import { CreateStudyDto } from '../dtos/CreateStudyDto';
@@ -28,6 +30,7 @@ export class StudiesCommands {
   }
 
   @Post('changeName')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(StudyGuard, IsStudyDeletedGuard)
   @Roles('admin')
   async update(
@@ -38,6 +41,7 @@ export class StudiesCommands {
   }
 
   @Post('setDuration')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(StudyGuard, IsStudyDeletedGuard)
   async setDuration(
@@ -48,6 +52,7 @@ export class StudiesCommands {
   }
 
   @Post('delete')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(StudyGuard)
   async delete(
@@ -62,6 +67,7 @@ export class StudiesCommands {
   }
 
   @Post('restore')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(StudyGuard)
   async restore(@Query() { studyId }: StudyQueryDto) {
@@ -69,6 +75,7 @@ export class StudiesCommands {
   }
 
   @Post('setStartDate')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(StudyGuard, IsStudyDeletedGuard)
   async setStartDate(
@@ -80,6 +87,7 @@ export class StudiesCommands {
   }
 
   @Post('setEndDate')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(StudyGuard, IsStudyDeletedGuard)
   async setEndDate(
@@ -91,6 +99,7 @@ export class StudiesCommands {
   }
 
   @Post('setActivation')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(StudyGuard, IsStudyDeletedGuard)
   async setActivation(

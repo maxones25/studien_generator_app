@@ -1,17 +1,16 @@
 import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
 import fakeData from '@test/fakeData';
 import {
   createApp,
   createDirector,
-  createStudy,
   getDirectorAccessToken,
   getEnv,
 } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import { Roles } from '@admin/roles/roles.enum';
-import { ConfigService } from '@nestjs/config';
+import { createStudy, createStudyId } from '@test/studies/createStudy';
+import { getStudies } from '@test/studies/getStudies';
 
 describe('Get Studies', () => {
   let app: INestApplication;
@@ -35,9 +34,15 @@ describe('Get Studies', () => {
     );
 
     studyIds = [];
-    studyIds.push(await createStudy(app, accessToken, fakeData.study()));
-    studyIds.push(await createStudy(app, accessToken, fakeData.study()));
-    studyIds.push(await createStudy(app, accessToken, fakeData.study()));
+    studyIds.push(
+      await createStudyId(app, { accessToken, data: fakeData.study() }),
+    );
+    studyIds.push(
+      await createStudyId(app, { accessToken, data: fakeData.study() }),
+    );
+    studyIds.push(
+      await createStudyId(app, { accessToken, data: fakeData.study() }),
+    );
 
     johnAccessToken = await getDirectorAccessToken(
       app,
@@ -45,13 +50,18 @@ describe('Get Studies', () => {
       TEST_DIRECTOR.JOHN.PASSWORD,
     );
 
-    await createStudy(app, johnAccessToken, fakeData.study());
+    await createStudy(app, {
+      accessToken: johnAccessToken,
+      data: fakeData.study(),
+    });
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 
   it('should get all studies by director', async () => {
-    return request(app.getHttpServer())
-      .get(`/studies`)
-      .set('Authorization', `Bearer ${accessToken}`)
+    return getStudies(app, { accessToken })
       .expect(200)
       .then((res) => {
         expect(Array.isArray(res.body)).toBeTruthy();
@@ -65,9 +75,7 @@ describe('Get Studies', () => {
   });
 
   it('should not get studies by another director', async () => {
-    return request(app.getHttpServer())
-      .get(`/studies`)
-      .set('Authorization', `Bearer ${johnAccessToken}`)
+    return getStudies(app, { accessToken: johnAccessToken })
       .expect(200)
       .then((res) => {
         expect(Array.isArray(res.body)).toBeTruthy();
@@ -75,9 +83,5 @@ describe('Get Studies', () => {
           expect(studyIds.includes(study.id)).toBeFalsy();
         });
       });
-  });
-
-  afterAll(async () => {
-    await app.close();
   });
 });
