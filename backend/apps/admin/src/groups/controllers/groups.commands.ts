@@ -5,6 +5,8 @@ import {
   Inject,
   UseGuards,
   Query,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { GroupsService } from '../groups.service';
 import { UpdateGroupDto } from '../dtos/UpdateGroupDto';
@@ -39,6 +41,7 @@ export class GroupsCommands {
   }
 
   @Post('changeName')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(GroupGuard, IsGroupDeletedGuard)
   async update(
@@ -49,6 +52,7 @@ export class GroupsCommands {
   }
 
   @Post('delete')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(GroupGuard)
   async delete(
@@ -59,6 +63,7 @@ export class GroupsCommands {
   }
 
   @Post('restore')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(GroupGuard)
   async restore(@Query() { groupId }: GroupQueryDto) {

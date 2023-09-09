@@ -1,11 +1,10 @@
 import { Transaction } from '@shared/modules/transaction/transaction';
-import { AddMessageDto } from '../dtos/AddMessageDto';
 import { ChatMessage, Chat, ChatMessageReceipt } from '@entities';
 
 type AddMessageTransactionInput = {
-  addMessageDto: AddMessageDto;
-  chatId: string;
   directorId: string;
+  chatId: string;
+  content: string;
 };
 
 export class AddMessageTransaction extends Transaction<
@@ -13,18 +12,21 @@ export class AddMessageTransaction extends Transaction<
   void
 > {
   protected async execute({
-    addMessageDto,
-    chatId,
     directorId,
+    chatId,
+    content,
   }: AddMessageTransactionInput): Promise<void> {
-    const { content, sentAt } = addMessageDto;
     const chatMessageRepo = this.entityManager.getRepository(ChatMessage);
+
     const message = new ChatMessage();
+
     message.chatId = chatId;
     message.directorId = directorId;
     message.content = content;
-    message.sentAt = sentAt;
+    message.sentAt = new Date();
+
     await chatMessageRepo.insert(message);
+
     await this.createReceipts(message.id, directorId, chatId);
   }
 

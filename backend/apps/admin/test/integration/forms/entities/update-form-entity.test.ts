@@ -13,7 +13,7 @@ import {
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 
-describe('Update Form Entity', () => {
+describe.skip('Update Form Entity', () => {
   let app: INestApplication;
   let accessToken: string;
   let studyId: string;

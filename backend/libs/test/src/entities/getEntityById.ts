@@ -1,8 +1,8 @@
-import { RequestOptions } from '@test/types';
+import { StudyRequestOptions } from '@test/types';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 
-export interface GetEntityByIdOptions extends RequestOptions {
+export interface GetEntityByIdOptions extends StudyRequestOptions {
   entityId: string;
 }
 

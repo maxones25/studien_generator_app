@@ -1,8 +1,14 @@
 export type Message = {
-  id: string,
-  participantNumber?: number,
-  directorId?: string,
-  directorName?: string,
-  content: string,
-  sentAt: Date
-}
+  id: string;
+  content: string;
+  sentAt: string;
+  director: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  } | null;
+  participant: {
+    id: string;
+    number: string;
+  } | null;
+};

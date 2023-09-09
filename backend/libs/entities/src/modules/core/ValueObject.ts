@@ -4,5 +4,4 @@ export interface ValueObject {
   modifiedAt: Date;
 
   deletedAt: Date;
-  isDeleted: boolean;
 }

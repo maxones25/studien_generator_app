@@ -41,6 +41,6 @@ export abstract class RecordRepository<
   async isDeleted(id: string) {
     const entity = await this.db.findOneBy({ id } as any);
     if (!entity) return true;
-    return entity.isDeleted;
+    return entity.deletedAt !== null;
   }
 }

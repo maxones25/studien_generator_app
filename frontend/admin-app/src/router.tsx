@@ -1,4 +1,5 @@
 import { AuthenticationGuard, LoginGuard } from "@modules/auth/components";
+import { ChatMessagesProvider } from "@modules/chat/contexts";
 import { StudyContainer } from "@modules/navigation/components";
 import { StudyProvider } from "@modules/studies/contexts";
 import AdminLoginPage from "@pages/AdminLoginPage/AdminLoginPage";
@@ -45,7 +46,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "directors",
-            element: <DirectorsPage/>,
+            element: <DirectorsPage />,
           },
         ],
       },
@@ -90,9 +91,11 @@ const router = createBrowserRouter([
             path: ":studyId",
             element: (
               <StudyProvider>
-                <StudyContainer>
-                  <Outlet />
-                </StudyContainer>
+                <ChatMessagesProvider>
+                  <StudyContainer>
+                    <Outlet />
+                  </StudyContainer>
+                </ChatMessagesProvider>
               </StudyProvider>
             ),
             children: [

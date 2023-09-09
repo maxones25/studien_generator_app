@@ -1,14 +1,16 @@
 import { INestApplication } from '@nestjs/common';
-import { RequestOptions } from '../types';
+import { StudyRequestOptions } from '../types';
 import request from 'supertest';
+import fakeData from '@test/fakeData';
 
-export interface CreateStudyOptions extends Omit<RequestOptions, 'studyId'> {
-  data: object;
+export interface CreateStudyOptions
+  extends Omit<StudyRequestOptions, 'studyId'> {
+  data?: object;
 }
 
 export const createStudy = (
   app: INestApplication,
-  { accessToken, data }: CreateStudyOptions,
+  { accessToken, data = fakeData.study() }: CreateStudyOptions,
 ) =>
   request(app.getHttpServer())
     .post(`/studies/create`)

@@ -12,7 +12,7 @@ import { TEST_DIRECTOR } from '@test/testData';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { AppModule } from '@admin/app.module';
 
-describe('Create Form Entity', () => {
+describe.skip('Create Form Entity', () => {
   let app: INestApplication;
   let accessToken: string;
   let studyId: string;

@@ -42,7 +42,7 @@ export class SchedulesRepository extends RecordRepository<FormScheduleEntity> {
 
     return schedules.map((schedule) => ({
       ...schedule,
-      isDeleted: schedule.isDeleted,
+      isDeleted: schedule.deletedAt !== null,
       ...schedule.attributes.reduce<FormScheduleAttributes>(
         (obj, attribute) => {
           obj[attribute.key] = attribute.value;
@@ -86,7 +86,7 @@ export class SchedulesRepository extends RecordRepository<FormScheduleEntity> {
 
     return schedules.map((schedule) => ({
       ...schedule,
-      isDeleted: schedule.isDeleted,
+      isDeleted: schedule.deletedAt !== null,
       ...schedule.attributes.reduce<FormScheduleAttributes>(
         (obj, attribute) => {
           obj[attribute.key] = attribute.value;

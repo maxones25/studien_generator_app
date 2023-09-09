@@ -1,9 +1,8 @@
 import { INestApplication } from '@nestjs/common';
-import { RequestOptions } from '../../types';
+import { StudyRequestOptions } from '../../types';
 import request from 'supertest';
-import { Role } from '@entities/core/study';
 
-export interface AddMemberOptions extends RequestOptions {
+export interface AddMemberOptions extends StudyRequestOptions {
   directorId: string;
   role: any;
 }

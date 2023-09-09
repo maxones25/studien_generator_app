@@ -1,8 +1,9 @@
-import { RequestOptions } from '@test/types';
+import { StudyRequestOptions } from '@test/types';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 
-export interface GetEntityByIdOptions extends Omit<RequestOptions, "studyId"> {}
+export interface GetEntityByIdOptions
+  extends Omit<StudyRequestOptions, 'studyId'> {}
 
 export const getStudies = (
   app: INestApplication,

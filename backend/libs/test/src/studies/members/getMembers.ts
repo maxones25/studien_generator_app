@@ -1,8 +1,8 @@
-import { RequestOptions } from '@test/types';
+import { StudyRequestOptions } from '@test/types';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 
-export interface GetMembersOptions extends RequestOptions {}
+export interface GetMembersOptions extends StudyRequestOptions {}
 
 export const getMembers = (
   app: INestApplication,

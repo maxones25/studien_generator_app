@@ -1,10 +1,11 @@
 import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
 import fakeData from '@test/fakeData';
-import { createApp, createStudy, getDirectorAccessToken } from '@test/utils';
+import { createApp, getDirectorAccessToken } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { AppModule } from '@admin/app.module';
+import { createStudyId } from '@test/studies/createStudy';
+import { createGroup } from '@test/groups/createGroup';
 
 describe('create group', () => {
   let app: INestApplication;
@@ -18,15 +19,15 @@ describe('create group', () => {
       TEST_DIRECTOR.MAX.EMAIL,
       TEST_DIRECTOR.MAX.PASSWORD,
     );
-    studyId = await createStudy(app, accessToken, fakeData.study());
+    studyId = await createStudyId(app, { accessToken });
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 
   it('should create a group', () => {
-    const group = fakeData.group();
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/groups`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(group)
+    return createGroup(app, { accessToken, studyId })
       .expect(201)
       .then((res) => {
         expect(validateUUID(res.text)).toBeTruthy();
@@ -34,49 +35,28 @@ describe('create group', () => {
   });
 
   it('should fail because name is missing', () => {
-    const group = fakeData.group();
-    delete group.name;
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/groups`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(group)
-      .expect(400);
+    const data = fakeData.group();
+    delete data.name;
+    return createGroup(app, { accessToken, studyId, data }).expect(400);
   });
 
-  it('should fail because name is empty', () => {
-    const group = fakeData.group();
-    group.name = '';
-    return request(app.getHttpServer())
-      .post(`/studies/${studyId}/groups`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(group)
-      .expect(400);
+  it('should fail because name is empty ', () => {
+    const data = fakeData.group();
+    data.name = '';
+    return createGroup(app, { accessToken, studyId, data }).expect(400);
   });
 
   it('should fail because name already exists', async () => {
-    const group = fakeData.group();
-    await request(app.getHttpServer())
-      .post(`/studies/${studyId}/groups`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(group)
-      .expect(201);
+    const data = fakeData.group();
 
-    return await request(app.getHttpServer())
-      .post(`/studies/${studyId}/groups`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(group)
-      .expect(422);
+    await createGroup(app, { accessToken, studyId, data }).expect(201);
+
+    return createGroup(app, { accessToken, studyId, data }).expect(422);
   });
 
   it('should fail because study id is unknown', () => {
-    const unknownStudyId = fakeData.id();
-    const group = fakeData.group();
-    delete group.name;
-    return request(app.getHttpServer())
-      .post(`/studies/${unknownStudyId}/groups`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(group)
-      .expect(401);
+    const studyId = fakeData.id();
+    return createGroup(app, { accessToken, studyId }).expect(401);
   });
 
   it('should fail because director is not member of study', async () => {
@@ -86,22 +66,10 @@ describe('create group', () => {
       TEST_DIRECTOR.MAX.PASSWORD,
     );
 
-    const newStudyId = await createStudy(
-      app,
-      johnAccessToken,
-      fakeData.study(),
-    );
+    const studyId = await createStudyId(app, {
+      accessToken: johnAccessToken,
+    });
 
-    const group = fakeData.group();
-
-    return request(app.getHttpServer())
-      .post(`/studies/${newStudyId}/groups`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(group)
-      .expect(401);
-  });
-
-  afterAll(async () => {
-    await app.close();
+    return createGroup(app, { accessToken, studyId }).expect(401);
   });
 });

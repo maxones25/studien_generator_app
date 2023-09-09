@@ -1,8 +1,8 @@
 import { INestApplication } from '@nestjs/common';
-import { RequestOptions } from '../types';
+import { StudyRequestOptions } from '../types';
 import request from 'supertest';
 
-export interface DeleteEntityOptions extends RequestOptions {
+export interface DeleteEntityOptions extends StudyRequestOptions {
   entityId: string;
 }
 
@@ -16,4 +16,4 @@ export const deleteEntity = (
       studyId,
       entityId,
     })
-    .set('Authorization', `Bearer ${accessToken}`)
+    .set('Authorization', `Bearer ${accessToken}`);

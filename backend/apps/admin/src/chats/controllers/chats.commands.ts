@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Put, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Query,
+  Param,
+  UseGuards,
+  HttpCode,
+  Inject,
+  HttpStatus,
+} from '@nestjs/common';
 import { ChatsService } from '../chats.service';
 import { AddMessageDto } from '../dtos/AddMessageDto';
 import { ReadMessagesDto } from '../dtos/ReadMessagesDto';
@@ -7,29 +17,38 @@ import { Roles } from '@admin/roles/roles.decorator';
 import { DirectorId } from '@admin/directors/decorators/director-id.decorator';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { ChatQueryDto } from '../dtos/ChatQueryDto';
+import { ChatGuard } from '../guards/ChatGuard';
+import { ReadMessagesUseCase } from '../transactions/ReadMessagesUseCase';
 
-@Controller('/studies/:studyId/chats')
+@Controller()
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class ChatsCommands {
-  constructor(private readonly chatService: ChatsService) {}
+  constructor(
+    @Inject(ReadMessagesUseCase)
+    private readonly readMessagesUseCase: ReadMessagesUseCase,
+    private readonly chatService: ChatsService,
+  ) {}
 
-  @Put('/:chatId')
+  @Post('chats/readMessages')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
+  @UseGuards(ChatGuard)
   async readMessages(
-    @Param('chatId', new ValidateIdPipe()) chatId: string,
+    @Query() { chatId }: ChatQueryDto,
     @DirectorId() directorId: string,
-    @Body() data: ReadMessagesDto,
   ) {
-    return this.chatService.readMessages(data, directorId, chatId);
+    const readAt = new Date();
+    return this.readMessagesUseCase.execute({ directorId, chatId, readAt });
   }
 
-  @Post('/:chatId')
+  @Post('studies/:studyId/chats/:chatId')
   @Roles('admin', 'employee')
   async addMessage(
     @Param('chatId', new ValidateIdPipe()) chatId: string,
     @DirectorId() directorId: string,
-    @Body() addMessageDto: AddMessageDto,
+    @Body() { content }: AddMessageDto,
   ) {
-    return this.chatService.addMessage(addMessageDto, chatId, directorId);
+    return this.chatService.addMessage(directorId, chatId, content);
   }
 }

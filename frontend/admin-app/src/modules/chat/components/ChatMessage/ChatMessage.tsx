@@ -9,10 +9,16 @@ export interface ChatMessageProps {
 export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   const { palette } = useTheme();
 
+  const isDirectorMessage = message.director !== null;
+
+  const displayName = isDirectorMessage
+    ? message.director?.firstName + " " + message.director?.lastName
+    : message.participant?.number;
+
   return (
     <ListItem
       style={{
-        justifyContent: message.directorId ? "flex-end" : "flex-start",
+        justifyContent: isDirectorMessage ? "flex-end" : "flex-start",
         padding: ".5rem",
       }}
     >
@@ -21,7 +27,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
           padding: "10px",
           maxWidth: "70%",
           wordBreak: "break-word",
-          backgroundColor: message.directorId
+          backgroundColor: isDirectorMessage
             ? palette.secondary.light
             : palette.grey[200],
           boxShadow: "0 3px 5px rgba(0,0,0,0.2)",
@@ -29,16 +35,9 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
         }}
       >
         <Typography variant="body1">{message.content}</Typography>
-        {message.directorName && (
-          <Typography variant="caption" display="block">
-            {message.directorName}
-          </Typography>
-        )}
-        {message.participantNumber && (
-          <Typography variant="caption" display="block">
-            {message.participantNumber}
-          </Typography>
-        )}
+        <Typography variant="caption" display="block">
+          {displayName}
+        </Typography>
         <Typography variant="caption" display="block" align="right">
           {new Date(message.sentAt).toLocaleDateString("de")}
         </Typography>

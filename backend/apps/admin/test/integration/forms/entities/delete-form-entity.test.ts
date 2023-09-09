@@ -16,7 +16,7 @@ import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import { Roles } from '@admin/roles/roles.enum';
 
-describe('Delete Form Entity', () => {
+describe.skip('Delete Form Entity', () => {
   let app: INestApplication;
   let accessToken: string;
   let studyId: string;

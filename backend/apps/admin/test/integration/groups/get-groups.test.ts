@@ -1,16 +1,11 @@
 import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
-import fakeData from '@test/fakeData';
-import {
-  createApp,
-  createDirector,
-  createGroup,
-  createStudy,
-  getDirectorAccessToken,
-  getEnv,
-} from '@test/utils';
+import { createApp, getDirectorAccessToken } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
+import { createStudyId } from '@test/studies/createStudy';
+import { createDirector } from '@test/director/signUpDirector';
+import { createGroupId } from '@test/groups/createGroup';
+import { getGroups } from '@test/groups/getGroups';
 
 describe('get groups', () => {
   let app: INestApplication;
@@ -22,11 +17,7 @@ describe('get groups', () => {
   beforeAll(async () => {
     app = await createApp(AppModule);
 
-    const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
-
-    const director = fakeData.director();
-
-    await createDirector(app, { activationPassword, ...director });
+    const director = await createDirector(app);
 
     accessToken = await getDirectorAccessToken(
       app,
@@ -34,18 +25,12 @@ describe('get groups', () => {
       director.password,
     );
 
-    studyId = await createStudy(app, accessToken, fakeData.study());
+    studyId = await createStudyId(app, { accessToken });
 
     groupIds = [];
-    groupIds.push(
-      await createGroup(app, accessToken, studyId, fakeData.group()),
-    );
-    groupIds.push(
-      await createGroup(app, accessToken, studyId, fakeData.group()),
-    );
-    groupIds.push(
-      await createGroup(app, accessToken, studyId, fakeData.group()),
-    );
+    groupIds.push(await createGroupId(app, { accessToken, studyId }));
+    groupIds.push(await createGroupId(app, { accessToken, studyId }));
+    groupIds.push(await createGroupId(app, { accessToken, studyId }));
 
     const johnAccessToken = await getDirectorAccessToken(
       app,
@@ -53,16 +38,24 @@ describe('get groups', () => {
       TEST_DIRECTOR.JOHN.PASSWORD,
     );
 
-    johnStudyId = await createStudy(app, johnAccessToken, fakeData.study());
+    johnStudyId = await createStudyId(app, { accessToken: johnAccessToken });
 
-    await createGroup(app, johnAccessToken, johnStudyId, fakeData.group());
-    await createGroup(app, johnAccessToken, johnStudyId, fakeData.group());
+    await createGroupId(app, {
+      accessToken: johnAccessToken,
+      studyId: johnStudyId,
+    });
+    await createGroupId(app, {
+      accessToken: johnAccessToken,
+      studyId: johnStudyId,
+    });
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 
   it('should get all groups', async () => {
-    return request(app.getHttpServer())
-      .get(`/studies/${studyId}/groups`)
-      .set('Authorization', `Bearer ${accessToken}`)
+    return getGroups(app, { accessToken, studyId })
       .expect(200)
       .then((res) => {
         expect(Array.isArray(res.body)).toBeTruthy();
@@ -75,13 +68,6 @@ describe('get groups', () => {
   });
 
   it('should fail because director is not member of study', async () => {
-    return request(app.getHttpServer())
-      .get(`/studies/${johnStudyId}/groups`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(401);
-  });
-
-  afterAll(async () => {
-    await app.close();
+    return getGroups(app, { accessToken, studyId: johnStudyId }).expect(401);
   });
 });

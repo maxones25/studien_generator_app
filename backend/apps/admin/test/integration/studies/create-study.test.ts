@@ -25,7 +25,7 @@ describe('Create Study', () => {
     await app.close();
   });
 
-  it.only('should create a study', async () => {
+  it('should create a study', async () => {
     const data = fakeData.study();
     await createStudy(app, { accessToken, data })
       .expect(201)

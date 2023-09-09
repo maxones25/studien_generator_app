@@ -1,8 +1,10 @@
-import { Type } from "class-transformer";
-import { IsDate } from "class-validator";
+import { Transform, Type } from 'class-transformer';
+import { IsDate } from 'class-validator';
 
 export class ReadMessagesDto {
-  @Type(() => Date)
   @IsDate()
+  @Transform(({ value }) => {
+    return new Date(value);
+  })
   readonly readAt: Date;
 }

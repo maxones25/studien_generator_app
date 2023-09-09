@@ -108,7 +108,7 @@ export class RecordsRepository extends RecordRepository<Record> {
     return records.map((record) => {
       return {
         ...record,
-        isDeleted: record.isDeleted,
+        isDeleted: record.deletedAt !== null,
         isFailed: record.isFailed,
         fields: record.fields.reduce<
           globalThis.Record<string, TransformedRecordField>

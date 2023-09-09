@@ -17,8 +17,4 @@ export abstract class BaseEntity implements ObjectLiteral, ValueObject {
     nullable: true,
   })
   deletedAt: Date;
-
-  get isDeleted() {
-    return this.deletedAt !== null;
-  }
 }

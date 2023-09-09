@@ -91,7 +91,6 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
   ): Participant & ParticipantsAttributes {
     return {
       ...participant,
-      isDeleted: participant.isDeleted,
       ...participant.attributes.reduce(
         (obj, { key, value }) => {
           obj[key] = value;

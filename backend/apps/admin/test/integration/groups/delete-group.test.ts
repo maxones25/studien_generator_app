@@ -1,16 +1,12 @@
 import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
-import fakeData from '@test/fakeData';
-import {
-  addMember,
-  createApp,
-  createGroup,
-  createStudy,
-  getDirectorAccessToken,
-} from '@test/utils';
+import { createApp, getDirectorAccessToken } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
-import { Roles } from '@admin/roles/roles.enum';
 import { AppModule } from '@admin/app.module';
+import { createStudyId } from '@test/studies/createStudy';
+import { addMember } from '@test/studies/members/addMember';
+import { createGroupId } from '@test/groups/createGroup';
+import { deleteGroup } from '@test/groups/deleteGroup';
+import { getGroupById } from '@test/groups/getGroupById';
 
 describe('delete group', () => {
   let app: INestApplication;
@@ -20,8 +16,6 @@ describe('delete group', () => {
 
   beforeAll(async () => {
     app = await createApp(AppModule);
-
-    const study = fakeData.study();
 
     accessToken = await getDirectorAccessToken(
       app,
@@ -34,41 +28,50 @@ describe('delete group', () => {
       TEST_DIRECTOR.JOHN.PASSWORD,
     );
 
-    studyId = await createStudy(app, accessToken, study);
+    studyId = await createStudyId(app, { accessToken });
 
-    await addMember(app, accessToken, studyId, {
+    await addMember(app, {
+      accessToken,
+      studyId,
       directorId: TEST_DIRECTOR.JOHN.ID,
-      role: Roles.employee,
+      role: 'employee',
     });
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('should delete a group', async () => {
-    const group = fakeData.group();
-    const groupId = await createGroup(app, accessToken, studyId, group);
-    await request(app.getHttpServer())
-      .delete(`/studies/${studyId}/groups/${groupId}`)
-      .set('Authorization', `Bearer ${accessToken}`)
+    const groupId = await createGroupId(app, { accessToken, studyId });
+
+    await deleteGroup(app, { accessToken, studyId, groupId })
       .expect(200)
       .then((res) => {
         expect(parseInt(res.text)).toEqual(1);
       });
 
-    await request(app.getHttpServer())
-      .get(`/studies/${studyId}/groups/${groupId}`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(401);
+    await getGroupById(app, { accessToken, studyId, groupId }).expect(401);
   });
 
   it('should fail because director is not an admin', async () => {
-    const group = fakeData.group();
-    const groupId = await createGroup(app, accessToken, studyId, group);
-    return request(app.getHttpServer())
-      .delete(`/studies/${studyId}/groups/${groupId}`)
-      .set('Authorization', `Bearer ${johnAccessToken}`)
-      .expect(401);
+    const groupId = await createGroupId(app, { accessToken, studyId });
+
+    return deleteGroup(app, {
+      accessToken: johnAccessToken,
+      studyId,
+      groupId,
+    }).expect(401);
   });
 
-  afterAll(async () => {
-    await app.close();
+  it('should fail because director is not a member of study', async () => {
+    const studyId = await createStudyId(app, { accessToken: johnAccessToken })
+    const groupId = await createGroupId(app, { accessToken: johnAccessToken, studyId });
+
+    return deleteGroup(app, {
+      accessToken,
+      studyId,
+      groupId,
+    }).expect(401);
   });
 });

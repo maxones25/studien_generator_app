@@ -47,8 +47,7 @@ const entityField = () => {
 
 const participant = () => {
   return {
-    number: faker.number.int({ min: 100000, max: 999999 }).toString(),
-    password: faker.internet.password({ length: 12 }),
+    number: faker.string.alpha({ length: 6 })
   };
 };
 
@@ -80,18 +79,14 @@ const chatMessageParticipant = (participantId: string, chatId: string) => {
     participantId,
     sentAt: new Date(),
     content: faker.word.sample(),
-  }
-}
+  };
+};
 
-const chatMessageAdmin = (directorId: string, chatId: string) => {
+const chatMessageAdmin = () => {
   return {
-    id: id(),
-    chatId,
-    directorId,
-    sentAt: new Date(),
     content: faker.word.sample(),
-  }
-}
+  };
+};
 
 export const id = () => faker.string.uuid();
 

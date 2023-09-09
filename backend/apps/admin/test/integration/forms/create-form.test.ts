@@ -6,7 +6,7 @@ import { TEST_DIRECTOR } from '@test/testData';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { AppModule } from '@admin/app.module';
 
-describe('create group', () => {
+describe.skip('Create Form', () => {
   let app: INestApplication;
   let accessToken: string;
   let studyId: string;

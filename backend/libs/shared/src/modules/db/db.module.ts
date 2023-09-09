@@ -1,5 +1,5 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { addTransactionalDataSource } from "typeorm-transactional";
 import {
   Study,
   StudyAttribute,
@@ -28,6 +28,7 @@ import {
   ParticipantNotification,
   Appointment,
 } from '@entities';
+import { DataSource } from 'typeorm';
 
 const DbModule = TypeOrmModule.forRootAsync({
   useFactory: async () => {
@@ -69,6 +70,13 @@ const DbModule = TypeOrmModule.forRootAsync({
         Appointment,
       ],
     };
+  },
+  async dataSourceFactory(options) {
+    if (!options) {
+      throw new Error('Invalid options passed');
+    }
+
+    return addTransactionalDataSource(new DataSource(options));
   },
 });
 

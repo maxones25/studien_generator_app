@@ -1,20 +1,20 @@
 import { Chat } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityRepository } from '@shared/modules/records/entity.repository';
+import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
 import { Repository } from 'typeorm';
 
-export class ChatsRepository extends EntityRepository<Chat> {
+export class ChatsRepository implements StudyRelatedDataAccessor {
   constructor(
     @InjectRepository(Chat)
-    db: Repository<Chat>,
-  ) {
-    super(db);
+    private readonly db: Repository<Chat>,
+  ) {}
+
+  getRelatedByStudy(studyId: string, id: string): Promise<any> {
+    return this.db.findOneBy({ id, studyId });
   }
 
-  create() {}
-
   async getAllMessages(id: string) {
-    const result = await this.db.findOne({
+    return this.db.findOne({
       where: {
         id,
       },
@@ -28,15 +28,17 @@ export class ChatsRepository extends EntityRepository<Chat> {
         id: true,
         messages: {
           id: true,
+          sentAt: true,
           participant: {
+            id: true,
             number: true,
           },
-          directorId: true,
           director: {
-            displayName: true,
+            id: true,
+            firstName: true,
+            lastName: true,
           },
           content: true,
-          sentAt: true,
         },
       },
       order: {
@@ -45,18 +47,5 @@ export class ChatsRepository extends EntityRepository<Chat> {
         },
       },
     });
-    const messages = result.messages.map(
-      ({ director, participant, content, sentAt, id, directorId }) => {
-        return {
-          id,
-          participantNumber: participant?.number,
-          directorId,
-          directorName: director?.displayName,
-          content,
-          sentAt,
-        };
-      },
-    );
-    return messages;
   }
 }

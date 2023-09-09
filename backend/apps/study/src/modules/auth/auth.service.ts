@@ -57,6 +57,6 @@ export class AuthService {
   async isDeleted(id: string) {
     const entity = await this.particpantsRepository.findOneBy({ id } as any);
     if (!entity) return true;
-    return entity.isDeleted;
+    return entity.deletedAt !== null;
   }
 }
