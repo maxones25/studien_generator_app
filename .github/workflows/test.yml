@@ -36,6 +36,7 @@ jobs:
               - 'backend/libs/shared/**'
             admin_backend_tests:
               - 'backend/apps/admin/test/**'
+              - 'backend/libs/test/**'
             admin_frontend:
               - 'frontend/admin-app/**'
             admin_frontend_tests:
@@ -47,6 +48,7 @@ jobs:
               - 'backend/libs/shared/**'
             study_backend_tests:
               - 'backend/apps/study/test/**'
+              - 'backend/libs/test/**'
             study_frontend:
               - 'frontend/study-app/**'
             study_frontend_tests:

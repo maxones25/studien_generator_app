@@ -2,12 +2,13 @@ import { AppModule } from '@admin/app.module';
 import { Roles } from '@admin/roles/roles.enum';
 import { INestApplication } from '@nestjs/common';
 import fakeData from '@test/fakeData';
+import { createStudyId } from '@test/studies/createStudy';
+import { addMember } from '@test/studies/members/addMember';
+import { removeMember } from '@test/studies/members/removeMember';
 import { TEST_DIRECTOR } from '@test/testData';
 import {
-  addMember,
   createApp,
   createDirector,
-  createStudy,
   getDirectorAccessToken,
   getEnv,
 } from '@test/utils';
@@ -32,7 +33,10 @@ describe('Remove Study Member', () => {
   });
 
   it('should successfully remove a study member given a valid studyId and directorId', async () => {
-    const studyId = await createStudy(app, accessToken, fakeData.study());
+    const studyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
 
     const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
 
@@ -43,19 +47,21 @@ describe('Remove Study Member', () => {
       ...director,
     });
 
-    await addMember(app, accessToken, studyId, {
+    await addMember(app, {
+      accessToken,
+      studyId,
       directorId,
-      role: Roles.employee,
+      role: 'employee',
     });
 
-    await request(app.getHttpServer())
-      .delete(`/studies/${studyId}/directors/${directorId}`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(200);
+    await removeMember(app, { accessToken, studyId, directorId }).expect(200);
   });
 
   it('should successfully change admin and remove former admin', async () => {
-    const studyId = await createStudy(app, accessToken, fakeData.study());
+    const studyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
 
     const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
 
@@ -66,37 +72,77 @@ describe('Remove Study Member', () => {
       ...director,
     });
 
-    await addMember(app, accessToken, studyId, {
+    await addMember(app, {
+      accessToken,
+      studyId,
       directorId,
-      role: Roles.admin,
+      role: 'admin',
     });
 
-    await request(app.getHttpServer())
-      .delete(`/studies/${studyId}/directors/${TEST_DIRECTOR.MAX.ID}`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(200);
+    await removeMember(app, {
+      accessToken,
+      studyId,
+      directorId: TEST_DIRECTOR.MAX.ID,
+    }).expect(200);
   });
 
   it('should throw an error if invalid directorId is provided', async () => {
-    const studyId = await createStudy(app, accessToken, fakeData.study());
+    const studyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
 
-    await request(app.getHttpServer())
-      .delete(`/studies/${studyId}/directors/invalid-id`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(401);
+    await removeMember(app, {
+      accessToken,
+      studyId,
+      directorId: 'invalid-id',
+    }).expect(401);
+  });
+
+  it('should throw an error if invalid studyId is provided', async () => {
+    const studyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
+
+    await removeMember(app, {
+      accessToken,
+      studyId: 'invalid-id',
+      directorId: TEST_DIRECTOR.MAX.ID,
+    }).expect(401);
   });
 
   it('should throw an error when trying to remove a non-existing study member', async () => {
-    const studyId = await createStudy(app, accessToken, fakeData.study());
+    const studyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
 
-    await request(app.getHttpServer())
-      .delete(`/studies/${studyId}/directors/${fakeData.id()}`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(401);
+    await removeMember(app, {
+      accessToken,
+      studyId,
+      directorId: fakeData.id(),
+    }).expect(401);
+  });
+
+  it('should throw an error when trying to remove a non-existing study', async () => {
+    const studyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
+
+    await removeMember(app, {
+      accessToken,
+      studyId: fakeData.id(),
+      directorId: TEST_DIRECTOR.MAX.ID,
+    }).expect(401);
   });
 
   it('should fail because director is not an admin', async () => {
-    const studyId = await createStudy(app, accessToken, fakeData.study());
+    const studyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
 
     const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
 
@@ -107,9 +153,11 @@ describe('Remove Study Member', () => {
       ...director,
     });
 
-    await addMember(app, accessToken, studyId, {
+    await addMember(app, {
+      accessToken,
+      studyId,
       directorId,
-      role: Roles.employee,
+      role: 'employee',
     });
 
     const otherAccessToken = await getDirectorAccessToken(
@@ -118,17 +166,22 @@ describe('Remove Study Member', () => {
       director.password,
     );
 
-    await request(app.getHttpServer())
-      .delete(`/studies/${studyId}/directors/${directorId}`)
-      .set('Authorization', `Bearer ${otherAccessToken}`)
-      .expect(401);
+    await removeMember(app, {
+      accessToken: otherAccessToken,
+      studyId,
+      directorId,
+    }).expect(401);
   });
 
   it('should throw an error when trying to remove the last admin from the study', async () => {
-    const studyId = await createStudy(app, accessToken, fakeData.study());
-    await request(app.getHttpServer())
-      .delete(`/studies/${studyId}/directors/${TEST_DIRECTOR.MAX.ID}`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(400);
+    const studyId = await createStudyId(app, {
+      accessToken,
+      data: fakeData.study(),
+    });
+    await removeMember(app, {
+      accessToken,
+      studyId,
+      directorId: TEST_DIRECTOR.MAX.ID,
+    }).expect(400);
   });
 });

@@ -5,6 +5,8 @@ import {
   Post,
   Query,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { RoleDto } from '../dtos/RoleDto';
 import { Roles } from '@admin/roles/roles.decorator';
@@ -38,6 +40,7 @@ export class MembersCommands {
   }
 
   @Post('changeRole')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(DirectorGuard, MemberGuard)
   async changeRole(
@@ -50,6 +53,7 @@ export class MembersCommands {
   }
 
   @Post('remove')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(MemberGuard)
   async remove(@Query() { studyId, directorId }: MemberQueryDto) {

@@ -17,7 +17,7 @@
     "test:admin:unit": "jest --config ./apps/admin/test/unit/jest.config.ts --coverage",
     "test:admin:unit:dev": "jest --config ./apps/admin/test/unit/jest.config.ts --onlyChanged --watch",
     "test:admin:integration": "jest --config ./apps/admin/test/integration/jest.config.ts --coverage",
-    "test:admin:integration:dev": "jest --config ./apps/admin/test/integration/jest.config.ts --onlyChanged",
+    "test:admin:integration:dev": "jest --verbose --config ./apps/admin/test/integration/jest.config.ts --onlyChanged",
     "test:study:integration": "jest --config ./apps/study/test/integration/jest.config.ts --coverage",
     "test:study:integration:dev": "jest --config ./apps/study/test/integration/jest.config.ts --onlyChanged",
     "test:shared:unit": "jest --config ./libs/shared/test/unit/jest.config.ts --coverage",

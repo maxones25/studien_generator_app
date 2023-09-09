@@ -51,8 +51,6 @@ export class DirectorsService {
   async getByCredentials(email: string, password: string) {
     const director = await this.directorsRepository.getByEmail(email, false);
 
-    console.log({ director });
-
     if (!director) throw new UnauthorizedException();
 
     if (!(await this.passwordService.compare(password, director.password)))

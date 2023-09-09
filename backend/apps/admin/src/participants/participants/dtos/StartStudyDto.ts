@@ -57,7 +57,6 @@ export class StartStudyConfig {
 export class StartStudyDto {
   @IsDate()
   @Transform(({ value }) => {
-    console.log(value);
     return new Date(value);
   })
   readonly startDate: Date;

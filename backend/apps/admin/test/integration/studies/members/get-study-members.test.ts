@@ -1,10 +1,8 @@
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import {
-  addMember,
   createApp,
   createDirector,
-  createStudy,
   getDirectorAccessToken,
   getEnv,
 } from '@test/utils';
@@ -12,13 +10,15 @@ import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
 import { Roles } from '@admin/roles/roles.enum';
-import { AddMemberDto } from '@admin/studies/members/dtos/AddMemberDto';
+import { createStudyId } from '@test/studies/createStudy';
+import { addMember } from '@test/studies/members/addMember';
+import { getMembers } from '@test/studies/members/getMembers';
 
 describe('Get Study Members', () => {
   let app: INestApplication;
   let accessToken: string;
   let studyId: string;
-  let directors: AddMemberDto[] = [];
+  let directors = [];
 
   beforeAll(async () => {
     app = await createApp(AppModule);
@@ -34,7 +34,7 @@ describe('Get Study Members', () => {
       TEST_DIRECTOR.MAX.PASSWORD,
     );
 
-    studyId = await createStudy(app, accessToken, fakeData.study());
+    studyId = await createStudyId(app, { accessToken, data: fakeData.study() });
 
     const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
 
@@ -46,7 +46,9 @@ describe('Get Study Members', () => {
 
       const role = Roles.employee;
 
-      await addMember(app, accessToken, studyId, {
+      await addMember(app, {
+        accessToken,
+        studyId,
         directorId,
         role,
       });
@@ -60,9 +62,7 @@ describe('Get Study Members', () => {
   });
 
   it('should get study members successfully', () => {
-    return request(app.getHttpServer())
-      .get(`/studies/${studyId}/directors`)
-      .set('Authorization', `Bearer ${accessToken}`)
+    return getMembers(app, { accessToken, studyId })
       .expect(200)
       .then((res) => {
         expect(Array.isArray(res.body)).toBeTruthy();
@@ -84,9 +84,6 @@ describe('Get Study Members', () => {
       TEST_DIRECTOR.JOHN.PASSWORD,
     );
 
-    return request(app.getHttpServer())
-      .get(`/studies/invalid-id/directors`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .expect(401);
+    return getMembers(app, { accessToken, studyId: 'invalid-id' }).expect(401);
   });
 });

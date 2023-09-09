@@ -14,7 +14,6 @@ export class AppointmentsQueries {
   @Get('appointments')
   @UseGuards(GroupGuard)
   get(@GetGroup() group: Group) {
-    console.log('TEST');
     return this.getAppointments.execute({
       studyId: group.studyId,
       groupId: group.id,
