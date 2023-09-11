@@ -40,12 +40,12 @@ export const AppointmentsCard: React.FC<AppointmentsCardProps> = ({
   const createData = useFormData<AppointmentFormData>();
 
   return (
-    <Column boxShadow={4} {...props}>
+    <Column testId="appointments card" boxShadow={4} {...props}>
       <Row p={2} justifyContent="space-between">
         <Text>{t("appointments")}</Text>
         <IconButton
           Icon={<Add />}
-          testId="open add appointment dialog"
+          testId="add appointment"
           onClick={createData.handleSet({
             endDate: "",
             endTime: "",
