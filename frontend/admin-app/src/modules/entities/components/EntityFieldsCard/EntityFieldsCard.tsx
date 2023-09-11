@@ -1,14 +1,14 @@
 import {
   Column,
-  DataDialog,
   DataList,
-  DataListItem,
+  DeleteDialog,
   IconButton,
+  OnlyAdmin,
   Row,
   Text,
 } from "@modules/core/components";
 import { useFormData } from "@modules/core/hooks";
-import { DeleteFieldForm, FieldForm } from "@modules/fields/components";
+import { FieldForm } from "@modules/fields/components";
 import {
   useAddField,
   useDeleteField,
@@ -16,13 +16,14 @@ import {
   useUpdateField,
 } from "@modules/fields/hooks";
 import { FieldFormData } from "@modules/fields/types";
-import { Add } from "@mui/icons-material";
+import { Add, Delete } from "@mui/icons-material";
 import {
   Chip,
   Dialog,
   DialogContent,
   DialogTitle,
   Divider,
+  ListItem,
   ListItemButton,
 } from "@mui/material";
 import React from "react";
@@ -73,11 +74,24 @@ export const EntityFieldsCard: React.FC<EntityFieldsCardProps> = () => {
         errorText={t("fetch error data", { data: t("fields") })}
         noDataText={t("no data found", { data: t("fields") })}
         renderItem={(field, { isLast }) => (
-          <DataListItem
+          <ListItem
             data-testid={`field item ${field.name}`}
             key={field.id}
-            item={field}
-            onDelete={deleteData.handleSet(field)}
+            secondaryAction={
+              <OnlyAdmin>
+                {({ disabled }) => (
+                  <IconButton
+                    testId={`delete field ${field.id}`}
+                    Icon={<Delete />}
+                    onClick={deleteData.handleSet(field)}
+                    disabled={disabled}
+                    tooltipProps={{
+                      title: t("delete record", { record: t("field") }),
+                    }}
+                  />
+                )}
+              </OnlyAdmin>
+            }
             divider={!isLast}
           >
             <ListItemButton onClick={editData.handleSet(field)}>
@@ -91,7 +105,7 @@ export const EntityFieldsCard: React.FC<EntityFieldsCardProps> = () => {
                 sx={{ ml: 1 }}
               />
             </ListItemButton>
-          </DataListItem>
+          </ListItem>
         )}
       />
       <Dialog open={editData.hasData} onClose={editData.reset}>
@@ -104,12 +118,16 @@ export const EntityFieldsCard: React.FC<EntityFieldsCardProps> = () => {
           <FieldForm onSubmit={handeSave} values={editData.data} />
         </DialogContent>
       </Dialog>
-      <DataDialog
-        Form={DeleteFieldForm}
-        mode="delete"
-        deleteTitle={t("delete data", { data: t("field") })}
-        client={deleteData}
-        onDelete={deleteField.mutateAsync}
+      <DeleteDialog
+        record="field"
+        open={deleteData.hasData}
+        target={deleteData.data?.name ?? ""}
+        onCancel={deleteData.reset}
+        onConfirm={() =>
+          deleteField.mutateAsync(deleteData.data!).then(() => {
+            deleteData.reset();
+          })
+        }
       />
     </Column>
   );

@@ -2,7 +2,7 @@
 
 import "cypress-wait-until";
 import "cypress-localstorage-commands";
-import { FakeEntity, FakeStudy } from "../fakeData";
+import { FakeEntity, FakeEntityField, FakeStudy } from "../fakeData";
 
 declare global {
   namespace Cypress {
@@ -21,6 +21,11 @@ declare global {
       ): Chainable<any>;
       createStudy(study: FakeStudy): Chainable<string>;
       createEntity(studyId: string, entity: FakeEntity): Chainable<string>;
+      createEntityField(
+        studyId: string,
+        entityId: string,
+        field: FakeEntityField
+      ): Chainable<string>;
       addMember(
         studyId: string,
         name: string,
@@ -30,6 +35,7 @@ declare global {
       openEntitiesPage(studyId: string): void;
       openEntityPage(studyId: string, entityId: string): void;
       shouldShowAlert(type: "success" | "error", text?: string): void;
+      selectOption(name: string, option: string): Chainable<any>;
     }
   }
 }
@@ -37,9 +43,11 @@ declare global {
 import "./api/fetchAccessToken";
 import "./api/createStudy";
 import "./api/createEntity";
+import "./api/createEntityField";
 
 import "./ui/shouldBeRelativePath";
 import "./ui/getByTestId";
+import "./ui/selectOption";
 import "./ui/setAccessToken";
 import "./ui/addMember";
 import "./ui/shouldShowAlert";
