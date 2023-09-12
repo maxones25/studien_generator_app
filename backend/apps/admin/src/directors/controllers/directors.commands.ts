@@ -14,6 +14,7 @@ import { Director } from '../decorators/director.decorator';
 import { Director as DirectorEntity } from '@entities';
 import { UpdatePasswordDto } from '../dtos/UpdatePasswordDto';
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
+import { AdminGuard } from '../guards/AdminGuard';
 
 @Controller('directors')
 export class DirectorsCommands {
@@ -24,7 +25,7 @@ export class DirectorsCommands {
 
   @Post('delete')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(DirectorGuard)
+  @UseGuards(AdminGuard, DirectorGuard)
   async delete(
     @Director() director: DirectorEntity,
     @Body() { hardDelete }: DeleteDto,
@@ -38,14 +39,14 @@ export class DirectorsCommands {
 
   @Post('restore')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(DirectorGuard)
+  @UseGuards(AdminGuard, DirectorGuard)
   async restore(@Director() director: DirectorEntity) {
     return this.directorsService.restore(director.id);
   }
 
   @Post('update')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(DirectorGuard)
+  @UseGuards(AdminGuard, DirectorGuard)
   async update(
     @Director() director: DirectorEntity,
     @Body() body: UpdateDirectorDto,
@@ -55,7 +56,7 @@ export class DirectorsCommands {
 
   @Post('resetPassword')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(DirectorGuard)
+  @UseGuards(AdminGuard, DirectorGuard)
   async updatePassword(
     @Director() director: DirectorEntity,
     @Body() { password }: UpdatePasswordDto,
