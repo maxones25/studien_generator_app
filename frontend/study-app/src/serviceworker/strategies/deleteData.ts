@@ -1,8 +1,8 @@
 import { StrategyHandler } from 'workbox-strategies';
-import { AbstractStrategy } from './abstract';
 import { addLastUpdatedParams } from '../utils/utils';
+import { WriteStrategy } from './writeStrategy';
 
-export class DeleteData extends AbstractStrategy {
+export class DeleteData extends WriteStrategy {
 
   constructor(storeName: string) {
     super(storeName, 'DELETE');

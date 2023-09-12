@@ -1,8 +1,8 @@
 import { StrategyHandler } from 'workbox-strategies';
-import { AbstractStrategy } from './abstract';
 import { addLastUpdatedParams } from '../utils/utils';
+import { WriteStrategy } from './writeStrategy';
 
-export class PutData extends AbstractStrategy {
+export class PutData extends WriteStrategy {
   filterFunction: (entry: Record<string, any>) => boolean;
 
   constructor( 
