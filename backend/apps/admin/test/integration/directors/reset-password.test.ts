@@ -8,8 +8,6 @@ import {
 } from '@test/auth/loginDirector';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
 import fakeData from '@test/fakeData';
-import { updateDirector } from '@test/director/updateDirector';
-import { Director } from '@entities/core/director/Director';
 import { resetPassword } from '@test/director/resetPassword';
 import { TEST_DIRECTOR } from '@test/testData';
 import { getDirectorById } from '@test/director/getMe';
