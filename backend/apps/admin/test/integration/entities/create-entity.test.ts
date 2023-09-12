@@ -1,5 +1,4 @@
 import { TEST_DIRECTOR } from '@test/testData';
-import { createApp, createStudy,  } from '@test/utils';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
@@ -7,6 +6,7 @@ import { validateUUID } from '@shared/modules/uuid/uuid';
 import { createEntity } from '@test/entities/createEntity';
 import { createStudyId } from '@test/studies/createStudy';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { createApp } from '@test/app/createApp';
 
 describe('Create Entity', () => {
   let app: INestApplication;
@@ -67,7 +67,7 @@ describe('Create Entity', () => {
   });
 
   it('should create entity even if entity already exists in other study', async () => {
-    const otherStudyId = await createStudy(app, accessToken, fakeData.study());
+    const otherStudyId = await createStudyId(app, { accessToken });
 
     const data = fakeData.entity();
 

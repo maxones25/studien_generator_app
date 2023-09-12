@@ -2,7 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import fakeData from '@test/fakeData';
 import {
   createApp,
-  getEnv,
 } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';

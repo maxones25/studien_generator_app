@@ -1,5 +1,4 @@
 import { INestApplication } from '@nestjs/common';
-import { createApp, getEnv } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
@@ -9,6 +8,7 @@ import { addMember } from '@test/studies/members/addMember';
 import { getMembers } from '@test/studies/members/getMembers';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
+import { createApp } from '@test/app/createApp';
 
 describe('Get Study Members', () => {
   let app: INestApplication;
