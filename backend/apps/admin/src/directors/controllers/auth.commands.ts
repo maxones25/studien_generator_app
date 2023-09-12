@@ -4,6 +4,8 @@ import {
   Post,
   Inject,
   UnauthorizedException,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { DirectorsService } from '../directors.service';
 import { JwtService } from '@nestjs/jwt';
@@ -52,6 +54,7 @@ export class AuthCommands {
   }
 
   @Post('loginAdmin')
+  @HttpCode(HttpStatus.OK)
   async loginAdmin(
     @Body()
     { activationPassword }: AdminLoginDto,
