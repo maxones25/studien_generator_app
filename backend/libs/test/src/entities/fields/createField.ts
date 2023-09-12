@@ -1,6 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { StudyRequestOptions } from '../../types';
 import request from 'supertest';
+import { validateUUID } from '@shared/modules/uuid/uuid';
 
 export interface CreateFieldOptions extends StudyRequestOptions {
   entityId: string;
@@ -27,6 +28,10 @@ export const createFieldId = (
   new Promise<string>((resolve, reject) => {
     createField(app, { accessToken, studyId, entityId, data })
       .expect(201)
-      .then((res) => resolve(res.text))
+      .then((res) => {
+        const { id } = res.body;
+        expect(validateUUID(id)).toBeTruthy();
+        resolve(id);
+      })
       .catch((err) => reject(err));
   });
