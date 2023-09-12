@@ -1,11 +1,11 @@
 import { StrategyHandler } from 'workbox-strategies';
 import { addLastUpdatedParams } from '../utils/utils';
-import { AbstractStrategy } from './abstract';
+import { AbstractStrategy } from './abstractStrategy';
 
 export class GetData extends AbstractStrategy {
 
   constructor(dbName: string, indexName?: string) {
-    super(dbName, 'GET', indexName);
+    super(dbName,  indexName);
   }
 
   protected async _handle(

@@ -13,7 +13,7 @@ export class TypeOrmExceptionFilter implements ExceptionFilter {
 		let code = 'UnprocessableEntity';
 
 		let status = HttpStatus.UNPROCESSABLE_ENTITY;
-		
+
 		switch (exception.constructor) {
 				case QueryFailedError:  // this is a TypeOrm error
 						status = HttpStatus.UNPROCESSABLE_ENTITY
