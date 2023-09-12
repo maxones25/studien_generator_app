@@ -1,26 +1,28 @@
-import fakeData from "../../../fakeData";
+import fakeData, { FakeParticipant } from "../../../fakeData";
 
-describe("create participant", () => {
-  let studyId;
-  let groupId;
-  let group;
+describe("delete participant", () => {
+  let studyId: string;
+  let participantId: string;
+  let participant: FakeParticipant;
 
   before(() => {
-    return cy.fetchAccessToken("director");
-  });
+    cy.fetchAccessToken("director");
 
-  beforeEach(() => {
     cy.createStudy(fakeData.study()).then((id) => {
       studyId = id;
-      group = fakeData.group();
-      cy.createGroup(studyId, group).then((id) => {
-        groupId = id;
-        cy.setAccessToken("director");
-      });
     });
   });
 
-  it.only("should create a participant", () => {
+  beforeEach(() => {
+    participant = fakeData.participant();
+
+    cy.createParticipant(studyId, participant).then((id) => {
+      participantId = id;
+      cy.setAccessToken("director");
+    });
+  });
+
+  it("should create a participant", () => {
     const participant = fakeData.participant();
 
     cy.openParticipantsPage(studyId);
@@ -33,7 +35,7 @@ describe("create participant", () => {
 
     cy.shouldShowAlert("success");
 
-    cy.getByTestId("participants page").contains(participant.number)
+    cy.getByTestId("participants page").contains(participant.number);
   });
 
   it("should cancel create a participant", () => {

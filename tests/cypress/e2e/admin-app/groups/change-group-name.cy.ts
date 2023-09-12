@@ -47,7 +47,7 @@ describe("change group name", () => {
     cy.getByTestId("group name").contains(group.name);
   });
 
-  it.only("should fail because name already exists", () => {
+  it("should fail because name already exists", () => {
     const otherGroup = fakeData.group();
     cy.createGroup(studyId, otherGroup);
 

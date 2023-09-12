@@ -38,7 +38,7 @@ describe("change participant group", () => {
     cy.getByTestId("change group").should("contain", group.name);
   });
 
-  it.only("should remove participant group", () => {
+  it("should remove participant group", () => {
     cy.openParticipantPage(studyId, participantId);
 
     cy.getByTestId("change group").should("not.contain", group.name);

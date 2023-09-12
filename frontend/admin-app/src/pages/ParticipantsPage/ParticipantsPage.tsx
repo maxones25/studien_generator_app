@@ -167,21 +167,24 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
             key={participant.id}
             disablePadding
             secondaryAction={
-              participant.isDeleted && (
+              participant.deletedAt !== null && (
                 <IconButton
-                  testId="restore participant"
+                  testId={`restore participant ${participant.id}`}
                   Icon={<RestoreFromTrash />}
                   onClick={() => restoreParticipant.mutate(participant)}
                   tooltipProps={{
-                    title: t("restore record", { record: t("participant") }),
+                    title: t(`restore record`, {
+                      record: t("participant"),
+                    }),
                   }}
                 />
               )
             }
           >
             <ListItemButton
+              data-testId={`open participant ${participant.id}`}
               onClick={navigate.handle(`${participant.id}`)}
-              disabled={participant.isDeleted}
+              disabled={participant.deletedAt !== null}
             >
               <ListItemIcon>
                 {participant.startedAt ? (
