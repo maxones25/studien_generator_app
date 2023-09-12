@@ -26,6 +26,7 @@ export class AuthCommands {
   ) {}
 
   @Post('login')
+  @HttpCode(HttpStatus.OK)
   async loginDirector(@Body() { email, password }: LoginDirectorDto) {
     const directorId = await this.directorsService.getByCredentials(
       email,
@@ -43,6 +44,7 @@ export class AuthCommands {
   }
 
   @Post('signUp')
+  @HttpCode(HttpStatus.OK)
   async signUp(
     @Body()
     { activationPassword, ...data }: SignupDirectorDto,
