@@ -2,12 +2,12 @@ import { StudyRequestOptions } from '@test/types';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 
-export interface GetEntityByIdOptions
+export interface GetStudiesOptions
   extends Omit<StudyRequestOptions, 'studyId'> {}
 
 export const getStudies = (
   app: INestApplication,
-  { accessToken }: GetEntityByIdOptions,
+  { accessToken }: GetStudiesOptions,
 ) =>
   request(app.getHttpServer())
     .get(`/studies/getAll`)
