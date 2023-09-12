@@ -53,6 +53,16 @@ const group = (): FakeGroup => {
   };
 };
 
+export type FakeParticipant = {
+  number: string;
+};
+
+const participant = (): FakeParticipant => {
+  return {
+    number: faker.string.numeric({ length: 5 }),
+  };
+};
+
 export type FakeAppointment = {
   subject: string;
   startDate: string;
@@ -89,4 +99,5 @@ export default {
   entity,
   entityField,
   appointment,
+  participant,
 };

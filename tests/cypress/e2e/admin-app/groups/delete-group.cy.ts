@@ -42,7 +42,7 @@ describe("delete group", () => {
     cy.getByTestId("groups page").should("not.contain", group.name);
   });
 
-  it.only("should soft delete a group", () => {
+  it("should soft delete a group", () => {
     cy.openGroupPage(studyId, groupId);
 
     cy.getByTestId("open delete group dialog").trigger("mouseover");
@@ -61,6 +61,6 @@ describe("delete group", () => {
 
     cy.getByTestId("groups page").should("contain", group.name);
 
-    cy.getByTestId(`restore group ${groupId}`).should("exist")
+    cy.getByTestId(`restore group ${groupId}`).should("exist");
   });
 });

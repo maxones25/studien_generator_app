@@ -29,25 +29,23 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
     startDate && startTime ? new Date(startDate + "T" + startTime) : null;
   const end = endDate && endTime ? new Date(endDate + "T" + endTime) : null;
 
-  const validate =
-    start && end ? () => start.getTime() < end.getTime() || "error" : undefined;
+  const validate: Record<string, any> = {};
+
+  if (start && end) {
+    validate.endBeforeStart = () =>
+      start.getTime() < end.getTime() || t("end before start");
+  }
 
   return (
-    <Form form={form} onSubmit={onSubmit}>
+    <Form testId="appointment form" form={form} onSubmit={onSubmit}>
       <ExperimentalFormTextField form={form} name="subject" required />
       <Row alignItems="flex-start">
         <ExperimentalFormTextField
           form={form}
           type="date"
           name="startDate"
+          validate={validate}
           required
-          validate={
-            validate
-              ? {
-                  validate,
-                }
-              : undefined
-          }
         />
         <ExperimentalFormTextField
           form={form}

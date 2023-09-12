@@ -2,10 +2,10 @@ import {
   ChipSelect,
   DataList,
   EditableListItem,
+  Heading,
   IconButton,
   Page,
   Row,
-  Text,
 } from "@modules/core/components";
 import {
   useFormData,
@@ -80,20 +80,29 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
   return (
     <Page testId="participants page" width={250} boxShadow={6} zIndex={900}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Text variant="h6">{t("participants")}</Text>
+        <Heading testId="participants heading">{t("participants")}</Heading>
         <Row>
           <IconButton
-            testId="create participant button"
+            testId="add participant"
             Icon={<Add />}
             color={participantData.hasData ? "primary" : "default"}
             onClick={participantData.handleSet({ number: "" })}
           />
-          <IconButton
-            testId="open search button"
-            Icon={search.isActive ? <SearchOff /> : <Search />}
-            color={search.isActive ? "primary" : "default"}
-            onClick={search.toggle}
-          />
+          {search.isActive ? (
+            <IconButton
+              testId="close search participant"
+              Icon={<SearchOff />}
+              color="primary"
+              onClick={search.stop}
+            />
+          ) : (
+            <IconButton
+              testId="search participant"
+              Icon={<Search />}
+              color="default"
+              onClick={search.start}
+            />
+          )}
         </Row>
       </Toolbar>
       <Divider />
@@ -113,6 +122,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
       {search.isActive && (
         <ClickAwayListener onClickAway={search.stop}>
           <Input
+            data-testid="change search text"
             sx={{ ml: 2, mr: 2 }}
             placeholder={t("search...")}
             onChange={(e) => search.set(e.currentTarget.value)}
@@ -133,6 +143,7 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
         />
       )}
       <DataList
+        testId="participants list"
         client={getParticipants}
         errorText="error"
         noDataText="no data"

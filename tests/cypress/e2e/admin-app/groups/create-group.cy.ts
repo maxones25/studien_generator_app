@@ -42,7 +42,7 @@ describe("create group", () => {
     cy.getByTestId("groups page").should("not.contain", group.name);
   });
 
-  it.only("should fail because name already exists", () => {
+  it("should fail because name already exists", () => {
     cy.openGroupsPage(studyId);
 
     const group = fakeData.group();

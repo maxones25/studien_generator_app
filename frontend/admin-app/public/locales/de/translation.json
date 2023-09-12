@@ -198,5 +198,6 @@
   "startTime": "Startzeit",
   "endTime": "Endzeit",
   "subject": "Betreff",
-  "name should not be empty": "Name darf nicht leer sein"
+  "name should not be empty": "Name darf nicht leer sein",
+  "end before start": "Startzeitpunkt muss vor dem Endzeitpunkt liegen"
 }

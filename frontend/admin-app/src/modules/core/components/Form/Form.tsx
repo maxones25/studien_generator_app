@@ -11,6 +11,7 @@ import {
 export interface FormProps<FormData extends FieldValues>
   extends Omit<ColumnProps, "onSubmit"> {
   form: UseFormReturn<FormData>;
+  testId?: string;
   onSubmit: SubmitHandler<FormData>;
 }
 
@@ -18,6 +19,7 @@ export function Form<FormData extends FieldValues>({
   onSubmit,
   form,
   children,
+  testId,
   ...props
 }: FormProps<FormData>) {
   const handleSubmit: FormEventHandler<HTMLDivElement> = (e) => {
@@ -28,7 +30,12 @@ export function Form<FormData extends FieldValues>({
 
   return (
     <FormProvider {...form}>
-      <Column component="form" onSubmit={handleSubmit} {...props}>
+      <Column
+        component="form"
+        testId={testId}
+        onSubmit={handleSubmit}
+        {...props}
+      >
         {children}
         <ReactHookFormDevTools />
       </Column>
