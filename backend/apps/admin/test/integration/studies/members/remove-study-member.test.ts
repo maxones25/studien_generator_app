@@ -1,18 +1,13 @@
 import { AppModule } from '@admin/app.module';
-import { Roles } from '@admin/roles/roles.enum';
 import { INestApplication } from '@nestjs/common';
+import { createApp } from '@test/app/createApp';
+import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { createDirector } from '@test/director/signUpDirector';
 import fakeData from '@test/fakeData';
 import { createStudyId } from '@test/studies/createStudy';
 import { addMember } from '@test/studies/members/addMember';
 import { removeMember } from '@test/studies/members/removeMember';
 import { TEST_DIRECTOR } from '@test/testData';
-import {
-  createApp,
-  createDirector,
-  getDirectorAccessToken,
-  getEnv,
-} from '@test/utils';
-import request from 'supertest';
 
 describe('Remove Study Member', () => {
   let app: INestApplication;
@@ -38,14 +33,9 @@ describe('Remove Study Member', () => {
       data: fakeData.study(),
     });
 
-    const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
+    const director = await createDirector(app);
 
-    const director = fakeData.director();
-
-    const directorId = await createDirector(app, {
-      activationPassword,
-      ...director,
-    });
+    const directorId = director.id;
 
     await addMember(app, {
       accessToken,
@@ -63,14 +53,9 @@ describe('Remove Study Member', () => {
       data: fakeData.study(),
     });
 
-    const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
+    const director = await createDirector(app);
 
-    const director = fakeData.director();
-
-    const directorId = await createDirector(app, {
-      activationPassword,
-      ...director,
-    });
+    const directorId = director.id;
 
     await addMember(app, {
       accessToken,
@@ -144,14 +129,9 @@ describe('Remove Study Member', () => {
       data: fakeData.study(),
     });
 
-    const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
+    const director = await createDirector(app);
 
-    const director = fakeData.director();
-
-    const directorId = await createDirector(app, {
-      activationPassword,
-      ...director,
-    });
+    const directorId = director.id;
 
     await addMember(app, {
       accessToken,

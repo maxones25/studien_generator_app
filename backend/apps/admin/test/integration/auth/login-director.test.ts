@@ -1,10 +1,12 @@
-import { createApp, createDirector, getEnv } from '@test/utils';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
 import { JwtService } from '@nestjs/jwt';
 import request from 'supertest';
 import { SignupDirectorDto } from '@admin/directors/dtos/SignupDirectorDto';
+import { createDirector } from '@test/director/signUpDirector';
+import { createApp } from '@test/app/createApp';
+import { getEnvironmentVariable } from '@test/app/getEnvironmentVariable';
 
 describe('login director', () => {
   let app: INestApplication;
@@ -14,11 +16,16 @@ describe('login director', () => {
   beforeAll(async () => {
     app = await createApp(AppModule);
 
-    const activationPassword = await getEnv(app, 'ACTIVATION_PASSWORD');
+    const data = fakeData.director();
 
-    director = { ...fakeData.director(), activationPassword };
+    director = {
+      ...data,
+      activationPassword: getEnvironmentVariable(app, 'ACTIVATION_PASSWORD'),
+    };
 
-    directorId = await createDirector(app, director);
+    const createdDirector = await createDirector(app, data);
+
+    directorId = createdDirector.id;
   });
 
   it('should login directors successfully', async () => {

@@ -1,5 +1,5 @@
 import { TEST_DIRECTOR } from '@test/testData';
-import { createApp, getDirectorAccessToken } from '@test/utils';
+import { createApp,  } from '@test/utils';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
@@ -7,6 +7,7 @@ import { deleteEntity } from '@test/entities/deleteEntity';
 import { createEntityId } from '@test/entities/createEntity';
 import { getEntityById } from '@test/entities/getEntityById';
 import { createStudyId } from '@test/studies/createStudy';
+import { getDirectorAccessToken } from '@test/auth/loginDirector';
 
 describe('Delete Entity', () => {
   let app: INestApplication;

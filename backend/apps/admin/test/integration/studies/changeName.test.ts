@@ -1,13 +1,13 @@
 import { AppModule } from '@admin/app.module';
 import { Roles } from '@admin/roles/roles.enum';
 import { INestApplication } from '@nestjs/common';
+import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import fakeData from '@test/fakeData';
 import { changeStudyName } from '@test/studies/changeStudyName';
 import { createStudy, createStudyId } from '@test/studies/createStudy';
 import { getStudyById } from '@test/studies/getStudyById';
 import { TEST_DIRECTOR } from '@test/testData';
-import { createApp, getDirectorAccessToken } from '@test/utils';
-import request from 'supertest';
+import { createApp,  } from '@test/utils';
 
 describe('Change Study Name', () => {
   let app: INestApplication;

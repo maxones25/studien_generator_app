@@ -1,11 +1,12 @@
 import { INestApplication } from '@nestjs/common';
 import fakeData from '@test/fakeData';
-import { createApp, getDirectorAccessToken } from '@test/utils';
+import { createApp,  } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import { createStudyId } from '@test/studies/createStudy';
 import { deleteStudy } from '@test/studies/deleteStudy';
 import { getStudyById } from '@test/studies/getStudyById';
+import { getDirectorAccessToken } from '@test/auth/loginDirector';
 
 describe('Delete Study', () => {
   let app: INestApplication;

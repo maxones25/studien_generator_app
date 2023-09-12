@@ -1,11 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
-import {
-  createApp,
-  createDirector,
-  getDirectorAccessToken,
-  getEnv,
-} from '@test/utils';
+import { createApp, getEnv } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
@@ -13,6 +7,8 @@ import { Roles } from '@admin/roles/roles.enum';
 import { createStudyId } from '@test/studies/createStudy';
 import { addMember } from '@test/studies/members/addMember';
 import { getMembers } from '@test/studies/members/getMembers';
+import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { createDirector } from '@test/director/signUpDirector';
 
 describe('Get Study Members', () => {
   let app: INestApplication;
@@ -36,13 +32,10 @@ describe('Get Study Members', () => {
 
     studyId = await createStudyId(app, { accessToken, data: fakeData.study() });
 
-    const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
-
     for (let i = 0; i < 2; i++) {
-      const directorId = await createDirector(app, {
-        activationPassword,
-        ...fakeData.director(),
-      });
+      const director = await createDirector(app);
+
+      const directorId = director.id;
 
       const role = Roles.employee;
 

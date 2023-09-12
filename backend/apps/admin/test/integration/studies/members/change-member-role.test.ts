@@ -1,14 +1,14 @@
 import { INestApplication } from '@nestjs/common';
-import { createApp, getDirectorAccessToken, getEnv } from '@test/utils';
+import { createApp } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import fakeData from '@test/fakeData';
 import { Roles } from '@admin/roles/roles.enum';
 import { createStudyId } from '@test/studies/createStudy';
 import { addMember } from '@test/studies/members/addMember';
 import { changeMemberRole } from '@test/studies/members/changeMemberRole';
 import { getStudyById } from '@test/studies/getStudyById';
 import { createDirector } from '@test/director/signUpDirector';
+import { getDirectorAccessToken } from '@test/auth/loginDirector';
 
 describe('Change Member Role', () => {
   let app: INestApplication;

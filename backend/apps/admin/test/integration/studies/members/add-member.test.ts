@@ -1,10 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import {
-  createApp,
-  createDirector,
-  getDirectorAccessToken,
-  getEnv,
-} from '@test/utils';
+import { createApp } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import { Roles } from '@admin/roles/roles.enum';
@@ -14,6 +9,8 @@ import { createStudyId } from '@test/studies/createStudy';
 import { getStudyById } from '@test/studies/getStudyById';
 import { addMember } from '@test/studies/members/addMember';
 import { Role } from '@entities/core/study';
+import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { createDirector } from '@test/director/signUpDirector';
 
 describe('Add Study Member', () => {
   let app: INestApplication;
@@ -34,24 +31,18 @@ describe('Add Study Member', () => {
 
     studyId = await createStudyId(app, { accessToken, data: fakeData.study() });
 
-    const activationPassword = getEnv(app, 'ACTIVATION_PASSWORD');
+    const director = await createDirector(app);
 
-    const otherDirector = fakeData.director();
+    directorId = director.id;
 
-    directorId = await createDirector(app, {
-      activationPassword,
-      ...otherDirector,
-    });
+    const director2 = await createDirector(app);
 
-    directorId2 = await createDirector(app, {
-      activationPassword,
-      ...fakeData.director(),
-    });
+    directorId2 = director2.id;
 
     otherAccessToken = await getDirectorAccessToken(
       app,
-      otherDirector.email,
-      otherDirector.password,
+      director.email,
+      director.password,
     );
   });
 
