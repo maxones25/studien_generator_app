@@ -17,7 +17,7 @@ export class IsDirectorDeletedGuard implements CanActivate {
 
     if (request.route.path.startsWith('/auth')) return true;
     if (request.route.path.startsWith('/health')) return true;
-    if (request.route.path.startsWith('/directors')) return true;
+    if (request.method === "POST" && request.route.path.startsWith('/directors')) return true;
 
     const id = request?.payload?.directorId;
 

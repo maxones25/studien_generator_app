@@ -1,6 +1,7 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Inject, UseGuards } from '@nestjs/common';
 import { DirectorsService } from '../directors.service';
 import { DirectorId } from '../decorators/director-id.decorator';
+import { IsDirectorDeletedGuard } from '../guards/IsDirectorDeletedGuard';
 
 @Controller('directors')
 export class DirectorsQueries {
@@ -10,6 +11,7 @@ export class DirectorsQueries {
   ) {}
 
   @Get('me')
+  @UseGuards(IsDirectorDeletedGuard)
   async me(@DirectorId() directorId: string) {
     return this.directorsService.getById(directorId);
   }
