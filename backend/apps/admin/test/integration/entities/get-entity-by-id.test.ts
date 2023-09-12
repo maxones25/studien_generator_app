@@ -2,13 +2,12 @@ import { TEST_DIRECTOR } from '@test/testData';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
-import { createEntity, createEntityId } from '@test/entities/createEntity';
-import { getEntities } from '@test/entities/getEntities';
+import { createEntityId } from '@test/entities/createEntity';
 import { createStudyId } from '@test/studies/createStudy';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { createApp } from '@test/app/createApp';
 import { getEntityById } from '@test/entities/getEntityById';
-import { createField, createFieldId } from '@test/entities/fields/createField';
+import { createFieldId } from '@test/entities/fields/createField';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
 
 describe('Get Entities', () => {
