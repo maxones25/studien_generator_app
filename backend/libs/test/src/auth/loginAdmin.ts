@@ -24,3 +24,15 @@ export const loginAdmin = (
 
   return request(app.getHttpServer()).post(`/auth/loginAdmin`).send(data);
 };
+
+export const getAdminAccessToken = (app: INestApplication) =>
+  new Promise<string>((resolve, reject) => {
+    loginAdmin(app, { withPassword: true })
+      .expect(200)
+      .then((res) => {
+        const accessToken = res.text;
+        expect(typeof accessToken).toBe('string');
+        resolve(accessToken as string);
+      })
+      .catch(reject);
+  });
