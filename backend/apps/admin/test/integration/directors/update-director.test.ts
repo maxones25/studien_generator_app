@@ -6,11 +6,8 @@ import {
   getDirectorAccessToken,
   loginDirector,
 } from '@test/auth/loginDirector';
-import { deleteDirector } from '@test/director/deleteDirector';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
-import { restoreDirector } from '@test/director/restoreDirector';
 import fakeData from '@test/fakeData';
-import { TEST_DIRECTOR } from '@test/testData';
 import { updateDirector } from '@test/director/updateDirector';
 import { getDirectorById, getMe } from '@test/director/getMe';
 import { Director } from '@entities/core/director/Director';
