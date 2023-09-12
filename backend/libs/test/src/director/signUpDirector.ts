@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import { RequestOptions, StudyRequestOptions } from '../types';
+import { RequestOptions } from '../types';
 import request from 'supertest';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { getEnv } from '@test/utils';
