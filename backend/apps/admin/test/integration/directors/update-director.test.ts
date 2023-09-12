@@ -9,7 +9,7 @@ import {
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
 import fakeData from '@test/fakeData';
 import { updateDirector } from '@test/director/updateDirector';
-import { getDirectorById, getMe } from '@test/director/getMe';
+import { getDirectorById } from '@test/director/getMe';
 import { Director } from '@entities/core/director/Director';
 
 describe('update director', () => {
