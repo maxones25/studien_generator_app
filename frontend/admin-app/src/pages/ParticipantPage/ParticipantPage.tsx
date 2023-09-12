@@ -6,6 +6,7 @@ import {
   DeleteDialog,
   DeleteDialogData,
   Editable,
+  Heading,
   IconButton,
   OnlyAdmin,
   Page,
@@ -85,10 +86,14 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Row>
           <Editable
+            testId="edit number"
+            inputTestId="change number"
             defaultText={participant.number}
             onSubmit={(number) => changeParticipantNumber.mutate({ number })}
           >
-            <Text variant="h6">{getParticipant.data?.number}</Text>
+            <Heading testId="number">
+              {getParticipant.data?.number ?? "-"}
+            </Heading>
           </Editable>
           <GroupSelect
             size="small"
