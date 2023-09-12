@@ -24,9 +24,8 @@ export const signUpDirector = (
   return request(app.getHttpServer()).post('/auth/signUp').send(data);
 };
 
-export const createDirector = (app: INestApplication) =>
+export const createDirector = (app: INestApplication, data = fakeData.director()) =>
   new Promise<Director>((resolve, reject) => {
-    const data = fakeData.director();
     signUpDirector(app, { data, withActivation: true })
       .expect(201)
       .then((res) => {
