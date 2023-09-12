@@ -2,7 +2,13 @@
 
 import "cypress-wait-until";
 import "cypress-localstorage-commands";
-import { FakeEntity, FakeEntityField, FakeGroup, FakeStudy } from "../fakeData";
+import {
+  FakeEntity,
+  FakeEntityField,
+  FakeGroup,
+  FakeParticipant,
+  FakeStudy,
+} from "../fakeData";
 
 declare global {
   namespace Cypress {
@@ -22,6 +28,10 @@ declare global {
       createStudy(study: FakeStudy): Chainable<string>;
       createGroup(studyId: string, group: FakeGroup): Chainable<string>;
       createEntity(studyId: string, entity: FakeEntity): Chainable<string>;
+      createParticipant(
+        studyId: string,
+        participant: FakeParticipant
+      ): Chainable<string>;
       createEntityField(
         studyId: string,
         entityId: string,
@@ -35,6 +45,8 @@ declare global {
       openStudyPage(studyId: string): void;
       openGroupsPage(studyId: string): void;
       openEntitiesPage(studyId: string): void;
+      openParticipantsPage(studyId: string): void;
+      openParticipantPage(studyId: string, participantId: string): void;
       openEntityPage(studyId: string, entityId: string): void;
       openGroupPage(studyId: string, groupId: string): void;
       shouldShowAlert(type: "success" | "error", text?: string): void;
@@ -46,6 +58,7 @@ declare global {
 import "./api/fetchAccessToken";
 import "./api/createStudy";
 import "./api/createGroup";
+import "./api/createParticipant";
 import "./api/createEntity";
 import "./api/createEntityField";
 
@@ -58,6 +71,8 @@ import "./ui/shouldShowAlert";
 
 import "./router/openStudyPage";
 import "./router/openEntitiesPage";
+import "./router/openParticipantsPage";
+import "./router/openParticipantPage";
 import "./router/openEntityPage";
 import "./router/openGroupsPage";
 import "./router/openGroupPage";

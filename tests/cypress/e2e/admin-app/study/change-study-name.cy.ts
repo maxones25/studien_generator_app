@@ -15,7 +15,7 @@ describe("change study name", () => {
     });
   });
 
-  it.only("should change study name", () => {
+  it("should change study name", () => {
     cy.openStudyPage(study.id);
 
     const newStudy = fakeData.study();

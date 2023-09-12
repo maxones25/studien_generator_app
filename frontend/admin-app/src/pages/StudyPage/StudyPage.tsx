@@ -81,7 +81,7 @@ const StudyPage: React.FC<StudyPageProps> = () => {
       <Column flex={1} overflowY="hidden">
         <StudyCard study={study} />
         <Row flex={1} alignItems="stretch" overflowY="hidden">
-          <MembersCard m={2} mt={0} p={2} />
+          <MembersCard m={2} mt={0} p={2} minWidth={500} />
           <AppointmentsCard minWidth={400} />
         </Row>
       </Column>

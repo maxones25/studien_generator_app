@@ -2,10 +2,10 @@ import { AppointmentsCard } from "@modules/appointments/components";
 import {
   DeleteDialog,
   Editable,
+  Heading,
   IconButton,
   Page,
   Row,
-  Text,
   TooltipGuard,
 } from "@modules/core/components";
 import { useNavigationHelper, useOpen } from "@modules/core/hooks";
@@ -61,10 +61,12 @@ const GroupPage: React.FC<GroupPageProps> = () => {
     <Page testId="group page" flex={1}>
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Editable
+          testId="edit name"
+          inputTestId="change name"
           defaultText={group.name}
           onSubmit={(name) => updateGroup.mutate({ id: group.id, name })}
         >
-          <Text variant="h6">{group.name}</Text>
+          <Heading testId="group name">{group.name}</Heading>
         </Editable>
         <TooltipGuard
           validate={{

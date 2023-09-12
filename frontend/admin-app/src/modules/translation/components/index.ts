@@ -1,1 +1,1 @@
-export * from "./TranslationProvider/TranslationProvider"
+export * from "./TranslationProvider/TranslationProvider";

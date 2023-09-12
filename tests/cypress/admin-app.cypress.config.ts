@@ -11,4 +11,11 @@ export default defineConfig({
     supportFile: "support/e2e.{js,jsx,ts,tsx}",
     screenshotsFolder: "screenshots",
   },
+
+  component: {
+    devServer: {
+      framework: "react",
+      bundler: "vite",
+    },
+  },
 });
