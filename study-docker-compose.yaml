@@ -25,6 +25,8 @@ services:
       retries: 10
       
   study-backend:
+    env: 
+      TEST: true
     container_name: study-backend
     build:
       context: ./backend

@@ -16,8 +16,6 @@ export class AuthService {
   ) {}
 
   async checkCredentials({ id, password }: LoginParticipantDto) {
-    
-    console.log('test1', process.env.TEST)
     const participant = await this.particpantsRepository.findOne({
       where: {
         id,
@@ -44,8 +42,6 @@ export class AuthService {
       chatId: participant.chat.id,
       type: 'participant',
     });
-
-    console.log('test2', process.env.TEST)
 
     if (!process.env.TEST) {
       const resetPassword = await this.passwordService.generateHashed(10)
