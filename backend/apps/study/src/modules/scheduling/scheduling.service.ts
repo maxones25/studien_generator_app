@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { DataService } from './scheduling-data.service';
-import { ParticipantNotification } from '@entities';
 import { PushNotificationType } from './push-notification-type.enum';
 const webpush = require('web-push');
 

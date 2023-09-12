@@ -128,7 +128,7 @@ describe('login participant', () => {
       .post('/auth/login')
       .send({
         id: participant.id,
-        password: fakeData.participant().password,
+        password: '0123456789CD'
       })
       .expect(401);
   });
