@@ -9,11 +9,26 @@ export interface GetEntityByIdOptions extends StudyRequestOptions {
 export const getEntityById = (
   app: INestApplication,
   { accessToken, studyId, entityId }: GetEntityByIdOptions,
-) =>
-  request(app.getHttpServer())
-    .get(`/entities/getById`)
-    .query({
-      studyId,
-      entityId,
-    })
-    .set('Authorization', `Bearer ${accessToken}`);
+) => {
+  const action = request(app.getHttpServer()).get(`/entities/getById`);
+
+  const qs: any = {};
+
+  if (studyId !== undefined) {
+    qs.studyId = studyId;
+  }
+
+  if (entityId !== undefined) {
+    qs.entityId = entityId;
+  }
+
+  if (Object.keys(qs).length > 0) {
+    action.query(qs);
+  }
+
+  if (accessToken !== undefined) {
+    action.set('Authorization', `Bearer ${accessToken}`);
+  }
+
+  return action;
+};
