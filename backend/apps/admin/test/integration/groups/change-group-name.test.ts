@@ -1,5 +1,6 @@
 import { AppModule } from '@admin/app.module';
 import { INestApplication } from '@nestjs/common';
+import { createApp } from '@test/app/createApp';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import fakeData from '@test/fakeData';
 import { changeGroupName } from '@test/groups/changeGroupName';
@@ -7,7 +8,6 @@ import { createGroupId } from '@test/groups/createGroup';
 import { getGroupById } from '@test/groups/getGroupById';
 import { createStudyId } from '@test/studies/createStudy';
 import { TEST_DIRECTOR } from '@test/testData';
-import { createApp } from '@test/utils';
 
 describe('change group name', () => {
   let app: INestApplication;

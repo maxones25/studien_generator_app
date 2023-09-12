@@ -4,7 +4,6 @@ import { INestApplication } from '@nestjs/common';
 import { createDirector } from '@test/director/signUpDirector';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
-import { getMe } from '@test/director/getMe';
 import { Director } from '@entities/core/director/Director';
 import { getDirectors } from '@test/director/getDirectors';
 import { validateUUID } from '@shared/modules/uuid/uuid';

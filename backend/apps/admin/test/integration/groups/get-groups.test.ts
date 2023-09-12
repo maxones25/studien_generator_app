@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import { createApp,  } from '@test/utils';
+
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import { createStudyId } from '@test/studies/createStudy';
@@ -7,6 +7,7 @@ import { createDirector } from '@test/director/signUpDirector';
 import { createGroupId } from '@test/groups/createGroup';
 import { getGroups } from '@test/groups/getGroups';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { createApp } from '@test/app/createApp';
 
 describe('get groups', () => {
   let app: INestApplication;

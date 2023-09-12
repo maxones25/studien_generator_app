@@ -1,11 +1,11 @@
 import { AppModule } from '@admin/app.module';
 import { AttributeType } from '@admin/components/Attribute';
 import { INestApplication } from '@nestjs/common';
+import { createApp } from '@test/app/createApp';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { getComponents } from '@test/components/getComponents';
 import { createDirector } from '@test/director/signUpDirector';
-import { createApp } from '@test/utils';
 
 const VALID_TYPES: AttributeType[] = [
   'boolean',

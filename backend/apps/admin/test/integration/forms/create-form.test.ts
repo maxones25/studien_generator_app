@@ -1,5 +1,4 @@
 import { INestApplication } from '@nestjs/common';
-import { createApp,  } from '@test/utils';
 import { TEST_DIRECTOR } from '@test/testData';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { AppModule } from '@admin/app.module';
@@ -7,6 +6,7 @@ import { createStudyId } from '@test/studies/createStudy';
 import { createForm } from '@test/forms/createForm';
 import fakeData from '@test/fakeData';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { createApp } from '@test/app/createApp';
 
 describe('Create Form', () => {
   let app: INestApplication;

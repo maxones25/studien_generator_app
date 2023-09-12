@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { createApp } from '@test/utils';
 import { AppModule } from '@admin/app.module';
+import { createApp } from '@test/app/createApp';
 
 describe('App Heath', () => {
   let app: INestApplication;
