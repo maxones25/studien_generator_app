@@ -1,6 +1,6 @@
-import fakeData from "../../../fakeData";
+import fakeData from "../../../../fakeData";
 
-describe("add entity fields", () => {
+describe("add entity field", () => {
   let study;
   let entity;
 
@@ -164,7 +164,7 @@ describe("add entity fields", () => {
     cy.contains("Bitte Name eingeben");
   });
 
-  it.only("should not create field twice", () => {
+  it("should not create field twice", () => {
     cy.openEntityPage(study.id, entity.id);
 
     const field = fakeData.entityField("DateTime");

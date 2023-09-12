@@ -74,7 +74,7 @@ const GroupPage: React.FC<GroupPageProps> = () => {
         >
           {(disabled) => (
             <IconButton
-              testId="delete group"
+              testId="open delete group dialog"
               Icon={<Delete />}
               onClick={deleteDialog.open}
               tooltipProps={{

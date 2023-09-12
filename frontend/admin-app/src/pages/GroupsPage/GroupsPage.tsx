@@ -56,7 +56,7 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
         <Text variant="h6">{t("groups")}</Text>
         <Row>
           <IconButton
-            testId="create group"
+            testId="open group input"
             Icon={<Add />}
             color={editGroupData.hasData ? "primary" : "default"}
             onClick={editGroupData.handleSet({ name: "" })}
@@ -109,7 +109,7 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
               secondaryAction={
                 isDeleted && (
                   <IconButton
-                    testId="restore group"
+                    testId={`restore group ${group.id}`}
                     Icon={<RestoreFromTrash />}
                     onClick={() => restoreGroup.mutate(group)}
                     tooltipProps={{

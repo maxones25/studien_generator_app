@@ -20,10 +20,12 @@ import {
 import { Delete } from "@mui/icons-material";
 import { Divider, LinearProgress, Toolbar } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export interface EntityPageProps {}
 
 const EntityPage: React.FC<EntityPageProps> = () => {
+  const { t } = useTranslation();
   const getEntity = useGetEntity();
   const updateEntity = useChangeName();
   const deleteDialog = useOpen();
@@ -46,6 +48,8 @@ const EntityPage: React.FC<EntityPageProps> = () => {
     <Page testId="entity page" flex={1}>
       <Toolbar sx={{ ml: 2, justifyContent: "space-between" }}>
         <Editable
+          testId="edit name"
+          inputTestId="change name"
           defaultText={entity.name}
           onSubmit={(name) => updateEntity.mutate({ id: entity.id, name })}
         >
@@ -58,6 +62,9 @@ const EntityPage: React.FC<EntityPageProps> = () => {
               Icon={<Delete />}
               onClick={deleteDialog.open}
               disabled={disabled}
+              tooltipProps={{
+                title: t("delete record", { record: t("entity") }),
+              }}
             />
           )}
         </OnlyAdmin>
