@@ -28,7 +28,7 @@ describe('login director', () => {
         email: director.email,
         password: director.password,
       })
-      .expect(201)
+      .expect(200)
       .then((res) => {
         expect(typeof res.body.accessToken).toEqual('string');
         const jwtService = app.get(JwtService);

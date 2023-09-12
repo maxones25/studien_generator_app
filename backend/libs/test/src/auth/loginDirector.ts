@@ -18,7 +18,7 @@ export const getDirectorAccessToken = (
 ) =>
   new Promise<string>((resolve, reject) => {
     loginDirector(app, email, password)
-      .expect(201)
+      .expect(200)
       .then((res) => {
         expect(typeof res.body.accessToken).toEqual('string');
         resolve(res.body.accessToken as string);

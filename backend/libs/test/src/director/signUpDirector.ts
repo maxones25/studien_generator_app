@@ -27,7 +27,7 @@ export const signUpDirector = (
 export const createDirector = (app: INestApplication, data = fakeData.director()) =>
   new Promise<Director>((resolve, reject) => {
     signUpDirector(app, { data, withActivation: true })
-      .expect(201)
+      .expect(200)
       .then((res) => {
         expect(validateUUID(res.text)).toBeTruthy();
         resolve(Director.create({ ...data, id: res.text }));

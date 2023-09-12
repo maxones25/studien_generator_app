@@ -21,7 +21,7 @@ describe('signUp director', () => {
         ...fakeData.director(),
         activationPassword,
       })
-      .expect(201)
+      .expect(200)
       .then((res) => {
         expect(validateUUID(res.text)).toBeTruthy();
       });
@@ -36,7 +36,7 @@ describe('signUp director', () => {
         ...director,
         activationPassword,
       })
-      .expect(201);
+      .expect(200);
 
     return request(app.getHttpServer())
       .post('/auth/signUp')
