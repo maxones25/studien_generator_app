@@ -1,6 +1,5 @@
-import { Controller, Get, Param, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, UseGuards, Query } from '@nestjs/common';
 import { EntitiesService } from '../entities.service';
-import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { Roles } from '@admin/roles/roles.decorator';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
