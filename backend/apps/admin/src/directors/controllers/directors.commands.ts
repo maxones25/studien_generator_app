@@ -4,7 +4,8 @@ import {
   Post,
   UseGuards,
   Inject,
-  Query,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { DirectorsService } from '../directors.service';
 import { UpdateDirectorDto } from '../dtos/UpdateDirectorDto';
@@ -22,6 +23,7 @@ export class DirectorsCommands {
   ) {}
 
   @Post('delete')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(DirectorGuard)
   async delete(
     @Director() director: DirectorEntity,
@@ -35,14 +37,14 @@ export class DirectorsCommands {
   }
 
   @Post('restore')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(DirectorGuard)
-  async restore(
-    @Director() director: DirectorEntity,
-  ) {
+  async restore(@Director() director: DirectorEntity) {
     return this.directorsService.restore(director.id);
   }
 
   @Post('update')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(DirectorGuard)
   async update(
     @Director() director: DirectorEntity,
@@ -52,6 +54,7 @@ export class DirectorsCommands {
   }
 
   @Post('resetPassword')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(DirectorGuard)
   async updatePassword(
     @Director() director: DirectorEntity,
