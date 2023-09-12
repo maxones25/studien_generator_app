@@ -47,7 +47,7 @@ const entityField = () => {
 
 const participant = () => {
   return {
-    number: faker.string.alpha({ length: 6 })
+    number: faker.string.alpha({ length: 6 }),
   };
 };
 
@@ -90,8 +90,12 @@ const chatMessageAdmin = () => {
 
 export const id = () => faker.string.uuid();
 
+export const password = (length = 10) =>
+  faker.internet.password({ length, memorable: true });
+
 export default {
   id,
+  password,
   name: randomName,
   director,
   study,
