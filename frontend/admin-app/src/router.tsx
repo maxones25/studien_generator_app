@@ -2,6 +2,7 @@ import { AuthenticationGuard, LoginGuard } from "@modules/auth/components";
 import { ChatMessagesProvider } from "@modules/chat/contexts";
 import { StudyContainer } from "@modules/navigation/components";
 import { StudyProvider } from "@modules/studies/contexts";
+import { LanguageHeader } from "@modules/translation/components";
 import AdminLoginPage from "@pages/AdminLoginPage/AdminLoginPage";
 import ChatPage from "@pages/ChatPage/ChatPage";
 import ChatsPage from "@pages/ChatsPage/ChatsPage";
@@ -24,6 +25,12 @@ import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 const router = createBrowserRouter([
   {
     path: "/admin",
+    element: (
+      <>
+        <LanguageHeader />
+        <Outlet />
+      </>
+    ),
     children: [
       {
         index: true,
@@ -56,6 +63,7 @@ const router = createBrowserRouter([
     path: "/login",
     element: (
       <LoginGuard path="/" topic="Director">
+        <LanguageHeader />
         <LoginPage />
       </LoginGuard>
     ),
@@ -64,6 +72,7 @@ const router = createBrowserRouter([
     path: "/signUp",
     element: (
       <LoginGuard path="/" topic="Director">
+        <LanguageHeader />
         <SignUpPage />
       </LoginGuard>
     ),

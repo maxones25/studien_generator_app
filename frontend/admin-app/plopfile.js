@@ -20,6 +20,7 @@ const modules = [
   "records",
   "studies",
   "tasks",
+  "translation",
 ];
 
 const types = ["type", "interface"];

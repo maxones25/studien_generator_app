@@ -39,7 +39,7 @@ export const GroupSelect: React.FC<GroupSelectProps> = ({
     <Select
       {...props}
       label={t("group")}
-      name="groups"
+      name="group"
       options={[{ label: "-", value: null }, ...options]}
       onChange={handleSelect}
     />

@@ -1,10 +1,8 @@
 import i18n from "i18next";
-import { initReactI18next, useTranslation } from "react-i18next";
+import { initReactI18next } from "react-i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { useEffect, useRef } from "react";
-import { LinearProgress } from "@mui/material";
-import { useStoredState } from "@modules/core/hooks";
+import { LanguageProvider } from "@modules/translation/contexts";
 
 i18n
   .use(Backend)
@@ -38,23 +36,5 @@ export interface TranslationProviderProps {
   children: JSX.Element;
 }
 export const TranslationProvider = ({ children }: TranslationProviderProps) => {
-  const init = useRef<boolean>(false);
-  const [lang] = useStoredState<string>("lang", {
-    defaultValue: "de",
-    storage: localStorage,
-  });
-  const { i18n } = useTranslation();
-
-  useEffect(() => {
-    if (!init.current) {
-      i18n.changeLanguage(lang);
-      init.current = true;
-    }
-  }, [init, lang]);
-
-  if (!init.current) {
-    return <LinearProgress />;
-  }
-
-  return children;
+  return <LanguageProvider>{children}</LanguageProvider>;
 };

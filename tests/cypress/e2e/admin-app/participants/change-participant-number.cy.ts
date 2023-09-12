@@ -41,4 +41,34 @@ describe("change participant number", () => {
       participant.number
     );
   });
+
+  it("should fail because number is empty", () => {
+    cy.openParticipantPage(studyId, participantId);
+
+    cy.getByTestId("edit number").click();
+
+    cy.getByTestId("change number").clear();
+    cy.getByTestId("change number").type("\n");
+
+    cy.getByTestId("number").should("contain", participant.number);
+    cy.getByTestId("participants list").should("contain", participant.number);
+  });
+
+  it("should fail because number already exists", () => {
+    const data = fakeData.participant();
+
+    cy.createParticipant(studyId, data);
+
+    cy.openParticipantPage(studyId, participantId);
+
+    cy.getByTestId("edit number").click();
+
+    cy.getByTestId("change number").clear();
+    cy.getByTestId("change number").type(data.number + "\n");
+
+    cy.shouldShowAlert("error", "Fehler");
+
+    cy.getByTestId("number").should("contain", participant.number);
+    cy.getByTestId("participants list").should("contain", participant.number);
+  });
 });

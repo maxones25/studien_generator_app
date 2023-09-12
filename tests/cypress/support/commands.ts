@@ -15,6 +15,7 @@ declare global {
     interface Chainable {
       fetchAccessToken(type: "director" | "participant"): Chainable<any>;
       setAccessToken(type: "director" | "participant"): Chainable<any>;
+      setLanguage(lang: "de" | "en"): Chainable<any>;
       shouldBeRelativePath(path: string): Chainable<any>;
       getByTestId(
         name: string,
@@ -66,6 +67,7 @@ import "./ui/shouldBeRelativePath";
 import "./ui/getByTestId";
 import "./ui/selectOption";
 import "./ui/setAccessToken";
+import "./ui/setLanguage";
 import "./ui/addMember";
 import "./ui/shouldShowAlert";
 

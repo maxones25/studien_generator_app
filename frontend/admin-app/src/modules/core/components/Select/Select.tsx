@@ -34,6 +34,7 @@ export const Select: React.FC<SelectProps> = ({
     <FormControl margin="normal" size={size} {...formControlProps}>
       {label && <InputLabel id={labelId}>{label}</InputLabel>}
       <MSelect
+        data-testid={`change ${name}`}
         size={size}
         labelId={labelId}
         label={label}
@@ -41,7 +42,11 @@ export const Select: React.FC<SelectProps> = ({
         {...props}
       >
         {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
+          <MenuItem
+            data-testid={`change ${name} option ${option.value}`}
+            key={option.value}
+            value={option.value}
+          >
             {option.label}
           </MenuItem>
         ))}
