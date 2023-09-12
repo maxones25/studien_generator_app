@@ -212,6 +212,13 @@ jobs:
           docker-compose -f database-docker-compose.yaml build
           docker-compose -f database-docker-compose.yaml up -d
 
+      - name: Wait for MySQL
+        run: sleep 10s
+
+      - name: Run Migrations
+        working-directory: ./backend
+        run: npm run db:migration:run
+
       - name: Run integration tests
         working-directory: ./backend
         run: npm run test:study:integration
