@@ -1,9 +1,9 @@
 export interface RequestOptions {}
 
 export interface AuthRequestOptions extends RequestOptions {
-  accessToken: string;
+  accessToken: string | undefined;
 }
 
 export interface StudyRequestOptions extends AuthRequestOptions {
-  studyId: string;
+  studyId: string | undefined;
 }

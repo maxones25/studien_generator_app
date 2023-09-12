@@ -10,9 +10,20 @@ export interface DeleteDirectorOptions extends AuthRequestOptions {
 export const deleteDirector = (
   app: INestApplication,
   { accessToken, directorId, data }: DeleteDirectorOptions,
-) =>
-  request(app.getHttpServer())
-    .post('/directors/delete')
-    .set('Authorization', `Bearer ${accessToken}`)
-    .query({ directorId })
-    .send(data);
+) => {
+  let action = request(app.getHttpServer()).post('/directors/delete');
+
+  if(accessToken !== undefined) {
+    action.set('Authorization', `Bearer ${accessToken}`)
+  }
+
+  if(directorId !== undefined) {
+    action.query({ directorId })
+  }
+
+  if(data !== undefined) {
+    action.send(data);
+  }
+
+  return action;
+}
