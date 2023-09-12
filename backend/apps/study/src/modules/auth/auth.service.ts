@@ -44,11 +44,11 @@ export class AuthService {
     });
 
     if (!process.env.TEST) {
-      const resetPassword = await this.passwordService.generateHashed(10)
+      const resetPassword = await this.passwordService.generateHashed(10);
   
       this.particpantsRepository.update(participant.id, {
         password: resetPassword
-      })
+      });
     }
 
     return {
