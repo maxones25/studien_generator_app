@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, UseGuards } from '@nestjs/common';
 import { DirectorsService } from '../directors.service';
 import { DirectorId } from '../decorators/director-id.decorator';
-import { AdminGuard } from '../guards/AdminGuard';
+import { IsAdminGuard } from '../guards/IsAdminGuard';
 
 @Controller('directors')
 export class DirectorsQueries {
@@ -16,7 +16,7 @@ export class DirectorsQueries {
   }
 
   @Get('getAll')
-  @UseGuards(AdminGuard)
+  @UseGuards(IsAdminGuard)
   async getAll() {
     return this.directorsService.get();
   }
