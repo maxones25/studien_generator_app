@@ -1,6 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { createApp } from '@test/app/createApp';
-import { INestApplication } from '@nestjs/common';
+import { IApp, createApp } from '@test/app/createApp';
 import { createDirector } from '@test/director/signUpDirector';
 import {
   getDirectorAccessToken,
@@ -13,7 +12,7 @@ import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('restore director', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
 
   beforeAll(async () => {

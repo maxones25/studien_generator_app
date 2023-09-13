@@ -1,6 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { INestApplication } from '@nestjs/common';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import fakeData from '@test/fakeData';
@@ -10,7 +9,7 @@ import { getStudyAppointments } from '@test/studies/getStudyAppointments';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('get appointments', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let studyId: string;
   let createdAppointments: any[];

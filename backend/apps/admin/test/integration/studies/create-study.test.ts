@@ -1,4 +1,3 @@
-import { INestApplication } from '@nestjs/common';
 import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
 import { validateUUID } from '@shared/modules/uuid/uuid';
@@ -7,10 +6,10 @@ import { Roles } from '@admin/roles/roles.enum';
 import { createStudy } from '@test/studies/createStudy';
 import { getStudyById } from '@test/studies/getStudyById';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 
 describe('Create Study', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
 
   beforeAll(async () => {

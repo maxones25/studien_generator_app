@@ -1,4 +1,3 @@
-import { INestApplication } from '@nestjs/common';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import { Roles } from '@admin/roles/roles.enum';
@@ -10,10 +9,10 @@ import { addMember } from '@test/studies/members/addMember';
 import { Role } from '@entities/core/study';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 
 describe('Add Study Member', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let studyId: string;
   let directorId: string;

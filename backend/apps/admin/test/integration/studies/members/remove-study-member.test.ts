@@ -1,6 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { INestApplication } from '@nestjs/common';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
 import fakeData from '@test/fakeData';
@@ -10,7 +9,7 @@ import { removeMember } from '@test/studies/members/removeMember';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('Remove Study Member', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
 
   beforeAll(async () => {

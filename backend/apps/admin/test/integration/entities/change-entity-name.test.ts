@@ -1,5 +1,4 @@
 import { TEST_DIRECTOR } from '@test/testData';
-import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
 import { changeEntityName } from '@test/entities/changeEntityName';
@@ -7,10 +6,10 @@ import { getEntityById } from '@test/entities/getEntityById';
 import { createEntity, createEntityId } from '@test/entities/createEntity';
 import { createStudyId } from '@test/studies/createStudy';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 
 describe('Change Entity Name', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let studyId: string;
   let entityId: string;

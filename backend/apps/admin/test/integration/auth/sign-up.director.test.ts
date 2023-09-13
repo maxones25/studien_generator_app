@@ -1,13 +1,12 @@
 import request from 'supertest';
-import { INestApplication } from '@nestjs/common';
 import fakeData from '@test/fakeData';
 import { AppModule } from '@admin/app.module';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { getEnvironmentVariable } from '@test/app/getEnvironmentVariable';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 
 describe('signUp director', () => {
-  let app: INestApplication;
+  let app: IApp;
   let activationPassword: string;
 
   beforeAll(async () => {

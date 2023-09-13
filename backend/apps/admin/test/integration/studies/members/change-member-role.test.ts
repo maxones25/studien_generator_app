@@ -1,4 +1,3 @@
-import { INestApplication } from '@nestjs/common';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import { Roles } from '@admin/roles/roles.enum';
@@ -8,10 +7,10 @@ import { changeMemberRole } from '@test/studies/members/changeMemberRole';
 import { getStudyById } from '@test/studies/getStudyById';
 import { createDirector } from '@test/director/signUpDirector';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 
 describe('Change Member Role', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
 
   beforeAll(async () => {

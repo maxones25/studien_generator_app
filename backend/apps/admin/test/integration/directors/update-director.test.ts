@@ -1,6 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { createApp } from '@test/app/createApp';
-import { INestApplication } from '@nestjs/common';
+import { IApp, createApp } from '@test/app/createApp';
 import { createDirector } from '@test/director/signUpDirector';
 import {
   getDirectorAccessToken,
@@ -13,7 +12,7 @@ import { getDirectorById } from '@test/director/getMe';
 import { Director } from '@entities/core/director/Director';
 
 describe('update director', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let directorAccessToken: string;
   let director: Director;

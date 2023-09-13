@@ -1,7 +1,6 @@
 import { AppModule } from '@admin/app.module';
 import { AttributeType } from '@admin/components/Attribute';
-import { INestApplication } from '@nestjs/common';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { getComponents } from '@test/components/getComponents';
@@ -18,7 +17,7 @@ const VALID_TYPES: AttributeType[] = [
 ];
 
 describe('get components', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
 
   beforeAll(async () => {

@@ -1,15 +1,14 @@
 import { TEST_DIRECTOR } from '@test/testData';
-import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
 import { createEntityId } from '@test/entities/createEntity';
 import { getEntities } from '@test/entities/getEntities';
 import { createStudyId } from '@test/studies/createStudy';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 
 describe('Get Entities', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let studyId: string;
   let entities: string[];

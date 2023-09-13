@@ -1,6 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { INestApplication } from '@nestjs/common';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import fakeData from '@test/fakeData';
 import { changeGroupName } from '@test/groups/changeGroupName';
@@ -10,7 +9,7 @@ import { createStudyId } from '@test/studies/createStudy';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('change group name', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let johnAccessToken: string;
   let studyId: string;

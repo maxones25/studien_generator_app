@@ -1,4 +1,3 @@
-import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import { TEST_DIRECTOR } from '@test/testData';
 import faker from '@test/fakeData';
@@ -7,10 +6,10 @@ import { createParticipantId } from '@test/participants/createParticipant';
 import { createStudyId } from '@test/studies/createStudy';
 import { getChatByParticipant } from '@test/chats/getChatByParticipant';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 
 describe('Write Message', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let otherAccessToken: string;
   let studyId: string;

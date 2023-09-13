@@ -1,6 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { createApp } from '@test/app/createApp';
-import { INestApplication } from '@nestjs/common';
+import { IApp, createApp } from '@test/app/createApp';
 import { createDirector } from '@test/director/signUpDirector';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
@@ -8,7 +7,7 @@ import { getMe } from '@test/director/getMe';
 import { Director } from '@entities/core/director/Director';
 
 describe('get me', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let director: Director;
 

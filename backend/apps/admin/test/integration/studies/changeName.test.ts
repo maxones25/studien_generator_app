@@ -1,7 +1,6 @@
 import { AppModule } from '@admin/app.module';
 import { Roles } from '@admin/roles/roles.enum';
-import { INestApplication } from '@nestjs/common';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import fakeData from '@test/fakeData';
 import { changeStudyName } from '@test/studies/changeStudyName';
@@ -10,7 +9,7 @@ import { getStudyById } from '@test/studies/getStudyById';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('Change Study Name', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let johnAccessToken: string;
 

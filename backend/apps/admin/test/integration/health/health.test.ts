@@ -1,10 +1,9 @@
-import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '@admin/app.module';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 
 describe('App Heath', () => {
-  let app: INestApplication;
+  let app: IApp;
 
   beforeAll(async () => {
     app = await createApp(AppModule);

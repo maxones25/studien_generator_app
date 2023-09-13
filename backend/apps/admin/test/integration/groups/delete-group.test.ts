@@ -1,5 +1,3 @@
-import { INestApplication } from '@nestjs/common';
-
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import { createStudyId } from '@test/studies/createStudy';
@@ -8,10 +6,10 @@ import { createGroupId } from '@test/groups/createGroup';
 import { deleteGroup } from '@test/groups/deleteGroup';
 import { getGroupById } from '@test/groups/getGroupById';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 
 describe('delete group', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let johnAccessToken: string;
   let studyId: string;

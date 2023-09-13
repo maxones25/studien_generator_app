@@ -1,15 +1,14 @@
-import { INestApplication } from '@nestjs/common';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
 import { JwtService } from '@nestjs/jwt';
 import request from 'supertest';
 import { SignupDirectorDto } from '@admin/directors/dtos/SignupDirectorDto';
 import { createDirector } from '@test/director/signUpDirector';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 import { getEnvironmentVariable } from '@test/app/getEnvironmentVariable';
 
 describe('login director', () => {
-  let app: INestApplication;
+  let app: IApp;
   let directorId: string;
   let director: SignupDirectorDto;
 

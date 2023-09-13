@@ -1,11 +1,10 @@
 import { AppModule } from '@admin/app.module';
-import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 import { loginAdmin } from '@test/auth/loginAdmin';
 
 describe('Login Admin', () => {
-  let app: INestApplication;
+  let app: IApp;
 
   beforeAll(async () => {
     app = await createApp(AppModule);

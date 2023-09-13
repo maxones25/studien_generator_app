@@ -1,6 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { createApp } from '@test/app/createApp';
-import { INestApplication } from '@nestjs/common';
+import { IApp, createApp } from '@test/app/createApp';
 import { createDirector } from '@test/director/signUpDirector';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
@@ -9,7 +8,7 @@ import { getDirectors } from '@test/director/getDirectors';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 
 describe('get directors', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let createdDirectors: Director[];
 

@@ -1,6 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { INestApplication } from '@nestjs/common';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
 import {
   getDirectorAccessToken,
@@ -14,7 +13,7 @@ import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('delete director', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
 
   beforeAll(async () => {
