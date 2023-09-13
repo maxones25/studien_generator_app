@@ -4,6 +4,7 @@ import { EntitiesRepository } from './repositories/entities.repository';
 import { EntityGuard } from './guards/entity.guard';
 import { CreateEntityUseCase } from './useCases/CreateEntityUseCase';
 import { ChangeNameUseCase } from './useCases/ChangeNameUseCase';
+import { DeleteEntityUseCase } from './useCases/DeleteEntityUseCase';
 
 const entitiesProviders: Provider[] = [
   EntityGuard,
@@ -15,6 +16,7 @@ const entitiesProviders: Provider[] = [
   },
   CreateEntityUseCase,
   ChangeNameUseCase,
+  DeleteEntityUseCase,
 ];
 
 export default entitiesProviders;

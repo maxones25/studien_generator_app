@@ -7,7 +7,6 @@ import {
   HttpStatus,
   HttpCode,
 } from '@nestjs/common';
-import { EntitiesService } from '../entities.service';
 import { CreateEntityDto } from '../dtos/CreateEntityDto';
 import { UpdateEntityDto } from '../dtos/UpdateEntityDto';
 import { EntityGuard } from '../guards/entity.guard';
@@ -21,16 +20,19 @@ import { CreateEntityUseCase } from '../useCases/CreateEntityUseCase';
 import { ICreateEntityUseCase } from '../domain/ICreateEntityUseCase';
 import { IChangeNameUseCase } from '../domain/IChangeNameUseCase';
 import { ChangeNameUseCase } from '../useCases/ChangeNameUseCase';
+import { DeleteEntityUseCase } from '../useCases/DeleteEntityUseCase';
+import { IDeleteEntityUseCase } from '../domain/IDeleteEntityUseCase';
 
 @Controller('entities')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class EntitiesCommands {
   constructor(
-    private readonly entitiesService: EntitiesService,
     @Inject(CreateEntityUseCase)
     private readonly createEntityUseCase: ICreateEntityUseCase,
     @Inject(ChangeNameUseCase)
     private readonly changeNameUseCase: IChangeNameUseCase,
+    @Inject(DeleteEntityUseCase)
+    private readonly deleteEntityUseCase: IDeleteEntityUseCase,
   ) {}
 
   @Post('createEntity')
@@ -58,6 +60,6 @@ export class EntitiesCommands {
   @Roles('admin')
   @UseGuards(EntityGuard)
   async delete(@Query() { entityId }: EntityQueryDto) {
-    return this.entitiesService.delete(entityId);
+    return this.deleteEntityUseCase.execute({ entityId });
   }
 }

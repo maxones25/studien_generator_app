@@ -16,6 +16,11 @@ export class EntitiesRepository
     super(db);
   }
 
+  async deleteEntity(id: string): Promise<number> {
+    const { affected } = await this.db.delete({ id });
+    return affected;
+  }
+
   async updateName(id: string, name: string): Promise<number> {
     const { affected } = await this.db.update({ id }, { name });
     return affected;

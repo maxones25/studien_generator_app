@@ -1,20 +1,17 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { EntitiesRepository } from './repositories/entities.repository';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { IEntitiesRepository } from './domain/IEntitiesRepository';
 
 @Injectable()
 export class EntitiesService implements StudyRelatedDataAccessor {
   constructor(
-    @Inject(EntitiesRepository)
-    private entitiesRepository: EntitiesRepository,
+    @Inject('IEntitiesRepository')
+    private entitiesRepository: IEntitiesRepository,
   ) {}
 
   getRelatedByStudy(studyId: string, id: string) {
     return this.entitiesRepository.getRelatedByStudy(studyId, id);
-  }
-
-  async delete(entityId: string) {
-    return await this.entitiesRepository.hardDelete(entityId);
   }
 
   async getAll(studyId: string) {
