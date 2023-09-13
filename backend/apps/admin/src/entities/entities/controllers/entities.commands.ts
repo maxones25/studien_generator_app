@@ -16,19 +16,26 @@ import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { EntityQueryDto } from '../dtos/EntityQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { Inject } from '@shared/modules/core/Inject';
+import { CreateEntityUseCase } from '../useCases/CreateEntityUseCase';
+import { ICreateEntityUseCase } from '../domain/ICreateEntityUseCase';
 
 @Controller('entities')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class EntitiesCommands {
-  constructor(private readonly entitiesService: EntitiesService) {}
+  constructor(
+    private readonly entitiesService: EntitiesService,
+    @Inject(CreateEntityUseCase)
+    private readonly createEntityUseCase: ICreateEntityUseCase,
+  ) {}
 
   @Post('createEntity')
   @Roles('admin', 'employee')
   async create(
     @Query() { studyId }: StudyQueryDto,
-    @Body() body: CreateEntityDto,
+    @Body() data: CreateEntityDto,
   ) {
-    return this.entitiesService.create(studyId, body);
+    return this.createEntityUseCase.execute({ studyId, data });
   }
 
   @Post('changeName')

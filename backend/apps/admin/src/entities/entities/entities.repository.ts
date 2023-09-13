@@ -2,13 +2,31 @@ import { Repository } from 'typeorm';
 import { Entity } from '@entities';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { IEntitiesRepository } from './domain/IEntitiesRepository';
+import { CreateEntityDto } from './dtos/CreateEntityDto';
 
-export class EntitiesRepository extends RecordRepository<Entity> {
+export class EntitiesRepository
+  extends RecordRepository<Entity>
+  implements IEntitiesRepository
+{
   constructor(
     @InjectRepository(Entity)
     db: Repository<Entity>,
   ) {
     super(db);
+  }
+  async createEntity(
+    studyId: string,
+    { name }: CreateEntityDto,
+  ): Promise<string> {
+    const entity = new Entity();
+
+    entity.studyId = studyId;
+    entity.name = name;
+
+    await this.db.insert(entity);
+
+    return entity.id;
   }
 
   getRelatedByStudy(studyId: string, id: string) {
