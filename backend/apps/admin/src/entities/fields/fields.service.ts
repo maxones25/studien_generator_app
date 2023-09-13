@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { UpdateFieldDto } from './dtos/UpdateFieldDto';
 import { FieldsRepository } from './fields.repository';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
@@ -22,6 +22,7 @@ export class FieldsService implements StudyRelatedDataAccessor {
   }
 
   async update(fieldId: string, data: UpdateFieldDto) {
+    if(!data) throw new BadRequestException();
     return this.updateFieldTransaction.run({ fieldId, data });
   }
 
