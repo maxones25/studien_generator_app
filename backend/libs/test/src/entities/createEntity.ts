@@ -1,25 +1,24 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
 import { StudyRequestOptions } from '../types';
-import request from 'supertest';
+import { request } from '@test/app/request';
 
 export interface CreateEntityOptions extends StudyRequestOptions {
   data: object;
 }
 
 export const createEntity = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, data }: CreateEntityOptions,
 ) =>
-  request(app.getHttpServer())
-    .post(`/entities/createEntity`)
-    .query({
-      studyId,
-    })
-    .send(data)
-    .set('Authorization', `Bearer ${accessToken}`);
+  request(app).command({
+    path: `/entities/createEntity`,
+    accessToken,
+    query: { studyId },
+    data,
+  });
 
 export const createEntityId = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, data }: CreateEntityOptions,
 ) =>
   new Promise<string>((resolve, reject) => {

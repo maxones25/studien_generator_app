@@ -1,7 +1,7 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
 import { StudyRequestOptions } from '../../types';
-import request from 'supertest';
 import { validateUUID } from '@shared/modules/uuid/uuid';
+import { request } from '@test/app/request';
 
 export interface CreateFieldOptions extends StudyRequestOptions {
   entityId: string;
@@ -9,20 +9,18 @@ export interface CreateFieldOptions extends StudyRequestOptions {
 }
 
 export const createField = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, entityId, data }: CreateFieldOptions,
 ) =>
-  request(app.getHttpServer())
-    .post(`/entities/addField`)
-    .query({
-      studyId,
-      entityId,
-    })
-    .set('Authorization', `Bearer ${accessToken}`)
-    .send(data);
+  request(app).command({
+    path: `/entities/addField`,
+    accessToken,
+    query: { studyId, entityId },
+    data,
+  });
 
 export const createFieldId = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, entityId, data }: CreateFieldOptions,
 ) =>
   new Promise<string>((resolve, reject) => {

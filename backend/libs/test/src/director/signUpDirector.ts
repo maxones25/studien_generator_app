@@ -1,10 +1,10 @@
-import { INestApplication } from '@nestjs/common';
 import { RequestOptions } from '../types';
-import request from 'supertest';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import fakeData from '@test/fakeData';
 import { Director } from '@entities/core/director/Director';
 import { getEnvironmentVariable } from '@test/app/getEnvironmentVariable';
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 
 export interface SignUpDirectorOptions extends RequestOptions {
   data?: any;
@@ -12,7 +12,7 @@ export interface SignUpDirectorOptions extends RequestOptions {
 }
 
 export const signUpDirector = (
-  app: INestApplication,
+  app: IApp,
   options: SignUpDirectorOptions = {},
 ) => {
   const { data = fakeData.director(), withActivation = true } = options;
@@ -24,11 +24,11 @@ export const signUpDirector = (
     );
   }
 
-  return request(app.getHttpServer()).post('/auth/signUp').send(data);
+  return request(app).command({ path: '/auth/signUp', data })
 };
 
 export const createDirector = (
-  app: INestApplication,
+  app: IApp,
   data = fakeData.director(),
 ) =>
   new Promise<Director>((resolve, reject) => {

@@ -1,6 +1,6 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
 import { StudyRequestOptions } from '../types';
-import request from 'supertest';
+import { request } from '@test/app/request';
 
 export interface ChangeEntityNameOptions extends StudyRequestOptions {
   entityId: string;
@@ -8,14 +8,12 @@ export interface ChangeEntityNameOptions extends StudyRequestOptions {
 }
 
 export const changeEntityName = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, entityId, studyId, data }: ChangeEntityNameOptions,
 ) =>
-  request(app.getHttpServer())
-    .post(`/entities/changeName`)
-    .query({
-      studyId,
-      entityId,
-    })
-    .set('Authorization', `Bearer ${accessToken}`)
-    .send(data);
+  request(app).command({
+    path: `/entities/changeName`,
+    accessToken,
+    query: { studyId, entityId },
+    data,
+  });

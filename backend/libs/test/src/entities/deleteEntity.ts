@@ -1,19 +1,17 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
 import { StudyRequestOptions } from '../types';
-import request from 'supertest';
+import { request } from '@test/app/request';
 
 export interface DeleteEntityOptions extends StudyRequestOptions {
   entityId: string;
 }
 
 export const deleteEntity = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, entityId, studyId }: DeleteEntityOptions,
 ) =>
-  request(app.getHttpServer())
-    .post(`/entities/deleteEntity`)
-    .query({
-      studyId,
-      entityId,
-    })
-    .set('Authorization', `Bearer ${accessToken}`);
+  request(app).command({
+    path: `/entities/deleteEntity`,
+    accessToken,
+    query: { studyId, entityId },
+  });

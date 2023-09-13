@@ -1,6 +1,6 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
 import { AuthRequestOptions } from '../types';
-import request from 'supertest';
+import { request } from '@test/app/request';
 
 export interface UpdateDirectorOptions extends AuthRequestOptions {
   directorId: string;
@@ -8,22 +8,12 @@ export interface UpdateDirectorOptions extends AuthRequestOptions {
 }
 
 export const updateDirector = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, directorId, data }: UpdateDirectorOptions,
-) => {
-  let action = request(app.getHttpServer()).post('/directors/update');
-
-  if(accessToken !== undefined) {
-    action.set('Authorization', `Bearer ${accessToken}`)
-  }
-
-  if(directorId !== undefined) {
-    action.query({ directorId })
-  }
-
-  if(data !== undefined) {
-    action.send(data);
-  }
-
-  return action;
-}
+) =>
+  request(app).command({
+    path: '/directors/update',
+    accessToken,
+    query: { directorId },
+    data,
+  });
