@@ -20,6 +20,7 @@ import { Entity as EntityEntity } from '@entities';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { AddFieldUseCase } from '../useCases/AddFieldUseCase';
 import { IAddFieldUseCase } from '../domain/IAddFieldUseCase';
+import { FieldGuard } from '../field.guard';
 
 @Controller('entities')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -50,6 +51,7 @@ export class FieldsCommands {
 
   @Post('updateField')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(FieldGuard)
   @Roles('admin', 'employee')
   async updateField(
     @Query() { fieldId }: FieldQueryDto,
@@ -60,6 +62,7 @@ export class FieldsCommands {
 
   @Post('removeField')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(FieldGuard)
   @Roles('admin')
   async deleteField(@Query() { fieldId }: FieldQueryDto) {
     return this.fieldsService.delete(fieldId);
