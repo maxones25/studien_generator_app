@@ -10,7 +10,7 @@ export interface QueryRequestOptions {
 
 export interface CommandRequestOptions {
   path: string;
-  body: any;
+  data: any;
   query?: Record<string, any>;
   accessToken?: any;
   headers?: Record<string, string>;
@@ -25,7 +25,7 @@ export const request = (app: IApp) => {
       accessToken,
       query,
       headers,
-      body,
+      data,
     }: CommandRequestOptions) => {
       const r = httpServer.get(path);
 
@@ -43,8 +43,8 @@ export const request = (app: IApp) => {
         r.query(query);
       }
 
-      if (body !== undefined) {
-        r.send(body);
+      if (data !== undefined) {
+        r.send(data);
       }
 
       return r;
