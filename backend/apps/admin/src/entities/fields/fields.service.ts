@@ -22,7 +22,7 @@ export class FieldsService implements StudyRelatedDataAccessor {
   }
 
   async update(fieldId: string, data: UpdateFieldDto) {
-    if(!data) throw new BadRequestException();
+    if (!data) throw new BadRequestException();
     return this.updateFieldTransaction.run({ fieldId, data });
   }
 
