@@ -9,8 +9,8 @@ import {
 export type Time = { hours: number; minutes: number };
 
 const currentDate = () => {
-  return new Date()
-}
+  return new Date();
+};
 
 const isoDate = (date = new Date()) => {
   return format(date, 'YYYY-MM-DD');
@@ -96,8 +96,17 @@ const formatTime = (value: string | Date) => {
   return format(value, 'HH:mm');
 };
 
+const convertToDateTime = (date: string, time: string) => {
+  if (!apiIsValid(date, 'YYYY-MM-DD'))
+    throw new Error('date must be of pattern YYYY-MM-DD');
+  if (!apiIsValid(time, 'HH:mm'))
+    throw new Error('time must be of pattern HH:mm');
+  return new Date(date + 'T' + time);
+};
+
 export default {
   currentDate,
+  convertToDateTime,
   isoDateTime,
   formatDate,
   formatDateTime,
