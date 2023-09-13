@@ -19,6 +19,8 @@ import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDelete
 import { Inject } from '@shared/modules/core/Inject';
 import { CreateEntityUseCase } from '../useCases/CreateEntityUseCase';
 import { ICreateEntityUseCase } from '../domain/ICreateEntityUseCase';
+import { IChangeNameUseCase } from '../domain/IChangeNameUseCase';
+import { ChangeNameUseCase } from '../useCases/ChangeNameUseCase';
 
 @Controller('entities')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -27,6 +29,8 @@ export class EntitiesCommands {
     private readonly entitiesService: EntitiesService,
     @Inject(CreateEntityUseCase)
     private readonly createEntityUseCase: ICreateEntityUseCase,
+    @Inject(ChangeNameUseCase)
+    private readonly changeNameUseCase: IChangeNameUseCase,
   ) {}
 
   @Post('createEntity')
@@ -46,7 +50,7 @@ export class EntitiesCommands {
     @Query() { entityId }: EntityQueryDto,
     @Body() { name }: UpdateEntityDto,
   ) {
-    return this.entitiesService.setName(entityId, name);
+    return this.changeNameUseCase.execute({ entityId, name });
   }
 
   @Post('deleteEntity')

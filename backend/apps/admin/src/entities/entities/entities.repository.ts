@@ -15,6 +15,12 @@ export class EntitiesRepository
   ) {
     super(db);
   }
+
+  async updateName(id: string, name: string): Promise<number> {
+    const { affected } = await this.db.update({ id }, { name });
+    return affected;
+  }
+
   async createEntity(
     studyId: string,
     { name }: CreateEntityDto,

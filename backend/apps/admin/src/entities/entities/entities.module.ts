@@ -5,10 +5,16 @@ import entitiesProviders from './entities.providers';
 import { EntityGuard } from './entity.guard';
 import { EntitiesService } from './entities.service';
 import { CreateEntityUseCase } from './useCases/CreateEntityUseCase';
+import { ChangeNameUseCase } from './useCases/ChangeNameUseCase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Entity])],
   providers: entitiesProviders,
-  exports: [EntitiesService, EntityGuard, CreateEntityUseCase],
+  exports: [
+    EntitiesService,
+    EntityGuard,
+    CreateEntityUseCase,
+    ChangeNameUseCase,
+  ],
 })
 export class EntitiesModule {}

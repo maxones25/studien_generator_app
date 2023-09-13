@@ -1,6 +1,7 @@
-import { Id } from "@shared/modules/core/Id";
-import { CreateEntityDto } from "../dtos/CreateEntityDto";
+import { Id } from '@shared/modules/core/Id';
+import { CreateEntityDto } from '../dtos/CreateEntityDto';
 
 export interface IEntitiesRepository {
-    createEntity(studyId: string, data: CreateEntityDto): Promise<Id>;
+  updateName(entityId: string, name: string): Promise<number>;
+  createEntity(studyId: string, data: CreateEntityDto): Promise<Id>;
 }
