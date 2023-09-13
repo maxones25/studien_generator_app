@@ -16,10 +16,4 @@ export class FieldsService implements StudyRelatedDataAccessor {
   async getByEntity(entityId: string) {
     return this.fieldsRepository.getByEntity(entityId);
   }
-
-  async delete(fieldId: string) {
-    return this.fieldsRepository.hardDelete({
-      id: fieldId,
-    });
-  }
 }

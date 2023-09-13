@@ -4,6 +4,7 @@ import { FieldsService } from './fields.service';
 import { FieldsRepository } from './repositories/fields.repository';
 import { AddFieldUseCase } from './useCases/AddFieldUseCase';
 import { UpdateFieldUseCase } from './useCases/UpdateFieldUseCase';
+import { RemoveFieldUseCase } from './useCases/RemoveFieldUseCase';
 
 const entityFieldsProviders: Provider[] = [
   FieldsService,
@@ -15,6 +16,7 @@ const entityFieldsProviders: Provider[] = [
   },
   AddFieldUseCase,
   UpdateFieldUseCase,
+  RemoveFieldUseCase,
 ];
 
 export default entityFieldsProviders;

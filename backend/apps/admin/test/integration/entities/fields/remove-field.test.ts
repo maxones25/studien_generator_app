@@ -2,12 +2,14 @@ import { AppModule } from '@admin/app.module';
 import { IApp, createApp } from '@test/app/createApp';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { createDirector } from '@test/director/signUpDirector';
 import { createEntityId } from '@test/entities/createEntity';
 import { createFieldId } from '@test/entities/fields/createField';
 import { getFields } from '@test/entities/fields/getFields';
 import { removeField } from '@test/entities/fields/removeField';
 import fakeData from '@test/fakeData';
 import { createStudyId } from '@test/studies/createStudy';
+import { addMember } from '@test/studies/members/addMember';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('remove field', () => {
@@ -89,6 +91,35 @@ describe('remove field', () => {
       TEST_DIRECTOR.JOHN.EMAIL,
       TEST_DIRECTOR.JOHN.PASSWORD,
     );
+
+    const fieldId = await createFieldId(app, {
+      accessToken,
+      studyId,
+      entityId,
+    });
+
+    return await removeField(app, {
+      accessToken: otherAccessToken,
+      studyId,
+      fieldId,
+    }).expect(401);
+  });
+
+  it('should fail because director is not an admin', async () => {
+    const director = await createDirector(app);
+
+    await addMember(app, {
+      accessToken,
+      studyId,
+      directorId: director.id,
+      role: 'employee',
+    });
+
+    const otherAccessToken = await getDirectorAccessToken(
+        app,
+        director.email,
+        director.password,
+      );
 
     const fieldId = await createFieldId(app, {
       accessToken,

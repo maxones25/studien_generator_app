@@ -1,21 +1,20 @@
 import { EntityField } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RecordRepository } from '@shared/modules/records/record.repository';
 import { Repository } from 'typeorm';
 import { IFieldsRepository } from '../domain/IFieldsRepository';
 import { CreateFieldDto } from '../domain/dtos/CreateFieldDto';
 import { Id } from '@shared/modules/core/Id';
 import { UpdateFieldDto } from '../domain/dtos/UpdateFieldDto';
 
-export class FieldsRepository
-  extends RecordRepository<EntityField>
-  implements IFieldsRepository
-{
+export class FieldsRepository implements IFieldsRepository {
   constructor(
     @InjectRepository(EntityField)
-    db: Repository<EntityField>,
-  ) {
-    super(db);
+    private readonly db: Repository<EntityField>,
+  ) {}
+
+  async deleteField(id: string): Promise<number> {
+    const { affected } = await this.db.delete({ id });
+    return affected;
   }
 
   async updateField(

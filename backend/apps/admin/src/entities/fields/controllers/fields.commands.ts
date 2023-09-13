@@ -23,6 +23,8 @@ import { IAddFieldUseCase } from '../domain/IAddFieldUseCase';
 import { FieldGuard } from '../guards/field.guard';
 import { UpdateFieldUseCase } from '../useCases/UpdateFieldUseCase';
 import { IUpdateFieldUseCase } from '../domain/IUpdateFieldUseCase';
+import { RemoveFieldUseCase } from '../useCases/RemoveFieldUseCase';
+import { IRemoveFieldUseCase } from '../domain/IRemoveFieldUseCase';
 
 @Controller('entities')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -34,6 +36,8 @@ export class FieldsCommands {
     private readonly addFieldUseCase: IAddFieldUseCase,
     @Inject(UpdateFieldUseCase)
     private readonly updateFieldUseCase: IUpdateFieldUseCase,
+    @Inject(RemoveFieldUseCase)
+    private readonly removeFieldUseCase: IRemoveFieldUseCase,
   ) {}
 
   @Post('addField')
@@ -69,6 +73,6 @@ export class FieldsCommands {
   @UseGuards(FieldGuard)
   @Roles('admin')
   async deleteField(@Query() { fieldId }: FieldQueryDto) {
-    return this.fieldsService.delete(fieldId);
+    return this.removeFieldUseCase.execute({ fieldId });
   }
 }
