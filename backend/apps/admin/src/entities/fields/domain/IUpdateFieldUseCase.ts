@@ -1,5 +1,5 @@
 import { UseCase } from '@shared/modules/core/UseCase';
-import { UpdateFieldDto } from '../dtos/UpdateFieldDto';
+import { UpdateFieldDto } from './dtos/UpdateFieldDto';
 
 export type UpdateFieldInput = {
   fieldId: string;

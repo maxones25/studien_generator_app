@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntityField } from '@entities';
 import entityFieldsProviders from './fields.providers';
 import { FieldsService } from './fields.service';
-import { FieldGuard } from './field.guard';
+import { FieldGuard } from './guards/field.guard';
 import { AddFieldUseCase } from './useCases/AddFieldUseCase';
 import { UpdateFieldUseCase } from './useCases/UpdateFieldUseCase';
 

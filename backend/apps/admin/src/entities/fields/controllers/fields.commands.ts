@@ -8,19 +8,19 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { CreateFieldDto } from '../dtos/CreateFieldDto';
-import { UpdateFieldDto } from '../dtos/UpdateFieldDto';
+import { CreateFieldDto } from '../domain/dtos/CreateFieldDto';
+import { UpdateFieldDto } from '../domain/dtos/UpdateFieldDto';
 import { Roles } from '@admin/roles/roles.decorator';
 import { FieldsService } from '../fields.service';
 import { EntityGuard } from '@admin/entities/entities/entity.guard';
-import { FieldQueryDto } from '../dtos/FieldQueryDto';
+import { FieldQueryDto } from '../domain/dtos/FieldQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { Entity } from '@admin/entities/entities/entity.decorator';
 import { Entity as EntityEntity } from '@entities';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { AddFieldUseCase } from '../useCases/AddFieldUseCase';
 import { IAddFieldUseCase } from '../domain/IAddFieldUseCase';
-import { FieldGuard } from '../field.guard';
+import { FieldGuard } from '../guards/field.guard';
 import { UpdateFieldUseCase } from '../useCases/UpdateFieldUseCase';
 import { IUpdateFieldUseCase } from '../domain/IUpdateFieldUseCase';
 

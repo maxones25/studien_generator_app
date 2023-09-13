@@ -1,5 +1,5 @@
 import { UseCase } from '@shared/modules/core/UseCase';
-import { CreateFieldDto } from '../dtos/CreateFieldDto';
+import { CreateFieldDto } from './dtos/CreateFieldDto';
 
 export type AddFieldInput = {
   entityId: string;
