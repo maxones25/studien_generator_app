@@ -88,6 +88,28 @@ const chatMessageAdmin = () => {
   };
 };
 
+const formatTime = (h: number, m: number) => {
+  return (h < 10 ? "0" + h : h) + ":" + (m < 10 ? "0" + m : m);
+};
+
+const appointment = () => {
+  const date = faker.date.future().toISOString().substring(0, 10);
+
+  const startHours = faker.number.int({ min: 0, max: 22 });
+  const startMinutes = faker.number.int({ min: 0, max: 59 });
+
+  const endHours = faker.number.int({ min: startHours + 1, max: 23 });
+  const endMinutes = faker.number.int({ min: 0, max: 59 });
+
+  return {
+    subject: faker.string.alpha({ length: 12 }),
+    startDate: date,
+    startTime: formatTime(startHours, startMinutes),
+    endDate: date,
+    endTime: formatTime(endHours, endMinutes),
+  };
+};
+
 export const id = () => faker.string.uuid();
 
 export const password = (length = 10) =>
@@ -108,4 +130,5 @@ export default {
   formEntity,
   chatMessageParticipant,
   chatMessageAdmin,
+  appointment,
 };
