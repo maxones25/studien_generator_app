@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { IFieldsRepository } from './domain/IFieldsRepository';
 import { CreateFieldDto } from './dtos/CreateFieldDto';
 import { Id } from '@shared/modules/core/Id';
+import { UpdateFieldDto } from './dtos/UpdateFieldDto';
 
 export class FieldsRepository
   extends RecordRepository<EntityField>
@@ -15,6 +16,14 @@ export class FieldsRepository
     db: Repository<EntityField>,
   ) {
     super(db);
+  }
+
+  async updateField(
+    id: string,
+    { name, type }: UpdateFieldDto,
+  ): Promise<number> {
+    const { affected } = await this.db.update({ id }, { name, type });
+    return affected;
   }
 
   async createField(
