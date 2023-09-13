@@ -11,10 +11,10 @@ import {
 import { CreateFieldDto } from '../domain/dtos/CreateFieldDto';
 import { UpdateFieldDto } from '../domain/dtos/UpdateFieldDto';
 import { Roles } from '@admin/roles/roles.decorator';
-import { EntityGuard } from '@admin/entities/entities/entity.guard';
+import { EntityGuard } from '@admin/entities/entities/guards/entity.guard';
 import { FieldQueryDto } from '../domain/dtos/FieldQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
-import { Entity } from '@admin/entities/entities/entity.decorator';
+import { Entity } from '@admin/entities/entities/decorators/entity.decorator';
 import { Entity as EntityEntity } from '@entities';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { AddFieldUseCase } from '../useCases/AddFieldUseCase';

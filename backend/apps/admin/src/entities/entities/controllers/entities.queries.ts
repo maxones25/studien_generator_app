@@ -3,7 +3,7 @@ import { EntitiesService } from '../entities.service';
 import { Roles } from '@admin/roles/roles.decorator';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
-import { EntityGuard } from '../entity.guard';
+import { EntityGuard } from '../guards/entity.guard';
 import { EntityQueryDto } from '../dtos/EntityQueryDto';
 
 @Controller('entities')

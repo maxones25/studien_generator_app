@@ -6,7 +6,7 @@ import { FormQueryDto } from '../dtos/FormQueryDto';
 import { Roles } from '@admin/roles/roles.decorator';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { EntityQueryDto } from '@admin/entities/entities/dtos/EntityQueryDto';
-import { EntityGuard } from '@admin/entities/entities/entity.guard';
+import { EntityGuard } from '@admin/entities/entities/guards/entity.guard';
 
 @Controller('forms')
 @UseGuards(StudyGuard)
