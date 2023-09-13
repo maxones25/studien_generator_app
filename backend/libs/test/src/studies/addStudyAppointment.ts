@@ -16,7 +16,9 @@ export const createStudyAppointment = (
     data = fakeData.appointment(),
   }: AddStudyAppointmentOptions,
 ) => {
-  const action = request(app.getHttpServer()).post(`/studies/create`);
+  const action = request(app.getHttpServer()).post(
+    `/studies/createAppointment`,
+  );
 
   if (accessToken !== undefined) {
     action.set('Authorization', `Bearer ${accessToken}`);
@@ -46,7 +48,7 @@ export const createStudyAppointmentId = (
       .expect(201)
       .then((res) => {
         expect(validateUUID(res.text)).toBeTruthy();
-        resolve(res.text)
+        resolve(res.text);
       })
       .catch((err) => reject(err));
   });
