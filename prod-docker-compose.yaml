@@ -9,7 +9,7 @@ services:
         "--collation-server=utf8mb4_unicode_ci",
       ]
     volumes:
-      - ./mysql/data:/var/lib/mysql
+      - ${MYSQL_PATH_PROD}/data:/var/lib/mysql
       - ./mysql/schema.sql:/docker-entrypoint-initdb.d/0-schema.sql
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -26,9 +26,7 @@ services:
 
   admin-backend:
     container_name: admin-backend
-    build:
-      context: ./backend
-      dockerfile: admin.dockerfile
+    image: ${CI_REGISTRY_IMAGE}/admin-backend:${IMAGE_TAG}
     depends_on:
       mysql:
         condition: service_healthy
@@ -47,9 +45,7 @@ services:
 
   study-backend:
     container_name: study-backend
-    build:
-      context: ./backend
-      dockerfile: study.dockerfile
+    image: ${CI_REGISTRY_IMAGE}/study-backend:${IMAGE_TAG}
     depends_on:
       mysql:
         condition: service_healthy
@@ -68,8 +64,7 @@ services:
 
   admin-frontend:
     container_name: admin-frontend
-    build:
-      context: ./frontend/admin-app
+    image: ${CI_REGISTRY_IMAGE}/admin-app:${IMAGE_TAG}
     depends_on:
       admin-backend:
         condition: service_healthy
@@ -80,8 +75,7 @@ services:
 
   study-frontend:
     container_name: study-frontend
-    build:
-      context: ./frontend/study-app
+    image: ${CI_REGISTRY_IMAGE}/study-app:${IMAGE_TAG}
     depends_on:
       study-backend:
         condition: service_healthy
