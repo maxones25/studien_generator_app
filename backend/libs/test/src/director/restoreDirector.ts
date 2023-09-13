@@ -1,24 +1,17 @@
-import { INestApplication } from '@nestjs/common';
+import { request } from '@test/app/request';
 import { AuthRequestOptions } from '../types';
-import request from 'supertest';
+import { IApp } from '@test/app/createApp';
 
 export interface RestoreDirectorOptions extends AuthRequestOptions {
   directorId: string;
 }
 
 export const restoreDirector = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, directorId }: RestoreDirectorOptions,
-) => {
-  let action = request(app.getHttpServer()).post('/directors/restore');
-
-  if (accessToken !== undefined) {
-    action.set('Authorization', `Bearer ${accessToken}`);
-  }
-
-  if (directorId !== undefined) {
-    action.query({ directorId });
-  }
-
-  return action;
-};
+) =>
+  request(app).command({
+    path: '/directors/restore',
+    accessToken,
+    query: { directorId },
+  });

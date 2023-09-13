@@ -1,12 +1,5 @@
-import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 
-export const getComponents = (app: INestApplication, accessToken: any) => {
-  const action = request(app.getHttpServer()).get(`/components`);
-
-  if (accessToken !== undefined) {
-    action.set('Authorization', `Bearer ${accessToken}`);
-  }
-
-  return action;
-};
+export const getComponents = (app: IApp, accessToken: any) =>
+  request(app).query({ path: `/components`, accessToken });
