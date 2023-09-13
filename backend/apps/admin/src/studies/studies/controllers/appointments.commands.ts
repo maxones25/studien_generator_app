@@ -2,6 +2,7 @@ import { Body, Controller, Inject, Post, Query } from '@nestjs/common';
 import { CreateAppointmentDto } from '../dtos/CreateAppointmentDto';
 import { CreateAppointmentUseCase } from '../transactions/CreateAppointmentUseCase';
 import { StudyQueryDto } from '../dtos/StudyQueryDto';
+import { Roles } from '@admin/roles/roles.decorator';
 
 @Controller('studies')
 export class AppointmentCommands {
@@ -11,6 +12,7 @@ export class AppointmentCommands {
   ) {}
 
   @Post('createAppointment')
+  @Roles("admin", "employee")
   create(
     @Query() { studyId }: StudyQueryDto,
     @Body() data: CreateAppointmentDto,
