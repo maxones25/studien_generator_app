@@ -5,6 +5,8 @@ import {
   Query,
   Inject,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { CreateFormDto } from '../dtos/CreateFormDto';
 import { Roles } from '@admin/roles/roles.decorator';
@@ -38,6 +40,7 @@ export class FormsCommands {
   }
 
   @Post('changeName')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(FormGuard)
   async changeName(
@@ -48,6 +51,7 @@ export class FormsCommands {
   }
 
   @Post('delete')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(FormGuard)
   async delete(@Query() { formId }: FormQueryDto) {
