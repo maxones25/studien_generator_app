@@ -1,5 +1,5 @@
-import { INestApplication } from '@nestjs/common';
 import { validateUUID } from '@shared/modules/uuid/uuid';
+import { IApp } from '@test/app/createApp';
 import fakeData from '@test/fakeData';
 import { StudyRequestOptions } from '@test/types';
 import request from 'supertest';
@@ -9,7 +9,7 @@ export interface CreateFormOptions extends StudyRequestOptions {
 }
 
 export const createForm = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, data = fakeData.form() }: CreateFormOptions,
 ) => {
   const r = request(app.getHttpServer()).post('/forms/create');
@@ -32,7 +32,7 @@ export const createForm = (
 };
 
 export const createFormId = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, data }: CreateFormOptions,
 ) =>
   new Promise<string>((resolve, reject) => {

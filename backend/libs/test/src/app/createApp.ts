@@ -1,13 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ValidationPipe } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { initializeTransactionalContext } from 'typeorm-transactional';
 
-export const createApp = async (AppModule: any) => {
+export interface IApp extends INestApplication {}
+
+export const createApp = async (AppModule: any): Promise<IApp> => {
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [AppModule],
   }).compile();
 
-  initializeTransactionalContext()
+  initializeTransactionalContext();
 
   const app = moduleFixture.createNestApplication();
 
