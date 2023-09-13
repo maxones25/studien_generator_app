@@ -2,13 +2,34 @@ import { EntityField } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { Repository } from 'typeorm';
+import { IFieldsRepository } from './domain/IFieldsRepository';
+import { CreateFieldDto } from './dtos/CreateFieldDto';
+import { Id } from '@shared/modules/core/Id';
 
-export class FieldsRepository extends RecordRepository<EntityField> {
+export class FieldsRepository
+  extends RecordRepository<EntityField>
+  implements IFieldsRepository
+{
   constructor(
     @InjectRepository(EntityField)
     db: Repository<EntityField>,
   ) {
     super(db);
+  }
+
+  async createField(
+    entityId: string,
+    { name, type }: CreateFieldDto,
+  ): Promise<Id> {
+    const field = new EntityField();
+
+    field.entityId = entityId;
+    field.name = name;
+    field.type = type;
+
+    await this.db.insert(field);
+
+    return field.id;
   }
 
   getRelatedByStudy(studyId: string, id: string) {

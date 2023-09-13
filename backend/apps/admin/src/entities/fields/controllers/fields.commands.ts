@@ -16,6 +16,8 @@ import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { Entity } from '@admin/entities/entities/entity.decorator';
 import { Entity as EntityEntity } from '@entities';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { AddFieldUseCase } from '../useCases/AddFieldUseCase';
+import { IAddFieldUseCase } from '../domain/IAddFieldUseCase';
 
 @Controller('entities')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -23,13 +25,18 @@ export class FieldsCommands {
   constructor(
     @Inject(FieldsService)
     private readonly fieldsService: FieldsService,
+    @Inject(AddFieldUseCase)
+    private readonly addFieldUseCase: IAddFieldUseCase,
   ) {}
 
   @Post('addField')
   @Roles('admin', 'employee')
   @UseGuards(EntityGuard)
-  async addField(@Entity() entity: EntityEntity, @Body() body: CreateFieldDto) {
-    const id = await this.fieldsService.add(entity.id, body);
+  async addField(@Entity() entity: EntityEntity, @Body() data: CreateFieldDto) {
+    const id = await this.addFieldUseCase.execute({
+      entityId: entity.id,
+      data,
+    });
     return {
       id,
       entity: {
