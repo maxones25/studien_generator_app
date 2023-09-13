@@ -1,6 +1,6 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
 import { StudyRequestOptions } from '../../types';
-import request from 'supertest';
+import { request } from '@test/app/request';
 
 export interface AddMemberOptions extends StudyRequestOptions {
   directorId: string;
@@ -8,11 +8,12 @@ export interface AddMemberOptions extends StudyRequestOptions {
 }
 
 export const addMember = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, directorId, role }: AddMemberOptions,
 ) =>
-  request(app.getHttpServer())
-    .post(`/members/add`)
-    .query({ studyId, directorId })
-    .set('Authorization', `Bearer ${accessToken}`)
-    .send({ role });
+  request(app).command({
+    path: '/members/add',
+    accessToken,
+    query: { studyId, directorId },
+    data: { role },
+  });

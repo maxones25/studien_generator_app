@@ -1,17 +1,18 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
 import { StudyRequestOptions } from '../types';
-import request from 'supertest';
+import { request } from '@test/app/request';
 
 export interface ChangeStudyNameOptions extends StudyRequestOptions {
   data: object;
 }
 
 export const changeStudyName = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, data }: ChangeStudyNameOptions,
 ) =>
-  request(app.getHttpServer())
-    .post(`/studies/changeName`)
-    .query({ studyId })
-    .set('Authorization', `Bearer ${accessToken}`)
-    .send(data);
+  request(app).command({
+    path: '/studies/changeName',
+    accessToken,
+    query: { studyId },
+    data,
+  });

@@ -1,16 +1,15 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 import { StudyRequestOptions } from '@test/types';
-import request from 'supertest';
 
 export interface GetGroupsOptions extends StudyRequestOptions {}
 
 export const getGroups = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId }: GetGroupsOptions,
 ) =>
-  request(app.getHttpServer())
-    .get('/groups/getByStudy')
-    .query({
-      studyId,
-    })
-    .set('Authorization', `Bearer ${accessToken}`);
+  request(app).query({
+    path: '/groups/getByStudy',
+    accessToken,
+    query: { studyId },
+  });

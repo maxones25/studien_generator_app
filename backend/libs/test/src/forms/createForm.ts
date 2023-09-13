@@ -1,8 +1,8 @@
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 import fakeData from '@test/fakeData';
 import { StudyRequestOptions } from '@test/types';
-import request from 'supertest';
 
 export interface CreateFormOptions extends StudyRequestOptions {
   data?: any;
@@ -11,26 +11,7 @@ export interface CreateFormOptions extends StudyRequestOptions {
 export const createForm = (
   app: IApp,
   { accessToken, studyId, data = fakeData.form() }: CreateFormOptions,
-) => {
-  const r = request(app.getHttpServer()).post('/forms/create');
-
-  if (accessToken !== undefined) {
-    r.set('Authorization', `Bearer ${accessToken}`);
-  }
-
-  if (studyId !== undefined) {
-    r.query({
-      studyId,
-    });
-  }
-
-  if (data !== undefined) {
-    r.send(data);
-  }
-
-  return r;
-};
-
+) => request(app).command({ path: "/forms/create", accessToken, query: { studyId }, data })
 export const createFormId = (
   app: IApp,
   { accessToken, studyId, data }: CreateFormOptions,

@@ -1,7 +1,7 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
 import { StudyRequestOptions } from '../types';
-import request from 'supertest';
 import fakeData from '@test/fakeData';
+import { request } from '@test/app/request';
 
 export interface CreateStudyOptions
   extends Omit<StudyRequestOptions, 'studyId'> {
@@ -9,16 +9,12 @@ export interface CreateStudyOptions
 }
 
 export const createStudy = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, data = fakeData.study() }: CreateStudyOptions,
-) =>
-  request(app.getHttpServer())
-    .post(`/studies/create`)
-    .set('Authorization', `Bearer ${accessToken}`)
-    .send(data);
+) => request(app).command({ path: '/studies/create', accessToken, data });
 
 export const createStudyId = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, data }: CreateStudyOptions,
 ) =>
   new Promise<string>((resolve, reject) => {

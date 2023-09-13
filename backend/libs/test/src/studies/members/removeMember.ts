@@ -1,16 +1,17 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
 import { StudyRequestOptions } from '../../types';
-import request from 'supertest';
+import { request } from '@test/app/request';
 
 export interface RemoveMemberOptions extends StudyRequestOptions {
   directorId: string;
 }
 
 export const removeMember = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, directorId }: RemoveMemberOptions,
 ) =>
-  request(app.getHttpServer())
-    .post(`/members/remove`)
-    .query({ studyId, directorId })
-    .set('Authorization', `Bearer ${accessToken}`);
+  request(app).command({
+    path: '/members/remove',
+    accessToken,
+    query: { studyId, directorId },
+  });

@@ -1,6 +1,6 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 import { StudyRequestOptions } from '@test/types';
-import request from 'supertest';
 
 export interface DeleteGroupOptions extends StudyRequestOptions {
   groupId: string;
@@ -8,14 +8,12 @@ export interface DeleteGroupOptions extends StudyRequestOptions {
 }
 
 export const deleteGroup = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, groupId, hardDelete = true }: DeleteGroupOptions,
 ) =>
-  request(app.getHttpServer())
-    .post('/groups/delete')
-    .query({
-      studyId,
-      groupId,
-    })
-    .set('Authorization', `Bearer ${accessToken}`)
-    .send({ hardDelete });
+  request(app).command({
+    path: '/groups/delete',
+    accessToken,
+    query: { studyId, groupId },
+    data: { hardDelete },
+  });

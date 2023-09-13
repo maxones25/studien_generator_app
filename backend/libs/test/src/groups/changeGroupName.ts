@@ -1,6 +1,6 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 import { StudyRequestOptions } from '@test/types';
-import request from 'supertest';
 
 export interface ChangeGroupNameOptions extends StudyRequestOptions {
   groupId: string;
@@ -8,14 +8,12 @@ export interface ChangeGroupNameOptions extends StudyRequestOptions {
 }
 
 export const changeGroupName = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, groupId, data }: ChangeGroupNameOptions,
 ) =>
-  request(app.getHttpServer())
-    .post('/groups/changeName')
-    .query({
-      studyId,
-      groupId,
-    })
-    .set('Authorization', `Bearer ${accessToken}`)
-    .send(data);
+  request(app).command({
+    path: '/groups/changeName',
+    accessToken,
+    query: { studyId, groupId },
+    data,
+  });

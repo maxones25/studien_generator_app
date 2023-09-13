@@ -1,27 +1,19 @@
-import { INestApplication } from '@nestjs/common';
 import { validateUUID } from '@shared/modules/uuid/uuid';
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 import fakeData from '@test/fakeData';
 import { StudyRequestOptions } from '@test/types';
-import request from 'supertest';
 
 export interface CreateGroupOptions extends StudyRequestOptions {
   data?: any;
 }
 
 export const createGroup = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, data = fakeData.group() }: CreateGroupOptions,
-) =>
-  request(app.getHttpServer())
-    .post('/groups/create')
-    .query({
-      studyId,
-    })
-    .send(data)
-    .set('Authorization', `Bearer ${accessToken}`);
-
+) => request(app).command({ path: "/groups/create", accessToken, query: { studyId }, data })
 export const createGroupId = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, data }: CreateGroupOptions,
 ) =>
   new Promise<string>((resolve, reject) => {

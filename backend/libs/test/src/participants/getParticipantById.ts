@@ -1,19 +1,17 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 import { StudyRequestOptions } from '@test/types';
-import request from 'supertest';
 
 export interface GetParticipantByIdOptions extends StudyRequestOptions {
   participantId: string;
 }
 
 export const getParticipantById = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, participantId }: GetParticipantByIdOptions,
 ) =>
-  request(app.getHttpServer())
-    .get('/participants/getById')
-    .query({
-      studyId,
-      participantId,
-    })
-    .set('Authorization', `Bearer ${accessToken}`);
+  request(app).query({
+    path: '/participants/getById',
+    accessToken,
+    query: { studyId, participantId },
+  });

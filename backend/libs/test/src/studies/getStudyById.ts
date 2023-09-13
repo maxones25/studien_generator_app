@@ -1,16 +1,15 @@
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 import { StudyRequestOptions } from '@test/types';
-import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
 
 export interface GetStudyByIdOptions extends StudyRequestOptions {}
 
 export const getStudyById = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId }: GetStudyByIdOptions,
 ) =>
-  request(app.getHttpServer())
-    .get(`/studies/getById`)
-    .query({
-      studyId,
-    })
-    .set('Authorization', `Bearer ${accessToken}`);
+  request(app).query({
+    path: '/studies/getById',
+    accessToken,
+    query: { studyId },
+  });

@@ -1,17 +1,18 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
 import { StudyRequestOptions } from '../types';
-import request from 'supertest';
+import { request } from '@test/app/request';
 
 export interface DeleteStudyOptions extends StudyRequestOptions {
   hardDelete?: boolean;
 }
 
 export const deleteStudy = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, hardDelete = true }: DeleteStudyOptions,
 ) =>
-  request(app.getHttpServer())
-    .post(`/studies/delete`)
-    .query({ studyId })
-    .set('Authorization', `Bearer ${accessToken}`)
-    .send({ hardDelete });
+  request(app).command({
+    path: '/studies/delete',
+    accessToken,
+    query: { studyId },
+    data: { hardDelete },
+  });

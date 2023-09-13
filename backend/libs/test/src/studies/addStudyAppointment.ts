@@ -1,42 +1,30 @@
-import { INestApplication } from '@nestjs/common';
 import { StudyRequestOptions } from '../types';
-import request from 'supertest';
 import fakeData from '@test/fakeData';
 import { validateUUID } from '@shared/modules/uuid/uuid';
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 
 export interface AddStudyAppointmentOptions extends StudyRequestOptions {
   data?: object;
 }
 
 export const createStudyAppointment = (
-  app: INestApplication,
+  app: IApp,
   {
     accessToken,
     studyId,
     data = fakeData.appointment(),
   }: AddStudyAppointmentOptions,
-) => {
-  const action = request(app.getHttpServer()).post(
-    `/studies/createAppointment`,
-  );
-
-  if (accessToken !== undefined) {
-    action.set('Authorization', `Bearer ${accessToken}`);
-  }
-
-  if (studyId !== undefined) {
-    action.query({ studyId });
-  }
-
-  if (data !== undefined) {
-    action.send(data);
-  }
-
-  return action;
-};
+) =>
+  request(app).command({
+    path: '/studies/createAppointment',
+    accessToken,
+    query: { studyId },
+    data,
+  });
 
 export const createStudyAppointmentId = (
-  app: INestApplication,
+  app: IApp,
   {
     accessToken,
     studyId,
