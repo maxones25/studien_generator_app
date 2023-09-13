@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { FieldsService } from './fields.service';
+import { FieldsService } from '../fields.service';
 import { RecordGuard } from '@shared/modules/records/record.guard';
 
 @Injectable()

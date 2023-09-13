@@ -2,10 +2,10 @@ import { EntityField } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { Repository } from 'typeorm';
-import { IFieldsRepository } from './domain/IFieldsRepository';
-import { CreateFieldDto } from './dtos/CreateFieldDto';
+import { IFieldsRepository } from '../domain/IFieldsRepository';
+import { CreateFieldDto } from '../domain/dtos/CreateFieldDto';
 import { Id } from '@shared/modules/core/Id';
-import { UpdateFieldDto } from './dtos/UpdateFieldDto';
+import { UpdateFieldDto } from '../domain/dtos/UpdateFieldDto';
 
 export class FieldsRepository
   extends RecordRepository<EntityField>
