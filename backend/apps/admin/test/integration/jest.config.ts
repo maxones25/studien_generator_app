@@ -28,7 +28,6 @@ const config: Config.InitialOptions = {
     '@entities': '<rootDir>/libs/entities/src',
     '@test/(.*)': '<rootDir>/libs/test/src/$1',
   },
-  maxWorkers: '50%',
 };
 
 export default config;
