@@ -32,7 +32,6 @@ export class FieldsCommands {
   ) {}
 
   @Post('addField')
-  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(EntityGuard)
   async addField(@Entity() entity: EntityEntity, @Body() data: CreateFieldDto) {
