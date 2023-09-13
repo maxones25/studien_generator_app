@@ -11,7 +11,6 @@ import {
 import { CreateFieldDto } from '../domain/dtos/CreateFieldDto';
 import { UpdateFieldDto } from '../domain/dtos/UpdateFieldDto';
 import { Roles } from '@admin/roles/roles.decorator';
-import { FieldsService } from '../fields.service';
 import { EntityGuard } from '@admin/entities/entities/entity.guard';
 import { FieldQueryDto } from '../domain/dtos/FieldQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
@@ -30,8 +29,6 @@ import { IRemoveFieldUseCase } from '../domain/IRemoveFieldUseCase';
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class FieldsCommands {
   constructor(
-    @Inject(FieldsService)
-    private readonly fieldsService: FieldsService,
     @Inject(AddFieldUseCase)
     private readonly addFieldUseCase: IAddFieldUseCase,
     @Inject(UpdateFieldUseCase)
