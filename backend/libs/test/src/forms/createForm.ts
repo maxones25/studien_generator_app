@@ -11,14 +11,25 @@ export interface CreateFormOptions extends StudyRequestOptions {
 export const createForm = (
   app: INestApplication,
   { accessToken, studyId, data = fakeData.form() }: CreateFormOptions,
-) =>
-  request(app.getHttpServer())
-    .post('/forms/create')
-    .query({
+) => {
+  const r = request(app.getHttpServer()).post('/forms/create');
+
+  if (accessToken !== undefined) {
+    r.set('Authorization', `Bearer ${accessToken}`);
+  }
+
+  if (studyId !== undefined) {
+    r.query({
       studyId,
-    })
-    .send(data)
-    .set('Authorization', `Bearer ${accessToken}`);
+    });
+  }
+
+  if (data !== undefined) {
+    r.send(data);
+  }
+
+  return r;
+};
 
 export const createFormId = (
   app: INestApplication,

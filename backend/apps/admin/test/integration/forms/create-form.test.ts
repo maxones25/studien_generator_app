@@ -7,6 +7,7 @@ import { createForm } from '@test/forms/createForm';
 import fakeData from '@test/fakeData';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { createApp } from '@test/app/createApp';
+import { getAdminAccessToken } from '@test/auth/loginAdmin';
 
 describe('Create Form', () => {
   let app: INestApplication;
@@ -42,6 +43,15 @@ describe('Create Form', () => {
       .then((res) => {
         expect(validateUUID(res.text)).toBeTruthy();
       });
+  });
+
+  it('should fail because unauthorized', () => {
+    return createForm(app, { accessToken: undefined, studyId }).expect(401);
+  });
+
+  it('should fail because admin is authorized', async () => {
+    const accessToken = await getAdminAccessToken(app);
+    return createForm(app, { accessToken, studyId }).expect(401);
   });
 
   it('should fail because studyId invalid', () => {
