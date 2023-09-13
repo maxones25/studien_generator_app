@@ -241,7 +241,7 @@ describe('update field', () => {
       studyId,
       fieldId,
       data: {
-        name: ""
+        name: '',
       },
     }).expect(400);
   });
@@ -258,7 +258,7 @@ describe('update field', () => {
       studyId,
       fieldId,
       data: {
-        name: false
+        name: false,
       },
     }).expect(400);
   });
@@ -275,7 +275,7 @@ describe('update field', () => {
       studyId,
       fieldId,
       data: {
-        type: 123
+        type: 123,
       },
     }).expect(400);
   });
@@ -292,7 +292,7 @@ describe('update field', () => {
       studyId,
       fieldId,
       data: {
-        type: "Type"
+        type: 'Type',
       },
     }).expect(400);
   });
