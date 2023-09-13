@@ -1,4 +1,3 @@
-import { INestApplication } from '@nestjs/common';
 import { IApp } from '@test/app/createApp';
 import { request } from '@test/app/request';
 
