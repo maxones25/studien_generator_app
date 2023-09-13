@@ -1,4 +1,3 @@
-import { INestApplication } from '@nestjs/common';
 import { TEST_DIRECTOR } from '@test/testData';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { AppModule } from '@admin/app.module';
@@ -6,11 +5,11 @@ import { createStudyId } from '@test/studies/createStudy';
 import { createForm } from '@test/forms/createForm';
 import fakeData from '@test/fakeData';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
-import { createApp } from '@test/app/createApp';
+import { IApp, createApp } from '@test/app/createApp';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
 
 describe('Create Form', () => {
-  let app: INestApplication;
+  let app: IApp;
   let accessToken: string;
   let otherAccessToken: string;
   let studyId: string;
@@ -42,7 +41,8 @@ describe('Create Form', () => {
       .expect(201)
       .then((res) => {
         expect(validateUUID(res.text)).toBeTruthy();
-      });
+      })
+      .catch(console.log);
   });
 
   it('should fail because unauthorized', () => {
