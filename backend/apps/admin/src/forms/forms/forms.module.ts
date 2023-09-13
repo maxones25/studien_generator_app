@@ -16,6 +16,7 @@ import { EntitiesService } from './services/entities.service';
 import { EntityGuard } from './guards/entity.guard';
 import { ComponentsService } from './services/components.service';
 import { ComponentGuard } from './guards/component.guard';
+import { CreateFormUseCase } from './transactions/CreateFormUseCase';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ComponentGuard } from './guards/component.guard';
     EntityGuard,
     PageGuard,
     ComponentGuard,
+    CreateFormUseCase,
     FormsService,
     EntitiesService,
     PagesService,

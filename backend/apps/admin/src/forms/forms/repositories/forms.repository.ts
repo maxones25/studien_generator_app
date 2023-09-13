@@ -5,14 +5,29 @@ import { RecordRepository } from '@shared/modules/records/record.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FormConfiguration } from '@entities';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
+import { IFormsRepository } from '../domain/IFormsRepository';
+import { CreateFormDto } from '../dtos/CreateFormDto';
 
 @Injectable()
-export class FormsRepository extends RecordRepository<Form> {
+export class FormsRepository
+  extends RecordRepository<Form>
+  implements IFormsRepository
+{
   constructor(
     @InjectRepository(Form)
     db: Repository<Form>,
   ) {
     super(db);
+  }
+  async createForm(studyId: string, { name }: CreateFormDto): Promise<string> {
+    const form = new Form();
+
+    form.studyId = studyId;
+    form.name = name;
+
+    await this.db.insert(form);
+
+    return form.id;
   }
 
   getRelatedByStudy(studyId: string, id: string): Promise<any> {

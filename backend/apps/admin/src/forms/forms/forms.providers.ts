@@ -15,6 +15,7 @@ import { RemoveComponentTransaction } from './transactions/RemoveComponentTransa
 import { ComponentsService } from './services/components.service';
 import { ComponentsRepository } from './repositories/components.repository';
 import { ComponentGuard } from './guards/component.guard';
+import { CreateFormUseCase } from './transactions/CreateFormUseCase';
 
 const formsProviders: Provider[] = [
   FormsService,
@@ -33,6 +34,15 @@ const formsProviders: Provider[] = [
   PageGuard,
   EntityGuard,
   ComponentGuard,
+  {
+    provide: 'IFormsRepository',
+    useClass: FormsRepository,
+  },
+  {
+    provide: 'IPagesRepository',
+    useClass: PagesRepository,
+  },
+  CreateFormUseCase,
 ];
 
 export default formsProviders;

@@ -15,6 +15,8 @@ import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { FormGuard } from '../guards/form.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { CreateFormUseCase } from '../transactions/CreateFormUseCase';
+import { ICreateFormUseCase } from '../domain/ICreateFormUseCase';
 
 @Controller('forms')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -22,15 +24,17 @@ export class FormsCommands {
   constructor(
     @Inject(FormsService)
     private readonly formsService: FormsService,
+    @Inject(CreateFormUseCase)
+    private readonly createFormUseCase: ICreateFormUseCase,
   ) {}
 
   @Post('create')
   @Roles('admin', 'employee')
   async create(
     @Query() { studyId }: StudyQueryDto,
-    @Body() body: CreateFormDto,
+    @Body() data: CreateFormDto,
   ) {
-    return this.formsService.create(studyId, body);
+    return this.createFormUseCase.execute({ studyId, data });
   }
 
   @Post('changeName')
