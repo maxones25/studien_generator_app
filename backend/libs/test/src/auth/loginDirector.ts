@@ -1,18 +1,12 @@
 import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 
-export const loginDirector = (
-  app: INestApplication,
-  email: string,
-  password: string,
-) =>
-  request(app.getHttpServer()).post('/auth/login').send({
-    email,
-    password,
-  });
+export const loginDirector = (app: IApp, email: string, password: string) =>
+  request(app).command({ path: '/auth/login', data: { email, password } });
 
 export const getDirectorAccessToken = (
-  app: INestApplication,
+  app: IApp,
   email: string,
   password: string,
 ) =>

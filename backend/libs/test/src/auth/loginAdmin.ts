@@ -1,6 +1,6 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
 import { getEnvironmentVariable } from '@test/app/getEnvironmentVariable';
-import request from 'supertest';
+import { request } from '@test/app/request';
 
 export interface LoginAdminOptions {
   activationPassword?: string;
@@ -8,7 +8,7 @@ export interface LoginAdminOptions {
 }
 
 export const loginAdmin = (
-  app: INestApplication,
+  app: IApp,
   { activationPassword, withPassword = false }: LoginAdminOptions,
 ) => {
   const data: any = {};
@@ -21,11 +21,10 @@ export const loginAdmin = (
   } else if (activationPassword !== undefined) {
     data.activationPassword = activationPassword;
   }
-
-  return request(app.getHttpServer()).post(`/auth/loginAdmin`).send(data);
+  return request(app).command({ path: `/auth/loginAdmin`, data })
 };
 
-export const getAdminAccessToken = (app: INestApplication) =>
+export const getAdminAccessToken = (app: IApp) =>
   new Promise<string>((resolve, reject) => {
     loginAdmin(app, { withPassword: true })
       .expect(200)
