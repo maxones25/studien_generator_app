@@ -5,6 +5,8 @@ import {
   Post,
   UseGuards,
   Inject,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { CreateFieldDto } from '../dtos/CreateFieldDto';
 import { UpdateFieldDto } from '../dtos/UpdateFieldDto';
@@ -30,6 +32,7 @@ export class FieldsCommands {
   ) {}
 
   @Post('addField')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(EntityGuard)
   async addField(@Entity() entity: EntityEntity, @Body() data: CreateFieldDto) {
@@ -47,6 +50,7 @@ export class FieldsCommands {
   }
 
   @Post('updateField')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   async updateField(
     @Query() { fieldId }: FieldQueryDto,
@@ -56,6 +60,7 @@ export class FieldsCommands {
   }
 
   @Post('removeField')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   async deleteField(@Query() { fieldId }: FieldQueryDto) {
     return this.fieldsService.delete(fieldId);
