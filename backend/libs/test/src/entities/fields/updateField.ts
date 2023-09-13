@@ -3,17 +3,17 @@ import { request } from '@test/app/request';
 import { StudyRequestOptions } from '@test/types';
 
 export interface UpdateFieldOptions extends StudyRequestOptions {
-  entityId: string;
+  fieldId: string;
   data: any;
 }
 
 export const updateField = (
   app: IApp,
-  { accessToken, studyId, entityId, data }: UpdateFieldOptions,
+  { accessToken, studyId, fieldId, data }: UpdateFieldOptions,
 ) =>
   request(app).command({
     path: '/entities/updateField',
     accessToken,
-    query: { studyId, entityId },
+    query: { studyId, fieldId },
     data,
   });
