@@ -280,7 +280,7 @@ describe('update field', () => {
     }).expect(400);
   });
 
-  it('should fail because name type i invalid type', async () => {
+  it('should fail because name type is invalid type', async () => {
     const fieldId = await createFieldId(app, {
       accessToken,
       studyId,
