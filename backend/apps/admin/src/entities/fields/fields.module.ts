@@ -5,10 +5,11 @@ import entityFieldsProviders from './fields.providers';
 import { FieldsService } from './fields.service';
 import { FieldGuard } from './field.guard';
 import { AddFieldUseCase } from './useCases/AddFieldUseCase';
+import { UpdateFieldUseCase } from './useCases/UpdateFieldUseCase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([EntityField])],
   providers: entityFieldsProviders,
-  exports: [FieldsService, FieldGuard, AddFieldUseCase],
+  exports: [FieldsService, FieldGuard, AddFieldUseCase, UpdateFieldUseCase],
 })
 export class FieldsModule {}

@@ -21,6 +21,8 @@ import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDelete
 import { AddFieldUseCase } from '../useCases/AddFieldUseCase';
 import { IAddFieldUseCase } from '../domain/IAddFieldUseCase';
 import { FieldGuard } from '../field.guard';
+import { UpdateFieldUseCase } from '../useCases/UpdateFieldUseCase';
+import { IUpdateFieldUseCase } from '../domain/IUpdateFieldUseCase';
 
 @Controller('entities')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -30,6 +32,8 @@ export class FieldsCommands {
     private readonly fieldsService: FieldsService,
     @Inject(AddFieldUseCase)
     private readonly addFieldUseCase: IAddFieldUseCase,
+    @Inject(UpdateFieldUseCase)
+    private readonly updateFieldUseCase: IUpdateFieldUseCase,
   ) {}
 
   @Post('addField')
@@ -55,9 +59,9 @@ export class FieldsCommands {
   @Roles('admin', 'employee')
   async updateField(
     @Query() { fieldId }: FieldQueryDto,
-    @Body() body: UpdateFieldDto,
+    @Body() data: UpdateFieldDto,
   ) {
-    return this.fieldsService.update(fieldId, body);
+    return this.updateFieldUseCase.execute({ fieldId, data });
   }
 
   @Post('removeField')
