@@ -1,5 +1,5 @@
 import { Id } from '@shared/modules/core/Id';
-import { CreateEntityDto } from '../dtos/CreateEntityDto';
+import { CreateEntityDto } from './dtos/CreateEntityDto';
 import { Entity } from '@entities';
 
 export interface IEntitiesRepository {

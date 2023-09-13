@@ -7,12 +7,12 @@ import {
   HttpStatus,
   HttpCode,
 } from '@nestjs/common';
-import { CreateEntityDto } from '../dtos/CreateEntityDto';
-import { UpdateEntityDto } from '../dtos/UpdateEntityDto';
+import { CreateEntityDto } from '../domain/dtos/CreateEntityDto';
+import { UpdateEntityDto } from '../domain/dtos/UpdateEntityDto';
 import { EntityGuard } from '../guards/entity.guard';
 import { Roles } from '@admin/roles/roles.decorator';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
-import { EntityQueryDto } from '../dtos/EntityQueryDto';
+import { EntityQueryDto } from '../domain/dtos/EntityQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { Inject } from '@shared/modules/core/Inject';

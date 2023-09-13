@@ -1,6 +1,6 @@
 import { Id } from '@shared/modules/core/Id';
 import { UseCase } from '@shared/modules/core/UseCase';
-import { CreateEntityDto } from '../dtos/CreateEntityDto';
+import { CreateEntityDto } from './dtos/CreateEntityDto';
 
 export type CreateEntityInput = {
   studyId: string;

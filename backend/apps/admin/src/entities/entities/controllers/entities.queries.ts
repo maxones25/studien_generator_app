@@ -4,7 +4,7 @@ import { Roles } from '@admin/roles/roles.decorator';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { EntityGuard } from '../guards/entity.guard';
-import { EntityQueryDto } from '../dtos/EntityQueryDto';
+import { EntityQueryDto } from '../domain/dtos/EntityQueryDto';
 
 @Controller('entities')
 @UseGuards(StudyGuard)

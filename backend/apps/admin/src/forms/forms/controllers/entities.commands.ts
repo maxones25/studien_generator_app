@@ -14,7 +14,7 @@ import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { FormGuard } from '../guards/form.guard';
 import { EntitiesService } from '../services/entities.service';
 import { CreateEntityDto } from '../dtos/CreateEntityDto';
-import { EntityQueryDto } from '@admin/entities/entities/dtos/EntityQueryDto';
+import { EntityQueryDto } from '@admin/entities/entities/domain/dtos/EntityQueryDto';
 import { EntityQueryDto as FormEntityQueryDto } from '../dtos/EntityQueryDto';
 import { EntityGuard } from '@admin/entities/entities/guards/entity.guard';
 import { EntityGuard as FormEntityGuard } from '../guards/entity.guard';
