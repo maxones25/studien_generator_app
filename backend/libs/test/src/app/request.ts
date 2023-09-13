@@ -27,7 +27,7 @@ export const request = (app: IApp) => {
       headers,
       data,
     }: CommandRequestOptions) => {
-      const r = httpServer.get(path);
+      const r = httpServer.post(path);
 
       if (accessToken !== undefined) {
         r.set('Authorization', `Bearer ${accessToken}`);
