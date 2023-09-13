@@ -10,7 +10,7 @@ export interface QueryRequestOptions {
 
 export interface CommandRequestOptions {
   path: string;
-  data: any;
+  data?: any;
   query?: Record<string, any>;
   accessToken?: any;
   headers?: Record<string, string>;
