@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { FieldsRepository } from './repositories/fields.repository';
+import { FieldsRepository } from '../repositories/fields.repository';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
