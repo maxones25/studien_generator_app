@@ -1,6 +1,6 @@
 import { Provider } from '@nestjs/common';
 import { EntitiesService } from './entities.service';
-import { EntitiesRepository } from './entities.repository';
+import { EntitiesRepository } from './repositories/entities.repository';
 import { EntityGuard } from './guards/entity.guard';
 import { CreateEntityUseCase } from './useCases/CreateEntityUseCase';
 import { ChangeNameUseCase } from './useCases/ChangeNameUseCase';

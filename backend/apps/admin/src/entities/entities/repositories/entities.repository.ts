@@ -2,8 +2,8 @@ import { Repository } from 'typeorm';
 import { Entity } from '@entities';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IEntitiesRepository } from './domain/IEntitiesRepository';
-import { CreateEntityDto } from './dtos/CreateEntityDto';
+import { IEntitiesRepository } from '../domain/IEntitiesRepository';
+import { CreateEntityDto } from '../dtos/CreateEntityDto';
 
 export class EntitiesRepository
   extends RecordRepository<Entity>
