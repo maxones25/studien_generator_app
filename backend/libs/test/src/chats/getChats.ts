@@ -1,16 +1,15 @@
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 import { StudyRequestOptions } from '@test/types';
-import request from 'supertest';
 
 export interface GetChatsOptions extends StudyRequestOptions {}
 
 export const getChats = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId }: GetChatsOptions,
 ) =>
-  request(app.getHttpServer())
-    .get(`/studies/${studyId}/chats`)
-    .query({
-      studyId,
-    })
-    .set('Authorization', `Bearer ${accessToken}`);
+  request(app).query({
+    path: `/studies/${studyId}/chats`,
+    accessToken,
+    query: { studyId },
+  });

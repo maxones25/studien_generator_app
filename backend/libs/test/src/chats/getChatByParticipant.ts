@@ -1,15 +1,14 @@
-import { INestApplication } from '@nestjs/common';
 import { validateUUID } from '@shared/modules/uuid/uuid';
+import { IApp } from '@test/app/createApp';
 import { getParticipantById } from '@test/participants/getParticipantById';
 import { StudyRequestOptions } from '@test/types';
-import request from 'supertest';
 
 export interface GetChatByParticipantOptions extends StudyRequestOptions {
   participantId: string;
 }
 
 export const getChatByParticipant = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, studyId, participantId }: GetChatByParticipantOptions,
 ) =>
   new Promise<string>((resolve, reject) => {

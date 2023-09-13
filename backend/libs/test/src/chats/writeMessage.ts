@@ -1,5 +1,5 @@
-import request from 'supertest';
-import { INestApplication } from '@nestjs/common';
+import { IApp } from '@test/app/createApp';
+import { request } from '@test/app/request';
 import { StudyRequestOptions } from '@test/types';
 
 export interface WriteMessageOptions extends StudyRequestOptions {
@@ -8,10 +8,11 @@ export interface WriteMessageOptions extends StudyRequestOptions {
 }
 
 export const writeMessage = (
-  app: INestApplication,
+  app: IApp,
   { accessToken, data, studyId, chatId }: WriteMessageOptions,
 ) =>
-  request(app.getHttpServer())
-    .post(`/studies/${studyId}/chats/${chatId}`)
-    .send(data)
-    .set('Authorization', `Bearer ${accessToken}`);
+  request(app).command({
+    path: `/studies/${studyId}/chats/${chatId}`,
+    accessToken,
+    data,
+  });
