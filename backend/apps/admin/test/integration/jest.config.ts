@@ -2,6 +2,8 @@ import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
   displayName: 'admin:integration',
+  cache: true,
+  bail: true,
   rootDir: '../../../../',
   testMatch: ['<rootDir>/apps/admin/test/integration/**/*.test.ts'],
   transform: {
@@ -26,6 +28,7 @@ const config: Config.InitialOptions = {
     '@entities': '<rootDir>/libs/entities/src',
     '@test/(.*)': '<rootDir>/libs/test/src/$1',
   },
+  maxWorkers: '50%',
 };
 
 export default config;
