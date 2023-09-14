@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { DirectorsService } from '../directors.service';
+import { DirectorsService } from '../services/directors.service';
 
 @Injectable()
 export class DirectorGuard implements CanActivate {

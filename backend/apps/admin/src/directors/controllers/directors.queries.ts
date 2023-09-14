@@ -1,5 +1,5 @@
 import { Controller, Get, Inject, UseGuards } from '@nestjs/common';
-import { DirectorsService } from '../directors.service';
+import { DirectorsService } from '../services/directors.service';
 import { DirectorId } from '../decorators/director-id.decorator';
 import { IsAdminGuard } from '../guards/IsAdminGuard';
 

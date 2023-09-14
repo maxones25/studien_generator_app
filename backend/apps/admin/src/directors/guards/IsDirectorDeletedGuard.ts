@@ -4,7 +4,7 @@ import {
   Inject,
   UnauthorizedException,
 } from '@nestjs/common';
-import { DirectorsService } from '../directors.service';
+import { DirectorsService } from '../services/directors.service';
 
 export class IsDirectorDeletedGuard implements CanActivate {
   constructor(
@@ -18,7 +18,7 @@ export class IsDirectorDeletedGuard implements CanActivate {
     if (request.route.path.startsWith('/auth')) return true;
     if (request.route.path.startsWith('/health')) return true;
 
-    if(request.payload.topic === "Admin") return true;
+    if (request.payload.topic === 'Admin') return true;
 
     const id = request?.payload?.directorId;
 

@@ -1,10 +1,11 @@
 import { Provider } from '@nestjs/common';
-import { DirectorsService } from './directors.service';
-import { DirectorsRepository } from './directors.repository';
+import { DirectorsService } from './services/directors.service';
+import { DirectorsRepository } from './repositories/directors.repository';
 import { DirectorGuard } from './guards/director.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { PasswordService } from '@shared/modules/password/password.service';
 import { IsDirectorDeletedGuard } from './guards/IsDirectorDeletedGuard';
+import { LoginDirectorUseCase } from './useCases/LoginDirectorUseCase';
 
 const directorsProviders: Provider[] = [
   AuthGuard,
@@ -13,6 +14,11 @@ const directorsProviders: Provider[] = [
   DirectorsService,
   DirectorsRepository,
   PasswordService,
+  {
+    provide: 'IDirectorsRepository',
+    useClass: DirectorsRepository,
+  },
+  LoginDirectorUseCase, 
 ];
 
 export default directorsProviders;

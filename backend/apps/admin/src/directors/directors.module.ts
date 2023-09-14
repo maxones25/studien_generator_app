@@ -2,14 +2,21 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Director } from '@entities';
 import directorsProviders from './directors.providers';
-import { DirectorsService } from './directors.service';
+import { DirectorsService } from './services/directors.service';
 import { DirectorGuard } from './guards/director.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { IsDirectorDeletedGuard } from './guards/IsDirectorDeletedGuard';
+import { LoginDirectorUseCase } from './useCases/LoginDirectorUseCase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Director])],
   providers: directorsProviders,
-  exports: [IsDirectorDeletedGuard, DirectorGuard, AuthGuard, DirectorsService],
+  exports: [
+    IsDirectorDeletedGuard,
+    DirectorGuard,
+    AuthGuard,
+    DirectorsService,
+    LoginDirectorUseCase,
+  ],
 })
 export class DirectorsModule {}

@@ -7,7 +7,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { DirectorsService } from '../directors.service';
+import { DirectorsService } from '../services/directors.service';
 import { UpdateDirectorDto } from '../dtos/UpdateDirectorDto';
 import { DirectorGuard } from '../guards/director.guard';
 import { Director } from '../decorators/director.decorator';

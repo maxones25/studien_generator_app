@@ -11,7 +11,7 @@ import { DirectorId } from '@admin/directors/decorators/director-id.decorator';
 import { StudyGuard } from '../guards/study.guard';
 import { StudiesService } from '../studies.service';
 import { StudyQueryDto } from '../dtos/StudyQueryDto';
-import { DirectorsService } from '@admin/directors/directors.service';
+import { DirectorsService } from '@admin/directors/services/directors.service';
 
 @Controller('studies')
 export class StudiesQueries {
