@@ -2,11 +2,11 @@ import { StudyMember } from '@entities';
 import { Director } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
-import { IDirectorsRepository } from '../domain/IDirectorsRepository';
-import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
-import { UpdateDirectorDto } from '../dtos/UpdateDirectorDto';
+import { IDirectorsRepository } from '../domain/repositories/IDirectorsRepository';
+import { SignupDirectorDto } from '../domain/dtos/SignupDirectorDto';
+import { UpdateDirectorDto } from '../domain/dtos/UpdateDirectorDto';
 import { RecordRepository2 } from '@shared/modules/records/record.repository';
-import { CreateDirectorDto } from '../dtos/CreateDirectorDto';
+import { CreateDirectorDto } from '../domain/dtos/CreateDirectorDto';
 
 export class DirectorsRepository
   extends RecordRepository2<Director>

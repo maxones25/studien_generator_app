@@ -4,8 +4,10 @@ import { DirectorsRepository } from './repositories/directors.repository';
 import { DirectorGuard } from './guards/director.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { IsDirectorDeletedGuard } from './guards/IsDirectorDeletedGuard';
-import { LoginDirectorUseCase } from './useCases/LoginDirectorUseCase';
-import { SignUpDirectorUseCase } from './useCases/SignUpDirectorUseCase';
+import { LoginAdminProvider } from './providers/LoginAdminProvider';
+import { DirectorsRepositoryProvider } from './providers/DirectorsRepositoryProvider';
+import { LoginDirectorProvider } from './providers/LoginDirectorProvider';
+import { SignUpDirectorProvider } from './providers/SignUpDirectorProvider';
 
 const directorsProviders: Provider[] = [
   AuthGuard,
@@ -13,12 +15,10 @@ const directorsProviders: Provider[] = [
   IsDirectorDeletedGuard,
   DirectorsService,
   DirectorsRepository,
-  {
-    provide: 'IDirectorsRepository',
-    useClass: DirectorsRepository,
-  },
-  LoginDirectorUseCase, 
-  SignUpDirectorUseCase,
+  DirectorsRepositoryProvider,
+  LoginDirectorProvider,
+  SignUpDirectorProvider,
+  LoginAdminProvider,
 ];
 
 export default directorsProviders;

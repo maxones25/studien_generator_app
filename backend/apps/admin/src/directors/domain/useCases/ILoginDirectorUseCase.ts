@@ -1,5 +1,7 @@
 import { UseCase } from '@shared/modules/core/UseCase';
 
+export const LOGIN_DIRECTOR_USE_CASE = "LOGIN_DIRECTOR_USE_CASE"
+
 export type LoginDirectorInput = {
   email: string;
   password: string;

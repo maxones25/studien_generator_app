@@ -3,37 +3,33 @@ import {
   Controller,
   Post,
   Inject,
-  UnauthorizedException,
   HttpCode,
   HttpStatus,
+  UseFilters,
 } from '@nestjs/common';
-import { LoginDirectorDto } from '@admin/directors/dtos/LoginDirectorDto';
-import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
-import { AdminLoginDto } from '../dtos/AdminLoginDto';
-import { LoginDirectorUseCase } from '../useCases/LoginDirectorUseCase';
-import { ILoginDirectorUseCase } from '../domain/ILoginDirectorUseCase';
-import { ISignUpDirectorUseCase } from '../domain/ISignUpDirectorUseCase';
-import { SignUpDirectorUseCase } from '../useCases/SignUpDirectorUseCase';
 import {
-  CONFIG_SERVICE,
-  IConfigService,
-} from '@shared/modules/config/IConfigService';
-import {
-  ITokenService,
-  TOKEN_SERVICE,
-} from '@shared/modules/token/ITokenService';
+  LOGIN_DIRECTOR_USE_CASE,
+  LOGIN_ADMIN_USE_CASE,
+  SIGN_UP_DIRECTOR_USE_CASE,
+  ILoginDirectorUseCase,
+  LoginDirectorDto,
+  SignupDirectorDto,
+  ILoginAdminUseCase,
+  ISignUpDirectorUseCase,
+  AdminLoginDto,
+} from '../domain';
+import { ErrorFilter } from '../filters/ErrorFilter';
 
 @Controller('auth')
+@UseFilters(ErrorFilter)
 export class AuthCommands {
   constructor(
-    @Inject(TOKEN_SERVICE)
-    private tokenService: ITokenService,
-    @Inject(CONFIG_SERVICE)
-    private configService: IConfigService,
-    @Inject(LoginDirectorUseCase)
+    @Inject(LOGIN_DIRECTOR_USE_CASE)
     private readonly logindirectorUseCase: ILoginDirectorUseCase,
-    @Inject(SignUpDirectorUseCase)
+    @Inject(SIGN_UP_DIRECTOR_USE_CASE)
     private readonly signUpDirectorUseCase: ISignUpDirectorUseCase,
+    @Inject(LOGIN_ADMIN_USE_CASE)
+    private readonly loginAdminUseCase: ILoginAdminUseCase,
   ) {}
 
   @Post('login')
@@ -57,13 +53,6 @@ export class AuthCommands {
     @Body()
     { activationPassword }: AdminLoginDto,
   ) {
-    if (activationPassword !== this.configService.get('ACTIVATION_PASSWORD'))
-      throw new UnauthorizedException();
-
-    const accessToken = await this.tokenService.sign({
-      topic: 'Admin',
-    });
-
-    return accessToken;
+    return this.loginAdminUseCase.execute({ activationPassword });
   }
 }

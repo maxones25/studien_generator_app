@@ -5,6 +5,7 @@ import {
   UpdateFieldInput,
 } from '../domain/IUpdateFieldUseCase';
 import { UseCaseError } from '@shared/modules/core/UseCaseError';
+import { BadRequestException } from '@nestjs/common';
 
 export class UpdateFieldUseCase implements IUpdateFieldUseCase {
   constructor(
@@ -13,7 +14,8 @@ export class UpdateFieldUseCase implements IUpdateFieldUseCase {
   ) {}
 
   async execute({ fieldId, data }: UpdateFieldInput): Promise<number> {
-    if (Object.keys(data).length === 0) throw new UseCaseError('data required');
+    if (Object.keys(data).length === 0) throw new BadRequestException();
+    // if (Object.keys(data).length === 0) throw new UseCaseError('data required');
     return await this.fieldsRepository.updateField(fieldId, data);
   }
 }

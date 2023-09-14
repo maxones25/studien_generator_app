@@ -8,11 +8,11 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { DirectorsService } from '../services/directors.service';
-import { UpdateDirectorDto } from '../dtos/UpdateDirectorDto';
+import { UpdateDirectorDto } from '../domain/dtos/UpdateDirectorDto';
 import { DirectorGuard } from '../guards/director.guard';
 import { Director } from '../decorators/director.decorator';
 import { Director as DirectorEntity } from '@entities';
-import { UpdatePasswordDto } from '../dtos/UpdatePasswordDto';
+import { UpdatePasswordDto } from '../domain/dtos/UpdatePasswordDto';
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
 import { IsAdminGuard } from '../guards/IsAdminGuard';
 

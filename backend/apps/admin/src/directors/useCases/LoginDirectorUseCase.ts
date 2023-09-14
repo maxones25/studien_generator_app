@@ -1,17 +1,29 @@
 import { Inject } from '@shared/modules/core/Inject';
-import { IDirectorsRepository } from '../domain/IDirectorsRepository';
 import {
+  DIRECTORS_REPOSITORY,
+  IDirectorsRepository,
+} from '../domain/repositories/IDirectorsRepository';
+import {
+  DirectorExistsAlreadyError,
+  DirectorNotFoundError,
   ILoginDirectorUseCase,
   LoginDirectorInput,
   LoginDirectorOutput,
-} from '../domain/ILoginDirectorUseCase';
+  WrongPasswordError,
+} from '../domain';
 import { UnauthorizedException } from '@nestjs/common';
-import { ITokenService, TOKEN_SERVICE } from '@shared/modules/token/ITokenService';
-import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
+import {
+  ITokenService,
+  TOKEN_SERVICE,
+} from '@shared/modules/token/ITokenService';
+import {
+  IPasswordService,
+  PASSWORD_SERVICE,
+} from '@shared/modules/password/IPasswordService';
 
 export class LoginDirectorUseCase implements ILoginDirectorUseCase {
   constructor(
-    @Inject('IDirectorsRepository')
+    @Inject(DIRECTORS_REPOSITORY)
     private readonly directorsRepository: IDirectorsRepository,
     @Inject(PASSWORD_SERVICE)
     private readonly passwordService: IPasswordService,
@@ -25,10 +37,10 @@ export class LoginDirectorUseCase implements ILoginDirectorUseCase {
   }: LoginDirectorInput): Promise<LoginDirectorOutput> {
     const director = await this.directorsRepository.getByEmail(email, false);
 
-    if (!director) throw new UnauthorizedException();
+    if (!director) throw new DirectorNotFoundError();
 
     if (!(await this.passwordService.compare(password, director.password)))
-      throw new UnauthorizedException();
+      throw new WrongPasswordError();
 
     const accessToken = await this.tokenService.sign({
       topic: 'Director',

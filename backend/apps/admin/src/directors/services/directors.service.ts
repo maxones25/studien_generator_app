@@ -1,8 +1,11 @@
 import { Inject, Injectable, BadRequestException } from '@nestjs/common';
-import { UpdateDirectorDto } from '../dtos/UpdateDirectorDto';
+import { UpdateDirectorDto } from '../domain/dtos/UpdateDirectorDto';
 import { DirectorsRepository } from '../repositories/directors.repository';
-import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
-import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
+import { SignupDirectorDto } from '../domain/dtos/SignupDirectorDto';
+import {
+  IPasswordService,
+  PASSWORD_SERVICE,
+} from '@shared/modules/password/IPasswordService';
 
 @Injectable()
 export class DirectorsService {

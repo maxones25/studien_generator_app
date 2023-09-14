@@ -1,24 +1,20 @@
 import {
   ISignUpDirectorUseCase,
   SignUpDirectorInput,
-} from '../domain/ISignUpDirectorUseCase';
+} from '../domain/useCases/ISignUpDirectorUseCase';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { IDirectorsRepository } from '../domain/repositories/IDirectorsRepository';
+import { IPasswordService } from '@shared/modules/password/IPasswordService';
+import { IConfigService } from '@shared/modules/config/IConfigService';
 import {
-  BadRequestException,
-  Inject,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { IDirectorsRepository } from '../domain/IDirectorsRepository';
-import { ConfigService } from '@shared/modules/config/ConfigService';
-import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
-import { CONFIG_SERVICE } from '@shared/modules/config/IConfigService';
+  DirectorExistsAlreadyError,
+  WrongActivationPasswordError,
+} from '../domain';
 
 export class SignUpDirectorUseCase implements ISignUpDirectorUseCase {
   constructor(
-    @Inject(CONFIG_SERVICE)
-    private readonly configService: ConfigService,
-    @Inject('IDirectorsRepository')
+    private readonly configService: IConfigService,
     private readonly directorsRepository: IDirectorsRepository,
-    @Inject(PASSWORD_SERVICE)
     private readonly passwordService: IPasswordService,
   ) {}
 
@@ -26,14 +22,14 @@ export class SignUpDirectorUseCase implements ISignUpDirectorUseCase {
     data: { activationPassword, email, firstName, lastName, password },
   }: SignUpDirectorInput): Promise<string> {
     if (activationPassword !== this.configService.get('ACTIVATION_PASSWORD'))
-      throw new UnauthorizedException();
+      throw new WrongActivationPasswordError();
 
     const foundDirector = await this.directorsRepository.getByEmail(
       email,
       true,
     );
 
-    if (foundDirector) throw new BadRequestException('director already exists');
+    if (foundDirector) throw new DirectorExistsAlreadyError();
 
     const hashedPassword = await this.passwordService.hash(password);
 

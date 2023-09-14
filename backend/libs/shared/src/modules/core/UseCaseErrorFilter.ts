@@ -1,21 +1,16 @@
-import {
-  ExceptionFilter,
-  Catch,
-  ArgumentsHost,
-  HttpStatus,
-} from '@nestjs/common';
+import { ArgumentsHost, ExceptionFilter, HttpStatus } from '@nestjs/common';
+import { UseCaseError } from '@shared/modules/core/UseCaseError';
 import { Response } from 'express';
-import { UseCaseError } from './UseCaseError';
 
-@Catch(UseCaseError)
-export class UseCaseErrorFilter implements ExceptionFilter {
+export abstract class UseCaseErrorFilter implements ExceptionFilter {
+  abstract resolveStatus(exception: UseCaseError): HttpStatus | undefined;
+
   catch(exception: UseCaseError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
-    const message = exception.message;
+    const response: Response = ctx.getResponse();
 
-    response.status(HttpStatus.BAD_REQUEST).json({
-      message,
-    });
+    const status = this.resolveStatus(exception) ?? HttpStatus.BAD_REQUEST;
+
+    response.status(status).json({ message: exception.message });
   }
 }
