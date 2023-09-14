@@ -36,7 +36,7 @@ describe('restore director', () => {
 
     await loginDirector(app, director.email, director.password).expect(401);
 
-    await restoreDirector(app, { accessToken, directorId: director.id });
+    await restoreDirector(app, { accessToken, directorId: director.id }).expect(200)
 
     await loginDirector(app, director.email, director.password).expect(200);
   });
