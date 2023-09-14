@@ -3,9 +3,9 @@ import { Participant } from '@entities';
 import { ParticipantsRepository } from './participants.repository';
 import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
 import { AttributesRepository } from './attributes.repository';
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager } from 'typeorm';
 import { ParticipantAttribute } from '@entities';
-import { PasswordService } from '@shared/modules/password/password.service';
+import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
 
 @Injectable()
 export class ParticipantsService implements StudyRelatedDataAccessor {
@@ -14,13 +14,13 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
     private participantsRepository: ParticipantsRepository,
     @Inject(AttributesRepository)
     private attributesRepository: AttributesRepository,
-    @Inject(PasswordService)
-    private passwordService: PasswordService,
+    @Inject(PASSWORD_SERVICE)
+    private passwordService: IPasswordService,
   ) {}
 
   static build(
     entityManager: EntityManager,
-    passwordService: PasswordService = new PasswordService(),
+    passwordService: IPasswordService,
   ) {
     return new ParticipantsService(
       new ParticipantsRepository(entityManager.getRepository(Participant)),
@@ -64,11 +64,14 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
   }
 
   async updatePassword(participantId: string) {
+    
     const password = await this.passwordService.generate();
-    const hashedPassword = await this.passwordService.hash(password, 10);
+    const hashedPassword = await this.passwordService.hash(password);
+
     await this.participantsRepository.update(participantId, {
       password: hashedPassword,
     });
+
     return password;
   }
 

@@ -1,16 +1,16 @@
 import { Inject, Injectable, BadRequestException } from '@nestjs/common';
 import { UpdateDirectorDto } from '../dtos/UpdateDirectorDto';
 import { DirectorsRepository } from '../repositories/directors.repository';
-import { PasswordService } from '@shared/modules/password/password.service';
 import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
+import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
 
 @Injectable()
 export class DirectorsService {
   constructor(
     @Inject(DirectorsRepository)
     private directorsRepository: DirectorsRepository,
-    @Inject(PasswordService)
-    private passwordService: PasswordService,
+    @Inject(PASSWORD_SERVICE)
+    private passwordService: IPasswordService,
   ) {}
 
   async create({
@@ -26,7 +26,7 @@ export class DirectorsService {
 
     if (foundDirector) throw new BadRequestException('director already exists');
 
-    const password = await this.passwordService.hash(rawPassword, 10);
+    const password = await this.passwordService.hash(rawPassword);
 
     return await this.directorsRepository.create({
       email,
@@ -76,7 +76,7 @@ export class DirectorsService {
   }
 
   async changePassword(id: string, password: string) {
-    const hashedPassword = await this.passwordService.hash(password, 10);
+    const hashedPassword = await this.passwordService.hash(password);
     return this.directorsRepository.changePassword(id, hashedPassword);
   }
 }

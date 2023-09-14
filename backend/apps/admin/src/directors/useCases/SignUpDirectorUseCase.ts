@@ -8,17 +8,17 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { IDirectorsRepository } from '../domain/IDirectorsRepository';
-import { PasswordService } from '@shared/modules/password/password.service';
 import { ConfigService } from '@shared/modules/config/ConfigService';
+import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
 
 export class SignUpDirectorUseCase implements ISignUpDirectorUseCase {
   constructor(
-    @Inject("IConfigService")
+    @Inject('IConfigService')
     private readonly configService: ConfigService,
     @Inject('IDirectorsRepository')
     private readonly directorsRepository: IDirectorsRepository,
-    @Inject(PasswordService)
-    private readonly passwordService: PasswordService
+    @Inject(PASSWORD_SERVICE)
+    private readonly passwordService: IPasswordService,
   ) {}
 
   async execute({
@@ -34,10 +34,7 @@ export class SignUpDirectorUseCase implements ISignUpDirectorUseCase {
 
     if (foundDirector) throw new BadRequestException('director already exists');
 
-    const hashedPassword = await this.passwordService.hash(
-      password,
-      10,
-    );
+    const hashedPassword = await this.passwordService.hash(password);
 
     return this.directorsRepository.create({
       email,

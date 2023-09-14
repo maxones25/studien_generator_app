@@ -3,7 +3,7 @@ import { InjectEntityManager } from '@nestjs/typeorm';
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { EntityManager } from 'typeorm';
 import { Inject } from '@nestjs/common';
-import { PasswordService } from '@shared/modules/password/password.service';
+import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
 
 type TransactionInput = {
   studyId: string;
@@ -18,8 +18,8 @@ export class CreateParticipantTransaction extends Transaction<
   constructor(
     @InjectEntityManager()
     em: EntityManager,
-    @Inject(PasswordService)
-    private readonly passwordService: PasswordService,
+    @Inject(PASSWORD_SERVICE)
+    private readonly passwordService: IPasswordService,
   ) {
     super(em);
   }
@@ -30,8 +30,9 @@ export class CreateParticipantTransaction extends Transaction<
     groupId,
   }: TransactionInput): Promise<string> {
     const participantRepo = this.entityManager.getRepository(Participant);
-
-    const hashedPassword = await this.passwordService.generateHashed(10);
+    
+    const password = this.passwordService.generate();
+    const hashedPassword = await this.passwordService.hash(password);
 
     const participant = new Participant();
 

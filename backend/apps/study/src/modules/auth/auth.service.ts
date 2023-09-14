@@ -3,11 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Participant } from '@entities';
 import { LoginParticipantDto } from './dtos/LoginParticipantDto';
-import { PasswordService } from '@shared/modules/password/password.service';
 import {
   ITokenService,
   TOKEN_SERVICE,
 } from '@shared/modules/token/ITokenService';
+import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +16,8 @@ export class AuthService {
     private particpantsRepository: Repository<Participant>,
     @Inject(TOKEN_SERVICE)
     private tokenService: ITokenService,
-    private passwordService: PasswordService,
+    @Inject(PASSWORD_SERVICE)
+    private passwordService: IPasswordService,
   ) {}
 
   async checkCredentials({ id, password }: LoginParticipantDto) {
@@ -48,7 +49,8 @@ export class AuthService {
     });
 
     if (!process.env.TEST) {
-      const resetPassword = await this.passwordService.generateHashed(10);
+      const password = this.passwordService.generate();
+      const resetPassword = await this.passwordService.hash(password);
 
       this.particpantsRepository.update(participant.id, {
         password: resetPassword,

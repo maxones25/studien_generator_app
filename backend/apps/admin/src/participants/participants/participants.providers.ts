@@ -1,6 +1,5 @@
 import { Provider } from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
-import { PasswordService } from '@shared/modules/password/password.service';
 import { ParticipantsRepository } from './participants.repository';
 import { ParticipantGuard } from './guards/participant.guard';
 import { StartParticipantStudyTransaction } from './transactions/StartParticipantStudyTransaction';
@@ -16,7 +15,6 @@ import { GetAppointmentsUseCase } from './transactions/GetAppointmentsUseCase';
 
 const participantsProviders: Provider[] = [
   ParticipantGuard,
-  PasswordService,
   ParticipantsService,
   StartParticipantStudyTransaction,
   CreateParticipantTransaction,

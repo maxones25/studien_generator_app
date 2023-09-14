@@ -5,16 +5,16 @@ import {
   LoginDirectorInput,
   LoginDirectorOutput,
 } from '../domain/ILoginDirectorUseCase';
-import { PasswordService } from '@shared/modules/password/password.service';
 import { UnauthorizedException } from '@nestjs/common';
 import { ITokenService, TOKEN_SERVICE } from '@shared/modules/token/ITokenService';
+import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
 
 export class LoginDirectorUseCase implements ILoginDirectorUseCase {
   constructor(
     @Inject('IDirectorsRepository')
     private readonly directorsRepository: IDirectorsRepository,
-    @Inject(PasswordService)
-    private readonly passwordService: PasswordService,
+    @Inject(PASSWORD_SERVICE)
+    private readonly passwordService: IPasswordService,
     @Inject(TOKEN_SERVICE)
     private readonly tokenService: ITokenService,
   ) {}

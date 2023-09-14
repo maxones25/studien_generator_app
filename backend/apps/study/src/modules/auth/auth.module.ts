@@ -7,9 +7,14 @@ import { Participant } from '@entities';
 import { AuthGuard } from '@study/modules/auth/guards/auth.guard';
 import { IsParticipantDeletedGuard } from '@study/modules/auth/guards/IsParticipantDeleted.guard';
 import { AuthService } from './auth.service';
+import { PasswordModule } from '@shared/modules/password/password.module';
 
 @Module({
-  imports: [ConfigModule, TypeOrmModule.forFeature([Participant])],
+  imports: [
+    TypeOrmModule.forFeature([Participant]),
+    ConfigModule,
+    PasswordModule,
+  ],
   providers: authProviders,
   controllers: [AuthController],
   exports: [AuthGuard, IsParticipantDeletedGuard, AuthService],

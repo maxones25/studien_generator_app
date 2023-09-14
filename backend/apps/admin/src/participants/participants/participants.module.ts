@@ -15,11 +15,12 @@ import { DeleteParticipantTransaction } from './transactions/DeleteParticipantTr
 import { CreateAppointmentUseCase } from './transactions/CreateAppointmentUseCase';
 import { AppointmentsModule } from '@admin/appointments/appointments.module';
 import { GetAppointmentsUseCase } from './transactions/GetAppointmentsUseCase';
+import { PasswordModule } from '@shared/modules/password/password.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Participant, ParticipantAttribute]),
-    ConfigsModule,
+    PasswordModule,
     StudiesModule,
     TasksModule,
     ConfigsModule,

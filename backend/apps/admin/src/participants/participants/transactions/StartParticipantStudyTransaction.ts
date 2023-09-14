@@ -1,17 +1,16 @@
-import { Participant, ParticipantAttribute, Task } from '@entities';
+import { Participant, Task } from '@entities';
 import { Inject } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
-import { PasswordService } from '@shared/modules/password/password.service';
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { EntityManager } from 'typeorm';
 import { AppUriGenerator } from '../services/AppUriGenerator';
-import { ParticipantsRepository } from '../participants.repository';
 import { TasksRepository } from '@admin/participants/tasks/tasks.repository';
 import { TasksCalculator } from '@admin/participants/tasks/services/task-calculator.service';
 import { StudiesService } from '@admin/studies/studies/studies.service';
 import { SchedulesTransformer } from '../services/SchedulesTransformer';
 import { StartStudyConfig } from '../dtos/StartStudyDto';
 import { ParticipantsService } from '../participants.service';
+import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
 
 type TransactionInput = {
   participant: Participant;
@@ -31,8 +30,8 @@ export class StartParticipantStudyTransaction extends Transaction<
     em: EntityManager,
     @Inject(StudiesService)
     private readonly studiesService: StudiesService,
-    @Inject(PasswordService)
-    passwordService: PasswordService,
+    @Inject(PASSWORD_SERVICE)
+    passwordService: IPasswordService,
     @Inject(AppUriGenerator)
     private readonly appUriGenerator: AppUriGenerator,
     @Inject(TasksCalculator)
