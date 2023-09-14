@@ -7,7 +7,6 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { DirectorsService } from '../services/directors.service';
 import { LoginDirectorDto } from '@admin/directors/dtos/LoginDirectorDto';
 import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
 import { AdminLoginDto } from '../dtos/AdminLoginDto';
@@ -15,7 +14,10 @@ import { LoginDirectorUseCase } from '../useCases/LoginDirectorUseCase';
 import { ILoginDirectorUseCase } from '../domain/ILoginDirectorUseCase';
 import { ISignUpDirectorUseCase } from '../domain/ISignUpDirectorUseCase';
 import { SignUpDirectorUseCase } from '../useCases/SignUpDirectorUseCase';
-import { CONFIG_SERVICE, IConfigService } from '@shared/modules/config/IConfigService';
+import {
+  CONFIG_SERVICE,
+  IConfigService,
+} from '@shared/modules/config/IConfigService';
 import {
   ITokenService,
   TOKEN_SERVICE,
@@ -28,8 +30,6 @@ export class AuthCommands {
     private tokenService: ITokenService,
     @Inject(CONFIG_SERVICE)
     private configService: IConfigService,
-    @Inject(DirectorsService)
-    private readonly directorsService: DirectorsService,
     @Inject(LoginDirectorUseCase)
     private readonly logindirectorUseCase: ILoginDirectorUseCase,
     @Inject(SignUpDirectorUseCase)
