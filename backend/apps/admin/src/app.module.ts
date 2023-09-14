@@ -1,15 +1,11 @@
 import { Module } from '@nestjs/common';
-
 import { appProviders } from '@admin/app.providers';
-
 import ConfigModule from '@shared/modules/config/config.module';
 import DbModule from '@shared/modules/db/db.module';
 import JwtModule from '@shared/modules/jwt/jwt.module';
 import { UseCaseModule } from '@shared/modules/transaction/use-case.module';
-
 import { RolesModule } from '@admin/roles/roles.module';
 import { ComponentsModule } from '@admin/components/components.module';
-
 import { StudiesApp } from '@admin/studies/studies/studies.app';
 import { DirectorsApp } from '@admin/directors/directors.app';
 import { MembersApp } from '@admin/studies/members/members.app';
@@ -26,7 +22,7 @@ import { DirectorsModule } from './directors/directors.module';
 
 @Module({
   imports: [
-    ConfigModule(['.env.database', '.env.admin']),
+    ConfigModule.forRoot(['.env.database', '.env.admin']),
     JwtModule,
     DbModule,
     DirectorsModule,

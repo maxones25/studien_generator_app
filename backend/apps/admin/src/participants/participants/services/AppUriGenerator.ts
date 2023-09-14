@@ -1,11 +1,11 @@
-import { ConfigService } from '@nestjs/config';
 import { Inject, Injectable } from '@nestjs/common';
+import { IConfigService } from '@shared/modules/config/IConfigService';
 
 @Injectable()
 export class AppUriGenerator {
   constructor(
-    @Inject(ConfigService)
-    private readonly configService: ConfigService,
+    @Inject("IConfigService")
+    private readonly configService: IConfigService,
   ) {}
 
   generate(participantId: string, password: string) {

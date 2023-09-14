@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { DirectorsService } from '../services/directors.service';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 import { LoginDirectorDto } from '@admin/directors/dtos/LoginDirectorDto';
 import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
 import { AdminLoginDto } from '../dtos/AdminLoginDto';
@@ -17,14 +16,15 @@ import { LoginDirectorUseCase } from '../useCases/LoginDirectorUseCase';
 import { ILoginDirectorUseCase } from '../domain/ILoginDirectorUseCase';
 import { ISignUpDirectorUseCase } from '../domain/ISignUpDirectorUseCase';
 import { SignUpDirectorUseCase } from '../useCases/SignUpDirectorUseCase';
+import { IConfigService } from '@shared/modules/config/IConfigService';
 
 @Controller('auth')
 export class AuthCommands {
   constructor(
     @Inject(JwtService)
     private jwtService: JwtService,
-    @Inject(ConfigService)
-    private configService: ConfigService,
+    @Inject("IConfigService")
+    private configService: IConfigService,
     @Inject(DirectorsService)
     private readonly directorsService: DirectorsService,
     @Inject(LoginDirectorUseCase)

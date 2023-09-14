@@ -15,11 +15,9 @@ import { appProviders } from './app.providers';
 import { SchedulingModule } from './modules/scheduling/scheduling.module';
 import { AppointmentsModule } from './modules/appointments/appointments.module';
 
-// test
-
 @Module({
   imports: [
-    ConfigModule(['.env.database', '.env.study']),
+    ConfigModule.forRoot(['.env.database', '.env.study']),
     ScheduleModule.forRoot(),
     DbModule,
     JwtModule,

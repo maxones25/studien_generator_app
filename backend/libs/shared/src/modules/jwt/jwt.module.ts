@@ -1,15 +1,14 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule as NestJwtModule } from '@nestjs/jwt';
+import { IConfigService } from '../config/IConfigService';
 
 const JwtModule = NestJwtModule.registerAsync({
-  imports: [ConfigModule],
   global: true,
-  useFactory: async (configService: ConfigService) => {
+  useFactory: async (configService: IConfigService) => {
     return {
-      secret: configService.get<string>('JWT_SECRET'),
+      secret: configService.get('JWT_SECRET'),
     };
   },
-  inject: [ConfigService],
+  inject: ["IConfigService"],
 });
 
 export default JwtModule;

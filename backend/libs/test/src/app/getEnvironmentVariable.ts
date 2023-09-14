@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { IConfigService } from '@shared/modules/config/IConfigService';
 
 export type GetEnvironmentVariableOptions = 'ACTIVATION_PASSWORD';
 
@@ -7,6 +7,7 @@ export const getEnvironmentVariable = (
   app: INestApplication,
   key: GetEnvironmentVariableOptions,
 ) => {
-  const configService = app.get(ConfigService);
+  const configService: IConfigService = app.get("IConfigService");
+  
   return configService.get(key);
 };

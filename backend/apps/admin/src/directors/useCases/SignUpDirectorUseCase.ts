@@ -1,4 +1,3 @@
-import { ConfigService } from '@nestjs/config';
 import {
   ISignUpDirectorUseCase,
   SignUpDirectorInput,
@@ -10,10 +9,11 @@ import {
 } from '@nestjs/common';
 import { IDirectorsRepository } from '../domain/IDirectorsRepository';
 import { PasswordService } from '@shared/modules/password/password.service';
+import { ConfigService } from '@shared/modules/config/ConfigService';
 
 export class SignUpDirectorUseCase implements ISignUpDirectorUseCase {
   constructor(
-    @Inject(ConfigService)
+    @Inject("IConfigService")
     private readonly configService: ConfigService,
     @Inject('IDirectorsRepository')
     private readonly directorsRepository: IDirectorsRepository,

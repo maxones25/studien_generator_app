@@ -1,9 +1,24 @@
+import { DynamicModule, Global } from '@nestjs/common';
 import { ConfigModule as NestConfigModule } from '@nestjs/config';
+import { ConfigService } from './ConfigService';
 
-const ConfigModule = (envFilePath: string | string[]) =>
-  NestConfigModule.forRoot({
-    envFilePath,
-    isGlobal: true,
-  });
-
-export default ConfigModule;
+@Global()
+export default class ConfigModule {
+  static forRoot(envFilePath: string | string[]): DynamicModule {
+    return {
+      module: ConfigModule,
+      imports: [
+        NestConfigModule.forRoot({
+          envFilePath,
+        }),
+      ],
+      providers: [
+        {
+          provide: 'IConfigService',
+          useClass: ConfigService,
+        },
+      ],
+      exports: ['IConfigService'],
+    };
+  }
+}
