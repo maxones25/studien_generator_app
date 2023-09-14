@@ -15,6 +15,8 @@ import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
 import { AdminLoginDto } from '../dtos/AdminLoginDto';
 import { LoginDirectorUseCase } from '../useCases/LoginDirectorUseCase';
 import { ILoginDirectorUseCase } from '../domain/ILoginDirectorUseCase';
+import { ISignUpDirectorUseCase } from '../domain/ISignUpDirectorUseCase';
+import { SignUpDirectorUseCase } from '../useCases/SignUpDirectorUseCase';
 
 @Controller('auth')
 export class AuthCommands {
@@ -27,6 +29,8 @@ export class AuthCommands {
     private readonly directorsService: DirectorsService,
     @Inject(LoginDirectorUseCase)
     private readonly logindirectorUseCase: ILoginDirectorUseCase,
+    @Inject(SignUpDirectorUseCase)
+    private readonly signUpDirectorUseCase: ISignUpDirectorUseCase,
   ) {}
 
   @Post('login')
@@ -39,12 +43,9 @@ export class AuthCommands {
   @HttpCode(HttpStatus.OK)
   async signUp(
     @Body()
-    { activationPassword, ...data }: SignupDirectorDto,
+    data: SignupDirectorDto,
   ) {
-    if (activationPassword !== this.configService.get('ACTIVATION_PASSWORD'))
-      throw new UnauthorizedException();
-
-    return this.directorsService.create(data);
+    return this.signUpDirectorUseCase.execute({ data });
   }
 
   @Post('loginAdmin')

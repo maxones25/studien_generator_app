@@ -6,6 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { PasswordService } from '@shared/modules/password/password.service';
 import { IsDirectorDeletedGuard } from './guards/IsDirectorDeletedGuard';
 import { LoginDirectorUseCase } from './useCases/LoginDirectorUseCase';
+import { SignUpDirectorUseCase } from './useCases/SignUpDirectorUseCase';
 
 const directorsProviders: Provider[] = [
   AuthGuard,
@@ -19,6 +20,7 @@ const directorsProviders: Provider[] = [
     useClass: DirectorsRepository,
   },
   LoginDirectorUseCase, 
+  SignUpDirectorUseCase,
 ];
 
 export default directorsProviders;
