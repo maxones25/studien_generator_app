@@ -1,15 +1,64 @@
 import { StudyMember } from '@entities';
 import { Director } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RecordRepository } from '@shared/modules/records/record.repository';
-import { IsNull, Not, Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
+import { IDirectorsRepository } from '../domain/IDirectorsRepository';
+import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
+import { UpdateDirectorDto } from '../dtos/UpdateDirectorDto';
+import { RecordRepository2 } from '@shared/modules/records/record.repository';
+import { CreateDirectorDto } from '../dtos/CreateDirectorDto';
 
-export class DirectorsRepository extends RecordRepository<Director> {
+export class DirectorsRepository
+  extends RecordRepository2<Director>
+  implements IDirectorsRepository
+{
   constructor(
     @InjectRepository(Director)
     db: Repository<Director>,
   ) {
     super(db);
+  }
+
+  async update(
+    directorId: string,
+    { email, firstName, lastName }: UpdateDirectorDto,
+  ) {
+    return this.updateRecord(directorId, { email, firstName, lastName });
+  }
+
+  restore(directorId: string) {
+    return this.restoreRecord(directorId);
+  }
+
+  softDelete(directorId: string) {
+    return this.softDeleteRecord(directorId);
+  }
+
+  hardDelete(directorId: string) {
+    return this.hardDeleteRecord(directorId);
+  }
+  isDeleted(directorId: string) {
+    return this.isDeletedRecord(directorId);
+  }
+
+  async create({
+    email,
+    password,
+    firstName,
+    lastName,
+  }: CreateDirectorDto): Promise<string> {
+    const director = await this.createRecord({
+      email,
+      password,
+      firstName,
+      lastName,
+    });
+
+    return director.id;
+  }
+
+  getByCredentials(email: string, password: string): Promise<string> {
+    throw new Error('Method not implemented.');
   }
 
   async getById(id: string) {
@@ -79,6 +128,6 @@ export class DirectorsRepository extends RecordRepository<Director> {
   }
 
   changePassword(id: string, password: string) {
-    return this.update(id, { password });
+    return this.updateRecord(id, { password });
   }
 }

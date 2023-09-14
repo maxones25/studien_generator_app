@@ -1,13 +1,8 @@
-import {
-  Inject,
-  Injectable,
-  BadRequestException,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { UpdateDirectorDto } from './dtos/UpdateDirectorDto';
-import { DirectorsRepository } from './directors.repository';
+import { Inject, Injectable, BadRequestException } from '@nestjs/common';
+import { UpdateDirectorDto } from '../dtos/UpdateDirectorDto';
+import { DirectorsRepository } from '../repositories/directors.repository';
 import { PasswordService } from '@shared/modules/password/password.service';
-import { SignupDirectorDto } from './dtos/SignupDirectorDto';
+import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
 
 @Injectable()
 export class DirectorsService {
@@ -24,20 +19,21 @@ export class DirectorsService {
     firstName,
     lastName,
   }: Omit<SignupDirectorDto, 'activationPassword'>) {
-    const foundDirector = await this.directorsRepository.getByEmail(email, true);
+    const foundDirector = await this.directorsRepository.getByEmail(
+      email,
+      true,
+    );
 
     if (foundDirector) throw new BadRequestException('director already exists');
 
     const password = await this.passwordService.hash(rawPassword, 10);
 
-    const director = await this.directorsRepository.create({
+    return await this.directorsRepository.create({
       email,
       password,
       firstName,
       lastName,
     });
-
-    return director.id;
   }
 
   async get() {
@@ -46,21 +42,6 @@ export class DirectorsService {
 
   async getById(id: string) {
     return await this.directorsRepository.getById(id);
-  }
-
-  async getByCredentials(email: string, password: string) {
-    const director = await this.directorsRepository.getByEmail(email, false);
-
-    if (!director) throw new UnauthorizedException();
-
-    if (!(await this.passwordService.compare(password, director.password)))
-      throw new UnauthorizedException();
-
-    return director.id;
-  }
-
-  async getStudyMembers(studyId: string) {
-    return await this.directorsRepository.getStudyMembers(studyId);
   }
 
   async getNonStudyMembers(studyId: string) {
