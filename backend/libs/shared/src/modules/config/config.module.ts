@@ -1,6 +1,7 @@
 import { DynamicModule, Global } from '@nestjs/common';
 import { ConfigModule as NestConfigModule } from '@nestjs/config';
 import { ConfigService } from './ConfigService';
+import { CONFIG_SERVICE } from './IConfigService';
 
 @Global()
 export default class ConfigModule {
@@ -14,11 +15,11 @@ export default class ConfigModule {
       ],
       providers: [
         {
-          provide: 'IConfigService',
+          provide: CONFIG_SERVICE,
           useClass: ConfigService,
         },
       ],
-      exports: ['IConfigService'],
+      exports: [CONFIG_SERVICE],
     };
   }
 }

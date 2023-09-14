@@ -15,7 +15,7 @@ import { LoginDirectorUseCase } from '../useCases/LoginDirectorUseCase';
 import { ILoginDirectorUseCase } from '../domain/ILoginDirectorUseCase';
 import { ISignUpDirectorUseCase } from '../domain/ISignUpDirectorUseCase';
 import { SignUpDirectorUseCase } from '../useCases/SignUpDirectorUseCase';
-import { IConfigService } from '@shared/modules/config/IConfigService';
+import { CONFIG_SERVICE, IConfigService } from '@shared/modules/config/IConfigService';
 import {
   ITokenService,
   TOKEN_SERVICE,
@@ -26,7 +26,7 @@ export class AuthCommands {
   constructor(
     @Inject(TOKEN_SERVICE)
     private tokenService: ITokenService,
-    @Inject('IConfigService')
+    @Inject(CONFIG_SERVICE)
     private configService: IConfigService,
     @Inject(DirectorsService)
     private readonly directorsService: DirectorsService,

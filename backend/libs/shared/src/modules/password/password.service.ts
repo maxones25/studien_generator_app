@@ -2,12 +2,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { generate } from 'generate-password';
 import { IPasswordService } from './IPasswordService';
-import { IConfigService } from '../config/IConfigService';
+import { CONFIG_SERVICE, IConfigService } from '../config/IConfigService';
 
 @Injectable()
 export class PasswordService implements IPasswordService {
   constructor(
-    @Inject('IConfigService')
+    @Inject(CONFIG_SERVICE)
     private readonly configService: IConfigService,
   ) {}
 

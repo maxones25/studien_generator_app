@@ -10,10 +10,11 @@ import {
 import { IDirectorsRepository } from '../domain/IDirectorsRepository';
 import { ConfigService } from '@shared/modules/config/ConfigService';
 import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
+import { CONFIG_SERVICE } from '@shared/modules/config/IConfigService';
 
 export class SignUpDirectorUseCase implements ISignUpDirectorUseCase {
   constructor(
-    @Inject('IConfigService')
+    @Inject(CONFIG_SERVICE)
     private readonly configService: ConfigService,
     @Inject('IDirectorsRepository')
     private readonly directorsRepository: IDirectorsRepository,

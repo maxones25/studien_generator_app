@@ -1,5 +1,5 @@
 import { JwtModule as NestJwtModule } from '@nestjs/jwt';
-import { IConfigService } from '../../config/IConfigService';
+import { CONFIG_SERVICE, IConfigService } from '../../config/IConfigService';
 import { DynamicModule } from '@nestjs/common';
 import { JwtService } from './JwtService';
 
@@ -15,7 +15,7 @@ export default class JwtModule {
               secret: configService.get('JWT_SECRET'),
             };
           },
-          inject: ['IConfigService'],
+          inject: [CONFIG_SERVICE],
         }),
       ],
       providers: [JwtService],

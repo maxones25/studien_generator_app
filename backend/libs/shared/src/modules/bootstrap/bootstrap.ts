@@ -1,13 +1,14 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { initializeTransactionalContext } from 'typeorm-transactional';
+import { CONFIG_SERVICE } from '../config/IConfigService';
 
 async function bootstrap(AppModule: any) {
   initializeTransactionalContext();
 
   const app = await NestFactory.create(AppModule);
 
-  const configService = app.get("IConfigService");
+  const configService = app.get(CONFIG_SERVICE);
   const origin = configService.get('ORIGIN');
   const port = configService.get('PORT');
 

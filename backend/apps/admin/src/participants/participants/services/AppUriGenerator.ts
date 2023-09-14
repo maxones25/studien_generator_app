@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IConfigService } from '@shared/modules/config/IConfigService';
+import { CONFIG_SERVICE, IConfigService } from '@shared/modules/config/IConfigService';
 
 @Injectable()
 export class AppUriGenerator {
   constructor(
-    @Inject("IConfigService")
+    @Inject(CONFIG_SERVICE)
     private readonly configService: IConfigService,
   ) {}
 
