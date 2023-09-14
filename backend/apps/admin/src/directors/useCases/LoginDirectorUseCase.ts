@@ -7,7 +7,7 @@ import {
 } from '../domain/ILoginDirectorUseCase';
 import { PasswordService } from '@shared/modules/password/password.service';
 import { UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { ITokenService, TOKEN_SERVICE } from '@shared/modules/token/ITokenService';
 
 export class LoginDirectorUseCase implements ILoginDirectorUseCase {
   constructor(
@@ -15,8 +15,8 @@ export class LoginDirectorUseCase implements ILoginDirectorUseCase {
     private readonly directorsRepository: IDirectorsRepository,
     @Inject(PasswordService)
     private readonly passwordService: PasswordService,
-    @Inject(JwtService)
-    private readonly jwtService: JwtService,
+    @Inject(TOKEN_SERVICE)
+    private readonly tokenService: ITokenService,
   ) {}
 
   async execute({
@@ -30,7 +30,7 @@ export class LoginDirectorUseCase implements ILoginDirectorUseCase {
     if (!(await this.passwordService.compare(password, director.password)))
       throw new UnauthorizedException();
 
-    const accessToken = await this.jwtService.signAsync({
+    const accessToken = await this.tokenService.sign({
       topic: 'Director',
       directorId: director.id,
     });

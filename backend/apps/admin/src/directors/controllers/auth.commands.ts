@@ -8,7 +8,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { DirectorsService } from '../services/directors.service';
-import { JwtService } from '@nestjs/jwt';
 import { LoginDirectorDto } from '@admin/directors/dtos/LoginDirectorDto';
 import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
 import { AdminLoginDto } from '../dtos/AdminLoginDto';
@@ -17,13 +16,17 @@ import { ILoginDirectorUseCase } from '../domain/ILoginDirectorUseCase';
 import { ISignUpDirectorUseCase } from '../domain/ISignUpDirectorUseCase';
 import { SignUpDirectorUseCase } from '../useCases/SignUpDirectorUseCase';
 import { IConfigService } from '@shared/modules/config/IConfigService';
+import {
+  ITokenService,
+  TOKEN_SERVICE,
+} from '@shared/modules/token/ITokenService';
 
 @Controller('auth')
 export class AuthCommands {
   constructor(
-    @Inject(JwtService)
-    private jwtService: JwtService,
-    @Inject("IConfigService")
+    @Inject(TOKEN_SERVICE)
+    private tokenService: ITokenService,
+    @Inject('IConfigService')
     private configService: IConfigService,
     @Inject(DirectorsService)
     private readonly directorsService: DirectorsService,
@@ -57,7 +60,7 @@ export class AuthCommands {
     if (activationPassword !== this.configService.get('ACTIVATION_PASSWORD'))
       throw new UnauthorizedException();
 
-    const accessToken = await this.jwtService.signAsync({
+    const accessToken = await this.tokenService.sign({
       topic: 'Admin',
     });
 

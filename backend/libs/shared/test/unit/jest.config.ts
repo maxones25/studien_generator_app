@@ -13,7 +13,7 @@ const config: Config.InitialOptions = {
     '<rootDir>/libs/shared/src/enums',
     '<rootDir>/libs/shared/src/modules/db',
     '<rootDir>/libs/shared/src/modules/config',
-    '<rootDir>/libs/shared/src/modules/jwt',
+    '<rootDir>/libs/shared/src/modules/token',
   ],
   // coverageThreshold: {
   //   global: {

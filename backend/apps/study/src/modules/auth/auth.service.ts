@@ -1,17 +1,21 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { Participant } from '@entities';
 import { LoginParticipantDto } from './dtos/LoginParticipantDto';
 import { PasswordService } from '@shared/modules/password/password.service';
+import {
+  ITokenService,
+  TOKEN_SERVICE,
+} from '@shared/modules/token/ITokenService';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(Participant)
     private particpantsRepository: Repository<Participant>,
-    private jwtService: JwtService,
+    @Inject(TOKEN_SERVICE)
+    private tokenService: ITokenService,
     private passwordService: PasswordService,
   ) {}
 
@@ -35,7 +39,7 @@ export class AuthService {
     if (!(await this.passwordService.compare(password, participant.password)))
       throw new UnauthorizedException();
 
-    const accessToken = await this.jwtService.signAsync({
+    const accessToken = await this.tokenService.sign({
       participantId: participant.id,
       groupId: participant.groupId,
       studyId: participant.studyId,
@@ -45,9 +49,9 @@ export class AuthService {
 
     if (!process.env.TEST) {
       const resetPassword = await this.passwordService.generateHashed(10);
-  
+
       this.particpantsRepository.update(participant.id, {
-        password: resetPassword
+        password: resetPassword,
       });
     }
 

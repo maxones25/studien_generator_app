@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import ConfigModule from '@shared/modules/config/config.module';
 import DbModule from '@shared/modules/db/db.module';
-import JwtModule from '@shared/modules/jwt/jwt.module';
+import TokenModule from '@shared/modules/token/token.module';
 import { AuthModule } from '@study/modules/auth/auth.module';
 import { RecordsModule } from '@study/modules/records/records.module';
 import { FormsModule } from '@study/modules/forms/forms.module';
@@ -20,7 +20,7 @@ import { AppointmentsModule } from './modules/appointments/appointments.module';
     ConfigModule.forRoot(['.env.database', '.env.study']),
     ScheduleModule.forRoot(),
     DbModule,
-    JwtModule,
+    TokenModule.forRoot(),
     HealthModule,
     AuthModule,
     FormsModule,

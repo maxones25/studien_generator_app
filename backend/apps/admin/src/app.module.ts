@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { appProviders } from '@admin/app.providers';
 import ConfigModule from '@shared/modules/config/config.module';
 import DbModule from '@shared/modules/db/db.module';
-import JwtModule from '@shared/modules/jwt/jwt.module';
+import TokenModule from '@shared/modules/token/token.module';
 import { UseCaseModule } from '@shared/modules/transaction/use-case.module';
 import { RolesModule } from '@admin/roles/roles.module';
 import { ComponentsModule } from '@admin/components/components.module';
@@ -23,7 +23,7 @@ import { DirectorsModule } from './directors/directors.module';
 @Module({
   imports: [
     ConfigModule.forRoot(['.env.database', '.env.admin']),
-    JwtModule,
+    TokenModule.forRoot(),
     DbModule,
     DirectorsModule,
     UseCaseModule,
