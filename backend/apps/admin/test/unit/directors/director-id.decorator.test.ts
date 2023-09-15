@@ -1,4 +1,4 @@
-import { DirectorId } from '@admin/directors/decorators/director-id.decorator';
+import { DirectorId } from '@admin/directors/infrastructure/http/decorators/director-id.decorator';
 import { UnauthorizedException } from '@nestjs/common';
 import { ExecutionContext } from '@nestjs/common';
 import { ROUTE_ARGS_METADATA } from '@nestjs/common/constants';

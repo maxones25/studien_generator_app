@@ -5,13 +5,13 @@ import {
   Query,
   UseGuards,
   HttpCode,
-  HttpStatus
+  HttpStatus,
 } from '@nestjs/common';
 import { StudiesService } from '../studies.service';
 import { CreateStudyDto } from '../dtos/CreateStudyDto';
 import { ChangeNameDto } from '../dtos/ChangeNameDto';
 import { Roles } from '@admin/roles/roles.decorator';
-import { DirectorId } from '@admin/directors/decorators/director-id.decorator';
+import { DirectorId } from '@admin/directors/infrastructure/http/decorators/director-id.decorator';
 import { StudyGuard } from '../guards/study.guard';
 import { SetDurationDto } from '../dtos/SetDurationDto';
 import { SetDateDto } from '../dtos/SetDateDto';

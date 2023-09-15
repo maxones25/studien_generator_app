@@ -1,5 +1,5 @@
 import { AuthService } from '@admin/auth/auth.service';
-import { DirectorsRepository } from '@admin/directors/repositories/directors.repository';
+import { DirectorsRepository } from '@admin/directors/infrastructure/db/repositories/directors.repository';
 import { TestBed } from '@automock/jest';
 import { UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';

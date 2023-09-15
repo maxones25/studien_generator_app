@@ -2,7 +2,7 @@ import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
 import { JwtService } from '@nestjs/jwt';
 import request from 'supertest';
-import { SignupDirectorDto } from '@admin/directors/domain/dtos/SignupDirectorDto';
+import { SignupDirectorDto } from '@admin/directors/infrastructure/http/dtos/SignupDirectorDto';
 import { createDirector } from '@test/director/signUpDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { getEnvironmentVariable } from '@test/app/getEnvironmentVariable';

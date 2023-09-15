@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ComponentsService } from './components.service';
-import { IsDirectorGuard } from '@admin/directors/guards/IsDirectorGuard';
+import { IsDirectorGuard } from '@admin/directors/infrastructure/http/guards/IsDirectorGuard';
 
 @Controller('components')
 export class ComponentsController {

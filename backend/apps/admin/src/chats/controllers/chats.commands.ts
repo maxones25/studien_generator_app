@@ -14,7 +14,7 @@ import { AddMessageDto } from '../dtos/AddMessageDto';
 import { ReadMessagesDto } from '../dtos/ReadMessagesDto';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { Roles } from '@admin/roles/roles.decorator';
-import { DirectorId } from '@admin/directors/decorators/director-id.decorator';
+import { DirectorId } from '@admin/directors/infrastructure/http/decorators/director-id.decorator';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { ChatQueryDto } from '../dtos/ChatQueryDto';

@@ -1,7 +1,7 @@
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { CreateGroupDto } from '@admin/groups/dtos/CreateGroupDto';
-import { LoginDirectorDto } from '@admin/directors/domain/dtos/LoginDirectorDto';
+import { LoginDirectorDto } from '@admin/directors/infrastructure/http/dtos/LoginDirectorDto';
 import fakeData from '@test/fakeData';
 
 describe('LoginDirectorDto', () => {

@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { Roles } from '@admin/roles/roles.decorator';
-import { DirectorId } from '@admin/directors/decorators/director-id.decorator';
+import { DirectorId } from '@admin/directors/infrastructure/http/decorators/director-id.decorator';
 import { ChatsService } from '../chats.service';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';

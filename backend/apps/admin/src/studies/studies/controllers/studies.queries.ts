@@ -7,18 +7,19 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Roles } from '@admin/roles/roles.decorator';
-import { DirectorId } from '@admin/directors/decorators/director-id.decorator';
+import { DirectorId } from '@admin/directors/infrastructure/http/decorators/director-id.decorator';
 import { StudyGuard } from '../guards/study.guard';
 import { StudiesService } from '../studies.service';
 import { StudyQueryDto } from '../dtos/StudyQueryDto';
-import { DirectorsService } from '@admin/directors/services/directors.service';
+import { DirectorsService } from '@admin/directors/application/services/directors.service';
+import { DIRECTORS_SERVICE } from '@admin/directors/domain';
 
 @Controller('studies')
 export class StudiesQueries {
   constructor(
     @Inject(StudiesService)
     private readonly studiesService: StudiesService,
-    @Inject(DirectorsService)
+    @Inject(DIRECTORS_SERVICE)
     private readonly directorsService: DirectorsService,
   ) {}
 

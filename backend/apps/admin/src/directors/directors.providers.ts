@@ -1,24 +1,35 @@
 import { Provider } from '@nestjs/common';
-import { DirectorsService } from './services/directors.service';
-import { DirectorsRepository } from './repositories/directors.repository';
-import { DirectorGuard } from './guards/director.guard';
-import { AuthGuard } from './guards/auth.guard';
-import { IsDirectorDeletedGuard } from './guards/IsDirectorDeletedGuard';
-import { LoginAdminProvider } from './providers/LoginAdminProvider';
-import { DirectorsRepositoryProvider } from './providers/DirectorsRepositoryProvider';
-import { LoginDirectorProvider } from './providers/LoginDirectorProvider';
-import { SignUpDirectorProvider } from './providers/SignUpDirectorProvider';
+import { DirectorsService } from './application/services/directors.service';
+import { DirectorsRepository } from './infrastructure/db/repositories/directors.repository';
+import { DirectorGuard } from './infrastructure/http/guards/director.guard';
+import { AuthGuard } from './infrastructure/http/guards/auth.guard';
+import { IsDirectorDeletedGuard } from './infrastructure/http/guards/IsDirectorDeletedGuard';
+import {
+  ChangePasswordProvider,
+  DeleteDirectorProvider,
+  DirectorsRepositoryProvider,
+  LoginAdminProvider,
+  LoginDirectorProvider,
+  RestoreDirectorProvider,
+  SignUpDirectorProvider,
+  UpdateDirectorProvider,
+  DirectorsServiceProvider,
+} from './providers';
 
 const directorsProviders: Provider[] = [
   AuthGuard,
   DirectorGuard,
   IsDirectorDeletedGuard,
-  DirectorsService,
   DirectorsRepository,
   DirectorsRepositoryProvider,
   LoginDirectorProvider,
   SignUpDirectorProvider,
   LoginAdminProvider,
+  RestoreDirectorProvider,
+  ChangePasswordProvider,
+  DeleteDirectorProvider,
+  UpdateDirectorProvider,
+  DirectorsServiceProvider,
 ];
 
 export default directorsProviders;
