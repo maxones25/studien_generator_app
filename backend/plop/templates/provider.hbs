@@ -1,0 +1,11 @@
+import { {{pascalCase name}} } from '@admin/{{camelCase module}}/application';
+import { {{constantCase name}} } from '@admin/{{camelCase module}}/domain';
+import { Provider } from '@nestjs/common';
+
+export const {{pascalCase name}}Provider: Provider = {
+  provide: {{constantCase name}},
+  useFactory() {
+    return new {{pascalCase name}}();
+  },
+  inject: [],
+};
