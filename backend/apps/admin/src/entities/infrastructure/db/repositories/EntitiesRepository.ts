@@ -2,10 +2,10 @@ import {
   Entity as EntitySchema,
   EntityField as EntityFieldSchema,
 } from '@entities/schema';
-import { Entity, IEntitiesRepository } from '@admin/entities/domain';
+import { Entity, Field, IEntitiesRepository } from '@admin/entities/domain';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdatedResult } from '@shared/modules/core';
+import { Id, UpdatedResult } from '@shared/modules/core';
 
 export class EntitiesRepository implements IEntitiesRepository {
   constructor(
@@ -20,17 +20,19 @@ export class EntitiesRepository implements IEntitiesRepository {
     return entity.id;
   }
 
-  async getRelatedByStudy(studyId: string, id: string) {
-    return this.entities.findOne({
+  async getEntityByStudy(studyId: string, id: string): Promise<Entity> {
+    const item = await this.entities.findOne({
       where: {
         id,
         studyId,
       },
     });
+    if (item === null) return null;
+    return new Entity(item);
   }
 
-  async getAll(studyId: string) {
-    return this.entities.find({
+  async getAll(studyId: string): Promise<Entity[]> {
+    const items = await this.entities.find({
       where: {
         studyId,
       },
@@ -42,10 +44,11 @@ export class EntitiesRepository implements IEntitiesRepository {
         name: true,
       },
     });
+    return items.map((item) => new Entity(item));
   }
 
-  async getById(entityId: string) {
-    return this.entities.findOne({
+  async getById(entityId: string): Promise<Entity> {
+    const item = await this.entities.findOne({
       where: {
         id: entityId,
       },
@@ -65,6 +68,8 @@ export class EntitiesRepository implements IEntitiesRepository {
         },
       },
     });
+    if (item === null) return null;
+    return new Entity(item);
   }
 
   async existsEntityName(studyId: string, name: string): Promise<boolean> {
@@ -77,8 +82,49 @@ export class EntitiesRepository implements IEntitiesRepository {
     return affected;
   }
 
-  async deleteEntity(id: string): Promise<number> {
+  async deleteEntity(id: Id): Promise<number> {
     const { affected } = await this.entities.delete({ id });
     return affected;
+  }
+
+  async removeField(id: Id): Promise<number> {
+    const { affected } = await this.fields.delete({ id });
+    return affected;
+  }
+
+  async updateField({ id, name, type }: Field): Promise<number> {
+    const { affected } = await this.fields.update({ id }, { name, type });
+    return affected;
+  }
+
+  async addField(field: Field): Promise<Id> {
+    await this.fields.insert(field);
+    return field.id;
+  }
+
+  async getFieldByStudy(studyId: string, id: string): Promise<Field> {
+    const item = await this.fields.findOne({
+      where: { id, entity: { studyId } },
+    });
+    if (item === null) return null;
+    return new Field(item);
+  }
+
+  async getFieldsByEntity(entityId: string) {
+    const items = await this.fields.find({
+      where: {
+        entityId,
+      },
+      order: {
+        createdAt: 'ASC',
+      },
+      select: {
+        id: true,
+        name: true,
+        type: true,
+      },
+    });
+
+    return items.map((item) => new Field(item));
   }
 }

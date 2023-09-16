@@ -1,9 +1,10 @@
 import { UseCase } from '@shared/modules/core/UseCase';
-import { CreateFieldDto } from './dtos/CreateFieldDto';
+import { Field } from '@admin/entities/domain';
+
+export const ADD_FIELD_USE_CASE = "ADD_FIELD_USE_CASE";
 
 export type AddFieldInput = {
-  entityId: string;
-  data: CreateFieldDto;
+  field: Field;
 };
 
 export interface IAddFieldUseCase

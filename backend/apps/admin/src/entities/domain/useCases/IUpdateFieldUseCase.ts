@@ -1,9 +1,10 @@
 import { UseCase } from '@shared/modules/core/UseCase';
-import { UpdateFieldDto } from './dtos/UpdateFieldDto';
+import { Field } from '@admin/entities/domain';
+
+export const UPDATE_FIELD_USE_CASE = 'UPDATE_FIELD_USE_CASE';
 
 export type UpdateFieldInput = {
-  fieldId: string;
-  data: UpdateFieldDto;
+  field: Field;
 };
 
 export interface IUpdateFieldUseCase

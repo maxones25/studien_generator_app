@@ -8,6 +8,6 @@ export class GetStudyRelatedEntityUseCase
 {
   constructor(private readonly entitiesRepository: IEntitiesRepository) {}
   async execute(studyId: string, id: string): Promise<any> {
-    return await this.entitiesRepository.getRelatedByStudy(studyId, id);
+    return await this.entitiesRepository.getEntityByStudy(studyId, id);
   }
 }

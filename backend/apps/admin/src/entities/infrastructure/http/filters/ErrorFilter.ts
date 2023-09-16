@@ -1,8 +1,11 @@
 import { Catch, HttpStatus } from '@nestjs/common';
-import { NameAlreadyExistsError } from '../../../domain';
+import {
+  InvalidFieldError,
+  NameAlreadyExistsError,
+} from '@admin/entities/domain';
 import { UseCaseErrorFilter, UseCaseError } from '@shared/modules/core';
 
-@Catch(NameAlreadyExistsError)
+@Catch(NameAlreadyExistsError, InvalidFieldError)
 export class ErrorFilter extends UseCaseErrorFilter {
   resolveStatus(error: UseCaseError): HttpStatus {
     return HttpStatus.BAD_REQUEST;
