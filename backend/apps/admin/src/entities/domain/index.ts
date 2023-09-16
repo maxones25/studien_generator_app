@@ -5,3 +5,5 @@ export * from './repositories/IEntitiesRepository';
 export * from './models/Entity';
 export * from './useCases/IGetStudyRelatedEntityUseCase';
 export * from './errors/NameAlreadyExistsError';
+export * from './useCases/IGetAllEntitiesUseCase';
+export * from './useCases/IGetEntityByIdUseCase';

@@ -14,6 +14,8 @@ import { EntitiesService } from './application';
     Provider.ChangeEntityNameUseCaseProvider,
     Provider.GetStudyRelatedEntityUseCaseProvider,
     Provider.DeleteEntityUseCaseProvider,
+    Provider.GetAllEntitiesUseCaseProvider,
+    Provider.GetEntityByIdUseCaseProvider,
     Guard.EntityGuard,
   ],
   exports: [
@@ -22,6 +24,8 @@ import { EntitiesService } from './application';
     Domain.GET_STUDY_RELATED_ENTITY_USE_CASE,
     Domain.CHANGE_ENTITY_NAME_USE_CASE,
     Domain.DELETE_ENTITY_USE_CASE,
+    Domain.GET_ALL_ENTITIES_USE_CASE,
+    Domain.GET_ENTITY_BY_ID_USE_CASE,
     Guard.EntityGuard,
   ],
 })

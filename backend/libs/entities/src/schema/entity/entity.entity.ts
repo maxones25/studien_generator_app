@@ -9,17 +9,15 @@ import { StudySchema, EntityField, FormEntity } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
 import { IEntity } from '@entities/core/entity';
 
-export class BaseEntitySchema extends IdEntity implements IEntity {
+@TypeOrmEntity()
+@Unique('unique_name_for_study', ['name', 'studyId'])
+export class Entity extends IdEntity implements IEntity {
   @Column()
   name: string;
 
   @Column()
   studyId: string;
-}
 
-@TypeOrmEntity()
-@Unique('unique_name_for_study', ['name', 'studyId'])
-export class Entity extends BaseEntitySchema {
   @OneToMany(() => EntityField, (field) => field.entity)
   fields: EntityField[];
 

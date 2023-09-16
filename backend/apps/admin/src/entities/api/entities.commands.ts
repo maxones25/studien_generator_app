@@ -5,7 +5,9 @@ import {
   Inject,
   Query,
   Body,
+  Post,
   HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 import {
   CHANGE_ENTITY_NAME_USE_CASE,
@@ -26,7 +28,6 @@ import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { Roles } from '@admin/roles/roles.decorator';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
-import { Command } from '@shared/modules/core';
 
 @Controller('entities')
 @UseFilters(ErrorFilter)
@@ -41,7 +42,7 @@ export class EntitiesCommands {
     private readonly deleteEntityUseCase: IDeleteEntityUseCase,
   ) {}
 
-  @Command('createEntity', HttpStatus.CREATED)
+  @Post('createEntity')
   @Roles('admin', 'employee')
   async create(
     @Query() { studyId }: StudyQueryDto,
@@ -50,7 +51,8 @@ export class EntitiesCommands {
     return this.createEntityUseCase.execute({ studyId, data });
   }
 
-  @Command('changeName')
+  @Post('changeName')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(EntityGuard)
   async changeName(
@@ -61,7 +63,8 @@ export class EntitiesCommands {
     return this.changeEntityNameUseCase.execute({ studyId, entityId, name });
   }
 
-  @Command('deleteEntity')
+  @Post('deleteEntity')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(EntityGuard)
   @Roles('admin')
   async delete(@Query() { entityId }: EntityQueryDto) {

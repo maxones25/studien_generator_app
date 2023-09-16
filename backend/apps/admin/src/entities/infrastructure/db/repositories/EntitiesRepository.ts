@@ -36,6 +36,9 @@ export class EntitiesRepository implements IEntitiesRepository {
       },
       select: {
         id: true,
+        createdAt: true,
+        modifiedAt: true,
+        deletedAt: true,
         name: true,
       },
     });
@@ -51,6 +54,9 @@ export class EntitiesRepository implements IEntitiesRepository {
       },
       select: {
         id: true,
+        createdAt: true,
+        modifiedAt: true,
+        deletedAt: true,
         name: true,
         fields: {
           id: true,
@@ -62,7 +68,7 @@ export class EntitiesRepository implements IEntitiesRepository {
   }
 
   async existsEntityName(studyId: string, name: string): Promise<boolean> {
-    const entity = await this.entities.findOneBy({ studyId, name })
+    const entity = await this.entities.findOneBy({ studyId, name });
     return entity !== null;
   }
 
