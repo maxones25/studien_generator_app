@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { validateUUID } from '@shared/modules/uuid/uuid';
-import { MembersService } from '@admin/studies/members/members.service';
+import { MembersService } from '@admin/members/members.service';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
