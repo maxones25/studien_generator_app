@@ -151,7 +151,7 @@ export default function (plop) {
         }),
         addFile({
           path: 'infrastructure/db/repositories/{{pascalCase name}}.ts',
-          template: 'repository-interface.hbs',
+          template: 'repository.hbs',
         }),
         addPipe({ path: 'infrastructure/db/index.ts' }),
         appendPipe({

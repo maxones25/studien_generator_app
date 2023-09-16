@@ -1,8 +1,8 @@
 import { Controller, Get, Query, UseGuards, Inject } from '@nestjs/common';
 import { Roles } from '@admin/roles/roles.decorator';
-import { EntityQueryDto } from '@admin/entities/entities/domain/dtos/EntityQueryDto';
+import { EntityQueryDto } from '@admin/entities/infrastructure/http/dtos/EntityQueryDto';
 import { FieldsService } from '../services/fields.service';
-import { EntityGuard } from '@admin/entities/entities/guards/entity.guard';
+import { EntityGuard } from '@admin/entities/infrastructure/http/guards/entity.guard';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 
 @Controller('entities')

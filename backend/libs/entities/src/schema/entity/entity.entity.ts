@@ -7,8 +7,9 @@ import {
 } from 'typeorm';
 import { StudySchema, EntityField, FormEntity } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
+import { IEntity } from '@entities/core/entity';
 
-export class BaseEntity extends IdEntity {
+export class BaseEntitySchema extends IdEntity implements IEntity {
   @Column()
   name: string;
 
@@ -18,7 +19,7 @@ export class BaseEntity extends IdEntity {
 
 @TypeOrmEntity()
 @Unique('unique_name_for_study', ['name', 'studyId'])
-export class Entity extends BaseEntity {
+export class Entity extends BaseEntitySchema {
   @OneToMany(() => EntityField, (field) => field.entity)
   fields: EntityField[];
 

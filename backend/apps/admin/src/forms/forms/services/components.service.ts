@@ -2,11 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateFormComponentDto } from '../dtos/CreateFormComponentDto';
 import { AddComponentTransaction } from '../transactions/AddComponentTransaction';
 import { ComponentsRepository } from '../repositories/components.repository';
-import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 import { RemoveComponentTransaction } from '../transactions/RemoveComponentTransaction';
 
 @Injectable()
-export class ComponentsService implements StudyRelatedDataAccessor {
+export class ComponentsService implements IGetStudyRelatedDataUseCase {
   constructor(
     @Inject(ComponentsRepository)
     private componentsRepository: ComponentsRepository,
@@ -16,7 +16,7 @@ export class ComponentsService implements StudyRelatedDataAccessor {
     private readonly deleteComponentTransaction: RemoveComponentTransaction,
   ) {}
 
-  async getRelatedByStudy(studyId: string, id: string): Promise<any> {
+  async execute(studyId: string, id: string): Promise<any> {
     return this.componentsRepository.getRelatedByStudy(studyId, id);
   }
 

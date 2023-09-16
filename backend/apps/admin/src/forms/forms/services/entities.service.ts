@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { EntitiesRepository } from '../repositories/entities.repository';
-import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
-export class EntitiesService implements StudyRelatedDataAccessor {
+export class EntitiesService implements IGetStudyRelatedDataUseCase {
   constructor(
     @Inject(EntitiesRepository)
     private entitiesRepository: EntitiesRepository,
@@ -13,7 +13,7 @@ export class EntitiesService implements StudyRelatedDataAccessor {
     return this.entitiesRepository.getById(entityId);
   }
 
-  getRelatedByStudy(studyId: string, id: string): Promise<any> {
+  execute(studyId: string, id: string): Promise<any> {
     return this.entitiesRepository.getRelatedByStudy(studyId, id);
   }
 

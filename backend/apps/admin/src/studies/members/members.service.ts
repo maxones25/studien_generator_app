@@ -1,16 +1,16 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Roles } from '@admin/roles/roles.enum';
 import { MembersRepository } from './members.repository';
-import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
-export class MembersService implements StudyRelatedDataAccessor {
+export class MembersService implements IGetStudyRelatedDataUseCase {
   constructor(
     @Inject(MembersRepository)
     private membersRepository: MembersRepository,
   ) {}
 
-  async getRelatedByStudy(studyId: string, directorId: string) {
+  async execute(studyId: string, directorId: string) {
     return await this.membersRepository.getRelatedByStudy(studyId, directorId);
   }
 

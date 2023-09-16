@@ -1,14 +1,17 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Participant } from '@entities';
 import { ParticipantsRepository } from './participants.repository';
-import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 import { AttributesRepository } from './attributes.repository';
 import { EntityManager } from 'typeorm';
 import { ParticipantAttribute } from '@entities';
-import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
+import {
+  IPasswordService,
+  PASSWORD_SERVICE,
+} from '@shared/modules/password/IPasswordService';
 
 @Injectable()
-export class ParticipantsService implements StudyRelatedDataAccessor {
+export class ParticipantsService implements IGetStudyRelatedDataUseCase {
   constructor(
     @Inject(ParticipantsRepository)
     private participantsRepository: ParticipantsRepository,
@@ -39,7 +42,7 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
     return this.participantsRepository.softDeleteByGroup(groupId);
   }
 
-  async getRelatedByStudy(studyId: string, id: string): Promise<any> {
+  async execute(studyId: string, id: string): Promise<any> {
     return this.participantsRepository.getRelatedByStudy(studyId, id);
   }
 
@@ -64,7 +67,6 @@ export class ParticipantsService implements StudyRelatedDataAccessor {
   }
 
   async updatePassword(participantId: string) {
-    
     const password = await this.passwordService.generate();
     const hashedPassword = await this.passwordService.hash(password);
 

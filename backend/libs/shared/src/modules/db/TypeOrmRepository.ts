@@ -7,7 +7,7 @@ import {
 import datetime from '../datetime/datetime';
 import { BaseEntity } from '@entities/modules/schema';
 
-export abstract class TypeOrmRepository<
+export class TypeOrmRepository<
   Entity extends BaseEntity,
   ObjectEntity extends ObjectLiteral = Entity,
 > {

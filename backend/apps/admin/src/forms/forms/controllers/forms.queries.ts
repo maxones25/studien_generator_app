@@ -5,8 +5,8 @@ import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { FormQueryDto } from '../dtos/FormQueryDto';
 import { Roles } from '@admin/roles/roles.decorator';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
-import { EntityQueryDto } from '@admin/entities/entities/domain/dtos/EntityQueryDto';
-import { EntityGuard } from '@admin/entities/entities/guards/entity.guard';
+import { EntityQueryDto } from '@admin/entities/infrastructure/http/dtos/EntityQueryDto';
+import { EntityGuard } from '@admin/entities/infrastructure/http/guards/entity.guard';
 
 @Controller('forms')
 @UseGuards(StudyGuard)

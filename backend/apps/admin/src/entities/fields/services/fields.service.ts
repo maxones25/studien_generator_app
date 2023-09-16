@@ -1,15 +1,15 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { FieldsRepository } from '../repositories/fields.repository';
-import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
-export class FieldsService implements StudyRelatedDataAccessor {
+export class FieldsService implements IGetStudyRelatedDataUseCase {
   constructor(
     @Inject(FieldsRepository)
     private fieldsRepository: FieldsRepository,
   ) {}
 
-  getRelatedByStudy(studyId: string, id: string) {
+  execute(studyId: string, id: string) {
     return this.fieldsRepository.getRelatedByStudy(studyId, id);
   }
 

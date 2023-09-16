@@ -126,7 +126,7 @@ describe('Change Entity Name', () => {
       studyId,
       entityId,
       data,
-    }).expect(422);
+    }).expect(400);
   });
 
   it('should update entity even if entity already exists on other study', async () => {

@@ -1,3 +1,7 @@
 import { UseCaseError } from "@shared/modules/core";
 
-export class {{pascalCase name}}Error extends UseCaseError {}
+export class {{pascalCase name}} extends UseCaseError {
+    constructor(){
+        super("")
+    }
+}

@@ -2,11 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import { FormConfiguration } from '@entities';
 import { ConfigsRepository } from '../repositories/configs.repository';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
-import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 import { GetByGroupQueryDto } from '../dtos/GetByGroupQueryDto';
 
 @Injectable()
-export class ConfigsService implements StudyRelatedDataAccessor {
+export class ConfigsService implements IGetStudyRelatedDataUseCase {
   constructor(
     @Inject(ConfigsRepository)
     private formConfigsRepository: ConfigsRepository,
@@ -16,7 +16,7 @@ export class ConfigsService implements StudyRelatedDataAccessor {
   //   this.formConfigsRepository.getNonGroup(groupId);
   // }
 
-  getRelatedByStudy(studyId: string, id: string): Promise<any> {
+  execute(studyId: string, id: string): Promise<any> {
     return this.formConfigsRepository.getRelatedByStudy(studyId, id);
   }
 

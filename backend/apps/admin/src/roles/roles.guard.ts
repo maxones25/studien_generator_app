@@ -30,10 +30,7 @@ export class RolesGuard implements CanActivate {
     const directorId = this.getDirectorId(request);
     const studyId = this.getStudyId(request);
 
-    const member = await this.membersService.getRelatedByStudy(
-      studyId,
-      directorId,
-    );
+    const member = await this.membersService.execute(studyId, directorId);
 
     if (!member) throw new UnauthorizedException();
 

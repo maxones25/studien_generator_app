@@ -1,8 +1,9 @@
 import { Entity, Column, OneToMany } from 'typeorm';
 import { ChatMessage, ChatMessageReceipt, StudyMember } from '../..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
+import { IDirector } from '@entities/core/director';
 
-export class BaseDirector extends IdEntity {
+export class BaseDirector extends IdEntity implements IDirector {
   @Column()
   firstName: string;
 

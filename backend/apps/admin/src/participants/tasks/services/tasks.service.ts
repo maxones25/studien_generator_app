@@ -1,17 +1,17 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { TasksRepository } from '../tasks.repository';
 import { UpdateTaskDto } from '../dtos/UpdateTaskDto';
-import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 import { CreateTaskDto } from '../dtos/CreateTaskDto';
 
 @Injectable()
-export class TasksService implements StudyRelatedDataAccessor {
+export class TasksService implements IGetStudyRelatedDataUseCase {
   constructor(
     @Inject(TasksRepository)
     private readonly tasksRepository: TasksRepository,
   ) {}
 
-  getRelatedByStudy(studyId: string, id: string): Promise<any> {
+  execute(studyId: string, id: string): Promise<any> {
     return this.tasksRepository.getRelatedByStudy(studyId, id);
   }
 

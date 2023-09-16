@@ -2,10 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateFormDto } from '../dtos/CreateFormDto';
 import { FormsRepository } from '../repositories/forms.repository';
 import { CreateFormTransaction } from '../transactions/CreateFormTransaction';
-import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
-export class FormsService implements StudyRelatedDataAccessor {
+export class FormsService implements IGetStudyRelatedDataUseCase {
   constructor(
     @Inject(FormsRepository)
     private formsRepository: FormsRepository,
@@ -13,7 +13,7 @@ export class FormsService implements StudyRelatedDataAccessor {
     private createFormTransaction: CreateFormTransaction,
   ) {}
 
-  async getRelatedByStudy(studyId: string, id: string): Promise<any> {
+  async execute(studyId: string, id: string): Promise<any> {
     return this.formsRepository.getRelatedByStudy(studyId, id);
   }
 

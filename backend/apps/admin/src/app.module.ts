@@ -19,6 +19,7 @@ import { MembersModule } from '@admin/studies/members/members.module';
 import { RecordsApp } from '@admin/records/records.app';
 import { ChatsApp } from '@admin/chats/chats.app';
 import { DirectorsModule } from './directors/directors.module';
+import { FieldsApp } from './entities/fields/fields.app';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { DirectorsModule } from './directors/directors.module';
     ConfigsApp,
     ChatsApp,
     RecordsApp,
+    FieldsApp,
   ],
   providers: appProviders,
 })

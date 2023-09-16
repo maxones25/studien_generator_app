@@ -2,12 +2,12 @@ import { Inject, Injectable, BadRequestException } from '@nestjs/common';
 import { CreateFormDto } from '../dtos/CreateFormDto';
 import { FormsRepository } from '../repositories/forms.repository';
 import { CreateFormTransaction } from '../transactions/CreateFormTransaction';
-import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 import { PagesRepository } from '../repositories/pages.repository';
 import { DeletePageTransaction } from '../transactions/DeletePageTransaction';
 
 @Injectable()
-export class PagesService implements StudyRelatedDataAccessor {
+export class PagesService implements IGetStudyRelatedDataUseCase {
   constructor(
     @Inject(PagesRepository)
     private pagesRepository: PagesRepository,
@@ -15,7 +15,7 @@ export class PagesService implements StudyRelatedDataAccessor {
     private deletePageTransaction: DeletePageTransaction,
   ) {}
 
-  async getRelatedByStudy(studyId: string, id: string): Promise<any> {
+  async execute(studyId: string, id: string): Promise<any> {
     return this.pagesRepository.getRelatedByStudy(studyId, id);
   }
 

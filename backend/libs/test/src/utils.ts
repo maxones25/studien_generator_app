@@ -2,7 +2,7 @@ import request from 'supertest';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateEntityDto } from '@admin/entities/entities/domain/dtos/CreateEntityDto';
+import { CreateEntityDto } from '@admin/entities/infrastructure/http/dtos/CreateEntityDto';
 import { CreatePushDto } from '@study/modules/push/dto/CreatePushDto';
 import { MessageDto } from '@study/modules/chat/dtos/MessageDto';
 

@@ -1,16 +1,16 @@
-import {} from '@entities/schema';
+import { Schema } from '@entities/schema';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { I{{pascalCase name}} } from '@admin/{{pascalCase module}}/domain';
 import { TypeOrmRepository } from '@shared/modules/db';
 
 export class {{pascalCase name}}
-  extends TypeOrmRepository<{{pascalCase module}}Schema>
+  extends TypeOrmRepository<Schema>
   implements IDirectorsRepository
 {
   constructor(
-    @InjectRepository({{pascalCase module}}Schema)
-    db: Repository<{{pascalCase module}}Schema>,
+    @InjectRepository(Schema)
+    db: Repository<Schema>,
   ) {
     super(db);
   }

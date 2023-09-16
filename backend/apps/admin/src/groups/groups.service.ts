@@ -1,16 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateGroupDto } from './dtos/CreateGroupDto';
 import { GroupsRepository } from './repositories/groups.repository';
-import { StudyRelatedDataAccessor } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
-export class GroupsService implements StudyRelatedDataAccessor {
+export class GroupsService implements IGetStudyRelatedDataUseCase {
   constructor(
     @Inject(GroupsRepository)
     private groupsRepository: GroupsRepository,
   ) {}
 
-  getRelatedByStudy(studyId: string, id: string): Promise<any> {
+  execute(studyId: string, id: string): Promise<any> {
     return this.groupsRepository.getRelatedByStudy(studyId, id);
   }
 

@@ -7,3 +7,4 @@ export * from './Injectable';
 export * from './Transactional';
 export * from './DeletedResult';
 export * from './UpdatedResult';
+export * from "./decorators/Command"

@@ -1,4 +1,4 @@
-import { CreateEntityDto } from '@admin/entities/entities/domain/dtos/CreateEntityDto';
+import { CreateEntityDto } from '@admin/entities/infrastructure/http/dtos/CreateEntityDto';
 import { Id, UseCase } from '@shared/modules/core';
 
 export const CREATE_ENTITY_USE_CASE = 'CREATE_ENTITY_USE_CASE';

@@ -5,7 +5,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { StudyRelatedDataAccessor } from './StudyRelatedDataAccessor';
+import { IGetStudyRelatedDataUseCase } from './StudyRelatedDataAccessor';
 
 export type ValidateOptions = {
   studyId: string;
@@ -15,7 +15,7 @@ export type ValidateOptions = {
 
 export abstract class RecordGuard implements CanActivate {
   constructor(
-    private readonly accessor: StudyRelatedDataAccessor,
+    private readonly useCase: IGetStudyRelatedDataUseCase,
     private readonly record: string,
     private readonly paramName: string,
   ) {}
@@ -30,7 +30,7 @@ export abstract class RecordGuard implements CanActivate {
     if (typeof id !== 'string')
       throw new BadRequestException(`${this.paramName} required`);
 
-    const item = await this.accessor.getRelatedByStudy(studyId, id);
+    const item = await this.useCase.execute(studyId, id);
 
     if (!item) throw new UnauthorizedException();
 
