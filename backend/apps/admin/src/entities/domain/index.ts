@@ -14,3 +14,4 @@ export * from './useCases/IUpdateFieldUseCase';
 
 export * from './errors/InvalidFieldError';
 export * from './useCases/IGetStudyRelatedFieldUseCase';
+export * from './useCases/IGetFieldsByEntityUseCase';

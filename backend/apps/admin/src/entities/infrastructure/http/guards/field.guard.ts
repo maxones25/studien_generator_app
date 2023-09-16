@@ -1,4 +1,3 @@
-import { FieldsService } from '@admin/entities/application';
 import {
   GET_STUDY_RELATED_FIELD_USE_CASE,
   IGetStudyRelatedFieldUseCase,

@@ -3,12 +3,10 @@ import { EntitiesDb } from '@admin/entities/infrastructure/db';
 import * as Provider from './providers';
 import * as Guard from './infrastructure/http';
 import * as Domain from '@admin/entities/domain';
-import { FieldsService } from './application';
 
 @Module({
   imports: [EntitiesDb],
   providers: [
-    FieldsService,
     Provider.EntitiesRepositoryProvider,
     Provider.CreateEntityUseCaseProvider,
     Provider.ChangeEntityNameUseCaseProvider,
@@ -20,10 +18,10 @@ import { FieldsService } from './application';
     Provider.UpdateFieldUseCaseProvider,
     Provider.RemoveFieldUseCaseProvider,
     Provider.GetStudyRelatedFieldUseCaseProvider,
+    Provider.GetFieldsByEntityUseCaseProvider,
     Guard.EntityGuard,
   ],
   exports: [
-    FieldsService,
     Domain.CREATE_ENTITY_USE_CASE,
     Domain.GET_STUDY_RELATED_ENTITY_USE_CASE,
     Domain.CHANGE_ENTITY_NAME_USE_CASE,
@@ -34,6 +32,7 @@ import { FieldsService } from './application';
     Domain.REMOVE_FIELD_USE_CASE,
     Domain.UPDATE_FIELD_USE_CASE,
     Domain.GET_STUDY_RELATED_FIELD_USE_CASE,
+    Domain.GET_FIELDS_BY_ENTITY_USE_CASE,
     Guard.EntityGuard,
   ],
 })

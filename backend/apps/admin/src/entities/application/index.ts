@@ -1,5 +1,3 @@
-export * from './entities.service';
-export * from './fields.service';
 export * from './useCases/ChangeEntityNameUseCase';
 export * from './useCases/CreateEntityUseCase';
 export * from './useCases/GetStudyRelatedEntityUseCase';
@@ -9,5 +7,5 @@ export * from './useCases/GetEntityByIdUseCase';
 export * from './useCases/AddFieldUseCase';
 export * from './useCases/UpdateFieldUseCase';
 export * from './useCases/RemoveFieldUseCase';
-
 export * from './useCases/GetStudyRelatedFieldUseCase';
+export * from './useCases/GetFieldsByEntityUseCase';

@@ -10,3 +10,4 @@ export * from './useCases/RemoveFieldUseCaseProvider';
 export * from './useCases/UpdateFieldUseCaseProvider';
 
 export * from './useCases/GetStudyRelatedFieldUseCaseProvider';
+export * from './useCases/GetFieldsByEntityUseCaseProvider';

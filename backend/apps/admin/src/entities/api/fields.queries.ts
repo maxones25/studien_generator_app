@@ -7,25 +7,30 @@ import {
   UseFilters,
 } from '@nestjs/common';
 import { Roles } from '@admin/roles/roles.decorator';
-import { EntityQueryDto } from '@admin/entities/infrastructure/http/dtos/EntityQueryDto';
-import { EntityGuard } from '@admin/entities/infrastructure/http/guards/entity.guard';
+import {
+  EntityQueryDto,
+  EntityGuard,
+} from '@admin/entities/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
-import { FieldsService } from '../application';
-import { ErrorFilter } from '../infrastructure/http';
+import { ErrorFilter } from '@admin/entities/infrastructure/http';
+import {
+  GET_FIELDS_BY_ENTITY_USE_CASE,
+  IGetFieldsByEntityUseCase,
+} from '@admin/entities/domain';
 
 @Controller('entities')
 @UseFilters(ErrorFilter)
 @UseGuards(StudyGuard)
 export class FieldsQueries {
   constructor(
-    @Inject(FieldsService)
-    private readonly fieldsService: FieldsService,
+    @Inject(GET_FIELDS_BY_ENTITY_USE_CASE)
+    private readonly getFieldsByEntityUseCase: IGetFieldsByEntityUseCase,
   ) {}
 
   @Get('getFields')
   @Roles('admin', 'employee')
   @UseGuards(EntityGuard)
   async getFields(@Query() { entityId }: EntityQueryDto) {
-    return this.fieldsService.getByEntity(entityId);
+    return this.getFieldsByEntityUseCase.execute({ entityId });
   }
 }
