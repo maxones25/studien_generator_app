@@ -6,13 +6,14 @@ const addFile = ({ template, path }) => ({
   templateFile: 'plop/templates/' + template,
 });
 
-const appendPipe = ({ path, folder, prefix = '' }) => ({
+const appendPipe = ({ path, folder, prefix = '', suffix = "" }) => ({
   type: 'append',
   path: 'apps/admin/src/{{module}}/' + path,
   templateFile: 'plop/templates/pipe.hbs',
   data: {
     folder,
     prefix,
+    suffix,
   },
 });
 
@@ -73,6 +74,7 @@ export default function (plop) {
         appendPipe({
           path: 'providers/index.ts',
           folder: 'useCases',
+          suffix: "Provider"
         }),
       ];
     },
