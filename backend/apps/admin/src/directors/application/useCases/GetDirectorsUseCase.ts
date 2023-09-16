@@ -6,6 +6,6 @@ import {
 export class GetDirectorsUseCase implements IGetDirectorsUseCase {
   constructor(private readonly directorsRepository: IDirectorsRepository) {}
   execute(): Promise<any> {
-    return this.directorsRepository.getDirectors();
+    return this.directorsRepository.getAll();
   }
 }

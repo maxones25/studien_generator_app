@@ -8,6 +8,6 @@ export class RestoreDirectorUseCase implements IRestoreDirectorUseCase {
   constructor(private readonly directorsRepository: IDirectorsRepository) {}
 
   execute({ directorId }: RestoreDirectorInput): Promise<number> {
-    return this.directorsRepository.restoreDirector(directorId);
+    return this.directorsRepository.restore(directorId);
   }
 }

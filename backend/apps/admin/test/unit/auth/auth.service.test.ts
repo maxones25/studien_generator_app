@@ -42,7 +42,7 @@ describe('AuthService', () => {
       password: director.password,
     };
 
-    repo.getDirectorCredentialsByEmail.mockResolvedValueOnce(null);
+    repo.getCredentialsByEmail.mockResolvedValueOnce(null);
 
     await expect(service.checkCredentials(body)).rejects.toThrow(
       UnauthorizedException,
@@ -57,7 +57,7 @@ describe('AuthService', () => {
       password: director.password,
     };
 
-    repo.getDirectorCredentialsByEmail.mockResolvedValueOnce({
+    repo.getCredentialsByEmail.mockResolvedValueOnce({
       password: fakeData.director().password,
     } as any);
 
@@ -76,7 +76,7 @@ describe('AuthService', () => {
       password: director.password,
     };
 
-    repo.getDirectorCredentialsByEmail.mockResolvedValueOnce({
+    repo.getCredentialsByEmail.mockResolvedValueOnce({
       id: directorId,
       password: director.password,
     } as any);

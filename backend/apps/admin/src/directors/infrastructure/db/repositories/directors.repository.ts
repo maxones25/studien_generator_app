@@ -5,11 +5,11 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import { IDirectorsRepository, Director } from '@admin/directors/domain';
-import { RecordRepository2 } from '@shared/modules/records/record.repository';
 import { Id } from '@shared/modules/core';
+import { TypeOrmRepository } from '@shared/modules/db';
 
 export class DirectorsRepository
-  extends RecordRepository2<DirectorSchema>
+  extends TypeOrmRepository<DirectorSchema>
   implements IDirectorsRepository
 {
   constructor(
@@ -35,7 +35,7 @@ export class DirectorsRepository
     return director.id;
   }
 
-  async getDirectors(): Promise<Director[]> {
+  async getAll(): Promise<Director[]> {
     return this.db.find({
       select: {
         id: true,
@@ -68,7 +68,7 @@ export class DirectorsRepository
     });
   }
 
-  async getDirectorsNotMemberOfStudyById(studyId: Id) {
+  async getNonMembersOfStudy(studyId: Id) {
     return this.db
       .createQueryBuilder('d')
       .select([
@@ -91,7 +91,7 @@ export class DirectorsRepository
       .getMany();
   }
 
-  async getDirectorById(id: Id) {
+  async getById(id: Id) {
     return await this.db.findOne({
       where: { id },
       select: {
@@ -106,18 +106,26 @@ export class DirectorsRepository
     });
   }
 
-  async getDirectorCredentialsByEmail(email: string, deleted = false) {
-    const deletedAt = deleted ? undefined : IsNull();
+  async getCredentialsByEmail(email: string) {
     return this.db.findOne({
       where: {
         email,
-        deletedAt,
+        deletedAt: IsNull(),
       },
       select: {
         id: true,
         password: true,
       },
     });
+  }
+
+  async isEmailRegistered(email: string): Promise<boolean> {
+    const director = await this.db.findOne({
+      where: {
+        email,
+      },
+    });
+    return director !== null;
   }
 
   async isDeleted(directorId: Id) {
@@ -128,15 +136,15 @@ export class DirectorsRepository
     return this.updateRecord(id, { email, firstName, lastName });
   }
 
-  async restoreDirector(directorId: Id): Promise<number> {
+  async restore(directorId: Id): Promise<number> {
     return this.restoreRecord(directorId);
   }
 
-  async softDeleteDirector(directorId: Id) {
+  async softDelete(directorId: Id) {
     return this.softDeleteRecord(directorId);
   }
 
-  async hardDeleteDirector(directorId: Id) {
+  async hardDelete(directorId: Id) {
     return this.hardDeleteRecord(directorId);
   }
 

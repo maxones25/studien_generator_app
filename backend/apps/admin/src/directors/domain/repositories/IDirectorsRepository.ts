@@ -4,23 +4,21 @@ import { DeletedResult, Id, UpdatedResult } from '@shared/modules/core';
 export const DIRECTORS_REPOSITORY = 'DIRECTORS_REPOSITORY';
 
 interface IReadDirectorsRepository {
-  getDirectorsNotMemberOfStudyById(studyId: string): Promise<Director[]>;
-  getDirectors(): Promise<Director[]>;
-  getDirectorCredentialsByEmail(
-    email: string,
-    deleted?: boolean,
-  ): Promise<Director>;
-  getDirectorById(id: Id): Promise<Director>;
+  getNonMembersOfStudy(studyId: string): Promise<Director[]>;
+  getAll(): Promise<Director[]>;
+  getCredentialsByEmail(email: string, deleted?: boolean): Promise<Director>;
+  getById(id: Id): Promise<Director>;
   isDeleted(id: Id): Promise<boolean>;
+  isEmailRegistered(email: string): Promise<boolean>;
 }
 
 interface IWriteDirectorsRepository {
   create(director: Director): Promise<Id>;
   update(director: Director): Promise<UpdatedResult>;
   changePassword(director: Director): Promise<UpdatedResult>;
-  restoreDirector(Id: string): Promise<UpdatedResult>;
-  softDeleteDirector(Id: string): Promise<DeletedResult>;
-  hardDeleteDirector(Id: string): Promise<DeletedResult>;
+  restore(Id: string): Promise<UpdatedResult>;
+  softDelete(Id: string): Promise<DeletedResult>;
+  hardDelete(Id: string): Promise<DeletedResult>;
 }
 
 export interface IDirectorsRepository

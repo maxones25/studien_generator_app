@@ -18,7 +18,7 @@ import {
 import { ErrorFilter } from '../filters/ErrorFilter';
 import { LoginDirectorDto } from '../dtos/LoginDirectorDto';
 import { SignupDirectorDto } from '../dtos/SignupDirectorDto';
-import { LoginAdminDto } from '../dtos/AdminLoginDto';
+import { LoginAdminDto } from '../dtos/LoginAdminDto';
 
 @Controller('auth')
 @UseFilters(ErrorFilter)

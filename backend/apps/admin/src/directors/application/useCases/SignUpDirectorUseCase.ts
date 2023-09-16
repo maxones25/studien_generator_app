@@ -23,10 +23,11 @@ export class SignUpDirectorUseCase implements ISignUpDirectorUseCase {
     if (activationPassword !== this.configService.get('ACTIVATION_PASSWORD'))
       throw new WrongActivationPasswordError();
 
-    const foundDirector =
-      await this.directorsRepository.getDirectorCredentialsByEmail(email, true);
+    const isRegistered = await this.directorsRepository.isEmailRegistered(
+      email,
+    );
 
-    if (foundDirector) throw new DirectorExistsAlreadyError();
+    if (isRegistered) throw new DirectorExistsAlreadyError();
 
     const hashedPassword = await this.passwordService.hash(password);
 

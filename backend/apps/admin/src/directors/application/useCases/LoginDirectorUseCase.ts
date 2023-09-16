@@ -20,11 +20,9 @@ export class LoginDirectorUseCase implements ILoginDirectorUseCase {
     email,
     password,
   }: LoginDirectorInput): Promise<LoginDirectorOutput> {
-    const director =
-      await this.directorsRepository.getDirectorCredentialsByEmail(
-        email,
-        false,
-      );
+    const director = await this.directorsRepository.getCredentialsByEmail(
+      email,
+    );
 
     if (!director) throw new DirectorNotFoundError();
 

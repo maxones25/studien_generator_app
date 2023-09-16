@@ -1,19 +1,25 @@
-import { DeepPartial, FindOptionsWhere, ObjectLiteral } from 'typeorm';
-import { EntityRepository } from './entity.repository';
-import { BaseEntity } from '@entities/modules/schema/BaseEntity';
+import {
+  DeepPartial,
+  FindOptionsWhere,
+  ObjectLiteral,
+  Repository,
+} from 'typeorm';
 import datetime from '../datetime/datetime';
+import { BaseEntity } from '@entities/modules/schema';
 
-export abstract class RecordRepository<
+export abstract class TypeOrmRepository<
   Entity extends BaseEntity,
   ObjectEntity extends ObjectLiteral = Entity,
-> extends EntityRepository<Entity> {
-  async create(data: DeepPartial<Entity>) {
+> {
+  constructor(protected readonly db: Repository<Entity>) {}
+
+  protected async createRecord(data: DeepPartial<Entity>) {
     const entity = data as unknown as DeepPartial<ObjectEntity>;
     await this.db.insert(entity);
     return data as Entity;
   }
 
-  async update(
+  protected async updateRecord(
     id: string | FindOptionsWhere<Entity>,
     data: Partial<ObjectEntity>,
   ) {
@@ -21,24 +27,24 @@ export abstract class RecordRepository<
     return affected;
   }
 
-  async hardDelete(id: string | FindOptionsWhere<Entity>) {
+  protected async hardDeleteRecord(id: string | FindOptionsWhere<Entity>) {
     const { affected } = await this.db.delete(id);
     return affected;
   }
 
-  async softDelete(id: string | FindOptionsWhere<Entity>) {
+  protected async softDeleteRecord(id: string | FindOptionsWhere<Entity>) {
     const deletedAt = datetime.currentDate();
     const data = { deletedAt } as any;
-    return await this.update(id, data);
+    return await this.updateRecord(id, data);
   }
 
-  async restore(id: string | FindOptionsWhere<Entity>) {
+  protected async restoreRecord(id: string | FindOptionsWhere<Entity>) {
     const deletedAt = null;
     const data = { deletedAt } as any;
-    return await this.update(id, data);
+    return await this.updateRecord(id, data);
   }
 
-  async isDeleted(id: string) {
+  protected async isDeletedRecord(id: string) {
     const entity = await this.db.findOneBy({ id } as any);
     if (!entity) return true;
     return entity.deletedAt !== null;

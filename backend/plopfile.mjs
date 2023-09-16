@@ -6,7 +6,7 @@ const addFile = ({ template, path }) => ({
   templateFile: 'plop/templates/' + template,
 });
 
-const appendPipe = ({ path, folder, prefix = '', suffix = "" }) => ({
+const appendPipe = ({ path, folder, prefix = '', suffix = '' }) => ({
   type: 'append',
   path: 'apps/admin/src/{{module}}/' + path,
   templateFile: 'plop/templates/pipe.hbs',
@@ -74,7 +74,7 @@ export default function (plop) {
         appendPipe({
           path: 'providers/index.ts',
           folder: 'useCases',
-          suffix: "Provider"
+          suffix: 'Provider',
         }),
       ];
     },
@@ -141,13 +141,22 @@ export default function (plop) {
       return [
         addFile({
           path: 'domain/repositories/I{{pascalCase name}}.ts',
-          template: 'error.hbs',
+          template: 'repository-interface.hbs',
         }),
         addPipe({ path: 'domain/index.ts' }),
         appendPipe({
           path: 'domain/index.ts',
           folder: 'repositories',
           prefix: 'I',
+        }),
+        addFile({
+          path: 'infrastructure/db/repositories/{{pascalCase name}}.ts',
+          template: 'repository-interface.hbs',
+        }),
+        addPipe({ path: 'infrastructure/db/index.ts' }),
+        appendPipe({
+          path: 'infrastructure/db/index.ts',
+          folder: 'repositories',
         }),
       ];
     },

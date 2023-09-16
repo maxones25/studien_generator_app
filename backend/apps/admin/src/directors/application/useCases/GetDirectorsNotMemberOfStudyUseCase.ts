@@ -13,6 +13,6 @@ export class GetDirectorsNotMemberOfStudyUseCase
   execute({
     studyId,
   }: GetDirectorsNotMemberOfStudyUseCaseInput): Promise<Director[]> {
-    return this.directorsRepository.getDirectorsNotMemberOfStudyById(studyId);
+    return this.directorsRepository.getNonMembersOfStudy(studyId);
   }
 }
