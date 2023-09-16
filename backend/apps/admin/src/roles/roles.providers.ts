@@ -1,8 +1,6 @@
 import { Provider } from '@nestjs/common';
-import { RolesGuard } from './roles.guard';
+import { RolesGuard } from '../members/infrastructure/http';
 
-const rolesProviders: Provider[] = [
-  RolesGuard
-];
+const rolesProviders: Provider[] = [RolesGuard];
 
 export default rolesProviders;

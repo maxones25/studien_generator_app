@@ -1,7 +1,7 @@
 import { StudyMemberSchema } from '@entities/schema';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { IMembersRepository, Member } from '@admin/Members/domain';
+import { IMembersRepository, Member } from '@admin/members/domain';
 
 export class MembersRepository implements IMembersRepository {
   constructor(

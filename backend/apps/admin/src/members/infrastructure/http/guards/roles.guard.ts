@@ -11,7 +11,7 @@ import { validateUUID } from '@shared/modules/uuid/uuid';
 import {
   GET_STUDY_RELATED_MEMBER_USE_CASE,
   IGetStudyRelatedMemberUseCase,
-} from '@admin/Members/domain';
+} from '@admin/members/domain';
 
 @Injectable()
 export class RolesGuard implements CanActivate {

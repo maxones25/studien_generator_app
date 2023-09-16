@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import {
   GET_STUDY_RELATED_MEMBER_USE_CASE,
   IGetStudyRelatedMemberUseCase,
-} from '@admin/Members/domain';
+} from '@admin/members/domain';
 
 export class MemberGuard extends RecordGuard {
   constructor(

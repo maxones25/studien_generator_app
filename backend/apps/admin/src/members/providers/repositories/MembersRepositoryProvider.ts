@@ -1,4 +1,4 @@
-import { MEMBERS_REPOSITORY } from '@admin/Members/domain';
+import { MEMBERS_REPOSITORY } from '@admin/members/domain';
 import { MembersRepository } from '@admin/members/infrastructure/db';
 import { Provider } from '@nestjs/common';
 
