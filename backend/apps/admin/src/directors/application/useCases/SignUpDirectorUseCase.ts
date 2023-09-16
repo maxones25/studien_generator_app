@@ -4,6 +4,7 @@ import {
   DirectorExistsAlreadyError,
   WrongActivationPasswordError,
   IDirectorsRepository,
+  Director,
 } from '@admin/directors/domain';
 import { IPasswordService } from '@shared/modules/password';
 import { IConfigService } from '@shared/modules/config';
@@ -17,25 +18,25 @@ export class SignUpDirectorUseCase implements ISignUpDirectorUseCase {
 
   async execute({
     activationPassword,
-    data: {  email, firstName, lastName, password },
+    data: { email, firstName, lastName, password },
   }: SignUpDirectorInput): Promise<string> {
     if (activationPassword !== this.configService.get('ACTIVATION_PASSWORD'))
       throw new WrongActivationPasswordError();
 
-    const foundDirector = await this.directorsRepository.getByEmail(
-      email,
-      true,
-    );
+    const foundDirector =
+      await this.directorsRepository.getDirectorCredentialsByEmail(email, true);
 
     if (foundDirector) throw new DirectorExistsAlreadyError();
 
     const hashedPassword = await this.passwordService.hash(password);
 
-    return this.directorsRepository.create({
+    const director = new Director({
       email,
+      password: hashedPassword,
       firstName,
       lastName,
-      password: hashedPassword,
     });
+
+    return this.directorsRepository.create(director);
   }
 }

@@ -14,8 +14,8 @@ export interface IDirector extends Entity, DirectorAttributes {}
 
 export class Director implements IDirector {
   readonly id: string;
-  readonly createdAt = new Date();
-  readonly modifiedAt = new Date();
+  readonly createdAt: Date;
+  readonly modifiedAt: Date;
   readonly deletedAt: Date = null;
   readonly firstName: string;
   readonly lastName: string;
@@ -24,10 +24,10 @@ export class Director implements IDirector {
 
   static create(data: DirectorAttributes & { id: string }): Director {
     return {
-        ...data,
-        createdAt: new Date(),
-        modifiedAt: new Date(),
-        deletedAt: null,
-    }
+      ...data,
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+      deletedAt: null,
+    };
   }
 }

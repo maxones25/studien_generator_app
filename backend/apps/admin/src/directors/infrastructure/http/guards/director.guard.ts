@@ -7,23 +7,23 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { DirectorsService } from '../../../application';
-import { DIRECTORS_SERVICE } from '@admin/directors/domain';
+import { DIRECTORS_SERVICE, GET_DIRECTOR_BY_ID_USE_CASE, IGetDirectorByIdUseCase } from '@admin/directors/domain';
 
 @Injectable()
 export class DirectorGuard implements CanActivate {
   constructor(
-    @Inject(DIRECTORS_SERVICE)
-    private readonly directorsService: DirectorsService,
+    @Inject(GET_DIRECTOR_BY_ID_USE_CASE)
+    private readonly getDirectorByIdUseCase: IGetDirectorByIdUseCase,
   ) {}
 
   async canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
 
-    const id = request.query.directorId;
+    const directorId = request.query.directorId;
 
-    if (typeof id !== 'string') throw new UnauthorizedException();
+    if (typeof directorId !== 'string') throw new UnauthorizedException();
 
-    const director = await this.directorsService.getById(id);
+    const director = await this.getDirectorByIdUseCase.execute({ directorId });
 
     if (!director) throw new UnauthorizedException();
 

@@ -1,17 +1,28 @@
 import { Director } from '@entities/core/director';
-import { UpdateDirectorDto, CreateDirectorDto } from '@admin/directors/domain';
+import { DeletedResult, Id, UpdatedResult } from '@shared/modules/core';
+
 export const DIRECTORS_REPOSITORY = 'DIRECTORS_REPOSITORY';
 
-export interface IDirectorsRepository {
-  isDeleted(id: string): Promise<boolean>;
-  getNonStudyMembers(studyId: string): Promise<any[]>;
-  getById(id: string): Promise<any>;
-  get(): Promise<any[]>;
-  update(directorId: string, data: UpdateDirectorDto): Promise<number>;
-  softDelete(directorId: string): Promise<number>;
-  hardDelete(directorId: string): Promise<number>;
-  changePassword(directorId: string, hashedPassword: string): Promise<number>;
-  restore(directorId: string): Promise<number>;
-  create(data: CreateDirectorDto): Promise<string>;
-  getByEmail(email: string, deleted?: boolean): Promise<Director>;
+interface IReadDirectorsRepository {
+  getDirectorsNotMemberOfStudyById(studyId: string): Promise<Director[]>;
+  getDirectors(): Promise<Director[]>;
+  getDirectorCredentialsByEmail(
+    email: string,
+    deleted?: boolean,
+  ): Promise<Director>;
+  getDirectorById(id: Id): Promise<Director>;
+  isDeleted(id: Id): Promise<boolean>;
 }
+
+interface IWriteDirectorsRepository {
+  create(director: Director): Promise<Id>;
+  update(director: Director): Promise<UpdatedResult>;
+  changePassword(director: Director): Promise<UpdatedResult>;
+  restoreDirector(Id: string): Promise<UpdatedResult>;
+  softDeleteDirector(Id: string): Promise<DeletedResult>;
+  hardDeleteDirector(Id: string): Promise<DeletedResult>;
+}
+
+export interface IDirectorsRepository
+  extends IReadDirectorsRepository,
+    IWriteDirectorsRepository {}

@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Director } from '@entities';
 import directorsProviders from './directors.providers';
-import { DirectorsService } from './application/services/directors.service';
 import { DirectorGuard } from './infrastructure/http/guards/director.guard';
 import { AuthGuard } from './infrastructure/http/guards/auth.guard';
 import { IsDirectorDeletedGuard } from './infrastructure/http/guards/IsDirectorDeletedGuard';
@@ -16,6 +15,8 @@ import {
   SIGN_UP_DIRECTOR_USE_CASE,
   UPDATE_DIRECTOR_USE_CASE,
   DIRECTORS_SERVICE,
+  GET_DIRECTORS_USE_CASE,
+  GET_DIRECTOR_BY_ID_USE_CASE,
 } from './domain';
 
 @Module({
@@ -33,6 +34,8 @@ import {
     CHANGE_PASSWORD_USE_CASE,
     DELETE_DIRECTOR_USE_CASE,
     UPDATE_DIRECTOR_USE_CASE,
+    GET_DIRECTORS_USE_CASE,
+    GET_DIRECTOR_BY_ID_USE_CASE,
   ],
 })
 export class DirectorsModule {}

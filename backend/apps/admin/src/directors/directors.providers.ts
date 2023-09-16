@@ -1,5 +1,4 @@
 import { Provider } from '@nestjs/common';
-import { DirectorsService } from './application/services/directors.service';
 import { DirectorsRepository } from './infrastructure/db/repositories/directors.repository';
 import { DirectorGuard } from './infrastructure/http/guards/director.guard';
 import { AuthGuard } from './infrastructure/http/guards/auth.guard';
@@ -14,6 +13,8 @@ import {
   SignUpDirectorProvider,
   UpdateDirectorProvider,
   DirectorsServiceProvider,
+  GetDirectorsUseCaseProvider,
+  GetDirectorByIdUseCaseProvider,
 } from './providers';
 
 const directorsProviders: Provider[] = [
@@ -30,6 +31,8 @@ const directorsProviders: Provider[] = [
   DeleteDirectorProvider,
   UpdateDirectorProvider,
   DirectorsServiceProvider,
+  GetDirectorsUseCaseProvider,
+  GetDirectorByIdUseCaseProvider,
 ];
 
 export default directorsProviders;

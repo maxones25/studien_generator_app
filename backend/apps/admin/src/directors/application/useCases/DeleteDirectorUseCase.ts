@@ -9,9 +9,9 @@ export class DeleteDirectorUseCase implements IDeleteDirectorUseCase {
 
   execute({ directorId, hardDelete }: DeleteDirectorInput): Promise<number> {
     if (hardDelete) {
-      return this.directorsRepository.hardDelete(directorId);
+      return this.directorsRepository.hardDeleteDirector(directorId);
     } else {
-      return this.directorsRepository.softDelete(directorId);
+      return this.directorsRepository.softDeleteDirector(directorId);
     }
   }
 }

@@ -1,5 +1,6 @@
 import {
   ChangePasswordInput,
+  Director,
   IChangePasswordUseCase,
   IDirectorsRepository,
 } from '@admin/directors/domain';
@@ -17,6 +18,8 @@ export class ChangePasswordUseCase implements IChangePasswordUseCase {
   }: ChangePasswordInput): Promise<number> {
     const hashedPassword = await this.passwordService.hash(password);
 
-    return this.directorsRepository.changePassword(directorId, hashedPassword);
+    const director = new Director({ id: directorId, password: hashedPassword });
+
+    return this.directorsRepository.changePassword(director);
   }
 }

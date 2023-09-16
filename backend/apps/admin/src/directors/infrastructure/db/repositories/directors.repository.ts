@@ -4,12 +4,9 @@ import {
 } from '@entities/schema';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
-import {
-  CreateDirectorDto,
-  IDirectorsRepository,
-  UpdateDirectorDto,
-} from '@admin/directors/domain';
+import { IDirectorsRepository, Director } from '@admin/directors/domain';
 import { RecordRepository2 } from '@shared/modules/records/record.repository';
+import { Id } from '@shared/modules/core';
 
 export class DirectorsRepository
   extends RecordRepository2<DirectorSchema>
@@ -22,34 +19,12 @@ export class DirectorsRepository
     super(db);
   }
 
-  async restore(directorId: string): Promise<number> {
-    return this.restoreRecord(directorId);
-  }
-
-  async update(
-    directorId: string,
-    { email, firstName, lastName }: UpdateDirectorDto,
-  ) {
-    return this.updateRecord(directorId, { email, firstName, lastName });
-  }
-
-  async softDelete(directorId: string) {
-    return this.softDeleteRecord(directorId);
-  }
-
-  async hardDelete(directorId: string) {
-    return this.hardDeleteRecord(directorId);
-  }
-  async isDeleted(directorId: string) {
-    return this.isDeletedRecord(directorId);
-  }
-
   async create({
     email,
     password,
     firstName,
     lastName,
-  }: CreateDirectorDto): Promise<string> {
+  }: Director): Promise<string> {
     const director = await this.createRecord({
       email,
       password,
@@ -60,23 +35,78 @@ export class DirectorsRepository
     return director.id;
   }
 
-  getByCredentials(email: string, password: string): Promise<string> {
-    throw new Error('Method not implemented.');
-  }
-
-  async getById(id: string) {
-    return await this.db.findOne({
-      where: { id },
+  async getDirectors(): Promise<Director[]> {
+    return this.db.find({
       select: {
         id: true,
+        createdAt: true,
+        modifiedAt: true,
+        deletedAt: true,
+        email: true,
         firstName: true,
         lastName: true,
-        email: true,
       },
     });
   }
 
-  async getByEmail(email: string, deleted = false) {
+  async getStudyMembers(studyId: Id) {
+    return this.db.find({
+      where: {
+        studies: {
+          studyId,
+        },
+      },
+      select: {
+        id: true,
+        createdAt: true,
+        modifiedAt: true,
+        deletedAt: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+      },
+    });
+  }
+
+  async getDirectorsNotMemberOfStudyById(studyId: Id) {
+    return this.db
+      .createQueryBuilder('d')
+      .select([
+        'd.id',
+        'd.createdAt',
+        'd.modifiedAt',
+        'd.deletedAt',
+        'd.email',
+        'd.firstName',
+        'd.lastName',
+      ])
+      .leftJoin(
+        StudyMemberSchema,
+        'sm',
+        'd.id = sm.directorId AND sm.studyId = :studyId',
+        { studyId },
+      )
+      .where('sm.studyId IS NULL')
+      .groupBy('d.id')
+      .getMany();
+  }
+
+  async getDirectorById(id: Id) {
+    return await this.db.findOne({
+      where: { id },
+      select: {
+        id: true,
+        createdAt: true,
+        modifiedAt: true,
+        deletedAt: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+      },
+    });
+  }
+
+  async getDirectorCredentialsByEmail(email: string, deleted = false) {
     const deletedAt = deleted ? undefined : IsNull();
     return this.db.findOne({
       where: {
@@ -90,47 +120,27 @@ export class DirectorsRepository
     });
   }
 
-  get() {
-    return this.db.find({
-      select: {
-        id: true,
-        deletedAt: true,
-        createdAt: true,
-        modifiedAt: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-      },
-    });
+  async isDeleted(directorId: Id) {
+    return this.isDeletedRecord(directorId);
   }
 
-  async getStudyMembers(studyId: string) {
-    return this.db.find({
-      where: {
-        studies: {
-          studyId,
-        },
-      },
-      select: { id: true, firstName: true, lastName: true, email: true },
-    });
+  async update({ id, email, firstName, lastName }: Director) {
+    return this.updateRecord(id, { email, firstName, lastName });
   }
 
-  async getNonStudyMembers(studyId: string) {
-    return this.db
-      .createQueryBuilder('d')
-      .select(['d.id', 'd.firstName', 'd.lastName', 'd.email'])
-      .leftJoin(
-        StudyMemberSchema,
-        'sm',
-        'd.id = sm.directorId AND sm.studyId = :studyId',
-        { studyId },
-      )
-      .where('sm.studyId IS NULL')
-      .groupBy('d.id')
-      .getMany();
+  async restoreDirector(directorId: Id): Promise<number> {
+    return this.restoreRecord(directorId);
   }
 
-  changePassword(id: string, password: string) {
+  async softDeleteDirector(directorId: Id) {
+    return this.softDeleteRecord(directorId);
+  }
+
+  async hardDeleteDirector(directorId: Id) {
+    return this.hardDeleteRecord(directorId);
+  }
+
+  async changePassword({ id, password }: Director) {
     return this.updateRecord(id, { password });
   }
 }
