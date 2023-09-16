@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { Director as DirectorEntity } from '@entities';
 
-export const Director = createParamDecorator(
+export const GetDirector = createParamDecorator(
   (data: unknown, ctx: ExecutionContext): DirectorEntity => {
     const request = ctx.switchToHttp().getRequest();
 

@@ -6,6 +6,11 @@ const addFile = ({ template, path }) => ({
   templateFile: 'plop/templates/' + template,
 });
 
+const addEmptyFile = ({ path }) => ({
+  type: 'add',
+  path: 'apps/admin/src/{{module}}/' + path,
+});
+
 const appendPipe = ({ path, folder, prefix = '', suffix = '' }) => ({
   type: 'append',
   path: 'apps/admin/src/{{module}}/' + path,
@@ -111,6 +116,39 @@ export default function (plop) {
         appendPipe({
           path: 'domain/index.ts',
           folder: 'errors',
+        }),
+      ];
+    },
+  });
+
+  plop.setGenerator('model', {
+    description: 'generates a model',
+    prompts: [
+      {
+        name: 'module',
+        message: 'Module:',
+        type: 'list',
+        choices: () => {
+          return fs
+            .readdirSync('./apps/admin/src', { withFileTypes: true })
+            .filter((dirent) => dirent.isDirectory())
+            .map((dirent) => dirent.name);
+        },
+      },
+      {
+        name: 'name',
+        type: 'input',
+      },
+    ],
+    actions: () => {
+      return [
+        addEmptyFile({
+          path: 'domain/models/{{pascalCase name}}.ts',
+        }),
+        addPipe({ path: 'domain/index.ts' }),
+        appendPipe({
+          path: 'domain/index.ts',
+          folder: 'models',
         }),
       ];
     },

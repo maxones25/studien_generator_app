@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { UpdateDirectorDto } from '../dtos/UpdateDirectorDto';
 import { DirectorGuard } from '../guards/director.guard';
-import { Director } from '../decorators/director.decorator';
+import { GetDirector } from '../decorators/director.decorator';
 import { Director as DirectorEntity } from '@entities';
 import { UpdatePasswordDto } from '../dtos/UpdatePasswordDto';
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
@@ -42,7 +42,7 @@ export class DirectorsCommands {
   @HttpCode(HttpStatus.OK)
   @UseGuards(IsAdminGuard, DirectorGuard)
   async delete(
-    @Director() director: DirectorEntity,
+    @GetDirector() director: DirectorEntity,
     @Body() { hardDelete }: DeleteDto,
   ) {
     return this.deleteDirectorUseCase.execute({
@@ -54,7 +54,7 @@ export class DirectorsCommands {
   @Post('restore')
   @HttpCode(HttpStatus.OK)
   @UseGuards(IsAdminGuard, DirectorGuard)
-  async restore(@Director() director: DirectorEntity) {
+  async restore(@GetDirector() director: DirectorEntity) {
     return this.restoreDirectorUseCase.execute({ directorId: director.id });
   }
 
@@ -62,7 +62,7 @@ export class DirectorsCommands {
   @HttpCode(HttpStatus.OK)
   @UseGuards(IsAdminGuard, DirectorGuard)
   async update(
-    @Director() director: DirectorEntity,
+    @GetDirector() director: DirectorEntity,
     @Body() data: UpdateDirectorDto,
   ) {
     return this.updateDirectorUseCase.execute({
@@ -75,7 +75,7 @@ export class DirectorsCommands {
   @HttpCode(HttpStatus.OK)
   @UseGuards(IsAdminGuard, DirectorGuard)
   async updatePassword(
-    @Director() director: DirectorEntity,
+    @GetDirector() director: DirectorEntity,
     @Body() { password }: UpdatePasswordDto,
   ) {
     return this.changePasswordUseCase.execute({

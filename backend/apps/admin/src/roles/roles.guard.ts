@@ -8,13 +8,16 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { validateUUID } from '@shared/modules/uuid/uuid';
-import { MembersService } from '@admin/members/members.service';
+import {
+  GET_STUDY_RELATED_MEMBER_USE_CASE,
+  IGetStudyRelatedMemberUseCase,
+} from '@admin/Members/domain';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(
-    @Inject(MembersService)
-    private membersService: MembersService,
+    @Inject(GET_STUDY_RELATED_MEMBER_USE_CASE)
+    private useCase: IGetStudyRelatedMemberUseCase,
     private reflector: Reflector,
   ) {}
 
@@ -30,7 +33,7 @@ export class RolesGuard implements CanActivate {
     const directorId = this.getDirectorId(request);
     const studyId = this.getStudyId(request);
 
-    const member = await this.membersService.execute(studyId, directorId);
+    const member = await this.useCase.execute(studyId, directorId);
 
     if (!member) throw new UnauthorizedException();
 

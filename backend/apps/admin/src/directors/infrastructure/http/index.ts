@@ -6,3 +6,5 @@ export * from './guards/IsDirectorDeletedGuard';
 export * from './guards/IsDirectorGuard';
 export * from './guards/auth.guard';
 export * from './guards/director.guard';
+export * from './decorators/director-id.decorator';
+export * from './decorators/director.decorator';
