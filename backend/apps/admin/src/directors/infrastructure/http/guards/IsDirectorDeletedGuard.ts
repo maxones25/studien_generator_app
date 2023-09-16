@@ -4,13 +4,15 @@ import {
   Inject,
   UnauthorizedException,
 } from '@nestjs/common';
-import { DirectorsService } from '../../../application/services/directors.service';
-import { DIRECTORS_SERVICE } from '@admin/directors/domain';
+import {
+  IIsDirectorDeletedUseCase,
+  IS_DIRECTOR_DELETED_USE_CASE,
+} from '@admin/directors/domain';
 
 export class IsDirectorDeletedGuard implements CanActivate {
   constructor(
-    @Inject(DIRECTORS_SERVICE)
-    private readonly directorsService: DirectorsService,
+    @Inject(IS_DIRECTOR_DELETED_USE_CASE)
+    private readonly isDirectorDeletedUseCase: IIsDirectorDeletedUseCase,
   ) {}
 
   async canActivate(context: ExecutionContext) {
@@ -21,11 +23,13 @@ export class IsDirectorDeletedGuard implements CanActivate {
 
     if (request.payload.topic === 'Admin') return true;
 
-    const id = request?.payload?.directorId;
+    const directorId = request?.payload?.directorId;
 
-    if (typeof id !== 'string') throw new UnauthorizedException();
+    if (typeof directorId !== 'string') throw new UnauthorizedException();
 
-    const isDeleted = await this.directorsService.isDeleted(id);
+    const isDeleted = await this.isDirectorDeletedUseCase.execute({
+      directorId,
+    });
 
     if (isDeleted) throw new UnauthorizedException();
 

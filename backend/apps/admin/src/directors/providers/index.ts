@@ -1,5 +1,4 @@
 export * from './repositories/DirectorsRepositoryProvider';
-export * from './services/DirectorsService';
 export * from './useCases/LoginAdminProvider';
 export * from './useCases/LoginDirectorProvider';
 export * from './useCases/RestoreDirectorProvider';
@@ -7,5 +6,7 @@ export * from './useCases/SignUpDirectorProvider';
 export * from './useCases/ChangePasswordProvider';
 export * from './useCases/DeleteDirectorProvider';
 export * from './useCases/UpdateDirectorProvider';
-export * from "./useCases/GetDirectorsUseCaseProvider"
+export * from './useCases/GetDirectorsUseCaseProvider';
 export * from './useCases/GetDirectorByIdUseCaseProvider';
+export * from './useCases/GetDirectorsNotMemberOfStudyUseCaseProvider';
+export * from './useCases/IsDirectorDeletedUseCaseProvider';

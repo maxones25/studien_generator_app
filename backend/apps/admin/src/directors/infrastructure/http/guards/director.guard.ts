@@ -6,8 +6,10 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { DirectorsService } from '../../../application';
-import { DIRECTORS_SERVICE, GET_DIRECTOR_BY_ID_USE_CASE, IGetDirectorByIdUseCase } from '@admin/directors/domain';
+import {
+  GET_DIRECTOR_BY_ID_USE_CASE,
+  IGetDirectorByIdUseCase,
+} from '@admin/directors/domain';
 
 @Injectable()
 export class DirectorGuard implements CanActivate {

@@ -1,41 +1,45 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Director } from '@entities';
-import directorsProviders from './directors.providers';
-import { DirectorGuard } from './infrastructure/http/guards/director.guard';
-import { AuthGuard } from './infrastructure/http/guards/auth.guard';
-import { IsDirectorDeletedGuard } from './infrastructure/http/guards/IsDirectorDeletedGuard';
 import { PasswordModule } from '@shared/modules/password';
-import {
-  CHANGE_PASSWORD_USE_CASE,
-  DELETE_DIRECTOR_USE_CASE,
-  LOGIN_ADMIN_USE_CASE,
-  RESTORE_DIRECTOR_USE_CASE,
-  LOGIN_DIRECTOR_USE_CASE,
-  SIGN_UP_DIRECTOR_USE_CASE,
-  UPDATE_DIRECTOR_USE_CASE,
-  DIRECTORS_SERVICE,
-  GET_DIRECTORS_USE_CASE,
-  GET_DIRECTOR_BY_ID_USE_CASE,
-} from './domain';
+import * as Domain from './domain';
+import * as Provider from './providers';
+import * as Guard from '@admin/directors/infrastructure/http';
+import * as Db from '@admin/directors/infrastructure/db';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Director]), PasswordModule],
-  providers: directorsProviders,
+  imports: [Db.DirectorsDb, PasswordModule],
+  providers: [
+    Guard.AuthGuard,
+    Guard.DirectorGuard,
+    Guard.IsDirectorDeletedGuard,
+    Db.DirectorsRepository,
+    Provider.DirectorsRepositoryProvider,
+    Provider.LoginDirectorProvider,
+    Provider.SignUpDirectorProvider,
+    Provider.LoginAdminProvider,
+    Provider.RestoreDirectorProvider,
+    Provider.ChangePasswordProvider,
+    Provider.DeleteDirectorProvider,
+    Provider.UpdateDirectorProvider,
+    Provider.GetDirectorsUseCaseProvider,
+    Provider.GetDirectorByIdUseCaseProvider,
+    Provider.GetDirectorsNotMemberOfStudyUseCaseProvider,
+    Provider.IsDirectorDeletedUseCaseProvider,
+  ],
   exports: [
-    IsDirectorDeletedGuard,
-    DirectorGuard,
-    AuthGuard,
-    DIRECTORS_SERVICE,
-    SIGN_UP_DIRECTOR_USE_CASE,
-    LOGIN_DIRECTOR_USE_CASE,
-    LOGIN_ADMIN_USE_CASE,
-    RESTORE_DIRECTOR_USE_CASE,
-    CHANGE_PASSWORD_USE_CASE,
-    DELETE_DIRECTOR_USE_CASE,
-    UPDATE_DIRECTOR_USE_CASE,
-    GET_DIRECTORS_USE_CASE,
-    GET_DIRECTOR_BY_ID_USE_CASE,
+    Guard.IsDirectorDeletedGuard,
+    Guard.DirectorGuard,
+    Guard.AuthGuard,
+    Domain.SIGN_UP_DIRECTOR_USE_CASE,
+    Domain.LOGIN_DIRECTOR_USE_CASE,
+    Domain.LOGIN_ADMIN_USE_CASE,
+    Domain.RESTORE_DIRECTOR_USE_CASE,
+    Domain.CHANGE_PASSWORD_USE_CASE,
+    Domain.DELETE_DIRECTOR_USE_CASE,
+    Domain.UPDATE_DIRECTOR_USE_CASE,
+    Domain.GET_DIRECTORS_USE_CASE,
+    Domain.GET_DIRECTOR_BY_ID_USE_CASE,
+    Domain.GET_DIRECTORS_NOT_MEMBER_OF_STUDY_USE_CASE,
+    Domain.IS_DIRECTOR_DELETED_USE_CASE,
   ],
 })
 export class DirectorsModule {}

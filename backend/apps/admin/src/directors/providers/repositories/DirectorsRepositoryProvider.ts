@@ -1,6 +1,6 @@
 import { Provider } from '@nestjs/common';
-import { DIRECTORS_REPOSITORY } from '../../domain/repositories/IDirectorsRepository';
-import { DirectorsRepository } from '../../infrastructure/db/repositories/directors.repository';
+import { DIRECTORS_REPOSITORY } from '@admin/directors/domain';
+import { DirectorsRepository } from '@admin/directors/infrastructure/db';
 
 export const DirectorsRepositoryProvider: Provider = {
   provide: DIRECTORS_REPOSITORY,

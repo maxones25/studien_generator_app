@@ -10,7 +10,8 @@ export * from './errors/DirectorExistsAlreadyError';
 export * from './errors/WrongActivationPasswordError';
 export * from './errors/WrongPasswordError';
 export * from './errors/DirectorNotFoundError';
-export * from './services/IDirectorsService';
 export * from "./useCases/IGetDirectorsUseCase";
 export * from "./models/Director"
 export * from './useCases/IGetDirectorByIdUseCase';
+export * from './useCases/IGetDirectorsNotMemberOfStudyUseCase';
+export * from './useCases/IIsDirectorDeletedUseCase';
