@@ -4,7 +4,6 @@ import ConfigModule from '@shared/modules/config/config.module';
 import DbModule from '@shared/modules/db/db.module';
 import TokenModule from '@shared/modules/token/token.module';
 import { UseCaseModule } from '@shared/modules/transaction/use-case.module';
-import { RolesModule } from '@admin/roles/roles.module';
 import { ComponentsModule } from '@admin/components/components.module';
 import { StudiesApp } from '@admin/studies/studies/studies.app';
 import { DirectorsApp } from '@admin/directors/directors.app';
@@ -29,7 +28,6 @@ import { DirectorsModule } from './directors/directors.module';
     UseCaseModule,
     MembersModule,
     HealthModule,
-    RolesModule,
     DirectorsApp,
     EntitiesApp,
     StudiesApp,

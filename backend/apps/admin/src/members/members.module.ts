@@ -3,20 +3,23 @@ import { MemberGuard } from './infrastructure/http/guards/member.guard';
 import { MembersDb } from './infrastructure/db';
 import * as Provider from '@admin/members/providers';
 import * as Domain from '@admin/members/domain';
+import { RolesGuard } from './infrastructure/http';
 
 @Module({
   imports: [MembersDb],
   providers: [
+    MemberGuard,
+    RolesGuard,
     Provider.MembersRepositoryProvider,
     Provider.AddMemberUseCaseProvider,
     Provider.ChangeMemberRoleUseCaseProvider,
     Provider.RemoveMemberUseCaseProvider,
     Provider.GetStudyRelatedMemberUseCaseProvider,
     Provider.GetMembersByStudyUseCaseProvider,
-    MemberGuard,
   ],
   exports: [
     MemberGuard,
+    RolesGuard,
     Domain.MEMBERS_REPOSITORY,
     Domain.ADD_MEMBER_USE_CASE,
     Domain.CHANGE_MEMBER_ROLE_USE_CASE,

@@ -1,7 +1,7 @@
 import { Query, Controller, Get, Inject } from '@nestjs/common';
 import { StudyQueryDto } from '../dtos/StudyQueryDto';
 import { GetAppointmentsUseCase } from '../transactions/GetAppointmentsUseCase';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 
 @Controller('studies')
 export class AppointmentQueries {

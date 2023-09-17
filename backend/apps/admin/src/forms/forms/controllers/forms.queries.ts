@@ -3,7 +3,7 @@ import { FormsService } from '../services/forms.service';
 import { FormGuard } from '../guards/form.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { FormQueryDto } from '../dtos/FormQueryDto';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { EntityQueryDto } from '@admin/entities/infrastructure/http/dtos/EntityQueryDto';
 import { EntityGuard } from '@admin/entities/infrastructure/http/guards/entity.guard';

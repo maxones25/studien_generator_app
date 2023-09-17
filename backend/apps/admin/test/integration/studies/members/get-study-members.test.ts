@@ -1,13 +1,13 @@
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
-import { Roles } from '@admin/roles/roles.enum';
 import { createStudyId } from '@test/studies/createStudy';
 import { addMember } from '@test/studies/members/addMember';
 import { getMembers } from '@test/studies/members/getMembers';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
 import { IApp, createApp } from '@test/app/createApp';
+import { Roles } from '@entities/core/study';
 
 describe('Get Study Members', () => {
   let app: IApp;
@@ -20,7 +20,7 @@ describe('Get Study Members', () => {
 
     directors.push({
       directorId: TEST_DIRECTOR.MAX.ID,
-      role: Roles.admin,
+      role: Roles.Admin,
     });
 
     accessToken = await getDirectorAccessToken(
@@ -36,7 +36,7 @@ describe('Get Study Members', () => {
 
       const directorId = director.id;
 
-      const role = Roles.employee;
+      const role = Roles.Employee;
 
       await addMember(app, {
         accessToken,

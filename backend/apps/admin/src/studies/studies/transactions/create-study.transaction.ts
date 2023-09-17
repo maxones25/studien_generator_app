@@ -1,8 +1,8 @@
 import { Study } from '@entities';
 import { StudyMember } from '@entities';
 import { Transaction } from '@shared/modules/transaction/transaction';
-import { Roles } from '@admin/roles/roles.enum';
 import { CreateStudyDto } from '../dtos/CreateStudyDto';
+import { Roles } from '@entities/core/study';
 
 type CreateStudyInput = {
   directorId: string;
@@ -41,7 +41,7 @@ export class CreateStudyTransaction extends Transaction<
     await studyMemberRepository.insert({
       directorId,
       studyId,
-      role: Roles.admin,
+      role: Roles.Admin,
     });
   }
 }

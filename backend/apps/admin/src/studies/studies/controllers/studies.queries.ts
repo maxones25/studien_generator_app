@@ -1,5 +1,5 @@
 import { Controller, Get, Inject, Query, UseGuards } from '@nestjs/common';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { DirectorId } from '@admin/directors/infrastructure/http/decorators/director-id.decorator';
 import { StudyGuard } from '../guards/study.guard';
 import { StudiesService } from '../studies.service';

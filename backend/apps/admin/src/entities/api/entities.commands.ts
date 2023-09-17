@@ -26,7 +26,7 @@ import {
 } from '@admin/entities/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 
 @Controller('entities')

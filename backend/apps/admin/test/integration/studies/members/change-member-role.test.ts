@@ -1,6 +1,5 @@
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { Roles } from '@admin/roles/roles.enum';
 import { createStudyId } from '@test/studies/createStudy';
 import { addMember } from '@test/studies/members/addMember';
 import { changeMemberRole } from '@test/studies/members/changeMemberRole';
@@ -8,6 +7,7 @@ import { getStudyById } from '@test/studies/getStudyById';
 import { createDirector } from '@test/director/signUpDirector';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
+import { Roles } from '@entities/core/study';
 
 describe('Change Member Role', () => {
   let app: IApp;
@@ -55,7 +55,7 @@ describe('Change Member Role', () => {
     await getStudyById(app, { accessToken: otherAccessToken, studyId })
       .expect(200)
       .then((res) => {
-        expect(res.body.role).toBe(Roles.admin);
+        expect(res.body.role).toBe(Roles.Admin);
       });
   });
 
@@ -94,7 +94,7 @@ describe('Change Member Role', () => {
     await getStudyById(app, { accessToken, studyId })
       .expect(200)
       .then((res) => {
-        expect(res.body.role).toBe(Roles.employee);
+        expect(res.body.role).toBe(Roles.Employee);
       });
   });
 

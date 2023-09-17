@@ -1,4 +1,4 @@
-import { Roles } from '@admin/roles/roles.enum';
+import { Roles } from '@entities/core/study';
 import { IsEnum } from 'class-validator';
 
 export class RoleDto {

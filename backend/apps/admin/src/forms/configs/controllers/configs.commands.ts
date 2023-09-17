@@ -1,4 +1,4 @@
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import {
   BadRequestException,
   Body,

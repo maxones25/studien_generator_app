@@ -1,12 +1,11 @@
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { Roles } from '@admin/roles/roles.enum';
 import fakeData from '@test/fakeData';
 import { faker } from '@faker-js/faker';
 import { createStudyId } from '@test/studies/createStudy';
 import { getStudyById } from '@test/studies/getStudyById';
 import { addMember } from '@test/studies/members/addMember';
-import { Role } from '@entities/core/study';
+import { Role, Roles } from '@entities/core/study';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
 import { IApp, createApp } from '@test/app/createApp';
@@ -102,7 +101,7 @@ describe('Add Study Member', () => {
       accessToken: otherAccessToken,
       studyId,
       directorId: directorId2,
-      role: Roles.employee,
+      role: Roles.Employee,
     }).expect(401);
   });
 
@@ -111,7 +110,7 @@ describe('Add Study Member', () => {
       accessToken,
       studyId,
       directorId: faker.string.alphanumeric(10),
-      role: Roles.employee,
+      role: Roles.Employee,
     }).expect(401);
   });
 

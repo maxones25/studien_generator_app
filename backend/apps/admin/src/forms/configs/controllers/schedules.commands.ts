@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { SchedulesService } from '../services/schedules.service';
 import { AddScheduleDto } from '../dtos/AddScheduleDto';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { UpdateScheduleDto } from '../dtos/UpdateScheduleDto';
 import { ScheduleQueryDto } from '../dtos/ScheduleQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';

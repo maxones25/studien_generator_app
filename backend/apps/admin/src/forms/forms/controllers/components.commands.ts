@@ -7,7 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CreateFormComponentDto } from '../dtos/CreateFormComponentDto';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { ComponentsService } from '../services/components.service';
 import { ComponentQueryDto } from '../dtos/ComponentQueryDto';
 import { PageQueryDto } from '../dtos/PageQueryDto';

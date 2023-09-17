@@ -1,6 +1,6 @@
 import { Controller, Get, Param, UseGuards, Query } from '@nestjs/common';
 import { ParticipantsService } from '../participants.service';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { ParticipantQueryDto } from '../dtos/ParticipantQueryDto';
 import { ParticipantGuard } from '../guards/participant.guard';
 import { GroupQueryDto } from '@admin/groups/dtos/GroupQueryDto';

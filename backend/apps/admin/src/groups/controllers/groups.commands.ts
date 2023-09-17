@@ -12,7 +12,7 @@ import { GroupsService } from '../groups.service';
 import { UpdateGroupDto } from '../dtos/UpdateGroupDto';
 import { CreateGroupDto } from '../dtos/CreateGroupDto';
 import { GroupGuard } from '../guards/group.guard';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { GroupQueryDto } from '../dtos/GroupQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';

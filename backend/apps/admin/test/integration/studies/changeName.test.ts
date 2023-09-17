@@ -1,5 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { Roles } from '@admin/roles/roles.enum';
+import { Roles } from '@entities/core/study';
 import { IApp, createApp } from '@test/app/createApp';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import fakeData from '@test/fakeData';
@@ -50,7 +50,7 @@ describe('Change Study Name', () => {
       .then((res) => {
         expect(res.body.id).toEqual(studyId);
         expect(res.body.name).toEqual(updatedStudy.name);
-        expect(res.body.role).toEqual(Roles.admin);
+        expect(res.body.role).toEqual(Roles.Admin);
       });
   });
 

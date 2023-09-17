@@ -1,12 +1,12 @@
 import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { Roles } from '@admin/roles/roles.enum';
 import { createStudy, createStudyId } from '@test/studies/createStudy';
 import { getStudies } from '@test/studies/getStudies';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
 import { IApp, createApp } from '@test/app/createApp';
+import { Roles } from '@entities/core/study';
 
 describe('Get Studies', () => {
   let app: IApp;
@@ -61,7 +61,7 @@ describe('Get Studies', () => {
         res.body.forEach((study) => {
           expect(studyIds.includes(study.id)).toBeTruthy();
           expect(typeof study.name).toBe('string');
-          expect(study.role).toBe(Roles.admin);
+          expect(study.role).toBe(Roles.Admin);
         });
       });
   });

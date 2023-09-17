@@ -1,6 +1,6 @@
 import { Controller, Get, Query, Inject, UseGuards } from '@nestjs/common';
 import { SchedulesService } from '../services/schedules.service';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { ConfigQueryDto } from '../dtos/ConfigQueryDto';
 import { ConfigGuard } from '../guards/config.guard';
 

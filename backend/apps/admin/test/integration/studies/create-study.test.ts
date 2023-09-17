@@ -2,11 +2,11 @@ import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { AppModule } from '@admin/app.module';
-import { Roles } from '@admin/roles/roles.enum';
 import { createStudy } from '@test/studies/createStudy';
 import { getStudyById } from '@test/studies/getStudyById';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
+import { Roles } from '@entities/core/study';
 
 describe('Create Study', () => {
   let app: IApp;
@@ -37,7 +37,7 @@ describe('Create Study', () => {
         await getStudyById(app, { accessToken, studyId })
           .expect(200)
           .then((res) => {
-            expect(res.body.role).toBe(Roles.admin);
+            expect(res.body.role).toBe(Roles.Admin);
           });
       });
   });

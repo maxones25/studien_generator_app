@@ -7,7 +7,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { DirectorId } from '@admin/directors/infrastructure/http/decorators/director-id.decorator';
 import { ChatsService } from '../chats.service';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';

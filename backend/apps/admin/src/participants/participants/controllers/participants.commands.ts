@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { ParticipantsService } from '../participants.service';
 import { CreateParticipantDto } from '../dtos/CreateParticipantDto';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { ParticipantQueryDto } from '../dtos/ParticipantQueryDto';
 import { ParticipantGuard } from '../guards/participant.guard';
 import { ChangeNumberDto } from '../dtos/ChangeNumberDto';

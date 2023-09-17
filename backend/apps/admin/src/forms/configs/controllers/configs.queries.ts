@@ -1,4 +1,4 @@
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { Controller, Get, Inject, Query, UseGuards } from '@nestjs/common';
 import { GroupGuard } from '@admin/groups/guards/group.guard';
 import { GroupQueryDto } from '@admin/groups/dtos/GroupQueryDto';

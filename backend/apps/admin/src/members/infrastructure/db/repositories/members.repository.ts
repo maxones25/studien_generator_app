@@ -1,5 +1,5 @@
-import { Roles } from '@admin/roles/roles.enum';
 import { StudyMember } from '@entities';
+import { Roles } from '@entities/core/study';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
@@ -54,7 +54,7 @@ export class MembersRepository extends RecordRepository<StudyMember> {
     return this.db.find({
       where: {
         studyId,
-        role: Roles.admin,
+        role: Roles.Admin,
       },
     });
   }

@@ -7,7 +7,7 @@ import {
   UseGuards,
   BadRequestException,
 } from '@nestjs/common';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { FormQueryDto } from '../dtos/FormQueryDto';
 import { ChangeNameDto } from '../dtos/ChangeNameDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';

@@ -6,7 +6,7 @@ import {
   Inject,
   UseFilters,
 } from '@nestjs/common';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import {
   EntityQueryDto,
   EntityGuard,

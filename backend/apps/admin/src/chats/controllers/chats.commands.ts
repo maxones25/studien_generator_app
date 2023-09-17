@@ -11,9 +11,8 @@ import {
 } from '@nestjs/common';
 import { ChatsService } from '../chats.service';
 import { AddMessageDto } from '../dtos/AddMessageDto';
-import { ReadMessagesDto } from '../dtos/ReadMessagesDto';
 import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
-import { Roles } from '@admin/roles/roles.decorator';
+import { Roles } from '@admin/members/infrastructure/http';
 import { DirectorId } from '@admin/directors/infrastructure/http/decorators/director-id.decorator';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
