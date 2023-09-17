@@ -4,6 +4,7 @@ import { IApp, createApp } from '@test/app/createApp';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import fakeData from '@test/fakeData';
+import { createGroupId } from '@test/groups/createGroup';
 import {
   createParticipant,
   createParticipantId,
@@ -17,6 +18,8 @@ describe('create participant', () => {
   let accessToken: string;
   let otherAccessToken: string;
   let studyId: string;
+  let groupId: string;
+  let groupData: any;
 
   beforeAll(async () => {
     app = await createApp(AppModule);
@@ -34,13 +37,21 @@ describe('create participant', () => {
     );
 
     studyId = await createStudyId(app, { accessToken });
+
+    groupData = fakeData.group();
+
+    groupId = await createGroupId(app, {
+      accessToken,
+      studyId,
+      data: groupData,
+    });
   });
 
   afterAll(async () => {
     return await app.close();
   });
 
-  it('should create a participant', async () => {
+  it('should create a participant without group', async () => {
     const data = fakeData.participant();
 
     const participantId = await createParticipantId(app, {
@@ -56,6 +67,28 @@ describe('create participant', () => {
 
         expect(participant.id).toBe(participantId);
         expect(participant.number).toBe(data.number);
+        expect(participant.group).toBeNull();
+      });
+  });
+
+  it('should create a participant with group', async () => {
+    const data = fakeData.participant(groupId);
+
+    const participantId = await createParticipantId(app, {
+      accessToken,
+      studyId,
+      data,
+    });
+
+    return getParticipantById(app, { accessToken, studyId, participantId })
+      .expect(200)
+      .then((res) => {
+        const participant = res.body;
+
+        expect(participant.id).toBe(participantId);
+        expect(participant.number).toBe(data.number);
+        expect(participant.group.id).toBe(groupId);
+        expect(participant.group.name).toBe(groupData.name);
       });
   });
 
@@ -145,5 +178,44 @@ describe('create participant', () => {
       studyId,
       data: data2,
     }).expect(422);
+  });
+
+  it('should fail because groupId is invalid', async () => {
+    const data = fakeData.participant('invalid-123');
+
+    return await createParticipant(app, {
+      accessToken,
+      studyId,
+      data: data,
+    }).expect(400);
+  });
+
+  it('should fail because groupId is unknown', async () => {
+    const data = fakeData.participant(fakeData.id());
+
+    return await createParticipant(app, {
+      accessToken,
+      studyId,
+      data: data,
+    }).expect(400);
+  });
+
+  it('should fail because group is not part of study', async () => {
+    const otherStudyId = await createStudyId(app, {
+      accessToken: otherAccessToken,
+    });
+
+    const groupId = await createGroupId(app, {
+      accessToken: otherAccessToken,
+      studyId: otherStudyId,
+    });
+
+    const data = fakeData.participant(groupId);
+
+    return await createParticipant(app, {
+      accessToken,
+      studyId,
+      data: data,
+    }).expect(400);
   });
 });
