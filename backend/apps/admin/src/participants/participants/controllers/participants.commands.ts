@@ -83,6 +83,7 @@ export class ParticipantsCommands {
   }
 
   @Post('removeGroup')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(ParticipantGuard, IsParticipantDeletedGuard)
   async removeGroup(@Query() { participantId }: ParticipantQueryDto) {
@@ -90,6 +91,7 @@ export class ParticipantsCommands {
   }
 
   @Post('delete')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(ParticipantGuard)
   async delete(
@@ -104,6 +106,7 @@ export class ParticipantsCommands {
   }
 
   @Post('restore')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(ParticipantGuard)
   async restore(@Query() { participantId }: ParticipantQueryDto) {
@@ -111,6 +114,7 @@ export class ParticipantsCommands {
   }
 
   @Post('startStudy')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(ParticipantGuard, IsParticipantDeletedGuard, IsStudyActiveGuard)
   async startStudy(
@@ -125,6 +129,7 @@ export class ParticipantsCommands {
   }
 
   @Post('resetPassword')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(ParticipantGuard, IsParticipantDeletedGuard)
   async resetPassword(@Query() { participantId }: ParticipantQueryDto) {
