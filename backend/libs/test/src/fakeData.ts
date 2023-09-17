@@ -45,9 +45,16 @@ const entityField = () => {
   };
 };
 
-const participant = () => {
+const participant = (groupId?: string) => {
+  const number = faker.string.alpha({ length: 6 });
+  if (groupId) {
+    return {
+      number,
+      groupId,
+    };
+  }
   return {
-    number: faker.string.alpha({ length: 6 }),
+    number,
   };
 };
 
@@ -89,7 +96,7 @@ const chatMessageAdmin = () => {
 };
 
 const formatTime = (h: number, m: number) => {
-  return (h < 10 ? "0" + h : h) + ":" + (m < 10 ? "0" + m : m);
+  return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m);
 };
 
 const appointment = () => {
