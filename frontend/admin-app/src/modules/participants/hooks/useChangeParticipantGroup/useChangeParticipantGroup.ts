@@ -12,13 +12,16 @@ export const useChangeParticipantGroup = () => {
       apiRequest(`/participants/changeGroup`, {
         ...options,
         method: "POST",
-        params: { studyId, participantId: participant.id },
-        body: { groupId: group.id },
+        params: { studyId, participantId: participant.id, groupId: group.id },
       }),
     {
       onSuccess({ queryClient, variables: { group, participant } }) {
-        queryClient.invalidateQueries(getGetParticipantsKey({ studyId, deleted: true }));
-        queryClient.invalidateQueries(getGetParticipantsKey({ studyId, deleted: false }));
+        queryClient.invalidateQueries(
+          getGetParticipantsKey({ studyId, deleted: true })
+        );
+        queryClient.invalidateQueries(
+          getGetParticipantsKey({ studyId, deleted: false })
+        );
         queryClient.invalidateQueries(
           getGetParticipantKey({ participantId: participant.id })
         );
