@@ -3,7 +3,6 @@ import {
   Inject,
   Injectable,
   ExecutionContext,
-  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
@@ -23,7 +22,7 @@ export class IsParticipantDeletedGuard implements CanActivate {
 
     const isDeleted = await this.participantsService.isDeleted(id);
 
-    if (isDeleted) throw new NotFoundException('participant is deleted');
+    if (isDeleted) throw new UnauthorizedException('participant is deleted');
 
     return true;
   }
