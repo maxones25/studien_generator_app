@@ -13,7 +13,7 @@ export const getGetGroupsKey = (deps: {
 }) => ["getGroups", deps];
 
 export const useGetGroups = (options?: UseGetGroupsOptions) => {
-  const { deleted = false } = options || {};
+  const { deleted = true } = options || {};
   const studyId = useStudyId()!;
 
   return useReadRequest<Group[]>(

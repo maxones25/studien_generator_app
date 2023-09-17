@@ -13,7 +13,7 @@ export const getGetParticipantsKey = (deps: {
 }) => ["getParticipants", deps];
 
 export const useGetParticipants = (options?: UseGetParticipantsOptions) => {
-  const { deleted = false } = options || {};
+  const { deleted = true } = options || {};
   const studyId = useStudyId()!;
 
   return useReadRequest<Participant[]>(
