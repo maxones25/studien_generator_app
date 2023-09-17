@@ -4,9 +4,10 @@ import { ParticipantQueryDto } from '@admin/participants/participants/dtos/Parti
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { ParticipantGuard } from '@admin/participants/participants/guards/participant.guard';
 import { Roles } from '@admin/members/infrastructure/http';
+import { IsParticipantDeletedGuard } from '@admin/participants/participants/guards/IsParticipantDeletedGuard';
 
 @Controller('participants')
-@UseGuards(StudyGuard, ParticipantGuard)
+@UseGuards(StudyGuard, ParticipantGuard, IsParticipantDeletedGuard)
 export class TasksQueries {
   constructor(
     @Inject(TasksService)
