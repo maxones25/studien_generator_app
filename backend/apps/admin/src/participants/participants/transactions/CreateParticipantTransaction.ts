@@ -1,8 +1,8 @@
-import { Chat, Participant } from '@entities';
+import { Chat, Group, Participant } from '@entities';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { EntityManager } from 'typeorm';
-import { Inject } from '@nestjs/common';
+import { BadRequestException, Inject } from '@nestjs/common';
 import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
 
 type TransactionInput = {
@@ -29,6 +29,15 @@ export class CreateParticipantTransaction extends Transaction<
     number,
     groupId,
   }: TransactionInput): Promise<string> {
+    
+    if(groupId) {
+      const groupRepo = this.entityManager.getRepository(Group);
+
+      const group  = await groupRepo.findOneBy({ studyId, id: groupId });
+
+      if(group === null) throw new BadRequestException("group not found");
+    }
+
     const participantRepo = this.entityManager.getRepository(Participant);
     
     const password = this.passwordService.generate();
