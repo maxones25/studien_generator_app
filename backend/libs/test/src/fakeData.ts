@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { FieldType } from '@shared/enums/field-type.enum';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
+import datetime from '@shared/modules/datetime/datetime';
 
 const randomEnum = <E>(data: E): E[keyof E] => {
   const values = Object.values(data) as unknown as E[keyof E][];
@@ -117,6 +118,25 @@ const appointment = () => {
   };
 };
 
+const task = (options: { isCompleted?: boolean } = {}) => {
+  const { isCompleted = false } = options;
+
+  const scheduledAt = faker.date.future();
+
+  const completedAt = isCompleted
+    ? datetime.addTime(scheduledAt, {
+        hours: 0,
+        minutes: faker.number.int({ min: 0, max: 10 }),
+      })
+    : null;
+
+  return {
+    scheduledAt: scheduledAt.toISOString(),
+    completedAt: completedAt,
+    rescheduled: 0,
+  };
+};
+
 export const id = () => faker.string.uuid();
 
 export const password = (length = 10) =>
@@ -138,4 +158,5 @@ export default {
   chatMessageParticipant,
   chatMessageAdmin,
   appointment,
+  task,
 };
