@@ -144,7 +144,6 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
           onCancel={deleteDialog.close}
           target={getParticipant.data?.number!}
           isLoading={deleteParticipant.isLoading}
-          hasDeleteRelated
           hasSoftDelete
         />
       </Toolbar>
