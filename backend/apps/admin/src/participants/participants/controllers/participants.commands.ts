@@ -5,6 +5,8 @@ import {
   UseGuards,
   Query,
   Inject,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { ParticipantsService } from '../participants.service';
 import { CreateParticipantDto } from '../dtos/CreateParticipantDto';
@@ -59,6 +61,7 @@ export class ParticipantsCommands {
   }
 
   @Post('changeNumber')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(ParticipantGuard, IsParticipantDeletedGuard)
   async changeNumber(
@@ -69,6 +72,7 @@ export class ParticipantsCommands {
   }
 
   @Post('changeGroup')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(ParticipantGuard, IsParticipantDeletedGuard, GroupGuard)
   async changeGroup(
