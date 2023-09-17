@@ -53,7 +53,7 @@ describe('change participant number', () => {
       studyId,
       participantId,
       data: { number },
-    });
+    }).expect(200)
 
     return getParticipantById(app, { accessToken, studyId, participantId })
       .expect(200)
