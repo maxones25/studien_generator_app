@@ -47,7 +47,7 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
 
   async getById(id: string) {
     const participant = await this.db.findOneOrFail({
-      where: { id },
+      where: { id, deletedAt: IsNull() },
       relations: this.relations,
       select: this.select,
     });
