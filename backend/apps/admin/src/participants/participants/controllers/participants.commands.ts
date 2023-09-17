@@ -26,6 +26,8 @@ import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDelete
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
 import { IsParticipantDeletedGuard } from '../guards/IsParticipantDeletedGuard';
 import { DeleteParticipantTransaction } from '../transactions/DeleteParticipantTransaction';
+import { GroupGuard } from '@admin/groups/guards/group.guard';
+import { GroupQueryDto } from '@admin/groups/dtos/GroupQueryDto';
 
 @Controller('participants')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -68,10 +70,10 @@ export class ParticipantsCommands {
 
   @Post('changeGroup')
   @Roles('admin', 'employee')
-  @UseGuards(ParticipantGuard, IsParticipantDeletedGuard)
+  @UseGuards(ParticipantGuard, IsParticipantDeletedGuard, GroupGuard)
   async changeGroup(
     @Query() { participantId }: ParticipantQueryDto,
-    @Body() { groupId }: ChangeGroupDto,
+    @Query() { groupId }: GroupQueryDto,
   ) {
     return await this.participantsService.changeGroup(participantId, groupId);
   }
