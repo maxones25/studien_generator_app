@@ -3,7 +3,6 @@ import {
   ExecutionContext,
   Inject,
   Injectable,
-  BadRequestException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
@@ -23,7 +22,7 @@ export class IsGroupDeletedGuard implements CanActivate {
 
     const isDeleted = await this.groupsService.isDeleted(id);
 
-    if (isDeleted) throw new BadRequestException('group is deleted');
+    if (isDeleted) throw new UnauthorizedException('group is deleted');
 
     return true;
   }

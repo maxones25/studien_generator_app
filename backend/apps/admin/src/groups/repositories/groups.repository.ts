@@ -41,7 +41,7 @@ export class GroupsRepository extends RecordRepository<Group> {
   }
 
   async getById(id: string) {
-    return this.db.findOneOrFail({
+    return this.db.findOne({
       where: {
         id,
         deletedAt: IsNull(),
