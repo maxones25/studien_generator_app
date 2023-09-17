@@ -1,4 +1,4 @@
-import { Transform, Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import { IsDate } from 'class-validator';
 
 export class ReadMessagesDto {
