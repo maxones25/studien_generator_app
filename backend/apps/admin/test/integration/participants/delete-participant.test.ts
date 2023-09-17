@@ -105,7 +105,7 @@ describe('delete participant', () => {
       accessToken,
       studyId,
       participantId,
-    }).expect(404);
+    }).expect(401);
 
     return await getParticipants(app, {
       accessToken,
