@@ -1,4 +1,10 @@
-import { Controller, Get, Param, UseGuards, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  ParseBoolPipe,
+  UseGuards,
+  Query,
+} from '@nestjs/common';
 import { ParticipantsService } from '../participants.service';
 import { Roles } from '@admin/members/infrastructure/http';
 import { ParticipantQueryDto } from '../dtos/ParticipantQueryDto';
@@ -17,8 +23,8 @@ export class ParticipantsQueries {
   @Roles('admin', 'employee')
   @UseGuards(StudyGuard)
   async getByStudy(
+    @Query('deleted', ParseBoolPipe) deleted: boolean,
     @Query() { studyId }: StudyQueryDto,
-    @Query() { deleted }: DeletedDto,
   ) {
     return this.participantsService.getByStudy(studyId, deleted);
   }
