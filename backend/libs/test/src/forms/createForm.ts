@@ -12,6 +12,7 @@ export const createForm = (
   app: IApp,
   { accessToken, studyId, data = fakeData.form() }: CreateFormOptions,
 ) => request(app).command({ path: "/forms/create", accessToken, query: { studyId }, data })
+
 export const createFormId = (
   app: IApp,
   { accessToken, studyId, data }: CreateFormOptions,
