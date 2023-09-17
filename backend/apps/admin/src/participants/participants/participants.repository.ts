@@ -55,7 +55,7 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
   }
 
   async getByStudy(studyId: string, deleted: boolean = false) {
-    const deletedAt = deleted ? IsNull() : undefined;
+    const deletedAt = deleted ? undefined : IsNull();
     const participants = await this.db.find({
       where: {
         studyId,
