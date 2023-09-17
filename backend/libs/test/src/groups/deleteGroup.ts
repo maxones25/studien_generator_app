@@ -4,16 +4,23 @@ import { StudyRequestOptions } from '@test/types';
 
 export interface DeleteGroupOptions extends StudyRequestOptions {
   groupId: string;
-  hardDelete?: boolean;
+  hardDelete?: any;
+  deleteRelated?: any;
 }
 
 export const deleteGroup = (
   app: IApp,
-  { accessToken, studyId, groupId, hardDelete = true }: DeleteGroupOptions,
+  {
+    accessToken,
+    studyId,
+    groupId,
+    hardDelete = true,
+    deleteRelated = false,
+  }: DeleteGroupOptions,
 ) =>
   request(app).command({
     path: '/groups/delete',
     accessToken,
     query: { studyId, groupId },
-    data: { hardDelete },
+    data: { hardDelete, deleteRelated },
   });
