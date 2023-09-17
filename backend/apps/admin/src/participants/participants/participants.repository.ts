@@ -51,7 +51,7 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
       relations: this.relations,
       select: this.select,
     });
-    if(participant === null) return null;
+    if (participant === null) return null;
     return this.convertParticipant(participant);
   }
 

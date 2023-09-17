@@ -14,6 +14,7 @@ import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { GroupGuard } from '@admin/groups/guards/group.guard';
 import { DeletedDto } from '@shared/modules/records/DeletedDto';
+import { IsParticipantDeletedGuard } from '../guards/IsParticipantDeletedGuard';
 
 @Controller('participants')
 export class ParticipantsQueries {
@@ -38,7 +39,7 @@ export class ParticipantsQueries {
 
   @Get('getById')
   @Roles('admin', 'employee')
-  @UseGuards(ParticipantGuard)
+  @UseGuards(ParticipantGuard, IsParticipantDeletedGuard)
   async getById(@Query() { participantId }: ParticipantQueryDto) {
     return this.participantsService.getById(participantId);
   }
