@@ -11,8 +11,11 @@ import { CreateAppointmentUseCase } from '../transactions/CreateAppointmentUseCa
 import { GroupQueryDto } from '../dtos/GroupQueryDto';
 import { GroupGuard } from '../guards/group.guard';
 import { IsGroupDeletedGuard } from '../guards/IsGroupDeletedGuard';
+import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 
 @Controller('groups')
+@UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class AppointmentsCommands {
   constructor(
     @Inject(CreateAppointmentUseCase)
