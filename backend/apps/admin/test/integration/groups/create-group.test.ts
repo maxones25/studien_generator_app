@@ -6,6 +6,7 @@ import { createStudyId } from '@test/studies/createStudy';
 import { createGroup } from '@test/groups/createGroup';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
+import { deleteStudy } from '@test/studies/deleteStudy';
 
 describe('create group', () => {
   let app: IApp;
@@ -32,6 +33,17 @@ describe('create group', () => {
       .then((res) => {
         expect(validateUUID(res.text)).toBeTruthy();
       });
+  });
+
+  it('should fail because study is deleted', async () => {
+    const studyId = await createStudyId(app, { accessToken });
+
+    await deleteStudy(app, { accessToken, studyId, hardDelete: false });
+
+    return createGroup(app, {
+      accessToken,
+      studyId,
+    }).expect(401);
   });
 
   it('should fail because name is missing', () => {

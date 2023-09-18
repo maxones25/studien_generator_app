@@ -6,6 +6,7 @@ import { changeGroupName } from '@test/groups/changeGroupName';
 import { createGroupId } from '@test/groups/createGroup';
 import { getGroupById } from '@test/groups/getGroupById';
 import { createStudyId } from '@test/studies/createStudy';
+import { deleteStudy } from '@test/studies/deleteStudy';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('change group name', () => {
@@ -51,6 +52,24 @@ describe('change group name', () => {
         expect(res.body.id).toEqual(groupId);
         expect(res.body.name).toEqual(data.name);
       });
+  });
+
+  it('should fail because study is deleted', async () => {
+    const studyId = await createStudyId(app, { accessToken });
+    const groupId = await createGroupId(app, { accessToken, studyId });
+
+    await deleteStudy(app, { accessToken, studyId, hardDelete: false });
+
+    const name = fakeData.group().name;
+
+    return changeGroupName(app, {
+      accessToken,
+      studyId,
+      groupId,
+      data: {
+        name,
+      },
+    }).expect(401);
   });
 
   it('should fail because name is missing', async () => {
