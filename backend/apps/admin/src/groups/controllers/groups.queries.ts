@@ -27,7 +27,7 @@ export class GroupsQueries {
     return this.groupsService.getByStudy(studyId, deleted);
   }
 
-  @Get(':getById')
+  @Get('getById')
   @Roles('admin', 'employee')
   @UseGuards(GroupGuard, IsGroupDeletedGuard)
   async getById(@Query() { groupId }: GroupQueryDto) {
