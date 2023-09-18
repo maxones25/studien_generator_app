@@ -3,6 +3,7 @@ import { GetAppointmentsUseCase } from '../transactions/GetAppointmentsUseCase';
 import { GetGroup } from '../group.decorator';
 import { Group } from '@entities/core/group/Group';
 import { GroupGuard } from '../guards/group.guard';
+import { IsGroupDeletedGuard } from '../guards/IsGroupDeletedGuard';
 
 @Controller('groups')
 export class AppointmentsQueries {
@@ -12,7 +13,7 @@ export class AppointmentsQueries {
   ) {}
 
   @Get('appointments')
-  @UseGuards(GroupGuard)
+  @UseGuards(GroupGuard, IsGroupDeletedGuard)
   get(@GetGroup() group: Group) {
     return this.getAppointments.execute({
       studyId: group.studyId,
