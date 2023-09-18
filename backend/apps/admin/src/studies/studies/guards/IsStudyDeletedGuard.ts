@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   CanActivate,
   ExecutionContext,
   Inject,
@@ -23,7 +22,7 @@ export class IsStudyDeletedGuard implements CanActivate {
 
     const isDeleted = await this.studiesService.isDeleted(id);
 
-    if (isDeleted) throw new BadRequestException('study is read only');
+    if (isDeleted) throw new UnauthorizedException('study is read only');
 
     return true;
   }
