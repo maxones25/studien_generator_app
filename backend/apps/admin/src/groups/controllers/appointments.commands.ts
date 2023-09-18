@@ -13,6 +13,7 @@ import { GroupGuard } from '../guards/group.guard';
 import { IsGroupDeletedGuard } from '../guards/IsGroupDeletedGuard';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { Roles } from '@admin/members/infrastructure/http';
 
 @Controller('groups')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -23,6 +24,7 @@ export class AppointmentsCommands {
   ) {}
 
   @Post('createAppointment')
+  @Roles("admin", "employee")
   @UseGuards(GroupGuard, IsGroupDeletedGuard)
   create(
     @Query() { groupId }: GroupQueryDto,
