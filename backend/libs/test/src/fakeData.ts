@@ -139,11 +139,14 @@ const task = (options: { isCompleted?: boolean } = {}) => {
 
 export const id = () => faker.string.uuid();
 
+const text = (length = 10) => faker.string.alpha({ length, casing: "mixed" });
+
 export const password = (length = 10) =>
   faker.internet.password({ length, memorable: true });
 
 export default {
   id,
+  text,
   password,
   name: randomName,
   director,
