@@ -11,7 +11,7 @@ export const deactivateForm = (
   { accessToken, studyId, formId }: ActivateFormOptions,
 ) =>
   request(app).command({
-    path: '/forms/deactivate',
+    path: '/groups/deactivateFormConfig',
     accessToken,
     query: {
       studyId,

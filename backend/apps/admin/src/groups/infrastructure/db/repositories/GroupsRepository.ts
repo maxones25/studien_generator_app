@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import { IGroupsRepository } from '@admin/groups/domain';
-import { FormConfig, Group } from '@entities/core/group';
+import { FormConfig, FormConfigType, Group } from '@entities/core/group';
 import { TypeOrmRepository } from '@shared/modules/db';
 import { GroupAppointment } from '@entities/core/appointment';
 
@@ -126,7 +126,19 @@ export class GroupsRepository implements IGroupsRepository {
     return this.formConfigs.update(formConfigId, { isActive: true });
   }
 
+  deactivateFormConfig(formConfigId: string): Promise<number> {
+    return this.formConfigs.update(formConfigId, { isActive: false });
+  }
+
   getFormConfigById(id: string): Promise<FormConfig> {
     return this.formConfigs.findOne({ where: { id } });
+  }
+
+  setFormConfigType(formConfigId: string, type: FormConfigType) {
+    return this.formConfigs.update(formConfigId, { type });
+  }
+
+  deleteFormConfig(formConfigId: string) {
+    return this.formConfigs.hardDelete(formConfigId);
   }
 }

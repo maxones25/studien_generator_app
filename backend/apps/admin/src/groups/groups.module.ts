@@ -29,6 +29,10 @@ import { GroupGuard, IsGroupDeletedGuard } from './infrastructure/http';
     Provider.GetGroupAppointmentUseCaseProvider,
     Provider.AddFormConfigUseCaseProvider,
     Provider.ActivateFormConfigUseCaseProvider,
+    Provider.DeactivateFormConfigUseCaseProvider,
+    Provider.SetFormConfigTimeDependentUseCaseProvider,
+    Provider.SetFormConfigTimeIndependentUseCaseProvider,
+    Provider.RemoveFormConfigUseCaseProvider,
   ],
   exports: [
     GroupGuard,
@@ -47,6 +51,10 @@ import { GroupGuard, IsGroupDeletedGuard } from './infrastructure/http';
     Domain.GET_GROUP_APPOINTMENTS_USE_CASE,
     Domain.ADD_FORM_CONFIG_USE_CASE,
     Domain.ACTIVATE_FORM_CONFIG_USE_CASE,
+    Domain.DEACTIVATE_FORM_CONFIG_USE_CASE,
+    Domain.SET_FORM_CONFIG_TIME_DEPENDENT_USE_CASE,
+    Domain.SET_FORM_CONFIG_TIME_INDEPENDENT_USE_CASE,
+    Domain.REMOVE_FORM_CONFIG_USE_CASE,
   ],
 })
 export class GroupsModule {}

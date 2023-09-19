@@ -24,8 +24,16 @@ import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import {
   ACTIVATE_FORM_CONFIG_USE_CASE,
   ADD_FORM_CONFIG_USE_CASE,
+  DEACTIVATE_FORM_CONFIG_USE_CASE,
   IActivateFormConfigUseCase,
   IAddFormConfigUseCase,
+  IDeactivateFormConfigUseCase,
+  IRemoveFormConfigUseCase,
+  ISetFormConfigTimeDependentUseCase,
+  ISetFormConfigTimeIndependentUseCase,
+  REMOVE_FORM_CONFIG_USE_CASE,
+  SET_FORM_CONFIG_TIME_DEPENDENT_USE_CASE,
+  SET_FORM_CONFIG_TIME_INDEPENDENT_USE_CASE,
 } from '../domain';
 import { FormConfig, Group } from '@entities/core/group';
 import { GetForm } from '@admin/forms/forms/decorators/form.decorator';
@@ -43,6 +51,14 @@ export class FormConfigsCommands {
     private readonly addFormToGroupUseCase: IAddFormConfigUseCase,
     @Inject(ACTIVATE_FORM_CONFIG_USE_CASE)
     private readonly activateFormConfigUseCase: IActivateFormConfigUseCase,
+    @Inject(DEACTIVATE_FORM_CONFIG_USE_CASE)
+    private readonly deactivateFormConfigUseCase: IDeactivateFormConfigUseCase,
+    @Inject(SET_FORM_CONFIG_TIME_DEPENDENT_USE_CASE)
+    private readonly setFormConfigTimeDependentUseCase: ISetFormConfigTimeDependentUseCase,
+    @Inject(SET_FORM_CONFIG_TIME_INDEPENDENT_USE_CASE)
+    private readonly setFormConfigTimeIndependentUseCase: ISetFormConfigTimeIndependentUseCase,
+    @Inject(REMOVE_FORM_CONFIG_USE_CASE)
+    private readonly removeFormConfigUseCase: IRemoveFormConfigUseCase,
   ) {}
 
   @Post('addFormConfig')
@@ -80,60 +96,46 @@ export class FormConfigsCommands {
     return this.activateFormConfigUseCase.execute({ formConfigId: configId });
   }
 
-  // @Post('activate')
-  // @HttpCode(HttpStatus.OK)
-  // @Roles('admin', 'employee')
-  // @UseGuards(ConfigGuard)
-  // activateForm(@Config() config: FormConfiguration) {
-  //   if (config.isActive)
-  //     throw new BadRequestException('form is already active');
-  //   return this.configsService.activate(config);
-  // }
+  @Post('deactivateFormConfig')
+  @HttpCode(HttpStatus.OK)
+  @Roles('admin', 'employee')
+  @UseGuards(ConfigGuard)
+  deactivateForm(@Query() { configId }: ConfigQueryDto) {
+    return this.deactivateFormConfigUseCase.execute({ formConfigId: configId });
+  }
 
-  // @Post('deactivate')
-  // @HttpCode(HttpStatus.OK)
-  // @Roles('admin', 'employee')
-  // @UseGuards(ConfigGuard)
-  // deactivateForm(@Config() form: FormConfiguration) {
-  //   if (!form.isActive)
-  //     throw new BadRequestException('form is already deactive');
-  //   return this.configsService.deactivate(form);
-  // }
+  @Post('setFormConfigTimeDependent')
+  @HttpCode(HttpStatus.OK)
+  @Roles('admin', 'employee')
+  @UseGuards(ConfigGuard)
+  setFormTimeDependent(@Query() { configId }: ConfigQueryDto) {
+    return this.setFormConfigTimeDependentUseCase.execute({
+      formConfigId: configId,
+    });
+  }
 
-  // @Post('setTimeDependent')
-  // @HttpCode(HttpStatus.OK)
-  // @Roles('admin', 'employee')
-  // @UseGuards(ConfigGuard)
-  // setFormTimeDependent(@Config() form: FormConfiguration) {
-  //   if (form.type === FormConfigType.TimeDependent)
-  //     throw new BadRequestException('form is alredy time dependent');
-  //   return this.configsService.setTimeDependent(form);
-  // }
+  @Post('setFormConfigTimeIndependent')
+  @HttpCode(HttpStatus.OK)
+  @Roles('admin', 'employee')
+  @UseGuards(ConfigGuard)
+  setFormTimeIndependent(@Query() { configId }: ConfigQueryDto) {
+    return this.setFormConfigTimeIndependentUseCase.execute({
+      formConfigId: configId,
+    });
+  }
 
-  // @Post('setTimeIndependent')
-  // @HttpCode(HttpStatus.OK)
-  // @Roles('admin', 'employee')
-  // @UseGuards(ConfigGuard)
-  // setFormTimeIndependent(@Config() form: FormConfiguration) {
-  //   if (form.type === FormConfigType.TimeIndependent)
-  //     throw new BadRequestException('form is alredy time independent');
-  //   return this.configsService.setTimeIndependent(form);
-  // }
-
-  // @Post('removeFromGroup')
-  // @HttpCode(HttpStatus.OK)
-  // @Roles('admin')
-  // @UseGuards(ConfigGuard)
-  // async removeFormFromGroup(@Config() form: FormConfiguration) {
-  //   const group = await this.groupsService.getById(form.groupId);
-  //   if (group === null)
-  //     throw new BadRequestException('form is not a group form');
-  //   await this.configsService.delete(form.id);
-  //   return {
-  //     group: {
-  //       id: group.id,
-  //       name: group.name,
-  //     },
-  //   };
-  // }
+  @Post('removeFormConfig')
+  @HttpCode(HttpStatus.OK)
+  @Roles('admin')
+  @UseGuards(ConfigGuard)
+  async removeFormFromGroup(@Query() { configId }: ConfigQueryDto) {
+    const group = await this.removeFormConfigUseCase.execute({ formConfigId: configId })
+    
+    return {
+      group: {
+        id: group.id,
+        name: group.name,
+      },
+    };
+  }
 }

@@ -11,3 +11,7 @@ export * from './useCases/groups/IsGroupDeletedUseCaseProvider';
 export * from './useCases/groups/GetStudyRelatedGroupUseCaseProvider';
 export * from './useCases/formConfigs/AddFormConfigUseCaseProvider';
 export * from './useCases/formConfigs/ActivateFormConfigUseCaseProvider';
+export * from './useCases/formConfigs/DeactivateFormConfigUseCaseProvider';
+export * from './useCases/formConfigs/SetFormConfigTimeDependentUseCaseProvider';
+export * from './useCases/formConfigs/SetFormConfigTimeIndependentUseCaseProvider';
+export * from './useCases/formConfigs/RemoveFormConfigUseCaseProvider';

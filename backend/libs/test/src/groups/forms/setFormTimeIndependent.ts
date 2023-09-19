@@ -11,7 +11,7 @@ export const setFormTimeIndependent = (
   { accessToken, studyId, formId }: SetFormTimeIndependentOptions,
 ) =>
   request(app).command({
-    path: '/forms/setTimeIndependent',
+    path: '/groups/setFormConfigTimeIndependent',
     accessToken,
     query: {
       studyId,

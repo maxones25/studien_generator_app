@@ -11,7 +11,7 @@ export const removeFormFromGroup = (
   { accessToken, studyId, formId }: RemoveFormFromGroupOptions,
 ) =>
   request(app).command({
-    path: '/forms/removeFromGroup',
+    path: '/groups/removeFormConfig',
     accessToken,
     query: {
       studyId,

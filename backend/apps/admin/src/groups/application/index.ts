@@ -9,4 +9,9 @@ export * from './useCases/groups/GetGroupByIdUseCase';
 export * from './useCases/groups/IsGroupDeletedUseCase';
 export * from './useCases/groups/GetStudyRelatedGroupUseCase';
 export * from './useCases/formConfigs/AddFormConfigUseCase';
-export * from './useCases/ActivateFormConfigUseCase';
+export * from './useCases/formConfigs/ActivateFormConfigUseCase';
+export * from './useCases/formConfigs/DeactivateFormConfigUseCase';
+export * from './useCases/formConfigs/SetFormConfigTimeDependentUseCase';
+export * from './useCases/formConfigs/SetFormConfigTimeIndependentUseCase';
+
+export * from './useCases/formConfigs/RemoveFormConfigUseCase';

@@ -11,7 +11,7 @@ export const setFormTimeDependent = (
   { accessToken, studyId, formId }: SetFormTimeDependentOptions,
 ) =>
   request(app).command({
-    path: '/forms/setTimeDependent',
+    path: '/groups/setFormConfigTimeDependent',
     accessToken,
     query: {
       studyId,
