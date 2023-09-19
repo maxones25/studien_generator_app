@@ -3,14 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import { Appointment } from '@entities/core/appointment/Appointment';
 import { IStudyAppointmentsRepository } from '@admin/studies/studies/domain/IStudyAppointmentsRepository';
-import { IGroupAppointmentRepository } from '@admin/groups/domain/IGroupAppointmentRepository';
 import { IParticipantAppointmentsRepository } from '@admin/participants/participants/domain/IParticipantAppointmentsRepository';
 import { CreateAppointmentDto } from './dtos/CreateAppointmentDto';
 
 export class AppointmentsRepository
   implements
     IStudyAppointmentsRepository,
-    IGroupAppointmentRepository,
     IParticipantAppointmentsRepository
 {
   constructor(

@@ -3,11 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import { Appointment } from '@entities/core/appointment/Appointment';
 import { IStudyAppointmentsRepository } from '../domain/IStudyAppointmentsRepository';
-import { IGroupAppointmentRepository } from '@admin/groups/domain/IGroupAppointmentRepository';
 import { CreateAppointmentDto } from '@admin/appointments/dtos/CreateAppointmentDto';
 
 export class AppointmentsRepository
-  implements IStudyAppointmentsRepository, IGroupAppointmentRepository
+  implements IStudyAppointmentsRepository
 {
   constructor(
     @InjectRepository(AppointmentSchema)
