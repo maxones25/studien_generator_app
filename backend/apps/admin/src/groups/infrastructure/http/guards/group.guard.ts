@@ -3,7 +3,7 @@ import { RecordGuard } from '@shared/modules/records/record.guard';
 import {
   GET_STUDY_RELATED_GROUP_USE_CASE,
   IGetStudyRelatedGroupUseCase,
-} from '@admin/Groups/domain';
+} from '@admin/groups/domain';
 
 @Injectable()
 export class GroupGuard extends RecordGuard {

@@ -9,7 +9,7 @@ import { Request } from 'express';
 import {
   IIsGroupDeletedUseCase,
   IS_GROUP_DELETED_USE_CASE,
-} from '@admin/Groups/domain';
+} from '@admin/groups/domain';
 
 @Injectable()
 export class IsGroupDeletedGuard implements CanActivate {

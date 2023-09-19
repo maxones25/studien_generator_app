@@ -1,4 +1,4 @@
-import { GROUPS_REPOSITORY } from '@admin/Groups/domain';
+import { GROUPS_REPOSITORY } from '@admin/groups/domain';
 import { GroupsRepository } from '@admin/groups/infrastructure/db';
 import { Provider } from '@nestjs/common';
 

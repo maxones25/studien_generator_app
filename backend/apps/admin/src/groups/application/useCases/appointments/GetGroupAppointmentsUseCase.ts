@@ -2,7 +2,7 @@ import {
   GetGroupAppointmentsUseCaseInput,
   IGetGroupAppointmentsUseCase,
   IGroupsRepository,
-} from '@admin/Groups/domain';
+} from '@admin/groups/domain';
 import { GroupAppointment } from '@entities/core/appointment';
 
 export class GetGroupAppointmentsUseCase implements IGetGroupAppointmentsUseCase {

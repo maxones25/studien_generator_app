@@ -1,7 +1,7 @@
 import { AppointmentSchema, GroupSchema } from '@entities/schema';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
-import { IGroupsRepository } from '@admin/Groups/domain';
+import { IGroupsRepository } from '@admin/groups/domain';
 import { Group } from '@entities/core/group';
 import { TypeOrmRepository } from '@shared/modules/db';
 import { GroupAppointment } from '@entities/core/appointment';

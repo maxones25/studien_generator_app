@@ -2,7 +2,7 @@ import {
   GET_GROUP_APPOINTMENTS_USE_CASE,
   GROUPS_REPOSITORY,
   IGroupsRepository,
-} from '@admin/Groups/domain';
+} from '@admin/groups/domain';
 import { GetGroupAppointmentsUseCase } from '@admin/groups/application';
 import { Provider } from '@nestjs/common';
 
