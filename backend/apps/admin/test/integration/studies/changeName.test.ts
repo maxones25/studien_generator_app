@@ -1,17 +1,20 @@
 import { AppModule } from '@admin/app.module';
 import { Roles } from '@entities/core/study';
 import { IApp, createApp } from '@test/app/createApp';
+import { getAdminAccessToken } from '@test/auth/loginAdmin';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { createDirector } from '@test/director/signUpDirector';
 import fakeData from '@test/fakeData';
 import { changeStudyName } from '@test/studies/changeStudyName';
 import { createStudy, createStudyId } from '@test/studies/createStudy';
 import { getStudyById } from '@test/studies/getStudyById';
+import { addMember } from '@test/studies/members/addMember';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('Change Study Name', () => {
   let app: IApp;
   let accessToken: string;
-  let johnAccessToken: string;
+  let otherAccessToken: string;
 
   beforeAll(async () => {
     app = await createApp(AppModule);
@@ -22,7 +25,7 @@ describe('Change Study Name', () => {
       TEST_DIRECTOR.MAX.PASSWORD,
     );
 
-    johnAccessToken = await getDirectorAccessToken(
+    otherAccessToken = await getDirectorAccessToken(
       app,
       TEST_DIRECTOR.JOHN.EMAIL,
       TEST_DIRECTOR.JOHN.PASSWORD,
@@ -54,6 +57,99 @@ describe('Change Study Name', () => {
       });
   });
 
+  it('should fail because unauthorized', async () => {
+    const studyId = await createStudyId(app, { accessToken });
+
+    const name = fakeData.study().name;
+
+    await changeStudyName(app, {
+      accessToken: undefined,
+      studyId,
+      data: {
+        name,
+      },
+    }).expect(401);
+  });
+
+  it('should fail because admin is authorized', async () => {
+    const studyId = await createStudyId(app, { accessToken });
+
+    const name = fakeData.study().name;
+
+    const adminAccessToken = await getAdminAccessToken(app);
+
+    await changeStudyName(app, {
+      accessToken: adminAccessToken,
+      studyId,
+      data: {
+        name,
+      },
+    }).expect(401);
+  });
+
+  it('should fail because admin is authorized', async () => {
+    const studyId = await createStudyId(app, { accessToken });
+
+    const name = fakeData.study().name;
+
+    const adminAccessToken = await getAdminAccessToken(app);
+
+    await changeStudyName(app, {
+      accessToken: adminAccessToken,
+      studyId,
+      data: {
+        name,
+      },
+    }).expect(401);
+  });
+
+  it('should fail because director is not member of study', async () => {
+    const studyId = await createStudyId(app, {
+      accessToken,
+    });
+
+    const name = fakeData.study().name;
+
+    await changeStudyName(app, {
+      accessToken: otherAccessToken,
+      studyId,
+      data: {
+        name,
+      },
+    }).expect(401);
+  });
+
+  it('should fail because director is not an admin', async () => {
+    const director = await createDirector(app);
+
+    const studyId = await createStudyId(app, {
+      accessToken,
+    });
+
+    await addMember(app, {
+      accessToken,
+      studyId,
+      directorId: director.id,
+      role: 'employee',
+    });
+
+    const directorAccessToken = await getDirectorAccessToken(
+      app,
+      director.email,
+      director.password,
+    );
+
+    const name = fakeData.study().name;
+
+    await changeStudyName(app, {
+      accessToken: directorAccessToken,
+      studyId,
+      data: {
+        name,
+      },
+    }).expect(401);
+  });
+
   it('should fail because name is empty', async () => {
     const data = fakeData.study();
     const studyId = await createStudyId(app, { accessToken, data });
@@ -83,18 +179,5 @@ describe('Change Study Name', () => {
       studyId,
       data: { name: data.name },
     }).expect(422);
-  });
-
-  it('should fail because user is not an admin', async () => {
-    const studyId = await createStudyId(app, {
-      accessToken: johnAccessToken,
-      data: fakeData.study(),
-    });
-
-    await changeStudyName(app, {
-      accessToken,
-      studyId,
-      data: fakeData.study(),
-    }).expect(401);
   });
 });

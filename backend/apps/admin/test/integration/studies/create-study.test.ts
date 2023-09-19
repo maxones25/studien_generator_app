@@ -7,6 +7,7 @@ import { getStudyById } from '@test/studies/getStudyById';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { Roles } from '@entities/core/study';
+import { getAdminAccessToken } from '@test/auth/loginAdmin';
 
 describe('Create Study', () => {
   let app: IApp;
@@ -14,6 +15,7 @@ describe('Create Study', () => {
 
   beforeAll(async () => {
     app = await createApp(AppModule);
+
     accessToken = await getDirectorAccessToken(
       app,
       TEST_DIRECTOR.MAX.EMAIL,
@@ -40,6 +42,19 @@ describe('Create Study', () => {
             expect(res.body.role).toBe(Roles.Admin);
           });
       });
+  });
+
+  it('should fail because unauthorized', () => {
+    return createStudy(app, { accessToken: undefined }).expect(401);
+  });
+
+  it('should fail because admin is authorized', async () => {
+    const adminAccessToken = await getAdminAccessToken(app);
+    return createStudy(app, { accessToken: adminAccessToken }).expect(401);
+  });
+
+  it('should fail because unauthorized', () => {
+    return createStudy(app, { accessToken: undefined }).expect(401);
   });
 
   it('should fail because name is missing', () => {
