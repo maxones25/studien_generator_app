@@ -14,7 +14,6 @@ import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
-import { DeleteGroupTransaction } from '../transactions/DeleteGroupTransaction';
 import {
   CreateGroupDto,
   GroupGuard,
@@ -22,6 +21,7 @@ import {
   IsGroupDeletedGuard,
   UpdateGroupDto,
 } from '@admin/groups/infrastructure/http';
+import { DeleteGroupTransaction } from '../application';
 
 @Controller('groups')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)

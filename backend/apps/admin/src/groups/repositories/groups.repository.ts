@@ -1,6 +1,5 @@
 import { Group } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
-import datetime from '@shared/modules/datetime/datetime';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { IsNull, Repository } from 'typeorm';
 

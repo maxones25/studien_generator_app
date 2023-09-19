@@ -2,15 +2,26 @@ import { GroupSchema } from '@entities/schema';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import { IGroupsRepository } from '@admin/Groups/domain';
+import { Group } from '@entities/core/group';
+import { TypeOrmRepository } from '@shared/modules/db';
 
 export class GroupsRepository implements IGroupsRepository {
+  private readonly groups: TypeOrmRepository<GroupSchema>;
+
   constructor(
     @InjectRepository(GroupSchema)
-    private readonly db: Repository<GroupSchema>,
-  ) {}
+    groups: Repository<GroupSchema>,
+  ) {
+    this.groups = new TypeOrmRepository(groups);
+  }
+
+  async createGroup(group: Group): Promise<string> {
+    await this.groups.create(group);
+    return group.id;
+  }
 
   getRelatedByStudy(studyId: string, id: string) {
-    return this.db.findOne({
+    return this.groups.findOne({
       where: {
         id,
         studyId,
@@ -20,7 +31,7 @@ export class GroupsRepository implements IGroupsRepository {
 
   async getByStudy(studyId: string, deleted = false) {
     const deletedAt = deleted ? undefined : IsNull();
-    return this.db.find({
+    return this.groups.find({
       where: {
         studyId,
         deletedAt,
@@ -38,7 +49,7 @@ export class GroupsRepository implements IGroupsRepository {
   }
 
   async getById(id: string) {
-    return this.db.findOne({
+    return this.groups.findOne({
       where: {
         id,
         deletedAt: IsNull(),

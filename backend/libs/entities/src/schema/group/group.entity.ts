@@ -1,19 +1,17 @@
 import { Entity, Column, ManyToOne, OneToMany, Unique } from 'typeorm';
 import { Study, Participant, FormConfiguration, Appointment } from '../..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
-import { Group } from '@entities/core/group/Group';
+import { IGroup } from '@entities/core/group/Group';
 
-export class BaseGroupSchema extends IdEntity implements Group {
+@Entity('group')
+@Unique('unique_name_for_study', ['name', 'studyId'])
+export class GroupSchema extends IdEntity implements IGroup {
   @Column()
   name: string;
 
   @Column()
   studyId: string;
-}
 
-@Entity('group')
-@Unique('unique_name_for_study', ['name', 'studyId'])
-export class GroupSchema extends BaseGroupSchema {
   @OneToMany(() => Participant, (participant) => participant.group)
   participants: Participant[];
 

@@ -1,5 +1,5 @@
-import { ICreateAppointmentUseCase } from '../domain/ICreateAppointmentUseCase';
-import { IGroupAppointmentRepository } from '../domain/IGroupAppointmentRepository';
+import { ICreateAppointmentUseCase } from '../../domain/ICreateAppointmentUseCase';
+import { IGroupAppointmentRepository } from '../../domain/IGroupAppointmentRepository';
 
 export class CreateAppointmentUseCase implements ICreateAppointmentUseCase {
   constructor(

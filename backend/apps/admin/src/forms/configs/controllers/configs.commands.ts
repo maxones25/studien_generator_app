@@ -15,7 +15,7 @@ import {
   Form as FormEntity,
 } from '@entities';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
-import { GetGroup } from '@admin/groups/group.decorator';
+import { GetGroup } from '@admin/groups/infrastructure/http/decorators/group.decorator';
 import { Form } from '@admin/forms/forms/decorators/form.decorator';
 import { FormGuard } from '@admin/forms/forms/guards/form.guard';
 import { Config } from '../config.decorator';

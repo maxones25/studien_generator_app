@@ -8,29 +8,18 @@ import { IDirectorsRepository, Director } from '@admin/directors/domain';
 import { Id } from '@shared/modules/core';
 import { TypeOrmRepository } from '@shared/modules/db';
 
-export class DirectorsRepository
-  extends TypeOrmRepository<DirectorSchema>
-  implements IDirectorsRepository
-{
+export class DirectorsRepository implements IDirectorsRepository {
+  private readonly db: TypeOrmRepository<DirectorSchema>;
+
   constructor(
     @InjectRepository(DirectorSchema)
     db: Repository<DirectorSchema>,
   ) {
-    super(db);
+    this.db = new TypeOrmRepository(db);
   }
 
-  async create({
-    email,
-    password,
-    firstName,
-    lastName,
-  }: Director): Promise<string> {
-    const director = await this.createRecord({
-      email,
-      password,
-      firstName,
-      lastName,
-    });
+  async create(director: Director): Promise<string> {
+    await this.db.create(director);
 
     return director.id;
   }
@@ -129,26 +118,26 @@ export class DirectorsRepository
   }
 
   async isDeleted(directorId: Id) {
-    return this.isDeletedRecord(directorId);
+    return this.db.isDeleted(directorId);
   }
 
   async update({ id, email, firstName, lastName }: Director) {
-    return this.updateRecord(id, { email, firstName, lastName });
+    return this.db.update(id, { email, firstName, lastName });
   }
 
   async restore(directorId: Id): Promise<number> {
-    return this.restoreRecord(directorId);
+    return this.db.restore(directorId);
   }
 
   async softDelete(directorId: Id) {
-    return this.softDeleteRecord(directorId);
+    return this.db.softDelete(directorId);
   }
 
   async hardDelete(directorId: Id) {
-    return this.hardDeleteRecord(directorId);
+    return this.db.hardDelete(directorId);
   }
 
   async changePassword({ id, password }: Director) {
-    return this.updateRecord(id, { password });
+    return this.db.update(id, { password });
   }
 }

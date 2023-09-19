@@ -7,8 +7,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { CreateAppointmentUseCase } from '../transactions/CreateAppointmentUseCase';
-import { GroupQueryDto, GroupGuard, IsGroupDeletedGuard } from '@admin/groups/infrastructure/http';
+import { CreateAppointmentUseCase } from '../application/useCases/CreateAppointmentUseCase';
+import {
+  GroupQueryDto,
+  GroupGuard,
+  IsGroupDeletedGuard,
+} from '@admin/groups/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { Roles } from '@admin/members/infrastructure/http';

@@ -1,7 +1,10 @@
 import {
   DeepPartial,
+  FindManyOptions,
+  FindOneOptions,
   FindOptionsWhere,
   ObjectLiteral,
+  QueryRunner,
   Repository,
 } from 'typeorm';
 import datetime from '../datetime/datetime';
@@ -13,13 +16,13 @@ export class TypeOrmRepository<
 > {
   constructor(protected readonly db: Repository<Entity>) {}
 
-  protected async createRecord(data: DeepPartial<Entity>) {
+  public async create(data: DeepPartial<Entity>) {
     const entity = data as unknown as DeepPartial<ObjectEntity>;
     await this.db.insert(entity);
     return data as Entity;
   }
 
-  protected async updateRecord(
+  public async update(
     id: string | FindOptionsWhere<Entity>,
     data: Partial<ObjectEntity>,
   ) {
@@ -27,26 +30,38 @@ export class TypeOrmRepository<
     return affected;
   }
 
-  protected async hardDeleteRecord(id: string | FindOptionsWhere<Entity>) {
+  public async hardDelete(id: string | FindOptionsWhere<Entity>) {
     const { affected } = await this.db.delete(id);
     return affected;
   }
 
-  protected async softDeleteRecord(id: string | FindOptionsWhere<Entity>) {
+  public async softDelete(id: string | FindOptionsWhere<Entity>) {
     const deletedAt = datetime.currentDate();
     const data = { deletedAt } as any;
-    return await this.updateRecord(id, data);
+    return await this.update(id, data);
   }
 
-  protected async restoreRecord(id: string | FindOptionsWhere<Entity>) {
+  public async restore(id: string | FindOptionsWhere<Entity>) {
     const deletedAt = null;
     const data = { deletedAt } as any;
-    return await this.updateRecord(id, data);
+    return await this.update(id, data);
   }
 
-  protected async isDeletedRecord(id: string) {
+  public async isDeleted(id: string) {
     const entity = await this.db.findOneBy({ id } as any);
     if (!entity) return true;
     return entity.deletedAt !== null;
+  }
+
+  public find(options?: FindManyOptions<Entity>) {
+    return this.db.find(options);
+  }
+
+  public findOne(options?: FindOneOptions<Entity>) {
+    return this.db.findOne(options);
+  }
+
+  public createQueryBuilder(alias?: string, queryRunner?: QueryRunner) {
+    return this.db.createQueryBuilder(alias, queryRunner);
   }
 }
