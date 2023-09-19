@@ -8,3 +8,5 @@ export * from './useCases/groups/GetGroupsByStudyUseCase';
 export * from './useCases/groups/GetGroupByIdUseCase';
 export * from './useCases/groups/IsGroupDeletedUseCase';
 export * from './useCases/groups/GetStudyRelatedGroupUseCase';
+export * from './useCases/formConfigs/AddFormConfigUseCase';
+export * from './useCases/ActivateFormConfigUseCase';

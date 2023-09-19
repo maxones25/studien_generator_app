@@ -10,3 +10,8 @@ export * from './useCases/groups/IGetGroupsByStudyUseCase';
 export * from './useCases/groups/IGetGroupByIdUseCase';
 export * from './useCases/groups/IIsGroupDeletedUseCase';
 export * from './useCases/groups/IGetStudyRelatedGroupUseCase';
+export * from './useCases/formConfigs/IAddFormConfigUseCase';
+export * from './errors/FormAlreadyAddedToGroupError';
+
+export * from './useCases/IActivateFormConfigUseCase';
+export * from './errors/FormConfigIsAlreadyActiveError';

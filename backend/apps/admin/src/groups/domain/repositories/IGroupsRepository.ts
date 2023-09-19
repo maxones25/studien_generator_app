@@ -1,10 +1,14 @@
 import { GroupAppointment } from '@entities/core/appointment';
-import { Group } from '@entities/core/group';
+import { FormConfig, Group } from '@entities/core/group';
 import { DeletedResult, Id, UpdatedResult } from '@shared/modules/core';
 
 export const GROUPS_REPOSITORY = 'GROUPS_REPOSITORY';
 
 export interface IGroupsRepository {
+  getFormConfigById(formConfigId: Id): Promise<FormConfig>;
+  activateFormConfig(formConfigId: Id): Promise<UpdatedResult>;
+  createFormConfig(formConfig: FormConfig): Promise<Id>;
+  getFormConfigs(groupId: string, formId: string): Promise<FormConfig[]>;
   getGroupAppointments(
     studyId: string,
     groupId: string,

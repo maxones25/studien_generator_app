@@ -8,8 +8,15 @@ import {
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import { GroupSchema, StudySchema, Form, FormSchedule } from '..';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
+import { IFormConfig } from '@entities/core/group/FormConfig';
 
 export class BaseFormConfiguration extends IdEntity {
+
+}
+
+@TypeOrmEntity()
+@Unique('unique_form_config', ['formId', 'studyId', 'groupId', 'type'])
+export class FormConfiguration extends IdEntity implements IFormConfig {
   @Column()
   formId: string;
 
@@ -27,11 +34,7 @@ export class BaseFormConfiguration extends IdEntity {
     enum: FormConfigType,
   })
   type: FormConfigType;
-}
-
-@TypeOrmEntity()
-@Unique('unique_form_config', ['formId', 'studyId', 'groupId', 'type'])
-export class FormConfiguration extends BaseFormConfiguration {
+  
   @OneToMany(() => FormSchedule, (schedule) => schedule.config)
   schedules: FormSchedule[];
 

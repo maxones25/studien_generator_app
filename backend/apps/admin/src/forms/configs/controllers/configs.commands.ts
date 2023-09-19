@@ -17,7 +17,7 @@ import {
 } from '@entities';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import { GetGroup } from '@admin/groups/infrastructure/http/decorators/group.decorator';
-import { Form } from '@admin/forms/forms/decorators/form.decorator';
+import { GetForm } from '@admin/forms/forms/decorators/form.decorator';
 import { FormGuard } from '@admin/forms/forms/guards/form.guard';
 import { Config } from '../config.decorator';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
@@ -38,50 +38,50 @@ export class ConfigsCommands {
     private groupsService: GroupsService,
   ) {}
 
-  @Post('addToGroup')
-  @Roles('admin', 'employee')
-  @UseGuards(GroupGuard, IsGroupDeletedGuard, FormGuard)
-  async addFormToGroup(
-    @Query() { studyId }: StudyQueryDto,
-    @Form() form: FormEntity,
-    @GetGroup() group: GroupEntity,
-  ) {
-    const configs = await this.configsService.getByGroupAndForm(
-      group.id,
-      form.id,
-    );
+  // @Post('addToGroup')
+  // @Roles('admin', 'employee')
+  // @UseGuards(GroupGuard, IsGroupDeletedGuard, FormGuard)
+  // async addFormToGroup(
+  //   @Query() { studyId }: StudyQueryDto,
+  //   @GetForm() form: FormEntity,
+  //   @GetGroup() group: GroupEntity,
+  // ) {
+  //   const configs = await this.configsService.getByGroupAndForm(
+  //     group.id,
+  //     form.id,
+  //   );
 
-    if (configs.length > 1)
-      throw new BadRequestException('config already exists');
+  //   if (configs.length > 1)
+  //     throw new BadRequestException('config already exists');
 
-    const config = configs[0];
+  //   const config = configs[0];
 
-    const type =
-      configs.length === 0
-        ? FormConfigType.TimeDependent
-        : config.type === FormConfigType.TimeDependent
-        ? FormConfigType.TimeIndependent
-        : FormConfigType.TimeDependent;
+  //   const type =
+  //     configs.length === 0
+  //       ? FormConfigType.TimeDependent
+  //       : config.type === FormConfigType.TimeDependent
+  //       ? FormConfigType.TimeIndependent
+  //       : FormConfigType.TimeDependent;
 
-    const id = await this.configsService.create(
-      form.id,
-      studyId,
-      group.id,
-      type,
-    );
+  //   const id = await this.configsService.create(
+  //     form.id,
+  //     studyId,
+  //     group.id,
+  //     type,
+  //   );
 
-    return {
-      id,
-      group: {
-        id: group.id,
-        name: group.name,
-      },
-      form: {
-        id: form.id,
-        name: form.name,
-      },
-    };
-  }
+  //   return {
+  //     id,
+  //     group: {
+  //       id: group.id,
+  //       name: group.name,
+  //     },
+  //     form: {
+  //       id: form.id,
+  //       name: form.name,
+  //     },
+  //   };
+  // }
 
   @Post('activate')
   @HttpCode(HttpStatus.OK)

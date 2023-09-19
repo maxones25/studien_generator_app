@@ -11,7 +11,7 @@ export const activateForm = (
   { accessToken, studyId, formId }: ActivateFormOptions,
 ) =>
   request(app).command({
-    path: '/forms/activate',
+    path: '/groups/activateFormConfig',
     accessToken,
     query: {
       studyId,

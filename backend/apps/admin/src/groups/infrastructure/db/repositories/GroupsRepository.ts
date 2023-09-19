@@ -1,23 +1,31 @@
-import { AppointmentSchema, GroupSchema } from '@entities/schema';
+import {
+  AppointmentSchema,
+  FormConfiguration as FormConfigurationSchema,
+  GroupSchema,
+} from '@entities/schema';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import { IGroupsRepository } from '@admin/groups/domain';
-import { Group } from '@entities/core/group';
+import { FormConfig, Group } from '@entities/core/group';
 import { TypeOrmRepository } from '@shared/modules/db';
 import { GroupAppointment } from '@entities/core/appointment';
 
 export class GroupsRepository implements IGroupsRepository {
   private readonly groups: TypeOrmRepository<GroupSchema>;
   private readonly appointments: TypeOrmRepository<AppointmentSchema>;
+  private readonly formConfigs: TypeOrmRepository<FormConfigurationSchema>;
 
   constructor(
     @InjectRepository(GroupSchema)
     groups: Repository<GroupSchema>,
     @InjectRepository(AppointmentSchema)
     appointments: Repository<AppointmentSchema>,
+    @InjectRepository(FormConfigurationSchema)
+    formConfigs: Repository<FormConfigurationSchema>,
   ) {
     this.groups = new TypeOrmRepository(groups);
     this.appointments = new TypeOrmRepository(appointments);
+    this.formConfigs = new TypeOrmRepository(formConfigs);
   }
 
   async createGroup(group: Group): Promise<string> {
@@ -103,5 +111,22 @@ export class GroupsRepository implements IGroupsRepository {
         { studyId: IsNull(), groupId, participantId: IsNull() },
       ],
     });
+  }
+
+  getFormConfigs(groupId: string, formId: string): Promise<FormConfig[]> {
+    return this.formConfigs.find({ where: { groupId, formId } });
+  }
+
+  async createFormConfig(formConfig: FormConfig): Promise<string> {
+    await this.formConfigs.create(formConfig);
+    return formConfig.id;
+  }
+
+  activateFormConfig(formConfigId: string): Promise<number> {
+    return this.formConfigs.update(formConfigId, { isActive: true });
+  }
+
+  getFormConfigById(id: string): Promise<FormConfig> {
+    return this.formConfigs.findOne({ where: { id } });
   }
 }

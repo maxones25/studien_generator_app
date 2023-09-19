@@ -13,7 +13,7 @@ export const addFormToGroup = (
   { accessToken, studyId, formId, groupId }: AddFormToGroupOptions,
 ) =>
   request(app).command({
-    path: '/forms/addToGroup',
+    path: '/groups/addFormConfig',
     accessToken,
     query: {
       studyId,
