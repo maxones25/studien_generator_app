@@ -15,7 +15,7 @@ export const createForm = (
 
 export const createFormId = (
   app: IApp,
-  { accessToken, studyId, data }: CreateFormOptions,
+  { accessToken, studyId, data = fakeData.form() }: CreateFormOptions,
 ) =>
   new Promise<string>((resolve, reject) => {
     createForm(app, { accessToken, studyId, data })
