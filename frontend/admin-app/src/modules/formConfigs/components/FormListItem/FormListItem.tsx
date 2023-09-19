@@ -73,7 +73,12 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
 
   return (
     <>
-      <DataListItem item={form} divider={!isLast} disablePadding={false}>
+      <DataListItem
+        data-testid={`form config ${form.form.name} ${form.type}`}
+        item={form}
+        divider={!isLast}
+        disablePadding={false}
+      >
         <ListItemIcon>
           <Tooltip
             title={t(form.isActive ? "deactivate record" : "activate record", {

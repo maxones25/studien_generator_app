@@ -53,7 +53,7 @@ export const FormsCard: React.FC<FormsCardProps> = (props) => {
         >
           {(disabled) => (
             <IconButton
-              testId="add group form button"
+              testId="add form config"
               Icon={<Add />}
               onClick={menuAnchor.open}
               disabled={disabled}
