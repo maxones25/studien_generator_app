@@ -1,7 +1,7 @@
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
-import { GroupGuard } from '@admin/groups/guards/group.guard';
+import { GroupGuard } from '@admin/groups/infrastructure/http/guards/group.guard';
 import { GroupsRepository } from '@admin/groups/repositories/groups.repository';
 
 describe('GroupGuard', () => {

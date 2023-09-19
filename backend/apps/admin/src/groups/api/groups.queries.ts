@@ -9,9 +9,11 @@ import { GroupsService } from '../groups.service';
 import { Roles } from '@admin/members/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
-import { GroupGuard } from '../guards/group.guard';
-import { GroupQueryDto } from '../dtos/GroupQueryDto';
-import { IsGroupDeletedGuard } from '../guards/IsGroupDeletedGuard';
+import {
+  GroupGuard,
+  GroupQueryDto,
+  IsGroupDeletedGuard,
+} from '@admin/groups/infrastructure/http';
 
 @Controller('groups')
 @UseGuards(StudyGuard)

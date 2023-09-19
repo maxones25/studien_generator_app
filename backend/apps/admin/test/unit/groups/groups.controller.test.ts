@@ -1,10 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
 import { Group } from '@entities';
-import { GroupsController } from '@admin/groups/controllers/groups.queries';
+import { GroupsController } from '@admin/groups/api/groups.queries';
 import { GroupsService } from '@admin/groups/groups.service';
 import { GroupsRepository } from '@admin/groups/repositories/groups.repository';
-import { GroupGuard } from '@admin/groups/guards/group.guard';
+import { GroupGuard } from '@admin/groups/infrastructure/http/guards/group.guard';
 
 describe('GroupsController', () => {
   let controller: GroupsController;

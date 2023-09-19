@@ -9,12 +9,11 @@ import { ParticipantsService } from '../participants.service';
 import { Roles } from '@admin/members/infrastructure/http';
 import { ParticipantQueryDto } from '../dtos/ParticipantQueryDto';
 import { ParticipantGuard } from '../guards/participant.guard';
-import { GroupQueryDto } from '@admin/groups/dtos/GroupQueryDto';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
-import { GroupGuard } from '@admin/groups/guards/group.guard';
-import { DeletedDto } from '@shared/modules/records/DeletedDto';
+import { GroupGuard } from '@admin/groups/infrastructure/http/guards/group.guard';
 import { IsParticipantDeletedGuard } from '../guards/IsParticipantDeletedGuard';
+import { GroupQueryDto } from '@admin/groups/infrastructure/http';
 
 @Controller('participants')
 export class ParticipantsQueries {

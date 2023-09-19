@@ -9,17 +9,19 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { GroupsService } from '../groups.service';
-import { UpdateGroupDto } from '../dtos/UpdateGroupDto';
-import { CreateGroupDto } from '../dtos/CreateGroupDto';
-import { GroupGuard } from '../guards/group.guard';
 import { Roles } from '@admin/members/infrastructure/http';
-import { GroupQueryDto } from '../dtos/GroupQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
-import { IsGroupDeletedGuard } from '../guards/IsGroupDeletedGuard';
 import { DeleteGroupTransaction } from '../transactions/DeleteGroupTransaction';
+import {
+  CreateGroupDto,
+  GroupGuard,
+  GroupQueryDto,
+  IsGroupDeletedGuard,
+  UpdateGroupDto,
+} from '@admin/groups/infrastructure/http';
 
 @Controller('groups')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)

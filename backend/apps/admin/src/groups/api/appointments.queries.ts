@@ -2,8 +2,8 @@ import { Inject, Controller, Get, UseGuards } from '@nestjs/common';
 import { GetAppointmentsUseCase } from '../transactions/GetAppointmentsUseCase';
 import { GetGroup } from '../group.decorator';
 import { Group } from '@entities/core/group/Group';
-import { GroupGuard } from '../guards/group.guard';
-import { IsGroupDeletedGuard } from '../guards/IsGroupDeletedGuard';
+import { GroupGuard } from '../infrastructure/http/guards/group.guard';
+import { IsGroupDeletedGuard } from '../infrastructure/http/guards/IsGroupDeletedGuard';
 import { Roles } from '@admin/members/infrastructure/http';
 
 @Controller('groups')

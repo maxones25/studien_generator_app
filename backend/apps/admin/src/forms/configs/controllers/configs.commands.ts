@@ -20,12 +20,12 @@ import { Form } from '@admin/forms/forms/decorators/form.decorator';
 import { FormGuard } from '@admin/forms/forms/guards/form.guard';
 import { Config } from '../config.decorator';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
-import { GroupGuard } from '@admin/groups/guards/group.guard';
+import { GroupGuard } from '@admin/groups/infrastructure/http/guards/group.guard';
 import { ConfigsService } from '../services/configs.service';
 import { GroupsService } from '@admin/groups/groups.service';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
-import { IsGroupDeletedGuard } from '@admin/groups/guards/IsGroupDeletedGuard';
+import { IsGroupDeletedGuard } from '@admin/groups/infrastructure/http/guards/IsGroupDeletedGuard';
 
 @Controller('forms')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)

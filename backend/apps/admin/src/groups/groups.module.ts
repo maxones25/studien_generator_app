@@ -2,16 +2,17 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Group } from '@entities';
 import groupsProviders from './groups.providers';
-import { GroupGuard } from './guards/group.guard';
+import { GroupGuard } from './infrastructure/http/guards/group.guard';
 import { GroupsService } from './groups.service';
-import { IsGroupDeletedGuard } from './guards/IsGroupDeletedGuard';
+import { IsGroupDeletedGuard } from './infrastructure/http/guards/IsGroupDeletedGuard';
 import { DeleteGroupTransaction } from './transactions/DeleteGroupTransaction';
 import { AppointmentsModule } from '@admin/appointments/appointments.module';
 import { GetAppointmentsUseCase } from './transactions/GetAppointmentsUseCase';
 import { CreateAppointmentUseCase } from './transactions/CreateAppointmentUseCase';
+import { GroupsDb } from './infrastructure/db';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Group]), AppointmentsModule],
+  imports: [GroupsDb, AppointmentsModule],
   providers: groupsProviders,
   exports: [
     GroupGuard,
@@ -19,7 +20,7 @@ import { CreateAppointmentUseCase } from './transactions/CreateAppointmentUseCas
     GroupsService,
     DeleteGroupTransaction,
     GetAppointmentsUseCase,
-    CreateAppointmentUseCase
+    CreateAppointmentUseCase,
   ],
 })
 export class GroupsModule {}

@@ -14,7 +14,6 @@ import { Roles } from '@admin/members/infrastructure/http';
 import { ParticipantQueryDto } from '../dtos/ParticipantQueryDto';
 import { ParticipantGuard } from '../guards/participant.guard';
 import { ChangeNumberDto } from '../dtos/ChangeNumberDto';
-import { ChangeGroupDto } from '../dtos/ChangeGroupDto';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { StartStudyDto } from '../dtos/StartStudyDto';
 import { GetParticipant } from '../participant.decorator';
@@ -28,8 +27,7 @@ import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDelete
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
 import { IsParticipantDeletedGuard } from '../guards/IsParticipantDeletedGuard';
 import { DeleteParticipantTransaction } from '../transactions/DeleteParticipantTransaction';
-import { GroupGuard } from '@admin/groups/guards/group.guard';
-import { GroupQueryDto } from '@admin/groups/dtos/GroupQueryDto';
+import { GroupGuard, GroupQueryDto } from '@admin/groups/infrastructure/http';
 
 @Controller('participants')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)

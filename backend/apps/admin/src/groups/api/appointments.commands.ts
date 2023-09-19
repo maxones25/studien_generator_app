@@ -8,9 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CreateAppointmentUseCase } from '../transactions/CreateAppointmentUseCase';
-import { GroupQueryDto } from '../dtos/GroupQueryDto';
-import { GroupGuard } from '../guards/group.guard';
-import { IsGroupDeletedGuard } from '../guards/IsGroupDeletedGuard';
+import { GroupQueryDto, GroupGuard, IsGroupDeletedGuard } from '@admin/groups/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { Roles } from '@admin/members/infrastructure/http';
@@ -24,7 +22,7 @@ export class AppointmentsCommands {
   ) {}
 
   @Post('createAppointment')
-  @Roles("admin", "employee")
+  @Roles('admin', 'employee')
   @UseGuards(GroupGuard, IsGroupDeletedGuard)
   create(
     @Query() { groupId }: GroupQueryDto,
