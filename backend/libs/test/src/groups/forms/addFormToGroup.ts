@@ -26,7 +26,7 @@ export const createGroupFormId = (
   app: IApp,
   { accessToken, studyId, formId, groupId }: AddFormToGroupOptions,
 ) =>
-  new Promise((resolve, reject) => {
+  new Promise<string>((resolve, reject) => {
     addFormToGroup(app, { accessToken, studyId, formId, groupId })
       .expect(201)
       .then((res) => {
