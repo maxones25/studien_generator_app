@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { GroupsService } from './application/groups.service';
 import { AppointmentsModule } from '@admin/appointments/appointments.module';
 import { GroupsDb } from './infrastructure/db';
 import { GroupsRepository } from './repositories/groups.repository';
@@ -14,7 +13,6 @@ import { GroupGuard, IsGroupDeletedGuard } from './infrastructure/http';
   providers: [
     GroupGuard,
     IsGroupDeletedGuard,
-    GroupsService,
     GroupsRepository,
     Provider.GroupsRepositoryProvider,
     Provider.CreateGroupUseCaseProvider,
@@ -37,7 +35,6 @@ import { GroupGuard, IsGroupDeletedGuard } from './infrastructure/http';
   exports: [
     GroupGuard,
     IsGroupDeletedGuard,
-    GroupsService,
     Domain.GROUPS_REPOSITORY,
     Domain.CREATE_GROUP_USE_CASE,
     Domain.CHANGE_GROUP_NAME_USE_CASE,
