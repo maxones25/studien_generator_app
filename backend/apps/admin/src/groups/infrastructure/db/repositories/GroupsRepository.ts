@@ -1,18 +1,23 @@
-import { GroupSchema } from '@entities/schema';
+import { AppointmentSchema, GroupSchema } from '@entities/schema';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import { IGroupsRepository } from '@admin/Groups/domain';
 import { Group } from '@entities/core/group';
 import { TypeOrmRepository } from '@shared/modules/db';
+import { GroupAppointment } from '@entities/core/appointment';
 
 export class GroupsRepository implements IGroupsRepository {
   private readonly groups: TypeOrmRepository<GroupSchema>;
+  private readonly appointments: TypeOrmRepository<AppointmentSchema>;
 
   constructor(
     @InjectRepository(GroupSchema)
     groups: Repository<GroupSchema>,
+    @InjectRepository(AppointmentSchema)
+    appointments: Repository<AppointmentSchema>,
   ) {
     this.groups = new TypeOrmRepository(groups);
+    this.appointments = new TypeOrmRepository(appointments);
   }
 
   async createGroup(group: Group): Promise<string> {
@@ -80,6 +85,23 @@ export class GroupsRepository implements IGroupsRepository {
         deletedAt: 'ASC',
         name: 'ASC',
       },
+    });
+  }
+
+  async createGroupAppointment(appointment: GroupAppointment): Promise<string> {
+    await this.appointments.create(appointment);
+    return appointment.id;
+  }
+
+  async getGroupAppointments(
+    studyId: string,
+    groupId: string,
+  ): Promise<GroupAppointment[]> {
+    return this.appointments.find({
+      where: [
+        { studyId, groupId: IsNull(), participantId: IsNull() },
+        { studyId: IsNull(), groupId, participantId: IsNull() },
+      ],
     });
   }
 }

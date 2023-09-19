@@ -11,3 +11,15 @@ export interface Appointment extends Entity {
   groupId: string | null;
   participantId: string | null;
 }
+
+export interface IAppointment extends Entity {
+  startDate: string;
+  startTime: string;
+  endDate: string;
+  endTime: string;
+  subject: string;
+  originId: string;
+  studyId: string | null;
+  groupId: string | null;
+  participantId: string | null;
+}

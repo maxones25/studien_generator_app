@@ -1,4 +1,4 @@
-import { GroupSchema } from '@entities/schema';
+import { AppointmentSchema, GroupSchema } from '@entities/schema';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-export const GroupsDb = TypeOrmModule.forFeature([GroupSchema]);
+export const GroupsDb = TypeOrmModule.forFeature([GroupSchema, AppointmentSchema]);
