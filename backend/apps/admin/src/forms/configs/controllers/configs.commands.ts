@@ -22,7 +22,7 @@ import { Config } from '../config.decorator';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { GroupGuard } from '@admin/groups/infrastructure/http/guards/group.guard';
 import { ConfigsService } from '../services/configs.service';
-import { GroupsService } from '@admin/groups/groups.service';
+import { GroupsService } from '@admin/groups/application/groups.service';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { IsGroupDeletedGuard } from '@admin/groups/infrastructure/http/guards/IsGroupDeletedGuard';

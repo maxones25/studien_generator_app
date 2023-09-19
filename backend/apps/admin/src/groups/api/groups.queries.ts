@@ -5,7 +5,7 @@ import {
   Query,
   ParseBoolPipe,
 } from '@nestjs/common';
-import { GroupsService } from '../groups.service';
+import { GroupsService } from '../application/groups.service';
 import { Roles } from '@admin/members/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';

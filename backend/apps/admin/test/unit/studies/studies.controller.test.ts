@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { TestBed } from '@automock/jest';
 import { Group } from '@entities';
-import { GroupsService } from '@admin/groups/groups.service';
+import { GroupsService } from '@admin/groups/application/groups.service';
 import { StudiesController } from '@admin/studies/studies/controllers/studies.commands';
 import { StudiesService } from '@admin/studies/studies/studies.service';
 import { StudiesRepository } from '@admin/studies/studies.repository';

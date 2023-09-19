@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateGroupDto } from './dtos/CreateGroupDto';
-import { GroupsRepository } from './repositories/groups.repository';
+import { GroupsRepository } from '../repositories/groups.repository';
 import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
+import { CreateGroupDto } from '../infrastructure/http';
 
 @Injectable()
 export class GroupsService implements IGetStudyRelatedDataUseCase {

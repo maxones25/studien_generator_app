@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GroupGuard } from './infrastructure/http/guards/group.guard';
-import { GroupsService } from './groups.service';
+import { GroupsService } from './application/groups.service';
 import { IsGroupDeletedGuard } from './infrastructure/http/guards/IsGroupDeletedGuard';
 import { AppointmentsModule } from '@admin/appointments/appointments.module';
 import { CreateAppointmentUseCase } from './application/useCases/CreateAppointmentUseCase';
