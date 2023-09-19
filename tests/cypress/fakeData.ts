@@ -63,6 +63,16 @@ const participant = (): FakeParticipant => {
   };
 };
 
+export type FakeForm = {
+  name: string;
+};
+
+const form = (): FakeForm => {
+  return {
+    name: faker.string.alpha({ length: 12 }),
+  };
+};
+
 export type FakeAppointment = {
   subject: string;
   startDate: string;
@@ -100,4 +110,5 @@ export default {
   entityField,
   appointment,
   participant,
+  form,
 };
