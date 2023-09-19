@@ -8,7 +8,6 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { GroupsService } from '../application/groups.service';
 import { Roles } from '@admin/members/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
@@ -21,7 +20,6 @@ import {
   IsGroupDeletedGuard,
   UpdateGroupDto,
 } from '@admin/groups/infrastructure/http';
-import { DeleteGroupTransaction } from '../application';
 import {
   CHANGE_GROUP_NAME_USE_CASE,
   CREATE_GROUP_USE_CASE,
@@ -29,20 +27,22 @@ import {
   IChangeGroupNameUseCase,
   ICreateGroupUseCase,
   IDeleteGroupUseCase,
+  IRestoreGroupUseCase,
+  RESTORE_GROUP_USE_CASE,
 } from '../domain';
 
 @Controller('groups')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class GroupsCommands {
   constructor(
-    @Inject(GroupsService)
-    private readonly groupsService: GroupsService,
     @Inject(DELETE_GROUP_USE_CASE)
     private readonly deleteGroupUseCase: IDeleteGroupUseCase,
     @Inject(CREATE_GROUP_USE_CASE)
     private readonly createGroupUseCase: ICreateGroupUseCase,
     @Inject(CHANGE_GROUP_NAME_USE_CASE)
     private readonly changeGroupNameUseCase: IChangeGroupNameUseCase,
+    @Inject(RESTORE_GROUP_USE_CASE)
+    private readonly restoreGroupUseCase: IRestoreGroupUseCase,
   ) {}
 
   @Post('create')
@@ -85,6 +85,6 @@ export class GroupsCommands {
   @Roles('admin')
   @UseGuards(GroupGuard)
   async restore(@Query() { groupId }: GroupQueryDto) {
-    return this.groupsService.restore(groupId);
+    return this.restoreGroupUseCase.execute({ groupId });
   }
 }

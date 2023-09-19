@@ -32,6 +32,10 @@ export class GroupsRepository implements IGroupsRepository {
     return this.groups.softDelete(groupId);
   }
 
+  async restoreGroup(groupId: string): Promise<number> {
+    return this.groups.restore(groupId);
+  }
+
   getRelatedByStudy(studyId: string, id: string) {
     return this.groups.findOne({
       where: {

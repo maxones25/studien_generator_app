@@ -6,3 +6,4 @@ export * from './useCases/IGetAppointmentsUseCase';
 
 export * from './useCases/IChangeGroupNameUseCase';
 export * from './useCases/IDeleteGroupUseCase';
+export * from './useCases/IRestoreGroupUseCase';

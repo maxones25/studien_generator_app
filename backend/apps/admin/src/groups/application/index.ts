@@ -4,3 +4,4 @@ export * from "./useCases/DeleteGroupTransaction"
 export * from "./useCases/GetAppointmentsUseCase"
 export * from './useCases/ChangeGroupNameUseCase';
 export * from './useCases/DeleteGroupUseCase';
+export * from './useCases/RestoreGroupUseCase';
