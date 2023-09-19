@@ -1,12 +1,13 @@
 import { Roles } from '@admin/members/infrastructure/http';
 import {
   BadRequestException,
-  Body,
   Controller,
   Inject,
   Post,
   Query,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { ConfigGuard } from '../guards/config.guard';
 import {
@@ -83,6 +84,7 @@ export class ConfigsCommands {
   }
 
   @Post('activate')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(ConfigGuard)
   activateForm(@Config() config: FormConfiguration) {
@@ -92,6 +94,7 @@ export class ConfigsCommands {
   }
 
   @Post('deactivate')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(ConfigGuard)
   deactivateForm(@Config() form: FormConfiguration) {
@@ -101,6 +104,7 @@ export class ConfigsCommands {
   }
 
   @Post('setTimeDependent')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(ConfigGuard)
   setFormTimeDependent(@Config() form: FormConfiguration) {
@@ -110,6 +114,7 @@ export class ConfigsCommands {
   }
 
   @Post('setTimeIndependent')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(ConfigGuard)
   setFormTimeIndependent(@Config() form: FormConfiguration) {
@@ -119,6 +124,7 @@ export class ConfigsCommands {
   }
 
   @Post('removeFromGroup')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(ConfigGuard)
   async removeFormFromGroup(@Config() form: FormConfiguration) {
