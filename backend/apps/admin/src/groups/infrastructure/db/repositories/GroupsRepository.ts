@@ -45,7 +45,7 @@ export class GroupsRepository implements IGroupsRepository {
     });
   }
 
-  async getByStudy(studyId: string, deleted = false) {
+  async getGroupsByStudy(studyId: string, deleted: boolean): Promise<Group[]> {
     const deletedAt = deleted ? undefined : IsNull();
     return this.groups.find({
       where: {
@@ -55,6 +55,8 @@ export class GroupsRepository implements IGroupsRepository {
       select: {
         id: true,
         name: true,
+        createdAt: true,
+        modifiedAt: true,
         deletedAt: true,
       },
       order: {

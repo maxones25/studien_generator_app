@@ -4,6 +4,7 @@ import {
   UseGuards,
   Query,
   ParseBoolPipe,
+  Inject,
 } from '@nestjs/common';
 import { GroupsService } from '../application/groups.service';
 import { Roles } from '@admin/members/infrastructure/http';
@@ -14,11 +15,19 @@ import {
   GroupQueryDto,
   IsGroupDeletedGuard,
 } from '@admin/groups/infrastructure/http';
+import {
+  GET_GROUPS_BY_STUDY_USE_CASE,
+  IGetGroupsByStudyUseCase,
+} from '../domain';
 
 @Controller('groups')
 @UseGuards(StudyGuard)
 export class GroupsQueries {
-  constructor(private readonly groupsService: GroupsService) {}
+  constructor(
+    private readonly groupsService: GroupsService,
+    @Inject(GET_GROUPS_BY_STUDY_USE_CASE)
+    private readonly getGroupsByStudyUseCase: IGetGroupsByStudyUseCase,
+  ) {}
 
   @Get('getByStudy')
   @Roles('admin', 'employee')
@@ -26,7 +35,7 @@ export class GroupsQueries {
     @Query() { studyId }: StudyQueryDto,
     @Query('deleted', ParseBoolPipe) deleted: boolean,
   ) {
-    return this.groupsService.getByStudy(studyId, deleted);
+    return this.getGroupsByStudyUseCase.execute({ studyId, deleted });
   }
 
   @Get('getById')

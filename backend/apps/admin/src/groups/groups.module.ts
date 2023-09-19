@@ -12,6 +12,7 @@ import {
   CHANGE_GROUP_NAME_USE_CASE,
   CREATE_GROUP_USE_CASE,
   DELETE_GROUP_USE_CASE,
+  GET_GROUPS_BY_STUDY_USE_CASE,
   GROUPS_REPOSITORY,
   RESTORE_GROUP_USE_CASE,
 } from './domain';
@@ -19,6 +20,7 @@ import {
   ChangeGroupNameUseCaseProvider,
   CreateGroupUseCaseProvider,
   DeleteGroupUseCaseProvider,
+  GetGroupsByStudyUseCaseProvider,
   GroupsRepositoryProvider,
   RestoreGroupUseCaseProvider,
 } from './providers';
@@ -38,6 +40,7 @@ import { ParticipantsModule } from '@admin/participants/participants/participant
     ChangeGroupNameUseCaseProvider,
     DeleteGroupUseCaseProvider,
     RestoreGroupUseCaseProvider,
+    GetGroupsByStudyUseCaseProvider,
     {
       provide: GetAppointmentsUseCase,
       useFactory(appointmentsRepository: AppointmentsRepository) {
@@ -65,6 +68,7 @@ import { ParticipantsModule } from '@admin/participants/participants/participant
     CHANGE_GROUP_NAME_USE_CASE,
     DELETE_GROUP_USE_CASE,
     RESTORE_GROUP_USE_CASE,
+    GET_GROUPS_BY_STUDY_USE_CASE,
   ],
 })
 export class GroupsModule {}

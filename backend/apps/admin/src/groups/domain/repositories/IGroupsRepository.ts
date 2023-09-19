@@ -4,6 +4,7 @@ import { DeletedResult, Id, UpdatedResult } from '@shared/modules/core';
 export const GROUPS_REPOSITORY = 'GROUPS_REPOSITORY';
 
 export interface IGroupsRepository {
+  getGroupsByStudy(studyId: Id, deleted: boolean): Promise<Group[]>;
   restoreGroup(groupId: Id): Promise<UpdatedResult>;
   softDeleteGroup(groupId: Id): Promise<DeletedResult>;
   hardDeleteGroup(groupId: Id): Promise<DeletedResult>;

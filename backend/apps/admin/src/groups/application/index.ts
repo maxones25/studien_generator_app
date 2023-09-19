@@ -5,3 +5,4 @@ export * from "./useCases/GetAppointmentsUseCase"
 export * from './useCases/ChangeGroupNameUseCase';
 export * from './useCases/DeleteGroupUseCase';
 export * from './useCases/RestoreGroupUseCase';
+export * from './useCases/GetGroupsByStudyUseCase';
