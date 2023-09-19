@@ -36,7 +36,24 @@ export class GroupsRepository implements IGroupsRepository {
     return this.groups.restore(groupId);
   }
 
-  getRelatedByStudy(studyId: string, id: string) {
+  async getGroupById(groupId: string): Promise<Group> {
+    return this.groups.findOne({
+      where: {
+        id: groupId,
+        deletedAt: IsNull(),
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+  }
+
+  async isGroupDeleted(groupId: string): Promise<boolean> {
+    return this.groups.isDeleted(groupId);
+  }
+
+  async getGroupByStudy(studyId: string, id: string): Promise<Group> {
     return this.groups.findOne({
       where: {
         id,
@@ -62,19 +79,6 @@ export class GroupsRepository implements IGroupsRepository {
       order: {
         deletedAt: 'ASC',
         name: 'ASC',
-      },
-    });
-  }
-
-  async getById(id: string) {
-    return this.groups.findOne({
-      where: {
-        id,
-        deletedAt: IsNull(),
-      },
-      select: {
-        id: true,
-        name: true,
       },
     });
   }

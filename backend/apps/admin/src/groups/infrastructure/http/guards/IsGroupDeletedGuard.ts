@@ -6,21 +6,24 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { GroupsService } from '../../../application/groups.service';
+import {
+  IIsGroupDeletedUseCase,
+  IS_GROUP_DELETED_USE_CASE,
+} from '@admin/Groups/domain';
 
 @Injectable()
 export class IsGroupDeletedGuard implements CanActivate {
   constructor(
-    @Inject(GroupsService)
-    private readonly groupsService: GroupsService,
+    @Inject(IS_GROUP_DELETED_USE_CASE)
+    private readonly isGroupDeletedUseCase: IIsGroupDeletedUseCase,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
 
-    const id = this.getGroupId(request);
+    const groupId = this.getGroupId(request);
 
-    const isDeleted = await this.groupsService.isDeleted(id);
+    const isDeleted = await this.isGroupDeletedUseCase.execute({ groupId });
 
     if (isDeleted) throw new UnauthorizedException('group is deleted');
 

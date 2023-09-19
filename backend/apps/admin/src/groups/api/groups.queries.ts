@@ -6,7 +6,6 @@ import {
   ParseBoolPipe,
   Inject,
 } from '@nestjs/common';
-import { GroupsService } from '../application/groups.service';
 import { Roles } from '@admin/members/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
@@ -17,6 +16,8 @@ import {
 } from '@admin/groups/infrastructure/http';
 import {
   GET_GROUPS_BY_STUDY_USE_CASE,
+  GET_GROUP_BY_ID_USE_CASE,
+  IGetGroupByIdUseCase,
   IGetGroupsByStudyUseCase,
 } from '../domain';
 
@@ -24,7 +25,8 @@ import {
 @UseGuards(StudyGuard)
 export class GroupsQueries {
   constructor(
-    private readonly groupsService: GroupsService,
+    @Inject(GET_GROUP_BY_ID_USE_CASE)
+    private readonly getGroupByIdUseCase: IGetGroupByIdUseCase,
     @Inject(GET_GROUPS_BY_STUDY_USE_CASE)
     private readonly getGroupsByStudyUseCase: IGetGroupsByStudyUseCase,
   ) {}
@@ -42,6 +44,6 @@ export class GroupsQueries {
   @Roles('admin', 'employee')
   @UseGuards(GroupGuard, IsGroupDeletedGuard)
   async getById(@Query() { groupId }: GroupQueryDto) {
-    return this.groupsService.getById(groupId);
+    return this.getGroupByIdUseCase.execute({ groupId });
   }
 }

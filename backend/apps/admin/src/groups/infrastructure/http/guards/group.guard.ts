@@ -1,13 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { RecordGuard } from '@shared/modules/records/record.guard';
-import { GroupsService } from '../../../application/groups.service';
+import {
+  GET_STUDY_RELATED_GROUP_USE_CASE,
+  IGetStudyRelatedGroupUseCase,
+} from '@admin/Groups/domain';
 
 @Injectable()
 export class GroupGuard extends RecordGuard {
   constructor(
-    @Inject(GroupsService)
-    service: GroupsService,
+    @Inject(GET_STUDY_RELATED_GROUP_USE_CASE)
+    useCase: IGetStudyRelatedGroupUseCase,
   ) {
-    super(service, 'group', 'groupId');
+    super(useCase, 'group', 'groupId');
   }
 }

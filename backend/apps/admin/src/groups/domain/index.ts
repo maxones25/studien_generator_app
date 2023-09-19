@@ -8,3 +8,6 @@ export * from './useCases/IChangeGroupNameUseCase';
 export * from './useCases/IDeleteGroupUseCase';
 export * from './useCases/IRestoreGroupUseCase';
 export * from './useCases/IGetGroupsByStudyUseCase';
+export * from './useCases/IGetGroupByIdUseCase';
+export * from './useCases/IIsGroupDeletedUseCase';
+export * from './useCases/IGetStudyRelatedGroupUseCase';
