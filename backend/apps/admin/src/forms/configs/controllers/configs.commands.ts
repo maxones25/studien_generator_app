@@ -58,7 +58,7 @@ export class ConfigsCommands {
     const type =
       configs.length === 0
         ? FormConfigType.TimeDependent
-        : configs[0].type === FormConfigType.TimeDependent
+        : config.type === FormConfigType.TimeDependent
         ? FormConfigType.TimeIndependent
         : FormConfigType.TimeDependent;
 
