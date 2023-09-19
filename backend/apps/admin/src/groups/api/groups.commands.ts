@@ -22,6 +22,7 @@ import {
   UpdateGroupDto,
 } from '@admin/groups/infrastructure/http';
 import { DeleteGroupTransaction } from '../application';
+import { CREATE_GROUP_USE_CASE, ICreateGroupUseCase } from '../domain';
 
 @Controller('groups')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -31,6 +32,8 @@ export class GroupsCommands {
     private readonly groupsService: GroupsService,
     @Inject(DeleteGroupTransaction)
     private readonly deleteGroup: DeleteGroupTransaction,
+    @Inject(CREATE_GROUP_USE_CASE)
+    private readonly createGroupUseCase: ICreateGroupUseCase,
   ) {}
 
   @Post('create')
@@ -39,7 +42,7 @@ export class GroupsCommands {
     @Query() { studyId }: StudyQueryDto,
     @Body() body: CreateGroupDto,
   ) {
-    return this.groupsService.create(studyId, body);
+    return this.createGroupUseCase.execute({ data: { studyId, ...body } });
   }
 
   @Post('changeName')
