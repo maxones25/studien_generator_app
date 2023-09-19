@@ -8,11 +8,23 @@ import { GroupsDb } from './infrastructure/db';
 import { DeleteGroupTransaction, GetAppointmentsUseCase } from './application';
 import { GroupsRepository } from './repositories/groups.repository';
 import { AppointmentsRepository } from '@admin/appointments/appointment.repository';
-import { CREATE_GROUP_USE_CASE, GROUPS_REPOSITORY } from './domain';
-import { CreateGroupUseCaseProvider, GroupsRepositoryProvider } from './providers';
+import {
+  CHANGE_GROUP_NAME_USE_CASE,
+  CREATE_GROUP_USE_CASE,
+  DELETE_GROUP_USE_CASE,
+  GROUPS_REPOSITORY,
+} from './domain';
+import {
+  ChangeGroupNameUseCaseProvider,
+  CreateGroupUseCaseProvider,
+  DeleteGroupUseCaseProvider,
+  GroupsRepositoryProvider,
+} from './providers';
+import { ConfigsModule } from '@admin/forms/configs/configs.module';
+import { ParticipantsModule } from '@admin/participants/participants/participants.module';
 
 @Module({
-  imports: [GroupsDb, AppointmentsModule],
+  imports: [GroupsDb, AppointmentsModule, ConfigsModule, ParticipantsModule],
   providers: [
     GroupGuard,
     IsGroupDeletedGuard,
@@ -21,6 +33,8 @@ import { CreateGroupUseCaseProvider, GroupsRepositoryProvider } from './provider
     DeleteGroupTransaction,
     GroupsRepositoryProvider,
     CreateGroupUseCaseProvider,
+    ChangeGroupNameUseCaseProvider,
+    DeleteGroupUseCaseProvider,
     {
       provide: GetAppointmentsUseCase,
       useFactory(appointmentsRepository: AppointmentsRepository) {
@@ -45,6 +59,8 @@ import { CreateGroupUseCaseProvider, GroupsRepositoryProvider } from './provider
     CreateAppointmentUseCase,
     GROUPS_REPOSITORY,
     CREATE_GROUP_USE_CASE,
+    CHANGE_GROUP_NAME_USE_CASE,
+    DELETE_GROUP_USE_CASE,
   ],
 })
 export class GroupsModule {}

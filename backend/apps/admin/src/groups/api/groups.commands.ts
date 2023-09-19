@@ -22,7 +22,14 @@ import {
   UpdateGroupDto,
 } from '@admin/groups/infrastructure/http';
 import { DeleteGroupTransaction } from '../application';
-import { CREATE_GROUP_USE_CASE, ICreateGroupUseCase } from '../domain';
+import {
+  CHANGE_GROUP_NAME_USE_CASE,
+  CREATE_GROUP_USE_CASE,
+  DELETE_GROUP_USE_CASE,
+  IChangeGroupNameUseCase,
+  ICreateGroupUseCase,
+  IDeleteGroupUseCase,
+} from '../domain';
 
 @Controller('groups')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -30,10 +37,12 @@ export class GroupsCommands {
   constructor(
     @Inject(GroupsService)
     private readonly groupsService: GroupsService,
-    @Inject(DeleteGroupTransaction)
-    private readonly deleteGroup: DeleteGroupTransaction,
+    @Inject(DELETE_GROUP_USE_CASE)
+    private readonly deleteGroupUseCase: IDeleteGroupUseCase,
     @Inject(CREATE_GROUP_USE_CASE)
     private readonly createGroupUseCase: ICreateGroupUseCase,
+    @Inject(CHANGE_GROUP_NAME_USE_CASE)
+    private readonly changeGroupNameUseCase: IChangeGroupNameUseCase,
   ) {}
 
   @Post('create')
@@ -53,7 +62,7 @@ export class GroupsCommands {
     @Query() { groupId }: GroupQueryDto,
     @Body() { name }: UpdateGroupDto,
   ) {
-    return this.groupsService.changeName(groupId, name);
+    return this.changeGroupNameUseCase.execute({ groupId, name });
   }
 
   @Post('delete')
@@ -64,7 +73,11 @@ export class GroupsCommands {
     @Query() { groupId }: GroupQueryDto,
     @Body() { hardDelete, deleteRelated }: DeleteDto,
   ) {
-    return this.deleteGroup.run({ groupId, hardDelete, deleteRelated });
+    return this.deleteGroupUseCase.execute({
+      groupId,
+      hardDelete,
+      deleteRelated,
+    });
   }
 
   @Post('restore')

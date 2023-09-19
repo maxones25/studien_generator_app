@@ -16,6 +16,7 @@ import { CreateAppointmentUseCase } from './transactions/CreateAppointmentUseCas
 import { AppointmentsModule } from '@admin/appointments/appointments.module';
 import { GetAppointmentsUseCase } from './transactions/GetAppointmentsUseCase';
 import { PasswordModule } from '@shared/modules/password/password.module';
+import { ParticipantsRepository } from './participants.repository';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PasswordModule } from '@shared/modules/password/password.module';
   ],
   providers: participantsProviders,
   exports: [
+    ParticipantsRepository,
     ParticipantGuard,
     ParticipantsService,
     StartParticipantStudyTransaction,

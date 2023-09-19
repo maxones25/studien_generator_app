@@ -1,4 +1,4 @@
-import { Id, UseCase } from '@shared/modules/core';
+import { Id, UpdatedResult, UseCase } from '@shared/modules/core';
 
 export const CHANGE_GROUP_NAME_USE_CASE = 'CHANGE_GROUP_NAME_USE_CASE';
 
@@ -8,4 +8,4 @@ export type ChangeGroupNameUseCaseInput = {
 };
 
 export interface IChangeGroupNameUseCase
-  extends UseCase<ChangeGroupNameUseCaseInput, Promise<any>> {}
+  extends UseCase<ChangeGroupNameUseCaseInput, Promise<UpdatedResult>> {}

@@ -20,6 +20,6 @@ import { SchedulesService } from './services/schedules.service';
     ]),
   ],
   providers,
-  exports: [ConfigGuard, ConfigsService, SchedulesService],
+  exports: [ConfigGuard, ConfigsService, SchedulesService, ConfigsRepository],
 })
 export class ConfigsModule {}

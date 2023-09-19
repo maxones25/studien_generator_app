@@ -20,6 +20,18 @@ export class GroupsRepository implements IGroupsRepository {
     return group.id;
   }
 
+  async changeGroupName({ id, name }: Group): Promise<number> {
+    return await this.groups.update(id, { name });
+  }
+
+  async hardDeleteGroup(groupId: string): Promise<number> {
+    return this.groups.hardDelete(groupId);
+  }
+
+  async softDeleteGroup(groupId: string): Promise<number> {
+    return this.groups.softDelete(groupId);
+  }
+
   getRelatedByStudy(studyId: string, id: string) {
     return this.groups.findOne({
       where: {
