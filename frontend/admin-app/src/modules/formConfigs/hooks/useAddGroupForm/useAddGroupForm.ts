@@ -15,7 +15,7 @@ export const useAddGroupForm = () => {
     }
   >(
     ({ body: { formId, groupId }, ...options }) =>
-      apiRequest(`/forms/addToGroup`, {
+      apiRequest(`/groups/addFormConfig`, {
         ...options,
         method: "POST",
         params: {
