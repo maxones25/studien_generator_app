@@ -141,4 +141,15 @@ export class GroupsRepository implements IGroupsRepository {
   deleteFormConfig(formConfigId: string) {
     return this.formConfigs.hardDelete(formConfigId);
   }
+
+  async hasGroupFormWithType(
+    groupId: string,
+    formId: string,
+    type: FormConfigType,
+  ) {
+    const formConfig = await this.formConfigs.findOne({
+      where: { groupId, formId, type },
+    });
+    return formConfig !== null;
+  }
 }

@@ -1,5 +1,5 @@
 Cypress.Commands.add(
-  "getByTestId",
+  "findByTestId",
   (
     name: string,
     options?: Partial<
@@ -9,7 +9,6 @@ Cypress.Commands.add(
         Cypress.Shadow
     >
   ) => {
-    const element = cy.get(`[data-testid="${name}"]`, options);
-    return element;
+    return cy.find(`[data-testid="${name}"]`, options);
   }
 );

@@ -22,6 +22,16 @@ export class SetFormConfigTimeDependentUseCase
     if (formConfig.type === FormConfigType.TimeDependent)
       throw new FormConfigIsAlreadyTimeDependentError();
 
+    const existsAlready =
+      await this.groupsRepository.hasGroupFormWithType(
+        formConfig.groupId,
+        formConfig.formId,
+        FormConfigType.TimeDependent,
+      );
+
+    if (existsAlready)
+      throw new FormConfigIsAlreadyTimeDependentError();
+
     return await this.groupsRepository.setFormConfigType(
       formConfigId,
       FormConfigType.TimeDependent,

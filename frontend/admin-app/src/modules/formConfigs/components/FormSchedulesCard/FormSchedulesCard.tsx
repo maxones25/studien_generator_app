@@ -46,7 +46,13 @@ export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
   };
 
   return (
-    <Column mt={1} mb={1} p={1} boxShadow={2}>
+    <Column
+      testId={`schedules card ${form.form.id}`}
+      mt={1}
+      mb={1}
+      p={1}
+      boxShadow={2}
+    >
       <Row p={1} pl={2} justifyContent="space-between">
         <Text>{t("schedules")}</Text>
         <IconButton

@@ -199,5 +199,7 @@
   "endTime": "Endzeit",
   "subject": "Betreff",
   "name should not be empty": "Name darf nicht leer sein",
-  "end before start": "Startzeitpunkt muss vor dem Endzeitpunkt liegen"
+  "end before start": "Startzeitpunkt muss vor dem Endzeitpunkt liegen",
+  "form is already time independent": "Formular ist schon zeitunabhängig",
+  "form is already time dependent": "Formular ist schon zeitabhängig"
 }

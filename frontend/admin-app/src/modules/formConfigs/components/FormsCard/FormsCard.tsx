@@ -69,7 +69,11 @@ export const FormsCard: React.FC<FormsCardProps> = (props) => {
           onClose={menuAnchor.close}
         >
           {availableForms.map((form) => (
-            <MenuItem key={form.id} onClick={handleAddForm(form.id)}>
+            <MenuItem
+              key={form.id}
+              data-testid={`form ${form.id}`}
+              onClick={handleAddForm(form.id)}
+            >
               {form.name}
             </MenuItem>
           ))}

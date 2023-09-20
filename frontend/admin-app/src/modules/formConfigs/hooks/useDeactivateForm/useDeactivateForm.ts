@@ -9,7 +9,7 @@ export const useDeactivateForm = () => {
   const groupId = useGroupId()!;
   return useWriteRequest<FormConfig, unknown>(
     ({ body: { id: configId }, ...options }) =>
-      apiRequest(`/forms/deactivate`, {
+      apiRequest(`/groups/deactivateFormConfig`, {
         ...options,
         method: "POST",
         params: {

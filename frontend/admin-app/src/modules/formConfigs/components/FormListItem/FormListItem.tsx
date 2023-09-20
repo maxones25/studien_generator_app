@@ -87,6 +87,7 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
           >
             <Checkbox
               edge="start"
+              data-testid="change isActive"
               checked={form.isActive}
               onChange={handleChangeIsActive}
             />
@@ -99,9 +100,10 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
             </Link>
           </ListItemText>
           <Chip
+            data-testid="change type"
             color={isTimeDependent ? "primary" : "default"}
             onClick={handleChangeType}
-            label={t("TimeDependent")}
+            label={t(form.type)}
           />
           <IconButton
             testId="delete form icon button"
@@ -131,7 +133,7 @@ export const FormListItem: React.FC<FormListItemProps> = ({ form, isLast }) => {
           >
             <Badge badgeContent={form.schedules?.length} color="primary">
               <IconButton
-                testId="open schedules button"
+                testId="toggle schedules"
                 Icon={subcard.isOpen ? <Close /> : <MoreTime />}
                 onClick={subcard.toggle}
                 disabled={!isTimeDependent}

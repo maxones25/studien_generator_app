@@ -5,6 +5,11 @@ import { DeletedResult, Id, UpdatedResult } from '@shared/modules/core';
 export const GROUPS_REPOSITORY = 'GROUPS_REPOSITORY';
 
 export interface IGroupsRepository {
+  hasGroupFormWithType(
+    groupId: string,
+    formId: string,
+    type: FormConfigType,
+  ): Promise<boolean>;
   setFormConfigType(
     formConfigId: Id,
     TimeDependent: FormConfigType,

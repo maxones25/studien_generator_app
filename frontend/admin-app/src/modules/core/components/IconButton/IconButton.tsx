@@ -15,21 +15,25 @@ export interface IconButtonProps extends MIconButtonProps {
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ Icon, testId, tooltipProps, disabled, ...props }, ref) => {
-    return tooltipProps && !disabled ? (
-      <Tooltip title={tooltipProps.title}>
-        <MIconButton data-testid={testId} disabled={disabled} {...props}>
-          {Icon}
-        </MIconButton>
-      </Tooltip>
-    ) : ( 
-      <MIconButton
-        ref={ref}
-        data-testid={testId}
-        disabled={disabled}
-        {...props}
-      >
-        {Icon}
-      </MIconButton>
+    return (
+      <div data-testid={`${testId} container`}>
+        {tooltipProps && !disabled ? (
+          <Tooltip title={tooltipProps.title}>
+            <MIconButton data-testid={testId} disabled={disabled} {...props}>
+              {Icon}
+            </MIconButton>
+          </Tooltip>
+        ) : (
+          <MIconButton
+            ref={ref}
+            data-testid={testId}
+            disabled={disabled}
+            {...props}
+          >
+            {Icon}
+          </MIconButton>
+        )}
+      </div>
     );
   }
 );

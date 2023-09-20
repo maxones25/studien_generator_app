@@ -9,7 +9,7 @@ export const useSetFormTimeDependent = () => {
   const groupId = useGroupId()!;
   return useWriteRequest<FormConfig, boolean>(
     ({ body: { id: configId }, ...options }) =>
-      apiRequest(`/forms/setTimeDependent`, {
+      apiRequest(`/groups/setFormConfigTimeDependent`, {
         ...options,
         method: "POST",
         params: {

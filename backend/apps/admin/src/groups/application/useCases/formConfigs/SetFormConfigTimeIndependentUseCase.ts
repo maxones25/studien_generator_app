@@ -21,6 +21,14 @@ export class SetFormConfigTimeIndependentUseCase
     if (formConfig.type === FormConfigType.TimeIndependent)
       throw new FormConfigIsAlreadyTimeIndependentError();
 
+    const existsAlready = await this.groupsRepository.hasGroupFormWithType(
+      formConfig.groupId,
+      formConfig.formId,
+      FormConfigType.TimeIndependent,
+    );
+
+    if (existsAlready) throw new FormConfigIsAlreadyTimeIndependentError();
+
     return await this.groupsRepository.setFormConfigType(
       formConfigId,
       FormConfigType.TimeIndependent,

@@ -1,7 +1,7 @@
-import { UseCaseError } from "@shared/modules/core";
+import { UseCaseError } from '@shared/modules/core';
 
 export class FormConfigIsAlreadyTimeDependentError extends UseCaseError {
-    constructor(){
-        super("")
-    }
+  constructor() {
+    super('form is already time dependent');
+  }
 }

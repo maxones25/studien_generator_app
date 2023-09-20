@@ -9,7 +9,7 @@ export const useActivateForm = () => {
   const groupId = useGroupId()!;
   return useWriteRequest<FormConfig, unknown>(
     ({ body: { id: configId }, ...options }) =>
-      apiRequest(`/forms/activate`, {
+      apiRequest(`/groups/activateFormConfig`, {
         ...options,
         method: "POST",
         params: {

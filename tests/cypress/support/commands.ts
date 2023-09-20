@@ -5,6 +5,7 @@ import "cypress-localstorage-commands";
 import {
   FakeEntity,
   FakeEntityField,
+  FakeForm,
   FakeGroup,
   FakeParticipant,
   FakeStudy,
@@ -25,10 +26,20 @@ declare global {
             Cypress.Withinable &
             Cypress.Shadow
         >
-      ): Chainable<any>;
+      ): Chainable<JQuery<HTMLElement>>;
+      findByTestId(
+        name: string,
+        options?: Partial<
+          Cypress.Loggable &
+            Cypress.Timeoutable &
+            Cypress.Withinable &
+            Cypress.Shadow
+        >
+      ): Chainable<JQuery<HTMLElement>>;
       createStudy(study: FakeStudy): Chainable<string>;
       createGroup(studyId: string, group: FakeGroup): Chainable<string>;
       createEntity(studyId: string, entity: FakeEntity): Chainable<string>;
+      createForm(studyId: string, form: FakeForm): Chainable<string>;
       createParticipant(
         studyId: string,
         participant: FakeParticipant
@@ -62,9 +73,11 @@ import "./api/createGroup";
 import "./api/createParticipant";
 import "./api/createEntity";
 import "./api/createEntityField";
+import "./api/createForm";
 
 import "./ui/shouldBeRelativePath";
 import "./ui/getByTestId";
+import "./ui/findByTestId";
 import "./ui/selectOption";
 import "./ui/setAccessToken";
 import "./ui/setLanguage";
