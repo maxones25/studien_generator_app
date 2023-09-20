@@ -1,6 +1,8 @@
 Cypress.Commands.add(
   "findByTestId",
+  { prevSubject: "element" },
   (
+    subject,
     name: string,
     options?: Partial<
       Cypress.Loggable &
@@ -9,6 +11,6 @@ Cypress.Commands.add(
         Cypress.Shadow
     >
   ) => {
-    return cy.find(`[data-testid="${name}"]`, options);
+    return cy.wrap(subject).find(`[data-testid="${name}"]`, options);
   }
 );

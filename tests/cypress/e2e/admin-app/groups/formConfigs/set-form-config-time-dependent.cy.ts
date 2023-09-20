@@ -59,7 +59,7 @@ describe("set form config time dependent", () => {
     cy.shouldShowAlert("error", "schon zeitabhängig");
   });
 
-  it.only("should open and close schedules", () => {
+  it("should open and close schedules", () => {
     cy.openGroupPage(studyId, groupId);
 
     cy.getByTestId("add form config").click();

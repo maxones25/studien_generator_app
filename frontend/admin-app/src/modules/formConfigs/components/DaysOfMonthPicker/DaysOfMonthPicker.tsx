@@ -67,6 +67,7 @@ export const DaysOfMonthPicker = <TFieldValues extends FieldValues>({
                     <Chip
                       key={day}
                       label={day}
+                      data-testid={`select ${day}`}
                       color={daysOfMonth?.includes(day) ? "primary" : "default"}
                       sx={{ m: 0.5, width: 40 }}
                       size="small"

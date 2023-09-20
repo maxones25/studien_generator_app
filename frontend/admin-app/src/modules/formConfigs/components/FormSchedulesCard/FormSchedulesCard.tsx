@@ -56,7 +56,7 @@ export const FormSchedulesCard: React.FC<FormSchedulesCardProps> = ({
       <Row p={1} pl={2} justifyContent="space-between">
         <Text>{t("schedules")}</Text>
         <IconButton
-          testId="add schedule button"
+          testId="add schedule"
           Icon={<Add />}
           onClick={scheduleData.handleSet({
             configId: form.id,

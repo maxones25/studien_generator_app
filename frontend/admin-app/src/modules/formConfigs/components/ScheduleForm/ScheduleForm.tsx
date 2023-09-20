@@ -55,7 +55,12 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
   };
 
   return (
-    <Form {...formProps} form={form} onSubmit={handleSubmit}>
+    <Form
+      {...formProps}
+      form={form}
+      onSubmit={handleSubmit}
+      testId="schedule form"
+    >
       <Row alignItems="stretch">
         <Column>
           <Row>
@@ -73,6 +78,7 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
                 label={t("all")}
                 inputProps={{ step: 1 }}
                 sx={{ ml: 1, flex: 1 }}
+                min={1}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -89,6 +95,7 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
                 label={t("howOften")}
                 inputProps={{ step: 1 }}
                 sx={{ ml: 1, flex: 1 }}
+                min={1}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -101,7 +108,11 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
           </Row>
           {period === "Week" && type === "Fix" && (
             <>
-              <DaysOfWeekPicker control={form.control} name="daysOfWeek" />
+              <DaysOfWeekPicker
+                control={form.control}
+                name="daysOfWeek"
+                amount={1}
+              />
               <Divider sx={{ mt: 1, mb: 1 }} />
             </>
           )}
@@ -125,6 +136,7 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
                 label={t("restrict before")}
                 type="number"
                 required
+                min={0}
                 inputProps={{ step: 1 }}
               />
               <ExperimentalFormTextField
@@ -133,6 +145,7 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
                 label={t("restrict after")}
                 type="number"
                 required
+                min={0}
                 inputProps={{ step: 1 }}
                 sx={{ ml: 1 }}
               />
@@ -150,6 +163,7 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
                 name="postpone.times"
                 label={t("how often")}
                 type="number"
+                min={1}
                 required
                 inputProps={{ step: 1 }}
               />
@@ -158,6 +172,7 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
                 name="postpone.duration"
                 label={t("how many days")}
                 type="number"
+                min={1}
                 required
                 inputProps={{ step: 1 }}
                 sx={{ ml: 1 }}
@@ -165,7 +180,7 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
             </Row>
           )}
           <FormControl margin="normal">
-            <Button testId="form schedule form submit button" type="submit">
+            <Button testId="submit schedule form" type="submit">
               Save
             </Button>
           </FormControl>
@@ -194,17 +209,24 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
               const color = hasError ? "error" : "default";
               return (
                 <Column>
-                  <Row justifyContent="space-between">
-                    <Text color={color}>{t("times")}</Text>
-                    <IconButton
-                      testId="add time button"
-                      Icon={<Add />}
-                      color={color}
-                      onClick={() => {
-                        onChange([...times, "00:00"]);
-                      }}
-                    />
-                  </Row>
+                  <Column>
+                    <Row justifyContent="space-between">
+                      <Text color={color}>{t("times")}</Text>
+                      <IconButton
+                        testId="add time"
+                        Icon={<Add />}
+                        color={color}
+                        onClick={() => {
+                          onChange([...times, "00:00"]);
+                        }}
+                      />
+                    </Row>
+                    {form.formState.errors.times && (
+                      <Text variant="caption" color="error">
+                        {t("value required", { value: t("times") })}
+                      </Text>
+                    )}
+                  </Column>
                   <Column>
                     {times.map((time, i) => (
                       <Row key={time} mt={1}>
@@ -212,6 +234,9 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
                           type="time"
                           size="small"
                           defaultValue={time}
+                          inputProps={{
+                            "data-testid": `time ${i}`,
+                          }}
                           onBlur={(e) => {
                             const time = e.currentTarget.value;
                             if (time) {

@@ -64,6 +64,7 @@ export const DaysOfWeekPicker = <TFieldValues extends FieldValues>({
               <Switch
                 key={i}
                 label={t(day)}
+                testId={`select ${day}`}
                 onChange={(_, checked) => {
                   daysOfWeek[i] = checked;
                   onChange([...daysOfWeek]);

@@ -28,7 +28,7 @@ export function FormSwitch<TFieldValues extends FieldValues>({
       control={control}
       name={name}
       rules={rules}
-      render={({ field }) => <Switch label={label} {...field} />}
+      render={({ field }) => <Switch testId={`change ${name}`} label={label} {...field} />}
     />
   );
 }

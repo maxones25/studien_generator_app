@@ -2,10 +2,10 @@ import { IsInt, Min } from 'class-validator';
 
 export class PostponeDto {
   @IsInt()
-  @Min(0)
+  @Min(1)
   times: number;
 
   @IsInt()
-  @Min(0)
+  @Min(1)
   duration: number;
 }

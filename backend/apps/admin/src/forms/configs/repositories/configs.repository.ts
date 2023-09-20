@@ -56,6 +56,10 @@ export class ConfigsRepository extends RecordRepository<FormConfiguration> {
             duration: true,
             times: true,
           },
+          restrict: {
+            before: true,
+            after: true,
+          },
           times: true,
           attributes: {
             key: true,
