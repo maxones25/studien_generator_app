@@ -2,7 +2,7 @@ import {
   isValid as apiIsValid,
   format,
   subtract,
-  addDays,
+  addDays as apiAddDays,
   addMinutes,
 } from 'date-and-time';
 
@@ -102,6 +102,10 @@ const convertToDateTime = (date: string, time: string) => {
   if (!apiIsValid(time, 'HH:mm'))
     throw new Error('time must be of pattern HH:mm');
   return new Date(date + 'T' + time);
+};
+
+const addDays = (date: Date, days: number) => {
+  return apiAddDays(date, days);
 };
 
 export default {
