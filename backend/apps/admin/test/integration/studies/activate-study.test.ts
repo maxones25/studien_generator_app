@@ -29,7 +29,7 @@ describe('activate study', () => {
 
   afterAll(async () => app.close());
 
-  it('should start study', async () => {
+  it('should activate study', async () => {
     const studyId = await createStudyId(app, { accessToken });
 
     const startDate = fakeData.futureDate();
