@@ -139,15 +139,17 @@ const task = (options: { isCompleted?: boolean } = {}) => {
 
 export const id = () => faker.string.uuid();
 
-const text = (length = 10) => faker.string.alpha({ length, casing: "mixed" });
+const text = (length = 10) => faker.string.alpha({ length, casing: 'mixed' });
 
-const positiveInteger = () => faker.number.int({ min: 1 })
+const positiveInteger = () => faker.number.int({ min: 1 });
 
 const password = (length = 10) =>
   faker.internet.password({ length, memorable: true });
 
+const futureDate = () => faker.date.future();
 
 export default {
+  futureDate,
   positiveInteger,
   id,
   text,
