@@ -141,10 +141,14 @@ export const id = () => faker.string.uuid();
 
 const text = (length = 10) => faker.string.alpha({ length, casing: "mixed" });
 
-export const password = (length = 10) =>
+const positiveInteger = () => faker.number.int({ min: 1 })
+
+const password = (length = 10) =>
   faker.internet.password({ length, memorable: true });
 
+
 export default {
+  positiveInteger,
   id,
   text,
   password,
