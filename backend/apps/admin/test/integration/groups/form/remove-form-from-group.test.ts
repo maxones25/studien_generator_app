@@ -169,7 +169,7 @@ describe('remove form from group', () => {
       studyId,
       directorId: director.id,
       role: 'employee',
-    });
+    }).expect(201)
 
     const formData = fakeData.form();
 

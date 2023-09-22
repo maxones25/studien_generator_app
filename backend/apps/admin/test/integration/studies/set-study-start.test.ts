@@ -176,7 +176,7 @@ describe('set study start', () => {
       studyId,
       directorId: director.id,
       role: 'employee',
-    });
+    }).expect(201);
 
     const otherAccessToken = await getDirectorAccessToken(
       app,

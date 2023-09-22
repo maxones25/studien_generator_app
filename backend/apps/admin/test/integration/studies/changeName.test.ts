@@ -131,7 +131,7 @@ describe('Change Study Name', () => {
       studyId,
       directorId: director.id,
       role: 'employee',
-    });
+    }).expect(201)
 
     const directorAccessToken = await getDirectorAccessToken(
       app,
