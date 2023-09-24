@@ -32,7 +32,7 @@ export const useGetGroupForms = ({
       type,
     }),
     ({ ...options }) =>
-      apiRequest(`/forms/getByGroup`, {
+      apiRequest(`/groups/getFormConfigs`, {
         ...options,
         params: {
           studyId,

@@ -19,7 +19,12 @@ export interface IGroupsRepository {
   activateFormConfig(formConfigId: Id): Promise<UpdatedResult>;
   createFormConfig(formConfig: FormConfig): Promise<Id>;
   deleteFormConfig(formConfigId: Id): Promise<DeletedResult>;
-  getFormConfigs(groupId: string, formId: string): Promise<FormConfig[]>;
+  getFormConfigsByForm(groupId: string, formId: string): Promise<FormConfig[]>;
+  getFormConfigs(
+    groupId: string,
+    isActive?: boolean,
+    type?: FormConfigType,
+  ): Promise<FormConfig[]>;
   getGroupAppointments(
     studyId: string,
     groupId: string,

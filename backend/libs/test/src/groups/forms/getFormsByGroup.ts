@@ -13,7 +13,7 @@ export const getFormsByGroup = (
   { accessToken, studyId, groupId, isActive, type }: GetFormsByGroupOptions,
 ) =>
   request(app).query({
-    path: '/forms/getByGroup',
+    path: '/groups/getFormConfigs',
     accessToken,
     query: { studyId, groupId, isActive, type },
   });

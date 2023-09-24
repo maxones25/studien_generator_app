@@ -1,10 +1,15 @@
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import { Transform } from 'class-transformer';
-import { IsEnum, IsOptional } from 'class-validator';
+import { IsBoolean, IsEnum, IsOptional } from 'class-validator';
 
 export class GetByGroupQueryDto {
   @IsOptional()
-  @Transform(({ value }) => value.toLowerCase() === 'true')
+  @IsBoolean()
+  @Transform(({ value }) => {
+    if (value === 'true') return true;
+    if (value === 'false') return true;
+    return value;
+  })
   readonly isActive?: boolean;
 
   @IsOptional()

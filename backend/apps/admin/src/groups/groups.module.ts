@@ -31,6 +31,7 @@ import { GroupGuard, IsGroupDeletedGuard } from './infrastructure/http';
     Provider.SetFormConfigTimeDependentUseCaseProvider,
     Provider.SetFormConfigTimeIndependentUseCaseProvider,
     Provider.RemoveFormConfigUseCaseProvider,
+    Provider.GetFormConfigsUseCaseProvider,
   ],
   exports: [
     GroupGuard,
@@ -52,6 +53,7 @@ import { GroupGuard, IsGroupDeletedGuard } from './infrastructure/http';
     Domain.SET_FORM_CONFIG_TIME_DEPENDENT_USE_CASE,
     Domain.SET_FORM_CONFIG_TIME_INDEPENDENT_USE_CASE,
     Domain.REMOVE_FORM_CONFIG_USE_CASE,
+    Domain.GET_FORM_CONFIGS_USE_CASE,
   ],
 })
 export class GroupsModule {}

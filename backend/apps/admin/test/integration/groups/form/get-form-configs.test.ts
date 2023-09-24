@@ -1,4 +1,5 @@
 import { AppModule } from '@admin/app.module';
+import { FormConfigType } from '@entities/core/group';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { IApp, createApp } from '@test/app/createApp';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
@@ -6,6 +7,7 @@ import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import fakeData from '@test/fakeData';
 import { createFormId } from '@test/forms/createForm';
 import { createGroupId } from '@test/groups/createGroup';
+import { activateForm } from '@test/groups/forms/activateForm';
 import { createGroupFormId } from '@test/groups/forms/addFormToGroup';
 import { getFormsByGroup } from '@test/groups/forms/getFormsByGroup';
 import { createStudyId } from '@test/studies/createStudy';
@@ -88,6 +90,61 @@ describe('get form configs', () => {
           expect(Array.isArray(formConfig.schedules)).toBeTruthy();
           expect(formConfig.form.id).toBe(formId);
           expect(formConfig.form.name).toBe(formData.name);
+        });
+      });
+  });
+
+  it('should get only active form configs', async () => {
+    const formId = await createFormId(app, { accessToken, studyId });
+
+    const formConfigId = await createGroupFormId(app, {
+      accessToken,
+      studyId,
+      groupId,
+      formId,
+    });
+
+    await activateForm(app, {
+      accessToken,
+      studyId,
+      formId: formConfigId,
+    }).expect(200);
+
+    return await getFormsByGroup(app, {
+      accessToken,
+      studyId,
+      groupId,
+      isActive: true,
+    })
+      .expect(200)
+      .then((res) => {
+        const formConfigs = res.body;
+
+        expect(Array.isArray(formConfigs)).toBeTruthy();
+        expect(formConfigs.length).toBeGreaterThan(0);
+
+        formConfigs.forEach((formConfig) => {
+          expect(formConfig.isActive).toBe(true);
+        });
+      });
+  });
+
+  it('should get only time independent form configs', async () => {
+    return await getFormsByGroup(app, {
+      accessToken,
+      studyId,
+      groupId,
+      type: FormConfigType.TimeIndependent,
+    })
+      .expect(200)
+      .then((res) => {
+        const formConfigs = res.body;
+
+        expect(Array.isArray(formConfigs)).toBeTruthy();
+        expect(formConfigs.length).toBeGreaterThan(0);
+
+        formConfigs.forEach((formConfig) => {
+          expect(formConfig.type).toBe(FormConfigType.TimeIndependent);
         });
       });
   });
@@ -176,5 +233,32 @@ describe('get form configs', () => {
       studyId,
       groupId: fakeData.id(),
     }).expect(401);
+  });
+
+  it('should fail because isActive has wrong type', async () => {
+    return await getFormsByGroup(app, {
+      accessToken,
+      studyId,
+      groupId,
+      isActive: '0',
+    }).expect(400);
+  });
+
+  it('should fail because type has wrong type', async () => {
+    return await getFormsByGroup(app, {
+      accessToken,
+      studyId,
+      groupId,
+      type: 123,
+    }).expect(400);
+  });
+
+  it('should fail because type must be form config type', async () => {
+    return await getFormsByGroup(app, {
+      accessToken,
+      studyId,
+      groupId,
+      type: "TimeSomething",
+    }).expect(400);
   });
 });

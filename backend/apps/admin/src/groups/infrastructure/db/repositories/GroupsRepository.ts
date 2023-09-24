@@ -1,6 +1,7 @@
 import {
   AppointmentSchema,
   FormConfiguration as FormConfigurationSchema,
+  FormScheduleAttributes,
   GroupSchema,
 } from '@entities/schema';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -113,7 +114,7 @@ export class GroupsRepository implements IGroupsRepository {
     });
   }
 
-  getFormConfigs(groupId: string, formId: string): Promise<FormConfig[]> {
+  getFormConfigsByForm(groupId: string, formId: string): Promise<FormConfig[]> {
     return this.formConfigs.find({ where: { groupId, formId } });
   }
 
@@ -151,5 +152,70 @@ export class GroupsRepository implements IGroupsRepository {
       where: { groupId, formId, type },
     });
     return formConfig !== null;
+  }
+
+  async getFormConfigs(
+    groupId: string,
+    isActive?: boolean,
+    type?: FormConfigType,
+  ): Promise<FormConfig[]> {
+    const configs = await this.formConfigs.find({
+      where: {
+        groupId,
+        isActive,
+        type,
+      },
+      order: {
+        form: {
+          name: 'DESC',
+        },
+        type: 'DESC',
+      },
+      relations: {
+        form: true,
+        schedules: {
+          attributes: true,
+        },
+      },
+      select: {
+        id: true,
+        isActive: true,
+        type: true,
+        form: {
+          id: true,
+          name: true,
+        },
+        schedules: {
+          id: true,
+          type: true,
+          period: true,
+          postpone: {
+            duration: true,
+            times: true,
+          },
+          restrict: {
+            before: true,
+            after: true,
+          },
+          times: true,
+          attributes: {
+            key: true,
+            value: true,
+          },
+        },
+      },
+    });
+
+    return configs.map((config) => ({
+      ...config,
+      schedules: config.schedules.map(({ attributes, ...schedule }) => ({
+        ...schedule,
+        ...attributes.reduce<FormScheduleAttributes>((obj, attribute) => {
+          const { key, value } = attribute;
+          obj[key] = value;
+          return obj;
+        }, {}),
+      })),
+    }));
   }
 }

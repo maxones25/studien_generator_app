@@ -15,3 +15,4 @@ export * from './useCases/formConfigs/SetFormConfigTimeDependentUseCase';
 export * from './useCases/formConfigs/SetFormConfigTimeIndependentUseCase';
 
 export * from './useCases/formConfigs/RemoveFormConfigUseCase';
+export * from './useCases/formConfigs/GetFormConfigsUseCase';

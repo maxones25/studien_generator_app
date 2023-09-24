@@ -7,8 +7,12 @@ import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import { GroupQueryDto } from '@admin/groups/infrastructure/http';
 import { ConfigsService } from '@admin/forms/configs/services/configs.service';
 import { GetByGroupQueryDto } from '@admin/forms/configs/dtos/GetByGroupQueryDto';
+import {
+  GET_FORM_CONFIGS_USE_CASE,
+  IGetFormConfigsUseCase,
+} from '../domain/useCases/formConfigs/IGetFormConfigsUseCase';
 
-@Controller('forms')
+@Controller('groups')
 @UseGuards(StudyGuard)
 export class FormConfigsQueries {
   constructor(
@@ -16,16 +20,18 @@ export class FormConfigsQueries {
     private configsService: ConfigsService,
     @Inject(FormsService)
     private formsService: FormsService,
+    @Inject(GET_FORM_CONFIGS_USE_CASE)
+    private readonly getFormConfigsUseCase: IGetFormConfigsUseCase,
   ) {}
 
-  @Get('getByGroup')
+  @Get('getFormConfigs')
   @Roles('admin', 'employee')
   @UseGuards(GroupGuard)
   getFormsByGroup(
     @Query() { groupId }: GroupQueryDto,
-    @Query() query: GetByGroupQueryDto,
+    @Query() { type, isActive }: GetByGroupQueryDto,
   ) {
-    return this.configsService.getByGroup(groupId, query);
+    return this.getFormConfigsUseCase.execute({ groupId, type, isActive });
   }
 
   @Get('getNonGroup')

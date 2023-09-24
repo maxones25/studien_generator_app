@@ -15,7 +15,7 @@ export class AddFormConfigUseCase implements IAddFormConfigUseCase {
     groupId,
     formId,
   }: AddFormConfigUseCaseInput): Promise<Id> {
-    const formConfigs = await this.groupsRepository.getFormConfigs(
+    const formConfigs = await this.groupsRepository.getFormConfigsByForm(
       groupId,
       formId,
     );

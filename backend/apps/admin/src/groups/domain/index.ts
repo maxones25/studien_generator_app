@@ -15,12 +15,12 @@ export * from './useCases/formConfigs/IActivateFormConfigUseCase';
 export * from './useCases/formConfigs/IDeactivateFormConfigUseCase';
 export * from './useCases/formConfigs/ISetFormConfigTimeDependentUseCase';
 export * from './useCases/formConfigs/ISetFormConfigTimeIndependentUseCase';
+export * from './useCases/formConfigs/IGetFormConfigsUseCase';
 export * from './errors/FormAlreadyAddedToGroupError';
 export * from './errors/FormConfigIsAlreadyTimeDependentError';
 export * from './errors/FormConfigIsAlreadyTimeIndependentError';
 export * from './errors/FormConfigIsAlreadyActiveError';
 export * from './errors/FormConfigIsAlreadyInactiveError';
-
-export * from './useCases/IRemoveFormConfigUseCase';
+export * from './useCases/formConfigs/IRemoveFormConfigUseCase';
 export * from './errors/FormConfigNotFoundError';
 export * from './errors/GroupNotFoundError';
