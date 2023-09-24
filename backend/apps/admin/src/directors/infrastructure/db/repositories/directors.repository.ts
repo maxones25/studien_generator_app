@@ -76,6 +76,7 @@ export class DirectorsRepository implements IDirectorsRepository {
         { studyId },
       )
       .where('sm.studyId IS NULL')
+      .andWhere('d.deletedAt IS NULL')
       .groupBy('d.id')
       .getMany();
   }
