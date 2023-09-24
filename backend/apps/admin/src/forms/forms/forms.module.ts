@@ -17,6 +17,7 @@ import { EntityGuard } from './guards/entity.guard';
 import { ComponentsService } from './services/components.service';
 import { ComponentGuard } from './guards/component.guard';
 import { CreateFormUseCase } from './transactions/CreateFormUseCase';
+import { FORMS_REPOSITORY } from './domain';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { CreateFormUseCase } from './transactions/CreateFormUseCase';
     EntitiesService,
     PagesService,
     ComponentsService,
+    FORMS_REPOSITORY,
   ],
 })
 export class FormsModule {}

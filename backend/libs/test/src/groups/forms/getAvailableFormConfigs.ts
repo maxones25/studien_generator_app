@@ -11,7 +11,7 @@ export const getAvailableFormConfigs = (
   { accessToken, studyId, groupId }: GetAvailableFormConfigsOptions,
 ) =>
   request(app).query({
-    path: '/forms/getNonGroup',
+    path: '/groups/getAvailableForms',
     accessToken,
     query: { studyId, groupId },
   });

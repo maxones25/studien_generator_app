@@ -17,3 +17,4 @@ export * from './useCases/formConfigs/SetFormConfigTimeIndependentUseCaseProvide
 export * from './useCases/formConfigs/RemoveFormConfigUseCaseProvider';
 
 export * from './useCases/formConfigs/GetFormConfigsUseCaseProvider';
+export * from './useCases/formConfigs/GetAvailableFormsByGroupUseCaseProvider';

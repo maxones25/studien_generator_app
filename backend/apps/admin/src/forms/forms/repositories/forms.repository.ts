@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Form } from '@entities';
+import { Form as FormSchema } from '@entities';
 import { Repository } from 'typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,20 +7,21 @@ import { FormConfiguration } from '@entities';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import { IFormsRepository } from '../domain/IFormsRepository';
 import { CreateFormDto } from '../dtos/CreateFormDto';
+import { Form } from '@entities/core/form';
 
 @Injectable()
 export class FormsRepository
-  extends RecordRepository<Form>
+  extends RecordRepository<FormSchema>
   implements IFormsRepository
 {
   constructor(
-    @InjectRepository(Form)
-    db: Repository<Form>,
+    @InjectRepository(FormSchema)
+    db: Repository<FormSchema>,
   ) {
     super(db);
   }
   async createForm(studyId: string, { name }: CreateFormDto): Promise<string> {
-    const form = new Form();
+    const form = new FormSchema();
 
     form.studyId = studyId;
     form.name = name;
@@ -35,6 +36,28 @@ export class FormsRepository
   }
 
   getNonGroup(studyId: string, groupId: string) {
+    return this.db
+      .createQueryBuilder('f')
+      .select(['f.id', 'f.name'])
+      .leftJoin(
+        FormConfiguration,
+        'fg1',
+        'f.id = fg1.formId AND fg1.type = :independent AND fg1.groupId = :groupId',
+        { groupId, independent: FormConfigType.TimeIndependent },
+      )
+      .leftJoin(
+        FormConfiguration,
+        'fg2',
+        'f.id = fg2.formId AND fg2.type = :dependent AND fg2.groupId = :groupId',
+        { groupId, dependent: FormConfigType.TimeDependent },
+      )
+      .where('f.study = :studyId AND (fg1.type IS NULL OR fg2.type IS NULL)', {
+        studyId,
+      })
+      .getMany();
+  }
+
+  getAvailableForms(studyId: string, groupId: string): Promise<Form[]> {
     return this.db
       .createQueryBuilder('f')
       .select(['f.id', 'f.name'])

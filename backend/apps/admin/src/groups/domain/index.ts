@@ -24,3 +24,5 @@ export * from './errors/FormConfigIsAlreadyInactiveError';
 export * from './useCases/formConfigs/IRemoveFormConfigUseCase';
 export * from './errors/FormConfigNotFoundError';
 export * from './errors/GroupNotFoundError';
+
+export * from './useCases/formConfigs/IGetAvailableFormsByGroupUseCase';

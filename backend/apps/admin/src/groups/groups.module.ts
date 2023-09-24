@@ -7,9 +7,16 @@ import * as Provider from './providers';
 import { ConfigsModule } from '@admin/forms/configs/configs.module';
 import { ParticipantsModule } from '@admin/participants/participants/participants.module';
 import { GroupGuard, IsGroupDeletedGuard } from './infrastructure/http';
+import { FormsModule } from '@admin/forms/forms/forms.module';
 
 @Module({
-  imports: [GroupsDb, AppointmentsModule, ConfigsModule, ParticipantsModule],
+  imports: [
+    GroupsDb,
+    AppointmentsModule,
+    ConfigsModule,
+    ParticipantsModule,
+    FormsModule,
+  ],
   providers: [
     GroupGuard,
     IsGroupDeletedGuard,
@@ -32,6 +39,7 @@ import { GroupGuard, IsGroupDeletedGuard } from './infrastructure/http';
     Provider.SetFormConfigTimeIndependentUseCaseProvider,
     Provider.RemoveFormConfigUseCaseProvider,
     Provider.GetFormConfigsUseCaseProvider,
+    Provider.GetAvailableFormsByGroupUseCaseProvider,
   ],
   exports: [
     GroupGuard,
@@ -54,6 +62,7 @@ import { GroupGuard, IsGroupDeletedGuard } from './infrastructure/http';
     Domain.SET_FORM_CONFIG_TIME_INDEPENDENT_USE_CASE,
     Domain.REMOVE_FORM_CONFIG_USE_CASE,
     Domain.GET_FORM_CONFIGS_USE_CASE,
+    Domain.GET_AVAILABLE_FORMS_BY_GROUP_USE_CASE,
   ],
 })
 export class GroupsModule {}

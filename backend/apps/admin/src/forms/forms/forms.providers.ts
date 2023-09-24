@@ -16,6 +16,7 @@ import { ComponentsService } from './services/components.service';
 import { ComponentsRepository } from './repositories/components.repository';
 import { ComponentGuard } from './guards/component.guard';
 import { CreateFormUseCase } from './transactions/CreateFormUseCase';
+import { FORMS_REPOSITORY } from './domain';
 
 const formsProviders: Provider[] = [
   FormsService,
@@ -36,6 +37,10 @@ const formsProviders: Provider[] = [
   ComponentGuard,
   {
     provide: 'IFormsRepository',
+    useClass: FormsRepository,
+  },
+  {
+    provide: FORMS_REPOSITORY,
     useClass: FormsRepository,
   },
   {

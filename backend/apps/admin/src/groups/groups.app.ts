@@ -12,7 +12,7 @@ import { GroupsQueries } from './api/groups.queries';
 import { FormConfigsQueries } from './api/formConfigs.queries';
 
 @Module({
-  imports: [GroupsModule, StudiesModule, FormsModule, ConfigsModule],
+  imports: [GroupsModule, StudiesModule, ConfigsModule, FormsModule],
   controllers: [
     AppointmentsCommands,
     AppointmentsQueries,

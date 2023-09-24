@@ -14,7 +14,7 @@ export const useGetNonGroupForms = () => {
   return useReadRequest<Form[]>(
     getGetNonGroupFormsKey({ studyId, groupId }),
     (options) =>
-      apiRequest(`/forms/getNonGroup`, {
+      apiRequest(`/groups/getAvailableForms`, {
         ...options,
         params: { studyId, groupId },
       })
