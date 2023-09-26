@@ -48,7 +48,7 @@
     "generate-password": "^1.7.0",
     "mysql2": "^3.4.0",
     "reflect-metadata": "^0.1.13",
-    "rimraf": "^3.0.2",
+    "rimraf": "^5.0.4",
     "rxjs": "^7.2.0",
     "typeorm": "^0.3.16",
     "typeorm-transactional": "^0.4.1",
