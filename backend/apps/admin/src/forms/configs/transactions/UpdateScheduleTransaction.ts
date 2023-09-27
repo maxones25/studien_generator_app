@@ -2,10 +2,10 @@ import { Transaction } from '@shared/modules/transaction/transaction';
 import {
   FormSchedule,
   FormScheduleAttribute,
-  FormScheduleAttributes,
 } from '@entities';
 import { UpdateScheduleDto } from '../dtos/UpdateScheduleDto';
 import { BaseAttribute } from '@shared/types/BaseAttribute';
+import { FormScheduleAttributes } from '@entities/core/group';
 
 type UpdateScheduleInput = {
   scheduleId: string;

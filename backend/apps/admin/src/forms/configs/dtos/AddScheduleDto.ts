@@ -16,9 +16,9 @@ import {
 import { FormScheduleType } from '../enums/FormScheduleType';
 import { FormSchedulePeriod } from '../enums/FormSchedulePeriod';
 import { Type } from 'class-transformer';
-import { DaysOfMonth, DaysOfWeek } from '@entities';
 import { PostponeDto } from './PostponeDto';
 import { RestrictDto } from './RestrictDto';
+import { DaysOfMonth, DaysOfWeek } from '@entities/core/group';
 
 export class AddScheduleDto {
   @IsEnum(FormScheduleType)

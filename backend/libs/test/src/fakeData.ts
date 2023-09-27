@@ -148,7 +148,14 @@ const password = (length = 10) =>
 
 const futureDate = () => faker.date.future();
 
+const time = () => {
+  const hours = faker.number.int({ min: 0, max: 23 });
+  const minutes = faker.number.int({ min: 0, max: 59 });
+  return formatTime(hours, minutes);
+};
+
 export default {
+  time,
   futureDate,
   positiveInteger,
   id,

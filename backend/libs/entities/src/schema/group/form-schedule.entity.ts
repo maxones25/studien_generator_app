@@ -1,20 +1,16 @@
 import { Entity as TypeOrmEntity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { FormConfiguration, FormScheduleAttribute, Task } from '..';
-import { FormScheduleType } from '@admin/forms/configs/enums/FormScheduleType';
-import { FormSchedulePeriod } from '@admin/forms/configs/enums/FormSchedulePeriod';
 import { IdEntity } from '@entities/modules/schema/IdEntity';
+import {
+  FormSchedulePeriod,
+  FormScheduleType,
+  ISchedule,
+  Postpone,
+  Restrict,
+} from '@entities/core/group';
 
-export type Postpone = {
-  times: number;
-  duration: number;
-};
-
-export type Restrict = {
-  before: number;
-  after: number;
-};
-
-export class BaseFormSchedule extends IdEntity {
+@TypeOrmEntity()
+export class FormSchedule extends IdEntity implements ISchedule {
   @Column()
   configId: string;
 
@@ -70,10 +66,7 @@ export class BaseFormSchedule extends IdEntity {
     },
   })
   restrict: Restrict;
-}
 
-@TypeOrmEntity()
-export class FormSchedule extends BaseFormSchedule {
   @OneToMany(() => Task, (task) => task.form)
   tasks: Task[];
 

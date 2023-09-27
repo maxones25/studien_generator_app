@@ -22,6 +22,7 @@ import { FormsModule } from '@admin/forms/forms/forms.module';
     IsGroupDeletedGuard,
     GroupsRepository,
     Provider.GroupsRepositoryProvider,
+    Provider.SchedulesRepositoryProvider,
     Provider.CreateGroupUseCaseProvider,
     Provider.ChangeGroupNameUseCaseProvider,
     Provider.DeleteGroupUseCaseProvider,
@@ -40,11 +41,13 @@ import { FormsModule } from '@admin/forms/forms/forms.module';
     Provider.RemoveFormConfigUseCaseProvider,
     Provider.GetFormConfigsUseCaseProvider,
     Provider.GetAvailableFormsByGroupUseCaseProvider,
+    Provider.AddScheduleUseCaseProvider,
   ],
   exports: [
     GroupGuard,
     IsGroupDeletedGuard,
     Domain.GROUPS_REPOSITORY,
+    Domain.SCHEDULES_REPOSITORY,
     Domain.CREATE_GROUP_USE_CASE,
     Domain.CHANGE_GROUP_NAME_USE_CASE,
     Domain.DELETE_GROUP_USE_CASE,
@@ -63,6 +66,7 @@ import { FormsModule } from '@admin/forms/forms/forms.module';
     Domain.REMOVE_FORM_CONFIG_USE_CASE,
     Domain.GET_FORM_CONFIGS_USE_CASE,
     Domain.GET_AVAILABLE_FORMS_BY_GROUP_USE_CASE,
+    Domain.ADD_SCHEDULE_USE_CASE,
   ],
 })
 export class GroupsModule {}

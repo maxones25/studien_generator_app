@@ -1,7 +1,7 @@
 import {
   FormSchedule as FormScheduleEntity,
-  FormScheduleAttributes,
 } from '@entities';
+import { FormScheduleAttributes } from '@entities/core/group';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';

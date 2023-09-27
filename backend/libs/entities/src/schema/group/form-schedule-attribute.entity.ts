@@ -7,25 +7,7 @@ import {
 import { FormSchedule } from '..';
 import { AttributeKey } from '@shared/modules/records/attribute.repository';
 import { BaseEntity } from '@entities/modules/schema/BaseEntity';
-
-export type FormScheduleAttributes = Partial<{
-  frequency: number;
-  daysOfWeek: DaysOfWeek;
-  daysOfMonth: DaysOfMonth;
-  amount: number;
-}>;
-
-export type DaysOfWeek = [
-  boolean,
-  boolean,
-  boolean,
-  boolean,
-  boolean,
-  boolean,
-  boolean,
-];
-
-export type DaysOfMonth = number[];
+import {  FormScheduleAttributes } from '@entities/core/group';
 
 export class BaseFormScheduleAttribute extends BaseEntity {
   @PrimaryColumn()

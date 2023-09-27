@@ -1,14 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { AddScheduleDto } from '../dtos/AddScheduleDto';
 import { SchedulesRepository } from '../repositories/schedules.repository';
-import { FormScheduleType } from '../enums/FormScheduleType';
-import { FormSchedulePeriod } from '../enums/FormSchedulePeriod';
 import { UpdateScheduleDto } from '../dtos/UpdateScheduleDto';
 import { DeleteScheduleTransaction } from '../transactions/DeleteScheduleTransaction';
 import { CreateScheduleTransaction } from '../transactions/CreateScheduleTransaction';
 import { UpdateScheduleTransaction } from '../transactions/UpdateScheduleTransaction';
 import { BaseAttribute } from '@shared/types/BaseAttribute';
-import { FormScheduleAttributes } from '@entities';
+import {
+  FormScheduleAttributes,
+  FormSchedulePeriod,
+  FormScheduleType,
+} from '@entities/core/group';
 
 @Injectable()
 export class SchedulesService {
@@ -24,6 +26,12 @@ export class SchedulesService {
   ) {}
 
   async create(configId: string, data: AddScheduleDto) {
+    if (
+      data.type === FormScheduleType.Flexible &&
+      data.period === FormSchedulePeriod.Day
+    )
+      throw new BadRequestException('type Flexible and period Day not valid');
+      
     const attributes = this.generateAttributes(data);
     return this.createScheduleTransaction.run({ configId, data, attributes });
   }

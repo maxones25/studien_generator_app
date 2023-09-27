@@ -1,4 +1,4 @@
-import { DaysOfMonth, DaysOfWeek } from '@entities';
+import { DaysOfMonth, DaysOfWeek } from '@entities/core/group';
 import { Transform, Type } from 'class-transformer';
 import {
   ArrayMaxSize,

@@ -3,14 +3,15 @@ import { AddScheduleDto } from '../dtos/AddScheduleDto';
 import {
   FormSchedule,
   FormScheduleAttribute,
-  FormScheduleAttributes,
 } from '@entities';
 import { BaseAttribute } from '@shared/types/BaseAttribute';
+import { FormScheduleAttributes } from '@entities/core/group';
 
 type CreateScheduleInput = {
   configId: string;
   data: AddScheduleDto;
-  attributes: BaseAttribute<FormScheduleAttributes>[];
+  attributes: BaseAttribute<FormScheduleAttributes
+  >[];
 };
 
 export class CreateScheduleTransaction extends Transaction<

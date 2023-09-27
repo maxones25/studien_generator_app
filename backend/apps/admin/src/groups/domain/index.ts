@@ -1,5 +1,6 @@
 export * from './repositories/IGroupsRepository';
 export * from './repositories/IGroupAppointmentRepository';
+export * from './repositories/ISchedulesRepository';
 export * from './useCases/appointments/ICreateGroupAppointmentUseCase';
 export * from './useCases/appointments/IGetGroupAppointmentsUseCase';
 export * from './useCases/groups/ICreateGroupUseCase';
@@ -24,5 +25,5 @@ export * from './errors/FormConfigIsAlreadyInactiveError';
 export * from './useCases/formConfigs/IRemoveFormConfigUseCase';
 export * from './errors/FormConfigNotFoundError';
 export * from './errors/GroupNotFoundError';
-
 export * from './useCases/formConfigs/IGetAvailableFormsByGroupUseCase';
+export * from './useCases/schedules/IAddScheduleUseCase';

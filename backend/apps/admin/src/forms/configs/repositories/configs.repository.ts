@@ -2,8 +2,8 @@ import { FormConfiguration } from '@entities';
 import { Repository } from 'typeorm';
 import { RecordRepository } from '@shared/modules/records/record.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FormScheduleAttributes } from '@entities';
 import { GetByGroupQueryDto } from '../dtos/GetByGroupQueryDto';
+import { FormScheduleAttributes } from '@entities/core/group';
 
 export class ConfigsRepository extends RecordRepository<FormConfiguration> {
   constructor(
