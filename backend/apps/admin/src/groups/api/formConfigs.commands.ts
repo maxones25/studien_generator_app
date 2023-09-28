@@ -12,7 +12,9 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import {
+  ConfigQueryDto,
   ErrorFilter,
+  FormConfigGuard,
   GetGroup,
   GroupGuard,
   IsGroupDeletedGuard,
@@ -23,8 +25,6 @@ import * as Domain from '../domain';
 import { Group } from '@entities/core/group';
 import { GetForm } from '@admin/forms/forms/decorators/form.decorator';
 import { Form } from '@entities';
-import { ConfigGuard } from '@admin/forms/configs/guards/config.guard';
-import { ConfigQueryDto } from '@admin/forms/configs/dtos/ConfigQueryDto';
 
 @Controller('groups')
 @UseFilters(ErrorFilter)
@@ -75,7 +75,7 @@ export class FormConfigsCommands {
   @Post('activateFormConfig')
   @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
-  @UseGuards(ConfigGuard)
+  @UseGuards(FormConfigGuard)
   activateForm(@Query() { configId }: ConfigQueryDto) {
     return this.activateFormConfigUseCase.execute({ formConfigId: configId });
   }
@@ -83,7 +83,7 @@ export class FormConfigsCommands {
   @Post('deactivateFormConfig')
   @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
-  @UseGuards(ConfigGuard)
+  @UseGuards(FormConfigGuard)
   deactivateForm(@Query() { configId }: ConfigQueryDto) {
     return this.deactivateFormConfigUseCase.execute({ formConfigId: configId });
   }
@@ -91,7 +91,7 @@ export class FormConfigsCommands {
   @Post('setFormConfigTimeDependent')
   @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
-  @UseGuards(ConfigGuard)
+  @UseGuards(FormConfigGuard)
   setFormTimeDependent(@Query() { configId }: ConfigQueryDto) {
     return this.setFormConfigTimeDependentUseCase.execute({
       formConfigId: configId,
@@ -101,7 +101,7 @@ export class FormConfigsCommands {
   @Post('setFormConfigTimeIndependent')
   @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
-  @UseGuards(ConfigGuard)
+  @UseGuards(FormConfigGuard)
   setFormTimeIndependent(@Query() { configId }: ConfigQueryDto) {
     return this.setFormConfigTimeIndependentUseCase.execute({
       formConfigId: configId,
@@ -111,7 +111,7 @@ export class FormConfigsCommands {
   @Post('removeFormConfig')
   @HttpCode(HttpStatus.OK)
   @Roles('admin')
-  @UseGuards(ConfigGuard)
+  @UseGuards(FormConfigGuard)
   async removeFormFromGroup(@Query() { configId }: ConfigQueryDto) {
     const group = await this.removeFormConfigUseCase.execute({
       formConfigId: configId,

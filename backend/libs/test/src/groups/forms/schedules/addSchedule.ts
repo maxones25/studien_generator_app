@@ -21,7 +21,7 @@ export const addSchedule = (
   { accessToken, studyId, configId, ...data }: AddScheduleRequestOptions,
 ) =>
   request(app).command({
-    path: '/forms/addSchedule',
+    path: '/groups/addSchedule',
     accessToken,
     query: { studyId, configId },
     data,

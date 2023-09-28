@@ -9,7 +9,7 @@ export const useUpdateFormSchedule = () => {
   const groupId = useGroupId()!;
   return useWriteRequest<ScheduleFormData, number>(
     ({ body: { id: scheduleId, ...body }, ...options }) =>
-      apiRequest(`/forms/updateSchedule`, {
+      apiRequest(`/groups/updateSchedule`, {
         ...options,
         method: "POST",
         params: { studyId, scheduleId },

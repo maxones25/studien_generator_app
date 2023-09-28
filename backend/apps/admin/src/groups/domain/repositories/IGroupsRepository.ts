@@ -25,6 +25,7 @@ export interface IGroupsRepository {
     isActive?: boolean,
     type?: FormConfigType,
   ): Promise<FormConfig[]>;
+  getStudyRelatedFormConfig(studyId: string, id: string): Promise<FormConfig>;
   getGroupAppointments(
     studyId: string,
     groupId: string,

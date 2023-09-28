@@ -1,7 +1,6 @@
-import { FormSchedulePeriod } from '@admin/forms/configs/enums/FormSchedulePeriod';
 import { FormSchedule } from '@admin/forms/configs/repositories/schedules.repository';
 import {  Task } from '@entities';
-import { DaysOfMonth, DaysOfWeek } from '@entities/core/group';
+import { DaysOfMonth, DaysOfWeek, FormSchedulePeriod } from '@entities/core/group';
 import { Injectable } from '@nestjs/common';
 import datetime, { Time } from '@shared/modules/datetime/datetime';
 

@@ -10,7 +10,7 @@ export const useCreateFormSchedule = () => {
 
   return useWriteRequest<ScheduleFormData, string>(
     ({ body: { configId, ...body }, ...options }) =>
-      apiRequest(`/forms/addSchedule`, {
+      apiRequest(`/groups/addSchedule`, {
         ...options,
         method: "POST",
         params: { studyId, configId },

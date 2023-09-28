@@ -6,11 +6,13 @@ import {
   Post,
   Query,
   UseGuards,
+  UseFilters,
 } from '@nestjs/common';
 import {
   GroupQueryDto,
   GroupGuard,
   IsGroupDeletedGuard,
+  ErrorFilter,
 } from '@admin/groups/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
@@ -21,6 +23,7 @@ import {
 } from '../domain';
 
 @Controller('groups')
+@UseFilters(ErrorFilter)
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class AppointmentsCommands {
   constructor(

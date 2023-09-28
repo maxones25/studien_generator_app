@@ -1,110 +1,26 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { AddScheduleDto } from '../dtos/AddScheduleDto';
+import { Inject, Injectable } from '@nestjs/common';
 import { SchedulesRepository } from '../repositories/schedules.repository';
-import { UpdateScheduleDto } from '../dtos/UpdateScheduleDto';
 import { DeleteScheduleTransaction } from '../transactions/DeleteScheduleTransaction';
-import { CreateScheduleTransaction } from '../transactions/CreateScheduleTransaction';
-import { UpdateScheduleTransaction } from '../transactions/UpdateScheduleTransaction';
-import { BaseAttribute } from '@shared/types/BaseAttribute';
-import {
-  FormScheduleAttributes,
-  FormSchedulePeriod,
-  FormScheduleType,
-} from '@entities/core/group';
+import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 
 @Injectable()
-export class SchedulesService {
+export class SchedulesService implements IGetStudyRelatedDataUseCase {
   constructor(
     @Inject(SchedulesRepository)
     readonly schedulesRepository: SchedulesRepository,
-    @Inject(CreateScheduleTransaction)
-    readonly createScheduleTransaction: CreateScheduleTransaction,
-    @Inject(UpdateScheduleTransaction)
-    readonly updateScheduleTransaction: UpdateScheduleTransaction,
     @Inject(DeleteScheduleTransaction)
     readonly deleteScheduleTransaction: DeleteScheduleTransaction,
   ) {}
 
-  async create(configId: string, data: AddScheduleDto) {
-    if (
-      data.type === FormScheduleType.Flexible &&
-      data.period === FormSchedulePeriod.Day
-    )
-      throw new BadRequestException('type Flexible and period Day not valid');
-      
-    const attributes = this.generateAttributes(data);
-    return this.createScheduleTransaction.run({ configId, data, attributes });
-  }
-
-  async getByConfig(configId: string) {
-    return this.schedulesRepository.getByConfig(configId);
+  execute(studyId: string, id: string): Promise<any> {
+    return this.schedulesRepository.getStudyRelated(studyId, id);
   }
 
   async getActiveByGroup(groupId: string) {
     return this.schedulesRepository.getActiveByGroup(groupId);
   }
 
-  async update(scheduleId: string, data: UpdateScheduleDto) {
-    const attributes = this.generateAttributes(data);
-    return this.updateScheduleTransaction.run({ scheduleId, data, attributes });
-  }
-
   async delete(scheduleId: string) {
     return await this.deleteScheduleTransaction.run({ scheduleId });
-  }
-
-  private generateAttributes({
-    type,
-    period,
-    frequency,
-    amount,
-    daysOfMonth,
-    daysOfWeek,
-  }: AddScheduleDto): BaseAttribute<FormScheduleAttributes>[] {
-    if (type === FormScheduleType.Fix && period === FormSchedulePeriod.Day) {
-      return [
-        {
-          key: 'frequency',
-          value: frequency,
-        },
-      ];
-    } else if (
-      type === FormScheduleType.Fix &&
-      period === FormSchedulePeriod.Week
-    ) {
-      return [
-        {
-          key: 'frequency',
-          value: frequency,
-        },
-        {
-          key: 'daysOfWeek',
-          value: daysOfWeek,
-        },
-      ];
-    } else if (
-      type === FormScheduleType.Fix &&
-      period === FormSchedulePeriod.Month
-    ) {
-      return [
-        {
-          key: 'frequency',
-          value: frequency,
-        },
-        {
-          key: 'daysOfMonth',
-          value: daysOfMonth,
-        },
-      ];
-    } else if (type === FormScheduleType.Flexible) {
-      return [
-        {
-          key: 'amount',
-          value: amount,
-        },
-      ];
-    }
-
-    return [];
   }
 }

@@ -1,6 +1,4 @@
-import {
-  FormSchedule as FormScheduleEntity,
-} from '@entities';
+import { FormSchedule as FormScheduleEntity } from '@entities';
 import { FormScheduleAttributes } from '@entities/core/group';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -18,39 +16,8 @@ export class SchedulesRepository extends RecordRepository<FormScheduleEntity> {
     super(db);
   }
 
-  async getByConfig(configId: string): Promise<FormSchedule[]> {
-    const schedules = await this.db.find({
-      where: { configId },
-      order: {
-        createdAt: 'ASC',
-      },
-      relations: {
-        attributes: true,
-      },
-      select: {
-        id: true,
-        type: true,
-        period: true,
-        times: true,
-        configId: true,
-        postpone: {
-          duration: true,
-          times: true,
-        },
-      },
-    });
-
-    return schedules.map((schedule) => ({
-      ...schedule,
-      isDeleted: schedule.deletedAt !== null,
-      ...schedule.attributes.reduce<FormScheduleAttributes>(
-        (obj, attribute) => {
-          obj[attribute.key] = attribute.value;
-          return obj;
-        },
-        {},
-      ),
-    }));
+  getStudyRelated(studyId: string, id: string) {
+    return this.db.findOneBy({ config: { studyId }, id });
   }
 
   async getActiveByGroup(groupId: string): Promise<FormSchedule[]> {

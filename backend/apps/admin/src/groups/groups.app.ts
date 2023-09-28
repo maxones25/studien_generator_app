@@ -10,6 +10,7 @@ import { FormConfigsCommands } from './api/formConfigs.commands';
 import { GroupsCommands } from './api/groups.commands';
 import { GroupsQueries } from './api/groups.queries';
 import { FormConfigsQueries } from './api/formConfigs.queries';
+import { SchedulesCommands } from './api/schedules.commands';
 
 @Module({
   imports: [GroupsModule, StudiesModule, ConfigsModule, FormsModule],
@@ -20,6 +21,7 @@ import { FormConfigsQueries } from './api/formConfigs.queries';
     GroupsQueries,
     FormConfigsCommands,
     FormConfigsQueries,
+    SchedulesCommands
   ],
 })
 export class GroupsApp {}

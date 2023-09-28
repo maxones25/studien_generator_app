@@ -17,3 +17,7 @@ export * from './useCases/formConfigs/RemoveFormConfigUseCase';
 export * from './useCases/formConfigs/GetFormConfigsUseCase';
 export * from './useCases/formConfigs/GetAvailableFormsByGroupUseCase';
 export * from './useCases/schedules/AddScheduleUseCase';
+export * from './useCases/schedules/UpdateScheduleUseCase';
+export * from './useCases/schedules/GetStudyRelatedFormConfigUseCase';
+export * from './useCases/schedules/GetStudyRelatedScheduleUseCase';
+export * from './useCases/schedules/RemoveScheduleUseCase';

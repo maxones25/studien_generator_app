@@ -7,6 +7,7 @@ import {
   Query,
   HttpCode,
   HttpStatus,
+  UseFilters,
 } from '@nestjs/common';
 import { Roles } from '@admin/members/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
@@ -15,6 +16,7 @@ import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDelete
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
 import {
   CreateGroupDto,
+  ErrorFilter,
   GroupGuard,
   GroupQueryDto,
   IsGroupDeletedGuard,
@@ -32,6 +34,7 @@ import {
 } from '../domain';
 
 @Controller('groups')
+@UseFilters(ErrorFilter)
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class GroupsCommands {
   constructor(

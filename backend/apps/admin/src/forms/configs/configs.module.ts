@@ -6,9 +6,6 @@ import {
   FormSchedule,
   FormScheduleAttribute,
 } from '@entities';
-import { ConfigGuard } from './guards/config.guard';
-import { ConfigsRepository } from './repositories/configs.repository';
-import { ConfigsService } from './services/configs.service';
 import { SchedulesService } from './services/schedules.service';
 
 @Module({
@@ -20,6 +17,6 @@ import { SchedulesService } from './services/schedules.service';
     ]),
   ],
   providers,
-  exports: [ConfigGuard, ConfigsService, SchedulesService, ConfigsRepository],
+  exports: [SchedulesService],
 })
 export class ConfigsModule {}

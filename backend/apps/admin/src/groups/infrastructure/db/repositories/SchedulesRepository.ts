@@ -79,4 +79,71 @@ export class SchedulesRepository implements ISchedulesRepository {
 
     return schedule.id;
   }
+
+  async updateSchedule({
+    id,
+    type,
+    period,
+    postpone,
+    restrict,
+    times,
+    frequency,
+    amount,
+    daysOfWeek,
+    daysOfMonth,
+  }: Schedule): Promise<number> {
+    const affected = await this.schedules.update(id, {
+      type,
+      period,
+      postpone,
+      restrict,
+      times,
+    });
+
+    const scheduleId = id;
+
+    await this.attributes.hardDelete({ scheduleId });
+
+    if (frequency !== undefined) {
+      await this.attributes.create({
+        scheduleId,
+        key: 'frequency',
+        value: frequency,
+      });
+    }
+
+    if (amount !== undefined) {
+      await this.attributes.create({
+        scheduleId,
+        key: 'amount',
+        value: amount,
+      });
+    }
+
+    if (daysOfMonth !== undefined) {
+      await this.attributes.create({
+        scheduleId,
+        key: 'daysOfMonth',
+        value: daysOfMonth,
+      });
+    }
+
+    if (daysOfWeek !== undefined) {
+      await this.attributes.create({
+        scheduleId,
+        key: 'daysOfWeek',
+        value: daysOfWeek,
+      });
+    }
+
+    return affected;
+  }
+
+  getStudyRelatedSchedule(studyId: string, id: string): Promise<Schedule> {
+    return this.schedules.findOne({ where: { config: { studyId }, id } });
+  }
+
+  removeSchedule(scheduleId: string): Promise<number> {
+    return this.schedules.hardDelete(scheduleId);
+  }
 }

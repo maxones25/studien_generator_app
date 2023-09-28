@@ -1,6 +1,4 @@
-import { AddScheduleDto } from '@admin/forms/configs/dtos/AddScheduleDto';
-import { ConfigQueryDto } from '@admin/forms/configs/dtos/ConfigQueryDto';
-import { ConfigGuard } from '@admin/forms/configs/guards/config.guard';
+import { AddScheduleDto } from '@admin/groups/infrastructure/http/dtos/AddScheduleDto';
 import { Roles } from '@admin/members/infrastructure/http';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
@@ -11,21 +9,43 @@ import {
   Post,
   UseGuards,
   Inject,
+  UseFilters,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
-import { ADD_SCHEDULE_USE_CASE, IAddScheduleUseCase } from '../domain';
-import { IAddFieldUseCase } from '@admin/entities/domain';
+import {
+  ADD_SCHEDULE_USE_CASE,
+  IAddScheduleUseCase,
+  IRemoveScheduleUseCase,
+  IUpdateScheduleUseCase,
+  REMOVE_SCHEDULE_USE_CASE,
+  UPDATE_SCHEDULE_USE_CASE,
+} from '../domain';
+import {
+  ScheduleGuard,
+  ErrorFilter,
+  FormConfigGuard,
+  ScheduleQueryDto,
+  UpdateScheduleDto,
+  ConfigQueryDto,
+} from '@admin/groups/infrastructure/http';
 
-@Controller('forms')
+@Controller('groups')
+@UseFilters(ErrorFilter)
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
 export class SchedulesCommands {
   constructor(
     @Inject(ADD_SCHEDULE_USE_CASE)
     private readonly addScheduleUseCase: IAddScheduleUseCase,
+    @Inject(UPDATE_SCHEDULE_USE_CASE)
+    private readonly updateScheduleUseCase: IUpdateScheduleUseCase,
+    @Inject(REMOVE_SCHEDULE_USE_CASE)
+    private readonly removeScheduleUseCase: IRemoveScheduleUseCase,
   ) {}
 
   @Post('addSchedule')
   @Roles('admin', 'employee')
-  @UseGuards(ConfigGuard)
+  @UseGuards(FormConfigGuard)
   async create(
     @Query() { configId }: ConfigQueryDto,
     @Body() data: AddScheduleDto,
@@ -33,18 +53,22 @@ export class SchedulesCommands {
     return this.addScheduleUseCase.execute({ formConfigId: configId, data });
   }
 
-  // @Post('updateSchedule')
-  // @Roles('admin', 'employee')
-  // async update(
-  //   @Query() { scheduleId }: ScheduleQueryDto,
-  //   @Body() body: UpdateScheduleDto,
-  // ) {
-  //   return this.formSchedulesService.update(scheduleId, body);
-  // }
+  @Post('updateSchedule')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(ScheduleGuard)
+  @Roles('admin', 'employee')
+  async update(
+    @Query() { scheduleId }: ScheduleQueryDto,
+    @Body() data: UpdateScheduleDto,
+  ) {
+    return this.updateScheduleUseCase.execute({ scheduleId, data });
+  }
 
-  // @Post('removeSchedule')
-  // @Roles('admin')
-  // async delete(@Query() { scheduleId }: ScheduleQueryDto) {
-  //   return this.formSchedulesService.delete(scheduleId);
-  // }
+  @Post('removeSchedule')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(ScheduleGuard)
+  @Roles('admin')
+  async delete(@Query() { scheduleId }: ScheduleQueryDto) {
+    return this.removeScheduleUseCase.execute({ scheduleId });
+  }
 }

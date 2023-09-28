@@ -1,9 +1,10 @@
-import { ConfigsRepository } from '@admin/forms/configs/repositories/configs.repository';
 import { DeleteGroupUseCase } from '@admin/groups/application';
 import {
   DELETE_GROUP_USE_CASE,
   GROUPS_REPOSITORY,
   IGroupsRepository,
+  IFormConfigsRepository,
+  FORM_CONFIGS_REPOSITORY,
 } from '@admin/groups/domain';
 import { ParticipantsRepository } from '@admin/participants/participants/participants.repository';
 import { Provider } from '@nestjs/common';
@@ -13,13 +14,13 @@ export const DeleteGroupUseCaseProvider: Provider = {
   useFactory(
     groupsRepository: IGroupsRepository,
     participantsRepository: ParticipantsRepository,
-    configsRepository: ConfigsRepository,
+    formConfigsRepository: IFormConfigsRepository,
   ) {
     return new DeleteGroupUseCase(
       groupsRepository,
       participantsRepository,
-      configsRepository,
+      formConfigsRepository,
     );
   },
-  inject: [GROUPS_REPOSITORY, ParticipantsRepository, ConfigsRepository],
+  inject: [GROUPS_REPOSITORY, ParticipantsRepository, FORM_CONFIGS_REPOSITORY],
 };

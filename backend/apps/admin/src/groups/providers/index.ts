@@ -1,5 +1,6 @@
 export * from './repositories/GroupsRepositoryProvider';
 export * from './repositories/SchedulesRepositoryProvider';
+export * from './repositories/FormConfigsRepositoryProvider';
 export * from './useCases/appointments/CreateGroupAppointmentUseCaseProvider';
 export * from './useCases/appointments/GetGroupAppointmentUseCaseProvider';
 export * from './useCases/groups/CreateGroupUseCaseProvider';
@@ -19,3 +20,7 @@ export * from './useCases/formConfigs/RemoveFormConfigUseCaseProvider';
 export * from './useCases/formConfigs/GetFormConfigsUseCaseProvider';
 export * from './useCases/formConfigs/GetAvailableFormsByGroupUseCaseProvider';
 export * from './useCases/schedules/AddScheduleUseCaseProvider';
+export * from './useCases/schedules/UpdateScheduleUseCaseProvider';
+export * from './useCases/schedules/GetStudyRelatedFormConfigUseCaseProvider';
+export * from './useCases/schedules/GetStudyRelatedScheduleUseCaseProvider';
+export * from './useCases/schedules/RemoveScheduleUseCaseProvider';

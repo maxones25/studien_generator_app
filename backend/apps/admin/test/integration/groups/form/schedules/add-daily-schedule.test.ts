@@ -1,5 +1,4 @@
 import { AppModule } from '@admin/app.module';
-import { validateUUID } from '@shared/modules/uuid/uuid';
 import { IApp, createApp } from '@test/app/createApp';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
@@ -7,7 +6,11 @@ import fakeData from '@test/fakeData';
 import { createFormId } from '@test/forms/createForm';
 import { createGroupId } from '@test/groups/createGroup';
 import { createGroupFormId } from '@test/groups/forms/addFormToGroup';
-import { addSchedule } from '@test/groups/forms/schedules/addSchedule';
+import {
+  addSchedule,
+  addScheduleId,
+} from '@test/groups/forms/schedules/addSchedule';
+import { getSchedule } from '@test/groups/forms/schedules/getSchedule';
 import { createStudyId } from '@test/studies/createStudy';
 import { TEST_DIRECTOR } from '@test/testData';
 
@@ -38,7 +41,9 @@ describe('add daily schedule', () => {
     studyId = await createStudyId(app, { accessToken });
 
     groupId = await createGroupId(app, { accessToken, studyId });
+  });
 
+  beforeEach(async () => {
     formId = await createFormId(app, { accessToken, studyId });
 
     configId = await createGroupFormId(app, {
@@ -52,66 +57,115 @@ describe('add daily schedule', () => {
   afterAll(() => app.close());
 
   it('should add fix daily schedule', async () => {
-    return addSchedule(app, {
+    let { type, period, postpone, restrict, frequency, times } =
+      fakeData.schedule('Fix', 'Day');
+
+    postpone = null;
+    restrict = null;
+
+    const scheduleId = await addScheduleId(app, {
       accessToken,
       studyId,
       configId,
-      type: 'Fix',
-      period: 'Day',
-      frequency: 2,
-      postpone: null,
-      restrict: null,
-      times: [fakeData.time()],
-    })
-      .expect(201)
-      .then((res) => {
-        const id = res.text;
-        expect(validateUUID(id)).toBe(true);
-      });
+      type,
+      period,
+      frequency,
+      postpone,
+      restrict,
+      times,
+    });
+
+    const schedule = await getSchedule(app, {
+      accessToken,
+      studyId,
+      groupId,
+      configId,
+      scheduleId,
+    });
+
+    expect(schedule).toEqual({
+      id: scheduleId,
+      type,
+      period,
+      times,
+      postpone,
+      restrict,
+      frequency,
+    });
   });
 
   it('should add postponable schedule', async () => {
-    return addSchedule(app, {
+    let { type, period, postpone, restrict, frequency, times } =
+      fakeData.schedule('Fix', 'Day');
+
+    restrict = null;
+
+    const scheduleId = await addScheduleId(app, {
       accessToken,
       studyId,
       configId,
-      type: 'Fix',
-      period: 'Day',
-      frequency: 2,
-      postpone: {
-        times: 2,
-        duration: 1,
-      },
-      restrict: null,
-      times: [fakeData.time()],
-    })
-      .expect(201)
-      .then((res) => {
-        const id = res.text;
-        expect(validateUUID(id)).toBe(true);
-      });
+      type,
+      period,
+      frequency,
+      postpone,
+      restrict,
+      times,
+    });
+
+    const schedule = await getSchedule(app, {
+      accessToken,
+      studyId,
+      groupId,
+      configId,
+      scheduleId,
+    });
+
+    expect(schedule).toEqual({
+      id: scheduleId,
+      type,
+      period,
+      times,
+      postpone,
+      restrict,
+      frequency,
+    });
   });
 
   it('should add restricted schedule', async () => {
-    return addSchedule(app, {
+    let { type, period, postpone, restrict, frequency, times } =
+      fakeData.schedule('Fix', 'Day');
+
+    postpone = null;
+
+    const scheduleId = await addScheduleId(app, {
       accessToken,
       studyId,
       configId,
-      type: 'Fix',
-      period: 'Day',
-      frequency: 2,
-      postpone: null,
-      restrict: {
-        before: 2,
-        after: 4,
-      },
-      times: [fakeData.time()],
-    })
-      .expect(201)
-      .then((res) => {
-        const id = res.text;
-        expect(validateUUID(id)).toBe(true);
-      });
+      type,
+      period,
+      frequency,
+      postpone,
+      restrict,
+      times,
+    });
+
+    const schedule = await getSchedule(app, {
+      accessToken,
+      studyId,
+      groupId,
+      configId,
+      scheduleId,
+    });
+
+    expect(schedule).toEqual({
+      id: scheduleId,
+      type,
+      period,
+      times,
+      postpone,
+      restrict,
+      frequency,
+    });
   });
 
   it('should fail because flexible daily not valid', async () => {

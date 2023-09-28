@@ -6,7 +6,12 @@ import * as Domain from './domain';
 import * as Provider from './providers';
 import { ConfigsModule } from '@admin/forms/configs/configs.module';
 import { ParticipantsModule } from '@admin/participants/participants/participants.module';
-import { GroupGuard, IsGroupDeletedGuard } from './infrastructure/http';
+import {
+  FormConfigGuard,
+  GroupGuard,
+  IsGroupDeletedGuard,
+  ScheduleGuard,
+} from './infrastructure/http';
 import { FormsModule } from '@admin/forms/forms/forms.module';
 
 @Module({
@@ -19,10 +24,13 @@ import { FormsModule } from '@admin/forms/forms/forms.module';
   ],
   providers: [
     GroupGuard,
+    FormConfigGuard,
+    ScheduleGuard,
     IsGroupDeletedGuard,
     GroupsRepository,
     Provider.GroupsRepositoryProvider,
     Provider.SchedulesRepositoryProvider,
+    Provider.FormConfigsRepositoryProvider,
     Provider.CreateGroupUseCaseProvider,
     Provider.ChangeGroupNameUseCaseProvider,
     Provider.DeleteGroupUseCaseProvider,
@@ -42,12 +50,19 @@ import { FormsModule } from '@admin/forms/forms/forms.module';
     Provider.GetFormConfigsUseCaseProvider,
     Provider.GetAvailableFormsByGroupUseCaseProvider,
     Provider.AddScheduleUseCaseProvider,
+    Provider.UpdateScheduleUseCaseProvider,
+    Provider.GetStudyRelatedFormConfigUseCaseProvider,
+    Provider.GetStudyRelatedScheduleUseCaseProvider,
+    Provider.RemoveScheduleUseCaseProvider,
   ],
   exports: [
     GroupGuard,
+    FormConfigGuard,
+    ScheduleGuard,
     IsGroupDeletedGuard,
     Domain.GROUPS_REPOSITORY,
     Domain.SCHEDULES_REPOSITORY,
+    Domain.FORM_CONFIGS_REPOSITORY,
     Domain.CREATE_GROUP_USE_CASE,
     Domain.CHANGE_GROUP_NAME_USE_CASE,
     Domain.DELETE_GROUP_USE_CASE,
@@ -67,6 +82,10 @@ import { FormsModule } from '@admin/forms/forms/forms.module';
     Domain.GET_FORM_CONFIGS_USE_CASE,
     Domain.GET_AVAILABLE_FORMS_BY_GROUP_USE_CASE,
     Domain.ADD_SCHEDULE_USE_CASE,
+    Domain.UPDATE_SCHEDULE_USE_CASE,
+    Domain.GET_STUDY_RELATED_FORM_CONFIG_USE_CASE,
+    Domain.GET_STUDY_RELATED_SCHEDULE_USE_CASE,
+    Domain.REMOVE_SCHEDULE_USE_CASE,
   ],
 })
 export class GroupsModule {}

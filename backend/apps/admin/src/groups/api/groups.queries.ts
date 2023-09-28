@@ -5,11 +5,13 @@ import {
   Query,
   ParseBoolPipe,
   Inject,
+  UseFilters,
 } from '@nestjs/common';
 import { Roles } from '@admin/members/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
 import {
+  ErrorFilter,
   GroupGuard,
   GroupQueryDto,
   IsGroupDeletedGuard,
@@ -22,6 +24,7 @@ import {
 } from '../domain';
 
 @Controller('groups')
+@UseFilters(ErrorFilter)
 @UseGuards(StudyGuard)
 export class GroupsQueries {
   constructor(

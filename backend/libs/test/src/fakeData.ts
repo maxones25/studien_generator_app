@@ -1,7 +1,12 @@
+import { FormSchedulePeriod, FormScheduleType } from '@entities/core/group';
 import { faker } from '@faker-js/faker';
 import { FieldType } from '@shared/enums/field-type.enum';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import datetime from '@shared/modules/datetime/datetime';
+
+const randomArray = (initFunc: (i: number) => any, length = 1) => {
+  return Array.from({ length }, (_, i) => initFunc(i));
+};
 
 const randomEnum = <E>(data: E): E[keyof E] => {
   const values = Object.values(data) as unknown as E[keyof E][];
@@ -141,7 +146,7 @@ export const id = () => faker.string.uuid();
 
 const text = (length = 10) => faker.string.alpha({ length, casing: 'mixed' });
 
-const positiveInteger = () => faker.number.int({ min: 1 });
+const positiveInteger = (max?: number) => faker.number.int({ min: 1, max });
 
 const password = (length = 10) =>
   faker.internet.password({ length, memorable: true });
@@ -154,7 +159,72 @@ const time = () => {
   return formatTime(hours, minutes);
 };
 
+const schedule = (
+  type: `${FormScheduleType}`,
+  period: `${FormSchedulePeriod}`,
+) => {
+  const postpone = {
+    times: positiveInteger(3),
+    duration: positiveInteger(2),
+  };
+  const restrict = {
+    before: positiveInteger(8),
+    after: positiveInteger(8),
+  };
+  const times = randomArray(() => time(), positiveInteger(3));
+  if (type === 'Fix' && period === 'Day') {
+    return {
+      type,
+      period,
+      times,
+      postpone,
+      restrict,
+      frequency: positiveInteger(10),
+    };
+  } else if (type === 'Fix' && period === 'Week') {
+    return {
+      type,
+      period,
+      daysOfWeek: randomArray(() => faker.datatype.boolean(), 7),
+      times,
+      postpone,
+      restrict,
+      frequency: positiveInteger(10),
+    };
+  } else if (type === 'Fix' && period === 'Month') {
+    return {
+      type,
+      period,
+      daysOfMonth: randomArray((i) => (i + 1) * 2, positiveInteger(5)),
+      times,
+      postpone,
+      restrict,
+      frequency: positiveInteger(10),
+    };
+  } else if (type === 'Flexible' && period === 'Week') {
+    return {
+      type,
+      period,
+      times,
+      postpone,
+      restrict,
+      amount: positiveInteger(4),
+    };
+  } else if (type === 'Flexible' && period === 'Month') {
+    return {
+      type,
+      period,
+      times,
+      postpone,
+      restrict,
+      amount: positiveInteger(8),
+    };
+  }
+  return {};
+};
+
 export default {
+  schedule,
   time,
   futureDate,
   positiveInteger,

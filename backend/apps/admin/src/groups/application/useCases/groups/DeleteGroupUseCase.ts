@@ -1,7 +1,7 @@
-import { ConfigsRepository } from '@admin/forms/configs/repositories/configs.repository';
 import {
   DeleteGroupUseCaseInput,
   IDeleteGroupUseCase,
+  IFormConfigsRepository,
   IGroupsRepository,
 } from '@admin/groups/domain';
 import { ParticipantsRepository } from '@admin/participants/participants/participants.repository';
@@ -11,7 +11,7 @@ export class DeleteGroupUseCase implements IDeleteGroupUseCase {
   constructor(
     private readonly groupsRepository: IGroupsRepository,
     private readonly participantsRepository: ParticipantsRepository,
-    private readonly configsRepository: ConfigsRepository,
+    private readonly formConfigsRepository: IFormConfigsRepository,
   ) {}
 
   async execute({
@@ -22,9 +22,9 @@ export class DeleteGroupUseCase implements IDeleteGroupUseCase {
     if (deleteRelated) {
       if (hardDelete) {
         await this.participantsRepository.hardDelete({ groupId });
-        await this.configsRepository.hardDelete({ groupId });
+        await this.formConfigsRepository.hardDelete({ groupId });
       } else {
-        await this.configsRepository.softDelete({ groupId });
+        await this.formConfigsRepository.softDelete({ groupId });
         await this.participantsRepository.softDelete({ groupId });
       }
     } else {

@@ -1,10 +1,20 @@
 import { Roles } from '@admin/members/infrastructure/http';
-import { Controller, Get, Inject, Query, UseGuards } from '@nestjs/common';
-import { GroupGuard } from '@admin/groups/infrastructure/http/guards/group.guard';
+import {
+  Controller,
+  Get,
+  Inject,
+  Query,
+  UseGuards,
+  UseFilters,
+} from '@nestjs/common';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
-import { GroupQueryDto } from '@admin/groups/infrastructure/http';
-import { GetByGroupQueryDto } from '@admin/forms/configs/dtos/GetByGroupQueryDto';
+import {
+  ErrorFilter,
+  GetByGroupQueryDto,
+  GroupGuard,
+  GroupQueryDto,
+} from '@admin/groups/infrastructure/http';
 import {
   GET_FORM_CONFIGS_USE_CASE,
   IGetFormConfigsUseCase,
@@ -13,6 +23,7 @@ import {
 } from '../domain';
 
 @Controller('groups')
+@UseFilters(ErrorFilter)
 @UseGuards(StudyGuard)
 export class FormConfigsQueries {
   constructor(

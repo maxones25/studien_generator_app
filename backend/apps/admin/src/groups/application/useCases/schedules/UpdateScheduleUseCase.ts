@@ -1,9 +1,9 @@
 import {
-  AddScheduleUseCaseInput,
   DaysOfMonthMustBeDistinctError,
   FlexibleDailyIsInvalidError,
-  IAddScheduleUseCase,
   ISchedulesRepository,
+  IUpdateScheduleUseCase,
+  UpdateScheduleUseCaseInput,
 } from '@admin/groups/domain';
 import {
   FormSchedulePeriod,
@@ -11,26 +11,26 @@ import {
   Schedule,
 } from '@entities/core/group';
 import array from '@shared/modules/array/isDistinct';
-import { Id, Transactional } from '@shared/modules/core';
+import { Transactional } from '@shared/modules/core';
 
-export class AddScheduleUseCase implements IAddScheduleUseCase {
+export class UpdateScheduleUseCase implements IUpdateScheduleUseCase {
   constructor(private readonly schedulesRepository: ISchedulesRepository) {}
 
   @Transactional()
-  async execute({
-    formConfigId,
+  execute({
+    scheduleId,
     data: {
+      type,
       period,
+      times,
       postpone,
       restrict,
-      times,
-      type,
       amount,
       daysOfMonth,
       daysOfWeek,
       frequency,
     },
-  }: AddScheduleUseCaseInput): Promise<Id> {
+  }: UpdateScheduleUseCaseInput): Promise<number> {
     if (type === FormScheduleType.Flexible && period === FormSchedulePeriod.Day)
       throw new FlexibleDailyIsInvalidError();
 
@@ -42,18 +42,18 @@ export class AddScheduleUseCase implements IAddScheduleUseCase {
       throw new DaysOfMonthMustBeDistinctError();
 
     const schedule = new Schedule({
-      configId: formConfigId,
+      id: scheduleId,
+      type,
       period,
+      times,
       postpone,
       restrict,
-      times,
-      type,
       amount,
       daysOfMonth,
       daysOfWeek,
       frequency,
     });
 
-    return await this.schedulesRepository.addSchedule(schedule);
+    return this.schedulesRepository.updateSchedule(schedule);
   }
 }
