@@ -5,6 +5,7 @@ import { FormSchedulePeriod } from './FormSchedulePeriod';
 import { Postpone } from './Postpone';
 import { Restrict } from './Restrict';
 import { FormScheduleType } from './FormScheduleType';
+import { IFormConfig } from '../formConfig/FormConfig';
 
 export type FormScheduleAttributes = Partial<{
   frequency: number;
@@ -24,6 +25,7 @@ export interface ISchedule extends Entity {
   times: string[];
   postpone: Postpone;
   restrict: Restrict;
+  config: IFormConfig;
 }
 
 export class Schedule implements ISchedule, FormScheduleAttributes {
@@ -37,6 +39,7 @@ export class Schedule implements ISchedule, FormScheduleAttributes {
   times: string[];
   postpone: Postpone;
   restrict: Restrict;
+  config: IFormConfig;
   frequency?: number;
   daysOfWeek?: DaysOfWeek;
   daysOfMonth?: DaysOfMonth;

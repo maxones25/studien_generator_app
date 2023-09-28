@@ -1,6 +1,10 @@
-import { FormSchedule } from '@admin/forms/configs/repositories/schedules.repository';
-import {  Task } from '@entities';
-import { DaysOfMonth, DaysOfWeek, FormSchedulePeriod } from '@entities/core/group';
+import { Task } from '@entities';
+import {
+  DaysOfMonth,
+  DaysOfWeek,
+  FormSchedulePeriod,
+  Schedule,
+} from '@entities/core/group';
 import { Injectable } from '@nestjs/common';
 import datetime, { Time } from '@shared/modules/datetime/datetime';
 
@@ -13,7 +17,7 @@ export class TasksCalculator {
     startDate,
   }: {
     participantId: string;
-    schedules: FormSchedule[];
+    schedules: Schedule[];
     startDate: Date;
     duration: number;
   }) {

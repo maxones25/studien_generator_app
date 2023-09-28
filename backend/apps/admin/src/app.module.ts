@@ -13,7 +13,6 @@ import { EntitiesApp } from '@admin/entities/entities.app';
 import { FormsApp } from '@admin/forms/forms/forms.app';
 import { HealthModule } from '@shared/modules/health/health.module';
 import { GroupsApp } from '@admin/groups/groups.app';
-import { ConfigsApp } from '@admin/forms/configs/configs.app';
 import { MembersModule } from '@admin/members/members.module';
 import { RecordsApp } from '@admin/records/records.app';
 import { ChatsApp } from '@admin/chats/chats.app';
@@ -36,7 +35,6 @@ import { DirectorsModule } from './directors/directors.module';
     ParticipantsApp,
     ComponentsModule,
     FormsApp,
-    ConfigsApp,
     ChatsApp,
     RecordsApp,
   ],

@@ -6,7 +6,7 @@ export const ADD_SCHEDULE_USE_CASE = 'ADD_SCHEDULE_USE_CASE';
 
 export type AddScheduleUseCaseInput = {
   formConfigId: Id;
-  data: Omit<CreateDto<Schedule>, "configId">;
+  data: Omit<CreateDto<Schedule>, 'configId' | 'config'>;
 };
 
 export interface IAddScheduleUseCase

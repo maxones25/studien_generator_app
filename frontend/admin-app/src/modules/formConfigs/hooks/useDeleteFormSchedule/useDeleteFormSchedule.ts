@@ -9,7 +9,7 @@ export const useDeleteFormSchedule = () => {
   const groupId = useGroupId()!;
   return useWriteRequest<Schedule, number>(
     ({ body: { id: scheduleId }, ...options }) =>
-      apiRequest(`/forms/removeSchedule`, {
+      apiRequest(`/groups/removeSchedule`, {
         ...options,
         method: "POST",
         params: { studyId, scheduleId },

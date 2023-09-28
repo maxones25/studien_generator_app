@@ -5,7 +5,6 @@ import { TasksModule } from '../tasks/tasks.module';
 import { ParticipantsQueries } from './controllers/participants.queries';
 import { ParticipantsCommands } from './controllers/participants.commands';
 import { PasswordModule } from '@shared/modules/password/password.module';
-import { ConfigsModule } from '@admin/forms/configs/configs.module';
 import { GroupsModule } from '@admin/groups/groups.module';
 import { AppointmentsCommands } from './controllers/appointments.commands';
 import { AppointmentsQueries } from './controllers/appointments.queries';
@@ -13,7 +12,6 @@ import { AppointmentsQueries } from './controllers/appointments.queries';
 @Module({
   imports: [
     ParticipantsModule,
-    ConfigsModule,
     TasksModule,
     StudiesModule,
     PasswordModule,

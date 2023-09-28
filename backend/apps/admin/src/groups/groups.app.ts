@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { GroupsModule } from './groups.module';
 import { StudiesModule } from '@admin/studies/studies/studies.module';
 import { FormsModule } from '@admin/forms/forms/forms.module';
-import { ConfigsModule } from '@admin/forms/configs/configs.module';
 
 import { AppointmentsQueries } from './api/appointments.queries';
 import { AppointmentsCommands } from './api/appointments.commands';
@@ -13,7 +12,7 @@ import { FormConfigsQueries } from './api/formConfigs.queries';
 import { SchedulesCommands } from './api/schedules.commands';
 
 @Module({
-  imports: [GroupsModule, StudiesModule, ConfigsModule, FormsModule],
+  imports: [GroupsModule, StudiesModule, FormsModule],
   controllers: [
     AppointmentsCommands,
     AppointmentsQueries,
@@ -21,7 +20,7 @@ import { SchedulesCommands } from './api/schedules.commands';
     GroupsQueries,
     FormConfigsCommands,
     FormConfigsQueries,
-    SchedulesCommands
+    SchedulesCommands,
   ],
 })
 export class GroupsApp {}

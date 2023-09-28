@@ -4,9 +4,9 @@ import {
 } from '@entities/schema';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ISchedulesRepository } from '@admin/Groups/domain';
+import { ISchedulesRepository } from '@admin/groups/domain';
 import { TypeOrmRepository } from '@shared/modules/db';
-import { Schedule } from '@entities/core/group';
+import { FormScheduleAttributes, Schedule } from '@entities/core/group';
 
 export class SchedulesRepository implements ISchedulesRepository {
   private readonly schedules: TypeOrmRepository<FormScheduleSchema>;
@@ -137,6 +137,49 @@ export class SchedulesRepository implements ISchedulesRepository {
     }
 
     return affected;
+  }
+
+  async getActiveSchedulesByGroup(groupId: string): Promise<Schedule[]> {
+    const schedules = await this.schedules.find({
+      where: {
+        config: {
+          groupId,
+          isActive: true,
+        },
+      },
+      relations: {
+        config: true,
+        attributes: true,
+      },
+      select: {
+        id: true,
+        type: true,
+        period: true,
+        times: true,
+        postpone: {
+          duration: true,
+          times: true,
+        },
+        config: {
+          formId: true,
+        },
+        attributes: {
+          key: true,
+          value: true,
+        },
+      },
+    });
+
+    return schedules.map((schedule) => ({
+      ...schedule,
+      ...schedule.attributes.reduce<FormScheduleAttributes>(
+        (obj, attribute) => {
+          obj[attribute.key] = attribute.value;
+          return obj;
+        },
+        {},
+      ),
+    }));
   }
 
   getStudyRelatedSchedule(studyId: string, id: string): Promise<Schedule> {

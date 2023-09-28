@@ -8,4 +8,5 @@ export interface ISchedulesRepository {
   getStudyRelatedSchedule(studyId: string, id: string): Promise<Schedule>;
   updateSchedule(schedule: Schedule): Promise<number>;
   addSchedule(schedule: Schedule): Promise<Id>;
+  getActiveSchedulesByGroup(groupId: Id): Promise<Schedule[]>;
 }

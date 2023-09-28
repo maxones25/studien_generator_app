@@ -1,10 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { AppointmentsModule } from '@admin/appointments/appointments.module';
 import { GroupsDb } from './infrastructure/db';
 import { GroupsRepository } from './repositories/groups.repository';
 import * as Domain from './domain';
 import * as Provider from './providers';
-import { ConfigsModule } from '@admin/forms/configs/configs.module';
 import { ParticipantsModule } from '@admin/participants/participants/participants.module';
 import {
   FormConfigGuard,
@@ -15,13 +14,7 @@ import {
 import { FormsModule } from '@admin/forms/forms/forms.module';
 
 @Module({
-  imports: [
-    GroupsDb,
-    AppointmentsModule,
-    ConfigsModule,
-    ParticipantsModule,
-    FormsModule,
-  ],
+  imports: [GroupsDb, forwardRef(() => ParticipantsModule), FormsModule],
   providers: [
     GroupGuard,
     FormConfigGuard,

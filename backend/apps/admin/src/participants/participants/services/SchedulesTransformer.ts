@@ -1,23 +1,28 @@
-import { SchedulesService } from '@admin/forms/configs/services/schedules.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { StartStudyConfig } from '../dtos/StartStudyDto';
-import { FormSchedule } from '@admin/forms/configs/repositories/schedules.repository';
 import { InternalServerErrorException } from '@nestjs/common';
+import {
+  ISchedulesRepository,
+  SCHEDULES_REPOSITORY,
+} from '@admin/groups/domain';
+import { Schedule } from '@entities/core/group';
 
 @Injectable()
 export class SchedulesTransformer {
   constructor(
-    @Inject(SchedulesService)
-    private readonly schedulesService: SchedulesService,
+    @Inject(SCHEDULES_REPOSITORY)
+    private readonly schedulesRepository: ISchedulesRepository,
   ) {}
 
   async generateParticipantSchedules(
     groupId: string,
     configs: StartStudyConfig[],
   ) {
-    const schedules = await this.schedulesService.getActiveByGroup(groupId);
+    const schedules = await this.schedulesRepository.getActiveSchedulesByGroup(
+      groupId,
+    );
 
-    return schedules.map<FormSchedule>((schedule) => {
+    return schedules.map<Schedule>((schedule) => {
       const updateSchedule = configs
         .flatMap((config) => config.schedules)
         .find((s) => s.id === schedule.id);

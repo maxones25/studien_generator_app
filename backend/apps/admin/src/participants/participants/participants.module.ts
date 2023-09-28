@@ -4,7 +4,6 @@ import { Participant } from '@entities';
 import participantsProviders from './participants.providers';
 import { ParticipantGuard } from './guards/participant.guard';
 import { ParticipantsService } from './participants.service';
-import { ConfigsModule } from '@admin/forms/configs/configs.module';
 import { ParticipantAttribute } from '@entities';
 import { StudiesModule } from '@admin/studies/studies/studies.module';
 import { TasksModule } from '../tasks/tasks.module';
@@ -17,6 +16,7 @@ import { AppointmentsModule } from '@admin/appointments/appointments.module';
 import { GetAppointmentsUseCase } from './transactions/GetAppointmentsUseCase';
 import { PasswordModule } from '@shared/modules/password/password.module';
 import { ParticipantsRepository } from './participants.repository';
+import { GroupsModule } from '@admin/groups/groups.module';
 
 @Module({
   imports: [
@@ -24,8 +24,8 @@ import { ParticipantsRepository } from './participants.repository';
     PasswordModule,
     StudiesModule,
     TasksModule,
-    ConfigsModule,
     AppointmentsModule,
+    GroupsModule,
   ],
   providers: participantsProviders,
   exports: [

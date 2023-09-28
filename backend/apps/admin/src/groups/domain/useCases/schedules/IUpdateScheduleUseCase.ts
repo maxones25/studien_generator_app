@@ -6,7 +6,7 @@ export const UPDATE_SCHEDULE_USE_CASE = 'UPDATE_SCHEDULE_USE_CASE';
 
 export type UpdateScheduleUseCaseInput = {
   scheduleId: Id;
-  data: Omit<CreateDto<Schedule>, 'configId'>;
+  data: Omit<CreateDto<Schedule>, 'configId' | 'config'>;
 };
 
 export interface IUpdateScheduleUseCase
