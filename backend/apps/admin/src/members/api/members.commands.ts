@@ -17,8 +17,8 @@ import {
   IRemoveMemberUseCase,
   REMOVE_MEMBER_USE_CASE,
 } from '@admin/members/domain';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
-import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
 import { Roles } from '@admin/members/infrastructure/http';
 import {
   GetDirector,

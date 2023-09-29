@@ -1,9 +1,10 @@
-import { Query, Controller, Get, Inject } from '@nestjs/common';
-import { StudyQueryDto } from '../dtos/StudyQueryDto';
-import { GetAppointmentsUseCase } from '../transactions/GetAppointmentsUseCase';
+import { Query, Controller, Get, Inject, UseFilters } from '@nestjs/common';
+import { ErrorFilter, StudyQueryDto } from '../infrastructure/http';
 import { Roles } from '@admin/members/infrastructure/http';
+import { GetAppointmentsUseCase } from '../application';
 
 @Controller('studies')
+@UseFilters(ErrorFilter)
 export class AppointmentQueries {
   constructor(
     @Inject(GetAppointmentsUseCase)

@@ -1,5 +1,5 @@
 import { Appointment } from '@entities/core/appointment/Appointment';
-import { AppointmentsRepository } from '../repositories/appointment.repository';
+import { IStudyAppointmentsRepository } from '../domain';
 
 export type GetAppointmentsInput = {
   studyId: string;
@@ -7,7 +7,7 @@ export type GetAppointmentsInput = {
 
 export class GetAppointmentsUseCase {
   constructor(
-    private readonly appointmentsRepository: AppointmentsRepository,
+    private readonly appointmentsRepository: IStudyAppointmentsRepository,
   ) {}
 
   execute({ studyId }: GetAppointmentsInput): Promise<Appointment[]> {

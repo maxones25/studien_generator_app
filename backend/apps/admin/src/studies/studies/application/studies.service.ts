@@ -1,11 +1,12 @@
 import { Injectable, Inject, BadRequestException } from '@nestjs/common';
-import { CreateStudyTransaction } from './transactions/create-study.transaction';
-import { StudyAttributesRepository } from './repositories/study-attributes.repository';
+import { CreateStudyTransaction } from './useCases/create-study.transaction';
 import datetime from '@shared/modules/datetime/datetime';
-import { StudiesRepository } from './repositories/studies.repository';
 import { StudyAttributes } from '@entities';
-import { SetDurationDto } from './dtos/SetDurationDto';
-import { CreateStudyDto } from './dtos/CreateStudyDto';
+import { CreateStudyDto, SetDurationDto } from '../infrastructure/http';
+import {
+  StudiesRepository,
+  StudyAttributesRepository,
+} from '../infrastructure/db';
 
 @Injectable()
 export class StudiesService {

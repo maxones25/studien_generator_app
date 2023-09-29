@@ -1,15 +1,22 @@
-import { Controller, Get, Inject, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Inject,
+  Query,
+  UseFilters,
+  UseGuards,
+} from '@nestjs/common';
 import { Roles } from '@admin/members/infrastructure/http';
-import { DirectorId } from '@admin/directors/infrastructure/http/decorators/director-id.decorator';
-import { StudyGuard } from '../guards/study.guard';
-import { StudiesService } from '../studies.service';
-import { StudyQueryDto } from '../dtos/StudyQueryDto';
+import { DirectorId } from '@admin/directors/infrastructure/http';
+import { StudiesService } from '../application';
+import { StudyQueryDto, StudyGuard, ErrorFilter } from '../infrastructure/http';
 import {
   GET_DIRECTORS_NOT_MEMBER_OF_STUDY_USE_CASE,
   IGetDirectorsNotMemberOfStudyUseCase,
 } from '@admin/directors/domain';
 
 @Controller('studies')
+@UseFilters(ErrorFilter)
 export class StudiesQueries {
   constructor(
     @Inject(StudiesService)

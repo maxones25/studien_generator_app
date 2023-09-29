@@ -13,10 +13,10 @@ import { Roles } from '@admin/members/infrastructure/http';
 import { FormQueryDto } from '../dtos/FormQueryDto';
 import { ChangeNameDto } from '../dtos/ChangeNameDto';
 import { FormsService } from '../services/forms.service';
-import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import { FormGuard } from '../guards/form.guard';
-import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
 import { CreateFormUseCase } from '../transactions/CreateFormUseCase';
 import { ICreateFormUseCase } from '../domain/ICreateFormUseCase';
 

@@ -24,10 +24,10 @@ import {
   ErrorFilter,
   UpdateEntityDto,
 } from '@admin/entities/infrastructure/http';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
-import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
 import { Roles } from '@admin/members/infrastructure/http';
-import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
+import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';
 
 @Controller('entities')
 @UseFilters(ErrorFilter)

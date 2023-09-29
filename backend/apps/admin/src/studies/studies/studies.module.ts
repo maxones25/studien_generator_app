@@ -1,19 +1,36 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Appointment, Study } from '@entities';
-import studiesProviders from './studies.providers';
-import { StudyAttribute } from '@entities';
-import { StudiesService } from './studies.service';
-import { StudyGuard } from './guards/study.guard';
-import { IsStudyActiveGuard } from './guards/IsStudyActiveGuard';
-import { IsStudyDeletedGuard } from './guards/IsStudyDeletedGuard';
-import { CreateAppointmentUseCase } from './transactions/CreateAppointmentUseCase';
-import { GetAppointmentsUseCase } from './transactions/GetAppointmentsUseCase';
+import {
+  CreateAppointmentUseCase,
+  CreateStudyTransaction,
+  GetAppointmentsUseCase,
+  StudiesService,
+} from './application';
+import { StudyGuard } from './infrastructure/http/guards/study.guard';
+import { IsStudyActiveGuard, IsStudyDeletedGuard } from './infrastructure/http';
+import * as Provider from './providers';
+import * as Domain from './domain';
+import {
+  StudiesDb,
+  StudiesRepository,
+  StudyAttributesRepository,
+} from './infrastructure/db';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Study, StudyAttribute, Appointment])],
-  providers: studiesProviders,
+  imports: [StudiesDb],
+  providers: [
+    StudyGuard,
+    IsStudyDeletedGuard,
+    IsStudyActiveGuard,
+    StudiesService,
+    CreateStudyTransaction,
+    StudyAttributesRepository,
+    StudiesRepository,
+    Provider.StudyAppointmentRepositoryProvider,
+    Provider.GetStudyAppointmentsUseCaseProvider,
+    Provider.CreateStudyAppointmentUseCaseProvider,
+  ],
   exports: [
+    Domain.STUDY_APPOINTMENTS_REPOSITORY,
     StudiesService,
     StudyGuard,
     IsStudyActiveGuard,

@@ -6,11 +6,14 @@ import { EntityManager } from 'typeorm';
 import { AppUriGenerator } from '../services/AppUriGenerator';
 import { TasksRepository } from '@admin/participants/tasks/tasks.repository';
 import { TasksCalculator } from '@admin/participants/tasks/services/task-calculator.service';
-import { StudiesService } from '@admin/studies/studies/studies.service';
+import { StudiesService } from '@admin/studies/studies/application';
 import { SchedulesTransformer } from '../services/SchedulesTransformer';
 import { StartStudyConfig } from '../dtos/StartStudyDto';
 import { ParticipantsService } from '../participants.service';
-import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
+import {
+  IPasswordService,
+  PASSWORD_SERVICE,
+} from '@shared/modules/password/IPasswordService';
 
 type TransactionInput = {
   participant: Participant;
@@ -63,7 +66,6 @@ export class StartParticipantStudyTransaction extends Transaction<
       startDate,
       duration,
     });
-
 
     await this.participantsService.setStartDate(participant.id, startDate);
 

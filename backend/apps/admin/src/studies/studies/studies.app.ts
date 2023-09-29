@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { StudiesQueries } from './controllers/studies.queries';
+import { StudiesQueries } from './api/studies.queries';
 import { StudiesModule } from './studies.module';
-import { StudiesCommands } from './controllers/studies.commands';
+import { StudiesCommands } from './api/studies.commands';
 import { DirectorsModule } from '@admin/directors/directors.module';
-import { AppointmentCommands } from './controllers/appointments.commands';
-import { AppointmentQueries } from './controllers/appointments.queries';
+import { AppointmentCommands } from './api/appointments.commands';
+import { AppointmentQueries } from './api/appointments.queries';
 
 @Module({
   imports: [StudiesModule, DirectorsModule],

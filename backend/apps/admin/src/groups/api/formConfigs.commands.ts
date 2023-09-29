@@ -1,6 +1,6 @@
 import { Roles } from '@admin/members/infrastructure/http';
-import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import {
   Controller,
   Post,
@@ -20,7 +20,7 @@ import {
   IsGroupDeletedGuard,
 } from '../infrastructure/http';
 import { FormGuard } from '@admin/forms/forms/guards/form.guard';
-import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
+import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';
 import * as Domain from '../domain';
 import { Group } from '@entities/core/group';
 import { GetForm } from '@admin/forms/forms/decorators/form.decorator';

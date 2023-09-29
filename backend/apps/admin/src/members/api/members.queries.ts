@@ -1,6 +1,6 @@
 import { Controller, Get, Inject, Query } from '@nestjs/common';
 import { Roles } from '@admin/members/infrastructure/http';
-import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
+import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';
 import {
   GET_MEMBERS_BY_STUDY_USE_CASE,
   IGetMembersByStudyUseCase,

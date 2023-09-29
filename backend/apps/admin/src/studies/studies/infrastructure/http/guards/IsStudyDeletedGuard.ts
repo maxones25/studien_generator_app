@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { StudiesService } from '../studies.service';
+import { StudiesService } from '../../../application';
 
 export class IsStudyDeletedGuard implements CanActivate {
   constructor(

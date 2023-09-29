@@ -1,10 +1,21 @@
-import { Body, Controller, Inject, Post, Query } from '@nestjs/common';
-import { CreateAppointmentDto } from '../dtos/CreateAppointmentDto';
-import { CreateAppointmentUseCase } from '../transactions/CreateAppointmentUseCase';
-import { StudyQueryDto } from '../dtos/StudyQueryDto';
+import {
+  Body,
+  Controller,
+  Inject,
+  Post,
+  Query,
+  UseFilters,
+} from '@nestjs/common';
+import {
+  CreateAppointmentDto,
+  StudyQueryDto,
+  ErrorFilter,
+} from '../infrastructure/http';
+import { CreateAppointmentUseCase } from '../application';
 import { Roles } from '@admin/members/infrastructure/http';
 
 @Controller('studies')
+@UseFilters(ErrorFilter)
 export class AppointmentCommands {
   constructor(
     @Inject(CreateAppointmentUseCase)

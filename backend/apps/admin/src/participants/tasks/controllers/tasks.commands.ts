@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { TasksService } from '../services/tasks.service';
 import { ParticipantQueryDto } from '@admin/participants/participants/dtos/ParticipantQueryDto';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import { UpdateTaskDto } from '../dtos/UpdateTaskDto';
 import { TaskGuard } from '../task.guard';
 import { Roles } from '@admin/members/infrastructure/http';
@@ -17,7 +17,7 @@ import { ParticipantGuard } from '@admin/participants/participants/guards/partic
 import { CreateTaskDto } from '../dtos/CreateTaskDto';
 import { FormQueryDto } from '@admin/forms/forms/dtos/FormQueryDto';
 import { FormGuard } from '@admin/forms/forms/guards/form.guard';
-import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
 
 @Controller('participants')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)

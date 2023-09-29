@@ -4,7 +4,7 @@ import {
   ExecutionContext,
   Inject,
 } from '@nestjs/common';
-import { StudiesService } from '../studies.service';
+import { StudiesService } from '../../../application';
 import { Request } from 'express';
 
 export class IsStudyActiveGuard implements CanActivate {

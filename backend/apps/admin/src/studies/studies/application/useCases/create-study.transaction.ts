@@ -1,7 +1,7 @@
 import { Study } from '@entities';
 import { StudyMember } from '@entities';
 import { Transaction } from '@shared/modules/transaction/transaction';
-import { CreateStudyDto } from '../dtos/CreateStudyDto';
+import { CreateStudyDto } from '../../infrastructure/http';
 import { Roles } from '@entities/core/study';
 
 type CreateStudyInput = {

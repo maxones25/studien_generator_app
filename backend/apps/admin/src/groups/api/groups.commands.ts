@@ -10,9 +10,9 @@ import {
   UseFilters,
 } from '@nestjs/common';
 import { Roles } from '@admin/members/infrastructure/http';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
-import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
-import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
+import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
 import {
   CreateGroupDto,

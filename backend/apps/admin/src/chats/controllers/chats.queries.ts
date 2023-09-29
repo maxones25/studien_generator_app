@@ -10,8 +10,8 @@ import { ValidateIdPipe } from '@shared/pipes/validate-id.pipe';
 import { Roles } from '@admin/members/infrastructure/http';
 import { DirectorId } from '@admin/directors/infrastructure/http/decorators/director-id.decorator';
 import { ChatsService } from '../chats.service';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
-import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
+import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';
 import { ChatQueryDto } from '../dtos/ChatQueryDto';
 
 @Controller()

@@ -3,7 +3,7 @@ import { FormGuard } from '../guards/form.guard';
 import { FormQueryDto } from '../dtos/FormQueryDto';
 import { Roles } from '@admin/members/infrastructure/http';
 import { PagesService } from '../services/page.service';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 
 @Controller('forms')
 @UseGuards(StudyGuard, FormGuard)

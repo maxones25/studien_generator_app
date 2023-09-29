@@ -16,8 +16,8 @@ import { PageQueryDto } from '../dtos/PageQueryDto';
 import { PageGuard } from '../guards/page.guard';
 import { ComponentGuard } from '../guards/component.guard';
 import { ComponentsService as UiComponentsService } from '@admin/components/components.service';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
-import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
 
 @Controller('forms')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)

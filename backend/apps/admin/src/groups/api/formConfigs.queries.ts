@@ -7,8 +7,8 @@ import {
   UseGuards,
   UseFilters,
 } from '@nestjs/common';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
-import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
+import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';
 import {
   ErrorFilter,
   GetByGroupQueryDto,

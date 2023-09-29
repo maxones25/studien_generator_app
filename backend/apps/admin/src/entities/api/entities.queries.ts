@@ -1,4 +1,4 @@
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import {
   Controller,
   Get,
@@ -12,7 +12,7 @@ import {
   EntityQueryDto,
   ErrorFilter,
 } from '@admin/entities/infrastructure/http';
-import { StudyQueryDto } from '@admin/studies/studies/dtos/StudyQueryDto';
+import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';
 import { Roles } from '@admin/members/infrastructure/http';
 import {
   GET_ALL_ENTITIES_USE_CASE,

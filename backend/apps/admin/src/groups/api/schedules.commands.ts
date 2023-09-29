@@ -1,7 +1,7 @@
 import { AddScheduleDto } from '@admin/groups/infrastructure/http/dtos/AddScheduleDto';
 import { Roles } from '@admin/members/infrastructure/http';
-import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import {
   Query,
   Body,

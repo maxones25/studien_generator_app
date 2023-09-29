@@ -9,13 +9,13 @@ import {
 } from '@nestjs/common';
 import { Roles } from '@admin/members/infrastructure/http';
 import { FormQueryDto } from '../dtos/FormQueryDto';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import { FormGuard } from '../guards/form.guard';
 import { PageGuard } from '../guards/page.guard';
 import { PagesService } from '../services/page.service';
 import { Page } from '../decorators/page.decorator';
 import { FormPage } from '@entities';
-import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
 
 @Controller('forms')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)

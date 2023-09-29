@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { StudiesService } from '../studies.service';
+import { StudiesService } from '../../../application';
 
 @Injectable()
 export class StudyGuard implements CanActivate {

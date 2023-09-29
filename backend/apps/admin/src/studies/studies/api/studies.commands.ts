@@ -6,21 +6,26 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  UseFilters,
 } from '@nestjs/common';
-import { StudiesService } from '../studies.service';
-import { CreateStudyDto } from '../dtos/CreateStudyDto';
-import { ChangeNameDto } from '../dtos/ChangeNameDto';
+import { DirectorId } from '@admin/directors/infrastructure/http';
 import { Roles } from '@admin/members/infrastructure/http';
-import { DirectorId } from '@admin/directors/infrastructure/http/decorators/director-id.decorator';
-import { StudyGuard } from '../guards/study.guard';
-import { SetDurationDto } from '../dtos/SetDurationDto';
-import { SetDateDto } from '../dtos/SetDateDto';
-import { StudyQueryDto } from '../dtos/StudyQueryDto';
-import { SetActivationDto } from '../dtos/SetActivationDto';
+import { StudiesService } from '../application';
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
-import { IsStudyDeletedGuard } from '../guards/IsStudyDeletedGuard';
+import {
+  CreateStudyDto,
+  ChangeNameDto,
+  StudyGuard,
+  SetDurationDto,
+  SetDateDto,
+  StudyQueryDto,
+  SetActivationDto,
+  IsStudyDeletedGuard,
+  ErrorFilter,
+} from '../infrastructure/http';
 
 @Controller('studies')
+@UseFilters(ErrorFilter)
 export class StudiesCommands {
   constructor(private readonly studiesService: StudiesService) {}
 

@@ -1,5 +1,7 @@
 import { Appointment } from '@entities/core/appointment/Appointment';
-import { CreateAppointmentDto } from '../dtos/CreateAppointmentDto';
+import { CreateAppointmentDto } from '../../infrastructure/http/dtos/CreateAppointmentDto';
+
+export const STUDY_APPOINTMENTS_REPOSITORY = 'STUDY_APPOINTMENTS_REPOSITORY';
 
 export interface IStudyAppointmentsRepository {
   getStudyAppointments(studyId: string): Promise<Appointment[]>;

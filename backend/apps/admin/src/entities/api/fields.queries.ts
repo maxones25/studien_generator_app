@@ -11,7 +11,7 @@ import {
   EntityQueryDto,
   EntityGuard,
 } from '@admin/entities/infrastructure/http';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import { ErrorFilter } from '@admin/entities/infrastructure/http';
 import {
   GET_FIELDS_BY_ENTITY_USE_CASE,

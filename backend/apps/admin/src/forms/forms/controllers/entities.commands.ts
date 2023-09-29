@@ -12,7 +12,7 @@ import {
 import { Roles } from '@admin/members/infrastructure/http';
 import { FormQueryDto } from '../dtos/FormQueryDto';
 import { ChangeNameDto } from '../dtos/ChangeNameDto';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import { FormGuard } from '../guards/form.guard';
 import { EntitiesService } from '../services/entities.service';
 import { CreateEntityDto } from '../dtos/CreateEntityDto';
@@ -22,7 +22,7 @@ import { EntityGuard } from '@admin/entities/infrastructure/http/guards/entity.g
 import { EntityGuard as FormEntityGuard } from '../guards/entity.guard';
 import { Entity } from '../decorators/entity.decorator';
 import { FormEntity } from '@entities';
-import { IsStudyDeletedGuard } from '@admin/studies/studies/guards/IsStudyDeletedGuard';
+import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
 
 @Controller('forms')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)

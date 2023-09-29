@@ -2,7 +2,7 @@ import { Controller, Get, Inject, Query, UseGuards } from '@nestjs/common';
 import { ComponentsService } from '../services/components.service';
 import { PageQueryDto } from '../dtos/PageQueryDto';
 import { PageGuard } from '../guards/page.guard';
-import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
+import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 
 @Controller('forms')
 @UseGuards(StudyGuard)
