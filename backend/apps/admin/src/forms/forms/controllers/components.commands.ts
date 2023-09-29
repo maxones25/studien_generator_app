@@ -5,6 +5,8 @@ import {
   Query,
   Inject,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { CreateFormComponentDto } from '../dtos/CreateFormComponentDto';
 import { Roles } from '@admin/members/infrastructure/http';
@@ -49,6 +51,7 @@ export class ComponentsCommands {
   }
 
   @Post('removeComponent')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(PageGuard, ComponentGuard)
   async delete(
