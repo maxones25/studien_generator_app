@@ -1,5 +1,4 @@
 import {
-  ArrayMinSize,
   IsArray,
   IsEnum,
   IsObject,
@@ -7,7 +6,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { FormComponentAttributeDto } from './FormComponentAttributeDto';
 import { ComponentType } from '@admin/components/component-type.enum';
 
 export class FormFieldDto {
