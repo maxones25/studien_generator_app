@@ -14,6 +14,7 @@ import {
 import { createEntityId } from '@test/entities/createEntity';
 import { getFormEntities } from '@test/forms/entities/getFormEntities';
 import { changeFormEntityName } from '@test/forms/entities/changeFormEntityName';
+import { createFieldId } from '@test/entities/fields/createField';
 
 describe('get form entities', () => {
   let app: IApp;
@@ -22,6 +23,8 @@ describe('get form entities', () => {
   let studyId: string;
   let formId: string;
   let entityId: string;
+  let fieldId: string;
+  let fieldData: any;
   let createdFormEntities: any[];
 
   beforeAll(async () => {
@@ -42,6 +45,15 @@ describe('get form entities', () => {
     studyId = await createStudyId(app, { accessToken });
     formId = await createFormId(app, { accessToken, studyId });
     entityId = await createEntityId(app, { accessToken, studyId });
+
+    fieldData = fakeData.entityField();
+
+    fieldId = await createFieldId(app, {
+      accessToken,
+      studyId,
+      entityId,
+      data: fieldData,
+    });
 
     createdFormEntities = [];
 
@@ -80,6 +92,14 @@ describe('get form entities', () => {
           expect(formEntity.name).toBe(createdFormEntity.name);
           expect(formEntity.entity.id).toBe(entityId);
           expect(Array.isArray(formEntity.fields)).toBe(true);
+          expect(formEntity.fields.length).toBe(1);
+
+          formEntity.fields.forEach((field) => {
+            expect(field.id).toBe(fieldId);
+            expect(field.name).toBe(fieldData.name);
+            expect(field.type).toBe(fieldData.type);
+            expect(field.component).toBe(null);
+          });
         });
       });
   });
