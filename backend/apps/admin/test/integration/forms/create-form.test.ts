@@ -7,6 +7,8 @@ import fakeData from '@test/fakeData';
 import { getDirectorAccessToken } from '@test/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getFormById } from '@test/forms/getFormById';
+import { getFormPages } from '@test/forms/pages/getFormPages';
 
 describe('Create Form', () => {
   let app: IApp;
@@ -36,13 +38,25 @@ describe('Create Form', () => {
     await app.close();
   });
 
-  it('should create a form successfully', () => {
-    return createForm(app, { accessToken, studyId })
+  it('should create a form', async () => {
+    await createForm(app, { accessToken, studyId })
       .expect(201)
-      .then((res) => {
-        expect(validateUUID(res.text)).toBeTruthy();
-      })
-      .catch(console.log);
+      .then(async (res) => {
+        const formId = res.text;
+
+        expect(validateUUID(formId)).toBeTruthy();
+
+        await getFormById(app, { accessToken, studyId, formId }).expect(200);
+
+        await getFormPages(app, { accessToken, studyId, formId })
+          .expect(200)
+          .then((res) => {
+            const pages = res.body;
+
+            expect(Array.isArray(pages)).toBe(true);
+            expect(pages.length).toBe(1);
+          });
+      });
   });
 
   it('should fail because unauthorized', () => {
