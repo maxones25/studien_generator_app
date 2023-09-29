@@ -1,4 +1,12 @@
-import { Controller, Post, Query, Inject, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Query,
+  Inject,
+  UseGuards,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { Roles } from '@admin/members/infrastructure/http';
 import { FormQueryDto } from '../dtos/FormQueryDto';
 import { StudyGuard } from '@admin/studies/studies/guards/study.guard';
@@ -25,6 +33,7 @@ export class PagesCommands {
   }
 
   @Post('removePage')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(PageGuard)
   async removePage(@Page() page: FormPage) {
