@@ -14,8 +14,8 @@ const config = {
   coverageDirectory: '<rootDir>/coverage/admin/integration',
   coverageReporters: ['lcov'],
   maxWorkers: '50%',
-  workerIdleMemoryLimit: '50%',
-  workerThreads: true,
+  // workerIdleMemoryLimit: '50%',
+  // workerThreads: true,
   moduleNameMapper: {
     '@admin/(.*)': '<rootDir>/apps/admin/src/$1',
     '@shared/(.*)': '<rootDir>/libs/shared/src/$1',
