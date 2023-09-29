@@ -1,3 +1,4 @@
+import { ComponentType } from '@admin/components/component-type.enum';
 import { FormSchedulePeriod, FormScheduleType } from '@entities/core/group';
 import { faker } from '@faker-js/faker';
 import { FieldType } from '@shared/enums/field-type.enum';
@@ -223,7 +224,17 @@ const schedule = (
   return {};
 };
 
+const formComponent = () => {
+  const type = randomEnum(ComponentType);
+  return {
+    type,
+    attributes: {},
+    formFields: [],
+  };
+};
+
 export default {
+  formComponent,
   schedule,
   time,
   futureDate,
