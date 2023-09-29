@@ -23,8 +23,10 @@ export const createFormPage = (app: IApp, options: AddFormPageOptions) =>
     addFormPage(app, options)
       .expect(201)
       .then((res) => {
-        expect(validateUUID(res.text)).toBeTruthy();
-        resolve(res.text);
+        const page = res.body;
+
+        expect(validateUUID(page.id)).toBeTruthy();
+        resolve(page.id);
       })
       .catch((err) => reject(err));
   });
