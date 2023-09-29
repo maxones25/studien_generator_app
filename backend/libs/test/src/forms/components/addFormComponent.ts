@@ -32,7 +32,7 @@ export const createFormComponentId = (
   app: IApp,
   options: AddFormComponentOptions,
 ) =>
-  new Promise((resolve, reject) => {
+  new Promise<string>((resolve, reject) => {
     addFormComponent(app, options)
       .expect(201)
       .then((res) => {
