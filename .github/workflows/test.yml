@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-env: 
+env:
   TEST: true
 
 jobs:
@@ -183,9 +183,8 @@ jobs:
       - name: Run integration tests
         working-directory: ./backend
         env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
-        run:
-          npm run test:admin:integration
+          NODE_OPTIONS: "--max_old_space_size=8192"
+        run: npm run test:admin:integration
 
   study-backend-tests:
     runs-on: ubuntu-latest
