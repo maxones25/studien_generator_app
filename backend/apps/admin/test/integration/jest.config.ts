@@ -1,6 +1,6 @@
 import type { Config } from '@jest/types';
 
-const config: Config.InitialOptions = {
+const config = {
   displayName: 'admin:integration',
   cache: true,
   bail: true,
@@ -11,16 +11,11 @@ const config: Config.InitialOptions = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   collectCoverageFrom: ['<rootDir>/apps/admin/src/**/*.ts'],
-  // coverageThreshold: {
-  //   global: {
-  //     branches: 80,
-  //     functions: 80,
-  //     lines: 80,
-  //     statements: 80,
-  //   },
-  // },
   coverageDirectory: '<rootDir>/coverage/admin/integration',
   coverageReporters: ['lcov'],
+  maxWorkers: '50%',
+  workerIdleMemoryLimit: '50%',
+  workerThreads: true,
   moduleNameMapper: {
     '@admin/(.*)': '<rootDir>/apps/admin/src/$1',
     '@shared/(.*)': '<rootDir>/libs/shared/src/$1',
