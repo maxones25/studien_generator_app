@@ -24,7 +24,7 @@ export const createFormEntityId = (
   app: IApp,
   options: AddFormEntityRequestOptions,
 ) =>
-  new Promise((resolve, reject) => {
+  new Promise<string>((resolve, reject) => {
     addFormEntity(app, options)
       .expect(201)
       .then((res) => {
