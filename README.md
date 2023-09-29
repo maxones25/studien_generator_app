@@ -72,9 +72,13 @@ npm run start:admin:dev
 
 Die App benötigt folgende Umgebungsvariablen:
 
-ORIGIN: URI des Admin-Frontends
-
-JWT_SECRET: Secrect zum Erstellen der JWT
+| Variable            | Bedeutung                               |
+| ------------------- | --------------------------------------- |
+| ACTIVATION_PASSWORD | Administrator Passwort                  |
+| JWT_SECRET          | JWT Secret für das signieren von Tokens |
+| ORIGIN              | URI des Admin Frontends                 |
+| STUDY_FRONTED_URI   | URI des Study Frontends                 |
+| PORT                | Port der Admin App                      |
 
 ### Starten des Study-Backends
 
@@ -98,13 +102,24 @@ npm run start:study:dev
 
 Die App benötigt folgende Umgebungsvariablen:
 
-ORIGIN: URI des Study-Frontends
+| Variable          | Bedeutung                                                      |
+| ----------------- | -------------------------------------------------------------- |
+| ORIGIN            | URI des Study-Frontends                                        |
+| JWT_SECRET        | Secrect zum Erstellen der JWT                                  |
+| VAPID_PUBLIC_KEY  | gültiger public VAPID KEY https://vapidkeys.com                |
+| VAPID_PRIVATE_KEY | gültiger und passender private VAPID KEY https://vapidkeys.com |
 
-JWT_SECRET: Secrect zum Erstellen der JWT
+### Datenbank an Backend anbinden
 
-VAPID_PUBLIC_KEY: gültiger public VAPID KEY https://vapidkeys.com/
+Um das Admin und Study Backend mit der Datenbank zu verbinden, benötigt beide Apps folgende Umgebungsvariablen:
 
-VAPID_PRIVATE_KEY: gültiger und passender private VAPID KEY https://vapidkeys.com/
+| Variable    | Bedeutung                 |
+| ----------- | ------------------------- |
+| DB_HOST     | Host der Datenbank        |
+| DB_PORT     | Port des Datenbankservers |
+| DB_USER     | Datenbank Benutzer        |
+| DB_PASSWORD | Datenbank Passwort        |
+| DB_NAME     | Name der Datenbank        |
 
 ### Starten der Admin App (Frontend)
 
@@ -116,7 +131,9 @@ cd frontend/admin-app
 
 Die App benötigt folgende Umgebungsvariablen:
 
-VITE_API_URI: URI des Admin-Backends
+| Variable     | Bedeutung              |
+| ------------ | ---------------------- |
+| VITE_API_URI | URI des Admin-Backends |
 
 Installiere alle npm Pakete
 
@@ -140,9 +157,10 @@ cd frontend/study-app
 
 Die App benötigt folgende Umgebungsvariablen:
 
-VITE_API_URI: URI des Study-Backends
-
-VITE_VAPID_PUBLIC_KEY: gültigen public VAPID KEY https://vapidkeys.com/
+| Variable              | Bedeutung                                       |
+| --------------------- | ----------------------------------------------- |
+| VITE_API_URI          | URI des Study-Backends                          |
+| VITE_VAPID_PUBLIC_KEY | gültigen public VAPID KEY https://vapidkeys.com |
 
 Installiere alle npm Pakete
 
