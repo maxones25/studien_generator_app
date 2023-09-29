@@ -6,6 +6,8 @@ import {
   Inject,
   UseGuards,
   BadRequestException,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { Roles } from '@admin/members/infrastructure/http';
 import { FormQueryDto } from '../dtos/FormQueryDto';
@@ -54,6 +56,7 @@ export class EntitiesCommands {
   }
 
   @Post('changeEntityName')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   @UseGuards(FormEntityGuard)
   async changeName(
@@ -72,6 +75,7 @@ export class EntitiesCommands {
   }
 
   @Post('removeEntity')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin')
   @UseGuards(FormEntityGuard)
   async delete(@Query() { entityId }: FormEntityQueryDto) {
