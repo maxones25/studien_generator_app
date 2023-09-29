@@ -11,7 +11,7 @@ import { getFormById } from '@test/forms/getFormById';
 import { getFormPages } from '@test/forms/pages/getFormPages';
 import { getForms } from '@test/forms/getForms';
 
-describe('get forms', () => {
+describe('get forms by study', () => {
   let app: IApp;
   let accessToken: string;
   let otherAccessToken: string;
@@ -108,6 +108,12 @@ describe('get forms', () => {
     const adminAccessToken = await getAdminAccessToken(app);
 
     return getForms(app, { accessToken: adminAccessToken, studyId }).expect(
+      401,
+    );
+  });
+
+  it('should because director is not member of study', async () => {
+    return getForms(app, { accessToken: otherAccessToken, studyId }).expect(
       401,
     );
   });
