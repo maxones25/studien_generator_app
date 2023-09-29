@@ -14,11 +14,12 @@ export class TimePickerComponent extends Component {
       [
         new RequiredAttribute(true),
         new LabelAttribute(false),
-        new DefaultValueAttribute(
-          false,
-          'time',
-          (value) => Boolean(value) && datetime.isValid(value, 'HH:mm'),
-        ),
+        new DefaultValueAttribute(false, 'time', (value) => {
+          if (!Boolean(value)) return false;
+          if (typeof value !== 'string') return false;
+
+          return value === 'CurrentTime' || datetime.isValid(value, 'HH:mm');
+        }),
       ],
     );
   }
