@@ -233,7 +233,12 @@ const formComponent = () => {
   };
 };
 
+const options = (size = 4) => {
+  return randomArray(() => text(), size);
+};
+
 export default {
+  options,
   formComponent,
   schedule,
   time,

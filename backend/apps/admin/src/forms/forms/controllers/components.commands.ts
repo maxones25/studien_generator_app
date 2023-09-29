@@ -28,16 +28,17 @@ export class ComponentsCommands {
   ) {}
 
   @Post('addComponent')
+  @UseGuards(PageGuard)
+  @Roles('admin', 'employee')
   async create(
     @Query() { pageId }: PageQueryDto,
     @Body() body: CreateFormComponentDto,
   ) {
     const { formFields, type, attributes } = body;
-    const entityFieldsIds = formFields.map(({ fieldId }) => fieldId);
 
     await this.uiComponentsService.validateFormComponent(
       type,
-      entityFieldsIds,
+      formFields,
       Object.keys(attributes).map((key) => ({
         key,
         value: attributes[key],

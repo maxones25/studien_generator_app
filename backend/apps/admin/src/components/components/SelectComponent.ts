@@ -5,6 +5,7 @@ import { LabelAttribute } from './attributes/LabelAttribute';
 import { DefaultValueAttribute } from './attributes/DefaultValueAttribute';
 import { OptionsAttribute } from './attributes/OptionsAttribute';
 import { RequiredAttribute } from './attributes/RequiredAttribute';
+import { BadRequestException } from "@nestjs/common";
 
 export class SelectComponent extends Component {
   constructor() {
@@ -15,10 +16,17 @@ export class SelectComponent extends Component {
         new RequiredAttribute(true),
         new LabelAttribute(false),
         new OptionsAttribute(true),
-        new DefaultValueAttribute(false, "string", (value) => typeof value === 'string'),
+        new DefaultValueAttribute(
+          false,
+          'string',
+          (value) => typeof value === 'string',
+        ),
       ],
     );
   }
 
-  protected validateAttributes(attributes) {}
+  protected validateAttributes({ options, defaultValue }) {
+    if (defaultValue && !options.includes(defaultValue))
+      throw new BadRequestException('defaultValue must be an option');
+  }
 }

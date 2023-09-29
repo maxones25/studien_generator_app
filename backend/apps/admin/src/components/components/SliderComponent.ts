@@ -18,9 +18,17 @@ export class SliderComponent extends Component {
         new RequiredAttribute(true),
         new LabelAttribute(false),
         new MinAttribute(true),
-        new TextAttribute('minLabel', false),
+        new TextAttribute({
+          name: 'minLabel',
+          required: false,
+          canBeEmpty: true,
+        }),
         new MaxAttribute(true),
-        new TextAttribute('maxLabel', false),
+        new TextAttribute({
+          name: 'maxLabel',
+          required: false,
+          canBeEmpty: true,
+        }),
         new DefaultValueAttribute(
           false,
           'number',

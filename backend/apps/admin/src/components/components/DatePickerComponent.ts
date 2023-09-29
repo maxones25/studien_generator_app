@@ -16,6 +16,8 @@ export class DatePickerComponent extends Component {
         new LabelAttribute(false),
         new DefaultValueAttribute(false, 'date', (value) => {
           if (!Boolean(value)) return false;
+          if(typeof value !== "string") return false;
+          
           return (
             value === 'CurrentDate' || datetime.isValid(value, 'YYYY-MM-DD')
           );

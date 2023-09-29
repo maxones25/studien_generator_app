@@ -16,6 +16,11 @@ export abstract class Component {
   }
 
   private validateFieldTypes(types: FieldType[]) {
+    if (types.length !== this.entityFields.length)
+      throw new BadRequestException(
+        `component needs ${this.entityFields.length} fields`,
+      );
+
     for (const fieldType of this.entityFields) {
       const index = types.findIndex((type) => type === fieldType);
       if (index === -1)

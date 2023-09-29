@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { EntityField } from '@entities';
+import { EntityField, FormEntity } from '@entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ComponentType } from './component-type.enum';
@@ -18,6 +18,7 @@ import { AttributeType } from './Attribute';
 import { FormComponentAttributeDto } from '@admin/forms/forms/dtos/FormComponentAttributeDto';
 import { TextComponent } from './components/TextComponent';
 import { RadioGroupComponent } from './components/RadioGroupComponent';
+import { FormFieldDto } from '@admin/forms/forms/dtos/CreateFormComponentDto';
 
 @Injectable()
 export class ComponentsService {
@@ -43,7 +44,7 @@ export class ComponentsService {
 
   async validateFormComponent(
     componentType: ComponentType,
-    entityFieldIds: string[],
+    formFields: FormFieldDto[],
     attributes: FormComponentAttributeDto[],
   ) {
     const component = this.components.get(componentType);
@@ -53,15 +54,28 @@ export class ComponentsService {
         `component type '${componentType}' not found`,
       );
 
-    const types = await this.getEntityTypesByIds(entityFieldIds);
+    const types = await this.getEntityTypesByIds(formFields);
 
     component.validate(types, attributes);
   }
 
-  async getEntityTypesByIds(ids: string[]) {
+  async getEntityTypesByIds(formFields: FormFieldDto[]) {
+    if (formFields.length === 0) return [];
+
     const entityFields = await this.entityFieldsRepository.find({
-      where: ids.map((id) => ({ id })),
+      where: formFields.map(({ entityId, fieldId }) => ({
+        id: fieldId,
+        entity: {
+          formEntities: {
+            id: entityId,
+          },
+        },
+      })),
     });
+
+    if (entityFields.length !== formFields.length)
+      throw new BadRequestException('fields not found');
+
     return entityFields.map((entityField) => entityField.type);
   }
 
