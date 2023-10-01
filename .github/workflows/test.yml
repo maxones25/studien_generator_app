@@ -177,11 +177,53 @@ jobs:
         working-directory: ./backend
         run: npm run db:migration:run
 
-      - name: Run integration tests
+      - name: Run studies tests
         working-directory: ./backend
         env:
           NODE_OPTIONS: "--max_old_space_size=4096"
-        run: npm run test:admin:integration
+        run: npm run test:admin:integration studies
+
+      - name: Run directors tests
+        working-directory: ./backend
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: npm run test:admin:integration directors
+
+      - name: Run entities tests
+        working-directory: ./backend
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: npm run test:admin:integration entities
+
+      - name: Run forms tests
+        working-directory: ./backend
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: npm run test:admin:integration forms
+
+      - name: Run groups tests
+        working-directory: ./backend
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: npm run test:admin:integration chats
+
+      - name: Run chats tests
+        working-directory: ./backend
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: npm run test:admin:integration chats
+
+      - name: Run participants tests
+        working-directory: ./backend
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: npm run test:admin:integration participants
+
+      - name: Run records tests
+        working-directory: ./backend
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: npm run test:admin:integration records
 
   study-backend-tests:
     runs-on: ubuntu-latest

@@ -1,4 +1,4 @@
-import type { Config } from '@jest/types';
+import type { Config } from 'jest';
 
 const config = {
   displayName: 'admin:integration',
