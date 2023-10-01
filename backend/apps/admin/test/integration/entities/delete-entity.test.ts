@@ -5,7 +5,7 @@ import { deleteEntity } from '@test/entities/deleteEntity';
 import { createEntityId } from '@test/entities/createEntity';
 import { getEntityById } from '@test/entities/getEntityById';
 import { createStudyId } from '@test/studies/createStudy';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 
 describe('Delete Entity', () => {

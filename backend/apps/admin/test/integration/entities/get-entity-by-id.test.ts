@@ -3,11 +3,11 @@ import { AppModule } from '@admin/app.module';
 import fakeData from '@test/fakeData';
 import { createEntityId } from '@test/entities/createEntity';
 import { createStudyId } from '@test/studies/createStudy';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { getEntityById } from '@test/entities/getEntityById';
 import { createFieldId } from '@test/entities/fields/createField';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 
 describe('Get Entities', () => {
   let app: IApp;

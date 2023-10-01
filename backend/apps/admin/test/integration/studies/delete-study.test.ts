@@ -4,7 +4,7 @@ import { AppModule } from '@admin/app.module';
 import { createStudyId } from '@test/studies/createStudy';
 import { deleteStudy } from '@test/studies/deleteStudy';
 import { getStudyById } from '@test/studies/getStudyById';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 
 describe('Delete Study', () => {

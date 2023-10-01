@@ -3,12 +3,12 @@ import { AppModule } from '@admin/app.module';
 import { createStudyId } from '@test/studies/createStudy';
 import { createFormId } from '@test/forms/createForm';
 import fakeData from '@test/fakeData';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { createFormEntityId } from '@test/forms/entities/addFormEntity';
 import { createEntityId } from '@test/entities/createEntity';
 import { getFormsByEntity } from '@test/forms/getFormsByEntity';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 
 describe('get forms by entity', () => {
   let app: IApp;

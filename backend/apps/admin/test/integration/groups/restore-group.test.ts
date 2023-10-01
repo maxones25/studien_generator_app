@@ -5,14 +5,14 @@ import { addMember } from '@test/studies/members/addMember';
 import { createGroupId } from '@test/groups/createGroup';
 import { deleteGroup } from '@test/groups/deleteGroup';
 import { getGroupById } from '@test/groups/getGroupById';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { createParticipantId } from '@test/participants/createParticipant';
 import fakeData from '@test/fakeData';
 import { getParticipantById } from '@test/participants/getParticipantById';
 import { getParticipants } from '@test/participants/getParticipants';
 import { restoreGroup } from '@test/groups/restoreGroup';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 
 describe('restore group', () => {
   let app: IApp;

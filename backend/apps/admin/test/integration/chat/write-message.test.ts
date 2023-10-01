@@ -5,7 +5,7 @@ import { writeMessage } from '@test/chats/writeMessage';
 import { createParticipantId } from '@test/participants/createParticipant';
 import { createStudyId } from '@test/studies/createStudy';
 import { getChatByParticipant } from '@test/chats/getChatByParticipant';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 
 describe('Write Message', () => {

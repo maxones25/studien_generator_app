@@ -3,7 +3,7 @@ import { AppModule } from '@admin/app.module';
 import { createStudyId } from '@test/studies/createStudy';
 import { createFormId } from '@test/forms/createForm';
 import fakeData from '@test/fakeData';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { createFormPage } from '@test/forms/pages/addFormPage';
 import {
@@ -17,7 +17,7 @@ import { createFieldId } from '@test/entities/fields/createField';
 import { FieldType } from '@entities/core/entity';
 import { createFormEntityId } from '@test/forms/entities/addFormEntity';
 import { removeFormComponent } from '@test/forms/components/removeFormComponent';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 import { createDirector } from '@test/director/signUpDirector';
 import { addMember } from '@test/studies/members/addMember';
 

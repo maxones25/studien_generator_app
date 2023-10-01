@@ -1,7 +1,7 @@
 import { AppModule } from '@admin/app.module';
 import { JwtService } from '@nestjs/jwt';
 import { IApp, createApp } from '@test/app/createApp';
-import { loginAdmin } from '@test/auth/loginAdmin';
+import { loginAdmin } from '@test/admin/auth/loginAdmin';
 
 describe('Login Admin', () => {
   let app: IApp;

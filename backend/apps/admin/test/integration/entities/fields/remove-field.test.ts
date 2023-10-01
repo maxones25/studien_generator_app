@@ -1,7 +1,7 @@
 import { AppModule } from '@admin/app.module';
 import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
 import { createEntityId } from '@test/entities/createEntity';
 import { createFieldId } from '@test/entities/fields/createField';
@@ -113,13 +113,13 @@ describe('remove field', () => {
       studyId,
       directorId: director.id,
       role: 'employee',
-    }).expect(201)
+    }).expect(201);
 
     const otherAccessToken = await getDirectorAccessToken(
-        app,
-        director.email,
-        director.password,
-      );
+      app,
+      director.email,
+      director.password,
+    );
 
     const fieldId = await createFieldId(app, {
       accessToken,

@@ -1,8 +1,8 @@
 import { AppModule } from '@admin/app.module';
 import { Roles } from '@entities/core/study';
 import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
 import fakeData from '@test/fakeData';
 import { changeStudyName } from '@test/studies/changeStudyName';
@@ -131,7 +131,7 @@ describe('Change Study Name', () => {
       studyId,
       directorId: director.id,
       role: 'employee',
-    }).expect(201)
+    }).expect(201);
 
     const directorAccessToken = await getDirectorAccessToken(
       app,

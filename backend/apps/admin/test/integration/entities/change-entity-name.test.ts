@@ -5,7 +5,7 @@ import { changeEntityName } from '@test/entities/changeEntityName';
 import { getEntityById } from '@test/entities/getEntityById';
 import { createEntity, createEntityId } from '@test/entities/createEntity';
 import { createStudyId } from '@test/studies/createStudy';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 
 describe('Change Entity Name', () => {

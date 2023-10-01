@@ -3,7 +3,7 @@ import { AppModule } from '@admin/app.module';
 import { createStudyId } from '@test/studies/createStudy';
 import { createFormId } from '@test/forms/createForm';
 import fakeData from '@test/fakeData';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { createFormPage } from '@test/forms/pages/addFormPage';
 import {

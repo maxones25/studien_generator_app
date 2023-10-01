@@ -4,7 +4,7 @@ import fakeData from '@test/fakeData';
 import { createStudyId } from '@test/studies/createStudy';
 import { addMember } from '@test/studies/members/addMember';
 import { getMembers } from '@test/studies/members/getMembers';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { Roles } from '@entities/core/study';

@@ -1,7 +1,7 @@
 import { AppModule } from '@admin/app.module';
 import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { createEntityId } from '@test/entities/createEntity';
 import { createFieldId } from '@test/entities/fields/createField';
 import { getFields } from '@test/entities/fields/getFields';

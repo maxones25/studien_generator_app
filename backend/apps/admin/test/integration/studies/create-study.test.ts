@@ -4,10 +4,10 @@ import { validateUUID } from '@shared/modules/uuid/uuid';
 import { AppModule } from '@admin/app.module';
 import { createStudy } from '@test/studies/createStudy';
 import { getStudyById } from '@test/studies/getStudyById';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { Roles } from '@entities/core/study';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 
 describe('Create Study', () => {
   let app: IApp;

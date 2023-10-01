@@ -1,10 +1,10 @@
 import { AppModule } from '@admin/app.module';
 import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 import {
   getDirectorAccessToken,
   loginDirector,
-} from '@test/auth/loginDirector';
+} from '@test/admin/auth/loginDirector';
 import { deleteDirector } from '@test/director/deleteDirector';
 import { getDirectors } from '@test/director/getDirectors';
 import { getMe } from '@test/director/getMe';

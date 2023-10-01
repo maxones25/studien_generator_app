@@ -1,7 +1,7 @@
 import { AppModule } from '@admin/app.module';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { IApp, createApp } from '@test/app/createApp';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import fakeData from '@test/fakeData';
 import { createStudyAppointment } from '@test/studies/addStudyAppointment';
 import { createStudyId } from '@test/studies/createStudy';

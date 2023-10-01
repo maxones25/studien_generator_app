@@ -4,7 +4,7 @@ import fakeData from '@test/fakeData';
 import { createEntityId } from '@test/entities/createEntity';
 import { getEntities } from '@test/entities/getEntities';
 import { createStudyId } from '@test/studies/createStudy';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 
 describe('Get Entities', () => {

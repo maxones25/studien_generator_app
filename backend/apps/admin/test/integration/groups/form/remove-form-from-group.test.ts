@@ -1,8 +1,8 @@
 import { AppModule } from '@admin/app.module';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
 import fakeData from '@test/fakeData';
 import { createFormId } from '@test/forms/createForm';
@@ -169,7 +169,7 @@ describe('remove form from group', () => {
       studyId,
       directorId: director.id,
       role: 'employee',
-    }).expect(201)
+    }).expect(201);
 
     const formData = fakeData.form();
 

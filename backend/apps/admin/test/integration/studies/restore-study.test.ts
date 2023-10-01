@@ -4,10 +4,10 @@ import { AppModule } from '@admin/app.module';
 import { createStudyId } from '@test/studies/createStudy';
 import { deleteStudy } from '@test/studies/deleteStudy';
 import { getStudyById } from '@test/studies/getStudyById';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { restoreStudy } from '@test/studies/restoreStudy';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 import { createDirector } from '@test/director/signUpDirector';
 import { addMember } from '@test/studies/members/addMember';
 

@@ -1,8 +1,8 @@
 import { AppModule } from '@admin/app.module';
 import { AttributeType } from '@admin/components/Attribute';
 import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { getComponents } from '@test/components/getComponents';
 import { createDirector } from '@test/director/signUpDirector';
 

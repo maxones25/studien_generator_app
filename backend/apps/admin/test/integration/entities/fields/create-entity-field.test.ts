@@ -5,7 +5,7 @@ import { validateUUID } from '@shared/modules/uuid/uuid';
 import { createEntityId } from '@test/entities/createEntity';
 import { createField } from '@test/entities/fields/createField';
 import { createStudyId } from '@test/studies/createStudy';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
 
 describe('Create Entity Field', () => {

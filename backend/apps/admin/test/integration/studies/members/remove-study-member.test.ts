@@ -1,6 +1,6 @@
 import { AppModule } from '@admin/app.module';
 import { IApp, createApp } from '@test/app/createApp';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
 import fakeData from '@test/fakeData';
 import { createStudyId } from '@test/studies/createStudy';

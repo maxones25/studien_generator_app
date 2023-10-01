@@ -4,8 +4,8 @@ import { createDirector } from '@test/director/signUpDirector';
 import {
   getDirectorAccessToken,
   loginDirector,
-} from '@test/auth/loginDirector';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+} from '@test/admin/auth/loginDirector';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 import fakeData from '@test/fakeData';
 import { updateDirector } from '@test/director/updateDirector';
 import { getDirectorById } from '@test/director/getMe';

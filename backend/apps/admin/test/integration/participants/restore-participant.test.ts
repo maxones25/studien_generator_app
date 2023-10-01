@@ -1,12 +1,12 @@
 import { AppModule } from '@admin/app.module';
 import { IApp, createApp } from '@test/app/createApp';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import fakeData from '@test/fakeData';
 import { createParticipantId } from '@test/participants/createParticipant';
 import { getParticipantById } from '@test/participants/getParticipantById';
 import { createStudyId } from '@test/studies/createStudy';
 import { TEST_DIRECTOR } from '@test/testData';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 import { deleteParticipant } from '@test/participants/deleteParticipant';
 import { createTaskId } from '@test/tasks/createTask';
 import { createFormId } from '@test/forms/createForm';

@@ -1,8 +1,8 @@
 import { AppModule } from '@admin/app.module';
 import { validateUUID } from '@shared/modules/uuid/uuid';
 import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import fakeData from '@test/fakeData';
 import { createGroupId } from '@test/groups/createGroup';
 import {

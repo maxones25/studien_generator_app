@@ -1,7 +1,7 @@
 import { AppModule } from '@admin/app.module';
 import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import fakeData from '@test/fakeData';
 import { createParticipantId } from '@test/participants/createParticipant';
 import { changeParticipantNumber } from '@test/participants/changeParticipantNumber';
@@ -53,7 +53,7 @@ describe('change participant number', () => {
       studyId,
       participantId,
       data: { number },
-    }).expect(200)
+    }).expect(200);
 
     return getParticipantById(app, { accessToken, studyId, participantId })
       .expect(200)

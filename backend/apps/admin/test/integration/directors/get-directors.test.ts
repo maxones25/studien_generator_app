@@ -1,8 +1,8 @@
 import { AppModule } from '@admin/app.module';
 import { IApp, createApp } from '@test/app/createApp';
 import { createDirector } from '@test/director/signUpDirector';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 import { Director } from '@entities/core/director/Director';
 import { getDirectors } from '@test/director/getDirectors';
 import { validateUUID } from '@shared/modules/uuid/uuid';

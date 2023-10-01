@@ -6,7 +6,7 @@ import { createStudyId } from '@test/studies/createStudy';
 import { getStudyById } from '@test/studies/getStudyById';
 import { addMember } from '@test/studies/members/addMember';
 import { Role, Roles } from '@entities/core/study';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
 import { IApp, createApp } from '@test/app/createApp';
 

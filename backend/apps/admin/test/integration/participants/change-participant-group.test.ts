@@ -1,6 +1,6 @@
 import { AppModule } from '@admin/app.module';
 import { IApp, createApp } from '@test/app/createApp';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import fakeData from '@test/fakeData';
 import { createParticipantId } from '@test/participants/createParticipant';
 import { getParticipantById } from '@test/participants/getParticipantById';
@@ -8,7 +8,7 @@ import { createStudyId } from '@test/studies/createStudy';
 import { TEST_DIRECTOR } from '@test/testData';
 import { createGroupId } from '@test/groups/createGroup';
 import { changeParticipantGroup } from '@test/participants/changeParticipantGroup';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 
 describe('change participant group', () => {
   let app: IApp;

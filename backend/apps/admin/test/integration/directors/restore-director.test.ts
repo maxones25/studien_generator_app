@@ -4,9 +4,9 @@ import { createDirector } from '@test/director/signUpDirector';
 import {
   getDirectorAccessToken,
   loginDirector,
-} from '@test/auth/loginDirector';
+} from '@test/admin/auth/loginDirector';
 import { deleteDirector } from '@test/director/deleteDirector';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 import { restoreDirector } from '@test/director/restoreDirector';
 import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
@@ -36,7 +36,9 @@ describe('restore director', () => {
 
     await loginDirector(app, director.email, director.password).expect(401);
 
-    await restoreDirector(app, { accessToken, directorId: director.id }).expect(200)
+    await restoreDirector(app, { accessToken, directorId: director.id }).expect(
+      200,
+    );
 
     await loginDirector(app, director.email, director.password).expect(200);
   });

@@ -3,7 +3,7 @@ import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
 import { createStudy, createStudyId } from '@test/studies/createStudy';
 import { getStudies } from '@test/studies/getStudies';
-import { getDirectorAccessToken } from '@test/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
 import { createDirector } from '@test/director/signUpDirector';
 import { IApp, createApp } from '@test/app/createApp';
 import { Roles } from '@entities/core/study';

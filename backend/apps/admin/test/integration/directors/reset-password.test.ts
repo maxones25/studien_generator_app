@@ -4,8 +4,8 @@ import { createDirector } from '@test/director/signUpDirector';
 import {
   getDirectorAccessToken,
   loginDirector,
-} from '@test/auth/loginDirector';
-import { getAdminAccessToken } from '@test/auth/loginAdmin';
+} from '@test/admin/auth/loginDirector';
+import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 import fakeData from '@test/fakeData';
 import { resetPassword } from '@test/director/resetPassword';
 import { TEST_DIRECTOR } from '@test/testData';
@@ -131,7 +131,11 @@ describe('reset director password', () => {
       data: { password, id: fakeData.id() },
     }).expect(200);
 
-    const directorAT = await getDirectorAccessToken(app, director.email, password);
+    const directorAT = await getDirectorAccessToken(
+      app,
+      director.email,
+      password,
+    );
 
     const updatedDirector = await getDirectorById(app, directorAT);
 
