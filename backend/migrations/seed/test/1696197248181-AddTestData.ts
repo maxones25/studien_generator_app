@@ -6,7 +6,6 @@ import {
   TEST_PARTICIPANT,
   TEST_STUDY,
 } from '@test/testData';
-import { StudyAttribute } from '@entities/schema';
 
 const studyId = TEST_STUDY.MAIN;
 const participantId = TEST_PARTICIPANT.ID;
@@ -25,6 +24,8 @@ const secondRecordId = 'e3cd8d75-127b-4312-b2a8-479778896a69';
 const textFormFieldId = TEST_FORM.FIELDS.TEXT.ID;
 const dateFormFieldId = TEST_FORM.FIELDS.DATE.ID;
 
+const stringifyJSON = (data: any) => JSON.stringify(JSON.stringify(data));
+
 export class AddTestData1696197248181 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.manager
@@ -35,22 +36,22 @@ export class AddTestData1696197248181 implements MigrationInterface {
         {
           studyId: () => `'${studyId}'`,
           key: 'duration',
-          value: () => '"365"',
+          value: stringifyJSON(365),
         },
         {
           studyId: () => `'${studyId}'`,
           key: 'endDate',
-          value: () => '"\\"2030-12-31T00:00:00.000Z\\""',
+          value: stringifyJSON('2030-12-31T00:00:00.000Z'),
         },
         {
           studyId: () => `'${studyId}'`,
           key: 'isActive',
-          value: () => '"true"',
+          value: stringifyJSON(true),
         },
         {
           studyId: () => `'${studyId}'`,
           key: 'startDate',
-          value: () => '"\\"2023-08-01T00:00:00.000Z\\""',
+          value: stringifyJSON('2023-08-01T00:00:00.000Z'),
         },
       ])
       .execute();
@@ -261,25 +262,25 @@ export class AddTestData1696197248181 implements MigrationInterface {
         {
           id: '2719c806-3ce4-4882-89b0-dd6854405237',
           recordId: firstRecordId,
-          value: '"test2"',
+          value: stringifyJSON('test2'),
           formFieldId: textFormFieldId,
         },
         {
           id: '2b3a10ef-1719-470f-b194-5ab2f8a347c4',
           recordId: firstRecordId,
-          value: '"2023-10-01T16:24:38.471Z"',
+          value: stringifyJSON('2023-10-01T16:24:38.471Z'),
           formFieldId: dateFormFieldId,
         },
         {
           id: '97763b50-a5f3-4185-baae-e618c463d040',
           recordId: secondRecordId,
-          value: '"test"',
+          value: stringifyJSON('test'),
           formFieldId: textFormFieldId,
         },
         {
           id: 'b3788af8-a648-4b29-97d8-ed0671443c02',
           recordId: secondRecordId,
-          value: '"2023-10-01T16:24:31.406Z"',
+          value: stringifyJSON('2023-10-01T16:24:31.406Z'),
           formFieldId: dateFormFieldId,
         },
       ])
