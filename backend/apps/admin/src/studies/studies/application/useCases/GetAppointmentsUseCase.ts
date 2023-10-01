@@ -1,5 +1,5 @@
 import { Appointment } from '@entities/core/appointment/Appointment';
-import { IStudyAppointmentsRepository } from '../domain';
+import { IStudyAppointmentsRepository } from '../../domain';
 
 export type GetAppointmentsInput = {
   studyId: string;
