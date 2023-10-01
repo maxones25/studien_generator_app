@@ -236,13 +236,10 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v2
 
-      - name: Cache npm dependencies
-        uses: actions/cache@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          path: ./backend/node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('./backend/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
+          node-version: 16
 
       - name: Install packages
         working-directory: ./backend
@@ -277,13 +274,10 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v2
 
-      - name: Cache npm dependencies
-        uses: actions/cache@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          path: ./tests/cypress/node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('./tests/cypress/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
+          node-version: 16
 
       - name: Install packages
         if: steps.cache.outputs.cache-hit != 'true'
@@ -315,13 +309,10 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v2
 
-      - name: Cache npm dependencies
-        uses: actions/cache@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          path: ./tests/cypress/node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('./tests/cypress/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
+          node-version: 16
 
       - name: Install packages
         if: steps.cache.outputs.cache-hit != 'true'
