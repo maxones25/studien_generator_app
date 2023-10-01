@@ -53,6 +53,10 @@ const isValid = (dateString: string, formatString: string) => {
   return apiIsValid(dateString, formatString);
 };
 
+const isValidDateTime = (dateString: string) => {
+  return apiIsValid(dateString, 'YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+};
+
 const getLastMonday = (d: Date) => {
   const day = d.getDay();
   const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust for Sundays
@@ -109,6 +113,7 @@ const addDays = (date: Date, days: number) => {
 };
 
 export default {
+  isValidDateTime,
   currentDate,
   convertToDateTime,
   isoDateTime,
