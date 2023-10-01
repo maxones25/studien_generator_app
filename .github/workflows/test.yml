@@ -31,6 +31,8 @@ jobs:
             database:
               - 'backend/migrations/**'
               - 'mysql/schema.sql'
+              - 'mysql/test.dockerfile'
+              - 'mysql/schema/**'
               - 'mysql/seed/**'
             admin_backend:
               - 'backend/apps/admin/src/**'
