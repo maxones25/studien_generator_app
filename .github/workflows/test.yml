@@ -149,7 +149,8 @@ jobs:
           docker build ./backend -t ghcr.io/${{ github.repository }}/study-backend:latest -f ./backend/study.dockerfile
           docker push ghcr.io/${{ github.repository }}/study-backend:latest
 
-  admin-backend-tests:
+  studies-backend-tests:
+    name: Test study management
     runs-on: ubuntu-latest
     needs: [changes, build-database-container, build-admin-backend-container]
     if: |
@@ -185,9 +186,42 @@ jobs:
 
       - name: Run studies tests
         working-directory: ./backend
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration studies
+
+  admin-backend-tests:
+    name: Test Other modules
+    runs-on: ubuntu-latest
+    needs: [changes, build-database-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_backend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Start database containers
+        run: docker-compose -f database-docker-compose.yaml up -d
+
+      - name: Wait for MySQL
+        run: sleep 10s
+
+      - name: Run schema migrations
+        working-directory: ./backend
+        run: npm run db:migration:run
+
+      - name: Insert testing seed data
+        working-directory: ./backend
+        run: npm run db:seed:run
 
       - name: Run directors tests
         working-directory: ./backend
