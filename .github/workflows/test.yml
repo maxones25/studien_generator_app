@@ -175,12 +175,6 @@ jobs:
       - name: Wait for MySQL
         run: sleep 10s
 
-      - name: Run studies tests
-        working-directory: ./backend
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
-        run: npm run test:admin:integration studies
-
       - name: Run schema migrations
         working-directory: ./backend
         run: npm run db:migration:run
@@ -188,6 +182,12 @@ jobs:
       - name: Insert testing seed data
         working-directory: ./backend
         run: npm run db:seed:run
+
+      - name: Run studies tests
+        working-directory: ./backend
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: npm run test:admin:integration studies
 
       - name: Run directors tests
         working-directory: ./backend
@@ -266,7 +266,7 @@ jobs:
       - name: Insert testing seed data
         working-directory: ./backend
         run: npm run db:seed:run
-        
+
       - name: Run integration tests
         working-directory: ./backend
         run: npm run test:study:integration
