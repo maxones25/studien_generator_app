@@ -45,10 +45,10 @@ const entity = () => {
   };
 };
 
-const entityField = () => {
+const entityField = (type?: FieldType) => {
   return {
     name: randomName(),
-    type: randomEnum(FieldType),
+    type: type ? type : randomEnum(FieldType),
   };
 };
 
