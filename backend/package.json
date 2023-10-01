@@ -25,6 +25,7 @@
     "build": "rimraf dist && nest build admin && nest build study",
     "build:admin": "rimraf dist && nest build admin",
     "build:study": "rimraf dist && nest build study",
+    "db:seed:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d seed.data-source.ts",
     "db:migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d data-source.ts",
     "db:migration:revert": "typeorm-ts-node-commonjs migration:revert -d data-source.ts",
     "db:migration:create": "typeorm-ts-node-commonjs migration:create",
