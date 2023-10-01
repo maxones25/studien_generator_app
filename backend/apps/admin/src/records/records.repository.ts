@@ -34,6 +34,8 @@ export class RecordsRepository extends RecordRepository<Record> {
   private select: FindOptionsSelect<Record> = {
     id: true,
     createdAt: true,
+    modifiedAt: true,
+    deletedAt: true,
     failureReason: true,
     form: {
       id: true,
