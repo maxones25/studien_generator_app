@@ -1,12 +1,11 @@
+import { AppModule } from '@admin/app.module';
+import { validateUUID } from '@shared/modules/uuid/uuid';
+import { getDirectorAccessToken } from '@test/admin/director';
+import { createGroup } from '@test/admin/groups';
+import { createStudyId, deleteStudy } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
-import { validateUUID } from '@shared/modules/uuid/uuid';
-import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { createGroup } from '@test/groups/createGroup';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { deleteStudy } from '@test/studies/deleteStudy';
 
 describe('create group', () => {
   let app: IApp;

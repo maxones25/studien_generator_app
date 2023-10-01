@@ -1,17 +1,21 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createFormId } from '@test/admin/forms';
+import {
+  createParticipantId,
+  createTaskId,
+  deleteParticipant,
+  getParticipantById,
+  getTasksByParticipant,
+  restoreParticipant,
+} from '@test/admin/participants';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createParticipantId } from '@test/participants/createParticipant';
-import { getParticipantById } from '@test/participants/getParticipantById';
-import { createStudyId } from '@test/studies/createStudy';
 import { TEST_DIRECTOR } from '@test/testData';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { deleteParticipant } from '@test/participants/deleteParticipant';
-import { createTaskId } from '@test/tasks/createTask';
-import { createFormId } from '@test/forms/createForm';
-import { getTasksByParticipant } from '@test/tasks/getTasksByParticipant';
-import { restoreParticipant } from '@test/participants/restoreParticipant';
 
 describe('restore participant', () => {
   let app: IApp;

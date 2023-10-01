@@ -1,16 +1,15 @@
-import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { addMember } from '@test/studies/members/addMember';
-import { createGroupId } from '@test/groups/createGroup';
-import { deleteGroup } from '@test/groups/deleteGroup';
-import { getGroupById } from '@test/groups/getGroupById';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { createParticipantId } from '@test/participants/createParticipant';
+import { getDirectorAccessToken } from '@test/admin/director';
+import { createGroupId, deleteGroup, getGroupById } from '@test/admin/groups';
+import {
+  createParticipantId,
+  getParticipantById,
+  getParticipants,
+} from '@test/admin/participants';
+import { createStudyId, addMember } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { getParticipantById } from '@test/participants/getParticipantById';
-import { getParticipants } from '@test/participants/getParticipants';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('delete group', () => {
   let app: IApp;

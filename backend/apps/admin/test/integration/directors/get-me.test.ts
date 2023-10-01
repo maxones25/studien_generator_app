@@ -1,10 +1,12 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { createDirector } from '@test/director/signUpDirector';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getMe } from '@test/director/getMe';
-import { Director } from '@entities/core/director/Director';
+import { IApp, createApp } from '@test/app';
+import {
+  createDirector,
+  getDirectorAccessToken,
+  getAdminAccessToken,
+  getMe,
+} from '@test/admin/director';
+import { Director } from '@entities/core/director';
 
 describe('get me', () => {
   let app: IApp;

@@ -1,12 +1,14 @@
-import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
+import { getDirectorAccessToken } from '@test/admin/director';
+import {
+  createEntityId,
+  deleteEntity,
+  getEntityById,
+} from '@test/admin/entities';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { deleteEntity } from '@test/entities/deleteEntity';
-import { createEntityId } from '@test/entities/createEntity';
-import { getEntityById } from '@test/entities/getEntityById';
-import { createStudyId } from '@test/studies/createStudy';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('Delete Entity', () => {
   let app: IApp;
@@ -22,7 +24,7 @@ describe('Delete Entity', () => {
       TEST_DIRECTOR.MAX.PASSWORD,
     );
 
-    studyId = await createStudyId(app, { accessToken, data: fakeData.study() });
+    studyId = await createStudyId(app, { accessToken });
   });
 
   afterAll(async () => {

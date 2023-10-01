@@ -1,12 +1,12 @@
 import { AppModule } from '@admin/app.module';
 import { TEST_DIRECTOR } from '@test/testData';
 import faker from '@test/fakeData';
-import { writeMessage } from '@test/chats/writeMessage';
-import { createParticipantId } from '@test/participants/createParticipant';
-import { createStudyId } from '@test/studies/createStudy';
-import { getChatByParticipant } from '@test/chats/getChatByParticipant';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
+import { writeMessage } from '@test/admin/chats/writeMessage';
+import { createParticipantId } from '@test/admin/participants/createParticipant';
+import { getChatByParticipant } from '@test/admin/chats/getChatByParticipant';
+import { getDirectorAccessToken } from '@test/admin/director/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
+import { createStudyId } from '@test/admin/studies';
 
 describe('Write Message', () => {
   let app: IApp;

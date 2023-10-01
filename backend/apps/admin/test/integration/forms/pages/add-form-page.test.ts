@@ -1,14 +1,14 @@
-import { TEST_DIRECTOR } from '@test/testData';
-import { validateUUID } from '@shared/modules/uuid/uuid';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { createFormId } from '@test/forms/createForm';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { getFormPages } from '@test/forms/pages/getFormPages';
-import { addFormPage } from '@test/forms/pages/addFormPage';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import { validateUUID } from '@shared/modules/uuid/uuid';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createFormId, addFormPage, getFormPages } from '@test/admin/forms';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('add form page', () => {
   let app: IApp;

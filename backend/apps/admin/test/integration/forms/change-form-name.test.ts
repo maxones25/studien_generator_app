@@ -1,13 +1,13 @@
-import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { createFormId } from '@test/forms/createForm';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createFormId, changeFormName, getFormById } from '@test/admin/forms';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { changeFormName } from '@test/forms/changeFormName';
-import { getFormById } from '@test/forms/getFormById';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('change form name', () => {
   let app: IApp;

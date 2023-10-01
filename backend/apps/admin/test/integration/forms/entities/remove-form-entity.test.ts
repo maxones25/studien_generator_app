@@ -1,21 +1,20 @@
-import { TEST_DIRECTOR } from '@test/testData';
-import { validateUUID } from '@shared/modules/uuid/uuid';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { createFormId } from '@test/forms/createForm';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import fakeData from '@test/fakeData';
 import {
-  addFormEntity,
+  getDirectorAccessToken,
+  getAdminAccessToken,
+  createDirector,
+} from '@test/admin/director';
+import { createEntityId } from '@test/admin/entities';
+import {
+  createFormId,
   createFormEntityId,
-} from '@test/forms/entities/addFormEntity';
-import { createEntityId } from '@test/entities/createEntity';
-import { getFormEntities } from '@test/forms/entities/getFormEntities';
-import { removeFormEntity } from '@test/forms/entities/removeFormEntity';
-import { createDirector } from '@test/director/signUpDirector';
-import { addMember } from '@test/studies/members/addMember';
+  removeFormEntity,
+  getFormEntities,
+} from '@test/admin/forms';
+import { createStudyId, addMember } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
+import fakeData from '@test/fakeData';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('remove form entity', () => {
   let app: IApp;

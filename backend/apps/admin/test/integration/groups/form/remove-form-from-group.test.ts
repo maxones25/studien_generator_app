@@ -1,20 +1,19 @@
 import { AppModule } from '@admin/app.module';
-import { validateUUID } from '@shared/modules/uuid/uuid';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { createDirector } from '@test/director/signUpDirector';
-import fakeData from '@test/fakeData';
-import { createFormId } from '@test/forms/createForm';
-import { createGroupId } from '@test/groups/createGroup';
 import {
-  addFormToGroup,
+  getDirectorAccessToken,
+  getAdminAccessToken,
+  createDirector,
+} from '@test/admin/director';
+import { createFormId } from '@test/admin/forms';
+import {
+  createGroupId,
   createGroupFormId,
-} from '@test/groups/forms/addFormToGroup';
-import { getFormsByGroup } from '@test/groups/forms/getFormsByGroup';
-import { removeFormFromGroup } from '@test/groups/forms/removeFromGroup';
-import { createStudyId } from '@test/studies/createStudy';
-import { addMember } from '@test/studies/members/addMember';
+  removeFormFromGroup,
+  getFormsByGroup,
+} from '@test/admin/groups';
+import { createStudyId, addMember } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
+import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('remove form from group', () => {

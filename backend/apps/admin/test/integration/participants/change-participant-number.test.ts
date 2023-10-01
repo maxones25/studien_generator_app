@@ -1,12 +1,16 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import {
+  createParticipantId,
+  changeParticipantNumber,
+  getParticipantById,
+} from '@test/admin/participants';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createParticipantId } from '@test/participants/createParticipant';
-import { changeParticipantNumber } from '@test/participants/changeParticipantNumber';
-import { getParticipantById } from '@test/participants/getParticipantById';
-import { createStudyId } from '@test/studies/createStudy';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('change participant number', () => {

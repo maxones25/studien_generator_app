@@ -1,14 +1,19 @@
 import { AppModule } from '@admin/app.module';
 import { Roles } from '@entities/core/study';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { createDirector } from '@test/director/signUpDirector';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+  createDirector,
+} from '@test/admin/director';
+import {
+  createStudyId,
+  changeStudyName,
+  getStudyById,
+  addMember,
+  createStudy,
+} from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { changeStudyName } from '@test/studies/changeStudyName';
-import { createStudy, createStudyId } from '@test/studies/createStudy';
-import { getStudyById } from '@test/studies/getStudyById';
-import { addMember } from '@test/studies/members/addMember';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('Change Study Name', () => {

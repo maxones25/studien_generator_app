@@ -1,13 +1,14 @@
+import { AppModule } from '@admin/app.module';
+import { Roles } from '@entities/core/study';
+import { validateUUID } from '@shared/modules/uuid/uuid';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createStudy, getStudyById } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
-import { validateUUID } from '@shared/modules/uuid/uuid';
-import { AppModule } from '@admin/app.module';
-import { createStudy } from '@test/studies/createStudy';
-import { getStudyById } from '@test/studies/getStudyById';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { Roles } from '@entities/core/study';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 
 describe('Create Study', () => {
   let app: IApp;

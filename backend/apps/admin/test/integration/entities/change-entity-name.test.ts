@@ -1,12 +1,11 @@
-import { TEST_DIRECTOR } from '@test/testData';
-import { AppModule } from '@admin/app.module';
-import fakeData from '@test/fakeData';
-import { changeEntityName } from '@test/entities/changeEntityName';
-import { getEntityById } from '@test/entities/getEntityById';
-import { createEntity, createEntityId } from '@test/entities/createEntity';
-import { createStudyId } from '@test/studies/createStudy';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
+import { AppModule } from "@admin/app.module";
+import { getDirectorAccessToken } from "@test/admin/director";
+import { changeEntityName, createEntity, createEntityId, getEntityById } from "@test/admin/entities";
+import { createStudyId } from "@test/admin/studies";
+import { IApp, createApp } from "@test/app";
+import fakeData from "@test/fakeData";
+import { TEST_DIRECTOR } from "@test/testData";
+
 
 describe('Change Entity Name', () => {
   let app: IApp;

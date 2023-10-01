@@ -1,18 +1,18 @@
-import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { addMember } from '@test/studies/members/addMember';
-import { createGroupId } from '@test/groups/createGroup';
-import { deleteGroup } from '@test/groups/deleteGroup';
-import { getGroupById } from '@test/groups/getGroupById';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { createParticipantId } from '@test/participants/createParticipant';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import {
+  createGroupId,
+  deleteGroup,
+  getGroupById,
+  restoreGroup,
+} from '@test/admin/groups';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { getParticipantById } from '@test/participants/getParticipantById';
-import { getParticipants } from '@test/participants/getParticipants';
-import { restoreGroup } from '@test/groups/restoreGroup';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('restore group', () => {
   let app: IApp;

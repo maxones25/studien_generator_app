@@ -1,17 +1,19 @@
 import { AppModule } from '@admin/app.module';
 import { validateUUID } from '@shared/modules/uuid/uuid';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import fakeData from '@test/fakeData';
-import { createFormId } from '@test/forms/createForm';
-import { createGroupId } from '@test/groups/createGroup';
 import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createFormId } from '@test/admin/forms';
+import {
+  createGroupId,
   addFormToGroup,
+  getFormsByGroup,
   createGroupFormId,
-} from '@test/groups/forms/addFormToGroup';
-import { getFormsByGroup } from '@test/groups/forms/getFormsByGroup';
-import { createStudyId } from '@test/studies/createStudy';
+} from '@test/admin/groups';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
+import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('add form to group', () => {

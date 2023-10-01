@@ -1,15 +1,14 @@
-import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { createFormId } from '@test/forms/createForm';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+  createDirector,
+} from '@test/admin/director';
+import { createFormId, deleteForm, getFormById } from '@test/admin/forms';
+import { createStudyId, addMember } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { deleteForm } from '@test/forms/deleteForm';
-import { getFormById } from '@test/forms/getFormById';
-import { createDirector } from '@test/director/signUpDirector';
-import { addMember } from '@test/studies/members/addMember';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('delete Form', () => {
   let app: IApp;

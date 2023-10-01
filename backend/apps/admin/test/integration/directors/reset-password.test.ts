@@ -1,15 +1,15 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { createDirector } from '@test/director/signUpDirector';
+import { IApp, createApp } from '@test/app';
+import fakeData from '@test/fakeData';
+import { TEST_DIRECTOR } from '@test/testData';
 import {
+  getDirectorById,
   getDirectorAccessToken,
   loginDirector,
-} from '@test/admin/auth/loginDirector';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import fakeData from '@test/fakeData';
-import { resetPassword } from '@test/director/resetPassword';
-import { TEST_DIRECTOR } from '@test/testData';
-import { getDirectorById } from '@test/director/getMe';
+  resetPassword,
+  getAdminAccessToken,
+  createDirector,
+} from '@test/admin/director';
 
 describe('reset director password', () => {
   let app: IApp;

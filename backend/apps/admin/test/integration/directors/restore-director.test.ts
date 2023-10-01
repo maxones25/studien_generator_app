@@ -1,13 +1,13 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { createDirector } from '@test/director/signUpDirector';
+import { IApp, createApp } from '@test/app';
 import {
+  createDirector,
   getDirectorAccessToken,
   loginDirector,
-} from '@test/admin/auth/loginDirector';
-import { deleteDirector } from '@test/director/deleteDirector';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { restoreDirector } from '@test/director/restoreDirector';
+  deleteDirector,
+  getAdminAccessToken,
+  restoreDirector,
+} from '@test/admin/director';
 import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
 

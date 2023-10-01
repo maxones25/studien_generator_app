@@ -1,11 +1,8 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { createDirector } from '@test/director/signUpDirector';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { Director } from '@entities/core/director/Director';
-import { getDirectors } from '@test/director/getDirectors';
+import { IApp, createApp } from '@test/app';
+import { Director } from '@entities/core/director';
 import { validateUUID } from '@shared/modules/uuid/uuid';
+import { createDirector, getAdminAccessToken, getDirectorAccessToken, getDirectors } from '@test/admin/director';
 
 describe('get directors', () => {
   let app: IApp;

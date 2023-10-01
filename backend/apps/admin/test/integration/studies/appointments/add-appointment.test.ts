@@ -1,10 +1,9 @@
 import { AppModule } from '@admin/app.module';
 import { validateUUID } from '@shared/modules/uuid/uuid';
-import { IApp, createApp } from '@test/app/createApp';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/director';
+import { createStudyId, createStudyAppointment } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createStudyAppointment } from '@test/studies/addStudyAppointment';
-import { createStudyId } from '@test/studies/createStudy';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('add appointment to study', () => {

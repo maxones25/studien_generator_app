@@ -1,16 +1,20 @@
 import { AppModule } from '@admin/app.module';
 import datetime from '@shared/modules/datetime/datetime';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { createDirector } from '@test/director/signUpDirector';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+  createDirector,
+} from '@test/admin/director';
+import {
+  createStudyId,
+  getStudyById,
+  setStudyDuration,
+  setStudyEnd,
+  addMember,
+} from '@test/admin/studies';
+import { setStudyStart } from '@test/admin/studies/setStudyStart';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createStudyId } from '@test/studies/createStudy';
-import { getStudyById } from '@test/studies/getStudyById';
-import { addMember } from '@test/studies/members/addMember';
-import { setStudyDuration } from '@test/studies/setStudyDuration';
-import { setStudyEnd } from '@test/studies/setStudyEnd';
-import { setStudyStart } from '@test/studies/setStudyStart';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('set study start', () => {

@@ -1,17 +1,20 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { createDirector } from '@test/director/signUpDirector';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+  createDirector,
+} from '@test/admin/director';
+import { createFormId } from '@test/admin/forms';
+import {
+  createGroupId,
+  createGroupFormId,
+  addScheduleId,
+  removeSchedule,
+  getFormsByGroup,
+} from '@test/admin/groups';
+import { createStudyId, addMember } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createFormId } from '@test/forms/createForm';
-import { createGroupId } from '@test/groups/createGroup';
-import { createGroupFormId } from '@test/groups/forms/addFormToGroup';
-import { getFormsByGroup } from '@test/groups/forms/getFormsByGroup';
-import { addScheduleId } from '@test/groups/forms/schedules/addSchedule';
-import { removeSchedule } from '@test/groups/forms/schedules/removeSchedule';
-import { createStudyId } from '@test/studies/createStudy';
-import { addMember } from '@test/studies/members/addMember';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('remove schedule', () => {

@@ -1,15 +1,13 @@
-import { TEST_DIRECTOR } from '@test/testData';
-import { validateUUID } from '@shared/modules/uuid/uuid';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { createForm, createFormId } from '@test/forms/createForm';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createFormId, getForms } from '@test/admin/forms';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getFormById } from '@test/forms/getFormById';
-import { getFormPages } from '@test/forms/pages/getFormPages';
-import { getForms } from '@test/forms/getForms';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('get forms by study', () => {
   let app: IApp;

@@ -1,11 +1,9 @@
+import { AppModule } from '@admin/app.module';
+import { getDirectorAccessToken } from '@test/admin/director';
+import { createStudyId, deleteStudy, getStudyById } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
-import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { deleteStudy } from '@test/studies/deleteStudy';
-import { getStudyById } from '@test/studies/getStudyById';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
 
 describe('Delete Study', () => {
   let app: IApp;

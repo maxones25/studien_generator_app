@@ -1,15 +1,15 @@
-import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import fakeData from '@test/fakeData';
-import { createStudyId } from '@test/studies/createStudy';
-import { addMember } from '@test/studies/members/addMember';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { createDirector } from '@test/director/signUpDirector';
-import { IApp, createApp } from '@test/app/createApp';
 import { Roles } from '@entities/core/study';
-import { getNonMembers } from '@test/studies/members/getNonMembers';
-import { deleteDirector } from '@test/director/deleteDirector';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import {
+  getDirectorAccessToken,
+  createDirector,
+  getAdminAccessToken,
+  deleteDirector,
+} from '@test/admin/director';
+import { createStudyId, addMember, getNonMembers } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
+import fakeData from '@test/fakeData';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('Get Non Study Members', () => {
   let app: IApp;

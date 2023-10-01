@@ -1,18 +1,19 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import fakeData from '@test/fakeData';
-import { createFormId } from '@test/forms/createForm';
-import { createGroupId } from '@test/groups/createGroup';
-import { createGroupFormId } from '@test/groups/forms/addFormToGroup';
 import {
-  addSchedule,
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createFormId } from '@test/admin/forms';
+import {
+  createGroupId,
+  createGroupFormId,
   addScheduleId,
-} from '@test/groups/forms/schedules/addSchedule';
-import { getSchedule } from '@test/groups/forms/schedules/getSchedule';
-import { updateSchedule } from '@test/groups/forms/schedules/updateSchedule';
-import { createStudyId } from '@test/studies/createStudy';
+  updateSchedule,
+  getSchedule,
+} from '@test/admin/groups';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
+import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('update schedule', () => {

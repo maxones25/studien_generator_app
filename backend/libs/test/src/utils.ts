@@ -2,7 +2,6 @@ import request from 'supertest';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { LoginParticipantDto } from '@study/modules/auth/dtos/LoginParticipantDto';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateEntityDto } from '@admin/entities/infrastructure/http/dtos/CreateEntityDto';
 import { CreatePushDto } from '@study/modules/push/dto/CreatePushDto';
 import { MessageDto } from '@study/modules/chat/dtos/MessageDto';
 
@@ -23,23 +22,6 @@ export const createApp = async (AppModule: any) => {
 
   return app;
 };
-
-export const createEntity = (
-  app: INestApplication,
-  accessToken: string,
-  studyId: string,
-  data: CreateEntityDto,
-) =>
-  new Promise<string>((resolve, reject) => {
-    request(app.getHttpServer())
-      .post(`/entities/createEntity`)
-      .query({ studyId })
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(data)
-      .expect(201)
-      .then((res) => resolve(res.text))
-      .catch((err) => reject(err));
-  });
 
 export const getParticipantAccessToken = (
   app: INestApplication,

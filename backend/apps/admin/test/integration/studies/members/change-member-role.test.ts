@@ -1,13 +1,14 @@
-import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { addMember } from '@test/studies/members/addMember';
-import { changeMemberRole } from '@test/studies/members/changeMemberRole';
-import { getStudyById } from '@test/studies/getStudyById';
-import { createDirector } from '@test/director/signUpDirector';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
 import { Roles } from '@entities/core/study';
+import { getDirectorAccessToken, createDirector } from '@test/admin/director';
+import {
+  createStudyId,
+  addMember,
+  changeMemberRole,
+  getStudyById,
+} from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('Change Member Role', () => {
   let app: IApp;

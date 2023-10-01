@@ -1,12 +1,16 @@
 import { AppModule } from '@admin/app.module';
 import datetime from '@shared/modules/datetime/datetime';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import {
+  createStudyId,
+  getStudyById,
+  activateStudy,
+} from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createStudyId } from '@test/studies/createStudy';
-import { getStudyById } from '@test/studies/getStudyById';
-import { activateStudy } from '@test/studies/setStudyActivation';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('get study by id', () => {

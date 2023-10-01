@@ -1,25 +1,24 @@
-import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { createFormId } from '@test/forms/createForm';
-import fakeData from '@test/fakeData';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { createFormPage } from '@test/forms/pages/addFormPage';
-import {
-  addFormComponent,
-  createFormComponentId,
-} from '@test/forms/components/addFormComponent';
 import { ComponentType } from '@admin/components/component-type.enum';
-import { getFormComponents } from '@test/forms/components/getFormComponents';
-import { createEntityId } from '@test/entities/createEntity';
-import { createFieldId } from '@test/entities/fields/createField';
 import { FieldType } from '@entities/core/entity';
-import { createFormEntityId } from '@test/forms/entities/addFormEntity';
-import { removeFormComponent } from '@test/forms/components/removeFormComponent';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { createDirector } from '@test/director/signUpDirector';
-import { addMember } from '@test/studies/members/addMember';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+  createDirector,
+} from '@test/admin/director';
+import { createEntityId, createFieldId } from '@test/admin/entities';
+import {
+  createFormId,
+  createFormPage,
+  createFormEntityId,
+  createFormComponentId,
+  removeFormComponent,
+  getFormComponents,
+} from '@test/admin/forms';
+import { createStudyId, addMember } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
+import fakeData from '@test/fakeData';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('create CheckBox form component', () => {
   let app: IApp;

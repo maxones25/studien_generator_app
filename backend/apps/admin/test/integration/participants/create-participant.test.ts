@@ -1,16 +1,17 @@
 import { AppModule } from '@admin/app.module';
-import { validateUUID } from '@shared/modules/uuid/uuid';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import fakeData from '@test/fakeData';
-import { createGroupId } from '@test/groups/createGroup';
 import {
-  createParticipant,
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createGroupId } from '@test/admin/groups';
+import {
   createParticipantId,
-} from '@test/participants/createParticipant';
-import { getParticipantById } from '@test/participants/getParticipantById';
-import { createStudyId } from '@test/studies/createStudy';
+  getParticipantById,
+  createParticipant,
+} from '@test/admin/participants';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
+import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('create participant', () => {

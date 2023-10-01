@@ -1,14 +1,14 @@
-import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { createDirector } from '@test/director/signUpDirector';
-import { createGroupId } from '@test/groups/createGroup';
-import { getGroups } from '@test/groups/getGroups';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import {
+  createDirector,
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createGroupId, deleteGroup, getGroups } from '@test/admin/groups';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { deleteGroup } from '@test/groups/deleteGroup';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('get groups', () => {
   let app: IApp;

@@ -1,14 +1,17 @@
 import { AppModule } from '@admin/app.module';
 import { validateUUID } from '@shared/modules/uuid/uuid';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import {
+  createGroupId,
+  createGroupAppointment,
+  getGroupAppointments,
+} from '@test/admin/groups';
+import { createStudyId, deleteStudy } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createGroupAppointment } from '@test/groups/addGroupAppointment';
-import { createGroupId } from '@test/groups/createGroup';
-import { getGroupAppointments } from '@test/groups/getGroupAppointments';
-import { createStudyId } from '@test/studies/createStudy';
-import { deleteStudy } from '@test/studies/deleteStudy';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('add appointment to group', () => {

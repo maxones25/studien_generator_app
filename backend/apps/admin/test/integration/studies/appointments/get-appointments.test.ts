@@ -1,11 +1,15 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import {
+  createStudyId,
+  createStudyAppointmentId,
+  getStudyAppointments,
+} from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createStudyAppointmentId } from '@test/studies/addStudyAppointment';
-import { createStudyId } from '@test/studies/createStudy';
-import { getStudyAppointments } from '@test/studies/getStudyAppointments';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('get appointments', () => {

@@ -1,15 +1,18 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { createDirector } from '@test/director/signUpDirector';
-import { createEntityId } from '@test/entities/createEntity';
-import { createFieldId } from '@test/entities/fields/createField';
-import { getFields } from '@test/entities/fields/getFields';
-import { removeField } from '@test/entities/fields/removeField';
+import {
+  createDirector,
+  getAdminAccessToken,
+  getDirectorAccessToken,
+} from '@test/admin/director';
+import {
+  createEntityId,
+  createFieldId,
+  getFields,
+  removeField,
+} from '@test/admin/entities';
+import { addMember, createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createStudyId } from '@test/studies/createStudy';
-import { addMember } from '@test/studies/members/addMember';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('remove field', () => {

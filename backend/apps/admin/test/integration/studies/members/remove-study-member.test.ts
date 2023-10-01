@@ -1,11 +1,8 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { createDirector } from '@test/director/signUpDirector';
+import { getDirectorAccessToken, createDirector } from '@test/admin/director';
+import { createStudyId, addMember, removeMember } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createStudyId } from '@test/studies/createStudy';
-import { addMember } from '@test/studies/members/addMember';
-import { removeMember } from '@test/studies/members/removeMember';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('Remove Study Member', () => {

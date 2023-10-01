@@ -1,12 +1,13 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
+import { getDirectorAccessToken } from '@test/admin/director';
+import {
+  createGroupId,
+  changeGroupName,
+  getGroupById,
+} from '@test/admin/groups';
+import { createStudyId, deleteStudy } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { changeGroupName } from '@test/groups/changeGroupName';
-import { createGroupId } from '@test/groups/createGroup';
-import { getGroupById } from '@test/groups/getGroupById';
-import { createStudyId } from '@test/studies/createStudy';
-import { deleteStudy } from '@test/studies/deleteStudy';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('change group name', () => {

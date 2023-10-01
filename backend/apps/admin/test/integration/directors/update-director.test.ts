@@ -1,15 +1,15 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { createDirector } from '@test/director/signUpDirector';
+import { IApp, createApp } from '@test/app';
+import fakeData from '@test/fakeData';
 import {
+  getDirectorById,
+  updateDirector,
+  getAdminAccessToken,
   getDirectorAccessToken,
   loginDirector,
-} from '@test/admin/auth/loginDirector';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import fakeData from '@test/fakeData';
-import { updateDirector } from '@test/director/updateDirector';
-import { getDirectorById } from '@test/director/getMe';
-import { Director } from '@entities/core/director/Director';
+  createDirector,
+} from '@test/admin/director';
+import { Director } from '@entities/core/director';
 
 describe('update director', () => {
   let app: IApp;

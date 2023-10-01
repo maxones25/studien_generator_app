@@ -1,14 +1,18 @@
-import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { createFormId } from '@test/forms/createForm';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createEntityId } from '@test/admin/entities';
+import {
+  createFormId,
+  createFormEntityId,
+  getFormsByEntity,
+} from '@test/admin/forms';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { createFormEntityId } from '@test/forms/entities/addFormEntity';
-import { createEntityId } from '@test/entities/createEntity';
-import { getFormsByEntity } from '@test/forms/getFormsByEntity';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('get forms by entity', () => {
   let app: IApp;

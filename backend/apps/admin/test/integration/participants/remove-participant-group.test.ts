@@ -1,14 +1,18 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createGroupId } from '@test/admin/groups';
+import {
+  createParticipantId,
+  removeParticipantGroup,
+  getParticipantById,
+} from '@test/admin/participants';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createParticipantId } from '@test/participants/createParticipant';
-import { getParticipantById } from '@test/participants/getParticipantById';
-import { createStudyId } from '@test/studies/createStudy';
 import { TEST_DIRECTOR } from '@test/testData';
-import { createGroupId } from '@test/groups/createGroup';
-import { removeParticipantGroup } from '@test/participants/removeParticipantGroup';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
 
 describe('remove participant group', () => {
   let app: IApp;

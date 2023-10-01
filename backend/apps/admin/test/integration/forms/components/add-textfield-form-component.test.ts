@@ -1,21 +1,20 @@
-import { TEST_DIRECTOR } from '@test/testData';
 import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { createFormId } from '@test/forms/createForm';
-import fakeData from '@test/fakeData';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { createFormPage } from '@test/forms/pages/addFormPage';
-import {
-  addFormComponent,
-  createFormComponentId,
-} from '@test/forms/components/addFormComponent';
 import { ComponentType } from '@admin/components/component-type.enum';
-import { getFormComponents } from '@test/forms/components/getFormComponents';
-import { createEntityId } from '@test/entities/createEntity';
-import { createFieldId } from '@test/entities/fields/createField';
 import { FieldType } from '@entities/core/entity';
-import { createFormEntityId } from '@test/forms/entities/addFormEntity';
+import { getDirectorAccessToken } from '@test/admin/director';
+import { createEntityId, createFieldId } from '@test/admin/entities';
+import {
+  createFormId,
+  createFormPage,
+  createFormEntityId,
+  createFormComponentId,
+  getFormComponents,
+  addFormComponent,
+} from '@test/admin/forms';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
+import fakeData from '@test/fakeData';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('create TextField form component', () => {
   let app: IApp;

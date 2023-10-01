@@ -1,6 +1,5 @@
-import request from 'supertest';
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
+import { IApp, createApp, getHealth } from '@test/app';
 
 describe('App Heath', () => {
   let app: IApp;
@@ -14,6 +13,6 @@ describe('App Heath', () => {
   });
 
   it('should be healthy', () => {
-    return request(app.getHttpServer()).get(`/health`).expect(200);
+    return getHealth(app).expect(200);
   });
 });

@@ -1,11 +1,11 @@
 import { AppModule } from '@admin/app.module';
 import { TEST_DIRECTOR } from '@test/testData';
-import { createParticipantId } from '@test/participants/createParticipant';
-import { createStudyId } from '@test/studies/createStudy';
-import { getChatByParticipant } from '@test/chats/getChatByParticipant';
-import { getChats } from '@test/chats/getChats';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
+import { createParticipantId } from '@test/admin/participants/createParticipant';
+import { getChatByParticipant } from '@test/admin/chats/getChatByParticipant';
+import { getChats } from '@test/admin/chats/getChats';
+import { getDirectorAccessToken } from '@test/admin/director/auth/loginDirector';
 import { IApp, createApp } from '@test/app/createApp';
+import { createStudyId } from '@test/admin/studies/createStudy';
 
 describe('Get Chats', () => {
   let app: IApp;

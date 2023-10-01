@@ -1,15 +1,19 @@
+import { AppModule } from '@admin/app.module';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+  createDirector,
+} from '@test/admin/director';
+import {
+  createStudyId,
+  deleteStudy,
+  restoreStudy,
+  getStudyById,
+  addMember,
+} from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
 import { TEST_DIRECTOR } from '@test/testData';
-import { AppModule } from '@admin/app.module';
-import { createStudyId } from '@test/studies/createStudy';
-import { deleteStudy } from '@test/studies/deleteStudy';
-import { getStudyById } from '@test/studies/getStudyById';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
-import { restoreStudy } from '@test/studies/restoreStudy';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { createDirector } from '@test/director/signUpDirector';
-import { addMember } from '@test/studies/members/addMember';
 
 describe('restore Study', () => {
   let app: IApp;

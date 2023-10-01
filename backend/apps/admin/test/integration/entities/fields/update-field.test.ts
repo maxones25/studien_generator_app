@@ -1,13 +1,17 @@
 import { AppModule } from '@admin/app.module';
-import { IApp, createApp } from '@test/app/createApp';
-import { getAdminAccessToken } from '@test/admin/auth/loginAdmin';
-import { getDirectorAccessToken } from '@test/admin/auth/loginDirector';
-import { createEntityId } from '@test/entities/createEntity';
-import { createFieldId } from '@test/entities/fields/createField';
-import { getFields } from '@test/entities/fields/getFields';
-import { updateField } from '@test/entities/fields/updateField';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import {
+  createEntityId,
+  createFieldId,
+  updateField,
+  getFields,
+} from '@test/admin/entities';
+import { createStudyId } from '@test/admin/studies';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
-import { createStudyId } from '@test/studies/createStudy';
 import { TEST_DIRECTOR } from '@test/testData';
 
 describe('update field', () => {
