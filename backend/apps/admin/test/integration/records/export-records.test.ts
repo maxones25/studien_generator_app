@@ -81,7 +81,9 @@ describe('export records', () => {
       .then((res) => {
         const data = res.text;
 
-        const expectedData = `"Proband";"Gruppe";"Formular";"4nJBdVNeZ (xBsyIuqyHP)";"g98oYrb0x (xBsyIuqyHP)";"Zeitstempel (xBsyIuqyHP)";"Uhrzeit (xBsyIuqyHP)"\n"001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test2";"2023-10-01T18:24";"16:24"\n"001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test";"2023-10-01T18:24";"12:12"`;
+        const expectedData = `"Proband";"Gruppe";"Formular";"4nJBdVNeZ (xBsyIuqyHP)";"g98oYrb0x (xBsyIuqyHP)";"Zeitstempel (xBsyIuqyHP)";"Uhrzeit (xBsyIuqyHP)"
+        "001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test2";"2023-10-01T18:24";"16:24"
+        "001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test";"2023-10-01T18:24";"12:12"`;
 
         expect(data).toBe(expectedData);
       });
