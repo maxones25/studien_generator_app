@@ -4,7 +4,6 @@ import {
   getAdminAccessToken,
   createDirector,
 } from '@test/admin/director';
-import { getRecords } from '@test/admin/records';
 import { exportRecords } from '@test/admin/records/exportRecords';
 import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
@@ -56,6 +55,11 @@ const columns = [
   },
 ];
 
+const expectedData =
+  `"Proband";"Gruppe";"Formular";"4nJBdVNeZ (xBsyIuqyHP)";"g98oYrb0x (xBsyIuqyHP)";"Zeitstempel (xBsyIuqyHP)";"Uhrzeit (xBsyIuqyHP)"\n"001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test2";"2023-10-01T18:24";"16:24"\n"001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test";"2023-10-01T18:24";"12:12"`
+    .split('\n')
+    .map((row) => row.split(';'));
+
 describe('export records', () => {
   let app: IApp;
   let accessToken: string;
@@ -81,11 +85,19 @@ describe('export records', () => {
       .then((res) => {
         const data = res.text;
 
-        const expectedData = `"Proband";"Gruppe";"Formular";"4nJBdVNeZ (xBsyIuqyHP)";"g98oYrb0x (xBsyIuqyHP)";"Zeitstempel (xBsyIuqyHP)";"Uhrzeit (xBsyIuqyHP)"
-        "001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test2";"2023-10-01T18:24";"16:24"
-        "001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test";"2023-10-01T18:24";"12:12"`;
+        const rows = data.split('\n');
 
-        expect(data).toBe(expectedData);
+        expect(rows.length).toBe(3);
+
+        rows.forEach((row, i) => {
+          const cells = row.split(';');
+
+          expect(cells.length).toBe(7);
+
+          cells.forEach((cell, k) => {
+            expect(cell).toBe(expectedData[i][k]);
+          });
+        });
       });
   });
 
