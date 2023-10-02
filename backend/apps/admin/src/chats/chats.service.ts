@@ -15,16 +15,12 @@ export class ChatsService {
     private entityManager: EntityManager,
     @InjectRepository(Chat)
     private chatRepository: Repository<Chat>,
-    @Inject(ChatsRepository)
-    private chatsRepository: ChatsRepository,
     @Inject(MessagesRepository)
     private messagesRepository: MessagesRepository,
     @InjectRepository(ChatMessageReceipt)
     private receiptRepository: Repository<ChatMessageReceipt>,
   ) {}
-  getRelatedByStudy(studyId: string, id: string): Promise<any> {
-    throw new Error('Method not implemented.');
-  }
+  
 
   getMessages(chatId: string) {
     return this.messagesRepository.getMessages(chatId);
