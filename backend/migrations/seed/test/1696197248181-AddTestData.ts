@@ -64,7 +64,7 @@ export class AddTestData1696197248181 implements MigrationInterface {
       .values({
         participantId: () => `'${participantId}'`,
         key: 'startedAt',
-        value: () => '"\\"2023-09-01T00:00:00.000Z\\""',
+        value: stringifyJSON('2023-09-01T00:00:00.000Z'),
       })
       .execute();
 

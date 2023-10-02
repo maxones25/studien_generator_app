@@ -80,6 +80,7 @@ const getDayOfWeekIndex = (day: Date) => {
 };
 
 const formatDateTime = (value: string | Date) => {
+  if(value === null || value === undefined) return "";
   if (typeof value === 'string') {
     value = new Date(value);
   }
@@ -87,6 +88,7 @@ const formatDateTime = (value: string | Date) => {
 };
 
 const formatDate = (value: string | Date) => {
+  if(value === null || value === undefined) return "";
   if (typeof value === 'string') {
     value = new Date(value);
   }

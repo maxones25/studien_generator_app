@@ -13,6 +13,7 @@ import { ChatsService } from '../chats.service';
 import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';
 import { ChatQueryDto } from '../dtos/ChatQueryDto';
+import { ChatGuard } from '../guards/ChatGuard';
 
 @Controller()
 @UseGuards(StudyGuard)
@@ -33,6 +34,7 @@ export class ChatsQueries {
 
   @Get('/chats/getMessages')
   @Roles('admin', 'employee')
+  @UseGuards(ChatGuard)
   async getChatMessages(@Query() { chatId }: ChatQueryDto) {
     return this.chatService.getMessages(chatId);
   }

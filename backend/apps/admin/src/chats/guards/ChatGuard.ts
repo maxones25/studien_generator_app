@@ -8,6 +8,6 @@ export class ChatGuard extends RecordGuard {
     @Inject(ChatsRepository)
     service: IGetStudyRelatedDataUseCase,
   ) {
-    super(service, 'chat', 'chatId', 'path');
+    super(service, 'chat', 'chatId', 'both');
   }
 }
