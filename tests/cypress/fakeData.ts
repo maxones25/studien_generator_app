@@ -103,7 +103,10 @@ const appointment = (): FakeAppointment => {
   };
 };
 
+const message = () => faker.company.catchPhrase()
+
 export default {
+  message,
   study,
   group,
   entity,

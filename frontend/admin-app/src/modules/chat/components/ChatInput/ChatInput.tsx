@@ -30,6 +30,7 @@ export const ChatInput: React.FC<ChatInputProps> = () => {
       }}
     >
       <TextField
+        data-testid="write message"
         variant="outlined"
         fullWidth
         value={inputValue}

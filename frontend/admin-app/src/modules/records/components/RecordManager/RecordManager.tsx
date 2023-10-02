@@ -238,6 +238,7 @@ export const RecordManager: React.FC<RecordManagerProps> = ({
         </Row>
         <Column mb={1} flex={1}>
           <Autocomplete
+            data-testid="change columns"
             multiple
             freeSolo
             id="tags-filled"
@@ -248,6 +249,8 @@ export const RecordManager: React.FC<RecordManagerProps> = ({
                 columns: (columns as TableColumn[]).map(({ id }) => id),
               });
             }}
+            // @ts-ignore
+            ListboxProps={{ "data-testid": "columns" }}
             renderTags={(options: readonly TableColumn[], getTagProps) =>
               options.map((option, index) => (
                 <Chip

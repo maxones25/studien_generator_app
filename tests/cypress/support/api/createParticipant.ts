@@ -1,4 +1,4 @@
-import { FakeGroup, FakeParticipant } from "../../fakeData";
+import {  FakeParticipant } from "../../fakeData";
 
 Cypress.Commands.add(
   "createParticipant",

@@ -50,7 +50,7 @@ const FormsPage: React.FC<FormsPageProps> = () => {
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", pl: 2 }}>
         <Text variant="h6">{t("forms")}</Text>
         <IconButton
-          testId="create group button"
+          testId="create form"
           onClick={formData.handleSet({ name: "" })}
           Icon={<Add />}
         />

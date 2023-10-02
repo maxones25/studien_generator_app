@@ -56,11 +56,14 @@ declare global {
       ): Chainable<any>;
       openStudyPage(studyId: string): void;
       openGroupsPage(studyId: string): void;
+      openRecordsPage(studyId: string): void;
+      openFormsPage(studyId: string): void;
       openEntitiesPage(studyId: string): void;
       openParticipantsPage(studyId: string): void;
       openParticipantPage(studyId: string, participantId: string): void;
       openEntityPage(studyId: string, entityId: string): void;
       openGroupPage(studyId: string, groupId: string): void;
+      openChatsPage(studyId: string): void;
       shouldShowAlert(type: "success" | "error", text?: string): void;
       selectOption(name: string, option: string): Chainable<any>;
     }
@@ -91,3 +94,6 @@ import "./router/openParticipantPage";
 import "./router/openEntityPage";
 import "./router/openGroupsPage";
 import "./router/openGroupPage";
+import "./router/openRecordsPage";
+import "./router/openFormsPage";
+import "./router/openChatsPage";
