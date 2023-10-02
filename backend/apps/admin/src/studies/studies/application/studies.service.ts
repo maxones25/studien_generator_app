@@ -36,11 +36,11 @@ export class StudiesService {
     if (!(await this.attributesRepository.isSet(studyId, 'duration')))
       throw new BadRequestException('duration must be set');
 
-    this.attributesRepository.set(studyId, 'isActive', true);
+    await this.attributesRepository.set(studyId, 'isActive', true);
   }
 
   async deactivate(studyId: string) {
-    this.attributesRepository.set(studyId, 'isActive', false);
+    await this.attributesRepository.set(studyId, 'isActive', false);
   }
 
   async changeName(id: string, name: string) {
