@@ -264,8 +264,6 @@ jobs:
 
       - name: Run entities tests
         working-directory: ./backend
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration entities
 
   forms-management-api-tests:
@@ -305,8 +303,6 @@ jobs:
 
       - name: Run forms tests
         working-directory: ./backend
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration forms
 
   groups-management-api-tests:
@@ -346,9 +342,7 @@ jobs:
 
       - name: Run groups tests
         working-directory: ./backend
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
-        run: npm run test:admin:integration chats
+        run: npm run test:admin:integration groups
 
   participants-management-api-tests:
     name: Test participants management API
@@ -387,8 +381,6 @@ jobs:
 
       - name: Run participants tests
         working-directory: ./backend
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration participants
 
   records-management-api-tests:
@@ -428,8 +420,6 @@ jobs:
 
       - name: Run records tests
         working-directory: ./backend
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration records
 
   chats-management-api-tests:
@@ -469,8 +459,6 @@ jobs:
 
       - name: Run chats tests
         working-directory: ./backend
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration chats
 
   study-backend-tests:
