@@ -12,8 +12,6 @@ export class IsDirectorGuard implements CanActivate {
 
     const topic = request.payload.topic;
 
-    if (typeof topic !== 'string') throw new UnauthorizedException();
-
     if (topic !== 'Director') throw new UnauthorizedException();
 
     return true;

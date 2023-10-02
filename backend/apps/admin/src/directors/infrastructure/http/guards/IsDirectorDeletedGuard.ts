@@ -21,11 +21,9 @@ export class IsDirectorDeletedGuard implements CanActivate {
     if (request.route.path.startsWith('/auth')) return true;
     if (request.route.path.startsWith('/health')) return true;
 
-    if (request.payload.topic === 'Admin') return true;
+    if (request.payload.topic !== 'Director') return true;
 
     const directorId = request?.payload?.directorId;
-
-    if (typeof directorId !== 'string') throw new UnauthorizedException();
 
     const isDeleted = await this.isDirectorDeletedUseCase.execute({
       directorId,

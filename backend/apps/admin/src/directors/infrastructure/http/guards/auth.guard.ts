@@ -29,13 +29,25 @@ export class AuthGuard implements CanActivate {
 
     try {
       const payload = await this.tokenService.verify(token);
-
       request.payload = payload;
-
-      return true;
     } catch {
       throw new UnauthorizedException();
     }
+
+    if (typeof request.payload.topic !== 'string')
+      throw new UnauthorizedException();
+
+    const topic = request.payload.topic;
+
+    if (topic === 'Admin') {
+    } else if (topic === 'Director') {
+      if (typeof request.payload.directorId !== 'string')
+        throw new UnauthorizedException();
+    } else {
+      throw new UnauthorizedException();
+    }
+
+    return true;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
