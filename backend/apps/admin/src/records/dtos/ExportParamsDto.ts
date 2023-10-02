@@ -1,4 +1,5 @@
 import {
+  ArrayMinSize,
   IsArray,
   IsNotEmpty,
   IsObject,
@@ -25,6 +26,7 @@ export class TableColumnDto {
 export class ExportParamsDto extends RecordsQueryDto {
   @IsArray()
   @IsObject({ each: true })
+  @ArrayMinSize(1)
   @ValidateNested()
   @Type(() => TableColumnDto)
   readonly columns: TableColumnDto[];
