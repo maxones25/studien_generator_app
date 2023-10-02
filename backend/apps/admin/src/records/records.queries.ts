@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   Inject,
   Post,
   Query,
@@ -29,6 +31,7 @@ export class RecordsQueries {
   }
 
   @Post('export')
+  @HttpCode(HttpStatus.OK)
   @Roles('admin', 'employee')
   exportData(
     @Query() { studyId }: StudyQueryDto,
