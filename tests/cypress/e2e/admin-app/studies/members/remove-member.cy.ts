@@ -1,4 +1,4 @@
-import fakeData from "../../../fakeData";
+import fakeData from "../../../../fakeData";
 
 describe("remove member", () => {
   let study;
@@ -36,7 +36,7 @@ describe("remove member", () => {
   });
 
   it("should remove admin if there is one admin left", () => {
-    cy.addMember(study.id, "Alice Smith", "admin")
+    cy.addMember(study.id, "Alice Smith", "admin");
 
     cy.getByTestId("select Max Mustermann role").contains("Administrator");
 

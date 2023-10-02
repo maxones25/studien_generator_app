@@ -1,4 +1,4 @@
-import fakeData from "../../../fakeData";
+import fakeData from "../../../../fakeData";
 
 describe("add member", () => {
   let study;

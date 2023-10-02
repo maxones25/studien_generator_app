@@ -1,4 +1,4 @@
-import fakeData from "../../../fakeData";
+import fakeData from "../../../../fakeData";
 
 describe("change member role", () => {
   let study;
@@ -20,9 +20,7 @@ describe("change member role", () => {
 
     cy.getByTestId("select Alice Smith role").contains("Administrator");
 
-    cy.getByTestId("select Alice Smith role")
-      .contains("Administrator")
-      .click();
+    cy.getByTestId("select Alice Smith role").contains("Administrator").click();
 
     cy.getByTestId("select Alice Smith role option employee").click();
 
@@ -34,9 +32,7 @@ describe("change member role", () => {
 
     cy.getByTestId("select Alice Smith role").contains("Mitarbeiter");
 
-    cy.getByTestId("select Alice Smith role")
-      .contains("Mitarbeiter")
-      .click();
+    cy.getByTestId("select Alice Smith role").contains("Mitarbeiter").click();
 
     cy.getByTestId("select Alice Smith role option admin").click();
 

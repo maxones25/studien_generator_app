@@ -149,8 +149,8 @@ jobs:
           docker build ./backend -t ghcr.io/${{ github.repository }}/study-backend:latest -f ./backend/study.dockerfile
           docker push ghcr.io/${{ github.repository }}/study-backend:latest
 
-  studies-backend-tests:
-    name: Test study management
+  studies-management-api-tests:
+    name: Test studies management API
     runs-on: ubuntu-latest
     needs: [changes, build-database-container, build-admin-backend-container]
     if: |
@@ -188,8 +188,8 @@ jobs:
         working-directory: ./backend
         run: npm run test:admin:integration studies
 
-  admin-backend-tests:
-    name: Test Other modules
+  director-management-api-tests:
+    name: Test directors management API
     runs-on: ubuntu-latest
     needs: [changes, build-database-container, build-admin-backend-container]
     if: |
@@ -225,9 +225,42 @@ jobs:
 
       - name: Run directors tests
         working-directory: ./backend
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration directors
+
+  entities-management-api-tests:
+    name: Test entities management API
+    runs-on: ubuntu-latest
+    needs: [changes, build-database-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_backend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Start database containers
+        run: docker-compose -f database-docker-compose.yaml up -d
+
+      - name: Wait for MySQL
+        run: sleep 10s
+
+      - name: Run schema migrations
+        working-directory: ./backend
+        run: npm run db:migration:run
+
+      - name: Insert testing seed data
+        working-directory: ./backend
+        run: npm run db:seed:run
 
       - name: Run entities tests
         working-directory: ./backend
@@ -235,11 +268,81 @@ jobs:
           NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration entities
 
+  forms-management-api-tests:
+    name: Test forms management API
+    runs-on: ubuntu-latest
+    needs: [changes, build-database-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_backend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Start database containers
+        run: docker-compose -f database-docker-compose.yaml up -d
+
+      - name: Wait for MySQL
+        run: sleep 10s
+
+      - name: Run schema migrations
+        working-directory: ./backend
+        run: npm run db:migration:run
+
+      - name: Insert testing seed data
+        working-directory: ./backend
+        run: npm run db:seed:run
+
       - name: Run forms tests
         working-directory: ./backend
         env:
           NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration forms
+
+  groups-management-api-tests:
+    name: Test groups management API
+    runs-on: ubuntu-latest
+    needs: [changes, build-database-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_backend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Start database containers
+        run: docker-compose -f database-docker-compose.yaml up -d
+
+      - name: Wait for MySQL
+        run: sleep 10s
+
+      - name: Run schema migrations
+        working-directory: ./backend
+        run: npm run db:migration:run
+
+      - name: Insert testing seed data
+        working-directory: ./backend
+        run: npm run db:seed:run
 
       - name: Run groups tests
         working-directory: ./backend
@@ -247,11 +350,40 @@ jobs:
           NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration chats
 
-      - name: Run chats tests
+  participants-management-api-tests:
+    name: Test participants management API
+    runs-on: ubuntu-latest
+    needs: [changes, build-database-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_backend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
         working-directory: ./backend
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
-        run: npm run test:admin:integration chats
+        run: npm ci
+
+      - name: Start database containers
+        run: docker-compose -f database-docker-compose.yaml up -d
+
+      - name: Wait for MySQL
+        run: sleep 10s
+
+      - name: Run schema migrations
+        working-directory: ./backend
+        run: npm run db:migration:run
+
+      - name: Insert testing seed data
+        working-directory: ./backend
+        run: npm run db:seed:run
 
       - name: Run participants tests
         working-directory: ./backend
@@ -259,11 +391,87 @@ jobs:
           NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration participants
 
+  records-management-api-tests:
+    name: Test records management API
+    runs-on: ubuntu-latest
+    needs: [changes, build-database-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_backend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Start database containers
+        run: docker-compose -f database-docker-compose.yaml up -d
+
+      - name: Wait for MySQL
+        run: sleep 10s
+
+      - name: Run schema migrations
+        working-directory: ./backend
+        run: npm run db:migration:run
+
+      - name: Insert testing seed data
+        working-directory: ./backend
+        run: npm run db:seed:run
+
       - name: Run records tests
         working-directory: ./backend
         env:
           NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:admin:integration records
+
+  chats-management-api-tests:
+    name: Test chats management API
+    runs-on: ubuntu-latest
+    needs: [changes, build-database-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_backend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Start database containers
+        run: docker-compose -f database-docker-compose.yaml up -d
+
+      - name: Wait for MySQL
+        run: sleep 10s
+
+      - name: Run schema migrations
+        working-directory: ./backend
+        run: npm run db:migration:run
+
+      - name: Insert testing seed data
+        working-directory: ./backend
+        run: npm run db:seed:run
+
+      - name: Run chats tests
+        working-directory: ./backend
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: npm run test:admin:integration chats
 
   study-backend-tests:
     runs-on: ubuntu-latest
@@ -305,7 +513,8 @@ jobs:
         working-directory: ./backend
         run: npm run test:study:integration
 
-  admin-frontend-tests:
+  studies-management-e2e-tests:
+    name: Test studies management E2E
     runs-on: ubuntu-latest
     needs:
       [changes, build-admin-frontend-container, build-admin-backend-container]
@@ -328,17 +537,237 @@ jobs:
         working-directory: ./tests/cypress
         run: npm ci
 
-      - name: Build admin-backend containers
-        run: |
-          docker-compose -f admin-docker-compose.yaml build
-
-      - name: Start admin-backend containers
+      - name: Start admin app containers
         run: |
           docker-compose -f admin-docker-compose.yaml up -d
 
       - name: Run end to end tests
         working-directory: ./tests/cypress
-        run: npm run test:admin
+        run: npm run test:admin -- --spec "e2e/admin-app/studies/**/*"
+
+  directors-management-e2e-tests:
+    name: Test directors management E2E
+    runs-on: ubuntu-latest
+    needs:
+      [changes, build-admin-frontend-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_frontend == 'true' ||
+      needs.changes.outputs.admin_frontend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./tests/cypress
+        run: npm ci
+
+      - name: Start admin app containers
+        run: |
+          docker-compose -f admin-docker-compose.yaml up -d
+
+      - name: Run end to end tests
+        working-directory: ./tests/cypress
+        run: npm run test:admin -- --spec "e2e/admin-app/directors/**/*"
+
+  entities-management-e2e-tests:
+    name: Test entities management E2E
+    runs-on: ubuntu-latest
+    needs:
+      [changes, build-admin-frontend-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_frontend == 'true' ||
+      needs.changes.outputs.admin_frontend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./tests/cypress
+        run: npm ci
+
+      - name: Start admin app containers
+        run: |
+          docker-compose -f admin-docker-compose.yaml up -d
+
+      - name: Run end to end tests
+        working-directory: ./tests/cypress
+        run: npm run test:admin -- --spec "e2e/admin-app/entities/**/*"
+
+  forms-management-e2e-tests:
+    name: Test forms management E2E
+    runs-on: ubuntu-latest
+    needs:
+      [changes, build-admin-frontend-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_frontend == 'true' ||
+      needs.changes.outputs.admin_frontend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./tests/cypress
+        run: npm ci
+
+      - name: Start admin app containers
+        run: |
+          docker-compose -f admin-docker-compose.yaml up -d
+
+      - name: Run end to end tests
+        working-directory: ./tests/cypress
+        run: npm run test:admin -- --spec "e2e/admin-app/forms/**/*"
+
+  groups-management-e2e-tests:
+    name: Test groups management E2E
+    runs-on: ubuntu-latest
+    needs:
+      [changes, build-admin-frontend-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_frontend == 'true' ||
+      needs.changes.outputs.admin_frontend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./tests/cypress
+        run: npm ci
+
+      - name: Start admin app containers
+        run: |
+          docker-compose -f admin-docker-compose.yaml up -d
+
+      - name: Run end to end tests
+        working-directory: ./tests/cypress
+        run: npm run test:admin -- --spec "e2e/admin-app/groups/**/*"
+
+  participants-management-e2e-tests:
+    name: Test participants management E2E
+    runs-on: ubuntu-latest
+    needs:
+      [changes, build-admin-frontend-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_frontend == 'true' ||
+      needs.changes.outputs.admin_frontend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./tests/cypress
+        run: npm ci
+
+      - name: Start admin app containers
+        run: |
+          docker-compose -f admin-docker-compose.yaml up -d
+
+      - name: Run end to end tests
+        working-directory: ./tests/cypress
+        run: npm run test:admin -- --spec "e2e/admin-app/participants/**/*"
+
+  records-management-e2e-tests:
+    name: Test records management E2E
+    runs-on: ubuntu-latest
+    needs:
+      [changes, build-admin-frontend-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_frontend == 'true' ||
+      needs.changes.outputs.admin_frontend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./tests/cypress
+        run: npm ci
+
+      - name: Start admin app containers
+        run: |
+          docker-compose -f admin-docker-compose.yaml up -d
+
+      - name: Run end to end tests
+        working-directory: ./tests/cypress
+        run: npm run test:admin -- --spec "e2e/admin-app/records/**/*"
+
+  chats-management-e2e-tests:
+    name: Test chats management E2E
+    runs-on: ubuntu-latest
+    needs:
+      [changes, build-admin-frontend-container, build-admin-backend-container]
+    if: |
+      needs.changes.outputs.pipeline == 'true' ||
+      needs.changes.outputs.admin_backend == 'true' ||
+      needs.changes.outputs.admin_frontend == 'true' ||
+      needs.changes.outputs.admin_frontend_tests == 'true'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./tests/cypress
+        run: npm ci
+
+      - name: Start admin app containers
+        run: |
+          docker-compose -f admin-docker-compose.yaml up -d
+
+      - name: Run end to end tests
+        working-directory: ./tests/cypress
+        run: npm run test:admin -- --spec "e2e/admin-app/chats/**/*"
 
   study-frontend-tests:
     runs-on: ubuntu-latest
