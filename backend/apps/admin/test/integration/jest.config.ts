@@ -1,6 +1,6 @@
 import type { Config } from 'jest';
 
-const config = {
+const config: Config = {
   displayName: 'admin:integration',
   cache: true,
   bail: true,

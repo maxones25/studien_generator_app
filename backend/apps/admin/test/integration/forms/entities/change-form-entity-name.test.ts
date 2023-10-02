@@ -211,4 +211,22 @@ describe('change form entity name', () => {
       name: 123,
     }).expect(400);
   });
+
+  it('should fail because name already exists', async () => {
+    const otherEntityId = await createEntityId(app, { accessToken, studyId });
+    const name = fakeData.text();
+    await createFormEntityId(app, {
+      accessToken,
+      studyId,
+      formId,
+      entityId: otherEntityId,
+      name,
+    });
+    await changeFormEntityName(app, {
+      accessToken,
+      studyId,
+      formEntityId,
+      name,
+    }).expect(400);
+  });
 });

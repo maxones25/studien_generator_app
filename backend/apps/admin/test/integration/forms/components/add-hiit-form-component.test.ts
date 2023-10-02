@@ -734,4 +734,47 @@ describe('create Text form component', () => {
       formFields,
     }).expect(400);
   });
+
+  it('should fail because rounds must be an integer', async () => {
+    const fieldId = await createFieldId(app, {
+      accessToken,
+      studyId,
+      entityId,
+      data: { name: fakeData.text(), type: FieldType.DateTime },
+    });
+
+    const type = ComponentType.HIIT;
+    const attributes = {
+      required: true,
+      warmUp: 5,
+      rounds: 5.5,
+      highIntensity: 5,
+      lowIntensity: 6,
+      coolDown: 6,
+    };
+    const formFields = [
+      {
+        fieldId: startFieldId,
+        entityId: formEntityId,
+      },
+      {
+        fieldId: endFieldId,
+        entityId: formEntityId,
+      },
+
+      {
+        fieldId: fieldId,
+        entityId: formEntityId,
+      },
+    ];
+
+    return addFormComponent(app, {
+      accessToken,
+      studyId,
+      pageId,
+      type,
+      attributes,
+      formFields,
+    }).expect(400);
+  });
 });

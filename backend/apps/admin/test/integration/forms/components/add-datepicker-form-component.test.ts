@@ -185,6 +185,21 @@ describe('create DatePicker form component', () => {
     }).expect(400);
   });
 
+  it('should fail because defaultValue is zero', async () => {
+    const type = ComponentType.DatePicker;
+    const attributes = { required: false, defaultValue: 0 };
+    const formFields = [{ entityId: formEntityId, fieldId }];
+
+    return addFormComponent(app, {
+      accessToken,
+      studyId,
+      pageId,
+      type,
+      attributes,
+      formFields,
+    }).expect(400);
+  });
+
   it('should fail because label has wrong type', async () => {
     const type = ComponentType.DatePicker;
     const attributes = { required: false, label: 123 };

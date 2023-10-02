@@ -187,6 +187,24 @@ describe('create Select form component', () => {
     }).expect(400);
   });
 
+  it('should fail because options has wrong type', async () => {
+    const type = ComponentType.Select;
+    const attributes = {
+      required: false,
+      options: { 1: "test" },
+    };
+    const formFields = [{ entityId: formEntityId, fieldId }];
+
+    return addFormComponent(app, {
+      accessToken,
+      studyId,
+      pageId,
+      type,
+      attributes,
+      formFields,
+    }).expect(400);
+  });
+
   it('should fail because options has wrong option type', async () => {
     const type = ComponentType.Select;
     const attributes = {

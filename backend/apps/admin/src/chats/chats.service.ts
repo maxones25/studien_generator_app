@@ -4,8 +4,6 @@ import { EntityManager, Repository } from 'typeorm';
 import { AddMessageTransaction } from './transactions/AddMessageTransaction';
 import { Chat } from '@entities';
 import { ChatMessageReceipt } from '@entities';
-import { ReadMessagesDto } from './dtos/ReadMessagesDto';
-import { ChatsRepository } from './chats.repository';
 import { MessagesRepository } from './messages.repository';
 
 @Injectable()
@@ -88,25 +86,6 @@ export class ChatsService {
       };
     });
     return chats;
-  }
-
-  async readMessages(
-    { readAt }: ReadMessagesDto,
-    directorId: string,
-    chatId: string,
-  ) {
-    const receiptsToUpdate = await this.receiptRepository
-      .createQueryBuilder('receipt')
-      .innerJoinAndSelect('receipt.message', 'message')
-      .where('receipt.directorId = :directorId', { directorId })
-      .andWhere('message.chatId = :chatId', { chatId })
-      .getMany();
-
-    for (let receipt of receiptsToUpdate) {
-      receipt.readAt = readAt;
-    }
-
-    await this.receiptRepository.save(receiptsToUpdate);
   }
 
   async addMessage(directorId: string, chatId: string, content: string) {
