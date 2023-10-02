@@ -44,8 +44,18 @@ const columns = [
     name: 'g98oYrb0x (xBsyIuqyHP)',
     type: 'Text',
   },
+  {
+    id: 'fields.ee6040fe-343b-4b15-943f-d810c22f18b6.value',
+    name: 'Zeitstempel (xBsyIuqyHP)',
+    type: 'DateTime',
+  },
+  {
+    id: 'fields.6c8d8b8d-a783-48ce-b145-124add7cd6dd.value',
+    name: 'Uhrzeit (xBsyIuqyHP)',
+    type: 'Time',
+  },
 ];
-//test
+
 describe('export records', () => {
   let app: IApp;
   let accessToken: string;
@@ -71,7 +81,7 @@ describe('export records', () => {
       .then((res) => {
         const data = res.text;
 
-        const expectedData = `"Proband";"Gruppe";"Formular";"4nJBdVNeZ (xBsyIuqyHP)";"g98oYrb0x (xBsyIuqyHP)"\n"001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test2"\n"001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test"`;
+        const expectedData = `"Proband";"Gruppe";"Formular";"4nJBdVNeZ (xBsyIuqyHP)";"g98oYrb0x (xBsyIuqyHP)";"Zeitstempel (xBsyIuqyHP)";"Uhrzeit (xBsyIuqyHP)"\n"001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test2";"2023-10-01T18:24";"16:24"\n"001";"Gruppe 1";"4V4MJi5i";"2023-10-01";"test";"2023-10-01T18:24";"12:12"`;
 
         expect(data).toBe(expectedData);
       });
