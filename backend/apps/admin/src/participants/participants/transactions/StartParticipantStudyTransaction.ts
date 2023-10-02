@@ -1,5 +1,5 @@
 import { Participant, Task } from '@entities';
-import { Inject } from '@nestjs/common';
+import { BadRequestException, Inject } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { Transaction } from '@shared/modules/transaction/transaction';
 import { EntityManager } from 'typeorm';
@@ -52,6 +52,9 @@ export class StartParticipantStudyTransaction extends Transaction<
     startDate,
     configs,
   }: TransactionInput): Promise<string> {
+    if (participant.groupId === null)
+      throw new BadRequestException('participant must have a group');
+
     const schedules =
       await this.schedulesTransformer.generateParticipantSchedules(
         participant.groupId,
