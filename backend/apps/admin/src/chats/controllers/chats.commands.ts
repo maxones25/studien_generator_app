@@ -31,8 +31,8 @@ export class ChatsCommands {
 
   @Post('chats/readMessages')
   @HttpCode(HttpStatus.OK)
-  @Roles('admin', 'employee')
   @UseGuards(ChatGuard)
+  @Roles('admin', 'employee')
   async readMessages(
     @Query() { chatId }: ChatQueryDto,
     @DirectorId() directorId: string,
@@ -42,9 +42,10 @@ export class ChatsCommands {
   }
 
   @Post('studies/:studyId/chats/:chatId')
+  @UseGuards(ChatGuard)
   @Roles('admin', 'employee')
   async addMessage(
-    @Param('chatId', new ValidateIdPipe()) chatId: string,
+    @Query() { chatId }: ChatQueryDto,
     @DirectorId() directorId: string,
     @Body() { content }: AddMessageDto,
   ) {
