@@ -28,7 +28,7 @@ export const addSchedule = (
   });
 
 export const addScheduleId = (app: IApp, options: AddScheduleRequestOptions) =>
-  new Promise((resolve, reject) => {
+  new Promise<string>((resolve, reject) => {
     addSchedule(app, options)
       .expect(201)
       .then((res) => {
