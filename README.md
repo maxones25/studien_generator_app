@@ -193,7 +193,7 @@ cd backend
 Teste die Endpoints des Admin-Backends
 
 ```console
-npm run test:admin:integration
+npm run test:admin
 ```
 
 Teste die Endpoints des Study-Backends

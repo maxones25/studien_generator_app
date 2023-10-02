@@ -5,8 +5,8 @@ import { FieldType } from '@shared/enums/field-type.enum';
 import { FormConfigType } from '@shared/enums/form-config-type.enum';
 import datetime from '@shared/modules/datetime/datetime';
 
-const randomArray = (initFunc: (i: number) => any, length = 1) => {
-  return Array.from({ length }, (_, i) => initFunc(i));
+const randomArray = <T = any>(initFunc: (i: number) => any, length = 1) => {
+  return Array.from<unknown, T>({ length }, (_, i) => initFunc(i));
 };
 
 const randomEnum = <E>(data: E): E[keyof E] => {
@@ -238,6 +238,7 @@ const options = (size = 4) => {
 };
 
 export default {
+  randomArray,
   options,
   formComponent,
   schedule,

@@ -1,21 +1,17 @@
 import type { Config } from 'jest';
 
 const config: Config = {
-  displayName: 'admin:integration',
-  cache: true,
-  bail: true,
+  displayName: 'admin',
   rootDir: '../../../../',
-  testMatch: ['<rootDir>/apps/admin/test/integration/**/*.test.ts'],
   transform: {
-    '^.+\\.(t|j)sx?$': '@swc/jest',
+    '^.+\\.(t|j)s$': '<rootDir>/create-swc-transformer.js',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  testMatch: ['<rootDir>/apps/admin/test/integration/**/*.test.ts'],
   collectCoverageFrom: ['<rootDir>/apps/admin/src/**/*.ts'],
-  coverageDirectory: '<rootDir>/coverage/admin/integration',
+  coverageDirectory: '<rootDir>/coverage/admin',
   coverageReporters: ['lcov'],
   maxWorkers: '50%',
-  // workerIdleMemoryLimit: '50%',
-  // workerThreads: true,
   moduleNameMapper: {
     '@admin/(.*)': '<rootDir>/apps/admin/src/$1',
     '@shared/(.*)': '<rootDir>/libs/shared/src/$1',

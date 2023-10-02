@@ -186,7 +186,7 @@ jobs:
 
       - name: Run studies tests
         working-directory: ./backend
-        run: npm run test:admin:integration studies
+        run: npm run test:admin studies
 
   director-management-api-tests:
     name: Test directors management API
@@ -225,7 +225,7 @@ jobs:
 
       - name: Run directors tests
         working-directory: ./backend
-        run: npm run test:admin:integration directors
+        run: npm run test:admin directors
 
   entities-management-api-tests:
     name: Test entities management API
@@ -264,7 +264,7 @@ jobs:
 
       - name: Run entities tests
         working-directory: ./backend
-        run: npm run test:admin:integration entities
+        run: npm run test:admin entities
 
   forms-management-api-tests:
     name: Test forms management API
@@ -303,7 +303,7 @@ jobs:
 
       - name: Run forms tests
         working-directory: ./backend
-        run: npm run test:admin:integration forms
+        run: npm run test:admin forms
 
   groups-management-api-tests:
     name: Test groups management API
@@ -342,7 +342,7 @@ jobs:
 
       - name: Run groups tests
         working-directory: ./backend
-        run: npm run test:admin:integration groups
+        run: npm run test:admin groups
 
   participants-management-api-tests:
     name: Test participants management API
@@ -381,7 +381,7 @@ jobs:
 
       - name: Run participants tests
         working-directory: ./backend
-        run: npm run test:admin:integration participants
+        run: npm run test:admin participants
 
   records-management-api-tests:
     name: Test records management API
@@ -420,7 +420,7 @@ jobs:
 
       - name: Run records tests
         working-directory: ./backend
-        run: npm run test:admin:integration records
+        run: npm run test:admin records
 
   chats-management-api-tests:
     name: Test chats management API
@@ -459,7 +459,7 @@ jobs:
 
       - name: Run chats tests
         working-directory: ./backend
-        run: npm run test:admin:integration chats
+        run: npm run test:admin chats
 
   study-backend-tests:
     runs-on: ubuntu-latest
