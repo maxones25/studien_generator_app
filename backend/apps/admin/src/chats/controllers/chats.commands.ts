@@ -45,7 +45,7 @@ export class ChatsCommands {
   @UseGuards(ChatGuard)
   @Roles('admin', 'employee')
   async addMessage(
-    @Query() { chatId }: ChatQueryDto,
+    @Param('chatId', new ValidateIdPipe()) chatId: string,
     @DirectorId() directorId: string,
     @Body() { content }: AddMessageDto,
   ) {
