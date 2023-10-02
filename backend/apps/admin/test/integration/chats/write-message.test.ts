@@ -1,14 +1,14 @@
 import { AppModule } from '@admin/app.module';
-import { TEST_DIRECTOR } from '@test/testData';
-import faker from '@test/fakeData';
-import { writeMessage } from '@test/admin/chats/writeMessage';
-import { createParticipantId } from '@test/admin/participants/createParticipant';
-import { getChatByParticipant } from '@test/admin/chats/getChatByParticipant';
-import { getDirectorAccessToken } from '@test/admin/director/auth/loginDirector';
-import { IApp, createApp } from '@test/app/createApp';
+import { getChatByParticipant, writeMessage } from '@test/admin/chats';
+import {
+  getDirectorAccessToken,
+  getAdminAccessToken,
+} from '@test/admin/director';
+import { createParticipantId } from '@test/admin/participants';
 import { createStudyId } from '@test/admin/studies';
-import { getAdminAccessToken } from '@test/admin/director';
+import { IApp, createApp } from '@test/app';
 import fakeData from '@test/fakeData';
+import { TEST_DIRECTOR } from '@test/testData';
 
 describe('Write Message', () => {
   let app: IApp;
@@ -49,14 +49,14 @@ describe('Write Message', () => {
   });
 
   it('should post message successfully', async () => {
-    const data = faker.chatMessageAdmin();
+    const data = fakeData.chatMessageAdmin();
     return writeMessage(app, { accessToken, studyId, chatId, data }).expect(
       201,
     );
   });
 
   it('should fail because unauthorized', async () => {
-    const data = faker.chatMessageAdmin();
+    const data = fakeData.chatMessageAdmin();
     return writeMessage(app, {
       accessToken: undefined,
       studyId,
@@ -66,7 +66,7 @@ describe('Write Message', () => {
   });
 
   it('should fail because admin is authorized', async () => {
-    const data = faker.chatMessageAdmin();
+    const data = fakeData.chatMessageAdmin();
     const adminAccessToken = await getAdminAccessToken(app);
     return writeMessage(app, {
       accessToken: adminAccessToken,
@@ -77,7 +77,7 @@ describe('Write Message', () => {
   });
 
   it('should fail because director is not part of study', async () => {
-    const data = faker.chatMessageAdmin();
+    const data = fakeData.chatMessageAdmin();
     return writeMessage(app, {
       accessToken: otherAccessToken,
       studyId,
@@ -87,17 +87,17 @@ describe('Write Message', () => {
   });
 
   it('should fail because studyId is missing', async () => {
-    const data = faker.chatMessageAdmin();
+    const data = fakeData.chatMessageAdmin();
     return writeMessage(app, {
       accessToken,
       studyId: undefined,
       chatId,
       data,
-    }).expect(400);
+    }).expect(404);
   });
 
   it('should fail because studyId is invalid', async () => {
-    const data = faker.chatMessageAdmin();
+    const data = fakeData.chatMessageAdmin();
     return writeMessage(app, {
       accessToken,
       studyId: fakeData.text(),
@@ -107,7 +107,7 @@ describe('Write Message', () => {
   });
 
   it('should fail because studyId is unknown', async () => {
-    const data = faker.chatMessageAdmin();
+    const data = fakeData.chatMessageAdmin();
     return writeMessage(app, {
       accessToken,
       studyId: fakeData.id(),
@@ -117,17 +117,17 @@ describe('Write Message', () => {
   });
 
   it('should fail because chatId is missing', async () => {
-    const data = faker.chatMessageAdmin();
+    const data = fakeData.chatMessageAdmin();
     return writeMessage(app, {
       accessToken,
       studyId,
       chatId: undefined,
       data,
-    }).expect(400);
+    }).expect(404);
   });
 
   it('should fail because chatId is invalid', async () => {
-    const data = faker.chatMessageAdmin();
+    const data = fakeData.chatMessageAdmin();
     return writeMessage(app, {
       accessToken,
       studyId,
@@ -137,7 +137,7 @@ describe('Write Message', () => {
   });
 
   it('should fail because chatId is unknown', async () => {
-    const data = faker.chatMessageAdmin();
+    const data = fakeData.chatMessageAdmin();
     return writeMessage(app, {
       accessToken,
       studyId,

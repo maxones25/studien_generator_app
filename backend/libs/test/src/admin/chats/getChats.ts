@@ -9,7 +9,8 @@ export const getChats = (
   { accessToken, studyId }: GetChatsOptions,
 ) =>
   request(app).query({
-    path: `/studies/${studyId}/chats`,
+    path: `/studies/:studyId/chats`,
+    params: { studyId },
     accessToken,
     query: { studyId },
   });

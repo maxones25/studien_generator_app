@@ -9,13 +9,13 @@ type AddMessageTransactionInput = {
 
 export class AddMessageTransaction extends Transaction<
   AddMessageTransactionInput,
-  void
+  string
 > {
   protected async execute({
     directorId,
     chatId,
     content,
-  }: AddMessageTransactionInput): Promise<void> {
+  }: AddMessageTransactionInput): Promise<string> {
     const chatMessageRepo = this.entityManager.getRepository(ChatMessage);
 
     const message = new ChatMessage();
@@ -28,6 +28,8 @@ export class AddMessageTransaction extends Transaction<
     await chatMessageRepo.insert(message);
 
     await this.createReceipts(message.id, directorId, chatId);
+
+    return message.id;
   }
 
   private async createReceipts(

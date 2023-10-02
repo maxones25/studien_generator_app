@@ -69,7 +69,7 @@ describe("delete participant", () => {
     cy.getByTestId(`restore participant ${participantId}`).should("exist");
   });
 
-  it.only("should not open a soft deleted participant", () => {
+  it("should not open a soft deleted participant", () => {
     cy.openParticipantPage(studyId, participantId);
 
     cy.getByTestId("participants list").should("contain", participant.number);

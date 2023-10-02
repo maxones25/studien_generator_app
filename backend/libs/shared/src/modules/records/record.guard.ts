@@ -18,6 +18,7 @@ export abstract class RecordGuard implements CanActivate {
     private readonly useCase: IGetStudyRelatedDataUseCase,
     private readonly record: string,
     private readonly paramName: string,
+    private readonly variant: 'query' | 'path' | 'both' = 'query',
   ) {}
 
   async canActivate(context: ExecutionContext) {
@@ -25,7 +26,7 @@ export abstract class RecordGuard implements CanActivate {
 
     const studyId = this.getStudyId(request);
 
-    const id = request.query[this.paramName];
+    const id = this.getId(request);
 
     if (typeof id !== 'string')
       throw new BadRequestException(`${this.paramName} required`);
@@ -45,5 +46,21 @@ export abstract class RecordGuard implements CanActivate {
     if (typeof request?.query?.studyId === 'string')
       return request.query.studyId;
     throw new UnauthorizedException();
+  }
+
+  private getId(request: Request) {
+    if (
+      this.variant === 'query' ||
+      (this.variant === 'both' &&
+        typeof request.query[this.paramName] === 'string')
+    )
+      return request.query[this.paramName];
+    if (
+      this.variant === 'path' ||
+      (this.variant === 'both' &&
+        typeof request.params[this.paramName] === 'string')
+    )
+      return request.params[this.paramName];
+    return undefined;
   }
 }
