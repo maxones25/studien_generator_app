@@ -42,6 +42,12 @@ export const TEST_ENTITY = {
     DATE: {
       ID: 'cba34ffd-f3ce-4d64-928f-02a2f2bc3549',
     },
+    DATETIME: {
+      ID: 'acfcfefe-190c-4a40-8006-39bf04a709b7',
+    },
+    TIME: {
+      ID: 'b790febe-ec2b-4fb8-8710-0a224e2a8938',
+    },
   },
 };
 
@@ -57,6 +63,12 @@ export const TEST_FORM = {
     DATEPICKER: {
       ID: '8eb5a6dd-2652-42cc-8af1-45a267f44a62',
     },
+    DATETIMEPICKER: {
+      ID: '7f817f50-dfae-4370-a259-a4b339e7bb22',
+    },
+    TIMEPICKER: {
+      ID: 'a666f59d-38f6-4aa3-8aea-c51aa898e31e',
+    },
   },
   ENTITY: {
     ID: 'c118259b-5c92-4cb3-ba51-d5b5a3a5b3b1',
@@ -67,6 +79,12 @@ export const TEST_FORM = {
     },
     DATE: {
       ID: 'bd99097c-fdd0-4cac-ac45-e9db68eae858',
+    },
+    TIME: {
+      ID: '6c8d8b8d-a783-48ce-b145-124add7cd6dd',
+    },
+    DATETIME: {
+      ID: 'ee6040fe-343b-4b15-943f-d810c22f18b6',
     },
   },
 };
