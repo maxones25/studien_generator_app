@@ -1,5 +1,8 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { addTransactionalDataSource, getDataSourceByName } from "typeorm-transactional";
+import {
+  addTransactionalDataSource,
+  getDataSourceByName,
+} from 'typeorm-transactional';
 import {
   Study,
   StudyAttribute,
@@ -29,6 +32,7 @@ import {
   Appointment,
 } from '@entities';
 import { DataSource } from 'typeorm';
+import { readFileSync } from 'fs';
 
 const DbModule = TypeOrmModule.forRootAsync({
   useFactory: async () => {
@@ -41,6 +45,15 @@ const DbModule = TypeOrmModule.forRootAsync({
       database: process.env.DB_NAME,
       timezone: 'Z',
       logging: false,
+      ssl: true,
+      extra: {
+        ssl: {
+          ca: process.env.SSL_CA_CERTIFICATES
+            ? readFileSync(process.env.SSL_CA_CERTIFICATES)
+            : undefined,
+          rejectUnauthorized: false,
+        },
+      },
       entities: [
         Director,
         Entity,
@@ -76,9 +89,9 @@ const DbModule = TypeOrmModule.forRootAsync({
       throw new Error('Invalid options passed');
     }
 
-    const dataSource = getDataSourceByName("default");
+    const dataSource = getDataSourceByName('default');
 
-    if(dataSource) return dataSource;
+    if (dataSource) return dataSource;
 
     return addTransactionalDataSource(new DataSource(options));
   },

@@ -17,8 +17,12 @@ export function getConfig({
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
+    ssl: true,
     timezone: 'Z',
     extra: {
+      ssl: {
+        rejectUnauthorized: false,
+      },
       connectTimeout: 60000,
     },
     entities: [__dirname + '/libs/entities/src/entities/**/*.entity.ts'],

@@ -1,0 +1,17 @@
+<button class="collapsible {{status}}">{{name}}</button>
+<div class="content">
+  <p>
+    <strong>Amount of Tests:</strong>
+    <span id="suiteTotalTests">{{total}}</span>
+  </p>
+  <p class="failed">
+    <strong>Failed Tests:</strong> <span id="suiteFailedTests">{{failed}}</span>
+  </p>
+  <p class="succeeded">
+    <strong>Succeeded Tests:</strong>
+    <span id="suiteSucceededTests">{{succeeded}}</span>
+  </p>
+
+  <h4>List of Test Cases</h4>
+  {{data}}
+</div>

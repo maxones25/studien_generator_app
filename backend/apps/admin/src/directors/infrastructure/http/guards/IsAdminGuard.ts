@@ -12,8 +12,6 @@ export class IsAdminGuard implements CanActivate {
 
     const topic = request.payload.topic;
 
-    if (typeof topic !== 'string') throw new UnauthorizedException();
-
     if (topic !== 'Admin') throw new UnauthorizedException();
 
     return true;

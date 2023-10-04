@@ -21,9 +21,7 @@ export class DirectorGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
 
-    const directorId = request.query.directorId;
-
-    if (typeof directorId !== 'string') throw new UnauthorizedException();
+    const directorId = request.query.directorId as string;
 
     const director = await this.getDirectorByIdUseCase.execute({ directorId });
 
