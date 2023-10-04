@@ -28,6 +28,7 @@ jobs:
         run: npm install
 
       - name: Build PWA
+        working-directory: ./frontend/admin-app
         run: npm run build:prod
 
       - name: Sync files
