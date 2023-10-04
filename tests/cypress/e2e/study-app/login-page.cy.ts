@@ -13,8 +13,8 @@ describe("login page", () => {
 
   it("should login successfully", () => {
     cy.visit(`/login?
-    id=${testData.participant.id}&
-    password=${testData.participant.password}`);
+    id=${encodeURIComponent(testData.participant.id)}&
+    password=${encodeURIComponent(testData.participant.password)}`);
 
     cy.getByTestId("login-submit-button").click();
 
