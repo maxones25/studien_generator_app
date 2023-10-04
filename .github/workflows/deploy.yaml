@@ -9,19 +9,14 @@ jobs:
   deploy-admin-frontend:
     name: Deploy Admin Frontend
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      matrix:
-        node-version: [16.x]
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          node-version: 16
 
       - name: Install Packages
         working-directory: ./frontend/admin-app
@@ -39,5 +34,36 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./frontend/admin-app/dist/
           server-dir: ./admin/
+          protocol: ftp
+          port: 21
+
+  deploy-study-frontend:
+    name: Deploy Study Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install Packages
+        working-directory: ./frontend/study-app
+        run: npm install
+
+      - name: Build PWA
+        working-directory: ./frontend/study-app
+        run: npm run build:prod
+
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          server: hosting163530.a2f21.netcup.net
+          username: sga_github_actions
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./frontend/study-app/dist/
+          server-dir: ./study/
           protocol: ftp
           port: 21
