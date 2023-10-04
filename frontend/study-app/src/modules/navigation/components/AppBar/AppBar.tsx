@@ -1,6 +1,6 @@
 import { Badge, AppBar as MAppBar, Toolbar, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { ArrowBack, MailOutline, Menu, CalendarMonthOutlined, NotificationsOutlined } from '@mui/icons-material';
+import { ArrowBack, MailOutline, Menu, CalendarMonthOutlined } from '@mui/icons-material';
 import { useNavigationHelper } from '@modules/core/hooks';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -8,8 +8,8 @@ import { IconButton, ZiIcon } from '@modules/core/components';
 import { AppBarMenu, LogOutDialog } from '..';
 import { getNewMessagesCount } from '@modules/chat/utils';
 import { NotificationsDropDown } from '@modules/notifications/components';
-import { getNewNotificationsCount } from '@modules/notifications/utils';
-import { useReadNotifications } from '@modules/notifications/hooks';
+// import { getNewNotificationsCount } from '@modules/notifications/utils';
+// import { useReadNotifications } from '@modules/notifications/hooks';
 
 export interface AppBarProps {}
 
@@ -22,8 +22,8 @@ export const AppBar : React.FC<AppBarProps>= () => {
   const [openNotifications, setOpenNotifications] = useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
   const newMessagesCount = getNewMessagesCount();
-  const newNotificationsCount = getNewNotificationsCount();
-  const readNotifications = useReadNotifications();
+  // const newNotificationsCount = getNewNotificationsCount();
+  // const readNotifications = useReadNotifications();
 
   const changePage = () => {
     if (path === "/tasks")
@@ -41,13 +41,12 @@ export const AppBar : React.FC<AppBarProps>= () => {
     setOpenNotifications((prevOpen) => !prevOpen);
   };
 
-  const handleOpenNotifications = () => {
-    handleNotificationsToggle();
-    readNotifications.mutate({
-      readAt: new Date(),
-    });
-  }
-
+  // const handleOpenNotifications = () => {
+  //   handleNotificationsToggle();
+  //   readNotifications.mutate({
+  //     readAt: new Date(),
+  //   });
+  // }
 
   return (
       <MAppBar 
@@ -67,7 +66,7 @@ export const AppBar : React.FC<AppBarProps>= () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {t(`${path}`)}
           </Typography>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="end"
             color="inherit"
@@ -79,7 +78,7 @@ export const AppBar : React.FC<AppBarProps>= () => {
                 <NotificationsOutlined /> 
               </Badge>
             }
-          />
+          /> */}
           <IconButton
             size="large"
             edge="end"
