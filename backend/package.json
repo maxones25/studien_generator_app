@@ -13,7 +13,7 @@
     "start:study": "nest start study",
     "start:study:dev": "nest start study --watch",
     "start:study:debug": "nest start study --debug --watch",
-    "start:study:prod": "npm run db:migration:run && node dist/apps/study/main",
+    "start:study:prod": "node dist/apps/study/main",
     "test:admin": "jest --config ./apps/admin/test/integration/jest.config.ts --testTimeout=100000",
     "test:admin:coverage": "npm run test:admin -- --coverage --no-cache",
     "test:admin:watch": "npm run test:admin -- --bail --onlyChanged --watch --verbose",
