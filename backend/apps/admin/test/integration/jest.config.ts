@@ -19,6 +19,17 @@ const config: Config = {
     '@entities': '<rootDir>/libs/entities/src',
     '@test/(.*)': '<rootDir>/libs/test/src/$1',
   },
+  reporters: [
+    'default',
+    "<rootDir>/test-reporter/index.js"
+    // [
+    //   './node_modules/jest-html-reporter',
+    //   {
+    //     pageTitle: 'Test Report',
+    //     outputPath: './test-report/report',
+    //   },
+    // ],
+  ],
 };
 
 export default config;

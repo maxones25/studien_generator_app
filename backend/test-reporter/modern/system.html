@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Total Tests</th>
+      <th>Failed Tests</th>
+      <th>Succeeded Tests</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="{{status}}">
+      <td>{{name}}</td>
+      <td><span id="systemTotalTests">{{total}}</span></td>
+      <td class="failed"><span id="systemFailedTests">{{failed}}</span></td>
+      <td class="succeeded">
+        <span id="systemSucceededTests">{{succeeded}}</span>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4">
+        <h3>List of Test Suites</h3>
+        {{data}}
+      </td>
+    </tr>
+  </tfoot>
+</table>
