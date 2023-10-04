@@ -7,7 +7,7 @@ defaults:
     working-directory: ./frontend
 jobs:
   deploy-admin-frontend:
-    name: Deploy to Admin Frontend
+    name: Deploy Admin Frontend
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
