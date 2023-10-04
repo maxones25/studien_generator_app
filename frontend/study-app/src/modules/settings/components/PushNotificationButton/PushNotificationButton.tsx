@@ -15,7 +15,7 @@ export const PushNotificationButton : React.FC<PushNotificationButtonProps>= ({
   const { t } = useTranslation();
   const { showError } = useSnackBarContext();
   const subscribe = useSubscribePush();
-  const permission = window.Notification.permission;
+  const permission = window?.Notification?.permission;
   const [loading, setLoading] = useState(false);
   const { palette } = useTheme();
 

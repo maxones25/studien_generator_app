@@ -1,6 +1,6 @@
 import { Column, IconButton, List, Row, Text } from '@modules/core/components';
 import { useDateContext } from '@modules/date/contexts';
-import { useGetRecordedEventsByDate } from '@modules/tasks/hooks';
+import { useGetRecords } from '@modules/tasks/hooks';
 import { AddOutlined } from '@mui/icons-material';
 import React, { useState } from 'react';
 import { RecordedEventsListItem } from '..';
@@ -14,7 +14,8 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
   
 }) => {
   const { date, isToday } = useDateContext();
-  const { data, isError, isLoading } = useGetRecordedEventsByDate({ date });
+  const { data, isError, isLoading } = useGetRecords();
+  const filteredData = data?.filter((data) => data.taskId === null && date.isSame(data.createdAt, 'day'))
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
@@ -38,7 +39,7 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
         isLoading={isLoading}
         isError={isError}
       >
-        {data?.map((record) => 
+        {filteredData?.map((record) => 
           <RecordedEventsListItem key={record.id} record={record} />
         )}
       </List>

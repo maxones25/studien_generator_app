@@ -1,7 +1,7 @@
 import { CalendarListItem } from "@modules/calendar/types";
-import { useGetAppointmentsByDate, useGetTasksByDate } from "..";
 import { sortCalendarItems } from "@modules/calendar/utils";
 import { useDateContext } from "@modules/date/contexts";
+import { useGetAppointments, useGetTasks } from "..";
 
 export interface UseGetScheduleOptions {}
 
@@ -13,13 +13,13 @@ export interface UseGetScheduleResult {
 
 export const useGetSchedule = () : UseGetScheduleResult => {
     const { date } = useDateContext();
-    const tasks = useGetTasksByDate({ date });
-    const appointments = useGetAppointmentsByDate({ date });
+    const tasks = useGetTasks();
+    const appointments = useGetAppointments();
   
     const isLoading = tasks.isLoading || appointments.isLoading;
     const isError = tasks.isError || appointments.isError;
-    const tasksData = tasks.data;
-    const appointmentsData = appointments.data;
+    const tasksData = tasks.data?.filter((data) => date.isSame(data.scheduledAt, 'day'));
+    const appointmentsData = appointments.data?.filter((data) => date.isSame(data.start, 'day'));;
 
     let dates: CalendarListItem[] | undefined;
     

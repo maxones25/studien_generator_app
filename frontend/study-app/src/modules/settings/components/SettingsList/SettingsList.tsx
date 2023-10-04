@@ -24,7 +24,7 @@ export const SettingsList : React.FC<SettingsListProps>= ({
           {t('push notifications')}
         </Text>
         <HelpButton title='push notifications' body={
-          <a href={link}>Link</a>
+          <a target="_blank" href={link}>Link</a>
         }/>
       </ListItem>
       <ListItem 
