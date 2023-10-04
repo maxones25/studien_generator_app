@@ -2,6 +2,8 @@ import { LoginFormData } from "@modules/auth/types";
 import {
   Button,
   Form,
+  FormPasswordField,
+  FormTextField,
   Text,
 } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
@@ -24,16 +26,20 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
   return (
     <Form onSubmit={form.handleSubmit(onSubmit)} {...formProps}>
-      <input
-        type={!show ? "hidden" : "text"}
-        {...form.register("id", {
+      <FormTextField
+        label={t("id")}
+        sx={{display: !show ? 'none' : 'inline-flex'}}
+        formState={form.formState}
+        textFieldProps={form.register("id", {
           required: t("value required", { value: t("id") }),
         })}
       />
-      <input
-        type={!show ? "hidden" : "password"}
-        {...form.register("password", {
-          required: t("value required", { value: t("id") }),
+      <FormPasswordField
+        label={t("password")}
+        sx={{display: !show ? 'none' : 'inline-flex'}}
+        formState={form.formState}
+        textFieldProps={form.register("password", {
+          required: t("value required", { value: t("password") }),
         })}
       />
       {isError && (
@@ -45,16 +51,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         testId="login-submit-button"
         type="submit"
         isLoading={isLoading}
+        sx={{mb: "15px"}}
       >
         {t("start")}
       </Button>
-      <Button
-        testId="show-form-button"
+      <Text
         onClick={() => setShow(!show)}
-        isLoading={isLoading}
       >
-        {t("start")}
-      </Button>
+        {t("show form fields")}
+      </Text>
     </Form>
   );
 };
