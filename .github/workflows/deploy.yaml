@@ -1,0 +1,42 @@
+on:
+  workflow_dispatch:
+  
+name: "[Frontend] Deploy to Beta Server"
+defaults:
+  run:
+    working-directory: ./frontend
+jobs:
+  deploy-admin-frontend:
+    name: Deploy to Admin Frontend
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install Packages
+        working-directory: ./frontend/admin-app
+        run: npm install
+
+      - name: Build PWA
+        run: npm run build:prod
+
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          server: hosting163530.a2f21.netcup.net
+          username: sga_github_actions
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./frontend/admin-app/dist
+          server-dir: ./admin/
+          protocol: ftp
+          port: 21
