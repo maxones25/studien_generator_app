@@ -2,3 +2,5 @@ node_modules
 tools
 dist
 coverage
+.env.database
+.env.admin

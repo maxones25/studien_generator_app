@@ -32,6 +32,7 @@ import {
   Appointment,
 } from '@entities';
 import { DataSource } from 'typeorm';
+import { readFileSync } from 'fs';
 
 const DbModule = TypeOrmModule.forRootAsync({
   useFactory: async () => {
@@ -47,6 +48,9 @@ const DbModule = TypeOrmModule.forRootAsync({
       ssl: true,
       extra: {
         ssl: {
+          ca: process.env.SSL_CA_CERTIFICATES
+            ? readFileSync(process.env.SSL_CA_CERTIFICATES)
+            : undefined,
           rejectUnauthorized: false,
         },
       },
