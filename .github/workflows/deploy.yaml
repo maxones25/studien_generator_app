@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
-  
-name: "[Frontend] Deploy to Beta Server"
+
+name: "Deploy Frontend"
 defaults:
   run:
     working-directory: ./frontend
