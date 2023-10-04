@@ -9,7 +9,7 @@
     "start:admin": "nest start admin",
     "start:admin:dev": "npm run start:admin -- --watch",
     "start:admin:debug": "npm run start:admin -- --debug --watch",
-    "start:admin:prod": "npm run db:migration:run && node dist/apps/admin/main",
+    "start:admin:prod": "node dist/apps/admin/main",
     "start:study": "nest start study",
     "start:study:dev": "nest start study --watch",
     "start:study:debug": "nest start study --debug --watch",
