@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { IconButton, Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useTranslation } from 'react-i18next';
 
 export interface HelpButtonProps {
   title: string,
-  body: string,
+  body: ReactNode,
 }
 
 export const HelpButton: React.FC<HelpButtonProps> = ({
@@ -32,7 +32,7 @@ export const HelpButton: React.FC<HelpButtonProps> = ({
         <DialogTitle id="help-dialog-title">{t(title)}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-          {t(body)}
+          {body}
           </DialogContentText>
         </DialogContent>
       </Dialog>
