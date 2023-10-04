@@ -37,7 +37,7 @@ jobs:
           server: hosting163530.a2f21.netcup.net
           username: sga_github_actions
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./frontend/admin-app/dist
+          local-dir: ./frontend/admin-app/dist/
           server-dir: ./admin/
           protocol: ftp
           port: 21
