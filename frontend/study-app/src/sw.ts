@@ -5,9 +5,9 @@ import { clientsClaim } from 'workbox-core'
 import { NavigationRoute, registerRoute } from 'workbox-routing'
 import { initDB } from './serviceworker/indexedDB/setup'
 import { PostRecord } from './serviceworker/strategies/postRecord'
-// import { GetByDate } from './serviceworker/strategies/getByDate'
+import { GetByDate } from './serviceworker/strategies/getByDate'
 import { GetFormById } from './serviceworker/strategies/getFormById'
-// import { Record, Task } from '@modules/tasks/types'
+import { Record, Task } from '@modules/tasks/types'
 import { GetEvents } from './serviceworker/strategies/getEvents'
 import { messageHandler } from './serviceworker/listeners/message/message-listener'
 import { pushHandler } from './serviceworker/listeners/push/push-listener'
@@ -67,20 +67,20 @@ registerRoute(
   new GetData('tasks')
 );
 
-// registerRoute(
-//   new RegExp(`${BASE_URI}/tasks*`), 
-//   new GetByDate<Task>('tasks', 'scheduledAt')
-// );
+registerRoute(
+  new RegExp(`${BASE_URI}/tasks*`), 
+  new GetByDate<Task>('tasks', 'scheduledAt')
+);
 
 registerRoute(
   `${BASE_URI}/appointments`, 
   new GetData('appointments')
 );
 
-// registerRoute(
-//   new RegExp(`${BASE_URI}/appointments*`), 
-//   new GetByDate<Task>('appointments', 'start')
-// );
+registerRoute(
+  new RegExp(`${BASE_URI}/appointments*`), 
+  new GetByDate<Task>('appointments', 'start')
+);
 
 registerRoute(
   `${BASE_URI}/records`, 
@@ -93,10 +93,10 @@ registerRoute(
   'POST'
 );
 
-// registerRoute(
-//   new RegExp(`${BASE_URI}/records*`), 
-//   new GetByDate<Record>('records', 'createdAt')
-// );
+registerRoute(
+  new RegExp(`${BASE_URI}/records*`), 
+  new GetByDate<Record>('records', 'createdAt')
+);
 
 registerRoute(
   `${BASE_URI}/chat`, 
