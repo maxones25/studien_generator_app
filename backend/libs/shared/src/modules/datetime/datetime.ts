@@ -10,13 +10,16 @@ import {
 export type Time = { hours: number; minutes: number };
 
 const getOffset = () => {
-  return process.env.TIME_OFFSET ? parseInt(process.env.TIME_OFFSET) : 0
-}
+  return process.env.TIME_OFFSET ? parseInt(process.env.TIME_OFFSET) : 0;
+};
+
+const addOffset = (date: Date) => {
+  const offset = getOffset();
+  return addHours(date, offset);
+};
 
 const currentDate = () => {
-  const offset = getOffset()
-  const date =  new Date();
-  return addHours(date, offset)
+  return addOffset(new Date())
 };
 
 const isoDate = (date = new Date()) => {
@@ -53,8 +56,8 @@ const generateDays = (startDate: Date, duration: number) => {
 };
 
 const addTime = (date: Date, { hours, minutes }: Time) => {
-  const offset = getOffset()
-  return addMinutes(date, hours * 60 + minutes + (offset * 60), false);
+  const offset = getOffset();
+  return addMinutes(date, hours * 60 + minutes + offset * 60, false);
 };
 
 const isValid = (dateString: string, formatString: string) => {
@@ -88,7 +91,7 @@ const getDayOfWeekIndex = (day: Date) => {
 };
 
 const formatDateTime = (value: string | Date) => {
-  if(value === null || value === undefined) return "";
+  if (value === null || value === undefined) return '';
   if (typeof value === 'string') {
     value = new Date(value);
   }
@@ -96,7 +99,7 @@ const formatDateTime = (value: string | Date) => {
 };
 
 const formatDate = (value: string | Date) => {
-  if(value === null || value === undefined) return "";
+  if (value === null || value === undefined) return '';
   if (typeof value === 'string') {
     value = new Date(value);
   }
@@ -123,6 +126,7 @@ const addDays = (date: Date, days: number) => {
 };
 
 export default {
+  addOffset,
   isValidDateTime,
   currentDate,
   convertToDateTime,

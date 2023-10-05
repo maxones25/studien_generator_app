@@ -55,7 +55,7 @@ export class CreateRecordTransaction extends Transaction<
 
     if (
       datetime.addTime(datetime.currentDate(), { hours: 3, minutes: 0 }) <
-      new Date(createdAt)
+      datetime.addOffset(new Date(createdAt))
     )
       throw new ConflictException('record in future error');
 
