@@ -145,8 +145,8 @@ const ParticipantsPage: React.FC<ParticipantsPageProps> = () => {
       <DataList
         testId="participants list"
         client={getParticipants}
-        errorText="error"
-        noDataText="no data"
+        errorText={t("fetch error data", { data: t("participants") })}
+        noDataText={t("keine {{data}} gefunden", { data: t("participants") })}
         searchFields={["number", "group.name"]}
         searchValue={search.value}
         filter={(item) => {

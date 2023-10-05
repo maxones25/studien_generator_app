@@ -16,12 +16,14 @@ export interface FormTagsFieldProps<TFieldValues extends FieldValues> {
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
   >;
   label?: string;
+  placeholder?: string;
 }
 
 export const FormTagsField = <TFieldValues extends FieldValues>({
   control,
   name,
   rules,
+  placeholder,
   label,
 }: FormTagsFieldProps<TFieldValues>) => {
   return (
@@ -59,6 +61,7 @@ export const FormTagsField = <TFieldValues extends FieldValues>({
                   label={label}
                   multiline
                   margin="normal"
+                  placeholder={placeholder}
                   error={Boolean(error)}
                   helperText={error?.message}
                 />

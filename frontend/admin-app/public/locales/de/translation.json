@@ -69,7 +69,7 @@
   "min": "Minimum",
   "max": "Maximum",
   "defaultValue": "Standardwert",
-  "label": "Label",
+  "label": "Beschriftung",
   "value": "Wert",
   "warmUp": "Warm-Up (in Sekunden)",
   "coolDown": "Cool-Down (in Sekunden)",
@@ -202,5 +202,12 @@
   "end before start": "Startzeitpunkt muss vor dem Endzeitpunkt liegen",
   "form is already time independent": "Formular ist schon zeitunabhängig",
   "form is already time dependent": "Formular ist schon zeitabhängig",
-  "restricted": "beschränkt"
+  "restricted": "beschränkt",
+  "minLabel": "Beschriftung (Minimum)",
+  "maxLabel": "Beschriftung (Maximum)",
+  "select explain": "Füge mehrere Auswahloptionen hinzu und bestätige mit Enter",
+  "start study": "Studie starten",
+  "reset password": "Password zurücksetzen",
+  "send message": "Nachricht senden",
+  "started at": "gestartet am"
 }

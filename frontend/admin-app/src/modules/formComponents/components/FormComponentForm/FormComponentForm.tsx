@@ -105,6 +105,7 @@ export const FormComponentForm: React.FC<FormComponentFormFormProps> = ({
             control={form.control}
             name={`attributes.${attribute.name}`}
             label={t("options")}
+            placeholder={t("select explain")}
             rules={{
               required: t("required"),
             }}

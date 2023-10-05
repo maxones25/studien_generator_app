@@ -34,7 +34,7 @@ import {
 } from "@modules/participants/hooks";
 import { useStudy } from "@modules/studies/contexts";
 import { Delete, Launch } from "@mui/icons-material";
-import { Divider, LinearProgress, Toolbar } from "@mui/material";
+import { Divider, FormControl, LinearProgress, Toolbar } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -158,18 +158,25 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
           <>
             <Column m={2} p={1} boxShadow={4}>
               <Text>
+                {t("started at")}:
                 {participant.startedAt &&
                   new Date(participant.startedAt).toLocaleDateString("de")}
               </Text>
-              <Button testId="reset" onClick={resetDialog.open}>
-                Reset Password
-              </Button>
-              <Button
-                testId="send message"
-                onClick={navigate.handle(`../../chats/${participant.chat.id}`)}
-              >
-                Nachricht senden
-              </Button>
+              <FormControl margin="normal">
+                <Button testId="reset" onClick={resetDialog.open}>
+                  {t("reset password")}
+                </Button>
+              </FormControl>
+              <FormControl margin="normal">
+                <Button
+                  testId="send message"
+                  onClick={navigate.handle(
+                    `../../chats/${participant.chat.id}`
+                  )}
+                >
+                  {t("send message")}
+                </Button>
+              </FormControl>
             </Column>
             <AppointmentsCard
               readClient={getAppointments}

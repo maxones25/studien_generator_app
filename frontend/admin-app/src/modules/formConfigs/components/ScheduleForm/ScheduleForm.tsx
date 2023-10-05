@@ -181,7 +181,7 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
           )}
           <FormControl margin="normal">
             <Button testId="submit schedule form" type="submit">
-              Save
+              {t("save")}
             </Button>
           </FormControl>
         </Column>
