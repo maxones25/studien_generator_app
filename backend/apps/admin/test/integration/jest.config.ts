@@ -21,7 +21,7 @@ const config: Config = {
   },
   reporters: [
     'default',
-    "<rootDir>/test-reporter/index.js"
+    // "<rootDir>/test-reporter/index.js"
     // [
     //   './node_modules/jest-html-reporter',
     //   {
