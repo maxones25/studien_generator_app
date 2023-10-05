@@ -9,10 +9,12 @@ import { Add } from "@mui/icons-material";
 import { Chip } from "@mui/material";
 import React from "react";
 import { ComponentPreview } from "..";
+import { useTranslation } from "react-i18next";
 
 export interface FormPreviewProps {}
 
 export const FormPreview: React.FC<FormPreviewProps> = () => {
+  const {t} = useTranslation()
   const formEditor = useFormEditor();
   const { components } = useFormEditorContext();
   const removeComponent = useRemoveComponent();
@@ -43,7 +45,7 @@ export const FormPreview: React.FC<FormPreviewProps> = () => {
               <Chip
                 key={option.data.name}
                 icon={<Add />}
-                label={option.data.name}
+                label={t(option.data.name)}
                 sx={{ ml: 1, mb: 1 }}
                 onClick={() => formEditor.component.set(option.data)}
               />

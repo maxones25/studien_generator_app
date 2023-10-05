@@ -209,5 +209,16 @@
   "start study": "Studie starten",
   "reset password": "Password zurücksetzen",
   "send message": "Nachricht senden",
-  "started at": "gestartet am"
+  "started at": "gestartet am",
+  "DatePicker": "Datumsfeld",
+  "NumberPicker": "Zahlenfeld",
+  "Slider": "Schieberegler",
+  "TextField": "Textfeld",
+  "Select": "Dropdownfeld",
+  "RadioGroup": "Radiogruppenfeld",
+  "Switch": "Switchfeld",
+  "CheckBox": "Kontrollkästchen",
+  "HIIT": "HIIT-Training",
+  "DateTimePicker": "Zeitpunktfeld",
+  "TimePicker": "Zeitfeld"
 }
