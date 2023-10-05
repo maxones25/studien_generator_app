@@ -18,14 +18,14 @@ export const LanguageHeader: React.FC<LanguageHeaderProps> = () => {
             label: "DE",
             value: "de",
           },
-          {
-            label: "EN",
-            value: "en",
-          },
-          {
-            label: "IT",
-            value: "it",
-          },
+          // {
+          //   label: "EN",
+          //   value: "en",
+          // },
+          // {
+          //   label: "IT",
+          //   value: "it",
+          // },
         ]}
       />
     </Row>
