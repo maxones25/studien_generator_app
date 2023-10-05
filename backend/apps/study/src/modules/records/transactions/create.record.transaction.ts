@@ -53,7 +53,10 @@ export class CreateRecordTransaction extends Transaction<
   ): Promise<Record> {
     const recordsRepository = this.entityManager.getRepository(Record);
 
-    if (new Date(createdAt) > datetime.currentDate())
+    if (
+      datetime.addTime(datetime.currentDate(), { hours: 3, minutes: 0 }) <
+      new Date(createdAt)
+    )
       throw new ConflictException('record in future error');
 
     const record = new Record();
@@ -147,15 +150,15 @@ export class CreateRecordTransaction extends Transaction<
           id: true,
           attributes: {
             key: true,
-            value: true
-          }
-        }
+            value: true,
+          },
+        },
       },
     });
 
-    const isRequired: boolean = formField.formComponent.attributes.find(({key}) => 
-      key === 'required'
-    )?.value
+    const isRequired: boolean = formField.formComponent.attributes.find(
+      ({ key }) => key === 'required',
+    )?.value;
     if (!value && !isRequired) return true;
 
     const type = formField.entityField.type.toString().toLowerCase();
