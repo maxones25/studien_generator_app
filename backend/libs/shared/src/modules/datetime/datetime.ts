@@ -9,8 +9,12 @@ import {
 
 export type Time = { hours: number; minutes: number };
 
+const getOffset = () => {
+  return process.env.TIME_OFFSET ? parseInt(process.env.TIME_OFFSET) : 0
+}
+
 const currentDate = () => {
-  const offset = process.env.TIME_OFFSET ? parseInt(process.env.TIME_OFFSET) : 0
+  const offset = getOffset()
   const date =  new Date();
   return addHours(date, offset)
 };
@@ -49,7 +53,8 @@ const generateDays = (startDate: Date, duration: number) => {
 };
 
 const addTime = (date: Date, { hours, minutes }: Time) => {
-  return addMinutes(date, hours * 60 + minutes, false);
+  const offset = getOffset()
+  return addMinutes(date, hours * 60 + minutes + (offset * 60), false);
 };
 
 const isValid = (dateString: string, formatString: string) => {
