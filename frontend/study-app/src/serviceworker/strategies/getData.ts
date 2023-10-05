@@ -14,7 +14,6 @@ export class GetData extends AbstractStrategy {
   ): Promise<Response | undefined> {
     // create new last updated date to set at the end. Important to do it now 
     // so you don't run the risk of it being newer than the actual data
-    console.log("test-getdata")
     const newLastUpdated = new Date();
     const db = await this.dbPromise;
     const lastUpdated = await this.getMetaData(db); 
