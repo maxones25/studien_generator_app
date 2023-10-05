@@ -24,6 +24,8 @@ precacheAndRoute(self.__WB_MANIFEST);
 // clean old assets
 cleanupOutdatedCaches();
 
+console.log("uri" + BASE_URI)
+
 let allowlist: undefined | RegExp[];
 if (DEV)
   allowlist = [/^\/$/];
