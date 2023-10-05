@@ -1,4 +1,4 @@
-const BASE_URI = import.meta.env.VITE_API_URI
+const BASE_URI = import.meta.env.VITE_API_URI ?? "https://prod--study-backend--cnyk2jyy4lkl.code.run"
 const DEV = import.meta.env.DEV
 import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
 import { clientsClaim } from 'workbox-core'

@@ -1,6 +1,7 @@
-import { ParticipantNotification, Task, ChatMessage } from "@entities";
+import { ParticipantNotification, Task, ChatMessage, Appointment } from "@entities";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import datetime from "@shared/modules/datetime/datetime";
 import { Repository, MoreThan, Not, IsNull, Equal } from "typeorm";
 
 @Injectable()
@@ -12,6 +13,8 @@ export class DataService {
     private tasksRepository: Repository<Task>,
     @InjectRepository(ChatMessage)
     private chatRepository: Repository<ChatMessage>,
+    @InjectRepository(Appointment)
+    private appointmentsRepository: Repository<Appointment>,
   ) {}
 
   async getNewEntriesFromNotifications(lastChecked: Date) {
@@ -52,6 +55,27 @@ export class DataService {
         form: {
           name: true,
         }
+      }
+    });
+  }
+
+  async getNewEntriesFromAppointments(lastChecked: Date) {
+    return this.appointmentsRepository.find({
+      where: {
+        startDate: Equal(datetime.formatDate(lastChecked)),
+        startTime: Equal(datetime.formatTime(lastChecked)),
+        participant: {
+          subscription: Not(IsNull()),
+        }
+      },
+      relations: {
+        participant: true,
+      },
+      select: {
+        participant: {
+          subscription: true,
+        },
+        subject: true,
       }
     });
   }

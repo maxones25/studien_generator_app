@@ -35,6 +35,12 @@ export class SchedulingService {
       const message = this.createNotificationMessage(type, form.name, scheduledAt)
       this.sendPushNotification(participant.subscription, type, message);
     })
+    const appointments = await this.dataService.getNewEntriesFromAppointments(this.lastChecked);
+    appointments.forEach(({participant, startDate, startTime, subject}) => {
+      const type = PushNotificationType.Appointment
+      const message = this.createNotificationMessage(type, subject, new Date(startDate + 'T' + startTime))
+      this.sendPushNotification(participant.subscription, type, message);
+    })
     this.lastChecked = new Date()
     this.lastChecked.setMilliseconds(0);
     this.lastChecked.setSeconds(0);
@@ -78,6 +84,8 @@ export class SchedulingService {
         return `${name} wurde vom ${oldDate} auf den ${newDate} verschoben`;
       case PushNotificationType.Task:
         return `${name} muss um ${newDate} bearbeitet werden`;
+      case PushNotificationType.Appointment:
+        return `Sie haben den Termin '${name}' um ${newDate}`;
       default:
         break;
     }

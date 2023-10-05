@@ -2,10 +2,12 @@ import { LoginFormData } from "@modules/auth/types";
 import {
   Button,
   Form,
+  FormPasswordField,
+  FormTextField,
   Text,
 } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -20,21 +22,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 }) => {
   const { t } = useTranslation();
   const form = useForm<LoginFormData>({ values });
-
-  console.log(values)
+  const [show, setShow] = useState(false);
 
   return (
     <Form onSubmit={form.handleSubmit(onSubmit)} {...formProps}>
-      <input
-        type="hidden"
-        {...form.register("id", {
+      <FormTextField
+        label={t("id")}
+        sx={{display: !show ? 'none' : 'inline-flex'}}
+        formState={form.formState}
+        textFieldProps={form.register("id", {
           required: t("value required", { value: t("id") }),
         })}
       />
-      <input
-        type="hidden"
-        {...form.register("password", {
-          required: t("value required", { value: t("id") }),
+      <FormPasswordField
+        label={t("password")}
+        sx={{display: !show ? 'none' : 'inline-flex'}}
+        formState={form.formState}
+        textFieldProps={form.register("password", {
+          required: t("value required", { value: t("password") }),
         })}
       />
       {isError && (
@@ -46,9 +51,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         testId="login-submit-button"
         type="submit"
         isLoading={isLoading}
+        sx={{mb: "15px"}}
       >
         {t("start")}
       </Button>
+      <Text
+        onClick={() => setShow(!show)}
+      >
+        {t("show form fields")}
+      </Text>
     </Form>
   );
 };
