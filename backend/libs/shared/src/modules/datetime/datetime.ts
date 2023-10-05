@@ -19,7 +19,7 @@ const addOffset = (date: Date) => {
 };
 
 const currentDate = () => {
-  return addOffset(new Date())
+  return addOffset(new Date());
 };
 
 const isoDate = (date = new Date()) => {
@@ -95,6 +95,8 @@ const formatDateTime = (value: string | Date) => {
   if (typeof value === 'string') {
     value = new Date(value);
   }
+  const offset = getOffset();
+  value = addHours(value, -offset);
   return format(value, 'YYYY-MM-DDTHH:mm');
 };
 
