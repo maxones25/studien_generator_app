@@ -4,12 +4,15 @@ import {
   subtract,
   addDays as apiAddDays,
   addMinutes,
+  addHours,
 } from 'date-and-time';
 
 export type Time = { hours: number; minutes: number };
 
 const currentDate = () => {
-  return new Date();
+  const offset = process.env.TIME_OFFSET ? parseInt(process.env.TIME_OFFSET) : 0
+  const date =  new Date();
+  return addHours(date, offset)
 };
 
 const isoDate = (date = new Date()) => {
