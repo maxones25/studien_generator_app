@@ -36,7 +36,7 @@ export const DaysOfWeekPicker = <TFieldValues extends FieldValues>({
 
   const validate = (value: ScheduleDaysOfWeek) => {
     return (
-      (value?.filter((v) => Boolean(v))?.length ?? 0) === 3 ||
+      (value?.filter((v) => Boolean(v))?.length ?? 0) === amount ||
       t("please select x", { x: amount })
     );
   };
