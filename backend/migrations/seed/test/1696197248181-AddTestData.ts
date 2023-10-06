@@ -12,6 +12,7 @@ const groupId = TEST_GROUP.ID;
 const participantId = TEST_PARTICIPANT.ID;
 
 const entityId = TEST_ENTITY.ID;
+const entityName = TEST_ENTITY.NAME;
 const textFieldId = TEST_ENTITY.FIELDS.TEXT.ID;
 const dateFieldId = TEST_ENTITY.FIELDS.DATE.ID;
 const dateTimeFieldId = TEST_ENTITY.FIELDS.DATETIME.ID;
@@ -85,7 +86,7 @@ export class AddTestData1696197248181 implements MigrationInterface {
       .into('entity', ['id', 'name', 'studyId'])
       .values({
         id: () => `'${entityId}'`,
-        name: 'hxgEe00CvK',
+        name: entityName,
         studyId: () => `'${studyId}'`,
       })
       .execute();

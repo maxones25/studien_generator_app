@@ -76,7 +76,13 @@ const ChatsPage: React.FC<ChatsPageProps> = () => {
               onClick={navigate.handle(`${chat.id}`)}
               selected={chatId === chat.id}
             >
-              <StyledBadge badgeContent={chat.unread} color="error" max={999}>
+              <StyledBadge
+                badgeContent={
+                  <span data-testid="unread messages">{chat.unread}</span>
+                }
+                color="error"
+                max={999}
+              >
                 <ListItemText
                   primary={chat.participantNumber}
                   secondary={chat.newestMessage.content ?? "-"}

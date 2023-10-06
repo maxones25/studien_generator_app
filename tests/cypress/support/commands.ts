@@ -3,6 +3,7 @@
 import "cypress-wait-until";
 import "cypress-localstorage-commands";
 import {
+  FakeDirector,
   FakeEntity,
   FakeEntityField,
   FakeForm,
@@ -14,7 +15,12 @@ import {
 declare global {
   namespace Cypress {
     interface Chainable {
-      fetchAccessToken(type: "director" | "participant"): Chainable<any>;
+      fetchAccessToken(
+        type: "director" | "participant",
+        user?: string,
+        password?: string
+      ): Chainable<any>;
+      createDirector(data: FakeDirector): Chainable<string>;
       setAccessToken(type: "director" | "participant"): Chainable<any>;
       setLanguage(lang: "de" | "en"): Chainable<any>;
       shouldBeRelativePath(path: string): Chainable<any>;
@@ -37,6 +43,11 @@ declare global {
         >
       ): Chainable<JQuery<HTMLElement>>;
       createStudy(study: FakeStudy): Chainable<string>;
+      apiAddMember(
+        studyId: string,
+        directorId: string,
+        role: string
+      ): Chainable<void>;
       createGroup(studyId: string, group: FakeGroup): Chainable<string>;
       createEntity(studyId: string, entity: FakeEntity): Chainable<string>;
       createForm(studyId: string, form: FakeForm): Chainable<string>;
@@ -58,6 +69,7 @@ declare global {
       openGroupsPage(studyId: string): void;
       openRecordsPage(studyId: string): void;
       openFormsPage(studyId: string): void;
+      openFormPage(studyId: string, formId: string): void;
       openEntitiesPage(studyId: string): void;
       openParticipantsPage(studyId: string): void;
       openParticipantPage(studyId: string, participantId: string): void;
@@ -77,6 +89,8 @@ import "./api/createParticipant";
 import "./api/createEntity";
 import "./api/createEntityField";
 import "./api/createForm";
+import "./api/createDirector";
+import "./api/addMember";
 
 import "./ui/shouldBeRelativePath";
 import "./ui/getByTestId";
@@ -96,4 +110,5 @@ import "./router/openGroupsPage";
 import "./router/openGroupPage";
 import "./router/openRecordsPage";
 import "./router/openFormsPage";
+import "./router/openFormPage";
 import "./router/openChatsPage";

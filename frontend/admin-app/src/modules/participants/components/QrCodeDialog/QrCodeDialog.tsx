@@ -25,7 +25,7 @@ export const QrCodeDialog: React.FC<QrCodeDialogProps> = ({
   const clipboard = useClipboard();
 
   return (
-    <Dialog open={Boolean(uri)} {...props}>
+    <Dialog data-testid="qr code page" open={Boolean(uri)} {...props}>
       <DialogContent>
         <DialogContentText sx={{ textAlign: "center" }}>
           Dies ist der QR Code zur Probanden-App. Dieser QR Code sollte nun von

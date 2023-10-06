@@ -51,7 +51,7 @@ export const StartDateForm: React.FC<StartDateFormProps> = ({
           validateStartDate,
         }}
       />
-      <Button testId="start study" type="submit">
+      <Button testId="continue" type="submit">
         {t("continue")}
       </Button>
     </Form>

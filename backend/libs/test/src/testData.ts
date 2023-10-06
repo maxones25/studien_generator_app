@@ -35,6 +35,7 @@ export const TEST_CHAT = {
 
 export const TEST_ENTITY = {
   ID: 'c2c31a68-6bd7-48df-8d4b-47a95de8920f',
+  NAME: 'hxgEe00CvK',
   FIELDS: {
     TEXT: {
       ID: '6f776404-0402-42ca-9649-bace38c52684',

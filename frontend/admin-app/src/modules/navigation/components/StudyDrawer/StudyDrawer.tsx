@@ -89,7 +89,7 @@ export const StudyDrawer: React.FC<StudyDrawerProps> = ({ study }) => {
     : Construction;
 
   return (
-    <Column width={200} boxShadow={6} zIndex={1000}>
+    <Column testId="menu drawer" width={200} boxShadow={6} zIndex={1000}>
       <Toolbar>
         <Row mr={1}>
           {StatusIcon && (
@@ -111,7 +111,11 @@ export const StudyDrawer: React.FC<StudyDrawerProps> = ({ study }) => {
               <ListItem key={path} disablePadding divider>
                 <ListItemButton onClick={navigate.handle(path)}>
                   <StyledBadge
-                    badgeContent={unreadCount.data ?? 0}
+                    badgeContent={
+                      <span data-testid="unread messages">
+                        {unreadCount.data}
+                      </span>
+                    }
                     color="error"
                     max={999}
                   >

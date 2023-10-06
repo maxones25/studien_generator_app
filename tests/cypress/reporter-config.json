@@ -1,0 +1,7 @@
+{
+  "charts": true,
+  "reportPageTitle": "Admin-App-E2E-Test-Report",
+  "embeddedScreenshots": true,
+  "inlineAssets": true,
+  "saveAllAttempts": false
+}

@@ -108,11 +108,7 @@ export const ScheduleForm: React.FC<FormScheduleFormProps> = ({
           </Row>
           {period === "Week" && type === "Fix" && (
             <>
-              <DaysOfWeekPicker
-                control={form.control}
-                name="daysOfWeek"
-                amount={1}
-              />
+              <DaysOfWeekPicker control={form.control} name="daysOfWeek" />
               <Divider sx={{ mt: 1, mb: 1 }} />
             </>
           )}

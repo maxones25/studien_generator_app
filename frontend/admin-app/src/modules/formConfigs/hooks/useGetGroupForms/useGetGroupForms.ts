@@ -40,6 +40,9 @@ export const useGetGroupForms = ({
           isActive,
           type,
         },
-      })
+      }),
+    {
+      enabled: Boolean(groupId),
+    }
   );
 };

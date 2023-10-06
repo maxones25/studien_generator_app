@@ -23,3 +23,5 @@ Cypress.on('uncaught:exception', (err, _runnable) => {
   console.log(err);
   return false
 });
+
+import 'cypress-mochawesome-reporter/register';

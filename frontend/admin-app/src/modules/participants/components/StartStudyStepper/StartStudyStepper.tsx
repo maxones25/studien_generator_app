@@ -127,7 +127,7 @@ export const StartStudyStepper: FC<StartStudyStepperProps> = ({
               size="small"
               onClick={handleSubmit}
             >
-              Studie starten
+              {t("start study")}
             </Button>
           </Row>
         </StepContent>

@@ -30,7 +30,7 @@ export const FormEntitySideBar: React.FC<FormEntitySideBarProps> = () => {
       <Row p={2} justifyContent="space-between">
         <Text>{t("entities")}</Text>
         <IconButton
-          testId="close form component form"
+          testId="add entity"
           Icon={<Add />}
           onClick={menuAnchor.open}
         />
@@ -40,7 +40,11 @@ export const FormEntitySideBar: React.FC<FormEntitySideBarProps> = () => {
           onClose={menuAnchor.close}
         >
           {getEntities.data?.map((entity) => (
-            <MenuItem key={entity.id} onClick={handleCreateFormEntity(entity)}>
+            <MenuItem
+              data-testid={entity.id}
+              key={entity.id}
+              onClick={handleCreateFormEntity(entity)}
+            >
               {entity.name}
             </MenuItem>
           ))}

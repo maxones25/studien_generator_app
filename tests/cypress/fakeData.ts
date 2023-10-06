@@ -11,6 +11,22 @@ export const FieldTypeMap = {
 
 export type FieldType = (typeof FieldTypeMap)[keyof typeof FieldTypeMap];
 
+export type FakeDirector = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};
+
+const director = (): FakeDirector => {
+  return {
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+  };
+};
+
 export type FakeStudy = {
   name: string;
 };
@@ -103,9 +119,10 @@ const appointment = (): FakeAppointment => {
   };
 };
 
-const message = () => faker.company.catchPhrase()
+const message = () => faker.company.catchPhrase();
 
 export default {
+  director,
   message,
   study,
   group,

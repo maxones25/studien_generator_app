@@ -56,7 +56,7 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <TableContainer>
+    <TableContainer data-testid="records table">
       <Table size="small" stickyHeader>
         <TableHead>
           <TableRow>
