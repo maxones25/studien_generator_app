@@ -15,7 +15,7 @@ jobs:
       pipeline: ${{ steps.filter.outputs.pipeline }}
       database: ${{ steps.filter.outputs.database }}
       cypress: ${{ steps.filter.outputs.cypress }}
-      cypress: ${{ steps.filter.outputs.test_setup }}
+      test_setup: ${{ steps.filter.outputs.test_setup }}
       admin_backend: ${{ steps.filter.outputs.admin_backend }}
       admin_backend_tests: ${{ steps.filter.outputs.admin_backend_tests }}
       admin_frontend: ${{ steps.filter.outputs.admin_frontend }}
