@@ -201,7 +201,7 @@ jobs:
   studies-management-api-tests:
     name: Test studies management API
     runs-on: ubuntu-latest
-    needs: [changes, build-database-container, build-admin-backend-container]
+    needs: [collector-admin-api-tests]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.admin_backend == 'true' ||
@@ -222,17 +222,6 @@ jobs:
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
 
-      - name: Wait for MySQL
-        run: sleep 10s
-
-      - name: Run schema migrations
-        working-directory: ./backend
-        run: npm run db:migration:run
-
-      - name: Insert testing seed data
-        working-directory: ./backend
-        run: npm run db:seed:run
-
       - name: Run studies tests
         working-directory: ./backend
         run: npm run test:admin studies
@@ -248,12 +237,22 @@ jobs:
     steps:
       - name: Get latest code
         uses: actions/checkout@v2
-        
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install packages
+        working-directory: ./backend
+        run: npm ci
+
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
         
       - name: Run directors tests
-        run: docker run ghcr.io/maxones25/studien_generator_app/test-setup:latest npm run test:admin directors
+        working-directory: ./backend
+        run: npm run test:admin directors
 
   entities-management-api-tests:
     name: Test entities management API
