@@ -121,6 +121,8 @@ const appointment = (): FakeAppointment => {
 
 const message = () => faker.company.catchPhrase();
 
+// fake data 1
+
 export default {
   director,
   message,

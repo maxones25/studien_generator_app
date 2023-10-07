@@ -22,12 +22,10 @@ services:
   
   test-setup:
     container_name: test-setup
+    image: ghcr.io/maxones25/studien_generator_app/test-setup:latest
     depends_on:
       mysql:
         condition: service_healthy
-    build:
-      context: ./backend
-      dockerfile: test-setup.dockerfile
     environment:
       - DB_HOST=mysql
       - DB_USER=root
