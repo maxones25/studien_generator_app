@@ -278,17 +278,6 @@ jobs:
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
 
-      - name: Wait for MySQL
-        run: sleep 10s
-
-      - name: Run schema migrations
-        working-directory: ./backend
-        run: npm run db:migration:run
-
-      - name: Insert testing seed data
-        working-directory: ./backend
-        run: npm run db:seed:run
-
       - name: Run entities tests
         working-directory: ./backend
         run: npm run test:admin entities
@@ -296,7 +285,7 @@ jobs:
   forms-management-api-tests:
     name: Test forms management API
     runs-on: ubuntu-latest
-    needs: [changes, build-database-container, build-admin-backend-container]
+    needs: [collector-admin-api-tests]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.admin_backend == 'true' ||
@@ -316,17 +305,6 @@ jobs:
 
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
-
-      - name: Wait for MySQL
-        run: sleep 10s
-
-      - name: Run schema migrations
-        working-directory: ./backend
-        run: npm run db:migration:run
-
-      - name: Insert testing seed data
-        working-directory: ./backend
-        run: npm run db:seed:run
 
       - name: Run forms tests
         working-directory: ./backend
@@ -335,7 +313,7 @@ jobs:
   groups-management-api-tests:
     name: Test groups management API
     runs-on: ubuntu-latest
-    needs: [changes, build-database-container, build-admin-backend-container]
+    needs: [collector-admin-api-tests]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.admin_backend == 'true' ||
@@ -355,17 +333,6 @@ jobs:
 
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
-
-      - name: Wait for MySQL
-        run: sleep 10s
-
-      - name: Run schema migrations
-        working-directory: ./backend
-        run: npm run db:migration:run
-
-      - name: Insert testing seed data
-        working-directory: ./backend
-        run: npm run db:seed:run
 
       - name: Run groups tests
         working-directory: ./backend
@@ -374,7 +341,7 @@ jobs:
   participants-management-api-tests:
     name: Test participants management API
     runs-on: ubuntu-latest
-    needs: [changes, build-database-container, build-admin-backend-container]
+    needs: [collector-admin-api-tests]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.admin_backend == 'true' ||
@@ -394,17 +361,6 @@ jobs:
 
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
-
-      - name: Wait for MySQL
-        run: sleep 10s
-
-      - name: Run schema migrations
-        working-directory: ./backend
-        run: npm run db:migration:run
-
-      - name: Insert testing seed data
-        working-directory: ./backend
-        run: npm run db:seed:run
 
       - name: Run participants tests
         working-directory: ./backend
@@ -413,7 +369,7 @@ jobs:
   records-management-api-tests:
     name: Test records management API
     runs-on: ubuntu-latest
-    needs: [changes, build-database-container, build-admin-backend-container]
+    needs: [collector-admin-api-tests]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.admin_backend == 'true' ||
@@ -433,17 +389,6 @@ jobs:
 
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
-
-      - name: Wait for MySQL
-        run: sleep 10s
-
-      - name: Run schema migrations
-        working-directory: ./backend
-        run: npm run db:migration:run
-
-      - name: Insert testing seed data
-        working-directory: ./backend
-        run: npm run db:seed:run
 
       - name: Run records tests
         working-directory: ./backend
@@ -452,7 +397,7 @@ jobs:
   chats-management-api-tests:
     name: Test chats management API
     runs-on: ubuntu-latest
-    needs: [changes, build-database-container, build-admin-backend-container]
+    needs: [collector-admin-api-tests]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.admin_backend == 'true' ||
@@ -472,17 +417,6 @@ jobs:
 
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
-
-      - name: Wait for MySQL
-        run: sleep 10s
-
-      - name: Run schema migrations
-        working-directory: ./backend
-        run: npm run db:migration:run
-
-      - name: Insert testing seed data
-        working-directory: ./backend
-        run: npm run db:seed:run
 
       - name: Run chats tests
         working-directory: ./backend
