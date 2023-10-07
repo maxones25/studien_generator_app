@@ -246,6 +246,9 @@ jobs:
       needs.changes.outputs.admin_backend == 'true' ||
       needs.changes.outputs.admin_backend_tests == 'true'
     steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+        
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
         
