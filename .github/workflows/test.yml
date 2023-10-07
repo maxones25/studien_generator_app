@@ -15,6 +15,7 @@ jobs:
       pipeline: ${{ steps.filter.outputs.pipeline }}
       database: ${{ steps.filter.outputs.database }}
       cypress: ${{ steps.filter.outputs.cypress }}
+      cypress: ${{ steps.filter.outputs.test_setup }}
       admin_backend: ${{ steps.filter.outputs.admin_backend }}
       admin_backend_tests: ${{ steps.filter.outputs.admin_backend_tests }}
       admin_frontend: ${{ steps.filter.outputs.admin_frontend }}
@@ -97,7 +98,7 @@ jobs:
       - name: Build and Push admin-frontend container
         if: needs.changes.outputs.test_setup == 'true'
         run: |
-          docker build ./mysql -t ghcr.io/${{ github.repository }}/test-setup:latest -f ./backend/test-setup.dockerfile
+          docker build ./backend -t ghcr.io/${{ github.repository }}/test-setup:latest -f ./backend/test-setup.dockerfile
           docker push ghcr.io/${{ github.repository }}/test-setup:latest
 
   build-cypress:
@@ -115,7 +116,7 @@ jobs:
       - name: Build and Push admin-frontend container
         if: needs.changes.outputs.cypress == 'true'
         run: |
-          docker build ./mysql -t ghcr.io/${{ github.repository }}/cypress-tests:latest -f ./tests/cypress/dockerfile
+          docker build ./tests/cypress -t ghcr.io/${{ github.repository }}/cypress-tests:latest -f ./tests/cypress/dockerfile
           docker push ghcr.io/${{ github.repository }}/cypress-tests:latest
 
   build-admin-frontend-container:

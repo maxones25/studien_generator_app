@@ -37,7 +37,7 @@ const secondRecordId = 'e3cd8d75-127b-4312-b2a8-479778896a69';
 
 const stringifyJSON = (data: any) => JSON.stringify(JSON.stringify(data));
 
-// seed data for tests 1
+// seed data for tests 12
 
 export class AddTestData1696197248181 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
