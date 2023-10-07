@@ -77,7 +77,7 @@ jobs:
         if: needs.changes.outputs.database == 'true'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and Push admin-frontend container
+      - name: Build and Push container
         if: needs.changes.outputs.database == 'true'
         run: |
           docker build ./mysql -t ghcr.io/${{ github.repository }}/test-database:latest -f ./mysql/test.dockerfile
@@ -95,7 +95,7 @@ jobs:
         if: needs.changes.outputs.test_setup == 'true'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and Push admin-frontend container
+      - name: Build and Push container
         if: needs.changes.outputs.test_setup == 'true'
         run: |
           docker build ./backend -t ghcr.io/${{ github.repository }}/test-setup:latest -f ./backend/test-setup.dockerfile
@@ -113,7 +113,7 @@ jobs:
         if: needs.changes.outputs.cypress == 'true'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and Push admin-frontend container
+      - name: Build and Push container
         if: needs.changes.outputs.cypress == 'true'
         run: |
           docker build ./tests/cypress -t ghcr.io/${{ github.repository }}/cypress-tests:latest -f ./tests/cypress/dockerfile
@@ -131,7 +131,7 @@ jobs:
         if: needs.changes.outputs.admin_frontend == 'true'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and Push admin-frontend container
+      - name: Build and Push container
         if: needs.changes.outputs.admin_frontend == 'true'
         run: |
           docker build ./frontend/admin-app -t ghcr.io/${{ github.repository }}/admin-frontend:latest -f ./frontend/admin-app/dockerfile
@@ -149,7 +149,7 @@ jobs:
         if: needs.changes.outputs.admin_backend == 'true'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and Push admin-frontend container
+      - name: Build and Push container
         if: needs.changes.outputs.admin_backend == 'true'
         run: |
           docker build ./backend -t ghcr.io/${{ github.repository }}/admin-backend:latest -f ./backend/admin.dockerfile
@@ -167,7 +167,7 @@ jobs:
         if: needs.changes.outputs.study_frontend == 'true'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and Push study-frontend container
+      - name: Build and Push container
         if: needs.changes.outputs.study_frontend == 'true'
         run: |
           docker build ./frontend/study-app -t ghcr.io/${{ github.repository }}/study-frontend:latest -f ./frontend/study-app/dockerfile
@@ -185,11 +185,18 @@ jobs:
         if: needs.changes.outputs.study_backend == 'true'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and Push admin-frontend container
+      - name: Build and Push container
         if: needs.changes.outputs.study_backend == 'true'
         run: |
           docker build ./backend -t ghcr.io/${{ github.repository }}/study-backend:latest -f ./backend/study.dockerfile
           docker push ghcr.io/${{ github.repository }}/study-backend:latest
+
+   collector-admin-api-tests:
+    runs-on: ubuntu-latest
+    needs: [build-database-container, build-test-setup, build-admin-backend-container]
+    steps:
+    - name: Collecting Build for Admin API Tests
+      run: echo "All parallel jobs have completed!"
 
   studies-management-api-tests:
     name: Test studies management API
@@ -233,46 +240,34 @@ jobs:
   director-management-api-tests:
     name: Test directors management API
     runs-on: ubuntu-latest
-    needs: [changes, build-database-container, build-admin-backend-container]
+    needs: [collector-admin-api-tests]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.admin_backend == 'true' ||
       needs.changes.outputs.admin_backend_tests == 'true'
     steps:
-      - name: Get latest code
-        uses: actions/checkout@v2
+      # - name: Get latest code
+      #   uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: 16
 
-      - name: Install packages
-        working-directory: ./backend
-        run: npm ci
+      # - name: Install packages
+      #   working-directory: ./backend
+      #   run: npm ci
 
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
-
-      - name: Wait for MySQL
-        run: sleep 10s
-
-      - name: Run schema migrations
-        working-directory: ./backend
-        run: npm run db:migration:run
-
-      - name: Insert testing seed data
-        working-directory: ./backend
-        run: npm run db:seed:run
-
+        
       - name: Run directors tests
-        working-directory: ./backend
-        run: npm run test:admin directors
+        run: docker run ghcr.io/maxones25/studien_generator_app/test-setup:latest npm run test:admin directors
 
   entities-management-api-tests:
     name: Test entities management API
     runs-on: ubuntu-latest
-    needs: [changes, build-database-container, build-admin-backend-container]
+    needs: [collector-admin-api-tests]
     if: |
       needs.changes.outputs.pipeline == 'true' ||
       needs.changes.outputs.admin_backend == 'true' ||
