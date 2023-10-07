@@ -191,7 +191,7 @@ jobs:
           docker build ./backend -t ghcr.io/${{ github.repository }}/study-backend:latest -f ./backend/study.dockerfile
           docker push ghcr.io/${{ github.repository }}/study-backend:latest
 
-   collector-admin-api-tests:
+  collector-admin-api-tests:
     runs-on: ubuntu-latest
     needs: [build-database-container, build-test-setup, build-admin-backend-container]
     steps:
