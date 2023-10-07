@@ -246,18 +246,6 @@ jobs:
       needs.changes.outputs.admin_backend == 'true' ||
       needs.changes.outputs.admin_backend_tests == 'true'
     steps:
-      # - name: Get latest code
-      #   uses: actions/checkout@v2
-
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: 16
-
-      # - name: Install packages
-      #   working-directory: ./backend
-      #   run: npm ci
-
       - name: Start database containers
         run: docker-compose -f database-docker-compose.yaml up -d
         
