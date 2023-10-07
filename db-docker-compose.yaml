@@ -19,3 +19,29 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      study-app-network:
+
+  test-setup:
+    container_name: test-setup
+    depends_on:
+      mysql:
+        condition: service_healthy
+    build:
+      context: ./backend
+      dockerfile: test-setup.dockerfile
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=studien_generator_app
+    command: sh -c "npm run db:migration:run && npm run db:seed:run && touch /usr/src/app/.healthcheck"
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f /usr/src/app/.healthcheck ] || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      - study-app-network
+networks:
+  study-app-network:
