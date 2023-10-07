@@ -42,4 +42,4 @@ services:
       - study-app-network
       
 networks:
-  study-app-network
+  study-app-network:
