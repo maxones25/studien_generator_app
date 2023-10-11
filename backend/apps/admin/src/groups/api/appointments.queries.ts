@@ -1,7 +1,7 @@
 import { Inject, Controller, Get, UseGuards, UseFilters } from '@nestjs/common';
 import { GetGroup } from '../infrastructure/http/decorators/group.decorator';
 import { Group } from '@entities/core/group/Group';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import {
   ErrorFilter,
   GroupGuard,

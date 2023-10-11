@@ -1,4 +1,4 @@
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import {
   Controller,
   Get,

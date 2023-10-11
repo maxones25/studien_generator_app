@@ -6,7 +6,7 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import { DirectorId } from '@admin/directors/infrastructure/http';
 import { StudiesService } from '../application';
 import { StudyQueryDto, StudyGuard, ErrorFilter } from '../infrastructure/http';

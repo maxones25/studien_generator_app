@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { RecordsService } from './records.service';
 import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';
 import { RecordsQueryDto } from './dtos/RecordsQueryDto';
 import { ExportParamsDto } from './dtos/ExportParamsDto';

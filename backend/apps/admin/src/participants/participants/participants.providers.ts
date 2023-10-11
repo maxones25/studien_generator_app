@@ -10,7 +10,7 @@ import { SchedulesTransformer } from './services/SchedulesTransformer';
 import { ResetPasswordUseCase } from './transactions/ResetPasswordUseCase';
 import { DeleteParticipantTransaction } from './transactions/DeleteParticipantTransaction';
 import { CreateAppointmentUseCase } from './transactions/CreateAppointmentUseCase';
-import { AppointmentsRepository } from '@admin/appointments/appointment.repository';
+import { AppointmentsRepository } from '@admin/participants/participants/appointment.repository';
 import { GetAppointmentsUseCase } from './transactions/GetAppointmentsUseCase';
 
 const participantsProviders: Provider[] = [
@@ -24,6 +24,7 @@ const participantsProviders: Provider[] = [
   ParticipantsRepository,
   AppUriGenerator,
   SchedulesTransformer,
+  AppointmentsRepository,
   {
     provide: CreateAppointmentUseCase,
     useFactory(appointmentsRepository: AppointmentsRepository) {

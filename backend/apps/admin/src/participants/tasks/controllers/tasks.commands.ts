@@ -11,7 +11,7 @@ import { ParticipantQueryDto } from '@admin/participants/participants/dtos/Parti
 import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import { UpdateTaskDto } from '../dtos/UpdateTaskDto';
 import { TaskGuard } from '../task.guard';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import { TaskQueryDto } from '../dtos/TaskQueryDto';
 import { ParticipantGuard } from '@admin/participants/participants/guards/participant.guard';
 import { CreateTaskDto } from '../dtos/CreateTaskDto';

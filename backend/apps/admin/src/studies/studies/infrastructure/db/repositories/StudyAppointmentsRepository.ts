@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import { Appointment } from '@entities/core/appointment/Appointment';
 import { IStudyAppointmentsRepository } from '@admin/studies/studies/domain';
-import { CreateAppointmentDto } from '@admin/appointments/dtos/CreateAppointmentDto';
+import { CreateAppointmentDto } from '../../http';
 
 export class StudyAppointmentsRepository
   implements IStudyAppointmentsRepository

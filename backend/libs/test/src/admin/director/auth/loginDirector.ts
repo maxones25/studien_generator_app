@@ -1,7 +1,7 @@
 import { IApp } from '@test/app/createApp';
 import { request } from '@test/app/request';
 
-export const loginDirector = (app: IApp, email: string, password: string) =>
+export const loginDirector = (app: IApp, email: any, password: any) =>
   request(app).command({ path: '/auth/login', data: { email, password } });
 
 export const getDirectorAccessToken = (

@@ -1,4 +1,4 @@
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import {

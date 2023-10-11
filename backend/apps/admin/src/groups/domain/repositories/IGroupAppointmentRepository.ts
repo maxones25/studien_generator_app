@@ -1,4 +1,4 @@
-import { CreateAppointmentDto } from '@admin/appointments/dtos/CreateAppointmentDto';
+import { CreateAppointmentDto } from '@admin/studies/studies/infrastructure/http';
 import { Appointment } from '@entities/core/appointment/Appointment';
 
 export interface IGroupAppointmentRepository {

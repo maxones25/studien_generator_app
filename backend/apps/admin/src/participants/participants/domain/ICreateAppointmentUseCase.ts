@@ -1,4 +1,4 @@
-import { CreateAppointmentDto } from '@admin/appointments/dtos/CreateAppointmentDto';
+import { CreateAppointmentDto } from '@admin/studies/studies/infrastructure/http';
 import { UseCase } from '@shared/modules/core/UseCase';
 
 export type CreateAppointmentInput = {

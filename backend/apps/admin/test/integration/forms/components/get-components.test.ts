@@ -1,5 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { AttributeType } from '@admin/components/Attribute';
+import { AttributeType } from '@admin/forms/components/Attribute';
 import {
   createDirector,
   getDirectorAccessToken,

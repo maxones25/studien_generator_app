@@ -1,5 +1,4 @@
 import { Module, forwardRef } from '@nestjs/common';
-import { AppointmentsModule } from '@admin/appointments/appointments.module';
 import { GroupsDb } from './infrastructure/db';
 import { GroupsRepository } from './repositories/groups.repository';
 import * as Domain from './domain';

@@ -3,7 +3,7 @@ import fakeData from '@test/fakeData';
 import { JwtService } from '@nestjs/jwt';
 import request from 'supertest';
 import { SignupDirectorDto } from '@admin/directors/infrastructure/http';
-import { createDirector } from '@test/admin/director';
+import { createDirector, loginDirector } from '@test/admin/director';
 import { IApp, createApp, getEnvironmentVariable } from '@test/app';
 
 describe('login director', () => {
@@ -26,13 +26,14 @@ describe('login director', () => {
     directorId = createdDirector.id;
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('should login directors successfully', async () => {
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email: director.email,
-        password: director.password,
-      })
+    const email = director.email;
+    const password = director.password;
+    return loginDirector(app, email, password)
       .expect(200)
       .then((res) => {
         expect(typeof res.body.accessToken).toEqual('string');
@@ -43,93 +44,50 @@ describe('login director', () => {
   });
 
   it('should fail because email is empty', async () => {
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email: '',
-        password: director.password,
-      })
-      .expect(400);
+    const email = '';
+    const password = director.password;
+    return loginDirector(app, email, password).expect(400);
   });
 
   it('should fail because email is not a string', async () => {
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email: 123,
-        password: director.password,
-      })
-      .expect(400);
+    const email = 123;
+    const password = director.password;
+    return loginDirector(app, email, password).expect(400);
   });
 
   it('should fail because password is empty', async () => {
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email: director.email,
-        password: '',
-      })
-      .expect(400);
+    const email = director.email;
+    const password = '';
+    return loginDirector(app, email, password).expect(400);
   });
 
   it('should fail because password is not a string', async () => {
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email: director.email,
-        password: true,
-      })
-      .expect(400);
+    const email = director.email;
+    const password = true;
+    return loginDirector(app, email, password).expect(400);
   });
 
   it('should fail because email is missing', async () => {
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        password: director.password,
-      })
-      .expect(400);
+    const email = undefined;
+    const password = director.password;
+    return loginDirector(app, email, password).expect(400);
   });
 
   it('should fail because password is missing', async () => {
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email: director.email,
-      })
-      .expect(400);
-  });
-
-  it('should fail because password is missing', async () => {
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email: director.email,
-      })
-      .expect(400);
+    const email = director.email;
+    const password = undefined;
+    return loginDirector(app, email, password).expect(400);
   });
 
   it('should fail because email does not exist', async () => {
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email: fakeData.director().email,
-        password: director.password,
-      })
-      .expect(401);
+    const email = fakeData.director().email;
+    const password = director.password;
+    return loginDirector(app, email, password).expect(401);
   });
 
   it('should fail because password is wrong', async () => {
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email: director.email,
-        password: fakeData.director().password,
-      })
-      .expect(401);
-  });
-
-  afterAll(async () => {
-    await app.close();
+    const email = director.email;
+    const password = fakeData.director().password;
+    return loginDirector(app, email, password).expect(401);
   });
 });

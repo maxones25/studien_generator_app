@@ -1,4 +1,3 @@
-import { CreateAppointmentDto } from '@admin/appointments/dtos/CreateAppointmentDto';
 import {
   Body,
   Controller,
@@ -15,8 +14,8 @@ import {
   ErrorFilter,
 } from '@admin/groups/infrastructure/http';
 import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
-import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
-import { Roles } from '@admin/members/infrastructure/http';
+import { CreateAppointmentDto, IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import {
   CREATE_GROUP_APPOINTMENT_USE_CASE,
   ICreateGroupAppointmentUseCase,

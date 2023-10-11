@@ -7,7 +7,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import { FormQueryDto } from '../dtos/FormQueryDto';
 import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import { FormGuard } from '../guards/form.guard';

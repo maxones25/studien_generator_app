@@ -6,7 +6,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ParticipantsService } from '../participants.service';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import { ParticipantQueryDto } from '../dtos/ParticipantQueryDto';
 import { ParticipantGuard } from '../guards/participant.guard';
 import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';

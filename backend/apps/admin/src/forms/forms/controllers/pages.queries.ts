@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards, Query, Inject } from '@nestjs/common';
 import { FormGuard } from '../guards/form.guard';
 import { FormQueryDto } from '../dtos/FormQueryDto';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import { PagesService } from '../services/page.service';
 import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 

@@ -9,7 +9,7 @@ import {
   UseFilters,
 } from '@nestjs/common';
 import { DirectorId } from '@admin/directors/infrastructure/http';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import { StudiesService } from '../application';
 import { DeleteDto } from '@shared/modules/records/DeleteDto';
 import {

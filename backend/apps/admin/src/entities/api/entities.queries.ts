@@ -13,7 +13,7 @@ import {
   ErrorFilter,
 } from '@admin/entities/infrastructure/http';
 import { StudyQueryDto } from '@admin/studies/studies/infrastructure/http/dtos/StudyQueryDto';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import {
   GET_ALL_ENTITIES_USE_CASE,
   GET_ENTITY_BY_ID_USE_CASE,

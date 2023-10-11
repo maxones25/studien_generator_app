@@ -1,6 +1,6 @@
 import { Query, Controller, Get, Inject, UseFilters } from '@nestjs/common';
 import { ErrorFilter, StudyQueryDto } from '../infrastructure/http';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import { GetAppointmentsUseCase } from '../application';
 
 @Controller('studies')

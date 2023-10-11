@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite --host",
-    "start:dev": "vite --host",
+    "start": "npm run start:dev",
+    "start:dev": "vite --host --mode dev",
     "build:dev": "tsc && vite build --mode dev",
     "build:test": "tsc && vite build --mode test",
     "build:prod": "tsc && vite build --mode prod",

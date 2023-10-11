@@ -9,13 +9,13 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { CreateFormComponentDto } from '../dtos/CreateFormComponentDto';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import { ComponentsService } from '../services/components.service';
 import { ComponentQueryDto } from '../dtos/ComponentQueryDto';
 import { PageQueryDto } from '../dtos/PageQueryDto';
 import { PageGuard } from '../guards/page.guard';
 import { ComponentGuard } from '../guards/component.guard';
-import { ComponentsService as UiComponentsService } from '@admin/components/components.service';
+import { ComponentsService as UiComponentsService } from '@admin/forms/components/components.service';
 import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
 

@@ -9,7 +9,7 @@ import {
   HttpStatus,
   UseFilters,
 } from '@nestjs/common';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 import { EntityGuard } from '@admin/entities/infrastructure/http/guards/entity.guard';
 import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import { Entity } from '@admin/entities/infrastructure/http/decorators/entity.decorator';

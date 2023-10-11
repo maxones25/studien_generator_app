@@ -1,4 +1,3 @@
-import { CreateAppointmentDto } from '@admin/appointments/dtos/CreateAppointmentDto';
 import {
   Body,
   Controller,
@@ -10,6 +9,7 @@ import {
 import { ParticipantQueryDto } from '../dtos/ParticipantQueryDto';
 import { CreateAppointmentUseCase } from '../transactions/CreateAppointmentUseCase';
 import { ParticipantGuard } from '../guards/participant.guard';
+import { CreateAppointmentDto } from '@admin/studies/studies/infrastructure/http';
 
 @Controller('participants')
 export class AppointmentsCommands {

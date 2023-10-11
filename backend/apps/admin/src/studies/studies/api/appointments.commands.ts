@@ -12,7 +12,7 @@ import {
   ErrorFilter,
 } from '../infrastructure/http';
 import { CreateAppointmentUseCase } from '../application';
-import { Roles } from '@admin/members/infrastructure/http';
+import { Roles } from '@admin/studies/members/infrastructure/http';
 
 @Controller('studies')
 @UseFilters(ErrorFilter)
