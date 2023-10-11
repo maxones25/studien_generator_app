@@ -1,4 +1,4 @@
-import { ComponentType } from '@admin/components/component-type.enum';
+import { ComponentType } from '@admin/forms/components/component-type.enum';
 import { FormSchedulePeriod, FormScheduleType } from '@entities/core/group';
 import { faker } from '@faker-js/faker';
 import { FieldType } from '@shared/enums/field-type.enum';
