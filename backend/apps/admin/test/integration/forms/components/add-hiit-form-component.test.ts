@@ -1,5 +1,5 @@
 import { AppModule } from '@admin/app.module';
-import { ComponentType } from '@admin/components/component-type.enum';
+import { ComponentType } from '@admin/forms/components/component-type.enum';
 import { FieldType } from '@entities/core/entity';
 import { getDirectorAccessToken } from '@test/admin/director';
 import { createEntityId, createFieldId } from '@test/admin/entities';
