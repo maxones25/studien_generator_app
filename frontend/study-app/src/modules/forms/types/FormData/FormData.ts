@@ -4,16 +4,16 @@ export type FormConfig = {
   form: FormData;
 };
 
+export enum FormType {
+  TimeIndependent = "TimeIndependent",
+  TimeDependent = "TimeDependent",
+}
+
 export type FormData = {
   id: string;
   name: string;
   pages: FormPageData[];
 };
-
-export enum FormType {
-  TimeIndependent = "TimeIndependent",
-  TimeDependent = "TimeDependent",
-}
 
 export type FormPageData = {
   components: FormComponentData[];
