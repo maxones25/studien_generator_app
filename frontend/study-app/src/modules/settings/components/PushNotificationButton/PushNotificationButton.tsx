@@ -10,7 +10,7 @@ const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
 
 interface PushNotificationButtonProps {}
 
-const PushNotificationButton: React.FC<PushNotificationButtonProps> = () => {
+export const PushNotificationButton: React.FC<PushNotificationButtonProps> = () => {
   const { t } = useTranslation();
   const { showError } = useSnackBarContext();
   const { palette } = useTheme();
@@ -64,5 +64,3 @@ const PushNotificationButton: React.FC<PushNotificationButtonProps> = () => {
     </Button>
   );
 };
-
-export default PushNotificationButton;

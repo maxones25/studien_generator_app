@@ -1,10 +1,11 @@
+import { HelpButton, Text } from '@modules/core/components';
+import TrafficLight from '@modules/core/components/TrafficLight/TrafficLight';
+import { useGetQueueStatus } from '@modules/settings/hooks';
 import { List, ListItem } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PushNotificationButton } from '..';
-import TrafficLight from '@modules/core/components/TrafficLight/TrafficLight';
-import { useGetQueueStatus } from '@modules/settings/hooks';
-import { HelpButton, Text } from '@modules/core/components';
+
 
 export interface SettingsListProps {}
 
