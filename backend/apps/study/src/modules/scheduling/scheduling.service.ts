@@ -13,24 +13,28 @@ export class SchedulingService {
     privateKey: process.env.VAPID_PRIVATE_KEY,
   };
   
-    constructor(private readonly dataService: DataService) {
-      this.lastChecked = new Date();
-    }
-
-  private readonly handlers = [
-    { func: this.dataService.getNewEntriesFromNotifications, type: PushNotificationType.Notification },
-    { func: this.dataService.getNewEntriesFromChat, type: PushNotificationType.Chat },
-    { func: this.dataService.getNewEntriesFromTasks, type: PushNotificationType.Task },
-    { func: this.dataService.getNewEntriesFromAppointments, type: PushNotificationType.Appointment },
-  ];
+  constructor(private readonly dataService: DataService) {
+    this.lastChecked = new Date();
+  }
 
   @Cron('0 * * * * *')
   async handleCron() {
-    for (const handler of this.handlers) {
-      const entries = await handler.func(this.lastChecked);
-      entries.forEach((entry) => this.processEntry(entry, handler.type));
-    }
-
+    const notifications = await this.dataService.getNewEntriesFromNotifications(this.lastChecked);
+    notifications.forEach((notification) => {
+      this.processEntry(notification, PushNotificationType.Notification);
+    });
+    const messages = await this.dataService.getNewEntriesFromChat(this.lastChecked);
+    messages.forEach(({chat}) => {
+      this.processEntry(chat, PushNotificationType.Chat);
+    });
+    const tasks = await this.dataService.getNewEntriesFromTasks(this.lastChecked);
+    tasks.forEach((task) => {
+      this.processEntry(task, PushNotificationType.Task);
+    });
+    const appointments = await this.dataService.getNewEntriesFromAppointments(this.lastChecked);
+    appointments.forEach((appointments) => {
+      const message = this.processEntry(appointments, PushNotificationType.Appointment);
+    });
     this.lastChecked = new Date();
     this.lastChecked.setMilliseconds(0);
     this.lastChecked.setSeconds(0);
