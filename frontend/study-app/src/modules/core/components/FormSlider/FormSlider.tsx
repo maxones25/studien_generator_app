@@ -3,7 +3,8 @@ import {
   FormControl,
   FormControlLabel,
   FormHelperText,
-  Slider,
+  Slider as MuiSlider,
+  styled,
 } from "@mui/material";
 import {
   Control,
@@ -15,6 +16,15 @@ import {
   get,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+
+const Slider = styled(MuiSlider)({
+  '& .MuiSlider-markLabel[data-index="0"]': {
+    transform: "translateX(-20%)"
+  },
+  '& .MuiSlider-markLabel[data-index="1"]': {
+    transform: "translateX(-80%)"
+  }
+});
 
 export interface FormSliderProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
@@ -47,10 +57,12 @@ export function FormSlider<TFieldValues extends FieldValues>({
     {
       value: min,
       label: minLabel,
+      labelAllign: 'right'
     },
     {
       value: max,
       label: maxLabel,
+      labelAllign: 'left'
     },
   ];
 
@@ -73,11 +85,13 @@ export function FormSlider<TFieldValues extends FieldValues>({
                       newValue as PathValue<TFieldValues, Path<TFieldValues>>
                     );
                   }}
-                  valueLabelDisplay="on"
+                  valueLabelDisplay="auto"
                   value={value ?? min}
                   marks={marks}
+                  step={attributes?.step}
                   {...field}
-                  {...attributes}
+                  min={attributes?.min}
+                  max={attributes?.max}
                 />
               }
               label={label}
