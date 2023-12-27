@@ -48,18 +48,22 @@ export class AuthService {
       type: 'participant',
     });
 
-    if (!process.env.TEST) {
+/*     if (!process.env.TEST) {
       const password = this.passwordService.generate();
       const resetPassword = await this.passwordService.hash(password);
 
-      this.particpantsRepository.update(participant.id, {
-        password: resetPassword,
-      });
-    }
+
+    } */
 
     return {
       accessToken,
     };
+  }
+
+  async changePassword(participantId: string, newPassword: string) {
+    this.particpantsRepository.update(participantId, {
+      password: newPassword,
+    });
   }
 
   async isDeleted(id: string) {
