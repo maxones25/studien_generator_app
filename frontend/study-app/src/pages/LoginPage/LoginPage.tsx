@@ -1,17 +1,21 @@
 import { LoginForm } from "@modules/auth/components";
 import { useLogin } from "@modules/auth/hooks";
 import { Page } from "@modules/core/components";
+import { useOpen } from "@modules/core/hooks";
+import { isInstallable } from "@modules/core/utils";
 import { useId, usePassword } from "@modules/navigation/hooks";
+import { Dialog } from "@mui/material";
 import React from "react";
 
 export interface LoginPageProps {}
 
 const LoginPage: React.FC<LoginPageProps> = () => {
+  const showInstallationGuide = isInstallable();
+  const { isOpen, close } = useOpen(true);
+
   const id = useId();
   const password = usePassword();
   const login = useLogin();
-
-  console.log({ id, password })
 
   return (
     <Page 
@@ -20,12 +24,14 @@ const LoginPage: React.FC<LoginPageProps> = () => {
         alignItems: "center",
       }} 
       testId="login page">
-      <LoginForm
-        onSubmit={login.mutate}
-        isError={login.isError}
-        isLoading={login.isLoading}
-        values={{ id, password }}
-      />
+        <LoginForm
+          onSubmit={login.mutate}
+          isError={login.isError}
+          isLoading={login.isLoading}
+          values={{ id, password }}
+        />
+        <Dialog open={isOpen && showInstallationGuide} onClose={close}>
+        </Dialog>
     </Page>
   );
 };

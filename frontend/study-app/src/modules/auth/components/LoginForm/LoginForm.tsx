@@ -7,7 +7,7 @@ import {
   Text,
 } from "@modules/core/components";
 import { FormProps } from "@modules/core/types";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -22,13 +22,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 }) => {
   const { t } = useTranslation();
   const form = useForm<LoginFormData>({ values });
-  const [show, setShow] = useState(false);
 
   return (
     <Form onSubmit={form.handleSubmit(onSubmit)} {...formProps}>
       <FormTextField
         label={t("id")}
-        sx={{display: !show ? 'none' : 'inline-flex'}}
         formState={form.formState}
         textFieldProps={form.register("id", {
           required: t("value required", { value: t("id") }),
@@ -36,7 +34,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       />
       <FormPasswordField
         label={t("password")}
-        sx={{display: !show ? 'none' : 'inline-flex'}}
         formState={form.formState}
         textFieldProps={form.register("password", {
           required: t("value required", { value: t("password") }),
@@ -55,11 +52,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       >
         {t("start")}
       </Button>
-      <Text
-        onClick={() => setShow(!show)}
-      >
-        {t("show form fields")}
-      </Text>
     </Form>
   );
 };
