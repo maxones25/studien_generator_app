@@ -1,8 +1,9 @@
 import { FormComponentDataAttributes } from "@modules/forms/types";
 import { TextFieldProps, TextField, SxProps, Theme } from "@mui/material";
-import { FieldValues, FormState, get } from "react-hook-form";
+import { Control, Controller, FieldValues, FormState, Path, get } from "react-hook-form";
 
 export interface FormTextFieldProps<FormData extends FieldValues> {
+  control: Control<FormData>;
   formState: FormState<FormData>;
   textFieldProps: TextFieldProps;
   sx?: SxProps<Theme>;
@@ -23,6 +24,7 @@ export const FormTextField = <FormData extends FieldValues>({
   type = "text",
   isVisible = true,
   fullWidth = false,
+  control,
 }: FormTextFieldProps<FormData>) => {
   const { name, inputProps } = textFieldProps;
   const error = get(formState.errors, name);
@@ -31,24 +33,31 @@ export const FormTextField = <FormData extends FieldValues>({
   if (!name) throw new Error("name required");
 
   return isVisible ? (
-    <TextField
-      sx={sx}
-      error={error}
-      margin="normal"
-      helperText={error?.message?.toString() ?? null}
-      label={label}
-      type={type}
-      fullWidth={fullWidth}
-      placeholder={placeholder}
-      inputProps={{
-        ...inputProps,
-        "data-testid": `${name}-input`,
-      }}
-      FormHelperTextProps={{
-        // @ts-ignore
-        "data-testid": `${name}-input-helper-text`,
-      }}
-      {...textFieldProps}
+  <Controller
+      control={control}
+      name={name as Path<FormData>}
+      render={({ field }) => (
+        <TextField
+          {...field}
+          sx={sx}
+          error={Boolean(error)}
+          margin="normal"
+          helperText={error?.message?.toString() ?? null}
+          label={label}
+          type={type}
+          fullWidth={fullWidth}
+          placeholder={placeholder}
+          inputProps={{
+            ...inputProps,
+            "data-testid": `${name}-input`,
+          }}
+          InputLabelProps={{ shrink: Boolean(field.value) }}
+          FormHelperTextProps={{
+            //@ts-ignore
+            "data-testid": `${name}-input-helper-text`,
+          }}
+        />
+      )}
     />
   ) : null;
 };

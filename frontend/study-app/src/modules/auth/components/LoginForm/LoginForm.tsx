@@ -4,12 +4,17 @@ import {
   Form,
   FormPasswordField,
   FormTextField,
+  IconButton,
+  Row,
   Text,
 } from "@modules/core/components";
+import { useOpen, useValue } from "@modules/core/hooks";
 import { FormProps } from "@modules/core/types";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { QrCodeReaderDialog } from "..";
+import { CameraAltOutlined } from "@mui/icons-material";
 
 export interface LoginFormProps extends FormProps<LoginFormData> {}
 
@@ -17,15 +22,23 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit,
   isError,
   isLoading,
-  values,
   formProps,
 }) => {
   const { t } = useTranslation();
-  const form = useForm<LoginFormData>({ values });
+  const { set, value: formData } = useValue<LoginFormData>({loginId: '', password: ''});
+  const form = useForm<LoginFormData>({values: formData});
+  const { open, close, isOpen } = useOpen(false);
+
+  useEffect(() => {
+    // Aktualisieren der Formularwerte mit reset
+    form.setValue('loginId', formData?.loginId);
+    form.setValue('password', formData?.password);
+  }, [formData]);
 
   return (
     <Form onSubmit={form.handleSubmit(onSubmit)} {...formProps}>
       <FormTextField
+        control={form.control}
         label={t("loginId")}
         formState={form.formState}
         textFieldProps={form.register("loginId", {
@@ -33,6 +46,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         })}
       />
       <FormPasswordField
+        control={form.control}
         label={t("password")}
         formState={form.formState}
         textFieldProps={form.register("password", {
@@ -44,14 +58,28 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           {t("access denied")}
         </Text>
       )}
-      <Button
-        testId="login-submit-button"
-        type="submit"
-        isLoading={isLoading}
-        sx={{mb: "15px"}}
-      >
-        {t("start")}
-      </Button>
+      <Row>
+        <Button
+          testId="login-submit-button"
+          type="submit"
+          isLoading={isLoading}
+          sx={{
+            flexGrow: 1,
+          }}
+        >
+          {t("start")}
+        </Button>
+        <IconButton 
+          Icon={<CameraAltOutlined/>}
+          testId="qr-scanner-icon"
+          onClick={open}
+        />
+      </Row>
+      <QrCodeReaderDialog 
+        open={isOpen}
+        close={close}
+        setValues={set}
+      />
     </Form>
   );
 };

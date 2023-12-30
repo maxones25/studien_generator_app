@@ -68,6 +68,7 @@ export const FormComponent: React.FC<FormComponentProps> = ({
       case "TextField":
         return (
           <FormTextField
+            control={form.control}
             label={props.label}
             formState={form.formState}
             textFieldProps={form.register(name, props.rules)}
@@ -76,6 +77,7 @@ export const FormComponent: React.FC<FormComponentProps> = ({
       case "NumberPicker":
         return (
           <FormNumberPicker
+            control={form.control}
             label={props.label}
             type={"number"}
             formState={form.formState}
