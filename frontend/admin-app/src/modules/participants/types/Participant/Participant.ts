@@ -6,6 +6,10 @@ export type Participant = {
   chat: {
     id: string;
   };
+  study: {
+    id: string,
+    name: string,
+  }
   group: {
     id: string;
     name: string;

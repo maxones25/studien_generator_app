@@ -9,7 +9,7 @@ type Input = {
   participantId: string;
 };
 
-export class ResetPasswordUseCase extends Transaction<Input, string> {
+export class ResetPasswordUseCase extends Transaction<Input, Record<string, string>> {
   constructor(
     @InjectEntityManager()
     em: EntityManager,
@@ -21,11 +21,13 @@ export class ResetPasswordUseCase extends Transaction<Input, string> {
     super(em);
   }
 
-  protected async execute({ participantId }: Input): Promise<string> {
+  protected async execute({ participantId }: Input): Promise<Record<string, string>> {
     const participantsService = ParticipantsService.build(this.entityManager, this.passwordService);
 
     const password = await participantsService.updatePassword(participantId);
+    const participant = await participantsService.getById(participantId)
+    const loginId = `${participant.study.name}-${participant.number}`;
 
-    return this.appUriGenerator.generate(participantId, password);
+    return { loginId, password };
   }
 }

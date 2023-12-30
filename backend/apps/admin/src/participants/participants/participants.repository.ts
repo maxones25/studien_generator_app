@@ -11,6 +11,7 @@ import {
 export class ParticipantsRepository extends RecordRepository<Participant> {
   private readonly relations: FindOptionsRelations<Participant> = {
     group: true,
+    study: true,
     attributes: true,
     chat: true,
   };
@@ -19,6 +20,10 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
     id: true,
     number: true,
     deletedAt: true,
+    study: {
+      id: true,
+      name: true,
+    },
     group: {
       id: true,
       name: true,

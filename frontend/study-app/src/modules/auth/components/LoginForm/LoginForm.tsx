@@ -26,10 +26,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   return (
     <Form onSubmit={form.handleSubmit(onSubmit)} {...formProps}>
       <FormTextField
-        label={t("id")}
+        label={t("loginId")}
         formState={form.formState}
-        textFieldProps={form.register("id", {
-          required: t("value required", { value: t("id") }),
+        textFieldProps={form.register("loginId", {
+          required: t("value required", { value: t("loginId") }),
         })}
       />
       <FormPasswordField

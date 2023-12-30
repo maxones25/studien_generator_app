@@ -13,7 +13,7 @@ const LoginPage: React.FC<LoginPageProps> = () => {
   const showInstallationGuide = isInstallable();
   const { isOpen, close } = useOpen(true);
 
-  const id = useId();
+  const loginId = useId();
   const password = usePassword();
   const login = useLogin();
 
@@ -28,7 +28,7 @@ const LoginPage: React.FC<LoginPageProps> = () => {
           onSubmit={login.mutate}
           isError={login.isError}
           isLoading={login.isLoading}
-          values={{ id, password }}
+          values={{ loginId, password }}
         />
         <Dialog open={isOpen && showInstallationGuide} onClose={close}>
         </Dialog>

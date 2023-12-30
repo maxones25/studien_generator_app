@@ -116,11 +116,11 @@ export class ParticipantsCommands {
   @Roles('admin')
   @UseGuards(ParticipantGuard, IsParticipantDeletedGuard, IsStudyActiveGuard)
   async startStudy(
-    @GetParticipant() participant: ParticipantEntity,
+    @Query() { participantId }: ParticipantQueryDto,
     @Body() { startDate, configs }: StartStudyDto,
   ) {
     return this.startParticipantStudyTransaction.run({
-      participant,
+      participantId,
       startDate,
       configs,
     });

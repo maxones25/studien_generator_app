@@ -20,20 +20,28 @@ export class AuthService {
     private passwordService: IPasswordService,
   ) {}
 
-  async checkCredentials({ id, password }: LoginParticipantDto) {
-    const participant = await this.particpantsRepository.findOne({
+  async checkCredentials({ loginId, password }: LoginParticipantDto) {
+    const [ studyName, number ] = loginId.split('-');
+    const participants = await this.particpantsRepository.find({
       where: {
-        id,
+        number,
       },
       relations: {
         chat: true,
+        study: true,
       },
       select: {
         chat: {
           id: true,
         },
+        study: {
+          id: true,
+          name: true,
+        }
       },
     });
+
+    const participant = participants.find(participant => participant.study.name === studyName);
 
     if (!participant) throw new UnauthorizedException();
 

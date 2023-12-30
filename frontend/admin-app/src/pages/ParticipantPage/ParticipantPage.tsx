@@ -32,6 +32,7 @@ import {
   useResetPassword,
   useStartStudy,
 } from "@modules/participants/hooks";
+import { LoginData } from "@modules/participants/types";
 import { useStudy } from "@modules/studies/contexts";
 import { Delete, Launch } from "@mui/icons-material";
 import { Divider, FormControl, LinearProgress, Toolbar } from "@mui/material";
@@ -56,7 +57,7 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
   const createAppointment = useCreateAppointment();
   const startStudyDialog = useOpen();
   const resetDialog = useOpen();
-  const uri = useValue<string | undefined>("");
+  const loginData = useValue<LoginData | undefined>(undefined);
 
   if (getParticipant.isLoading) {
     return <LinearProgress />;
@@ -219,16 +220,16 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
         onCancel={startStudyDialog.close}
         participant={participant}
         onSubmit={(data) => {
-          startStudy.mutateAsync(data).then((appUri) => {
-            uri.set(appUri);
+          startStudy.mutateAsync(data).then((apploginData) => {
+            loginData.set(apploginData);
             startStudyDialog.close();
           });
         }}
       />
       <QrCodeDialog
         fullScreen
-        uri={uri.value}
-        onClose={uri.reset}
+        loginData={loginData.value}
+        onClose={loginData.reset}
         PaperProps={{ sx: { p: 12, boxSizing: "border-box" } }}
       />
       <ConfirmDialog
@@ -240,8 +241,8 @@ const ParticipantPage: React.FC<ParticipantPageProps> = () => {
           <Button
             testId="reset password"
             onClick={() => {
-              resetPassword.mutateAsync(participant).then((appUri) => {
-                uri.set(appUri);
+              resetPassword.mutateAsync(participant).then((participantLoginData) => {
+                loginData.set(participantLoginData);
                 resetDialog.close();
               });
             }}

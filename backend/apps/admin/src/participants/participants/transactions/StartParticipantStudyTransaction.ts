@@ -16,14 +16,14 @@ import {
 } from '@shared/modules/password/IPasswordService';
 
 type TransactionInput = {
-  participant: Participant;
+  participantId: string;
   startDate: Date;
   configs: StartStudyConfig[];
 };
 
 export class StartParticipantStudyTransaction extends Transaction<
   TransactionInput,
-  string
+  Record<string, string>
 > {
   private readonly participantsService: ParticipantsService;
   private readonly tasksRepository: TasksRepository;
@@ -48,16 +48,17 @@ export class StartParticipantStudyTransaction extends Transaction<
   }
 
   protected async execute({
-    participant,
+    participantId,
     startDate,
     configs,
-  }: TransactionInput): Promise<string> {
-    if (participant.groupId === null)
+  }: TransactionInput): Promise<Record<string, string>> {
+    const participant = await this.participantsService.getById(participantId)
+    if (participant.group.id === null)
       throw new BadRequestException('participant must have a group');
 
     const schedules =
       await this.schedulesTransformer.generateParticipantSchedules(
-        participant.groupId,
+        participant.group.id,
         configs,
       );
 
@@ -77,7 +78,9 @@ export class StartParticipantStudyTransaction extends Transaction<
     const password = await this.participantsService.updatePassword(
       participant.id,
     );
+    const uri = this.appUriGenerator.generate();
+    const loginId = `${participant.study.name}-${participant.number}`;
 
-    return this.appUriGenerator.generate(participant.id, password);
+    return { uri, loginId, password };
   }
 }

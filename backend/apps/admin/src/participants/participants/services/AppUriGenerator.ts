@@ -8,8 +8,16 @@ export class AppUriGenerator {
     private readonly configService: IConfigService,
   ) {}
 
-  generate(participantId: string, password: string) {
+  generate(params: Record<string, string> = {}) {
     const appUri = this.configService.get('STUDY_FRONTED_URI');
-    return `${appUri}/login?id=${participantId}&password=${password}`;
+    const queryParams = Object.keys(params)
+    .filter((key) => params[key])
+    .map((key) => `${key}=${params[key]}`)
+    .join("&");
+
+  const uri = `${appUri}/login${
+    queryParams !== "" ? `?${queryParams}` : ""
+  }`;
+    return uri;
   }
 }
