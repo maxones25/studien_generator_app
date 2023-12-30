@@ -1,6 +1,7 @@
 import { LoginFormData } from '@modules/auth/types';
 import { Button } from '@modules/core/components';
 import { useSnackBarContext } from '@modules/core/contexts';
+import { useValue } from '@modules/core/hooks';
 import { Dialog, DialogActions } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,9 +20,14 @@ export const QrCodeReaderDialog : React.FC<QrCodeReaderDialogProps>= ({
 }) => {
   const { t } = useTranslation();
   const { showSuccess } = useSnackBarContext();
+  const { value, set } = useValue(false);
+  const onClose = () => {
+    set(false);
+    close();
+  };
 
   return (
-    <Dialog open={open} onClose={close} fullWidth>
+    <Dialog open={open} onClose={onClose} fullWidth>
       <QrReader 
         constraints={{}}
         onResult={(result, error) => {
@@ -30,6 +36,7 @@ export const QrCodeReaderDialog : React.FC<QrCodeReaderDialogProps>= ({
             console.log(text)
             setValues(JSON.parse(text));
             showSuccess(t('qrcode-success'));
+            set(true);
           }
           if (!!error) {
           }
@@ -38,9 +45,10 @@ export const QrCodeReaderDialog : React.FC<QrCodeReaderDialogProps>= ({
       <DialogActions>
         <Button
           testId='qrcode-cancel-button'
-          onClick={close}
+          onClick={onClose}
+          color={value ? 'primary' : 'error'}
         >
-          {t('back')}
+          {t(value ? 'continue' : 'cancel')}
         </Button>
       </DialogActions>
     </Dialog>

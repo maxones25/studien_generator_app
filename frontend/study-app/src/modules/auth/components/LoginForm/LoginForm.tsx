@@ -10,7 +10,7 @@ import {
 } from "@modules/core/components";
 import { useOpen, useValue } from "@modules/core/hooks";
 import { FormProps } from "@modules/core/types";
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { QrCodeReaderDialog } from "..";
@@ -28,12 +28,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const { set, value: formData } = useValue<LoginFormData>({loginId: '', password: ''});
   const form = useForm<LoginFormData>({values: formData});
   const { open, close, isOpen } = useOpen(false);
-
-  useEffect(() => {
-    // Aktualisieren der Formularwerte mit reset
-    form.setValue('loginId', formData?.loginId);
-    form.setValue('password', formData?.password);
-  }, [formData]);
 
   return (
     <Form onSubmit={form.handleSubmit(onSubmit)} {...formProps}>
