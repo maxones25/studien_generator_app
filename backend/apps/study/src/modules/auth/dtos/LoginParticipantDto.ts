@@ -5,6 +5,6 @@ export class LoginParticipantDto {
   readonly loginId: string;
 
   @IsString()
-  @Length(12)
+  @Length(8)
   readonly password: string;
 }

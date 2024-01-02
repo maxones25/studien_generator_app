@@ -68,9 +68,13 @@ export class AuthService {
     };
   }
 
-  async changePassword(participantId: string, newPassword: string) {
+  async changePassword(participantId: string, oldPassword: string, newPassword: string) {
+    const participant = await this.particpantsRepository.findOne({where: {id: participantId}});
+    if (!await this.passwordService.compare(oldPassword, participant.password))
+      throw new UnauthorizedException();
+    const hashedPassword = await this.passwordService.hash(newPassword);
     this.particpantsRepository.update(participantId, {
-      password: newPassword,
+      password: hashedPassword,
     });
   }
 

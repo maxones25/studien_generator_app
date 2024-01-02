@@ -19,8 +19,8 @@ export class AuthController {
   @Put('')
   async changePassword(
     @ParticipantId() participantId: string,
-    @Body() { newPassword }: ChangePasswordDto,
+    @Body() { oldPassword, newPassword }: ChangePasswordDto,
   ) {
-    return this.authService.changePassword(participantId, newPassword);
+    return this.authService.changePassword(participantId, oldPassword, newPassword);
   }
 }
