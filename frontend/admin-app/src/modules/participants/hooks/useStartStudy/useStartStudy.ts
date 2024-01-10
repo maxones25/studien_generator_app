@@ -2,7 +2,7 @@ import { useWriteRequest } from "@modules/core/hooks";
 import { apiRequest } from "@modules/core/utils";
 import { useStudyId } from "@modules/navigation/hooks";
 import { LoginData, StartStudyFormData } from "@modules/participants/types";
-import { getGetParticipantKey, getGetParticipantsKey } from "..";
+import { getGetAppointmentsKey, getGetParticipantKey, getGetParticipantsKey, getGetTasksKey } from "..";
 
 export const useStartStudy = () => {
   const studyId = useStudyId()!;
@@ -25,6 +25,13 @@ export const useStartStudy = () => {
         queryClient.invalidateQueries(
           getGetParticipantKey({ participantId: participant.id })
         );
+        queryClient.invalidateQueries(
+          getGetAppointmentsKey({ studyId, participantId:participant.id })
+        );
+        queryClient.invalidateQueries(
+          getGetTasksKey({ studyId, participantId:participant.id })
+        );
+        
         return {
           text: "record started",
           params: {
