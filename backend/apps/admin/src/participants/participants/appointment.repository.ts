@@ -18,6 +18,8 @@ export class AppointmentsRepository
     groupId: string,
     participantId: string,
   ): Promise<Appointment[]> {
+    if (!groupId || !studyId || !participantId)
+      return [];
     const items = await this.appointmentsRepository.find({
       where: [
         { studyId, groupId: IsNull(), participantId: IsNull() },

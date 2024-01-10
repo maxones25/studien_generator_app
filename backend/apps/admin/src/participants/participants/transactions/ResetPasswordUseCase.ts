@@ -10,6 +10,8 @@ type Input = {
 };
 
 export class ResetPasswordUseCase extends Transaction<Input, Record<string, string>> {
+  private readonly participantsService: ParticipantsService;
+
   constructor(
     @InjectEntityManager()
     em: EntityManager,
@@ -19,6 +21,7 @@ export class ResetPasswordUseCase extends Transaction<Input, Record<string, stri
     private readonly passwordService: IPasswordService,
   ) {
     super(em);
+    this.participantsService = ParticipantsService.build(em, passwordService);
   }
 
   protected async execute({ participantId }: Input): Promise<Record<string, string>> {
@@ -27,6 +30,8 @@ export class ResetPasswordUseCase extends Transaction<Input, Record<string, stri
     const password = await participantsService.updatePassword(participantId);
     const participant = await participantsService.getById(participantId)
     const loginId = `${participant.study.name}-${participant.number}`;
+
+    this.participantsService.setIsInitial(participant.id, true);
 
     return { loginId, password };
   }

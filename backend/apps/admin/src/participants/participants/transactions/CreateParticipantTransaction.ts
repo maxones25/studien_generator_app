@@ -4,7 +4,6 @@ import { Transaction } from '@shared/modules/transaction/transaction';
 import { EntityManager } from 'typeorm';
 import { BadRequestException, Inject } from '@nestjs/common';
 import { IPasswordService, PASSWORD_SERVICE } from '@shared/modules/password/IPasswordService';
-import { ParticipantsService } from '../participants.service';
 
 type TransactionInput = {
   studyId: string;
@@ -16,7 +15,6 @@ export class CreateParticipantTransaction extends Transaction<
   TransactionInput,
   string
 > {
-  private readonly participantsService: ParticipantsService;
   
   constructor(
     @InjectEntityManager()
@@ -25,7 +23,6 @@ export class CreateParticipantTransaction extends Transaction<
     private readonly passwordService: IPasswordService,
   ) {
     super(em);
-    this.participantsService = ParticipantsService.build(em, passwordService);
   }
 
   protected async execute({
@@ -55,7 +52,6 @@ export class CreateParticipantTransaction extends Transaction<
     participant.password = hashedPassword;
 
     await participantRepo.insert(participant);
-    this.participantsService.setIsInitial(participant.id, true);
     await this.createParticipantChat(participant.id, studyId);
 
     return participant.id;

@@ -72,6 +72,7 @@ export class StartParticipantStudyTransaction extends Transaction<
     });
 
     await this.participantsService.setStartDate(participant.id, startDate);
+    await this.participantsService.setIsInitial(participant.id, true);
 
     await this.tasksRepository.createBatch(tasks);
 
