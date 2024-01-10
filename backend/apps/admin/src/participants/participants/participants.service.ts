@@ -85,6 +85,14 @@ export class ParticipantsService implements IGetStudyRelatedDataUseCase {
     );
   }
 
+  async setIsInitial(participantId: string, isInitial: boolean) {
+    await this.attributesRepository.set(
+      participantId,
+      'isInitial',
+      Boolean(isInitial).toString(),
+    )
+  }
+
   async getByStudy(studyId: string, deleted = false) {
     return this.participantsRepository.getByStudy(studyId, deleted);
   }

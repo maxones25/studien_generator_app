@@ -6,4 +6,5 @@ export type AccessTokenData = {
   chatId: string,
   type: string,
   exp: number,
+  isInitial: boolean,
 }

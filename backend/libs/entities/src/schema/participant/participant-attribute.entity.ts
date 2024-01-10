@@ -6,6 +6,7 @@ import { BaseEntity } from '@entities/modules/schema/BaseEntity';
 export type ParticipantsAttributes = {
   startedAt: string | null;
   endedAt: string | null;
+  isInitial: string | null;
 };
 
 export class BaseParticipantAttribute extends BaseEntity {

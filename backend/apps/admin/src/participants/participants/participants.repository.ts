@@ -102,7 +102,7 @@ export class ParticipantsRepository extends RecordRepository<Participant> {
           obj[key] = value;
           return obj;
         },
-        { startedAt: null, endedAt: null },
+        { startedAt: null, endedAt: null, isInitial: null },
       ),
     };
   }

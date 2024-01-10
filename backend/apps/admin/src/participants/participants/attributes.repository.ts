@@ -1,5 +1,4 @@
 import {
-  Participant,
   ParticipantAttribute,
   ParticipantsAttributes,
 } from '@entities';
@@ -9,7 +8,6 @@ import {
   AttributeValue,
   AttritbuteRepository,
 } from '@shared/modules/records/attribute.repository';
-import { RecordRepository } from '@shared/modules/records/record.repository';
 import { Repository } from 'typeorm';
 
 export class AttributesRepository

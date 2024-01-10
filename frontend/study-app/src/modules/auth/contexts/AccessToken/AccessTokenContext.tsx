@@ -10,6 +10,7 @@ interface AccessTokenContextValue {
   studyId?: string;
   groupId?: string;
   chatId?: string;
+  isInitial?: boolean;
   set: (accessToken: string) => void;
   reset: () => void;
 }
@@ -46,8 +47,9 @@ const useAccessTokenContextValue = () => {
   const studyId = data?.participantId;
   const groupId = data?.groupId;
   const chatId = data?.chatId;
+  const isInitial = data?.isInitial;
 
-  return { value, isValid, participantId, studyId, groupId, chatId, set, reset };
+  return { value, isValid, participantId, studyId, groupId, chatId, isInitial, set, reset };
 };
 
 export const AccessTokenProvider: FC<AccessTokenProviderProps> = ({

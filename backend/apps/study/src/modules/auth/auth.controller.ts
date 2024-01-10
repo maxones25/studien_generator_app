@@ -3,6 +3,7 @@ import { LoginParticipantDto } from './dtos/LoginParticipantDto';
 import { AuthService } from './auth.service';
 import { ParticipantId } from '@study/decorators/participant-id.decorator';
 import { ChangePasswordDto } from './dtos/ChangePasswordDto';
+import { IsInitial } from '@study/decorators/isInitial.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -19,8 +20,11 @@ export class AuthController {
   @Put('')
   async changePassword(
     @ParticipantId() participantId: string,
+    @IsInitial() isInitial: boolean,
     @Body() { oldPassword, newPassword }: ChangePasswordDto,
   ) {
+    if (isInitial)
+      return this.authService.iniateAccount(participantId, newPassword);
     return this.authService.changePassword(participantId, oldPassword, newPassword);
   }
 }
