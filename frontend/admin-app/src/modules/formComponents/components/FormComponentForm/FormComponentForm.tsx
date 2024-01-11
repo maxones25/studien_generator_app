@@ -17,6 +17,7 @@ import {
   DateTimeAttribute,
   LabelAttribute,
   NumberAttribute,
+  TimeAttribute,
 } from "..";
 import { useTranslation } from "react-i18next";
 
@@ -109,6 +110,12 @@ export const FormComponentForm: React.FC<FormComponentFormFormProps> = ({
             rules={{
               required: t("required"),
             }}
+          />
+        ) : attribute.type === "time" ? (
+          <TimeAttribute
+            form={form}
+            name={`attributes.${attribute.name}`}
+            required={attribute.required}
           />
         ) : attribute.type === "datetime" ? (
           <DateTimeAttribute

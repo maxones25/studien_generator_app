@@ -19,8 +19,6 @@ export const DateTimePickerPreview: React.FC<DateTimePickerPreviewProps> = ({
 
   const isCurrentDateTime = defaultValue === "CurrentDateTime";
 
-  console.log(formatInputDateTime());
-
   return (
     <TextField
       type="datetime-local"

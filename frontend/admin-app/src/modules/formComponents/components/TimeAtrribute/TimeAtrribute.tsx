@@ -3,7 +3,7 @@ import { FormControl } from "@mui/material";
 import { FieldPath, FieldValues, UseFormReturn } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-export interface DateTimeAttributeProps<
+export interface TimeAttributeProps<
   TFieldValues extends FieldValues,
   FieldName extends FieldPath<TFieldValues>
 > {
@@ -13,7 +13,7 @@ export interface DateTimeAttributeProps<
   label?: string;
 }
 
-export const DateTimeAttribute = <
+export const TimeAttribute = <
   TFieldValues extends FieldValues,
   FieldName extends FieldPath<TFieldValues>
 >({
@@ -21,10 +21,10 @@ export const DateTimeAttribute = <
   name,
   label,
   required,
-}: DateTimeAttributeProps<TFieldValues, FieldName>) => {
+}: TimeAttributeProps<TFieldValues, FieldName>) => {
   const { t } = useTranslation();
 
-  const isCurrent = form.watch(name) === "CurrentDateTime";
+  const isCurrent = form.watch(name) === "CurrentTime";
 
   return (
     <FormControl margin="none">
@@ -32,14 +32,14 @@ export const DateTimeAttribute = <
         form={form}
         name={name}
         label={label}
-        type="datetime-local"
+        type="time"
         required={required}
       />}
       <Switch
-        label={t("currentDatetime")}
+        label={t("currentTime")}
         onChange={(_, checked) => {
           if (checked) {
-            form.setValue(name, "CurrentDateTime" as any);
+            form.setValue(name, "CurrentTime" as any);
           } else {
             form.setValue(name, undefined as any);
           }

@@ -1,3 +1,4 @@
+import { formatTime } from "@modules/date/utils";
 import { TextField } from "@mui/material";
 import React from "react";
 
@@ -15,12 +16,14 @@ export const TimePickerPreview: React.FC<TimePickerPreviewProps> = ({
   component,
 }) => {
   const { defaultValue, label } = component.attributes;
+
+  const isCurrentTime = defaultValue === "CurrentTime";
   return (
     <TextField
       type="time"
       margin="dense"
       label={label}
-      defaultValue={defaultValue}
+      defaultValue={isCurrentTime ? formatTime(new Date()) : defaultValue}
       fullWidth
       InputLabelProps={{ shrink: true }}
       InputProps={{ readOnly: true }}

@@ -36,7 +36,6 @@ export const formatTime = (value: Date | string | undefined) => {
     value = new Date(value);
   }
   return value.toLocaleTimeString("de", {
-    day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
   });
