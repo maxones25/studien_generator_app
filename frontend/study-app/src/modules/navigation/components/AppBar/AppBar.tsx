@@ -1,6 +1,6 @@
 import { Badge, AppBar as MAppBar, Toolbar, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { ArrowBack, MailOutline, Menu, CalendarMonthOutlined } from '@mui/icons-material';
+import { ArrowBack, Menu, CalendarMonthOutlined, ChatOutlined } from '@mui/icons-material';
 import { useNavigationHelper } from '@modules/core/hooks';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -99,7 +99,7 @@ export const AppBar : React.FC<AppBarProps>= () => {
             testId='go-chat-app-bar'
             Icon={
               <Badge color='error' badgeContent={newMessagesCount}>
-                <MailOutline /> 
+                <ChatOutlined /> 
               </Badge>
             }
           /> 
