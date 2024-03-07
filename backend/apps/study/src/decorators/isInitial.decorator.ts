@@ -7,7 +7,7 @@ import {
 export const IsInitial = createParamDecorator(
   (data: unknown, ctx: ExecutionContext): boolean => {
     const request = ctx.switchToHttp().getRequest();
-    if (!request?.payload?.isInitial) throw new UnauthorizedException();
+    if (request?.payload?.isInitial === undefined) throw new UnauthorizedException();
 
     return request.payload.isInitial as boolean;
   },

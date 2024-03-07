@@ -6,7 +6,6 @@ export const isInstallable = () => {
 
   if (!isMobileDevice)
       return false;
-  console.log(('standalone' in window.navigator))
   if (window.matchMedia('(display-mode: standalone)').matches)
     return false;
   if (!('standalone' in window.navigator) || window.navigator.standalone)
