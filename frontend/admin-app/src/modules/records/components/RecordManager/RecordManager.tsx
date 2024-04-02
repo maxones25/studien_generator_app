@@ -1,4 +1,4 @@
-import { Column, IconButton, Row } from "@modules/core/components";
+import { Button, Column, IconButton, Row } from "@modules/core/components";
 import {
   Autocomplete,
   Chip,
@@ -139,6 +139,10 @@ export const RecordManager: React.FC<RecordManagerProps> = ({
     .map((id) => columnMap[id])
     .filter((column) => Boolean(column));
 
+  const selectAll = () => {
+    onStateChange({columns: tableColumns.map(({ id }) => id)})
+  }
+
   return (
     <Column>
       <Toolbar sx={{ flexDirection: "column", alignItems: "stretch" }}>
@@ -212,6 +216,7 @@ export const RecordManager: React.FC<RecordManagerProps> = ({
             />
           </Row>
           <Row>
+            <Button onClick={selectAll} testId="record select all">{t('select all')}</Button>
             <IconButton
               testId="refresh table"
               Icon={<Refresh />}
