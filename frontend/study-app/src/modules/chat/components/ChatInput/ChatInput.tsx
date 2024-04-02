@@ -1,15 +1,13 @@
 import { useAccessTokenContext } from '@modules/auth/contexts';
 import { usePostChatMessage } from '@modules/chat/hooks';
-import { TextField } from '@mui/material';
+import { TextField, Button } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 
 export interface ChatInputProps {}
 
-export const ChatInput : React.FC<ChatInputProps> = ({
-  
-}) => {
+export const ChatInput: React.FC<ChatInputProps> = () => {
   const sendMessage = usePostChatMessage();
   const { participantId, chatId } = useAccessTokenContext();
   const [inputValue, setInputValue] = useState<string>("");
@@ -17,7 +15,7 @@ export const ChatInput : React.FC<ChatInputProps> = ({
 
   const handleSend = async () => {
     if (inputValue.trim()) {
-      sendMessage.mutateAsync({
+      await sendMessage.mutateAsync({
         id: uuid(),
         chatId: chatId ?? '',
         participantId,
@@ -29,11 +27,12 @@ export const ChatInput : React.FC<ChatInputProps> = ({
   };
 
   return (
-    <div 
-      style={{ 
+    <div
+      style={{
         display: 'flex',
-        width: '100%', 
-        paddingTop: '10px', 
+        alignItems: 'flex-end',
+        width: '100%',
+        paddingTop: '10px',
       }}
     >
       <TextField
@@ -46,11 +45,22 @@ export const ChatInput : React.FC<ChatInputProps> = ({
               e.preventDefault();
               handleSend();
           }
-      }}
+        }}
         label={t('type your message')}
-        multiline 
+        multiline
         maxRows={4}
       />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleSend}
+        style={{
+          borderRadius: '0px',
+          height: '56px', // Stellt sicher, dass die Höhe des Buttons der des TextField entspricht
+        }}
+      >
+        {t('send')}
+      </Button>
     </div>
   );
 };
