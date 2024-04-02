@@ -15,7 +15,7 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
 }) => {
   const { date, isToday } = useDateContext();
   const { data, isError, isLoading } = useGetRecords();
-  const filteredData = data?.filter((data) => data.taskId === null && date.isSame(data.createdAt, 'day'))
+  const filteredData = data?.filter((data) => !data.taskId && date.isSame(data.createdAt, 'day'))
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
