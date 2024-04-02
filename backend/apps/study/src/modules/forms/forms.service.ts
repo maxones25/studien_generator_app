@@ -139,7 +139,7 @@ export class FormsService {
             type: true,
             number: true,
             formFields: {
-              entityFieldId: true,
+              id: true,
             },
             attributes: {
               key: true,
