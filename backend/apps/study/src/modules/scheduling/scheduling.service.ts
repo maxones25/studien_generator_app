@@ -33,7 +33,7 @@ export class SchedulingService {
     });
     const appointments = await this.dataService.getNewEntriesFromAppointments(this.lastChecked);
     appointments.forEach((appointments) => {
-      const message = this.processEntry(appointments, PushNotificationType.Appointment);
+      this.processEntry(appointments, PushNotificationType.Appointment);
     });
     this.lastChecked = new Date();
     this.lastChecked.setMilliseconds(0);
@@ -42,18 +42,18 @@ export class SchedulingService {
 
   processEntry(entry: any, type: PushNotificationType) {
     const message = this.createNotificationMessage(type, entry);
-    const subscription = entry.participant?.subscription || entry.chat?.participant?.subscription;
-    this.sendPushNotification(subscription, type, message);
+    const subscription = entry.participant?.subscription;
+    this.sendPushNotification(subscription, type, message, entry.participant?.id);
   }
 
-  sendPushNotification(subscription: string, type: PushNotificationType, message: string, date?: Date) {
+  sendPushNotification(subscription: string, type: PushNotificationType, message: string, id: string) {
     webpush.sendNotification(
       JSON.parse(subscription),
       JSON.stringify({
         title: 'StudyApp',
         type,
         message,
-        date,
+        id,
       }),
       { vapidDetails: this.VAPID_DETAILS }
     );

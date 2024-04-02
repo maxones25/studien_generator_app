@@ -30,7 +30,8 @@ export class DataService {
       },
       select: {
         participant: {
-          subscription: true
+          subscription: true,
+          id: true
         }
       }
     });
@@ -51,6 +52,7 @@ export class DataService {
       select: {
         participant: {
           subscription: true,
+          id: true
         },
         form: {
           name: true,
@@ -74,6 +76,7 @@ export class DataService {
       select: {
         participant: {
           subscription: true,
+          id: true,
         },
         subject: true,
       }
@@ -100,7 +103,8 @@ export class DataService {
         chat: {
           id: true,
           participant: {
-            subscription: true
+            subscription: true,
+            id: true
           }
         }
       }

@@ -15,6 +15,7 @@ import { GetData } from './serviceworker/strategies/getData'
 import { PostMessage } from './serviceworker/strategies/postMessage'
 import { PutData } from './serviceworker/strategies/putData'
 import { DeleteData } from './serviceworker/strategies/deleteData'
+import { GetValue } from './serviceworker/strategies/getValue'
 
 declare let self: ServiceWorkerGlobalScope;
 
@@ -46,6 +47,11 @@ self.addEventListener('push', (event) => {
 })
 
 initDB();
+
+registerRoute(
+  `${BASE_URI}/auth/participant`, 
+  new GetValue('participant')
+);
 
 registerRoute(
   `${BASE_URI}/forms`, 

@@ -1,6 +1,6 @@
 import { openDB } from 'idb';
 
-export const initDB = () => openDB('study-app', 1, {
+export const initDB = () => openDB('study-app', 3, {
   upgrade(db) {
     if (!db.objectStoreNames.contains('records')) {
       const records = db.createObjectStore('records', { keyPath: 'id' });
@@ -40,6 +40,14 @@ export const initDB = () => openDB('study-app', 1, {
 
     if (!db.objectStoreNames.contains('metaData')) {
       db.createObjectStore('metaData');
+    };
+
+    if (!db.objectStoreNames.contains('subscription')) {
+      db.createObjectStore('subscription', { keyPath: 'id' });
+    };
+
+    if (!db.objectStoreNames.contains('participant')) {
+      db.createObjectStore('participant', { keyPath: 'id' });
     };
   }
 });

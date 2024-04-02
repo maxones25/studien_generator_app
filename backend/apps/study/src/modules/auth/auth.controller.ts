@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Inject, forwardRef, Put } from '@nestjs/common';
+import { Body, Controller, Post, Inject, forwardRef, Put, Get } from '@nestjs/common';
 import { LoginParticipantDto } from './dtos/LoginParticipantDto';
 import { AuthService } from './auth.service';
 import { ParticipantId } from '@study/decorators/participant-id.decorator';
@@ -15,6 +15,13 @@ export class AuthController {
   @Post('login')
   async login(@Body() loginParticipantDto: LoginParticipantDto) {
     return this.authService.checkCredentials(loginParticipantDto);
+  }
+
+  @Get('participant')
+  async getParticipant(
+    @ParticipantId() participantId: string,
+  ) {
+    return this.authService.getParticipant(participantId);
   }
 
   @Put('')

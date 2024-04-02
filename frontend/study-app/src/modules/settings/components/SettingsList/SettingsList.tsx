@@ -1,10 +1,10 @@
-import { Button, HelpButton, Text } from '@modules/core/components';
+import { Button } from '@modules/core/components';
 import TrafficLight from '@modules/core/components/TrafficLight/TrafficLight';
-import { useGetQueueStatus } from '@modules/settings/hooks';
-import { List, ListItem } from '@mui/material';
+import { useGetParticipantInfo, useGetQueueStatus } from '@modules/settings/hooks';
+import { Divider, List } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChangePasswordDialog, PushNotificationButton } from '..';
+import { ChangePasswordDialog, ParticipantInfoDialog, PushNotificationButton, SettingsListItem, TrafficLightExplanationDialog } from '..';
 import { useOpen } from '@modules/core/hooks';
 
 
@@ -15,41 +15,39 @@ export const SettingsList : React.FC<SettingsListProps>= ({
 }) => {
   const { t } = useTranslation();
   const { getQueueStatus } = useGetQueueStatus();
-  const link = "https://www.connecto.io/kb/knwbase/how-to-unsubscribe-from-chrome-notifications-on-web-and-android/#:~:text=Open%20chrome%20on%20your%20android,%E2%80%9CSettings%E2%80%9D%20from%20the%20menu.&text=On%20the%20Notifications%20tab%2C%20you,permitted%20to%20send%20you%20notifications."
-  const { open, isOpen, close } = useOpen(false);
+  const { open: openPassword, isOpen: isOpenPassword, close: closePassword } = useOpen(false);
+  const { open: openParticipantInfo, isOpen: isOpenParticipantInfo, close: closeParticipantInfo } = useOpen(false);
+  const { open: openTrafficLightInfo, isOpen: isOpenTrafficLightInfo, close: closeTrafficLightInfo } = useOpen(false);
+  const participant = useGetParticipantInfo();
 
   return (
-    <List>
-      <ListItem 
-        secondaryAction = {<PushNotificationButton/>}
-      >
-        <Text>
-          {t('push notifications')}
-        </Text>
-        <HelpButton title='push notifications' body={
-          <a target="_blank" href={link}>Link</a>
-        }/>
-      </ListItem>
-      <ListItem 
-        secondaryAction = {<TrafficLight status={ getQueueStatus() }/>}
-      >
-        <Text>
-          {t('data status')}
-        </Text>
-        <HelpButton title='data status' body='data status body'/>
-      </ListItem>
-      <ListItem
-        secondaryAction = {
+    <List sx={{p: '0px 5vw'}}>
+      <PushNotificationButton/>
+      <Divider />
+      <SettingsListItem title='data status' status={
+        <TrafficLight status={ getQueueStatus() }/>
+      }>
+        <Button onClick={openTrafficLightInfo} color='info' size='small' testId='data-status-info'>{t('info')}</Button>
+      </SettingsListItem>
+      <Divider />
+      <SettingsListItem title='account' status={
+          participant.data?.number || ''
+          }>
           <Button
+            color='info'
+            size='small'
+            testId='account-inof'
+            onClick={openParticipantInfo}
+          >{t('info')}</Button>
+          <Button
+            size='small'
             testId='change-password-button'
-            onClick={open}
-          >{t('change')}</Button>}
-      >
-        <Text>
-          {t('change password')}
-        </Text>
-      </ListItem>
-    <ChangePasswordDialog open={isOpen} close={close}/>
+            onClick={openPassword}
+          >{t('change password')}</Button>
+      </SettingsListItem>
+    <ChangePasswordDialog open={isOpenPassword} close={closePassword}/>
+    <ParticipantInfoDialog open={isOpenParticipantInfo} close={closeParticipantInfo} info={participant.data} />
+    <TrafficLightExplanationDialog open={isOpenTrafficLightInfo} onClose={closeTrafficLightInfo} />
     </List>
   );
 };

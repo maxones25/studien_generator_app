@@ -128,4 +128,25 @@ export class AuthService {
     if (!entity) return true;
     return entity.deletedAt !== null;
   }
+
+  async getParticipant(participantId: string) {
+    const participant = await this.particpantsRepository.findOne({
+      where: {id: participantId},
+      relations: {
+        study: true,
+        group: true,
+      },
+      select: {
+        id: true,
+        number: true,
+        study: {
+          name: true,
+        },
+        group: {
+          name: true,
+        }
+      }
+    });
+    return participant;
+  }
 }

@@ -1,3 +1,5 @@
 export * from './useSubscribePush/useSubscribePush'
 export * from './useGetQueueStatus/useGetQueueStatus'
 export * from './useChangePassword/useChangePassword'
+export * from './useDeleteSubscription/useDeleteSubscription'
+export * from './useGetParticipantInfo/useGetParticipantInfo'
