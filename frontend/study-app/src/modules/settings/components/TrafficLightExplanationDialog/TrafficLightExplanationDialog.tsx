@@ -44,12 +44,12 @@ export const TrafficLightExplanationDialog: React.FC<TrafficLightExplanationDial
             </li>
             <li>
               <div style={{display: 'flex', alignItems: 'start', flexDirection:'column', marginTop: '20px'}}>
-                <TrafficLight status={'yellow'} /> <span style={{ marginTop: '10px'}}>Einige Daten könnten veraltet sein. Dies passiert, wenn neu eingegebene Daten zwischen 2 Stunden und einem Tag alt sind, oder wenn mehr als 5 Datensätze hinzugefügt wurden.</span>
+                <TrafficLight status={'yellow'} /> <span style={{ marginTop: '10px'}}>Einige Daten könnten veraltet sein. Dies passiert, wenn Sie seit mehr als 2 Stunden keine Internetverbindung hatten um die Daten zu synchronisieren oder wenn eine größere Menge an Daten noch nicht synchronisierten wurde. Bitte verbinden Sie sich bald wieder mit dem Internet.</span>
               </div>
             </li>
             <li>
               <div style={{display: 'flex', alignItems: 'start', flexDirection:'column', marginTop: '20px'}}>
-                <TrafficLight status={'red'} /> <span style={{ marginTop: '10px'}}>Es gibt ein Problem. Dies kann der Fall sein, wenn zu viele Änderungen anstehen, die noch nicht synchronisiert wurden, oder wenn ein Fehler in der App auftritt.</span>
+                <TrafficLight status={'red'} /> <span style={{ marginTop: '10px'}}>Es gibt ein Problem. Dies kann der Fall sein, wenn die letzte Synchronisation zu lange her ist, oder wenn ein Fehler in der App auftritt. Bitte melden Sie sich bei einer Ansprechperson.</span>
               </div>
             </li>
           </ul>
