@@ -1,9 +1,17 @@
 import { useAccessTokenContext } from '@modules/auth/contexts';
 import { usePostChatMessage } from '@modules/chat/hooks';
-import { TextField, Button } from '@mui/material';
+import { IconButton } from '@modules/core/components';
+import { Send } from '@mui/icons-material';
+import { TextField, Box, useTheme, styled } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
+
+const StyledTextField= styled(TextField)(({  }) => ({
+  '& .MuiInputBase-root': {
+    backgroundColor: "white"
+  }
+}))
 
 export interface ChatInputProps {}
 
@@ -12,6 +20,8 @@ export const ChatInput: React.FC<ChatInputProps> = () => {
   const { participantId, chatId } = useAccessTokenContext();
   const [inputValue, setInputValue] = useState<string>("");
   const { t } = useTranslation();
+  const { palette } = useTheme();
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleSend = async () => {
     if (inputValue.trim()) {
@@ -27,18 +37,25 @@ export const ChatInput: React.FC<ChatInputProps> = () => {
   };
 
   return (
-    <div
+    <Box
+      paddingX={'10px'}
+      paddingTop={'10px'}
+      paddingBottom={isFocused ? '10px' : '40px'}
       style={{
+        backgroundColor: palette.primary.main,
         display: 'flex',
         alignItems: 'flex-end',
-        width: '100%',
-        paddingTop: '10px',
+        width: 'max-width',
+        color: 'white'
+
       }}
     >
-      <TextField
+      <StyledTextField
         variant="outlined"
         fullWidth
         value={inputValue}
+        onFocusCapture={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter' && !e.shiftKey) {
@@ -46,13 +63,15 @@ export const ChatInput: React.FC<ChatInputProps> = () => {
               handleSend();
           }
         }}
-        label={t('type your message')}
         multiline
         maxRows={4}
+        sx={{
+        }}
       />
-      <Button
-        variant="contained"
-        color="primary"
+      <IconButton
+        testId='send-message-button'
+        Icon={<Send/>}
+        color="inherit"
         onClick={handleSend}
         style={{
           borderRadius: '0px',
@@ -60,7 +79,7 @@ export const ChatInput: React.FC<ChatInputProps> = () => {
         }}
       >
         {t('send')}
-      </Button>
-    </div>
+      </IconButton>
+    </Box>
   );
 };

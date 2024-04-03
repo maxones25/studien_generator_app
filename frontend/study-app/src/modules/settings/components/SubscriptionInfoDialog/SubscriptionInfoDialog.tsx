@@ -42,7 +42,7 @@ export const SubscriptionInfoDialog: React.FC<InfoDialogProps> = ({ open, onClos
             <Typography>iPhone</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography paragraph>Folgen Sie diesen Schritten, um auf die Benachrichtigungseinstellungen für Safari auf Ihrem iPhone zuzugreifen:</Typography>
+            <Typography paragraph>Folgen Sie diesen Schritten, um auf die Benachrichtigungseinstellungen auf Ihrem iPhone zuzugreifen:</Typography>
             {/* Platzhalter für ein Bild */}
             <Box sx={{ my: 2, textAlign: 'center' }}>
               {/* Bildquelle einfügen */}
