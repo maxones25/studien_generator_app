@@ -7,9 +7,10 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import SettingsIcon from '@mui/icons-material/Settings'; // Symbolisiert Einstellungen
+import NotificationsIcon from '@mui/icons-material/Notifications'; // Symbolisiert Benachrichtigungen
 
 interface InfoDialogProps {
   open: boolean;
@@ -20,7 +21,7 @@ export const SubscriptionInfoDialog: React.FC<InfoDialogProps> = ({ open, onClos
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>
-        Was sind Push-Benachrichtigungen?
+        Push-Benachrichtigungen aktivieren
         <IconButton
           aria-label="close"
           onClick={onClose}
@@ -35,20 +36,19 @@ export const SubscriptionInfoDialog: React.FC<InfoDialogProps> = ({ open, onClos
       </DialogTitle>
       <DialogContent>
         <Typography paragraph>
-          Push-Benachrichtigungen sind Nachrichten, die von einer App oder einer Website an Ihr Mobilgerät gesendet werden, auch wenn die App oder der Browser nicht aktiv genutzt werden. Sie dienen dazu, Sie über neue Nachrichten, Updates oder andere wichtige Informationen zu informieren.
+          Falls beim Abonnieren der Benachrichtigungen ein Fehler auftritt, wurde die Erlaubnis möglicherweise abgelehnt. Erlauben Sie Benachrichtigungen in den Einstellungen gemäß den nächsten Schritten.
         </Typography>
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>iPhone</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography paragraph>Folgen Sie diesen Schritten, um auf die Benachrichtigungseinstellungen auf Ihrem iPhone zuzugreifen:</Typography>
-            {/* Platzhalter für ein Bild */}
-            <Box sx={{ my: 2, textAlign: 'center' }}>
-              {/* Bildquelle einfügen */}
-              <img src="Pfad_zum_iPhone_Bild" alt="iPhone Einstellungen" style={{ maxWidth: '100%', height: 'auto' }} />
-            </Box>
-            {/* Weitere Schritte oder Beschreibungen */}
+            <Typography>
+              <strong>So erlauben Sie Push-Benachrichtigungen für die "Studien-App" auf iOS:</strong><br />
+              1. Öffnen Sie die <SettingsIcon fontSize="small" /> Einstellungen.<br />
+              2. Scrollen Sie nach unten und wählen Sie "Studien-App".<br />
+              3. Tippen Sie auf Benachrichtigungen und aktivieren Sie sie.
+            </Typography>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -56,13 +56,12 @@ export const SubscriptionInfoDialog: React.FC<InfoDialogProps> = ({ open, onClos
             <Typography>Android</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography paragraph>Folgen Sie diesen Schritten, um auf die Benachrichtigungseinstellungen für Chrome auf Ihrem Android-Gerät zuzugreifen:</Typography>
-            {/* Platzhalter für ein Bild */}
-            <Box sx={{ my: 2, textAlign: 'center' }}>
-              {/* Bildquelle einfügen */}
-              <img src="Pfad_zum_Android_Bild" alt="Android Einstellungen" style={{ maxWidth: '100%', height: 'auto' }} />
-            </Box>
-            {/* Weitere Schritte oder Beschreibungen */}
+            <Typography>
+              <strong>Schritte zur Aktivierung von Push-Benachrichtigungen auf Android:</strong><br />
+              1. Öffnen Sie Chrome und gehen Sie zu den Einstellungen.<br />
+              2. Tippen Sie auf Website-Einstellungen.<br />
+              3. Wählen Sie <NotificationsIcon fontSize="small" /> Benachrichtigungen und erlauben Sie sie für die gewünschten Seiten.
+            </Typography>
           </AccordionDetails>
         </Accordion>
       </DialogContent>
