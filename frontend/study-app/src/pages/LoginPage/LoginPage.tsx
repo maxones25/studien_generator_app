@@ -1,4 +1,4 @@
-import { LoginForm } from "@modules/auth/components";
+import { InstallationInfoDialog, LoginForm } from "@modules/auth/components";
 import { useLogin } from "@modules/auth/hooks";
 import { Button, Column, Page } from "@modules/core/components";
 import { useOpen } from "@modules/core/hooks";
@@ -42,8 +42,8 @@ const LoginPage: React.FC<LoginPageProps> = () => {
           <Button testId="" fullWidth variant="outlined" onClick={openGuide}>
             {t('install-guide')}
           </Button>
-          <Dialog open={isOpenGuide} onClose={closeGuide}>
-          </Dialog>
+          <InstallationInfoDialog open={isOpenGuide} onClose={closeGuide}>
+          </InstallationInfoDialog>
         </Column>
     </Page>
   );
