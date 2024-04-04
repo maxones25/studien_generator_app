@@ -1,10 +1,9 @@
 import { ListItemButton, ListItemText } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import { Task } from '@modules/tasks/types';
-import { IconButton, StyledListItem } from '@modules/core/components';
+import { StyledListItem } from '@modules/core/components';
 import dayjs from 'dayjs';
 import { useFormIdContext } from '@modules/forms/contexts';
-import { ArrowForwardOutlined } from '@mui/icons-material';
 import { RescheduleDialog } from '..';
 import { TasksStates, getTaskState } from '@modules/tasks/utils';
 
@@ -25,26 +24,25 @@ export const TaskItem : React.FC<TaskItemProps>= ({
     if (state === TasksStates.Active)
       setForm(task.formId, task.name, task.id);
   }
+  const dateString = task.completedAt ? 
+    'abgeschlossen: ' + dayjs(task.completedAt).format('HH:mm') : 
+    'geplant: ' + dayjs(task.scheduledAt).format('HH:mm');
 
-  const date = task.scheduledAt;
-  const dateString = dayjs(date).format('HH:mm');
+  // task?.schedule?.postpone && 
+  // task.rescheduled < task.schedule.postpone.times &&
+  // state !== TasksStates.Failed &&
+  // state !== TasksStates.Completed &&
+  // <IconButton 
+  //   testId='reschedule task'
+  //   edge="end"
+  //   Icon={
+  //     <ArrowForwardOutlined />
+  //   }
+  //   onClick={() => setOpen(true)}
+  // />
 
   return (
     <StyledListItem 
-      secondaryAction={
-        task?.schedule?.postpone && 
-        task.rescheduled < task.schedule.postpone.times &&
-        state !== TasksStates.Failed &&
-        state !== TasksStates.Completed &&
-        <IconButton 
-          testId='reschedule task'
-          edge="end"
-          Icon={
-            <ArrowForwardOutlined />
-          }
-          onClick={() => setOpen(true)}
-        />
-      }
       sx={{ backgroundColor: state }}>
       <ListItemButton onClick={handleStart}>
         <ListItemText primary={task.name} secondary={dateString}/>

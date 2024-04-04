@@ -28,6 +28,7 @@ export class RecordsService {
       },
       relations: {
         form: true,
+        fields: true,
       },
     });
 
@@ -35,12 +36,13 @@ export class RecordsService {
       ({ modifiedAt }) => !updatedAt || modifiedAt >= updatedAt,
     );
 
-    return filteredRecords.map(({ id, taskId, createdAt, form }) => {
+    return filteredRecords.map(({ id, taskId, createdAt, form, fields }) => {
       return {
         id,
         taskId,
         createdAt,
         name: form.name,
+        fields,
       };
     });
   }
