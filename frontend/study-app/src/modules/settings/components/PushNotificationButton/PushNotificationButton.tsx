@@ -66,6 +66,11 @@ export const PushNotificationButton: React.FC<PushNotificationButtonProps> = () 
       setSubScriptionState(SubscriptionState.Granted);
     } catch (err: any) {
       showError(err);
+      const permission = window?.Notification?.permission;
+      if (permission === 'denied') {
+        setSubScriptionState(SubscriptionState.Denied);
+        return;
+      }
       setSubScriptionState(SubscriptionState.Default);
     }
   };
