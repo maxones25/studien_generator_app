@@ -7,12 +7,13 @@ import {
   Divider,
   List as MList,
 } from '@mui/material';
-import { Column, List } from '@modules/core/components';
+import { Column, List, Row, Text } from '@modules/core/components';
 import { useCalendarContext } from '@modules/calendar/contexts';
 import { useDateContext } from '@modules/date/contexts';
 import { useNavigationHelper } from '@modules/core/hooks';
 import { getClosestDate } from '@modules/calendar/utils';
 import { CalendarDateListItem } from '..';
+import { formatiOSDate } from '@modules/date/utils';
 
 type DateRefsType = {
   [key: string]: React.RefObject<HTMLLIElement>;
@@ -49,24 +50,36 @@ export const CalendarList: React.FC<CalendarListProps> = () => {
 
   return (
     <List title={'calendar entries'} isError={isError} isLoading={isLoading} ref={containerRef}>
-      {dates?.map(({ date, entries }) => (
-        <ListItem sx={{paddingY: .5}} ref={dateRefs[date.toISOString()]} key={date.toDateString()}>
+      {dates?.map(({ date, entries }) => {
+        const isCurrentDate = dayjs(date).isSame(new Date(), 'd');
+        return (
+          <ListItem 
+            sx={{paddingY: 1}} 
+            ref={dateRefs[date.toISOString()]} 
+            key={date.toDateString()} 
+          >
           <Column width="100%">
-            <ListItemText
-              onClick={() => handleClick(date)}
-              primary={dayjs(date).format('LL')}
-              sx={{'& .MuiTypography-root': { fontSize: '0.95rem' }}}
-            />
+            <Row justifyContent={'space-between'}>
+              <ListItemText
+                onClick={() => handleClick(date)}
+                primary={formatiOSDate(date)}
+                sx={{
+                  margin: '0px',
+                  '& .MuiTypography-root': { fontSize: '0.95rem', color: isCurrentDate ? theme.palette.error.main : 'black'}
+                }}
+              />
+              <Text fontSize={'0.9rem'} paddingRight={'16px'}>{isCurrentDate ? 'heute' : ''}</Text>
+            </Row>
             <Divider variant="fullWidth" sx={{ borderColor: theme.palette.grey[600] }} />
             <MList disablePadding>
               {entries.map((item, i, arr) => (
                 <CalendarDateListItem 
-                  key={item.id} item={item} divider={i < arr.length - 1}/>
-              ))}
+                key={item.id} item={item} divider={i < arr.length - 1}/>
+                ))}
             </MList>
           </Column>
         </ListItem>
-      ))}
+      )})}
     </List>
   );
 };
