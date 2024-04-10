@@ -43,7 +43,8 @@ export class DataService {
         scheduledAt: Equal(lastChecked),
         participant: {
           subscription: Not(IsNull()),
-        }
+        },
+        completedAt: IsNull(),
       },
       relations: {
         participant: true,
