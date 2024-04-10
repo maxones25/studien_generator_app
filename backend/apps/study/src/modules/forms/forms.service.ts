@@ -32,7 +32,9 @@ export class FormsService {
         form: {
           pages: {
             components: {
-              formFields: true,
+              formFields: {
+                entityField: true,
+              },
               attributes: true,
             },
           },
@@ -52,6 +54,10 @@ export class FormsService {
               number: true,
               formFields: {
                 id: true,
+                entityField: {
+                  id: true,
+                  name: true,
+                }
               },
               attributes: {
                 key: true,
@@ -124,7 +130,9 @@ export class FormsService {
       relations: {
         pages: {
           components: {
-            formFields: true,
+            formFields: {
+              entityField: true,
+            },
             attributes: true,
           },
         },
@@ -140,6 +148,10 @@ export class FormsService {
             number: true,
             formFields: {
               id: true,
+              entityField: {
+                id: true,
+                name: true,
+              }
             },
             attributes: {
               key: true,

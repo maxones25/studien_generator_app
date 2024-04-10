@@ -33,6 +33,10 @@ export type FormComponentDataAttribute = {
 
 export type FormField = {
   id: string;
+  entityField: {
+    id: string,
+    name: string,
+  }
 };
 
 export type FormComponentDataAttributes = {
@@ -53,4 +57,24 @@ export type FormComponentDataRules = {
   reqired?: string;
   minLength?: number;
   maxLength?: number;
+};
+
+export const findFormField = (
+  form: FormData,
+  fieldId: string
+): FormField | undefined => {
+  // Durchlaufen aller Seiten des Formulars
+  for (const page of form.pages) {
+    // Durchlaufen aller Komponenten auf der aktuellen Seite
+    for (const component of page.components) {
+      // Durchlaufen aller Felder in der aktuellen Komponente
+      const foundField = component.formFields.find(field => field.id === fieldId);
+      if (foundField) {
+        // Rückgabe des gefundenen Feldes
+        return foundField;
+      }
+    }
+  }
+  // Wenn das Feld in keiner Komponente gefunden wurde, Rückgabe von undefined
+  return undefined;
 };

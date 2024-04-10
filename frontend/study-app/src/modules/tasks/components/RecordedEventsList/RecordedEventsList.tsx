@@ -7,6 +7,7 @@ import { RecordedEventsListItem } from '..';
 import { useTranslation } from 'react-i18next';
 import { EventsList } from '@modules/events/components';
 import { Dialog, DialogTitle } from '@mui/material';
+import dayjs from 'dayjs';
 
 export interface RecordedEventsListProps {}
 
@@ -16,6 +17,10 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
   const { date, isToday } = useDateContext();
   const { data, isError, isLoading } = useGetRecords();
   const filteredData = data?.filter((data) => !data.taskId && date.isSame(data.createdAt, 'day'))
+  const sortedData = filteredData?.sort((a, b) => {
+    return dayjs(b.createdAt).diff(a.createdAt)
+  });
+
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
@@ -39,7 +44,7 @@ export const RecordedEventsList : React.FC<RecordedEventsListProps> = ({
         isLoading={isLoading}
         isError={isError}
       >
-        {filteredData?.map((record) => 
+        {sortedData?.map((record) => 
           <RecordedEventsListItem key={record.id} record={record} />
         )}
       </List>

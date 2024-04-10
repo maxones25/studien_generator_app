@@ -6,10 +6,13 @@ import ForwardIcon from '@mui/icons-material/Forward';
 import CloseIcon from '@mui/icons-material/Close';
 import { useFormIdContext } from '@modules/forms/contexts'; // Angenommen, dieser Kontext existiert und ist korrekt
 import { Task } from '@modules/tasks/types'; // Angenommen, diese Imports sind korrekt
-import { getTaskState, TasksStates } from '@modules/tasks/utils';
+import { getTaskState, mapRecords, TasksStates } from '@modules/tasks/utils';
 import { ObjectInfoDialog } from '@modules/core/components';
 import { useOpen } from '@modules/core/hooks';
 import { RescheduleDialog } from '..';
+import { useGetRecords } from '@modules/tasks/hooks';
+import { useGetForm } from '@modules/forms/hooks';
+import { RecordField, findFormField } from '@modules/forms/types';
 
 interface TaskDialogProps {
   open: boolean;
@@ -22,6 +25,16 @@ export const TaskDialog: React.FC<TaskDialogProps> = ({ open, onClose, task }) =
   const state = useMemo(() => getTaskState(task), [task]);
   const { isOpen, open: infoOpen, close } = useOpen(false);
   const { isOpen: rescheduleIsOpen, open: rescheduleOpen, close: rescheduleClose} = useOpen(false);
+  const record = useGetRecords().data?.filter(record => record.taskId === task.id)?.[0];
+  const form = useGetForm({formId: task.formId});
+  const fields: RecordField[] = record?.fields?.map((field: RecordField) => {
+    if (form.data != undefined)
+      return {
+      ...findFormField(form.data, field.formFieldId),
+      value: field.value,
+    }
+  });
+  const info = mapRecords({...task, fields});
 
   // Funktion zum Starten des Tasks
   const handleStart = () => {
@@ -87,7 +100,7 @@ export const TaskDialog: React.FC<TaskDialogProps> = ({ open, onClose, task }) =
         </ListItem>
       </List>
       <RescheduleDialog task={task} open={rescheduleIsOpen} onClose={rescheduleClose} />
-      <ObjectInfoDialog open={isOpen} close={close} title={task.name} info={task}/>
+      <ObjectInfoDialog open={isOpen} close={close} title={task.name} info={info}/>
     </Dialog>
   );
 };

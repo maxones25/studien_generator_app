@@ -7,12 +7,18 @@ export const formatIsoDate = (date: Date) => {
 
 export const formatiOSDate = (date: Date) => {
   if (dayjs(date).isSame(new Date(), 'y'))
-    return dayjs(date).format('dddd, D. MMMM')
-  return dayjs(date).format('dddd, D. MMMM YYYY')
+    return dayjs(date).format('dddd, D. MMMM');
+  return dayjs(date).format('dddd, D. MMMM YYYY');
 }
 
 export const formatiOSDateShort = (date: Date) => {
   if (dayjs(date).isSame(new Date(), 'y'))
-    return dayjs(date).format('dd, D. MMMM')
-  return dayjs(date).format('dd, D. MMMM YYYY')
+    return dayjs(date).format('dd, D. MMMM');
+  return dayjs(date).format('dd, D. MMMM YYYY');
+}
+
+export const formatiOSDateShortWithTime = (date: Date) => {
+  if (dayjs(date).isSame(new Date(), 'y'))
+  return dayjs(date).format('dd, D. MMMM HH:mm');
+return dayjs(date).format('dd, D. MMMM YYYY HH:mm');
 }

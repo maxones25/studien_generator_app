@@ -5,6 +5,8 @@ import DialogContent from '@mui/material/DialogContent';
 import { TableRow, TableCell, Table, TableBody, Box, IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { CloseSharp } from '@mui/icons-material';
+import dayjs from 'dayjs';
+import { formatiOSDateShortWithTime } from '@modules/date/utils';
 
 export interface ObjectInfoDialogProps {
   open: boolean
@@ -20,30 +22,42 @@ export const ObjectInfoDialog : React.FC<ObjectInfoDialogProps>= ({
   title
 }) => {
   const { t } = useTranslation(); 
+  let isFormFields = false;
 
-  const isObject = (value: any): value is Record<string, any> => {
-    return typeof value === 'object' && value !== null && !Array.isArray(value);
-  };
 
-  // Rekursive Funktion, um Objekteigenschaften zu rendernˇ
-  const renderObjectRows = (obj: any, prefix = ''): JSX.Element[] => {
-    return Object.entries(obj).flatMap(([key, value]) => {
-      const fullKey = prefix ? `${prefix}.${key}` : key;
-      if (isObject(value)) {
-        return renderObjectRows(value, fullKey);
-      } else {
-        return (
-          <TableRow key={fullKey}>
-            <TableCell>{t(fullKey)}</TableCell>
-            <TableCell>{value as String}</TableCell>
-          </TableRow>
-        );
-      }
-    });
-  };
+// Verbesserte Version der Hilfsfunktion, die jetzt nur prüft, ob ein Wert ein Objekt oder ein Array ist
+const isComplex = (value: any): value is Record<string, any> | Array<any> => {
+  return typeof value === 'object' && value !== null;
+};
+
+// Rekursive Funktion, um Objekt- und Arrayeigenschaften zu rendern
+const renderObjectRows = (obj: any, prefix = ''): JSX.Element[] => {
+  // Handhabt sowohl Objekte als auch Arrays
+  const entries = Array.isArray(obj) ? obj.map((value, index) => [index, value]) : Object.entries(obj);
+
+  return entries.flatMap(([key, value]) => {
+    const fullKey = prefix ? `${prefix}.${key}` : key.toString();
+    if (isComplex(value)) {
+      // Wenn der Wert ein Objekt oder ein Array ist, rekurriere
+      return renderObjectRows(value, fullKey);
+    } else {
+      if (dayjs(value).isValid() && value?.length == 24)
+        value = formatiOSDateShortWithTime(dayjs(value).toDate())
+      const tableRow = value ? (
+        <TableRow key={fullKey}>
+          <TableCell sx={{textAlign: isFormFields ? 'right' : 'left'}}>{t(fullKey)}</TableCell>
+          <TableCell sx={{minWidth: '8rem', textAlign: isFormFields ? 'right' : 'left'}}>{value.toString()}</TableCell>
+        </TableRow>
+      ) : <></>
+      if (fullKey === 'fields')
+        isFormFields = true;
+      return tableRow 
+    }
+  });
+};
 
   return info ? (
-    <Dialog open={open} onClose={close}>
+    <Dialog open={open} onClose={close} fullWidth maxWidth='sm'>
       <DialogTitle sx={{ m: 0, p: 2, position: 'relative' }}>
         <Box sx={{ pr: 3 /* Abstand rechts für den Schließbutton */, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
           {t(title)}
@@ -60,7 +74,7 @@ export const ObjectInfoDialog : React.FC<ObjectInfoDialogProps>= ({
           <CloseSharp />
         </IconButton>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ paddingX: .5 }}>
         <Table size="small">
           <TableBody>
             {renderObjectRows(info)}

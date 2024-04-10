@@ -36,11 +36,12 @@ export class RecordsService {
       ({ modifiedAt }) => !updatedAt || modifiedAt >= updatedAt,
     );
 
-    return filteredRecords.map(({ id, taskId, createdAt, form, fields }) => {
+    return filteredRecords.map(({ id, taskId, createdAt, form, fields, formId }) => {
       return {
         id,
         taskId,
         createdAt,
+        formId,
         name: form.name,
         fields,
       };

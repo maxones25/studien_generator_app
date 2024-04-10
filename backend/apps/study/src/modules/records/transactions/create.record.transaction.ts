@@ -74,11 +74,11 @@ export class CreateRecordTransaction extends Transaction<
 
   private async addRecordField(
     recordId: string,
-    { id, value }: RecordFieldDto,
+    { formFieldId, value }: RecordFieldDto,
   ) {
     const recordFieldRepository = this.entityManager.getRepository(RecordField);
 
-    if (!(await this.isValidValue({ id, value })))
+    if (!(await this.isValidValue({ formFieldId, value })))
       throw new ConflictException('invalid record field');
 
     if (!value) return;
@@ -87,7 +87,7 @@ export class CreateRecordTransaction extends Transaction<
 
     recordFieldRepository.insert({
       recordId,
-      formFieldId: id,
+      formFieldId,
       value: encodedValue,
     });
   }
@@ -131,9 +131,9 @@ export class CreateRecordTransaction extends Transaction<
     return false;
   }
 
-  private async isValidValue({ id, value }: RecordFieldDto): Promise<any> {
+  private async isValidValue({ formFieldId, value }: RecordFieldDto): Promise<any> {
     const formField = await this.formFieldsRepository.findOneOrFail({
-      where: { id },
+      where: { id: formFieldId },
       relations: {
         entityField: true,
         formComponent: {

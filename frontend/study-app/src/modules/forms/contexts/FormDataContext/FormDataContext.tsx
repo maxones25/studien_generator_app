@@ -48,7 +48,7 @@ const useFormDataContextValue = () => {
 
     componentsArray.forEach((value) => {
       Object.entries(value[1]).forEach((value) => {
-        entityFields.push({id: value[0], value: value[1]})
+        entityFields.push({formFieldId: value[0], value: value[1]})
       })
     })
 
@@ -61,7 +61,6 @@ const useFormDataContextValue = () => {
       fields: entityFields,
       name: name!,
     } ;
-    console.log(record);
     await saveForm.mutateAsync(record);
     resetForm();
   }

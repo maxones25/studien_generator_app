@@ -39,7 +39,7 @@ export class CreateRecordDto {
 
 export class RecordFieldDto {
   @IsUUID()
-  id: string;
+  formFieldId: string;
 
   @IsOptional()
   value: any;

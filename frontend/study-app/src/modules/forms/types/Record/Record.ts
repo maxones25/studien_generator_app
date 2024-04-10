@@ -9,6 +9,6 @@ export type Record = {
 }
 
 export type RecordField = {
-  id: string;
+  formFieldId: string;
   value: any;
 }
