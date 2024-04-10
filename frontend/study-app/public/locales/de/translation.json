@@ -1,4 +1,12 @@
 {
+  "rescheduled": "Verschoben (Anzahl)",
+  "restrict.after": "Ausführbar bis (h)",
+  "restrict.before": "Ausführbar ab (h)",
+  "postpone.duration": "Verschiebbar (Zeit)",
+  "postpone.times": "Verschiebbar (Anzahl)",
+  "loginId": "Anmelde-ID",
+  "forgot-password": "Passwort vergessen?",
+  "install-guide": "Installation Anleitung",
   "logout question": "Sind Sie sicher, dass Sie sich abmelden wollen?",
   "retract": "zurücknehmen",
   "accept": "akzeptieren",

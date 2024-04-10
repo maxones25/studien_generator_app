@@ -8,6 +8,7 @@ export const mapRecords = (data: Record<string, any>) => {
     completedAt: data.completedAt,
     createdAt: data.scheduledAt ? undefined : data.createdAt,
     postpone: data.schedule?.postpone,
+    rescheduled: data.schedule ? (data.rescheduled ?? '0') : undefined,
     restrict: data.schedule?.restrict,
     fields: data.fields ? t('values') : undefined,
     ...arrayToObject(data.fields),

@@ -43,7 +43,7 @@ const renderObjectRows = (obj: any, prefix = ''): JSX.Element[] => {
     } else {
       if (dayjs(value).isValid() && value?.length == 24)
         value = formatiOSDateShortWithTime(dayjs(value).toDate())
-      const tableRow = value ? (
+      const tableRow = value != undefined ? (
         <TableRow key={fullKey}>
           <TableCell sx={{textAlign: isFormFields ? 'right' : 'left'}}>{t(fullKey)}</TableCell>
           <TableCell sx={{minWidth: '8rem', textAlign: isFormFields ? 'right' : 'left'}}>{value.toString()}</TableCell>
