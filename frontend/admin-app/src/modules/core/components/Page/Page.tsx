@@ -12,7 +12,7 @@ export const Page: React.FC<PageProps> = ({ sx, testId, ...props }) => {
         sx={{
           position: "relative",
           height: "100vh",
-          overflowY: "hidden",
+          overflowY: "scroll",
           bgcolor: "background.default",
           ...sx,
         }}

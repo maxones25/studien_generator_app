@@ -145,7 +145,7 @@ export const RecordManager: React.FC<RecordManagerProps> = ({
 
   return (
     <Column>
-      <Toolbar sx={{ flexDirection: "column", alignItems: "stretch" }}>
+      <Toolbar sx={{ flexDirection: "column", alignItems: "stretch", position:'sticky', top: '0', backgroundColor: 'white', zIndex: '999' }}>
         <Row justifyContent="space-between">
           <Row flex={1}>
             <EntitySelect
