@@ -28,6 +28,7 @@ export const ParticipantInfoDialog : React.FC<ParticipantInfoDialogProps>= ({
   const renderObjectRows = (obj: any, prefix = ''): JSX.Element[] => {
     return Object.entries(obj).flatMap(([key, value]) => {
       const fullKey = prefix ? `${prefix}.${key}` : key;
+      if (fullKey === 'id') return <></>
       if (isObject(value)) {
         return renderObjectRows(value, fullKey);
       } else {
@@ -42,7 +43,7 @@ export const ParticipantInfoDialog : React.FC<ParticipantInfoDialogProps>= ({
   };
 
   return info ? (
-    <Dialog open={open} onClose={close}>
+    <Dialog open={open} onClose={close} fullWidth maxWidth='lg'>
       <DialogTitle sx={{ m: 0, p: 2, position: 'relative' }}>
         <Box sx={{ pr: 3 /* Abstand rechts für den Schließbutton */, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
           {t('participant info')}

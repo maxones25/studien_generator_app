@@ -1,4 +1,11 @@
 {
+  "repeatPassword": "Passwort wiederholen",
+  "newPassword": "Neues Passwort",
+  "oldPassword": "Altes Passwort",
+  "participant info": "Account-Informationen",
+  "message": "Nachricht",
+  "answer": "Antwort",
+  "required": "Pflichtfeld",
   "rescheduled": "Verschoben (Anzahl)",
   "restrict.after": "Ausführbar bis (h)",
   "restrict.before": "Ausführbar ab (h)",

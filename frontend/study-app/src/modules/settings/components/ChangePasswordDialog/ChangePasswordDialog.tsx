@@ -1,7 +1,8 @@
 import { Button, Form, FormPasswordField } from '@modules/core/components';
 import { useChangePassword } from '@modules/settings/hooks';
 import { ChangePasswordFormData } from '@modules/settings/types';
-import { Dialog, DialogActions } from '@mui/material';
+import { CloseSharp } from '@mui/icons-material';
+import { Box, Dialog, DialogActions, DialogTitle, IconButton } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -31,6 +32,22 @@ export const ChangePasswordDialog : React.FC<ChangePasswordDialogProps>= ({
 
   return (
     <Dialog open={open} onClose={close}>
+      <DialogTitle sx={{ m: 0, p: 2, position: 'relative' }}>
+        <Box sx={{ pr: 3 /* Abstand rechts für den Schließbutton */, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+          {t('change password')}
+        </Box>
+        <IconButton
+          aria-label="close"
+          onClick={close}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+          }}
+        >
+          <CloseSharp />
+        </IconButton>
+      </DialogTitle>
       <Form sx={{p: 2}} onSubmit={onSubmit}>
         <FormPasswordField
           control={form.control}
@@ -61,7 +78,7 @@ export const ChangePasswordDialog : React.FC<ChangePasswordDialogProps>= ({
             validate: validatePasswordMatch,
           })}
         />
-        <DialogActions>
+        <DialogActions sx={{mt: '16px'}}>
           <Button
             testId='change-password-cancel-button'
             onClick={close}

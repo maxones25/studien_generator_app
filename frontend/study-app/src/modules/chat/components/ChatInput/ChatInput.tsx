@@ -54,6 +54,7 @@ export const ChatInput: React.FC<ChatInputProps> = () => {
         variant="outlined"
         fullWidth
         value={inputValue}
+        placeholder={t('message')}
         onFocusCapture={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onChange={(e) => setInputValue(e.target.value)}
