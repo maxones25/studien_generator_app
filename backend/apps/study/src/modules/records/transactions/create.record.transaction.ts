@@ -28,6 +28,23 @@ export class CreateRecordTransaction extends Transaction<
   }): Promise<void> {
     // if(! await this.isCorrectForm(data.formId, data.fields.map((value) => value.entityFieldId)))
     //   throw new ConflictException('invalid form');
+    
+    if (data.taskId) {
+      const tasksRepository = this.entityManager.getRepository(Task);
+      const task = await tasksRepository.findOne({where: {
+        id: data.taskId,
+      }});
+      if (task.deletedAt != undefined)
+        throw new ConflictException('task was deleted');
+      tasksRepository.update(data.taskId, { completedAt: data.createdAt });
+    }
+
+    const formRepository = this.entityManager.getRepository(Form);
+    const form = await formRepository.findOne({where: {
+      id: data.formId,
+    }})
+    if (form.deletedAt != undefined)
+     throw new ConflictException('form was deleted');
 
     const record = await this.createRecord(data, participantId);
 
@@ -41,10 +58,6 @@ export class CreateRecordTransaction extends Transaction<
       throw new ConflictException('invalid record field');
     });
 
-    if (data.taskId) {
-      const tasksRepository = this.entityManager.getRepository(Task);
-      tasksRepository.update(data.taskId, { completedAt: data.createdAt });
-    }
   }
 
   private async createRecord(
