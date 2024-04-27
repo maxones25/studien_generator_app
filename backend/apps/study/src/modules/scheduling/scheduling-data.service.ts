@@ -18,15 +18,25 @@ export class DataService {
   ) {}
 
   async getNewEntriesFromTasks(lastChecked: Date) {
+    const preNotificationTimeMinutes = 15;
+    const preNotificationDate = datetime.addTime(lastChecked, { hours: 0, minutes: preNotificationTimeMinutes });
     return this.tasksRepository.find({
-      where: {
+      where: [{
         scheduledAt: Equal(lastChecked),
         participant: {
           subscription: Not(IsNull()),
         },
         completedAt: IsNull(),
         deletedAt: IsNull(),
-      },
+      },{
+        scheduledAt: Equal(preNotificationDate),
+        participant: {
+          subscription: Not(IsNull()),
+        },
+        completedAt: IsNull(),
+        deletedAt: IsNull(),
+      }
+    ],
       relations: {
         participant: true,
         form: true,
@@ -44,15 +54,25 @@ export class DataService {
   }
 
   async getNewEntriesFromAppointments(lastChecked: Date) {
+    const preNotificationTimeMinutes = 15;
+    const preNotificationDate = datetime.addTime(lastChecked, { hours: 0, minutes: preNotificationTimeMinutes });
     return this.appointmentsRepository.find({
-      where: {
-        startDate: Equal(datetime.formatDate(lastChecked)),
-        startTime: Equal(datetime.formatTime(lastChecked)),
-        participant: {
-          subscription: Not(IsNull()),
-        },
-        deletedAt: IsNull(),
-      },
+      where: [{
+          startDate: Equal(datetime.formatDate(lastChecked)),
+          startTime: Equal(datetime.formatTime(lastChecked)),
+          participant: {
+            subscription: Not(IsNull()),
+          },
+          deletedAt: IsNull(),
+        },{
+          startDate: Equal(datetime.formatDate(preNotificationDate)),
+          startTime: Equal(datetime.formatTime(preNotificationDate)),
+          participant: {
+            subscription: Not(IsNull()),
+          },
+          deletedAt: IsNull(),
+        }
+      ],
       relations: {
         participant: true,
       },
@@ -61,7 +81,6 @@ export class DataService {
           subscription: true,
           id: true,
         },
-        subject: true,
       }
     });
   }

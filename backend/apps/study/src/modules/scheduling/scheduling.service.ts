@@ -25,6 +25,7 @@ export class SchedulingService {
       messages.forEach(({chat}) => {
         this.processEntry(chat, PushNotificationType.Chat);
       });
+      this.lastChecked = datetime.addTime(this.lastChecked, { hours: 0, minutes: 1 });
       const tasks = await this.dataService.getNewEntriesFromTasks(this.lastChecked);
       tasks.forEach((task) => {
         this.processEntry(task, PushNotificationType.Task);
