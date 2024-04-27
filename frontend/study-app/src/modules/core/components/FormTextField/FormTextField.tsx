@@ -27,6 +27,7 @@ export const FormTextField = <FormData extends FieldValues>({
   isVisible = true,
   fullWidth = false,
   control,
+  attributes,
 }: FormTextFieldProps<FormData>) => {
   const { name, inputProps } = textFieldProps;
   const error = get(formState.errors, name);
@@ -41,6 +42,7 @@ export const FormTextField = <FormData extends FieldValues>({
   <Controller
       control={control}
       name={name as Path<FormData>}
+      defaultValue={attributes?.defaultValue}
       render={({ field }) => (
         <Box>
           {labelLength > maxLength && <Text>{label}</Text>}

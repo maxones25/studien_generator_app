@@ -5,15 +5,16 @@ import { Close } from "@mui/icons-material";
 import React from "react";
 import { FormEntitySideBar } from "..";
 import { FormComponentFormData } from "@modules/formComponents/types";
-import { useAddComponent } from "@modules/formComponents/hooks";
+import { useAddComponent, useUpdateComponent } from "@modules/formComponents/hooks";
 import { useFormEditorContext } from "@modules/forms/contexts";
 
 export interface FormSideBarProps {}
 
 export const FormSideBar: React.FC<FormSideBarProps> = () => {
   const formEditor = useFormEditor();
-  const { state } = useFormEditorContext();
+  const { state, allComponents } = useFormEditorContext();
   const createFormComponent = useAddComponent();
+  const updateFormComponent = useUpdateComponent();
 
   const handleSave = ({ attributes }: FormComponentFormData) => {
     createFormComponent
@@ -31,6 +32,19 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
       });
   };
 
+  const handleUpdate = ({ id, attributes, type, formFields }: FormComponentFormData) => {
+    updateFormComponent
+      .mutateAsync({
+        id,
+        attributes,
+        type,
+        formFields
+      })
+      .then(() => {
+        formEditor.formComponent.reset();
+      });
+  };
+
   const hasFields = (state?.fields?.length ?? 0) > 0;
 
   const hasMultipleFields = (state?.fields?.length ?? 0) > 1;
@@ -39,6 +53,8 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
     hasMultipleFields || !hasFields
       ? state.component.data?.name
       : state?.fields[0].data.name;
+
+  const formComponent = allComponents.findLast((component => component.name == formEditor.formComponent.data?.type))
 
   return (
     <Column
@@ -66,7 +82,25 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
             formProps={{ p: 1, overflowY: "scroll" }}
           />
         </>
-      ) : (
+      ) : formEditor.formComponent.isSelected ? (
+        <>
+          <Row p={2} justifyContent="space-between">
+            <Text>{formComponent?.name}</Text>
+            <IconButton
+              testId="close form component form"
+              Icon={<Close />}
+              onClick={formEditor.formComponent.reset}
+            />
+          </Row>
+          <FormComponentForm
+            values={formEditor.formComponent.data as FormComponentFormData}
+            componentAttributes={formComponent?.attributes ?? formEditor.component.data?.attributes!}
+            fieldName={formComponent?.name}
+            onSubmit={handleUpdate}
+            formProps={{ p: 1, overflowY: "scroll" }}
+          />
+        </>
+      ):(
         <FormEntitySideBar />
       )}
     </Column>

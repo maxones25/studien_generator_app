@@ -57,8 +57,6 @@ export const FormComponentForm: React.FC<FormComponentFormFormProps> = ({
         return obj;
       }, {});
 
-    console.table(attributes);
-
     onSubmit({ ...data, attributes });
   };
 

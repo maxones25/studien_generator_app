@@ -10,6 +10,7 @@ export type ComponentAttributes = Record<
 >;
 
 export type Component = {
+  id?: string;
   name: string;
   entityFields: FieldType[];
   attributes: ComponentAttributes;

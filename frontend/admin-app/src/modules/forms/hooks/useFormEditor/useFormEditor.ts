@@ -18,6 +18,7 @@ export interface UseFormEditorResult {
   };
   formComponent: {
     data: FormComponent | null;
+    isSelected: boolean;
     set: (formComponent: FormComponent) => void;
     reset: () => void;
   };
@@ -84,6 +85,7 @@ export const useFormEditor = (): UseFormEditorResult => {
     },
     formComponent: {
       data: formComponent,
+      isSelected: formComponent !== null,
       set: setFormComponent,
       reset: resetFormComponent,
     },

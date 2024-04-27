@@ -4,6 +4,7 @@ import { AddComponentTransaction } from '../transactions/AddComponentTransaction
 import { ComponentsRepository } from '../repositories/components.repository';
 import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 import { RemoveComponentTransaction } from '../transactions/RemoveComponentTransaction';
+import { UpdateComponentTransaction } from '../transactions/UpdateComponentTransaction';
 
 @Injectable()
 export class ComponentsService implements IGetStudyRelatedDataUseCase {
@@ -12,6 +13,8 @@ export class ComponentsService implements IGetStudyRelatedDataUseCase {
     private componentsRepository: ComponentsRepository,
     @Inject(AddComponentTransaction)
     private addComponentTransaction: AddComponentTransaction,
+    @Inject(UpdateComponentTransaction)
+    private updateComponentTransaction: UpdateComponentTransaction,
     @Inject(RemoveComponentTransaction)
     private readonly deleteComponentTransaction: RemoveComponentTransaction,
   ) {}
@@ -32,6 +35,10 @@ export class ComponentsService implements IGetStudyRelatedDataUseCase {
 
   async getByPage(pageId: string) {
     return this.componentsRepository.getByPage(pageId);
+  }
+
+  async update(id: string, formId: string, attributes: Record<string, any>) {
+    return this.updateComponentTransaction.run({ id, formId, attributes });
   }
 
   async remove(pageId: string, id: string) {

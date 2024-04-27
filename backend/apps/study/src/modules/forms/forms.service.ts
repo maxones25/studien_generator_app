@@ -46,9 +46,11 @@ export class FormsService {
         form: {
           id: true,
           name: true,
+          modifiedAt: true,
           pages: {
             number: true,
             components: {
+              modifiedAt: true,
               id: true,
               type: true,
               number: true,
@@ -80,7 +82,9 @@ export class FormsService {
     });
 
     const filteredForms = forms.filter(
-      ({ modifiedAt }) => !lastUpdated || modifiedAt >= lastUpdated,
+      ({ modifiedAt, form }) => !lastUpdated 
+      || modifiedAt >= lastUpdated 
+      || form.modifiedAt >= lastUpdated,
     );
 
     return filteredForms.map(({ form, type }) => {

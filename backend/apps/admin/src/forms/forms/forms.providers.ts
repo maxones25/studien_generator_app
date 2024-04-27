@@ -17,6 +17,7 @@ import { ComponentsRepository } from './repositories/components.repository';
 import { ComponentGuard } from './guards/component.guard';
 import { CreateFormUseCase } from './transactions/CreateFormUseCase';
 import { FORMS_REPOSITORY } from './domain';
+import { UpdateComponentTransaction } from './transactions/UpdateComponentTransaction';
 
 const formsProviders: Provider[] = [
   FormsService,
@@ -30,6 +31,7 @@ const formsProviders: Provider[] = [
   CreateFormTransaction,
   DeletePageTransaction,
   AddComponentTransaction,
+  UpdateComponentTransaction,
   RemoveComponentTransaction,
   FormGuard,
   PageGuard,

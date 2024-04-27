@@ -18,6 +18,9 @@ import { ComponentGuard } from '../guards/component.guard';
 import { ComponentsService as UiComponentsService } from '@admin/forms/components/components.service';
 import { StudyGuard } from '@admin/studies/studies/infrastructure/http/guards/study.guard';
 import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http';
+import { FormGuard } from '../guards/form.guard';
+import { FormQueryDto } from '../dtos/FormQueryDto';
+import { UpdateComponentDto } from '../dtos/UpdateComponentDto';
 
 @Controller('forms')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -48,6 +51,18 @@ export class ComponentsCommands {
     );
 
     return this.componentsService.add(pageId, body);
+  }
+
+  @Post('updateComponent')
+  @HttpCode(HttpStatus.OK)
+  @Roles('admin')
+  @UseGuards(FormGuard, ComponentGuard)
+  async update(
+    @Query() { formId }: FormQueryDto,
+    @Query() { componentId }: ComponentQueryDto,
+    @Body() { attributes }: UpdateComponentDto,
+  ) {
+    return this.componentsService.update(componentId, formId, attributes);
   }
 
   @Post('removeComponent')

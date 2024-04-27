@@ -70,6 +70,7 @@ export const FormComponent: React.FC<FormComponentProps> = ({
           <FormTextField
             control={form.control}
             label={props.label}
+            attributes={props.attributes}
             formState={form.formState}
             textFieldProps={form.register(name, props.rules)}
           />
@@ -79,6 +80,7 @@ export const FormComponent: React.FC<FormComponentProps> = ({
           <FormNumberPicker
             control={form.control}
             label={props.label}
+            attributes={props.attributes}
             type={"number"}
             formState={form.formState}
             textFieldProps={form.register(name, {
