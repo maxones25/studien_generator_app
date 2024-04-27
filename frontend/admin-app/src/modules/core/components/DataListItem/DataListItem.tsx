@@ -1,6 +1,7 @@
 import { useMenuAnchor } from "@modules/core/hooks";
 import { MoreVert } from "@mui/icons-material";
 import { IconButton, ListItem, ListItemProps, Menu, MenuItem } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export interface DataListItemProps<ItemData> extends ListItemProps {
   item: ItemData;
@@ -23,6 +24,7 @@ export function DataListItem<ItemData>({
   ...props
 }: DataListItemProps<ItemData>) {
   const menuAnchor = useMenuAnchor();
+  const { t } = useTranslation();
 
   const handleClick = (callback: (item: ItemData) => void) => () => {
     callback(item);
@@ -48,10 +50,10 @@ export function DataListItem<ItemData>({
                   onClose={menuAnchor.close}
                 >
                   {onUpdate && (
-                    <MenuItem onClick={handleClick(onUpdate)}>Edit</MenuItem>
+                    <MenuItem onClick={handleClick(onUpdate)}>{t('edit')}</MenuItem>
                   )}
                   {onDelete && (
-                    <MenuItem onClick={handleClick(onDelete)}>Delete</MenuItem>
+                    <MenuItem onClick={handleClick(onDelete)}>{t('delete')}</MenuItem>
                   )}
                 </Menu>
               </>

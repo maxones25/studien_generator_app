@@ -10,4 +10,8 @@ export interface IStudyAppointmentsRepository {
     studyId: string,
     { startDate, endDate, endTime, startTime, subject }: CreateAppointmentDto,
   ): Promise<string>;
+
+  deleteStudyAppointment(
+    appointmentId: string,
+  ): Promise<number>;
 }

@@ -54,7 +54,7 @@ export function FormSwitch<TFieldValues extends FieldValues>({
             label={label}
           />
           {Boolean(error) && 
-            <FormHelperText>{t("value required")}</FormHelperText>}
+            <FormHelperText>{t("required")}</FormHelperText>}
         </FormControl>
       )}}
     />

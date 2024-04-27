@@ -23,7 +23,9 @@ export class GetValue extends AbstractStrategy {
       const response = await handler.fetch(modifiedRequest);
 
       if (!response.ok) {
-        return this.getFromDB(db);
+        const dbData = await db.getAll(this.storeName);
+        const newResponse = new Response(JSON.stringify(dbData[0]))
+        return newResponse;
       }
 
       const data = await response.clone().json();

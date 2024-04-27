@@ -98,7 +98,7 @@ export function FormSlider<TFieldValues extends FieldValues>({
               labelPlacement="top"
             />
             {Boolean(error) && (
-              <FormHelperText>{t("value required")}</FormHelperText>
+              <FormHelperText>{t("required")}</FormHelperText>
             )}
           </FormControl>
         );

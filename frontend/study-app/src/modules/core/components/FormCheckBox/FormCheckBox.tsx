@@ -64,7 +64,7 @@ export function FormCheckBox<TFieldValues extends FieldValues>({
               }
             />
             {Boolean(error) && (
-              <FormHelperText>{t("value required")}</FormHelperText>
+              <FormHelperText>{t("required")}</FormHelperText>
             )}
           </FormControl>
         );

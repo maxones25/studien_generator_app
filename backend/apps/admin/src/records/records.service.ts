@@ -66,6 +66,8 @@ export class RecordsService {
         return datetime.formatDateTime(value);
       case 'Date':
         return datetime.formatDate(value);
+      case 'Time':
+        return datetime.formatTime(value);
       default:
         return value;
     }

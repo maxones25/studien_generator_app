@@ -6,6 +6,7 @@ export type Task = {
   completedAt?: Date;
   schedule?: Schedule;
   rescheduled: number;
+  deletedAt?: Date;
 }
 
 export type Schedule = {

@@ -26,8 +26,6 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   const { t } = useTranslation();
   const form = useForm<TaskFormData>({ values });
 
-  console.log(values)
-
   return (
     <Form {...formProps} form={form} onSubmit={onSubmit}>
       {isNew && (

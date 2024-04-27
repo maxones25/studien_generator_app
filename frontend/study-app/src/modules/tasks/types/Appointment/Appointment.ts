@@ -3,4 +3,5 @@ export type Appointment = {
   start: Date;
   end?: Date;
   name: string;
+  deletedAt?: Date;
 }

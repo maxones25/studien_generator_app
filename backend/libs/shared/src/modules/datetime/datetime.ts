@@ -105,13 +105,18 @@ const formatDate = (value: string | Date) => {
   if (typeof value === 'string') {
     value = new Date(value);
   }
+  const offset = getOffset();
+  value = addHours(value, -offset);
   return format(value, 'YYYY-MM-DD');
 };
 
 const formatTime = (value: string | Date) => {
+  if (value === null || value === undefined) return '';
   if (typeof value === 'string') {
     value = new Date(value);
   }
+  const offset = getOffset();
+  value = addHours(value, -offset);
   return format(value, 'HH:mm');
 };
 

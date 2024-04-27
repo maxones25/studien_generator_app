@@ -36,6 +36,7 @@ export class TasksRepository extends RecordRepository<Task> {
         scheduledAt: true,
         completedAt: true,
         rescheduled: true,
+        deletedAt: true,
         form: { id: true, name: true },
       },
     });

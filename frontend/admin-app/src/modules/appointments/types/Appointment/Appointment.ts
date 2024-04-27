@@ -5,4 +5,5 @@ export type Appointment = {
   endDate: string;
   endTime: string;
   subject: string;
+  deletedAt?: Date;
 };

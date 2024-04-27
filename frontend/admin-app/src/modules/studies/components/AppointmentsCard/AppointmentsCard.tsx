@@ -3,26 +3,27 @@ import {
   Column,
   ColumnProps,
   DataList,
+  DataListItem,
   IconButton,
   Row,
   Text,
 } from "@modules/core/components";
 import {
   useCreateAppointment,
+  useDeleteAppointment,
   useGetAppointments,
 } from "@modules/studies/hooks";
 import {
   Dialog,
   DialogContent,
   Divider,
-  ListItem,
   ListItemButton,
   ListItemText,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Add } from "@mui/icons-material";
 import { useFormData } from "@modules/core/hooks";
-import { AppointmentFormData } from "@modules/appointments/types";
+import { Appointment, AppointmentFormData } from "@modules/appointments/types";
 import { AppointmentForm } from "@modules/appointments/components";
 import { formatTime } from "@modules/appointments/utils";
 
@@ -33,6 +34,11 @@ export const AppointmentsCard: React.FC<AppointmentsCardProps> = (props) => {
   const getAppointments = useGetAppointments();
   const createAppointment = useCreateAppointment();
   const createData = useFormData<AppointmentFormData>();
+  const deleteAppointment = useDeleteAppointment();
+
+  const handleDeleteAppointment= async (data: Appointment) => {
+    await deleteAppointment.mutateAsync(data);
+  };
 
   return (
     <Column boxShadow={4} m={2} ml={0} mt={0} {...props}>
@@ -55,15 +61,22 @@ export const AppointmentsCard: React.FC<AppointmentsCardProps> = (props) => {
         client={getAppointments}
         errorText=""
         noDataText=""
-        renderItem={(appointment) => (
-          <ListItem key={appointment.id} disablePadding>
-            <ListItemButton>
-              <ListItemText
-                primary={appointment.subject}
-                secondary={formatTime(appointment)}
-              />
-            </ListItemButton>
-          </ListItem>
+        filter={(item) => item.deletedAt == undefined}
+        renderItem={(appointment, { isLast }) => (
+          <DataListItem
+            key={appointment.id}
+            divider={!isLast}
+            item={appointment}
+            onDelete={handleDeleteAppointment}
+            >
+              <ListItemButton>
+                <ListItemText
+                  primary={appointment.subject}
+                  secondary={formatTime(appointment)}
+                />
+              </ListItemButton>
+
+          </DataListItem>
         )}
       />
       <Dialog open={createData.hasData} onClose={createData.reset}>

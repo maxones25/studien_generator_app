@@ -3,6 +3,7 @@ import {
   Column,
   ColumnProps,
   DataList,
+  DataListItem,
   IconButton,
   Row,
   Text,
@@ -12,7 +13,6 @@ import {
   Dialog,
   DialogContent,
   Divider,
-  ListItem,
   ListItemButton,
   ListItemText,
 } from "@mui/material";
@@ -25,6 +25,7 @@ import {
   useFormData,
 } from "@modules/core/hooks";
 import { Appointment, AppointmentFormData } from "@modules/appointments/types";
+import { useDeleteAppointment } from "@modules/studies/hooks";
 
 export interface AppointmentsCardProps extends ColumnProps {
   readClient: UseReadRequestResult<Appointment[]>;
@@ -38,6 +39,11 @@ export const AppointmentsCard: React.FC<AppointmentsCardProps> = ({
 }) => {
   const { t } = useTranslation();
   const createData = useFormData<AppointmentFormData>();
+  const deleteAppointment = useDeleteAppointment();
+
+  const handleDeleteAppointment= async (data: Appointment) => {
+    await deleteAppointment.mutateAsync(data);
+  };
 
   return (
     <Column testId="appointments card" boxShadow={4} {...props}>
@@ -60,15 +66,22 @@ export const AppointmentsCard: React.FC<AppointmentsCardProps> = ({
         client={readClient}
         errorText=""
         noDataText=""
-        renderItem={(appointment) => (
-          <ListItem key={appointment.id} disablePadding>
-            <ListItemButton>
-              <ListItemText
-                primary={appointment.subject}
-                secondary={formatTime(appointment)}
-              />
-            </ListItemButton>
-          </ListItem>
+        filter={(item) => item.deletedAt == undefined}
+        renderItem={(appointment, { isLast }) => (
+          <DataListItem
+            key={appointment.id}
+            divider={!isLast}
+            item={appointment}
+            onDelete={handleDeleteAppointment}
+            >
+              <ListItemButton>
+                <ListItemText
+                  primary={appointment.subject}
+                  secondary={formatTime(appointment)}
+                />
+              </ListItemButton>
+
+          </DataListItem>
         )}
       />
       <Dialog open={createData.hasData} onClose={createData.reset}>

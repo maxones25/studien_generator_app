@@ -14,6 +14,7 @@ import {
   StudiesRepository,
   StudyAttributesRepository,
 } from './infrastructure/db';
+import { DeleteAppointmentUseCase } from './application/useCases/DeleteAppointmentUseCase';
 
 @Module({
   imports: [StudiesDb],
@@ -28,6 +29,7 @@ import {
     Provider.StudyAppointmentRepositoryProvider,
     Provider.GetStudyAppointmentsUseCaseProvider,
     Provider.CreateStudyAppointmentUseCaseProvider,
+    Provider.DeleteAppointmentUseCaseProvider,
   ],
   exports: [
     Domain.STUDY_APPOINTMENTS_REPOSITORY,
@@ -36,6 +38,7 @@ import {
     IsStudyActiveGuard,
     IsStudyDeletedGuard,
     CreateAppointmentUseCase,
+    DeleteAppointmentUseCase,
     GetAppointmentsUseCase,
   ],
 })

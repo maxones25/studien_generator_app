@@ -74,7 +74,7 @@ export function FormRadioGroup<TFieldValues extends FieldValues>({
               <FormControlLabel labelPlacement={"bottom"} key={option} value={option} control={<Radio />} label={option} />
             ))}
           </RadioGroup>
-          {Boolean(error) && <FormHelperText>{t("value required")}</FormHelperText>}
+          {Boolean(error) && <FormHelperText>{t("required")}</FormHelperText>}
         </FormControl>
       )}}
     />

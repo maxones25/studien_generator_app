@@ -36,7 +36,8 @@ const useCalendarContextValue = () => {
     
   if (tasksData && appointmentsData) {
     const calendarEntries = [...tasksData, ...appointmentsData];
-    const sortedEntries = sortCalendarItems(calendarEntries);
+    const filteredEntries = calendarEntries.filter((entry) => !entry.deletedAt)
+    const sortedEntries = sortCalendarItems(filteredEntries);
     dates = groupByDate(sortedEntries);
   }
   return {

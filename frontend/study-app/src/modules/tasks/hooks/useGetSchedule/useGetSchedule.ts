@@ -18,8 +18,8 @@ export const useGetSchedule = () : UseGetScheduleResult => {
   
     const isLoading = tasks.isLoading || appointments.isLoading;
     const isError = tasks.isError || appointments.isError;
-    const tasksData = tasks.data?.filter((data) => date.isSame(data.scheduledAt, 'day'));
-    const appointmentsData = appointments.data?.filter((data) => date.isSame(data.start, 'day'));;
+    const tasksData = tasks.data?.filter((data) => date.isSame(data.scheduledAt, 'day') && !data.deletedAt);
+    const appointmentsData = appointments.data?.filter((data) => date.isSame(data.start, 'day') && !data.deletedAt);
 
     let dates: CalendarListItem[] | undefined;
     

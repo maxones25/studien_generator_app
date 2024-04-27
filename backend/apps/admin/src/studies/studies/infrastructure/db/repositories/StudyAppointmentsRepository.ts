@@ -4,6 +4,7 @@ import { IsNull, Repository } from 'typeorm';
 import { Appointment } from '@entities/core/appointment/Appointment';
 import { IStudyAppointmentsRepository } from '@admin/studies/studies/domain';
 import { CreateAppointmentDto } from '../../http';
+import datetime from '@shared/modules/datetime/datetime';
 
 export class StudyAppointmentsRepository
   implements IStudyAppointmentsRepository
@@ -12,6 +13,13 @@ export class StudyAppointmentsRepository
     @InjectRepository(AppointmentSchema)
     private readonly appointmentsRepository: Repository<AppointmentSchema>,
   ) {}
+
+  async deleteStudyAppointment(id: string): Promise<number> {
+    const deletedAt = datetime.currentDate();
+    const data = { deletedAt } as any;
+    const { affected } = await this.appointmentsRepository.update(id, data);
+    return affected;
+  }
 
   async getStudyAppointments(studyId: string): Promise<Appointment[]> {
     const items = await this.appointmentsRepository.find({

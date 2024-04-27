@@ -5,4 +5,5 @@ export type Task = {
   completedAt: null | string;
   rescheduled: number;
   form: { id: string; name: string };
+  deletedAt?: Date;
 };

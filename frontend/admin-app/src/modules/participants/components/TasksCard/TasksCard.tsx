@@ -2,6 +2,7 @@ import {
   Column,
   ColumnProps,
   DataList,
+  DataListItem,
   IconButton,
   Row,
   Text,
@@ -9,9 +10,9 @@ import {
 import { useFormData } from "@modules/core/hooks";
 import { formatInputDateTime } from "@modules/date/utils";
 import { useGetTasks } from "@modules/participants/hooks";
-import { Participant } from "@modules/participants/types";
+import { Participant, Task } from "@modules/participants/types";
 import { TaskForm } from "@modules/tasks/components";
-import { useCreateTask, useUpdateTask } from "@modules/tasks/hooks";
+import { useCreateTask, useDeleteTask, useUpdateTask } from "@modules/tasks/hooks";
 import { TaskFormData } from "@modules/tasks/types";
 import {
   Add,
@@ -43,6 +44,7 @@ export const TasksCard: React.FC<TasksCardProps> = ({
   const updateTask = useUpdateTask();
   const createTask = useCreateTask();
   const taskData = useFormData<TaskFormData>();
+  const deleteTask = useDeleteTask();
 
   const handleSave = async (data: TaskFormData) => {
     if (data.id) {
@@ -51,6 +53,10 @@ export const TasksCard: React.FC<TasksCardProps> = ({
       await createTask.mutateAsync(data);
     }
     taskData.reset();
+  };
+
+  const handleDeleteTask= async (data: Task) => {
+    await deleteTask.mutateAsync(data);
   };
 
   return (
@@ -74,30 +80,37 @@ export const TasksCard: React.FC<TasksCardProps> = ({
         client={getTasks}
         errorText=""
         noDataText=""
-        renderItem={(task) => (
-          <ListItemButton
+        filter={(task) => task.deletedAt == undefined}
+        renderItem={(task, {isLast}) => (
+          <DataListItem
+            divider={!isLast}
+            item={task}
+            onDelete={handleDeleteTask}
+            onUpdate={taskData.handleSet(task)}
             key={task.id}
-            dense
-            onClick={taskData.handleSet(task)}
           >
-            <ListItemIcon>
-              {task.completedAt !== null ? (
-                <CheckCircleOutline />
-              ) : (
-                <RadioButtonUnchecked />
-              )}
-            </ListItemIcon>
-            <ListItemText
-              primary={task.form.name}
-              secondary={new Date(task.scheduledAt).toLocaleDateString("de", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            />
-          </ListItemButton>
+            <ListItemButton
+              dense
+            >
+              <ListItemIcon>
+                {task.completedAt !== null ? (
+                  <CheckCircleOutline />
+                ) : (
+                  <RadioButtonUnchecked />
+                )}
+              </ListItemIcon>
+              <ListItemText
+                primary={task.form.name}
+                secondary={new Date(task.scheduledAt).toLocaleDateString("de", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              />
+            </ListItemButton>
+          </DataListItem>
         )}
       />
       <Dialog open={taskData.hasData} onClose={taskData.reset}>

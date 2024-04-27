@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { DataService } from './scheduling-data.service';
 import { PushNotificationType } from './push-notification-type.enum';
+import datetime from '@shared/modules/datetime/datetime';
 const webpush = require('web-push');
 
 @Injectable()
@@ -19,31 +20,35 @@ export class SchedulingService {
 
   @Cron('0 * * * * *')
   async handleCron() {
-    const notifications = await this.dataService.getNewEntriesFromNotifications(this.lastChecked);
-    notifications.forEach((notification) => {
-      this.processEntry(notification, PushNotificationType.Notification);
-    });
-    const messages = await this.dataService.getNewEntriesFromChat(this.lastChecked);
-    messages.forEach(({chat}) => {
-      this.processEntry(chat, PushNotificationType.Chat);
-    });
-    const tasks = await this.dataService.getNewEntriesFromTasks(this.lastChecked);
-    tasks.forEach((task) => {
-      this.processEntry(task, PushNotificationType.Task);
-    });
-    const appointments = await this.dataService.getNewEntriesFromAppointments(this.lastChecked);
-    appointments.forEach((appointments) => {
-      this.processEntry(appointments, PushNotificationType.Appointment);
-    });
-    this.lastChecked = new Date();
-    this.lastChecked.setMilliseconds(0);
-    this.lastChecked.setSeconds(0);
+    try {   
+      const messages = await this.dataService.getNewEntriesFromChat(this.lastChecked);
+      messages.forEach(({chat}) => {
+        this.processEntry(chat, PushNotificationType.Chat);
+      });
+      const tasks = await this.dataService.getNewEntriesFromTasks(this.lastChecked);
+      tasks.forEach((task) => {
+        this.processEntry(task, PushNotificationType.Task);
+      });
+      const appointments = await this.dataService.getNewEntriesFromAppointments(this.lastChecked);
+      appointments.forEach((appointments) => {
+        this.processEntry(appointments, PushNotificationType.Appointment);
+      });
+      this.lastChecked = new Date();
+      this.lastChecked.setMilliseconds(0);
+      this.lastChecked.setSeconds(0);
+    } catch (error) {
+      
+    }
   }
 
   processEntry(entry: any, type: PushNotificationType) {
-    const message = this.createNotificationMessage(type, entry);
-    const subscription = entry.participant?.subscription;
-    this.sendPushNotification(subscription, type, message, entry.participant?.id);
+    try {
+      const message = this.createNotificationMessage(type, entry);
+      const subscription = entry.participant?.subscription;
+      this.sendPushNotification(subscription, type, message, entry.participant?.id);      
+    } catch (error) {
+
+    }
   }
 
   sendPushNotification(subscription: string, type: PushNotificationType, message: string, id: string) {
@@ -56,19 +61,19 @@ export class SchedulingService {
         id,
       }),
       { vapidDetails: this.VAPID_DETAILS }
-    );
+    ).catch(() => {
+
+    });
   }
 
   createNotificationMessage(type: PushNotificationType, entry: any): string {
     switch (type) {
       case PushNotificationType.Chat:
         return `Neue Chatnachricht`;
-      case PushNotificationType.Notification:
-        return `${entry.name} wurde vom ${entry.oldDate} auf den ${entry.newDate} verschoben`;
       case PushNotificationType.Task:
-        return `${entry.form.name} muss um ${entry.scheduledAt} bearbeitet werden`;
+        return `${entry?.form?.name} muss um ${datetime.formatTime(entry?.scheduledAt)} bearbeitet werden`;
       case PushNotificationType.Appointment:
-        return `Sie haben den Termin '${entry.subject}' um ${new Date(entry.startDate + 'T' + entry.startTime)}`;
+        return `Sie haben den Termin '${entry?.subject}' um ${entry?.startTime}`;
       default:
         return '';
     }

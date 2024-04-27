@@ -54,6 +54,7 @@ export class AppointmentsService {
         start: appointment.startDate + 'T' + appointment.startTime,
         end: appointment.endDate + 'T' + appointment.endTime,
         name: appointment.subject,
+        deletedAt: appointment.deletedAt,
       }
     })
   }

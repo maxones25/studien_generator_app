@@ -79,7 +79,7 @@ export function FormSelect<TFieldValues extends FieldValues>({
               ))}
             </Select>
             {Boolean(error) && (
-              <FormHelperText>{t("value required")}</FormHelperText>
+              <FormHelperText>{t("required")}</FormHelperText>
             )}
           </FormControl>
         );

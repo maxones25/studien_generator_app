@@ -17,26 +17,6 @@ export class DataService {
     private appointmentsRepository: Repository<Appointment>,
   ) {}
 
-  async getNewEntriesFromNotifications(lastChecked: Date) {
-    return this.notificationsRepository.find({
-      where: {
-        modifiedAt: MoreThan(lastChecked),
-        participant: {
-          subscription: Not(IsNull()),
-        }
-      },
-      relations: {
-        participant: true
-      },
-      select: {
-        participant: {
-          subscription: true,
-          id: true
-        }
-      }
-    });
-  }
-
   async getNewEntriesFromTasks(lastChecked: Date) {
     return this.tasksRepository.find({
       where: {
@@ -45,6 +25,7 @@ export class DataService {
           subscription: Not(IsNull()),
         },
         completedAt: IsNull(),
+        deletedAt: IsNull(),
       },
       relations: {
         participant: true,
@@ -69,7 +50,8 @@ export class DataService {
         startTime: Equal(datetime.formatTime(lastChecked)),
         participant: {
           subscription: Not(IsNull()),
-        }
+        },
+        deletedAt: IsNull(),
       },
       relations: {
         participant: true,

@@ -44,4 +44,11 @@ export class TasksCommands {
   updateTask(@Query() { taskId }: TaskQueryDto, @Body() body: UpdateTaskDto) {
     return this.tasksService.update(taskId, body);
   }
+
+  @Post('deleteTask')
+  @Roles('admin', 'employee')
+  @UseGuards(TaskGuard)
+  deleteTask(@Query() { taskId }: TaskQueryDto) {
+    return this.tasksService.delete(taskId);
+  }
 }

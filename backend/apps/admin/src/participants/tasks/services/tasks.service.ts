@@ -3,6 +3,7 @@ import { TasksRepository } from '../tasks.repository';
 import { UpdateTaskDto } from '../dtos/UpdateTaskDto';
 import { IGetStudyRelatedDataUseCase } from '@shared/modules/records/StudyRelatedDataAccessor';
 import { CreateTaskDto } from '../dtos/CreateTaskDto';
+import datetime from '@shared/modules/datetime/datetime';
 
 @Injectable()
 export class TasksService implements IGetStudyRelatedDataUseCase {
@@ -20,6 +21,7 @@ export class TasksService implements IGetStudyRelatedDataUseCase {
     formId: string,
     { completedAt, rescheduled, scheduledAt }: CreateTaskDto,
   ) {
+    scheduledAt = datetime.addOffset(scheduledAt);
     const task = await this.tasksRepository.create({
       participantId,
       formId,
@@ -44,5 +46,11 @@ export class TasksService implements IGetStudyRelatedDataUseCase {
       rescheduled,
       scheduledAt,
     });
+  }
+
+  async delete(
+    id: string,
+  ) {
+    return this.tasksRepository.softDelete(id);
   }
 }
