@@ -2,6 +2,7 @@ import { ParticipantNotification, Task, ChatMessage, Appointment } from "@entiti
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import datetime from "@shared/modules/datetime/datetime";
+import { addMinutes } from "date-and-time";
 import { Repository, MoreThan, Not, IsNull, Equal } from "typeorm";
 
 @Injectable()
@@ -19,7 +20,7 @@ export class DataService {
 
   async getNewEntriesFromTasks(lastChecked: Date) {
     const preNotificationTimeMinutes = 15;
-    const preNotificationDate = datetime.addTime(lastChecked, { hours: 0, minutes: preNotificationTimeMinutes });
+    const preNotificationDate = addMinutes(lastChecked, preNotificationTimeMinutes );
     return this.tasksRepository.find({
       where: [{
         scheduledAt: Equal(lastChecked),
@@ -55,7 +56,7 @@ export class DataService {
 
   async getNewEntriesFromAppointments(lastChecked: Date) {
     const preNotificationTimeMinutes = 15;
-    const preNotificationDate = datetime.addTime(lastChecked, { hours: 0, minutes: preNotificationTimeMinutes });
+    const preNotificationDate = addMinutes(lastChecked, preNotificationTimeMinutes );
     return this.appointmentsRepository.find({
       where: [{
           startDate: Equal(datetime.formatDate(lastChecked)),

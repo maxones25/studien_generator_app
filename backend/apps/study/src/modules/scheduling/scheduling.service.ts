@@ -3,6 +3,7 @@ import { Cron } from '@nestjs/schedule';
 import { DataService } from './scheduling-data.service';
 import { PushNotificationType } from './push-notification-type.enum';
 import datetime from '@shared/modules/datetime/datetime';
+import { addMinutes } from 'date-and-time';
 const webpush = require('web-push');
 
 @Injectable()
@@ -25,7 +26,7 @@ export class SchedulingService {
       messages.forEach(({chat}) => {
         this.processEntry(chat, PushNotificationType.Chat);
       });
-      this.lastChecked = datetime.addTime(this.lastChecked, { hours: 0, minutes: 1 });
+      this.lastChecked = addMinutes(this.lastChecked, 1);
       const tasks = await this.dataService.getNewEntriesFromTasks(this.lastChecked);
       tasks.forEach((task) => {
         this.processEntry(task, PushNotificationType.Task);
