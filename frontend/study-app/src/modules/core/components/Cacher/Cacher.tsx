@@ -1,6 +1,5 @@
 import { useGetChatMessages } from '@modules/chat/hooks';
 import { useGetForms } from '@modules/forms/hooks';
-import { useGetNotifications } from '@modules/notifications/hooks';
 import { useGetParticipantInfo } from '@modules/settings/hooks';
 import { useGetAppointments, useGetTasks, useGetRecords } from '@modules/tasks/hooks';
 import React, { ReactNode } from 'react';
@@ -18,7 +17,6 @@ export const Cacher : React.FC<CacherProps>= ({
   useGetRecords();
   useGetAppointments();
   useGetChatMessages();
-  useGetNotifications();
   useGetParticipantInfo();
 
   return (
