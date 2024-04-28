@@ -20,7 +20,6 @@ export class BaseFormComponent extends IdEntity {
 }
 
 @TypeOrmEntity()
-@Unique('unique_number_for_form_page', ['pageId', 'number'])
 export class FormComponent extends BaseFormComponent {
   @OneToMany(() => FormComponentAttribute, (attribute) => attribute.component)
   attributes: FormComponentAttribute[];

@@ -1,3 +1,5 @@
+import { FormComponent } from "..";
+
 export type FormComponentFormData = {
   id?: string;
   type: string;
@@ -7,3 +9,7 @@ export type FormComponentFormData = {
   }[];
   attributes: Record<string, any>;
 };
+
+export type FormComponentsSequence = {
+  components: FormComponent[],
+}

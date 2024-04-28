@@ -21,6 +21,7 @@ import { IsStudyDeletedGuard } from '@admin/studies/studies/infrastructure/http'
 import { FormGuard } from '../guards/form.guard';
 import { FormQueryDto } from '../dtos/FormQueryDto';
 import { UpdateComponentDto } from '../dtos/UpdateComponentDto';
+import { UpdateComponentSequenceDto } from '../dtos/UpdateComponentSequenceDto';
 
 @Controller('forms')
 @UseGuards(StudyGuard, IsStudyDeletedGuard)
@@ -51,6 +52,17 @@ export class ComponentsCommands {
     );
 
     return this.componentsService.add(pageId, body);
+  }
+
+  @Post('updateComponentSequence')
+  @HttpCode(HttpStatus.OK)
+  @Roles('admin')
+  @UseGuards(FormGuard)
+  async updateSequence(
+    @Query() { formId }: FormQueryDto,
+    @Body() data: UpdateComponentSequenceDto,
+  ) {
+    return this.componentsService.updateSequence(data, formId);
   }
 
   @Post('updateComponent')

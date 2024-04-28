@@ -93,6 +93,7 @@ export const FormSideBar: React.FC<FormSideBarProps> = () => {
             />
           </Row>
           <FormComponentForm
+            key={formEditor.formComponent.data?.id}
             values={formEditor.formComponent.data as FormComponentFormData}
             componentAttributes={formComponent?.attributes ?? formEditor.component.data?.attributes!}
             fieldName={formComponent?.name}

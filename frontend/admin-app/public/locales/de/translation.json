@@ -66,6 +66,7 @@
   "record deleted": "{{record}} '{{name}}' wurde gelöscht!",
   "record added": "{{record}} '{{name}}' wurde zu {{mainRecord}} hinzugefügt!",
   "record removed": "{{record}} '{{name}}' wurde von {{mainRecord}} entfernt!",
+  "records updated": "{{record}} wurden geändert!",
   "sign up successfull": "{{email}} wurde erfolgreich registriert",
   "min": "Minimum",
   "max": "Maximum",

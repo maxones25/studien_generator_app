@@ -1,25 +1,27 @@
-import { FormComponent } from "@modules/formComponents/types";
-import React, { useState } from "react";
-import {
-  DragDropContext,
-  Draggable,
-  DraggingStyle,
-  Droppable,
-  NotDraggingStyle,
-  OnDragEndResponder,
-} from "react-beautiful-dnd";
-
-export interface ComponentListProps {
-  components: FormComponent[];
+import { DragDropContext, Draggable, Droppable, OnDragEndResponder } from "@hello-pangea/dnd";
+import { useEffect, useState } from "react";
+export interface ComponentListProps <Data extends Record<string, any>> {
+  data: Data[];
+  renderItem: (
+    item: Data,
+  ) => JSX.Element;
+  saveSequence: (data: Data[]) => void,
 }
 
-export const ComponentList: React.FC<ComponentListProps> = ({ components }) => {
-  const [items, setItems] = useState(components);
+export function ComponentList<Data extends Record<string, any>>({ 
+  data,
+  renderItem,
+  saveSequence,
+}: ComponentListProps<Data>) {
+  const [items, setItems] = useState(data);
 
-  const grid = 8;
+  useEffect(() => {
+    if (data)
+      setItems(data)
+  },[data]);
 
   const reorder = (
-    list: FormComponent[],
+    list: Data[],
     startIndex: number,
     endIndex: number
   ) => {
@@ -34,50 +36,46 @@ export const ComponentList: React.FC<ComponentListProps> = ({ components }) => {
       return;
     }
 
-    const items = reorder(
-      components,
+    const newItems = reorder(
+      data,
       result.source.index,
       result.destination.index
     );
-
-    setItems([...items]);
+    
+    setItems(newItems);
+    saveSequence(newItems);
   };
 
-  const getListStyle = (isDraggingOver: boolean) => {
-    return {
-      background: isDraggingOver ? "lightblue" : "lightgrey",
-      padding: grid,
-      width: 250,
-    };
-  };
+  // const getListStyle = (isDraggingOver: boolean) => {
+  //   return {
+      
+  //   };
+  // };
 
-  const getItemStyle = (
-    isDragging: boolean,
-    draggableStyle?: DraggingStyle | NotDraggingStyle
-  ): React.CSSProperties => {
-    console.log(draggableStyle);
-    return {
-      // some basic styles to make the items look a bit nicer
-      userSelect: "none",
-      padding: grid * 2,
-      margin: `0 0 ${grid}px 0`,
+  // const getItemStyle = (
+  //   isDragging: boolean,
+  //   draggableStyle?: DraggingStyle | NotDraggingStyle
+  // ): React.CSSProperties => {
+  //   console.log(draggableStyle);
+  //   return {
+  //     // some basic styles to make the items look a bit nicer
 
-      // change background colour if dragging
-      background: isDragging ? "lightgreen" : "grey",
 
-      // styles we need to apply on draggables
-      ...draggableStyle,
-    };
-  };
+  //     // change background colour if dragging
+
+  //     // styles we need to apply on draggables
+  //     ...draggableStyle,
+  //   };
+  // };
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <Droppable droppableId="droppable">
-        {(provided, snapshot) => (
+        {(provided) => (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            style={getListStyle(snapshot.isDraggingOver)}
+            // style={getListStyle(snapshot.isDraggingOver)}
           >
             {items.map((component, index) => (
               <Draggable
@@ -85,19 +83,18 @@ export const ComponentList: React.FC<ComponentListProps> = ({ components }) => {
                 draggableId={component.id}
                 index={index}
               >
-                {(provided, snapshot) => {
-                  console.log(provided, snapshot)
+                {(provided) => {
                   return (
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
+                      // style={getItemStyle(
+                      //   snapshot.isDragging,
+                      //   provided.draggableProps.style
+                      // )}
                     >
-                      {component.type}
+                      {renderItem(component)}
                     </div>
                   );
                 }}
@@ -109,4 +106,4 @@ export const ComponentList: React.FC<ComponentListProps> = ({ components }) => {
       </Droppable>
     </DragDropContext>
   );
-};
+}
