@@ -22,7 +22,7 @@ export const ObjectInfoDialog : React.FC<ObjectInfoDialogProps>= ({
   title
 }) => {
   const { t } = useTranslation(); 
-  let isFormFields = false;
+  console.log(info)
 
 
 // Verbesserte Version der Hilfsfunktion, die jetzt nur prüft, ob ein Wert ein Objekt oder ein Array ist
@@ -31,7 +31,7 @@ const isComplex = (value: any): value is Record<string, any> | Array<any> => {
 };
 
 // Rekursive Funktion, um Objekt- und Arrayeigenschaften zu rendern
-const renderObjectRows = (obj: any, prefix = ''): JSX.Element[] => {
+const renderObjectRows = (obj: any, isFormFields? : boolean, prefix = ''): JSX.Element[] => {
   // Handhabt sowohl Objekte als auch Arrays
   const entries = Array.isArray(obj) ? obj.map((value, index) => [index, value]) : Object.entries(obj);
 
@@ -49,8 +49,8 @@ const renderObjectRows = (obj: any, prefix = ''): JSX.Element[] => {
           <TableCell sx={{minWidth: '8rem', textAlign: isFormFields ? 'right' : 'left'}}>{value.toString()}</TableCell>
         </TableRow>
       ) : <></>
-      if (fullKey === 'fields')
-        isFormFields = true;
+        if (fullKey=='data') 
+          return renderObjectRows(value, true);
       return tableRow 
     }
   });
