@@ -22,9 +22,7 @@ export const ObjectInfoDialog : React.FC<ObjectInfoDialogProps>= ({
   title
 }) => {
   const { t } = useTranslation(); 
-  console.log(info)
-
-
+  
 // Verbesserte Version der Hilfsfunktion, die jetzt nur prüft, ob ein Wert ein Objekt oder ein Array ist
 const isComplex = (value: any): value is Record<string, any> | Array<any> => {
   return typeof value === 'object' && value !== null;
