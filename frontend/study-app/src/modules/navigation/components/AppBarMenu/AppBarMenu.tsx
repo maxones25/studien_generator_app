@@ -1,5 +1,5 @@
 import { useNavigationHelper } from '@modules/core/hooks';
-import { Settings, Logout } from '@mui/icons-material';
+import { Settings, Logout, Info } from '@mui/icons-material';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -53,6 +53,15 @@ export const AppBarMenu : React.FC<AppBarMenuProps>= ({
           <Settings fontSize="small" />
         </ListItemIcon>
         {t('settings')}
+      </MenuItem>
+      <MenuItem 
+        data-testid={'go-app-details-app-bar'} 
+        onClick={navigate.handle('../details')}
+      >
+        <ListItemIcon>
+          <Info fontSize="small" />
+        </ListItemIcon>
+        {t('app details')}
       </MenuItem>
       <MenuItem 
         data-testid={'log-out-app-bar'} 

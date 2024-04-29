@@ -6,6 +6,7 @@ import { Navigate,  Outlet,  createBrowserRouter } from "react-router-dom";
 import { Cacher } from "@modules/core/components";
 import SettingsPage from "@pages/SettingsPage/SettingsPage";
 import CalendarPage from "@pages/CalendarPage/CalendarPage";
+import AppDetailsPage from "@pages/AppDetailsPage/AppDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "calendar",
         element: <CalendarPage />
+      },
+      {
+        path: "details",
+        element: <AppDetailsPage />
       }
     ]
   },
