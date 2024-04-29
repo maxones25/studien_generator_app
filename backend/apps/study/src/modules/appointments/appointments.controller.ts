@@ -14,7 +14,7 @@ export class AppoinmentsController {
     @GroupId() groupId: string,
     @ParticipantId() participantId: string,
     @Query('appointmentId') appointmentId?: string,
-    @Query('lastupdated') lastUpdated?: string
+    @Query('lastUpdated') lastUpdated?: string
   ) {
     if (lastUpdated) {
       return await this.appointmentsService.findModifiedSince(

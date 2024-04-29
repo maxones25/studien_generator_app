@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { IconButton, ZiIcon } from '@modules/core/components';
 import { AppBarMenu, LogOutDialog } from '..';
 import { getNewMessagesCount } from '@modules/chat/utils';
-import { NotificationsDropDown } from '@modules/notifications/components';
+// import { NotificationsDropDown } from '@modules/notifications/components';
 // import { getNewNotificationsCount } from '@modules/notifications/utils';
 // import { useReadNotifications } from '@modules/notifications/hooks';
 
@@ -19,7 +19,7 @@ export const AppBar : React.FC<AppBarProps>= () => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
-  const [openNotifications, setOpenNotifications] = useState(false);
+  // const [openNotifications, setOpenNotifications] = useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
   const newMessagesCount = getNewMessagesCount();
   // const newNotificationsCount = getNewNotificationsCount();
@@ -37,9 +37,9 @@ export const AppBar : React.FC<AppBarProps>= () => {
     setOpenMenu((prevOpen) => !prevOpen);
   };
 
-  const handleNotificationsToggle = () => {
-    setOpenNotifications((prevOpen) => !prevOpen);
-  };
+  // const handleNotificationsToggle = () => {
+  //   setOpenNotifications((prevOpen) => !prevOpen);
+  // };
 
   // const handleOpenNotifications = () => {
   //   handleNotificationsToggle();
@@ -119,11 +119,11 @@ export const AppBar : React.FC<AppBarProps>= () => {
           handleLogout={handleClick}
           open={openMenu}
         />
-        <NotificationsDropDown
+        {/* <NotificationsDropDown
           anchorEl={anchorRef.current}
           handleClose={handleNotificationsToggle}
           open={openNotifications}
-        />
+        /> */}
         <LogOutDialog 
           open={open}
           onClose={handleClick}

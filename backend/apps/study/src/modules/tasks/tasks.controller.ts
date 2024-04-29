@@ -11,7 +11,7 @@ export class TaskController {
   async getTasks(
     @ParticipantId() participantId: string,
     @Query('taskId') taskId?: string,
-    @Query('lastupdated') lastUpdated?: string
+    @Query('lastUpdated') lastUpdated?: string
   ) {
     if (lastUpdated) {
       return await this.taskService.findModifiedSince(participantId, new Date(lastUpdated));

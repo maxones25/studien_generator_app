@@ -8,6 +8,9 @@ export const getGetParticipantInfoKey = () => ["getParticipantInfo"];
 
 export const useGetParticipantInfo = () => {
   return useReadRequest<ParticipantInfo>(getGetParticipantInfoKey(), (options) =>
-    apiRequest(`/auth/participant`, { ...options })
+    apiRequest(`/auth/participant`, { ...options }),
+    {
+      staleTime: 1000*60*60
+    }
   );
 }
